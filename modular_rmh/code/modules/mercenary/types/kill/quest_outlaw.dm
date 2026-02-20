@@ -1,8 +1,7 @@
 /datum/quest/kill/outlaw
 	quest_type = QUEST_OUTLAW
 	mob_types_to_spawn = list(
-		/mob/living/carbon/human/species/human/northern/deranged_knight
-	)
+
 	count_min = 1
 	count_max = 1
 

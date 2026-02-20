@@ -29,6 +29,8 @@
 #define QUEST_COURIER_BONUS_FLAT 10 // Flat bonus for courier quests, since you gotta wait for a person to open a package
 #define QUEST_DELIVERY_PER_ITEM_BONUS 2 // Bonus per item delivered
 
+// >>> OLD LIST
+/*
 // All eligible quest kill mobs
 // The extra per number reward are based on toughness + whether their head is worth anything
 #define QUEST_KILL_MOBS_LIST list(\
@@ -57,3 +59,10 @@
 	/mob/living/carbon/human/species/elf/dark/drowraider = 5, \
 	/mob/living/carbon/human/species/human/northern/bog_deserters = 5,\
 )
+*/
+
+// ==>>> NEW LIST
+
+#define QUEST_KILL_MOBS_LIST list(/mob/living/carbon/human)
+#define QUEST_KILL_MEDIUM_LIST list(/mob/living/carbon/human)
+#define QUEST_RAID_LIST list(/mob/living/carbon/human)

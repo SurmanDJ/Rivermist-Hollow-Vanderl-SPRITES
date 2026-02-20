@@ -16,8 +16,8 @@
 // --- Base Types ---
 #include "types\__quest.dm"
 #include "types\__quest_list.dm"
-#include "types\quest_courier.dm"
-#include "types\quest_retrieval.dm"
+//#include "types\quest_courier.dm" - custom locatiom, works in the future
+//#include "types\quest_retrieval.dm" - fix for now (1)
 
 // --- Kill Quests ---
 #include "types\kill\__quest_kill_base.dm"
