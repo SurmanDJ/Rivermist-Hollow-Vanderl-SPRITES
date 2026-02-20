@@ -3925,6 +3925,7 @@
 #include "modular_rmh\code\modules\jobs\job_types\traders\waterdeep_guard.dm"
 #include "modular_rmh\code\modules\jobs\job_types\traders\waterdeep_merchant.dm"
 #include "modular_rmh\code\modules\mapping\mapping_helpers\access_helper.dm"
+#include "modular_rmh\code\modules\mercenary\load_order.dm"
 #include "modular_rmh\code\modules\mob\abyssal_monsters.dm"
 #include "modular_rmh\code\modules\mob\hedghog.dm"
 #include "modular_rmh\code\modules\mob\undead_wolf.dm"
