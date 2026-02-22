@@ -107,7 +107,7 @@
 			qdel(shield)
 
 
-/datum/outfit/adventurer_cleric/death_domaxin
+/datum/outfit/adventurer_cleric/death_domain
 	name = "Death Domain"
 	head = /obj/item/clothing/head/roguehood/colored/black
 	mask = /obj/item/clothing/face/skullmask
