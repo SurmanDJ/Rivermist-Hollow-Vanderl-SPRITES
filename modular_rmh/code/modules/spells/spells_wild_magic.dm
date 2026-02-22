@@ -47,7 +47,13 @@
         return
     crow.visible_message(span_notice("The crow reforms into [owner]'s original body!"))
     shape.restore_caster()
-
+/datum/action/cooldown/spell/proc/restore_mute(mob/living/owner)
+	if(!owner || QDELETED(owner))
+		return
+	if(!HAS_TRAIT(owner, TRAIT_MUTE))
+		return
+	REMOVE_TRAIT(owner, TRAIT_MUTE, "wild_magic")
+	owner.visible_message(span_danger("Pink bubbles stop coming out of [owner]'s mouth."))
 /datum/action/cooldown/spell/proc/handle_wild_magic(atom/cast_on)
 	if(!owner)
 		return
@@ -64,12 +70,15 @@
 	if(length(targets))
 		wild_target = pick(targets)
 	owner.visible_message(span_notice("[owner] causes unpredictable magical effects."))
-	switch(rand(1, 50))
+	switch(rand(1,50))
 		if(1)
-			var/datum/action/cooldown/spell/enchantment/green_flame/G = new
+			/*var/datum/action/cooldown/spell/enchantment/green_flame/G = new
 			G.owner = owner
 			G.cast(owner)
-			owner.visible_message(span_danger("[owner] infuses their weapon!"))
+			owner.visible_message(span_danger("[owner] infuses their weapon!"))*/
+			ADD_TRAIT(owner, TRAIT_MUTE, "wild_magic")
+			owner.visible_message(span_danger("Pink bubbles start flying out of [owner]'s mouth when he tries to speak."))
+			addtimer(CALLBACK(src, PROC_REF(restore_mute), owner), 60 SECONDS)
 		if(2)
 			var/obj/projectile/magic/flashpowder/P = new
 			P.fire(owner, wild_target ? wild_target : target)
