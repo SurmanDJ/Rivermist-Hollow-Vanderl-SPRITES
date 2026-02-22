@@ -5,11 +5,11 @@
 /datum/species/automaton
 	name = "Automaton"
 	id = SPEC_ID_AUTOMATON
-	desc = "The Brass Men of Heartfelt, engineered servants of the Makers Guild. \
+	desc = "The Brass Men of Baldur's Gate, engineered servants of the Artificers Guild. \
 	These mechanical beings house souls bound to brass and steel, compelled to serve through ancient artifice. \
 	\n\n\
-	Following the catastrophic events at Heartfelt, automatons are forbidden from wielding weapons - only tools may grace their metal hands. \
-	They exist in servitude to the Makers Guild and nobility, bound by a single immutable law: obey the last order given. \
+	Following the catastrophic events at Baldur's Gate, automatons are forbidden from wielding weapons - only tools may grace their metal hands. \
+	They exist in servitude to the Artificers Guild and nobility, bound by a single immutable law: obey the last order given. \
 	\n\n\
 	Their speech comes not from lips but from pre-recorded proclamations, their thoughts trapped within a prison of brass and binding runes. \
 	\n\n\

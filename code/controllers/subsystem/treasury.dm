@@ -291,4 +291,4 @@ SUBSYSTEM_DEF(treasury)
 		var/how_much = noble_incomes[welfare_dependant]
 		record_round_statistic(STATS_NOBLE_INCOME_TOTAL, how_much)
 		give_money_treasury(how_much, silent = TRUE)
-		give_money_account(how_much, welfare_dependant, "Vanderlin Noble Estate")
+		give_money_account(how_much, welfare_dependant, "Dusk Spire Noble Estate")

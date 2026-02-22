@@ -129,7 +129,7 @@
 	spawned.recalculate_stats(FALSE)
 
 	if(spawned.dna?.species)
-		spawned.dna.species.native_language = "Zizo Chant"
+		spawned.dna.species.native_language = "Undead Chant"
 		spawned.dna.species.accent_language = spawned.dna.species.get_accent(spawned.dna.species.native_language)
 
 	add_verb(spawned, /mob/living/carbon/human/proc/praise)

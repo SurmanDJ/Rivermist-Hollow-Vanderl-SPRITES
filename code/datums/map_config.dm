@@ -6,7 +6,7 @@
 /datum/map_config
 	// Metadata
 	/// Full path to map load json
-	var/config_filename = "_maps/vanderlin.json"
+	var/config_filename = "_maps/hsector.json"
 	/// If TRUE map config was either not loaded or loaded unsuccessfully via LoadConfig()
 	var/defaulted = TRUE
 	// Config from maps.txt
@@ -15,14 +15,14 @@
 	var/voteweight = 1
 	var/votable = FALSE
 
-	// Config actually from the JSON - should default to Vanderlin
-	var/map_name = "Vanderlin"
-	var/map_path = "map_files/vanderlin"
-	var/map_file = "vanderlin.dmm"
+	// Config actually from the JSON - should default to RMH
+	var/map_name = "Rivermist Hollow"
+	var/map_path = "map_files/hsector"
+	var/map_file = "hsector.dmm"
 
-	var/immigrant_origin = "Kingsfield"
-	var/monarch_title = "King"
-	var/monarch_title_f = "Queen"
+	var/immigrant_origin = "Waterdeep"
+	var/monarch_title = "Lord"
+	var/monarch_title_f = "Lady"
 
 	var/traits = null
 	var/space_ruin_levels = 7

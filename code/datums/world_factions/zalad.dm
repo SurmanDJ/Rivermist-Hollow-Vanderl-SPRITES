@@ -1,6 +1,6 @@
 
 /datum/world_faction/zalad_traders
-	faction_name = "Zalad"
+	faction_name = "Zakhara"
 	desc = "Nomadic traders from the harsh desert regions"
 	faction_color = "#D2691E"
 	trader_type_weights = list(

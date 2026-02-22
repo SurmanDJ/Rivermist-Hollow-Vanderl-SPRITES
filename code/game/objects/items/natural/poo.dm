@@ -27,7 +27,7 @@
 		. += span_info("Restores 50 Potassium")
 
 /obj/item/natural/poo/cow
-	name = "moo-beast pie"
+	name = "cow pie"
 	desc = "A pie that could not be described as delicious."
 	icon_state = "cowpoo"
 

@@ -56,8 +56,8 @@
 
 /obj/item/clothing/shirt/grenzelhoft
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
-	name = "grenzelhoftian hip-shirt"
-	desc = "A true fashion statement worn by Grenzelhoftian swordsmen."
+	name = "darkholdian hip-shirt"
+	desc = "A true fashion statement worn by Darkholdian swordsmen."
 	body_parts_covered = CHEST|GROIN|ARMS|VITALS
 	armor = list("blunt" = 20, "slash" = 20, "stab" = 20,  "piercing" = 10, "fire" = 0, "acid" = 0)
 	icon_state = "grenzelshirt"
@@ -96,7 +96,7 @@
 	"ORANGE"="#b86f0c",
 	"Royal Majenta"="#962e5c")
 	var/mob/living/carbon/human/L = loc
-	var/choice = input(L, "Choose a color.", "GRENZELHOFTIAN COLORPLEX") as anything in colors
+	var/choice = input(L, "Choose a color.", "COLORPLEX") as anything in colors
 	var/playerchoice = colors[choice]
 	picked = TRUE
 	detail_color = playerchoice

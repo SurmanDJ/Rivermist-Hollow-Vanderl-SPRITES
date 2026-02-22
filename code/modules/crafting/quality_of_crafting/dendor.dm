@@ -265,7 +265,7 @@
 
 /obj/item/dendor_blessing/devouring/give_blessing(mob/living/user)
 	playsound(get_turf(user), 'sound/vo/smokedrag.ogg', 100, TRUE)
-	to_chat(user, span_danger("A volf howls far away... and your teeth begin to sear with pain!"))
+	to_chat(user, span_danger("A wolf howls far away... and your teeth begin to sear with pain!"))
 	playsound(get_turf(user), 'sound/vo/mobs/wwolf/idle (1).ogg', 50, TRUE)
 	user.Immobilize(2 SECONDS)
 	sleep(2 SECONDS)

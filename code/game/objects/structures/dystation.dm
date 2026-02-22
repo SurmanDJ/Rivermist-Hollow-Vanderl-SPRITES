@@ -330,7 +330,7 @@ var/global/list/colorlist = list(
 
 /obj/item/dye_pack/royal
 	name = "royal dyes"
-	desc = "Dyes with powders hailing from all across Faerun, from Kingsfield to Heartfelt. \
+	desc = "Dyes with powders hailing from all across Faerun, from Neverwinter to Baldur's Gate. \
 		Vibrant and pleasing to the eyes, only the highest in the social hierarchy are seen with these colors." // RMH
 	icon_state = "luxury_dyes"
 	sellprice = 70

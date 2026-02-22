@@ -1,5 +1,5 @@
 /datum/language/zalad
-	name = "Zalad"
+	name = "Zakhara"
 	desc = ""
 	speech_verb = "states"
 	ask_verb = "questions"

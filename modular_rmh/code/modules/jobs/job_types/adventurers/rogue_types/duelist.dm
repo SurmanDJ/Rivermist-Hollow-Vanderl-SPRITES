@@ -62,6 +62,6 @@
 		if(1 to 2)
 			beltl = /obj/item/weapon/sword/rapier
 		if(3 to 4)
-			beltl = /obj/item/weapon/sword/rapier/silver //Correct, They have a chance to receive a silver rapier, due to them being from Valoria.
+			beltl = /obj/item/weapon/sword/rapier/silver //Correct, They have a chance to receive a silver rapier, due to them being from Silvermoon.
 		if(5 to 6)
 			beltl = /obj/item/weapon/sword/rapier/dec

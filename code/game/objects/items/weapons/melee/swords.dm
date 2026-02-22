@@ -86,7 +86,7 @@
 
 /obj/item/weapon/sword/short/psy
 	name = "psydonian shortsword"
-	desc = "Grenzelhoftian smiths worked with artificers, and an esoteric blade was born: a blade with an unique design, dismissing a crossguard in favor of a hollow beak to hook and draw harm away from its user. Short in length, yet lethally light in weight."
+	desc = "Darkholdian smiths worked with artificers, and an esoteric blade was born: a blade with an unique design, dismissing a crossguard in favor of a hollow beak to hook and draw harm away from its user. Short in length, yet lethally light in weight."
 	icon = 'icons/roguetown/weapons/32/psydonite.dmi'
 	icon_state = "psyswordshort"
 	force = DAMAGE_SHORTSWORD + 3
@@ -285,7 +285,7 @@
 //................ Shalal Sabre ............... //
 /obj/item/weapon/sword/sabre/shalal
 	name = "shalal sabre"
-	desc = "A fine weapon of Zaladin origin in the style of the Shalal tribesfolk, renowned for their defiance against magic and mastery of mounted swordsmanship."
+	desc = "A fine weapon of Zakharani origin in the style of the Shalal tribesfolk, renowned for their defiance against magic and mastery of mounted swordsmanship."
 	icon = 'icons/roguetown/weapons/64/swords.dmi'
 	icon_state = "marlin"
 	lefthand_file = 'icons/mob/inhands/weapons/roguebig_lefthand.dmi'
@@ -334,7 +334,7 @@
 \----------*/
 /obj/item/weapon/sword/scimitar
 	name = "scimitar"
-	desc = "A Zaladin design for swords, these curved blades are a common sight in the lands of the Ziggurat."
+	desc = "A Zakharani design for swords, these curved blades are a common sight in the lands of the Ziggurat."
 	icon_state = "scimitar"
 	wdefense = GOOD_PARRY
 	possible_item_intents = list(SWORD_CUT, SWORD_CHOP)
@@ -595,7 +595,7 @@
 
 /obj/item/weapon/sword/rapier/silver
 	name = "silver rapier"
-	desc = "An elegant silver rapier. Popular with lords and ladies in Valoria."
+	desc = "An elegant silver rapier. Popular with lords and ladies in Silvermoon."
 	icon_state = "rapier_s"
 	force = DAMAGE_SWORD - 2
 	melt_amount = 100
@@ -876,7 +876,7 @@
 /obj/item/weapon/sword/long/rider
 	icon_state = "tabi"
 	name = "kilij scimitar"
-	desc = "A curved blade of Zaladin origin meaning 'curved one'. The standard sword that saw the conquest of the Zalad continent and peoples."
+	desc = "A curved blade of Zakharani origin meaning 'curved one'. The standard sword that saw the conquest of the Zakhara continent and peoples."
 	possible_item_intents = list(SWORD_CUT, SWORD_STRIKE)
 	gripped_intents = list(SWORD_CUT, SWORD_STRIKE, SWDLONG_CHOP)
 	sellprice = 80
@@ -1254,7 +1254,7 @@
 /obj/item/weapon/sword/long/exe
 	icon_state = "exe"
 	name = "executioner's sword"
-	desc = "An ancient blade of ginormous stature, with a round ended tip. The pride and joy of Vanderlin's greatest pastime, executions."
+	desc = "An ancient blade of ginormous stature, with a round ended tip. Does the work quick and clean."
 	possible_item_intents = list(SWORD_STRIKE)
 	gripped_intents = list(SWORD_CHOP)
 	minstr = 10

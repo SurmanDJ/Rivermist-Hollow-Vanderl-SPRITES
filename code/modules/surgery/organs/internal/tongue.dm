@@ -13,9 +13,6 @@
 		/datum/language/common,
 		/datum/language/dwarvish,
 		/datum/language/elvish,
-		/datum/language/oldpsydonic,
-		/datum/language/newpsydonic,
-		/datum/language/zalad,
 		/datum/language/celestial,
 		/datum/language/hellspeak,
 		/datum/language/beast,
@@ -23,7 +20,8 @@
 		/datum/language/orcish,
 		/datum/language/deepspeak,
 		/datum/language/undead,
-		/datum/language/halfling
+		/datum/language/halfling,
+		/datum/language/zalad
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)

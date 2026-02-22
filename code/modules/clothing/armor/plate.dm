@@ -193,7 +193,7 @@
 
 /obj/item/clothing/armor/plate/fluted/ornate/ordinator
 	name = "inquisitorial ordinator's plate"
-	desc = "A relic that is said to have survived the early sieges of Grenzelhoft, refurbished and repurposed to slay the arch-enemy in the name of Psydon. <br> A fluted cuirass that has been reinforced with thick padding and an additional shoulder piece. You will endure."
+	desc = "A relic that is said to have survived the early sieges of Darkhold, refurbished and repurposed to slay the arch-enemy in the name of Psydon. <br> A fluted cuirass that has been reinforced with thick padding and an additional shoulder piece. You will endure."
 	icon_state = "ordinatorplate"
 
 

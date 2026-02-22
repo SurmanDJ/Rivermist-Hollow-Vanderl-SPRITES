@@ -79,7 +79,6 @@
 	name = "Magic apprentice"
 	greet_text = span_notice("I have learned basic arcyne but my skills are far from good.")
 	weight = 25
-	req_text = "Have Noc or Zizo as your Patron"
 
 /datum/special_trait/latentmagic/on_apply(mob/living/carbon/human/character, silent)
 	character.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
@@ -246,9 +245,6 @@
 	character.grant_language(/datum/language/celestial)
 	character.grant_language(/datum/language/orcish)
 	character.grant_language(/datum/language/deepspeak)
-	character.grant_language(/datum/language/newpsydonic)
-	character.grant_language(/datum/language/oldpsydonic)
-	character.grant_language(/datum/language/zalad)
 	character.grant_language(/datum/language/thievescant)
 
 /datum/special_trait/uniglot
@@ -259,7 +255,7 @@
 
 /datum/special_trait/uniglot/on_apply(mob/living/carbon/human/character, silent)
 	character.remove_language(/datum/language/common)
-	switch(rand(1,7))
+	switch(rand(1,4))
 		if(1)
 			character.grant_language(/datum/language/elvish)
 		if(2)
@@ -267,12 +263,6 @@
 		if(3)
 			character.grant_language(/datum/language/dwarvish)
 		if(4)
-			character.grant_language(/datum/language/zalad)
-		if(5)
-			character.grant_language(/datum/language/newpsydonic)
-		if(6)
-			character.grant_language(/datum/language/hellspeak)
-		if(7)
 			character.grant_language(/datum/language/orcish)
 
 /datum/special_trait/languageidiot
@@ -289,9 +279,6 @@
 	character.grant_language(/datum/language/celestial)
 	character.grant_language(/datum/language/orcish)
 	character.grant_language(/datum/language/deepspeak)
-	character.grant_language(/datum/language/newpsydonic)
-	character.grant_language(/datum/language/oldpsydonic)
-	character.grant_language(/datum/language/zalad)
 	character.grant_language(/datum/language/thievescant)
 
 /datum/special_trait/tavernbrawler
@@ -665,7 +652,7 @@
 	greet_text = span_notice("Physique, Endurance, Constitution. \
 	The trinity of what builds a great leader and an even greater kingdom... \
 	or whatever those nimrods were yapping about! <b>I cast FIREBALL!!!</b>")
-	req_text = "Monarch, worship Noc or Zizo"
+	req_text = "Monarch"
 	allowed_jobs = list(/datum/job/lord)
 	weight = 25 //Should be fine.
 

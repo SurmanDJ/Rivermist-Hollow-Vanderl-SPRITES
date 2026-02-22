@@ -66,12 +66,12 @@
 
 	if(!item_skip && ismovable(A))
 		var/atom/movable/thing = A
-		if(istype(used_intent, INTENT_GRAB))
+		if(used_intent.type == INTENT_GRAB)
 			if(!thing.anchored)
 				start_pulling(thing) //add params to grab bodyparts based on loc
 				return TRUE
 
- 		if(istype(used_intent, INTENT_DISARM))
+		if(used_intent.type == INTENT_DISARM)
 			if(!thing.anchored)
 				var/stam_loss = max(100 - (STASTR * 10), 5)
 				visible_message(span_info("[src] pushes [thing]."), span_info("I push [thing]."))

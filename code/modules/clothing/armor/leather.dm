@@ -46,7 +46,7 @@
 //................ Hide Armor ............... //
 /obj/item/clothing/armor/leather/hide
 	name = "hide armor"
-	desc = "A leather armor with additional internal padding of creacher fur. Offers slightly higher integrity and comfort."
+	desc = "A leather armor with additional internal padding of creature fur. Offers slightly higher integrity and comfort."
 	icon_state = "hidearmor"
 	sellprice = VALUE_LEATHER_ARMOR_FUR
 
@@ -153,7 +153,7 @@
 /obj/item/clothing/armor/leather/jacket/artijacket
 	name = "artificer jacket"
 	icon_state = "artijacket"
-	desc = "A thick leather jacket adorned with fur and cog decals. The height of Heartfelt fashion."
+	desc = "A thick leather jacket adorned with fur and cog decals. The height of Baldurian fashion."
 
 /obj/item/clothing/armor/leather/jacket/artijacket/porter
 	name = "leather jacket"
@@ -315,7 +315,7 @@
 
 /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
 	name = "black leather coat"
-	desc = "A stylish coat worn by the Duelists of Valoria. Light and flexible, it doesn't impede the complex movements they are known for, Seems to be well-padded."
+	desc = "A stylish coat worn by the Duelists of Silvermoon. Light and flexible, it doesn't impede the complex movements they are known for, Seems to be well-padded."
 	icon_state = "bwleathercoat"
 	boobed = TRUE
 	armor = ARMOR_LEATHER_GOOD
@@ -337,7 +337,7 @@
 
 /obj/item/clothing/armor/leather/studded/psyaltrist
 	name = "cuir-bouilli armor"
-	desc = "Treated, water-boiled and composite-layered leather armor of fine Grenzelhoftian make."
+	desc = "Treated, water-boiled and composite-layered leather armor of fine Darkholdian make."
 	icon_state = "cuirbouilli"
 	item_state = "cuirbouilli"
 

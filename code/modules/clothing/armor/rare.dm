@@ -52,7 +52,7 @@
 	stand_speed_reduction = 1.2
 
 /obj/item/clothing/armor/rare/grenzelplate
-	name = "grenzelhoftian plate regalia"
+	name = "darkholdian plate regalia"
 	desc = "Engraved on this masterwork of humen metallurgy lies \"Thrice Fingered, Thrice Betrayed, Thrice Pronged\" alongside the symbol of Psydon in its neck guard. No one is certain what the third betrayal is meant to signify, yet Samantha's poetry is clear."
 	icon_state = "human_swordchest"
 	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_AASIMAR)
@@ -64,7 +64,7 @@
 	name = "kataphractoe scaleskin"
 	desc = "Steel scales woven into armor with miniscule threads of adamantine, \
 			ensuring the wearer optimal defence with forgiving breathability. \
-			The sigil of the Zaladin Kataphractoe is embezeled at the throat guard."
+			The sigil of the Zakharani Kataphractoe is embezeled at the throat guard."
 	icon_state = "human_spearchest"
 	allowed_race = list(SPEC_ID_HUMEN)
 	allowed_sex = list(MALE)

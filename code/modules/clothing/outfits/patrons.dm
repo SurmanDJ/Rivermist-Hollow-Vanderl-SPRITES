@@ -334,8 +334,8 @@
 			H.update_inv_head()
 
 /obj/item/clothing/head/helmet/heavy/volfplate
-	name = "volf-face helm"
-	desc = "A steel bascinet helmet with a volfish visor protecting the head, ears, eyes, nose and mouth."
+	name = "wolf-face helm"
+	desc = "A steel bascinet helmet with a wolfish visor protecting the head, ears, eyes, nose and mouth."
 	icon_state = "volfplate"
 	item_state = "volfplate"
 	adjustable = CAN_CADJUST
@@ -348,7 +348,7 @@
 	adjustable = CAN_CADJUST
 
 /obj/item/clothing/head/helmet/heavy/volfplate/puritan
-	name = "volfskulle bascinet"
+	name = "wolfskulle bascinet"
 	desc = "A steel bascinet helmet with a snarling visor that protects the entire head and face. It mimics the guise of a terrible nitebeast; intimidating to the levyman, inspiring to the hunter."
 
 

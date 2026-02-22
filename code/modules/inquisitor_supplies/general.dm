@@ -148,7 +148,7 @@
 	list_reagents = list(/datum/reagent/medicine/stronghealth = 30)
 
 /datum/inqports/supplies/psybuns
-	name = "The Grenzelhoftian Bakery Special"
+	name = "The Darkholdian Bakery Special"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/supplies/psybuns
 	marquescost = 6
 
@@ -298,7 +298,7 @@
 	marquescost = 10
 
 /datum/inqports/equipment/otavansatchel
-	name = "1 Grenzelhoftian Leather Satchel"
+	name = "1 Darkholdian Leather Satchel"
 	item_type = /obj/item/storage/backpack/satchel/otavan
 	marquescost = 8
 
@@ -378,7 +378,7 @@
 	detail_color = "#99b2b1"
 
 /datum/inqports/wardrobe/fencerset
-	name = "The Grenzelhoftian Fencer's Finest Set Crate"
+	name = "The Darkholdian Fencer's Finest Set Crate"
 	item_type = /obj/structure/closet/crate/chest/inqcrate/wardrobe/fencerset
 	marquescost = 8
 

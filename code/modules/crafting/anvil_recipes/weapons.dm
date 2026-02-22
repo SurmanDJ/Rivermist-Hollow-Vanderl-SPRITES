@@ -881,7 +881,7 @@
 
 /datum/anvil_recipe/weapons/steel/scimitar_steel
 	name = "Scimitar"
-	recipe_name = "a Zalad Sword"
+	recipe_name = "a Zakhara Sword"
 	appro_skill = /datum/skill/craft/weaponsmithing
 	created_item = /obj/item/weapon/sword/scimitar
 

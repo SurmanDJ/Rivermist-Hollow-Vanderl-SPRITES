@@ -808,8 +808,8 @@
 	SET_BASE_PIXEL(-32, 0)
 
 /obj/structure/fluff/statue/zizo
-	name = "statue of Zizo"
-	desc = "The Dark Lady. Even in stone, you feel unsettled looking at it."
+	name = "statue of an ancient goddess"
+	desc = "Though you don't know who this mught be, exactly, you still feel unsettled looking at it."
 	icon = 'icons/roguetown/misc/64x128.dmi'
 	icon_state = "zizo"
 	max_integrity = 100
@@ -890,19 +890,20 @@
 	var/mob/living/carbon/human/H = user
 	var/random_message = pick(
 	"You spin the globe!",
-	"You land on Rockhill!",
-	"You land on Vanderlin!",
-	"You land on Heartfelt!",
-	"You land on Zaladin!",
-	"You land on Grenzelhoft!",
-	"You land on Valoria!",
-	"You land on Rosewood!",
-	"You land on Wintermare!",
-	"You land on Deshret!",
-	"You land on Kingsfield",
-	"You land on Amber Hollow!",
-	"You land on the lands of Z!",
-	"You land on the Fog Islands!")
+	"You land on Waterdeep!",
+	"You land on Rivermist Hollow!",
+	"You land on Baldur's Gate!",
+	"You land on Neverwinter!",
+	"You land on Luskan!",
+	"You land on Silvermoon!",
+	"You land on Darkhold!",
+	"You land on Amn!",
+	"You land on the Dragon Coast!",
+	"You land on Elturgard!",
+	"You land on the Dalelands!",
+	"You land on the Moonshae Isles!",
+	"You land on the Zakhra!",
+	"You land on some uncharted land!")
 	to_chat(H, "<span class='notice'>[random_message]</span>")
 
 /obj/structure/fluff/statue/femalestatue/Initialize()
@@ -913,7 +914,7 @@
 
 /obj/structure/fluff/statue/scare
 	name = "scarecrow"
-	desc = "An effigy made to drive away zad and other pesky birds from a farm."
+	desc = "An effigy made to drive away crow and other pesky birds from a farm."
 	icon_state = "td"
 
 /obj/structure/fluff/statue/tdummy
@@ -1089,7 +1090,7 @@
 
 /obj/structure/fluff/psycross
 	name = "pantheon cross"
-	desc = "A towering monument to the Ten. Marriages are performed under its shadow."
+	desc = "A towering monument to the Gods. Marriages are performed under its shadow."
 	icon_state = "psycross"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	break_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
@@ -1147,14 +1148,14 @@
 	attacked_sound = list("sound/combat/hits/onmetal/metalimpact (1).ogg", "sound/combat/hits/onmetal/metalimpact (2).ogg")
 
 /obj/structure/fluff/psycross/astrata
-	name = "astratan cross"
+	name = "solar cross"
 	icon_state = "astratancross"
-	desc = "A towering monument to Astrata. Those who stand beneath it feel the warmth of her light."
+	desc = "A towering monument to the Sun."
 	break_sound = null
 	attacked_sound = list("sound/combat/hits/onmetal/metalimpact (1).ogg", "sound/combat/hits/onmetal/metalimpact (2).ogg")
 
 /obj/structure/fluff/psycross/astrata/gold
-	name = "astratan cross"
+	name = "solar cross"
 	icon_state = "astratancross_g"
 	break_sound = null
 	attacked_sound = list("sound/combat/hits/onmetal/metalimpact (1).ogg", "sound/combat/hits/onmetal/metalimpact (2).ogg")
@@ -1178,41 +1179,41 @@
 	dir = SOUTH
 
 /obj/structure/fluff/psycross/crafted/shrine/dendor_volf
-	name = "devouring shrine to Dendor"
-	desc = "The life force of a Volf has consecrated this holy place. \n First present two blood baits to craft a red sacrifice. \n Then offer an egg and two feathers to craft a crimson sacrifice."
+	name = "devouring shrine to the nature"
+	desc = "The life force of a Wolf has consecrated this holy place. \n First present two blood baits to craft a red sacrifice. \n Then offer an egg and two feathers to craft a crimson sacrifice."
 	icon_state = "shrine_dendor_volf"
 
 /obj/structure/fluff/psycross/crafted/shrine/dendor_saiga
-	name = "stinging shrine to Dendor"
+	name = "stinging shrine to the nature"
 	desc = "The life force of a Saiga has consecrated this holy place. \n First present a jacksberry, westleach leaf, and eel to craft a yellow sacrifice. \n Then offer a jacksberry, calendula flower, and fiber to craft a citrine sacrifice."
 	icon_state = "shrine_dendor_saiga"
 
 /obj/structure/fluff/psycross/crafted/shrine/dendor_gote
-	name = "growing shrine to Dendor"
+	name = "growing shrine to the nature"
 	desc = "The life force of a Gote has consecrated this holy place. \n First present a poppy flower, swampweed leaf, and silk grub to craft a green sacrifice. \n Then offer a euphorbia flower, swampweed leaf, and two thorns to craft a viridian sacrifice."
 	icon_state = "shrine_dendor_gote"
 
 /obj/structure/fluff/psycross/crafted/shrine/dendor_troll
-	name = "lording shrine to Dendor"
+	name = "lording shrine to the nature"
 	desc = "The life force of a Troll has consecrated this holy place. \n First present two troll horns to craft a purple sacrifice. \n Then offer a piece of strange meat and two sinews to craft an indigo sacrifice."
 	icon_state = "shrine_dendor_troll"
 
 /obj/structure/fluff/psycross/psycrucifix
-	name = "wooden psydonic crucifix"
-	desc = "A rarely seen symbol of absolute and devoted certainty, more common in Grenzelhoft: HE yet lives. HE yet breathes."
+	name = "wooden crucifix"
+	desc = "An ancient symbol of some old religion, it's original meaning lost to time."
 	icon_state = "psycruci"
 	max_integrity = 80
 
 /obj/structure/fluff/psycross/psycrucifix/stone
-	name = "stone psydonic crucifix"
-	desc = "Formed of stone, this great Psycross symbolises that HE is forever ENDURING. Considered a rare sight upon the Peaks."
+	name = "stone crucifix"
+	desc = "An ancient symbol of some old religion, it's original meaning lost to time. This one is made of stone."
 	icon_state = "psycruci_r"
 	max_integrity = 120
 
 /obj/structure/fluff/psycross/psycrucifix/silver
-	name = "silver psydonic crucifix"
+	name = "silver crucifix"
 	icon_state = "psycruci_s"
-	desc = "Constructed of Blessed Silver, this crucifix symbolises absolute faith in the ONE - For PSYDON WEEPS, for all mortal ilk. PSYDON WEEPS, for all who walk upon the soil. PSYDON WEEPS..."
+	desc = "An ancient symbol of some old religion, it's original meaning lost to time. This one is made of silver."
 	attacked_sound = list("sound/combat/hits/onmetal/metalimpact (1).ogg", "sound/combat/hits/onmetal/metalimpact (2).ogg")
 	max_integrity = 450
 

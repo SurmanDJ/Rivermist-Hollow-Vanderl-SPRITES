@@ -115,7 +115,7 @@
 	SPEC_ID_HALF_ORC,\
 )
 
-/// Species not considered discriminated against in Vanderlin. Used for nobility, etc.
+/// Species not considered discriminated against in Rivermist Hollow. Used for nobility, etc.
 #define RACES_PLAYER_NONDISCRIMINATED list(\
 	SPEC_ID_HUMEN,\
 	SPEC_ID_DWARF,\
@@ -146,7 +146,7 @@
 	SPEC_ID_HOLLOWKIN,\
 )
 
-/// Species who are non-exotic to Vanderlin. These are species from foreign lands with no local pull or uncommon species. Used in miscellaneous cases, when they would not be that role.
+/// Species who are non-exotic to Rivermist Hollow. These are species from foreign lands with no local pull or uncommon species. Used in miscellaneous cases, when they would not be that role.
 #define RACES_PLAYER_NONEXOTIC list(\
 	SPEC_ID_HUMEN,\
 	SPEC_ID_DWARF,\
@@ -166,34 +166,6 @@
 	SPEC_ID_MEDICATOR,\
 	SPEC_ID_HOLLOWKIN,\
 	SPEC_ID_HALF_ORC,\
-)
-
-/// Species that lack lux. Any who have no ties to divinity anymore, whether it be their creation story or otherwise taken from them (Hollow-kin)
-#define RACES_PLAYER_LUXLESS list(\
-	SPEC_ID_KOBOLD,\
-	SPEC_ID_HOLLOWKIN,\
-	SPEC_ID_RAKSHARI,\
-	SPEC_ID_HUMAN_SPACE,\
-	SPEC_ID_ROUSMAN,\
-	SPEC_ID_GOBLIN,\
-	SPEC_ID_ORC,\
-)
-
-/// Species who are affiliated with Grenzelhoft or Psydon specifically.
-#define RACES_PLAYER_GRENZ list(\
-	SPEC_ID_HUMEN,\
-	SPEC_ID_DWARF,\
-	SPEC_ID_AASIMAR,\
-)
-
-/// Species who are affiliated with Zaladin
-#define RACES_PLAYER_ZALADIN list(\
-	SPEC_ID_HUMEN,\
-	SPEC_ID_RAKSHARI,\
-	SPEC_ID_ELF,\
-	SPEC_ID_ELF_W,\
-	SPEC_ID_HALF_ELF,\
-	SPEC_ID_DWARF,\
 )
 
 /// Elves and Half-Elves
@@ -238,7 +210,7 @@
 	SPEC_ID_HOLLOWKIN,\
 )
 
-/// Vanderlin royalty
+/// Rivermist Hollow "royalty"
 #define RACES_PLAYER_ROYALTY list(\
 	SPEC_ID_HUMEN,\
 	SPEC_ID_HALF_ELF,\

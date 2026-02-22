@@ -14,14 +14,14 @@
 	id = SPEC_ID_HOLLOWKIN
 	desc = "Hollowkin are short lived, widely diverse, and have an insatiable hatred for dark elves. \
 	This hate stems from their long standing political neighbor and rival, \
-	the Zizonic dark-elven kingdoms of Subterra. \
+	the dark-elven kingdoms of Subterra. \
 	Dendor and Xylix stand as the 'patron-deities' of this species despite having no hand in their creation. \
 	Hollowkin view freedom to be of the upmost importance due to their dark-elven neighbors' tendencies toward slavery and their own history of subjugation. \
 	They also, often mistakenly, worship Dendor for the boon of their animalistic nature, perceiving him as the source of their traits, talents, and instinct. \
 	\n\n\
 	Their true origin is much darker. Hollowkin are the product of dark-elven ingenuity and fleshcrafting. \
 	Their creation is a simple story of malice and greed- of sapient animal hybrid slave homunculi, \
-	a person turned product which they could market and sell to other great houses of modern Zizonic Subterra. \
+	a person turned product which they could market and sell to other great houses of modern Subterra. \
 	The true nature of their existence is largely lost to the hollowkin through centuries. \
 	The dark elves still recall, of course, viciously mocking their creations from deep within their caves, \
 	declaring them but nothing more than animals or pets. \

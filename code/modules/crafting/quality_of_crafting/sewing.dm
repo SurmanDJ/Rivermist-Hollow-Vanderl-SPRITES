@@ -44,7 +44,7 @@
 	output = /obj/item/clothing/shoes/tribal
 
 /datum/repeatable_crafting_recipe/sewing/hide/volfhelm
-	name = "volf helm"
+	name = "wolf helm"
 	requirements = list(
 		/obj/item/natural/hide = 3,
 		/obj/item/natural/fur = 2,
@@ -53,7 +53,7 @@
 	sellprice = 20
 
 /datum/repeatable_crafting_recipe/sewing/hide/volfmantle
-	name = "volf mantle"
+	name = "wolf mantle"
 	attacked_atom = /obj/item/natural/fur/volf
 	requirements = list(
 		/obj/item/natural/hide = 1,
@@ -1160,7 +1160,7 @@
 /*.............. recipes requiring skill 5 ..............*/
 
 /datum/repeatable_crafting_recipe/sewing/grenzel_shirt
-	name = "Grenzelhoftian hip shirt"
+	name = "Darkholdian hip shirt"
 	output = /obj/item/clothing/shirt/grenzelhoft
 	requirements = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/silk = 2,
@@ -1169,7 +1169,7 @@
 	category = "Shirt"
 
 /datum/repeatable_crafting_recipe/sewing/grenzel_pants
-	name = "Grenzelhoftian paumpers"
+	name = "Darkholdian paumpers"
 	output = /obj/item/clothing/pants/grenzelpants
 	requirements = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/silk = 1,

@@ -393,8 +393,8 @@
 	tastes = list("bread" = 1)
 
 /obj/item/reagent_containers/food/snacks/grenzelbun
-	name = "grenzelbun"
-	desc = "The classic wiener in a bun, a staple food of Grenzelhoft cuisine."
+	name = "wienerbun"
+	desc = "The classic wiener in a bun, a staple food of Darkhold cuisine."
 	icon_state = "grenzbun"
 	base_icon_state = "grenzbun"
 	bitesize = 5
@@ -422,7 +422,7 @@
 
 /obj/item/reagent_containers/food/snacks/cheesebun
 	name = "cheese bun"
-	desc = "A treat from the Grenzelhoft kitchen."
+	desc = "A treat from the Darkhold kitchen."
 	icon_state = "cheesebun"
 	base_icon_state = "cheesebun"
 	biting = TRUE
@@ -548,7 +548,7 @@
 
 /obj/item/reagent_containers/food/snacks/fritter
 	name = "apple fritter"
-	desc = "Having deep origins in the culture of Vanderlin, the humble fritter is perhaps the most patriotic pastry out there, long may it reign!"
+	desc = "Having deep origins in the culture of Rivermist Hollow, the humble fritter is perhaps the most patriotic pastry out there, long may it reign!"
 	icon_state = "applefritter"
 	dropshrink = 0.8
 	tastes = list("crispy butterdough" = 1, "sweet apple bits" = 1)
@@ -595,7 +595,7 @@
 	nutrition = CAKEBASE_NUTRITION + RAISIN_NUTRITION
 
 /obj/item/reagent_containers/food/snacks/zybcake
-	name = "zaladin cake base"
+	name = "zakhrani cake base"
 	desc = "With this sweet thing, you shall make them sing. Lacking spider-honey glazing."
 	icon_state = "cake_filled"
 	dropshrink = 0.8
@@ -605,9 +605,9 @@
 	foodtype = GRAIN | DAIRY | FRUIT | RAW | EGG
 	nutrition = CAKEBASE_NUTRITION + FRUIT_NUTRITION
 
-// -------------- SPIDER-HONEY CAKE (Zaladin) -----------------
+// -------------- SPIDER-HONEY CAKE (Zakharani) -----------------
 /obj/item/reagent_containers/food/snacks/zybcake_ready
-	name = "unbaked zaladin cake"
+	name = "unbaked zakhrani cake"
 	icon_state = "honeycakeuncook"
 	dropshrink = 0.8
 	slices_num = 0
@@ -620,8 +620,8 @@
 	nutrition = CAKEBASE_NUTRITION + FRUIT_NUTRITION + HONEY_NUTRITION
 
 /obj/item/reagent_containers/food/snacks/zybcake_cooked
-	name = "zalad cake"
-	desc = "Cake glazed with honey, in the famous Zaladin fashion, a delicious sweet treat. Said to be very hard to poison, perhaps the honey counteracting such malicious concotions."
+	name = "zakhra cake"
+	desc = "Cake glazed with honey, in the famous Zakharani fashion, a delicious sweet treat. Said to be very hard to poison, perhaps the honey counteracting such malicious concotions."
 	icon_state = "honeycake"
 	dropshrink = 0.8
 	slices_num = 6
@@ -638,7 +638,7 @@
 	nutrition = (CAKEBASE_NUTRITION + FRUIT_NUTRITION + HONEY_NUTRITION) * COOK_MOD
 
 /obj/item/reagent_containers/food/snacks/zybcake_slice
-	name = "zalad cake slice"
+	name = "zakhra cake slice"
 	icon_state = "hcake_slice"
 	base_icon_state = "hcake_slice"
 	dropshrink = 0.8
@@ -793,7 +793,7 @@
 
 /obj/item/reagent_containers/food/snacks/crimsoncake_cooked
 	name = "crimson pine cake"
-	desc = "A fusion of Crimson Elf and Grenzelhoftian cuisines, the cake originates from the Valorian Republics. Rumor has it that one of the many casus belli in the Republics was based upon a disagreement on the cakes exact recipe."
+	desc = "A fusion of the nothern, the cake originates from Luskan. Rumor has it that one of the major conflicts in the city was based upon a disagreement on the cakes exact recipe."
 	icon_state = "crimsonpinecake"
 	slices_num = 6
 	slice_path = /obj/item/reagent_containers/food/snacks/crimsoncake_slice
@@ -895,7 +895,7 @@
 
 /obj/item/reagent_containers/food/snacks/scone
 	name = "plain scone"
-	desc = "A delightfully fancy treat adored by the upper echelons of Kingsfield."
+	desc = "A delightfully fancy treat adored by the upper echelons of Neverwinter."
 	icon_state = "cookedscone"
 	tastes = list("crumbly butterdough" = 1, "sweet" = 1)
 	rotprocess = SHELFLIFE_LONG
@@ -917,7 +917,7 @@
 
 /obj/item/reagent_containers/food/snacks/scone_tangerine
 	name = "tangerine scone"
-	desc = "A delightfully fancy treat adored by the upper echelons of Kingsfield, complete with tangerine frosting."
+	desc = "A delightfully fancy treat adored by the upper echelons of Neverwinter, complete with tangerine frosting."
 	icon_state = "cookedtangerinescone"
 	tastes = list("crumbly butterdough" = 1, "sweet" = 1, "tangerine" = 1)
 	eat_effect = /datum/status_effect/buff/foodbuff
@@ -938,7 +938,7 @@
 
 /obj/item/reagent_containers/food/snacks/scone_plum
 	name = "plum scone"
-	desc = "A delightfully fancy treat adored by the upper echelons of Kingsfield, complete with plum filling."
+	desc = "A delightfully fancy treat adored by the upper echelons of Neverwinter, complete with plum filling."
 	icon_state = "cookedplumscone"
 	tastes = list("crumbly butterdough" = 1, "sweet" = 1, "plum" = 1)
 	eat_effect = /datum/status_effect/buff/foodbuff

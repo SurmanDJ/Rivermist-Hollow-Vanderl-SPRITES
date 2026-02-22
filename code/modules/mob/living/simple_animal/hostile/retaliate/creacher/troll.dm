@@ -214,7 +214,7 @@
 	base_intents = list(/datum/intent/simple/troll_axe)
 	attack_sound = list('sound/combat/wooshes/blunt/wooshhuge (1).ogg','sound/combat/wooshes/blunt/wooshhuge (2).ogg','sound/combat/wooshes/blunt/wooshhuge (3).ogg')
 	loot = list(/obj/item/weapon/axe/iron/troll)
-	deathmessage = "As the creacher tumbles, it falls upon its axe, snapping the handle."
+	deathmessage = "As the beast tumbles, it falls upon its axe, snapping the handle."
 
 /datum/intent/simple/troll_axe
 	name = "troll axe"

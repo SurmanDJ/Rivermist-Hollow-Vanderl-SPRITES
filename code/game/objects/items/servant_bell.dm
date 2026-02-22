@@ -27,7 +27,7 @@
 	var/noble_cooldown = 1 MINUTES
 	COOLDOWN_DECLARE(nearby_ring_bell)
 	var/nearby_cooldown = 5 SECONDS
-	var/hear_distance = 40 // just a little shorter than Vanderlin's manor
+	var/hear_distance = 40 // just a little shorter than Rivermist Hollow's manor
 
 /obj/item/servant_bell/Initialize(mapload)
 	. = ..()

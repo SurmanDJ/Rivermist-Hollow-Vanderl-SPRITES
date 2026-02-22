@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	item_path = /obj/item/clothing/cloak/half
 
 /datum/loadout_item/volfmantle
-	name = "Volf Mantle"
+	name = "Wolf Mantle"
 	item_path = /obj/item/clothing/cloak/volfmantle
 
 /datum/loadout_item/sash

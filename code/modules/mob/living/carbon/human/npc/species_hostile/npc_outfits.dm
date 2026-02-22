@@ -73,7 +73,7 @@
 			l_hand = /obj/item/weapon/knife/copper
 			r_hand = /obj/item/weapon/knife/copper
 		if(5)
-			// A valorian dueslist perished and got their stuff stolen
+			// A Luskanian dueslist perished and got their stuff stolen
 			head = /obj/item/clothing/head/leather/duelhat
 			armor = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
 			l_hand = /obj/item/weapon/sword/rapier

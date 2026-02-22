@@ -317,7 +317,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	switch(language)
 		if("Old Psydonic", "Psydonic")
 			return strings("accents/grenz_replacement.json", "grenz")
-		if("Zalad")
+		if("Zakhra")
 			return strings("accents/zalad_replacement.json", "arabic")
 		if("Imperial")
 			return
@@ -342,7 +342,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 			return strings("accents/triton_replacement.json", "triton")
 		if("Pirate")
 			return strings("accents/pirate_replacement.json", "pirate")
-		if("Zizo Chant")
+		if("Undead Chant")
 			return
 	return
 
@@ -430,11 +430,9 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 				/datum/language/hellspeak = "Infernal",
 				/datum/language/orcish = "Orcish",
 				/datum/language/celestial = "Celestial",
-				/datum/language/zalad = "Zalad",
 				/datum/language/deepspeak = "Deepspeak",
-				/datum/language/oldpsydonic = "Old Psydonic",
-				/datum/language/newpsydonic = "Psydonic",
-				/datum/language/undead = "Zizo Chant"
+				/datum/language/zalad = "Zakhara",
+				/datum/language/undead = "Undead Chant"
 			)
 
 			if (language in language_map)

@@ -409,27 +409,19 @@ GLOBAL_LIST_INIT(badomens, list())
 	GLOB.badomens -= input
 
 /datum/round_event_control/proc/badomen(eventreason)
-	var/used = "Zizo."
+	var/used = "The dead churn and dig at their graves."
 	var/title = "Bad Omen"
 	var/sound = 'sound/misc/evilevent.ogg'
 	switch(eventreason)
 		if(OMEN_ROUNDSTART)
 			used = pick( \
-				"Zizo.", \
-				"Unholy invocations channel the will of Her.", \
 				"Forbidden rituals cause echoes through the plane.", \
-				"Whispers of the Dark Lady in the shadows.", \
-				"The servants of Zizo undermine the Ten.", \
-				"Her influence becomes more tangible...", \
+				"Whispers of the Dark Evils in the shadows.", \
 				"A foul curse temporarily takes the land.", \
 				"The dead churn and dig at their graves.", \
 			)
 			title = pick( \
-				"Zizo Sneers", \
-				"The Dark Lady Watches", \
-				"Zizo's Attention", \
-				"She Peers", \
-				"Zizo Smirks", \
+				"The Dark Watches", \
 			)
 			sound = 'sound/misc/gods/zizo_omen.ogg'
 		if(OMEN_NOLORD)

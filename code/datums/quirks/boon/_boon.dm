@@ -77,8 +77,6 @@
 		/datum/language/elvish,
 		/datum/language/dwarvish,
 		/datum/language/deepspeak,
-		/datum/language/zalad,
-		/datum/language/newpsydonic,
 		/datum/language/hellspeak,
 		/datum/language/orcish,
 	)

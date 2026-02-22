@@ -5,19 +5,19 @@
 	height = 9
 
 /datum/map_template/vanderlin_apartment
-	name = "Vanderlin Basic Apartment"
+	name = "Rivermist Hollow Basic Apartment"
 	mappath = "_maps/map_files/vanderlin/house_templates/apartment1.dmm"
 	width = 7
 	height = 7
 
 /datum/map_template/vanderlin_apartment_two
-	name = "Vanderlin Basic Apartment Two"
+	name = "Rivermist Hollow Basic Apartment Two"
 	mappath = "_maps/map_files/vanderlin/house_templates/apartment2.dmm"
 	width = 6
 	height = 10
 
 /datum/map_template/vanderlin_apartment_three
-	name = "Vanderlin Basic Apartment Three"
+	name = "Rivermist Hollow Basic Apartment Three"
 	mappath = "_maps/map_files/vanderlin/house_templates/apartment3.dmm"
 	width = 10
 	height = 5

@@ -306,7 +306,7 @@
 		held_items[I] = list()
 		held_items[I]["NAME"] = I.name
 		held_items[I]["PRICE"] = 100
-	var/obj/I = new /obj/item/key/houses/house7(src) ///house 7 doesn't exist on Vanderlin. need to make map specific peddlers if we want to continue doing this.
+	var/obj/I = new /obj/item/key/houses/house7(src) ///house 7 doesn't exist on Vanderlin(the map). need to make map specific peddlers if we want to continue doing this.
 	held_items[I] = list()
 	held_items[I]["NAME"] = I.name
 	held_items[I]["PRICE"] = 120

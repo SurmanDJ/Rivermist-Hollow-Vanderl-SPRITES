@@ -23,7 +23,7 @@
 
 /obj/item/reagent_containers/food/snacks/cooked/frysteak_tatos
 	name = "frysteak and potato"
-	desc = "A slab of beastflesh, fried to a perfect medium-rare. Served with potatos, this will nourish even a starving volf."
+	desc = "A slab of beastflesh, fried to a perfect medium-rare. Served with potatos, this will nourish even a starving wolf."
 	icon_state = "potatosteak"
 	base_icon_state = "potatosteak"
 	faretype = FARE_NEUTRAL
@@ -135,7 +135,7 @@
 	foodtype = EGG
 
 /obj/item/reagent_containers/food/snacks/cooked/valorian_omlette
-	name = "valorian omelette"
+	name = "Luskanian omelette"
 	desc = "Fried cackleberries on a bed of half-melted cheese, a dish from distant lands."
 	tastes = list("fried cackleberries" = 1, "cheese" = 1)
 	icon_state = "omelette"
@@ -311,7 +311,7 @@
 /*	.............   Sausages on sticks   ................ */
 /obj/item/reagent_containers/food/snacks/cooked/sausage_sticked
 	name = "sausage onna stick"
-	desc = "A sausage skewered for convenience and cleanliness, classic Grenzelhoftian street food."
+	desc = "A sausage skewered for convenience and cleanliness, classic Darkholdian street food."
 	nutrition = COOKED_SAUSAGE_NUTRITION
 	icon_state = "sausageonastick"
 	tastes = list("savory sausage" = 2)
@@ -333,7 +333,7 @@
 
 /obj/item/reagent_containers/food/snacks/cooked/griddledog
 	name = "griddledog"
-	desc = "A classic piece of Grenzelhoftian street food, the fried butterdough is a Vanderlinian adulteration."
+	desc = "A classic piece of Darkholdian street food, the fried butterdough is a Rivermistian adulteration."
 	nutrition = COOKED_SAUSAGE_NUTRITION + BUTTERDOUGHSLICE_NUTRITION * COOK_MOD
 	icon_state = "griddledog"
 	tastes = list("savory sausage" = 2, "crispy butterdough" = 1)
