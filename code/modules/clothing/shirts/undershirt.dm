@@ -58,8 +58,8 @@
 	salvage_result = /obj/item/natural/silk
 
 /obj/item/clothing/shirt/undershirt/artificer
-	name = "heartfeltian suit"
-	desc = "Typical fashion of the best Heartfelt engineers."
+	name = "artificer suit"
+	desc = "Typical fashion of the best engineers."
 	icon_state = "artishirt"
 
 /obj/item/clothing/shirt/undershirt/lowcut

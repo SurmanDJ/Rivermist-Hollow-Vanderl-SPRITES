@@ -721,8 +721,6 @@ GLOBAL_LIST_INIT(natural_precursor_registry, list())
 	init_types = list(
 		/obj/item/natural/worms/leech,
 		/obj/item/natural/worms/leech/parasite,
-		/obj/item/natural/worms/leech/propaganda,
-		/obj/item/natural/worms/leech/abyssoid,
 	)
 
 /datum/natural_precursor/dendor_essence

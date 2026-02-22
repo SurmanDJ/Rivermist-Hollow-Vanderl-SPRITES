@@ -1,7 +1,7 @@
 // Once a blessing Dendor's champions, now a curse suffering endless hunger from Graggar's corruption.
 
 /datum/antagonist/werewolf
-	name = "Werevolf"
+	name = "Werewolf"
 	roundend_category = "Werewolves"
 	antagpanel_category = "Werewolf"
 	job_rank = ROLE_WEREWOLF
@@ -18,7 +18,7 @@
 	/// How much rage decays by while transformed
 	var/transformed_rage_decay = 5
 
-	var/wolfname = "Werevolf"
+	var/wolfname = "Werewolf"
 	var/list/datum/action/werewolf_form_powers = list(
 		/datum/action/cooldown/spell/undirected/howl, \
 		/datum/action/cooldown/spell/undirected/claws, \
@@ -39,7 +39,7 @@
 	var/forced_transform = FALSE
 
 /datum/antagonist/werewolf/lesser
-	name = "Lesser Werevolf"
+	name = "Lesser Werewolf"
 	antag_hud_type = ANTAG_HUD_WEREWOLF
 	antag_hud_name = "werewolf_lesser"
 	increase_votepwr = FALSE
@@ -187,7 +187,7 @@
 
 /obj/item/clothing/armor/regenerating/skin/werewolf_skin
 	slot_flags = null
-	name = "werevolf's skin"
+	name = "werewolf's skin"
 	desc = ""
 	icon_state = null
 	body_parts_covered = FULL_BODY
@@ -216,7 +216,7 @@
 	item_damage_type = "slash"
 
 /obj/item/weapon/werewolf_claw
-	name = "verevolf claw"
+	name = "verewolf claw"
 	desc = ""
 	icon = 'icons/roguetown/weapons/32/special.dmi'
 	item_state = null

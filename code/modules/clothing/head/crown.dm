@@ -13,12 +13,12 @@
 
 /obj/item/clothing/head/crown/circlet/golddiadem
 	name = "gold diadem"
-	desc = "A luxurious diadem forged out of gold. Often associated with the nobility of the early Grenzelhoftian Empire."
+	desc = "A luxurious diadem forged out of gold. Often associated with the nobility of Darkhold."
 	icon_state = "diadem_g"
 
 /obj/item/clothing/head/crown/circlet/silverdiadem
 	name = "silver diadem"
-	desc = "A luxurious diadem forged out of silver. Often associated with the nobility of the early Grenzelhoftian Empire "
+	desc = "A luxurious diadem forged out of silver. Often associated with the nobility of Darkhold."
 	icon_state = "diadem_s"
 	sellprice = VALUE_SILVER_ITEM
 
@@ -28,12 +28,12 @@
 
 /obj/item/clothing/head/crown/circlet/goldheaddress
 	name = "zenarii headdress"
-	desc = "A fancy headdress made out of zenarii. Light and fashionable, it's worn by the noble ladies of The Zaladin Dynasty."
+	desc = "A fancy headdress made out of zenarii. Light and fashionable, it's worn by the noble ladies of The Zakharani Dynasty."
 	icon_state = "headdress_g"
 
 /obj/item/clothing/head/crown/circlet/silverheaddress
 	name = "ziliquae headdress"
-	desc = "A fancy headdress made out of ziliquae. Light and fashionable, it's worn by the noble ladies of The Zaladin Dynasty."
+	desc = "A fancy headdress made out of ziliquae. Light and fashionable, it's worn by the noble ladies of The Zakharani Dynasty."
 	icon_state = "headdress_s"
 	sellprice = VALUE_SILVER_ITEM
 
@@ -100,7 +100,7 @@
 	sellprice = VALUE_GOLD_ITEM
 
 /obj/item/clothing/head/crown/serpcrown
-	name = "crown of Vanderlin"
+	name = "crown of Dusk Spire"
 	desc = "Heavy is the weight of the crown, and even heavier the responsibility it infers to its wearer."
 	icon_state = "serpcrown"
 	sellprice = VALUE_EXTREME
@@ -123,7 +123,7 @@
 
 /obj/item/clothing/head/crown/serpcrown/surplus
 	name = "crown"
-	desc = "A replacement for the Crown of Vanderlin, every bit as valid as proof of sovereignity as the original."
+	desc = "A replacement for the Crown of Dusk Spire, every bit as valid as proof of sovereignity as the original."
 	icon_state = "serpcrowno"
 	sellprice = VALUE_GOLD_ITEM
 

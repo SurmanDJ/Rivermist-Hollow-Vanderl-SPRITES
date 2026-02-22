@@ -1224,7 +1224,7 @@
 	bookfile = "tales2.json"
 
 /obj/item/book/tales3
-	name = "Myths & Legends of Rockhill & Beyond Volume I"
+	name = "Myths & Legends of Waterdeep & Beyond Volume I"
 	desc = "Arbalius The Younger"
 	icon_state ="book3_0"
 	base_icon_state = "book3"
@@ -1658,7 +1658,7 @@ ____________End of Example*/
 
 /obj/item/book/psybibleplayerbook
 	name = "Psybible"
-	desc = "An old tome, authored by Father Ambrose of Grenzelhoft."
+	desc = "An old tome, authored by Father Ambrose of Darkhold."
 	bookfile = "PsyBible.json"
 	random_cover = TRUE
 

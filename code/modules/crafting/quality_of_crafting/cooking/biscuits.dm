@@ -90,7 +90,7 @@
 
 
 /datum/repeatable_crafting_recipe/cooking/grenzelbun
-	name = "Grenzel Bun"
+	name = "Darkhold Bun"
 
 	requirements = list(
 		/obj/item/reagent_containers/food/snacks/cooked/sausage = 1,

@@ -344,31 +344,31 @@
 /obj/structure/table/map/enigma
 	icon = 'icons/roguetown/misc/tables.dmi'
 	icon_state = "map_enigma"
-	desc = "A table displaying a map of Enigma."
+	desc = "A table displaying a map of the Sword Coast."
 
 /obj/structure/table/map/vanderlin
 	icon_state = "map_vanderlin"
-	desc = "A table displaying a map of Vanderlin and Daftmarsh."
+	desc = "A table displaying a map of Murann and surroundings."
 
 /obj/structure/table/map/rosewood
 	icon_state = "map_rosewood"
-	desc = "A table displaying a map of Rosewood and White Palace Pass."
+	desc = "A table displaying a map of Neverwinter."
 
 /obj/structure/table/map/deshret
 	icon_state = "map_deshret"
-	desc = "A table displaying a map of Deshret and surrounding deserts."
+	desc = "A table displaying a map of Giant's plain."
 
 /obj/structure/table/map/amber
 	icon_state = "map_amber"
-	desc = "A table displaying a map of Amber Hollow. Regardless of serene appearance, the threat of Zizo's Claw underneath never lessens."
+	desc = "A table displaying a map of Darkhold."
 
 /obj/structure/table/map/kingsfield
 	icon_state = "map_kingsfield"
-	desc = "A table displaying a map of the capital of Kingsfield."
+	desc = "A table displaying a map of Baldur's Gate."
 
 /obj/structure/table/map/baotha
 	icon_state = "map_baotha"
-	desc = "A table displaying the lands surrounding the fallen kingdom of Azuria, doomed to ash."
+	desc = "A table displaying Waterdeep and the surrounding lands."
 
 /obj/structure/table/wood/fine
 	icon = 'icons/roguetown/misc/tables.dmi'

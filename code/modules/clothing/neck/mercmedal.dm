@@ -15,7 +15,7 @@
 	icon_state = "goldchain"
 
 /obj/item/clothing/neck/mercmedal/grenzelhoft
-	name = "grenzelhoft gryphon of valor"
+	name = "darkhold gryphon of valor"
 	desc = "The fearsome beast of the Black Empire's heraldry, cast in brass. These service awards have lost much of their value since mercenaries started receiving them."
 	icon_state = "gryphon"
 
@@ -45,8 +45,8 @@
 	icon_state = "spider"
 
 /obj/item/clothing/neck/mercmedal/duelist
-	name = "valorian blade pendant"
-	desc = "A silver pendant shaped as a rapier lined with gems, Worn by Valorian Duelists to honor their mastery of the blade and unyielding pursuit of glory in combat."
+	name = "Luskanian blade pendant"
+	desc = "A silver pendant shaped as a rapier lined with gems, Worn by Luskanian Duelists to honor their mastery of the blade and unyielding pursuit of glory in combat."
 	icon_state = "duelistcharm"
 
 /obj/item/clothing/neck/mercmedal/abyssal

@@ -313,7 +313,7 @@
 
 /datum/anvil_recipe/armor/steel/skullmet_helm
 	name = "Skullmet helm (+Bone X2)"
-	recipe_name = "A creacher skull covering a steel helmet."
+	recipe_name = "An animal skull covering a steel helmet."
 	additional_items = list(/obj/item/alch/bone, /obj/item/alch/bone)
 	created_item = /obj/item/clothing/head/helmet/medium/decorated/skullmet
 	craftdiff = 3
@@ -443,9 +443,9 @@
 	created_item = /obj/item/clothing/head/helmet/skullcap
 
 /datum/anvil_recipe/armor/iron/grenzelhoft_skullcap
-	name = "Grenzelhoft Plume helmet"
+	name = "Darkhold Plume helmet"
 	additional_items = list(/obj/item/natural/feather)
-	recipe_name = "a grenzelhoft plume helmet"
+	recipe_name = "a darkhold plume helmet"
 	created_item = /obj/item/clothing/head/helmet/skullcap/grenzelhoft
 
 /datum/anvil_recipe/armor/iron/splint
@@ -632,8 +632,8 @@
 	craftdiff = 3
 
 /datum/anvil_recipe/armor/steel/surcoat/heartfelt
-	name = "Armored Heartfelt Surcoat (+Bar)"
-	recipe_name = "an Armored Heartfeltian Surcoat"
+	name = "Armored Baldurian Surcoat (+Bar)"
+	recipe_name = "an Armored Baldurian Surcoat"
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/armor/medium/surcoat/heartfelt
 	craftdiff = 4
@@ -716,7 +716,7 @@
 
 /datum/anvil_recipe/armor/steel/helmetsall_zalad
 	name = "Kulah Khud"
-	recipe_name = "a Zalad Sallet"
+	recipe_name = "a Zakhara Sallet"
 	created_item = /obj/item/clothing/head/helmet/sallet/zalad
 
 /datum/anvil_recipe/armor/steel/bascinet
@@ -1109,7 +1109,7 @@
 
 // --------- BLACKSTEEL -----------
 /datum/anvil_recipe/armor/blacksteel/grenzel_cuirass
-	name = "Grenzelhoft Cuirass (+Steel Bar)"
+	name = "Darkhold Cuirass (+Steel Bar)"
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/armor/cuirass/grenzelhoft
 
@@ -1324,13 +1324,13 @@
 	craftdiff = 3
 
 /datum/anvil_recipe/armor/volfplate
-	name = "volf-face helm"
+	name = "wolf-face helm"
 	req_bar = /obj/item/ingot/steel
 	created_item = /obj/item/clothing/head/helmet/heavy/volfplate
 	craftdiff = 3
 
 /datum/anvil_recipe/armor/volfplate_puritan
-	name = "volfskulle bascinet"
+	name = "wolfskulle bascinet"
 	req_bar = /obj/item/ingot/steel
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/helmet/heavy/volfplate/puritan

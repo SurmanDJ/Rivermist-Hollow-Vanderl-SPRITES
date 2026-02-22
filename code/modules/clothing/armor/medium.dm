@@ -53,9 +53,9 @@
 		pic.color = get_detail_color()
 	. += pic
 
-//................ Armored surcoat (Heartfelt) ............... //
+//................ Armored surcoat (Baldurian) ............... //
 /obj/item/clothing/armor/medium/surcoat/heartfelt
-	desc = "A lordly protection in Heartfelt colors. Masterfully crafted coat of plates, for important nobility."
+	desc = "A lordly protection in Baldurian colors. Masterfully crafted coat of plates, for important nobility."
 	color = CLOTHING_BLOOD_RED
 	sellprice = VALUE_SNOWFLAKE_STEEL+BONUS_VALUE_SMALL
 

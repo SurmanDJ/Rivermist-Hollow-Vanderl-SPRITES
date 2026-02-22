@@ -1,7 +1,7 @@
 /datum/action/cooldown/spell/undirected/call_bird
 	name = "Call Messenger Bird"
 	desc = "Calls for your messenger bird."
-	button_icon_state = "zad"
+	button_icon_state = "crow"
 	sound = null
 
 	cooldown_time = 30 SECONDS
@@ -26,7 +26,7 @@
 	name = "Call Imperial Messenger"
 	destinations = list(
 		"My family" = "their family",
-		"Grenzelhoft Imperiate" = "the Grenzelhoft Imperiate",
+		"Darkhold Imperiate" = "the Darkhold Imperiate",
 		"Cancel" = "cancel",
 	)
 

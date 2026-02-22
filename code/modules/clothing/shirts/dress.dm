@@ -76,7 +76,7 @@
 
 /obj/item/clothing/shirt/dress/stewarddress
 	name = "steward's dress"
-	desc = "A heartfeltian-styled black dress with shining bronze buttons."
+	desc = "A baldurian-styled black dress with shining bronze buttons."
 	icon = 'icons/roguetown/clothing/special/steward.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/steward.dmi'
 	icon_state = "stewarddress"

@@ -1,7 +1,7 @@
 
 /obj/item/clothing/cloak/psydontabard
 	name = "inquisitorial tabard"
-	desc = "A long vest bearing Psydonian symbology"
+	desc = "A long vest bearing obscure symbology"
 	color = null
 	icon_state = "psydontabard"
 	item_state = "psydontabard"
@@ -14,7 +14,7 @@
 	var/open_wear = FALSE
 
 /obj/item/clothing/cloak/psydontabard/alt
-	name = "open grenzelhoftian tabard"
+	name = "open darkholdian tabard"
 	desc = "Used by more radical followers of the Inquisition"
 	body_parts_covered = null
 	icon_state = "psydontabardalt"
@@ -25,7 +25,7 @@
 	switch(open_wear)
 		if(FALSE)
 			name = "inquisitorial tabard"
-			desc = "A long vest bearing Psydonian symbology"
+			desc = "A long vest bearing obscure symbology"
 			body_parts_covered = null
 			icon_state = "psydontabardalt"
 			item_state = "psydontabardalt"
@@ -33,7 +33,7 @@
 			to_chat(usr, span_warning("Now wearing ENDURINGLY!"))
 		if(TRUE)
 			name = "inquisitorial tabard"
-			desc = "A long vest bearing Psydonian symbology"
+			desc = "A long vest bearing obscure symbology"
 			body_parts_covered = CHEST|GROIN
 			icon_state = "psydontabard"
 			item_state = "psydontabard"
@@ -49,7 +49,7 @@
 
 /obj/item/clothing/cloak/ordinatorcape
 	name = "ordinator cape"
-	desc = "A flowing red cape complete with an ornately patterned steel shoulderguard. Made to last. Made to ENDURE. Made to LIVE."
+	desc = "A flowing red cape complete with an ornately patterned steel shoulderguard."
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	icon_state = "ordinatorcape"
@@ -64,7 +64,7 @@
 
 /obj/item/clothing/cloak/absolutionistrobe
 	name = "absolver's robe"
-	desc = "Absolve them of their pain. Absolve them of their longing. Live, as PSYDON lives."
+	desc = "Absolve them of their pain. Absolve them of their longing."
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	icon_state = "absolutionistrobe"

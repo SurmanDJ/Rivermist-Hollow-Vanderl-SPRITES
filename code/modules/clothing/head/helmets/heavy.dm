@@ -36,7 +36,7 @@
 	block2add = FOV_BEHIND
 
 /obj/item/clothing/head/helmet/heavy/psydonhelm
-	name ="grenzelhoftian armet"
+	name ="darkholdian armet"
 	desc = "Headwear commonly worn by Templars in service to the Oratorium Throni Vacui. PSYDON Endures."
 	icon_state = "psydonarmet"
 	item_state = "psydonarmet"
@@ -226,14 +226,14 @@
 //............... Temple heavy helmets ......................//
 //............... Astrata Helmet ............... //
 /obj/item/clothing/head/helmet/heavy/necked/astrata
-	name = "astrata helmet"
-	desc = "A great helmet decorated with a golden sigil of the solar order and a maille neck cover. The dependable companion of many holy warriors of Astrata."
+	name = "sun helmet"
+	desc = "A great helmet decorated with a golden sigil of the solar order and a maille neck cover.."
 	icon_state = "astratahelm"
 	item_weight = 6 * GOLD_MULITPLIER
 
 //............... Noc Helmet ............... //
 /obj/item/clothing/head/helmet/heavy/necked/noc
-	name = "noc helmet"
+	name = "night helmet"
 	desc = "A sleek and rounded heavy helmet with a maille neck cover. Its unique craft is said to allow holy warriors of Noc additional insight before battle."
 	icon_state = "nochelm"
 	item_weight = 6 * SILVER_MULTIPLIER
@@ -245,14 +245,14 @@
 
 //............... Necra Helmet ............... //
 /obj/item/clothing/head/helmet/heavy/necked/necra
-	name = "necra helmet"
-	desc = "A reinforced helmet shaped into the visage of a skull with a maille neck cover under the cloth. A symbol of authority for the battle servants of the Undermaiden."
+	name = "dark helmet"
+	desc = "A reinforced helmet shaped into the visage of a skull with a maille neck cover under the cloth.."
 	icon_state = "necrahelm"
 	item_weight = 6 * IRON_MULTIPLIER
 
 //............... Dendor Helmet ............... //	This one seems a bit out of place
 /obj/item/clothing/head/helmet/heavy/necked/dendorhelm
-	name = "dendor helmet"
+	name = "beastly helmet"
 	desc = "A great helmet with twisted metalwork that imitates the twisting of bark, or the horns of a beast."
 	icon_state = "dendorhelm"
 	prevent_crits = ALL_EXCEPT_BLUNT
@@ -260,8 +260,8 @@
 
 //............... Eora Helmet ............... //
 /obj/item/clothing/head/helmet/sallet/eoran
-	name = "eora helmet"
-	desc = "A standard helmet forged in the style typical of Eoran worshippers, a simple yet practical protective piece of equipment. Upon it lays several laurels of flowers and other colorful ornaments, followed by several symbols and standards of the user's chapter, accomplishments or even punishment"
+	name = "alluring helmet"
+	desc = "A simple yet practical protective piece of equipment. Upon it lays several laurels of flowers and other colorful ornaments, followed by several symbols and standards of the user's chapter, accomplishments or even punishment"
 	icon_state = "eorahelm"
 	item_state = "eorahelm"
 	item_weight = 5 * IRON_MULTIPLIER
@@ -269,31 +269,31 @@
 
 //............... Pestra Helmet ............... //
 /obj/item/clothing/head/helmet/heavy/necked/pestrahelm
-	name = "pestran helmet"
-	desc = "A great helmet made of coarse, tainted steel. It is modeled after a plagued carrion, a blessed abomination of Pestra."
+	name = "coarse helmet"
+	desc = "A great helmet made of coarse, tainted steel."
 	icon_state = "pestrahelm"
 	item_state = "pestrahelm"
 	item_weight = 6 * IRON_MULTIPLIER
 
 //................ Malum Helmet ............. //
 /obj/item/clothing/head/helmet/heavy/necked/malumhelm
-	name = "malumite helmet"
-	desc = "A great helmet of sturdy dark steel. Its chiseled countenance reminds the viewer of Malum's stern gaze."
+	name = "sturdy helmet"
+	desc = "A great helmet of sturdy dark steel."
 	icon_state = "malumhelm"
 	item_state = "malumhelm"
 	item_weight = 6 * IRON_MULTIPLIER
 
 /obj/item/clothing/head/helmet/heavy/necked/ravox
-	name = "ravoxian helmet"
-	desc = "Headwear commonly worn by Templars in service to Ravox. It resembles a heavily-adorned visored sallet."
+	name = "sallet"
+	desc = "Resembles a heavily-adorned visored sallet."
 	icon_state = "ravoxhelm"
 	item_state = "ravoxhelm"
 	item_weight = 6 * IRON_MULTIPLIER
 
 //................ Xylix Helmet ............. //
 /obj/item/clothing/head/helmet/heavy/necked/xylix
-	name = "xylix helmet"
-	desc = "A great helmet forged from steel, and fashioned in the visage of a jester, jingling bells and all. Commonly worn by Templars in service to Xylix"
+	name = "jester helmet"
+	desc = "A great helmet forged from steel, and fashioned in the visage of a jester, jingling bells and all."
 	icon_state = "xylixhelm"
 	item_state = "xylixhelm"
 	item_weight = 6 * IRON_MULTIPLIER
@@ -304,7 +304,7 @@
 
 //................ Abyssor Helmet ............. //
 /obj/item/clothing/head/helmet/heavy/necked/abyssor
-	name = "abyssor helmet"
+	name = "ridged helmet"
 	desc = "A great helmet crafted from bronze. The visor is slitted and ridged, evoking the gills of a great sea-beast."
 	icon_state = "abyssorhelm"
 	item_state = "abyssorhelm"
@@ -312,7 +312,7 @@
 
 //............... Sinistar (Graggar) Helmet ............... //
 /obj/item/clothing/head/helmet/heavy/sinistar
-	name = "sinistar helmet"
+	name = "howling helmet"
 	desc = "Glorious star, smeared in guts and greeted with a chorus of howls."
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
 	bloody_icon = 'icons/effects/blood64x64.dmi'
@@ -484,7 +484,7 @@
 
 /obj/item/clothing/head/helmet/heavy/ordinatorhelm
 	name = "inquisitorial ordinator's helmet"
-	desc = "A design suggested by a Grenzelhoftian smith, inspired by an eccentric count who insisted on sleeping in a coffin. A steel casket with thin slits that allow for deceptively clear vision. The tainted will drown in the blood you bring their way, while this high helm keeps it out of your face."
+	desc = "A design suggested by a Darkholdian smith, inspired by an eccentric count who insisted on sleeping in a coffin. A steel casket with thin slits that allow for deceptively clear vision. The tainted will drown in the blood you bring their way, while this high helm keeps it out of your face."
 	icon_state = "ordinatorhelm"
 	item_state = "ordinatorhelm"
 	worn_x_dimension = 64

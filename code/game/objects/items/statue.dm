@@ -76,8 +76,8 @@
 
 /*	..................   Silver  ................... */
 /obj/item/statue/silver/volf
-	name = "silver volf bust"
-	desc = "A silver bust resembling a volf's head."
+	name = "silver wolf bust"
+	desc = "A silver bust resembling a wolf's head."
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "volf_silv"
 	dropshrink = 0.7
@@ -231,8 +231,8 @@
 
 /*	..................   Gold   ................... */
 /obj/item/statue/gold/volf
-	name = "golden volf bust"
-	desc = "A golden bust resembling a volf's head."
+	name = "golden wolf bust"
+	desc = "A golden bust resembling a wolf's head."
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "volf_gold"
 	dropshrink = 0.7
@@ -393,8 +393,8 @@
 	sellprice = 30
 
 /obj/item/statue/bronze/volf
-	name = "bronze volf bust"
-	desc = "A bronzeen bust resembling a volf's head."
+	name = "bronze wolf bust"
+	desc = "A bronzeen bust resembling a wolf's head."
 	icon = 'icons/roguetown/items/precious_objects.dmi'
 	icon_state = "volf_bronze"
 	dropshrink = 0.7

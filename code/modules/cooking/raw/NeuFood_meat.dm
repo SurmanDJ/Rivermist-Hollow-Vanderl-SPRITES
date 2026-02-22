@@ -273,8 +273,8 @@
 
 /*	..................   METT   ................... */
 /obj/item/reagent_containers/food/snacks/meat/mince/beef/mett
-	name = "grenzel mett"
-	desc = "A popular topping for bread in Grenzelhoft, while simply bizarre to people from Vanderlin."
+	name = "darkhold mett"
+	desc = "A popular topping for bread in the north, while simply bizarre to people from Rivermist Hollow."
 	icon_state = "mett_minced"
 	bitesize = 3
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/mince/beef/mett/slice
@@ -287,7 +287,7 @@
 	faretype = FARE_POOR
 
 /obj/item/reagent_containers/food/snacks/meat/mince/beef/mett/slice
-	name = "grenzel mett"
+	name = "darkhold mett"
 	icon_state = "mett_slice"
 	bitesize = 1
 	slices_num = FALSE

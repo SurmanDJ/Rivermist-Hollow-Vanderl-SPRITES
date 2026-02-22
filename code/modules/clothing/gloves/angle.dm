@@ -13,7 +13,7 @@
 	item_weight = 4
 
 /obj/item/clothing/gloves/angle/grenzel
-	name = "grenzelhoft gloves"
-	desc = "Regal gloves of Grenzelhoftian design, more a fashion statement than actual protection."
+	name = "darkhold gloves"
+	desc = "Regal gloves of Darkholdian design, more a fashion statement than actual protection."
 	icon_state = "grenzelgloves"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'

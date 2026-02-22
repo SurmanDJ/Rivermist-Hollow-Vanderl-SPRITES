@@ -213,7 +213,7 @@
 //................ Billhook ............... //
 /obj/item/weapon/polearm/spear/billhook
 	name = "billhook"
-	desc = "A polearm with a curved krag, a Valorian design for dismounting mounted warriors and to strike down monstrous beasts."
+	desc = "A polearm with a curved krag, a Luskanian design for dismounting mounted warriors and to strike down monstrous beasts."
 	icon_state = "billhook"
 	wbalance = EASY_TO_DODGE
 	possible_item_intents = list(POLEARM_THRUST, POLEARM_BASH) //bash is for nonlethal takedowns, only targets limbs

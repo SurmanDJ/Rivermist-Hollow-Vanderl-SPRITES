@@ -95,8 +95,8 @@
 
 //............... Volf Helmet ............... //
 /obj/item/clothing/head/helmet/leather/volfhelm
-	name = "volf helmet"
-	desc = "A leather helmet fashioned from a volf's pelt."
+	name = "wolf helmet"
+	desc = "A leather helmet fashioned from a wolf's pelt."
 	icon_state = "volfhead"
 
 	body_parts_covered = HEAD|HAIR|EARS
@@ -145,8 +145,8 @@
 	set_light(0)
 
 /obj/item/clothing/head/leather/duelhat
-	name = "valorian duelist hat"
-	desc = "A dainty looking feathered hat that is actually quite heavy and thick, Duelists from Valoria are known to value winning fights without dirtying the white feather on top"
+	name = "Luskanian duelist hat"
+	desc = "A dainty looking feathered hat that is actually quite heavy and thick, Duelists from Silvermoon are known to value winning fights without dirtying the white feather on top"
 	icon_state = "duelisthat"
 	item_state = "duelisthat"
 	sewrepair = TRUE

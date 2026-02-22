@@ -1,7 +1,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/cow
 	icon = 'icons/roguetown/mob/monster/cow.dmi'
-	name = "moo-beast"
+	name = "cow"
 	desc = "The grail of many farmers. Commonfolk associate the motherly sow with Eora, and the raging bull with Ravox."
 	icon_state = "cow"
 	icon_living = "cow"
@@ -133,8 +133,8 @@
 
 /mob/living/simple_animal/hostile/retaliate/bull
 	icon = 'icons/roguetown/mob/monster/cow.dmi'
-	name = "moo-beast bull"
-	desc = "Rambunctious as the war-saint himself, a depiction of the moo-beast bull looms on the standard of the Valorian city-state called Andalvia."
+	name = "cow bull"
+	desc = "A majestic and mighty beast, symbol of many cultures and polities."
 	icon_state = "bull"
 	icon_living = "bull"
 	icon_dead = "bull_dead"

@@ -74,7 +74,7 @@
 	return outputs
 
 /datum/repeatable_crafting_recipe/cooking/beef_mett
-	name = "Grenzel Mett"
+	name = "Darkhold Mett"
 
 	requirements = list(
 		/obj/item/reagent_containers/food/snacks/veg/onion_sliced = 1,
@@ -156,7 +156,7 @@
 	extra_chance = 100
 
 /datum/repeatable_crafting_recipe/cooking/valorian_omlette
-	name = "Valorian Omlette"
+	name = "Luskanian Omlette"
 
 	requirements = list(
 		/obj/item/reagent_containers/food/snacks/cooked/twin_egg = 1,

@@ -27,8 +27,8 @@
 	allowed_race = RACES_PLAYER_ALL
 
 /obj/item/clothing/cloak/psyaltrist
-	name = "psyalter's stole"
-	desc = "A silk stole embroidered with silver filigree and with concealed pockets in its back worn over a hymnal-scroll. It is worn as the traditional garb of a graduate of the choir leaders of the cathedrals of Grenzelhoft, and is a symbol of their station."
+	name = "alter's stole"
+	desc = "A silk stole embroidered with silver filigree and with concealed pockets in its back worn over a hymnal-scroll. It is covered with obscure symbols and regalia."
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	icon_state = "psaltertabard"
 	item_state = "psaltertabard"

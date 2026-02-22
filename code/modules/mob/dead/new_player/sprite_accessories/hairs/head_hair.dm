@@ -417,7 +417,7 @@
 	specuse = list(SPEC_ID_ELF, SPEC_ID_ELF_W)
 
 /datum/sprite_accessory/hair/head/zaladin
-	name = "Zaladin"
+	name = "Zakharani"
 	icon_state = "zaladin" // orginal name gelled
 	gender = MALE
 	specuse = ALL_RACES_LIST
@@ -898,7 +898,7 @@
 	specuse = ALL_RACES_LIST
 
 /datum/sprite_accessory/hair/head/grenzelcut
-	name = "Grenzel Cut"
+	name = "Darkhold Cut"
 	icon_state = "grenzelcut"
 	gender = NEUTER
 	specuse = ALL_RACES_LIST

@@ -2694,7 +2694,7 @@ $(function() {
 
 	$('#saveLog').click(function(e) {
 		var date = new Date();
-		var fname = ' Vanderlin Chat Log ' +
+		var fname = ' RMH Chat Log ' +
 					date.getFullYear() + '-' +
 					(date.getMonth() + 1 < 10 ? '0' : '') + (date.getMonth() + 1) + '-' +
 					(date.getDate() < 10 ? '0' : '') + date.getDate() + ' ' +
@@ -2708,7 +2708,7 @@ $(function() {
 			url: 'browserOutput_white.css',
 			success: function(styleData) {
 				var blob = new Blob([
-					'<head><title>Vanderlin Chat Log</title><style>',
+					'<head><title>RMH Chat Log</title><style>',
 					styleData,
 					'</style></head><body>',
 					$messages.html(),

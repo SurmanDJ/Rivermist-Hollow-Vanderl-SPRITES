@@ -66,7 +66,7 @@
 /obj/item/reagent_containers/food/snacks/tallow/red
 	name = "redtallow"
 	desc = "Fatty tissue is harvested from slain creachurs and rendered of its membraneous sinew to produce a hard shelf-stable \
-	grease. It has then been soaked in blood or something blood adjacent to make for an easily sourced and rather grim wax substitute. As they say in Grenzelhoft, one uses what one has."
+	grease. It has then been soaked in blood or something blood adjacent to make for an easily sourced and rather grim wax substitute. As they say in Darkhold, one uses what one has."
 	icon_state = "redtallow"
 	tastes = list("grease" = 1, "oil" = 1, "regret" =1, "blood"=1,)
 
@@ -111,7 +111,7 @@
 // -------------- CHOCOLATE -----------------
 /obj/item/reagent_containers/food/snacks/chocolate
 	name = "chocolate bar"
-	desc = "Unbelievably fancy chocolate, imported all the way from distant Grenzelhoft"
+	desc = "Unbelievably fancy chocolate, imported all the way from distant Darkhold"
 	icon_state = "chocolate"
 	bitesize = 4
 	nutrition = CHOCCY_NUTRITION
@@ -873,7 +873,7 @@
 
 /obj/item/reagent_containers/food/snacks/jellycake_pear
 	name = "pear gelatine cake"
-	desc = "A mildly unappetising dessert, fittingly considered a delicacy by orcs. This flavor is a strange fusion of Zalad and Orcish cuisines."
+	desc = "A mildly unappetising dessert, fittingly considered a delicacy by orcs. This flavor is a strange fusion of Zakhara and Orcish cuisines."
 	icon_state = "peargelatinecake"
 	dropshrink = 0.8
 	slice_path = /obj/item/reagent_containers/food/snacks/jellyslice_pear

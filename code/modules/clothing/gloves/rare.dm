@@ -43,8 +43,8 @@
 	item_weight = 7 * STEEL_MULTIPLIER
 
 /obj/item/clothing/gloves/rare/grenzelplate
-	name = "grenzelhoftian plate gauntlets"
-	desc = "Battling the Zaladins led to the exchange of military ideas. The Grenzelhoft adopted refined chain and plate armaments to better allow their knights unmatchable resilience against the enemies of their Empire."
+	name = "darkholdian plate gauntlets"
+	desc = "Battling the zakharanis led to the exchange of military ideas. The Darkhold adopted refined chain and plate armaments to better allow their knights unmatchable resilience against their enemies."
 	icon_state = "human_swordhand"
 	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_AASIMAR)
 	allowed_sex = list(MALE)
@@ -52,7 +52,7 @@
 
 /obj/item/clothing/gloves/rare/zaladplate
 	name = "kataphractoe claw gauntlets"
-	desc = "Interwoven beautifully with layers of silk, chain and plate, these gauntlets grant unmatched coverage while allowing maximum mobility. Both useful to the Zaladin's ever-growing slave-empire."
+	desc = "Interwoven beautifully with layers of silk, chain and plate, these gauntlets grant unmatched coverage while allowing maximum mobility. Both useful to the Zakharani's ever-growing slave-empire."
 	icon_state = "human_spearhand"
 	allowed_race = list(SPEC_ID_HUMEN)
 	allowed_sex = list(MALE)

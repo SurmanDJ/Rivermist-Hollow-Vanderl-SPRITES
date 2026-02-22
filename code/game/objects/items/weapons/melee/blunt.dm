@@ -95,7 +95,7 @@
 
 /obj/item/weapon/mace/cane/courtphysician
 	name = "physician's cane"
-	desc = "A prized cane. Embellished with a golden serpent, representing the Kingsfield university. The pointy end is quite sharp."
+	desc = "A prized cane. Embellished with a golden serpent, representing the Neverwinter academy. The pointy end is quite sharp."
 	icon_state = "physician_cane"
 	force = DAMAGE_MACE - 3
 	force_wielded = DAMAGE_MACE - 1
@@ -635,7 +635,7 @@
 
 /obj/item/weapon/mace/elvenclub/bronze
 	name = "bronze elven war club"
-	desc = "A bronze one-handed war club with a sharp end. It's been long favoured by the Elves of Heartfelt, despite its foreign origins."
+	desc = "A bronze one-handed war club with a sharp end. It's been long favoured by the people of Silvermoon, despite its foreign origins."
 	icon_state = "elvenclub_bronze"
 	melting_material = /datum/material/bronze
 	max_integrity = INTEGRITY_STANDARD
@@ -699,7 +699,7 @@
 /obj/item/weapon/mace/bronze
 	name = "bronze mace"
 	icon_state = "mace_bronze"
-	desc = "A spiked bronze mace. A weapon thats seen a revival in use amidst the cataclysm in Heartfelt."
+	desc = "A spiked bronze mace."
 	force = DAMAGE_MACE + 1
 	force_wielded = DAMAGE_MACE_WIELD + 1 //Spiked
 	max_integrity = INTEGRITY_STANDARD
