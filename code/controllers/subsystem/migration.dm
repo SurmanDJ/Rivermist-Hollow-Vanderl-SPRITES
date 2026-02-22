@@ -338,6 +338,11 @@ SUBSYSTEM_DEF(migrants)
 	//SSquirks.AssignQuirks(human_character, human_character.client, TRUE)
 
 	if(migrant_job.rune_linked)
+		for(var/obj/structure/resurrection_rune/rune_l in GLOB.global_resurrunes)
+			if(rune_l.is_main)
+				continue
+			human_character.get_rune_linked(rune_l)
+			break
 		GLOB.rune_roundstart_mobs += character
 
 	var/fakekey = get_display_ckey(human_character.ckey)

@@ -8,6 +8,7 @@
 	spawn_type = /mob/living/carbon/human/species/goblin/cave
 	outfit = /datum/outfit/npc/goblin
 	give_bank_account = FALSE
+	rune_linked = FALSE
 
 	traits = list(
 		TRAIT_NOMOOD,

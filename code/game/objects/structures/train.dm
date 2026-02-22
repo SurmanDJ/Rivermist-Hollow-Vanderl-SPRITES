@@ -84,6 +84,7 @@
 		if(departing_mob in rr.resrunecontroler.linked_users)
 
 			rr.resrunecontroler.remove_user(departing_mob)
+			GLOB.rune_roundstart_mobs -= departing_mob
 	GLOB.chosen_names -= departing_mob.real_name
 	departing_mob.returntolobby()
 	qdel(departing_mob)

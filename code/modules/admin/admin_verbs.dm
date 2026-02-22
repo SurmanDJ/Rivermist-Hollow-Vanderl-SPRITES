@@ -385,7 +385,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set category = "Admin.Admin Preferences"
 	set name = "Right-click Menu"
 	if(!holder)
-		sreturn
+		return
 	show_popup_menus = !show_popup_menus
 
 	to_chat(usr, span_notice("Toggled context menu [show_popup_menus ? "ON" : "OFF"]."))
