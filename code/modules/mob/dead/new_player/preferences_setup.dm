@@ -156,8 +156,10 @@
 	mannequin.transform = matrix()
 
 	apply_prefs_to(mannequin, TRUE)
-
-	if(previewJob)
+	if(preview_subclass)
+		mannequin.job = preview_subclass.title
+		mannequin.dress_up_as_job(preview_subclass, TRUE)
+	else if(previewJob)
 		mannequin.job = previewJob.title
 		mannequin.dress_up_as_job(previewJob, TRUE)
 

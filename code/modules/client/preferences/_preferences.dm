@@ -293,6 +293,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	/// If our owner is from a race that has more than one accent
 	var/change_accent = FALSE
 
+	var/datum/job/advclass/preview_subclass
 	/// Custom UI scale
 	var/ui_scale
 	///this is our character slot
@@ -890,7 +891,17 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=close'>Done</a></center><br>"
 		if(joblessrole != RETURNTOLOBBY && joblessrole != BERANDOMJOB)
 			joblessrole = RETURNTOLOBBY
+
 		HTML += "<b>If Role Unavailable:</b><font color='purple'><a href='?_src_=prefs;preference=job;task=nojob'>[joblessrole]</a></font><BR>"
+
+		var/datum/job/highest_pref
+		for(var/job in job_preferences)
+			if(job_preferences[job] > highest_pref)
+				highest_pref = SSjob.GetJob(job)
+		if(isnull(highest_pref))
+			preview_subclass = null
+		HTML += "<div style='text-align: center'><br><b>Subclass Preview:</b><br> <a href='?_src_=prefs;preference=subclassoutfit;task=input'>[preview_subclass ? "[preview_subclass.title]" : "Change"]</a></div>"
+
 		HTML += "<script type='text/javascript'>function setJobPrefRedirect(level, rank) { window.location.href='?_src_=prefs;preference=job;task=setJobLevel;level=' + level + ';text=' + encodeURIComponent(rank); return false; }</script>"
 		HTML += {"
 			<script type='text/javascript'>
@@ -1229,6 +1240,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 /datum/preferences/proc/reset_jobs(mob/user, silent = FALSE)
 	job_preferences = list()
+	preview_subclass = null
 	if(!silent)
 		to_chat(user, "<font color='red'>Classes reset.</font>")
 	if(winget(user, "mob_occupation", "is-visible"))
@@ -1429,6 +1441,12 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			if("setJobLevel")
 				if(SSticker.job_change_locked)
 					return 1
+				var/datum/job/highest_pref
+				for(var/job in job_preferences)
+					if(job_preferences[job] > highest_pref)
+						highest_pref = SSjob.GetJob(job)
+				if(isnull(highest_pref))
+					preview_subclass = null
 				update_job_preference(user, href_list["text"], text2num(href_list["level"]))
 			else
 				set_choices(user)
@@ -1679,6 +1697,32 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					GLOB.name_adjustments |= "[parent] changed their characters name to [new_name]."
 					log_character("[parent] changed their characters name to [new_name].")
 
+				if("subclassoutfit")
+					var/list/choices = list("None")
+					var/datum/job/highest_pref
+					for(var/job in job_preferences)
+						if(job_preferences[job] > highest_pref)
+							highest_pref = SSjob.GetJob(job)
+					if(isnull(highest_pref))
+						to_chat(user, "<b>I don't have a Class set to High!</b>")
+						return
+					if(length(highest_pref.job_subclasses))
+						for(var/adv in highest_pref.job_subclasses)
+							var/datum/job/advclass/advpath = adv
+							var/datum/job/advclass/advref = SSrole_class_handler.get_advclass_by_name(initial(advpath.title))
+							choices[advref.title] = advref
+					else
+						to_chat(user, "<b>This role does not have any subclasses!</b>")
+						return
+					if(length(choices))
+						var/new_choice = input(user, "Choose an outfit preview:", "Outfit Preview")  as anything in choices|null
+						if(new_choice && new_choice != "None")
+							preview_subclass = choices[new_choice]
+							update_preview_icon()
+						else
+							preview_subclass = null
+							update_preview_icon()
+						update_menu_data(user, list("job"))
 				if("age")
 					var/new_age = browser_input_list(user, "SELECT YOUR HERO'S AGE", "YILS DEAD", pref_species.possible_ages, age)
 					if(new_age)
