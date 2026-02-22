@@ -480,13 +480,7 @@
 	dna.species.pre_equip_species_outfit(equipping, src, visual_only)
 
 	var/datum/outfit/chosen_outfit
-	var/datum/job/chosen_job
-	if(length(equipping.job_subclasses))
-		chosen_job = pick(equipping.job_subclasses)
-	else
-		chosen_job = equipping
-
-	var/datum/outfit/outfit_check = (gender == FEMALE && chosen_job.outfit_female) ? chosen_job.outfit_female : chosen_job.outfit
+	var/datum/outfit/outfit_check = (gender == FEMALE && equipping.outfit_female) ? equipping.outfit_female : equipping.outfit
 	if(ispath(outfit_check, /datum/outfit))
 		chosen_outfit = outfit_check
 	else

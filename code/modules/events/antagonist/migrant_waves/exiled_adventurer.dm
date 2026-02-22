@@ -1,4 +1,4 @@
-/datum/round_event_control/antagonist/migrant_wave/werewolf
+/*/datum/round_event_control/antagonist/migrant_wave/werewolf
 	name = "Exiled Werewolf"
 	wave_type = /datum/migrant_wave/werewolf
 
@@ -27,4 +27,4 @@
 		TAG_HAUNTED,
 		TAG_COMBAT,
 		TAG_VILLAIN,
-	)
+	)*/

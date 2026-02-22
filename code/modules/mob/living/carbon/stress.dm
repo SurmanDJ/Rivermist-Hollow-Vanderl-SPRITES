@@ -46,7 +46,8 @@
 		stressbuffer = stress - STRESS_VGOOD
 		stress = STRESS_VGOOD
 
-	if(HAS_TRAIT(src, TRAIT_WEAK_HEART) && stress > 25)
+	if(HAS_TRAIT(src, TRAIT_WEAK_HEART) && stress > 60)
+		to_chat(src, span_warning("This is all too much for my weak heart!"))
 		INVOKE_ASYNC(src, PROC_REF(heart_attack))
 
 /mob/living/carbon/update_stress()
@@ -71,7 +72,7 @@
 				apply_status_effect(/datum/status_effect/stress/stressbad)
 				remove_status_effect(/datum/status_effect/stress/stressvgood)
 				remove_status_effect(/datum/status_effect/stress/stressvbad)
-			if(STRESS_VBAD to STRESS_INSANE-1)
+			if(STRESS_VBAD to INFINITY)
 				apply_status_effect(/datum/status_effect/stress/stressvbad)
 				remove_status_effect(/datum/status_effect/stress/stressvgood)
 				remove_status_effect(/datum/status_effect/stress/stressbad)

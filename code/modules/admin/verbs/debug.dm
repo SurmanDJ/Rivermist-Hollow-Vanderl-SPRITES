@@ -99,6 +99,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	log_admin("[key_name(usr)] assumed direct control of [M].")
 	var/mob/adminmob = src.mob
 	M.ckey = src.ckey
+	if(HAS_TRAIT_FROM(M, TRAIT_NOSLEEP, "aghost"))
+		REMOVE_TRAIT(M, TRAIT_NOSLEEP, "aghost")
 	if(isobserver(adminmob))
 		qdel(adminmob)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Assume Direct Control") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

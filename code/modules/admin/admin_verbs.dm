@@ -385,7 +385,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set category = "Admin.Admin Preferences"
 	set name = "Right-click Menu"
 	if(!holder)
-		return
+		sreturn
 	show_popup_menus = !show_popup_menus
 
 	to_chat(usr, span_notice("Toggled context menu [show_popup_menus ? "ON" : "OFF"]."))
@@ -419,8 +419,8 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 			if(S && !HAS_TRAIT(M, TRAIT_FLOORED)) // Wake them up unless they're asleep for another reason
 				M.remove_status_effect(S)
 				M.set_resting(FALSE, TRUE)
-			if(HAS_TRAIT(M, TRAIT_NOSLEEP))
-				REMOVE_TRAIT(M, TRAIT_NOSLEEP, TRAIT_GENERIC)
+			if(HAS_TRAIT_FROM(M, TRAIT_NOSLEEP, "aghost"))
+				REMOVE_TRAIT(M, TRAIT_NOSLEEP, "aghost")
 			M.density = initial(M.density)
 			M.invisibility = initial(M.invisibility)
 		else
@@ -439,7 +439,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		//ghostize
 		log_admin("[key_name(usr)] admin ghosted.")
 		message_admins("[key_name_admin(usr)] admin ghosted.")
-		ADD_TRAIT(mob, TRAIT_NOSLEEP, TRAIT_GENERIC)
+		ADD_TRAIT(mob, TRAIT_NOSLEEP, "aghost")
 		var/mob/body = mob
 		if (aghost_toggle)
 			body.invisibility = INVISIBILITY_MAXIMUM

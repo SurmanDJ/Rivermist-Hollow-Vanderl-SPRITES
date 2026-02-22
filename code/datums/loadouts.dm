@@ -630,10 +630,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	item_path = /obj/item/clothing/armor/gambeson/sophisticated_coat
 	point_cost = 3
 
-/datum/loadout_item/undershirtcerera
-	name = "Tunic With Corset"
-	item_path = /obj/item/clothing/shirt/undershirt/cerera
-
 /datum/loadout_item/corset
 	name = "Corset"
 	item_path = /obj/item/clothing/armor/corset/colored

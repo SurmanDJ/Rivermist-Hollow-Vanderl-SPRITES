@@ -105,7 +105,7 @@
 		addtimer(CALLBACK(src, PROC_REF(Immobilize), 30), 10)
 		if(iscarbon(src))
 			var/mob/living/carbon/C = src
-			if(C.stress >= 30)
+			if(C.stress >= 50)
 				C.heart_attack()
 			if(!HAS_TRAIT(C, TRAIT_NOHUNGER))
 				if(C.nutrition <= 0)
@@ -161,7 +161,7 @@
 	flash_fullscreen("stressflash")
 	changeNext_move(CLICK_CD_EXHAUSTED)
 	add_stress(/datum/stress_event/freakout)
-	var/heart_value = 30
+	var/heart_value = 50
 	if(HAS_TRAIT(src, TRAIT_WEAK_HEART))
 		heart_value *= 0.5
 	if(stress >= heart_value)

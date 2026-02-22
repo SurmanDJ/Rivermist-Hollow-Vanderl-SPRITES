@@ -255,7 +255,7 @@
 
 /datum/special_trait/uniglot/on_apply(mob/living/carbon/human/character, silent)
 	character.remove_language(/datum/language/common)
-	switch(rand(1,4))
+	switch(rand(1,5))
 		if(1)
 			character.grant_language(/datum/language/elvish)
 		if(2)
@@ -264,6 +264,8 @@
 			character.grant_language(/datum/language/dwarvish)
 		if(4)
 			character.grant_language(/datum/language/orcish)
+		if(5)
+			character.grant_language(/datum/language/zalad)
 
 /datum/special_trait/languageidiot
 	name = "Somewhat Polyglot"

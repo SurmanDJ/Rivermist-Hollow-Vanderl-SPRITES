@@ -145,11 +145,13 @@
 			add_delay += 2
 			if(L.m_intent == MOVE_INTENT_RUN)
 				L.toggle_rogmove_intent(MOVE_INTENT_WALK)
+			L.sprinted_since_last_dir_change = 0
 	else
 		if(L.dir != target_dir)
 			// Remove sprint intent if we change direction, but only if we sprinted at least 1 tile
-			if(L.m_intent == MOVE_INTENT_RUN && L.sprinted_tiles > 0)
+			if(L.m_intent == MOVE_INTENT_RUN && (L.sprinted_since_last_dir_change < 2 || L.dir == turn(target_dir, 180)))
 				L.toggle_rogmove_intent(MOVE_INTENT_WALK)
+			L.sprinted_since_last_dir_change = 0
 
 	var/old_direct = mob.dir
 
@@ -529,6 +531,7 @@
 	// If we're becoming sprinting from non-sprinting, reset the counter
 	if(!(m_intent == MOVE_INTENT_RUN && intent == MOVE_INTENT_RUN))
 		sprinted_tiles = 0
+		sprinted_since_last_dir_change = 0
 	switch(intent)
 		if(MOVE_INTENT_SNEAK)
 			m_intent = MOVE_INTENT_SNEAK
