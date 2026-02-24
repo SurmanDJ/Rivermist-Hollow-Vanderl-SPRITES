@@ -488,7 +488,7 @@
 
 	msg_stage++
 
-/// Prevent clicks for the "duration" of the status
+/// Prevent clicks for the duration of the ability
 /datum/status_effect/debuff/clickcd
 	id = "clickcd"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/clickcd
@@ -538,7 +538,7 @@
 /datum/status_effect/debuff/feinted
 	id = "feinted"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/feinted
-	duration = 20 SECONDS
+	duration = 30 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/feinted
 	name = "Feinted"
@@ -586,3 +586,4 @@
 /datum/status_effect/debuff/hobbled/on_remove()
 	. = ..()
 	owner?.remove_movespeed_modifier(MOVESPEED_ID_STATUS_EFFECT(id))
+

@@ -35,6 +35,14 @@
 	/// Assoc list of statkey to value
 	var/list/effectedstats = list()
 
+	/// Variables to create a mob overlay if applicable
+	var/mob_overlay_icon = 'icons/mob/mob_effects.dmi'
+	var/mob_overlay_icon_state
+	var/mob_overlay_layer
+
+	/// The AM for the mob visual
+	var/atom/movable/mob_visual
+
 /datum/status_effect/New(list/arguments)
 	on_creation(arglist(arguments))
 
