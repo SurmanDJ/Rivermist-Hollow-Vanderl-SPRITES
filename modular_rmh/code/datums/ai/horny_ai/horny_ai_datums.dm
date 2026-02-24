@@ -110,8 +110,7 @@
 
 	var/datum/sex_session/session = get_sex_session(basic_mob, target_living)
 	if(!session) //if we took too long and it's deleted
-		basic_mob.start_sex_session(target_living)
-		session = get_sex_session(basic_mob, target_living)
+		session = basic_mob.start_sex_session(target_living)
 
 	//check if we are sated
 	if(last_orgasm_time > world.time - 10 SECONDS || is_spent || controller.blackboard[BB_HORNY_TIME_START] < world.time - 5 MINUTES)
@@ -192,34 +191,33 @@
 			return
 
 		//do undress here
-		if(human_target.wear_pants)
-			if(human_target.wear_pants.flags_inv & HIDECROTCH && !human_target.wear_pants.genital_access)
-				if(!do_after(basic_mob, 1 SECONDS, human_target))
-					if(!human_target.cmode) //pants off if not in cmode
-						basic_mob.visible_message(span_danger("[basic_mob] manages to rip [human_target]'s [human_target.wear_pants.name] off!"))
-						var/obj/item/clothing/thepants = human_target.wear_pants
+		var/pririty_list = list(human_target.wear_pants, human_target.wear_armor, human_target.wear_shirt)
+		for(var/obj/item/clothing/priority_cloth in pririty_list)
+			if(priority_cloth)
+				if(priority_cloth.flags_inv & HIDECROTCH && !priority_cloth.genital_access)
+					if(!do_after(basic_mob, 1 SECONDS, human_target))
+						basic_mob.visible_message(span_danger("[basic_mob] manages to rip [human_target]'s [priority_cloth.name] off!"))
+						var/obj/item/clothing/thepants = priority_cloth
 						human_target.dropItemToGround(thepants)
 						thepants.throw_at(pick(orange(2, get_turf(human_target))), 2, 1, basic_mob, TRUE)
-					else if(human_target.cmode)
-						basic_mob.visible_message(span_danger("[basic_mob] manages to tug [human_target]'s [human_target.wear_pants.name] out of the way!"))
-					return
-		else if(prob(30))
-			for(var/obj/item/item as anything in human_target.get_equipped_items(FALSE))
-				if(istype(item, /obj/item/clothing) || istype(item, /obj/item/storage/belt))
-					if(!do_after(basic_mob, 1 SECONDS, human_target))
-						if(!istype(item, /obj/item/storage) && !istype(item, /obj/item/clothing/ring))
-							item.take_damage(damage_amount = item.max_integrity * 0.2, sound_effect = FALSE)
-						basic_mob.visible_message(span_danger("[basic_mob] manages to rip [human_target]'s [item] off!"))
-						human_target.dropItemToGround(item)
-						item.throw_at(pick(orange(2, get_turf(human_target))), 2, 1, basic_mob, TRUE)
-						return
+		if(prob(10))
+			var/obj/item/item = pick(human_target.get_equipped_items(FALSE))
+			if(istype(item, /obj/item/clothing) || istype(item, /obj/item/storage/belt))
+				if(!do_after(basic_mob, 1 SECONDS, human_target))
+					if(!istype(item, /obj/item/storage) && !istype(item, /obj/item/clothing/ring))
+						item.take_damage(damage_amount = item.max_integrity * 0.2, sound_effect = FALSE)
+					basic_mob.visible_message(span_danger("[basic_mob] manages to rip [human_target]'s [item] off!"))
+					human_target.dropItemToGround(item)
+					item.throw_at(pick(orange(2, get_turf(human_target))), 2, 1, basic_mob, TRUE)
+
+
 
 		//do tie up here
 		if(iscarbon(basic_mob) && human_target.body_position == LYING_DOWN && !human_target.get_active_held_item())
 			var/mob/living/carbon/c_mob = controller.pawn
 			if(basic_mob.Adjacent(human_target) && human_target.get_num_arms(TRUE) > 1 && !human_target.handcuffed)
 				c_mob.visible_message(span_danger("[c_mob] begins to tie up [human_target]'s hands!"))
-				session.stop_current_action()
+				//session.stop_current_action()
 				if(do_after(c_mob, 1 SECONDS, human_target))
 					// Create and use rope cuffs
 					var/obj/item/rope/rope_item = new /obj/item/rope
@@ -228,9 +226,9 @@
 					else
 						qdel(rope_item)
 
-			if(basic_mob.Adjacent(human_target) && !human_target.legcuffed)
+			/*if(basic_mob.Adjacent(human_target) && !human_target.legcuffed)
 				c_mob.visible_message(span_danger("[c_mob] begins to tie up [human_target]'s legs!"))
-				session.stop_current_action()
+				//session.stop_current_action()
 				if(do_after(c_mob, 1 SECONDS, human_target))
 					// Create and use rope cuffs
 					var/obj/item/rope/leg_rope = new /obj/item/rope
@@ -238,7 +236,7 @@
 						c_mob.stop_pulling()
 						return
 					else
-						qdel(leg_rope)
+						qdel(leg_rope)*/
 
 
 	//starting the action
@@ -253,6 +251,7 @@
 			var/speed = rand(SEX_SPEED_MID, SEX_SPEED_MAX)
 			session.set_current_force(force)
 			session.set_current_speed(speed)
+			target_living.apply_status_effect(/datum/status_effect/debuff/mob_fucked)
 			if(isnull(session.current_action))
 				wrong_action = TRUE
 				finish_action(controller, FALSE, target_key)

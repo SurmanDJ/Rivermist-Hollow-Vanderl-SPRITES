@@ -17,14 +17,14 @@ GLOBAL_LIST_EMPTY(global_resurrunes)
 
 /datum/status_effect/debuff/revived/rune/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_GENERIC)
-	ADD_TRAIT(owner, TRAIT_NO_SELF_MAGIC, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_PACIFISM, "resurrection_rune")
+	ADD_TRAIT(owner, TRAIT_NO_SELF_MAGIC, "resurrection_rune")
 
 
 /datum/status_effect/debuff/revived/rune/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_GENERIC)
-	REMOVE_TRAIT(owner, TRAIT_NO_SELF_MAGIC, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "resurrection_rune")
+	REMOVE_TRAIT(owner, TRAIT_NO_SELF_MAGIC, "resurrection_rune")
 
 /datum/status_effect/debuff/revived/rune/rough
 	id = "revived_rune_rough"

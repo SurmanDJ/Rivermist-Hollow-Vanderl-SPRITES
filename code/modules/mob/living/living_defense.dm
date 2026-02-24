@@ -373,6 +373,8 @@
 		return FALSE
 	if(!(flags & SHOCK_ILLUSION))
 		adjustFireLoss(shock_damage)
+	if(!istype(source, /atom))
+		source = null
 	visible_message(
 		"<span class='danger'>[src] was shocked by [source ? "\the [source]" : "something"]!</span>", \
 		"<span class='danger'>I feel a powerful shock coursing through my body!</span>", \

@@ -852,11 +852,11 @@
 		. += "<a href='byond://?src=[REF(src)];view_descriptors=1'>Look at Features</a>"
 
 	// Characters with the hunted flaw will freak out if they can't see someone's face.
-	if(!appears_dead)
+	/*if(!appears_dead)
 		if(!self_inspect && obscure_name && isliving(user))
 			var/mob/living/liver = user
-			if(liver.has_quirk(/datum/quirk/vice/hunted))
-				user.add_stress(/datum/stress_event/traumatized)
+			if(liver.has_quirk(/datum/quirk/vice/wanted))
+				user.add_stress(/datum/stress_event/traumatized)*/
 
 	if(!obscure_name && (flavortext || headshot_link || ooc_extra_link))
 		. += "<a href='?src=[REF(src)];task=view_flavor_text;'>Examine Closer</a>"
@@ -866,7 +866,7 @@
 		. += trait_exam
 
 	// The Assassin's profane dagger can sniff out their targets, even masked.
-	if(HAS_TRAIT(user, TRAIT_ASSASSIN) && ((has_quirk(/datum/quirk/vice/hunted) || HAS_TRAIT(src, TRAIT_ZIZOID_HUNTED))))
+	if(HAS_TRAIT(user, TRAIT_ASSASSIN) && HAS_TRAIT(src, TRAIT_ZIZOID_HUNTED))
 		//TODO: move this to an examinate signal call
 		if ((src != user) && iscarbon(user))
 			var/mob/living/carbon/assassin = user

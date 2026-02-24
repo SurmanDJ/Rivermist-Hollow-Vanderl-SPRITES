@@ -118,7 +118,7 @@
 
 	if(!(target in linked_users)) //sanity check
 		return
-	var/brute = target.getBruteLoss()
+	var/brute = target.getBruteLoss() * 0.13
 	var/burn  = target.getFireLoss()
 	var/tox   = target.getToxLoss()
 	var/oxy   = target.getOxyLoss()

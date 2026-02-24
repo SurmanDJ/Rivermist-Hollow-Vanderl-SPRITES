@@ -655,3 +655,22 @@
 	duration = 1 MINUTES
 	alert_type = /atom/movable/screen/alert/status_effect/aphrodisiac
 
+/datum/status_effect/debuff/mob_fucked
+	id = "mob_fucked"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/mob_fucked
+	effectedstats = list("strength" = -2, "endurance" = 3, "speed" = 2)
+	duration = 3 MINUTES
+
+/atom/movable/screen/alert/status_effect/debuff/mob_fucked
+	name = "Violated"
+	desc = "You were pinned down, roughed up and fucked - you are in no condition to fight, run while you can. They don't want to hurt you - for now."
+	icon_state = "bait"
+
+/datum/status_effect/debuff/mob_fucked/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_GENERIC)
+
+
+/datum/status_effect/debuff/mob_fucked/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_GENERIC)

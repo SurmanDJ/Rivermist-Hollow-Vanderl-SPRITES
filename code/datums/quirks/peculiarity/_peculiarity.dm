@@ -105,7 +105,7 @@
 	H.virginity = TRUE
 
 
-/datum/quirk/peculiarity/mystery_box
+/*/datum/quirk/peculiarity/mystery_box
 	name = "Mystery Box"
 	desc = "You possess a locked box that you cannot open. Someone in this world knows the code..."
 	point_value = 0
@@ -235,7 +235,7 @@
 		. += span_green("You know the words to open this box: \"[linked_quirk.passcode]\"")
 	else
 		. += span_notice("It seems to respond to spoken words. Perhaps [linked_quirk?.keeper ? linked_quirk.keeper.real_name : "someone"] knows how to open it.")
-	. += span_notice("Right-click to get a hint about who might know the passcode.")
+	. += span_notice("Right-click to get a hint about who might know the passcode.")*/
 
 /datum/quirk/peculiarity/monsterhuntermale
 	name = "Monster Seeker (Males)"

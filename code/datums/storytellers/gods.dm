@@ -511,7 +511,7 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_HUNTED_PEOPLE = list("name" = "Number of available prey:", "points" = 10, "capacity" = 80),
+			STATS_HUNTED_PEOPLE = list("name" = "Number of wanteds:", "points" = 10, "capacity" = 80),
 			STATS_ASSASSINATIONS = list("name" = "Successful assasinations:", "points" = 25, "capacity" = 75),
 		),
 		"Set 2" = list(

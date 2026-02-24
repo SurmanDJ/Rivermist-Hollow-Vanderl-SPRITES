@@ -245,6 +245,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	src << browse(null, "window=smallclothes_customization")
 	src << browse(null, "window=undies_selection")
 	src << browse(null, "window=legwear_selection")
+	src << browse(null, "window=misc_customization")
 
 	SStriumphs.remove_triumph_buy_menu(client)
 
