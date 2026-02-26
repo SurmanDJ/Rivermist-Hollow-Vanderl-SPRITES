@@ -1387,36 +1387,51 @@
 		sleep(delay)
 
 		var/mob/living/living = user
-		var/chance_per_point = 5
-		var/success = FALSE
-		var/chance = 0
+		//var/chance_per_point = 5
+		//var/success = FALSE
+		//var/chance = 0
+		var/roll = 0
+		var/bonus = 0
 
 		switch(key)
 			if("strength")
-				success = living.stat_roll(STATKEY_STR, chance_per_point)
-				chance = living.get_stat(STATKEY_STR)
+				/*success = living.stat_roll(STATKEY_STR, chance_per_point)
+				chance = living.get_stat(STATKEY_STR) все эти роллы нам не нужны из-за никти, новая система здравствует!*/
+				roll = rand(1,20)
+				bonus = floor((living.get_stat(STATKEY_STR)-10)/2)
 			if("perception")
-				success = living.stat_roll(STATKEY_PER, chance_per_point)
-				chance = living.get_stat(STATKEY_PER)
+				/*uccess = living.stat_roll(STATKEY_PER, chance_per_point)
+				chance = living.get_stat(STATKEY_PER)*/
+				roll = rand(1,20)
+				bonus = floor((living.get_stat(STATKEY_PER)-10)/2)
 			if("intelligence")
-				success = living.stat_roll(STATKEY_INT, chance_per_point)
-				chance = living.get_stat(STATKEY_INT)
+				/*success = living.stat_roll(STATKEY_INT, chance_per_point)
+				chance = living.get_stat(STATKEY_INT)*/
+				roll = rand(1,20)
+				bonus = floor((living.get_stat(STATKEY_INT)-10)/2)
 			if("constitution")
-				success = living.stat_roll(STATKEY_CON, chance_per_point)
-				chance = living.get_stat(STATKEY_CON)
+				/*success = living.stat_roll(STATKEY_CON, chance_per_point)
+				chance = living.get_stat(STATKEY_CON)*/
+				roll = rand(1,20)
+				bonus = floor((living.get_stat(STATKEY_CON)-10)/2)
 			if("endurance")
-				success = living.stat_roll(STATKEY_END, chance_per_point)
-				chance = living.get_stat(STATKEY_END)
+				/*success = living.stat_roll(STATKEY_END, chance_per_point)
+				chance = living.get_stat(STATKEY_END)*/
+				roll = rand(1,20)
+				bonus = floor((living.get_stat(STATKEY_END)-10)/2)
 			if("speed")
-				success = living.stat_roll(STATKEY_SPD, chance_per_point)
-				chance = living.get_stat(STATKEY_SPD)
+				/*success = living.stat_roll(STATKEY_SPD, chance_per_point)
+				chance = living.get_stat(STATKEY_SPD)*/
+				roll = rand(1,20)
+				bonus = floor((living.get_stat(STATKEY_SPD)-10)/2)
 			if("fortune")
-				success = living.stat_roll(STATKEY_LCK, chance_per_point)
-				chance = living.get_stat(STATKEY_LCK)
+				/*success = living.stat_roll(STATKEY_LCK, chance_per_point)
+				chance = living.get_stat(STATKEY_LCK)*/
+				roll = rand(1,20)
+				bonus = floor((living.get_stat(STATKEY_LCK)-10)/2)
 
-		chance *= chance_per_point
-
-		var/msg = success ? span_green("SUCCEEDS and [pick(success_message_list)]") : span_danger("FAILS and [pick(failure_message_list)] [chance]%")
+		//chance *= chance_per_point
+		var/msg = /*success ? span_green(*/"rolls a [roll][bonus >= 0 ? "+[bonus]" : "[bonus]"] on dice"/*) : span_danger("FAILS and [pick(failure_message_list)] [chance]%")*/
 
 		msg = replace_pronoun(user, msg)
 

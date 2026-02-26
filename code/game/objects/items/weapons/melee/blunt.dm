@@ -22,7 +22,7 @@
 	equip_sound = "rustle"
 	sharpness = IS_BLUNT
 	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_HIP
+	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
 	associated_skill = /datum/skill/combat/axesmaces
 	melting_material = /datum/material/iron
 	melt_amount = 75
