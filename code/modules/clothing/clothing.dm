@@ -78,6 +78,9 @@
 	var/proper_drying = FALSE
 	COOLDOWN_DECLARE(wet_stress_cd)
 
+	/// Defines for damage sounds, see [_DEFINES/clothing] and [pick_damage_sound]
+	var/material_category = ARMOR_MAT_FABRIC
+
 /obj/item/clothing/Initialize()
 	. = ..()
 	if(ispath(pocket_storage_component_path))
