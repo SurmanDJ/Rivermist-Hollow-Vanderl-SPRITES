@@ -69,6 +69,7 @@
 			targets += L
 	if(length(targets))
 		wild_target = pick(targets)
+	var/wild_magic_switch = rand(1,50)
 	owner.visible_message(span_notice("[owner] causes unpredictable magical effects."))
 	switch(wild_magic_switch)
 		if(1)
