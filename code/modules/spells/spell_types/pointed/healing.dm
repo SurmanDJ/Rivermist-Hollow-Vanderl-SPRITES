@@ -210,6 +210,8 @@
 	if(affecting)
 		affecting.heal_damage(amount_healed, amount_healed)
 		affecting.heal_wounds(amount_healed * wound_modifier)
+		C.adjustBruteLoss(-amount_healed * 0.2) //still heal the 20% of overall damage
+		C.adjustFireLoss(-amount_healed * 0.2)
 		C.update_damage_overlays()
 
 /datum/action/cooldown/spell/healing/profane

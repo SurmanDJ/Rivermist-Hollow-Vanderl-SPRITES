@@ -1,8 +1,8 @@
 /obj/item/clothing/undies
 	name = "briefs"
 	desc = "An absolute necessity."
-	icon = 'modular_rmh/icons/clothing/underwear.dmi'
-	mob_overlay_icon = 'modular_rmh/icons/clothing/onmob/underwear.dmi'
+	icon = 'modular_rmh/icons/clothing/underwear/underwear.dmi'
+	mob_overlay_icon = 'modular_rmh/icons/clothing/underwear/onmob/underwear.dmi'
 	icon_state = "briefs"
 	item_state = "briefs"
 	w_class = WEIGHT_CLASS_TINY
@@ -14,7 +14,7 @@
 	integrity_failure = 0.1
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	var/covers_breasts = FALSE
-	var/icon_state_base
+	var/mob_overlay_icon_base
 	boob_sized = FALSE
 	sewrepair = TRUE
 	salvage_result = /obj/item/natural/cloth
@@ -24,7 +24,7 @@
 
 /obj/item/clothing/undies/Initialize(mapload, ...)
 	. = ..()
-	icon_state_base = icon_state
+	mob_overlay_icon_base = mob_overlay_icon
 
 /obj/item/undies/attack(mob/M, mob/user, list/modifiers)
 	if(ishuman(M))
@@ -40,14 +40,17 @@
 	. = ..()
 	if(user.mouth == src)
 		flags_inv = null
-		icon_state = null
+		mob_overlay_icon = null
 		user.update_body()
-		user.update_body_parts()
+		user.update_inv_mouth()
+	else
+		flags_inv = HIDECROTCH
+		mob_overlay_icon = mob_overlay_icon_base
 
 /obj/item/clothing/undies/dropped(mob/user)
 	. = ..()
 	flags_inv = HIDECROTCH
-	icon_state = icon_state_base
+	mob_overlay_icon = mob_overlay_icon_base
 
 /obj/item/clothing/undies/bikini_bottom
 	name = "bikini bottom"

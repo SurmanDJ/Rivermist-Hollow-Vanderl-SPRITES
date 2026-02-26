@@ -1,8 +1,8 @@
 /obj/item/clothing/garter
 	name = "garters"
 	desc = "Holds up what's the most precios."
-	icon = 'modular_rmh/icons/clothing/garters.dmi'
-	mob_overlay_icon = 'modular_rmh/icons/clothing/onmob/garters.dmi'
+	icon = 'modular_rmh/icons/clothing/underwear/garters.dmi'
+	mob_overlay_icon = 'modular_rmh/icons/clothing/underwear/onmob/garters.dmi'
 	icon_state = "garters"
 	item_state = "garters"
 	w_class = WEIGHT_CLASS_TINY

@@ -1,8 +1,8 @@
 /obj/item/clothing/undershirt
 	name = "sheer body"
 	desc = "Something to cover yourself with."
-	icon = 'modular_rmh/icons/clothing/undershirt.dmi'
-	mob_overlay_icon = 'modular_rmh/icons/clothing/onmob/undershirts.dmi'
+	icon = 'modular_rmh/icons/clothing/underwear/undershirt.dmi'
+	mob_overlay_icon = 'modular_rmh/icons/clothing/underwear/onmob/undershirts.dmi'
 	icon_state = "solid"
 	item_state = "solid"
 	w_class = WEIGHT_CLASS_SMALL

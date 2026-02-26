@@ -38,3 +38,8 @@
 /obj/item/storage/fancy/ifak/attack_self(mob/user, list/modifiers)
 	. = ..()
 	to_chat(user, span_notice("[src] is now [is_open ? "open" : "closed"]."))
+
+/obj/item/storage/fancy/ifak/MiddleClick(mob/user, list/modifiers)
+	. = ..()
+	to_chat(user, span_notice("[src] is now [is_open ? "open" : "closed"]."))
+

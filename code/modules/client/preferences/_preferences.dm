@@ -450,7 +450,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		.flav-desc:hover { background-image: url('flavour_descriptors_hover.png'); }
 		.flav-text { top: 192px; left: 207px; width: 53px; height: 10px; background-image: url('flavour_text.png'); }
 		.flav-text:hover { background-image: url('flavour_text_hover.png'); }
-		.flav-misc { top: 210px; left: 207px; width: 45px; height: 10px; background-image: url('flavour_misc.png'); }
+		.flav-misc { top: 210px; left: 207px; width: 50px; height: 10px; background-image: url('flavour_misc.png'); }
 		.flav-misc:hover { background-image: url('flavour_misc_hover.png'); }
 		.flav-prev { top: 226px; left: 215px; width: 34px; height: 10px; background-image: url('flavour_preview.png'); }
 		.flav-prev:hover { background-image: url('flavour_preview_hover.png'); }

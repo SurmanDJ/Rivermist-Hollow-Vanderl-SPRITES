@@ -118,8 +118,8 @@
 
 	if(!(target in linked_users)) //sanity check
 		return
-	var/brute = target.getBruteLoss() * 0.13
-	var/burn  = target.getFireLoss()
+	var/brute = target.getBruteLoss() * 0.13 //yeah, magic numbers, but idc
+	var/burn  = target.getFireLoss() * 0.2 // the carbon update_health proc doesn't really count brute and burn damage to the limbs, so we have to do this little trick
 	var/tox   = target.getToxLoss()
 	var/oxy   = target.getOxyLoss()
 	var/total_damage = brute + burn + tox + oxy

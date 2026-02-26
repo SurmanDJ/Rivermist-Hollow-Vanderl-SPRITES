@@ -1,8 +1,8 @@
 /obj/item/clothing/bra
 	name = "bra"
 	desc = "An absolute necessity, for your chest."
-	icon = 'modular_rmh/icons/clothing/bra.dmi'
-	mob_overlay_icon = 'modular_rmh/icons/clothing/onmob/bra.dmi'
+	icon = 'modular_rmh/icons/clothing/underwear/bra.dmi'
+	mob_overlay_icon = 'modular_rmh/icons/clothing/underwear/onmob/bra.dmi'
 	icon_state = "bra"
 	item_state = "bra"
 	w_class = WEIGHT_CLASS_TINY

@@ -18,9 +18,11 @@
 
 	if(stat == DEAD)
 		return
+	if(status_flags & GODMODE)
+		return
 
-	var/brute = getBruteLoss()
-	var/burn  = getFireLoss()
+	var/brute = getBruteLoss() * 0.5
+	var/burn  = getFireLoss() * 0.5
 	var/tox   = getToxLoss()
 	var/oxy   = getOxyLoss()
 

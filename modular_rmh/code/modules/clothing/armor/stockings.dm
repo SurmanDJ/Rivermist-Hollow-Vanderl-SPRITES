@@ -1,8 +1,8 @@
 /obj/item/clothing/pants/chainlegs/iron/fishnet
 	name = "iron chain fishnets"
 	desc = "A legwear of chain interwoven."
-	icon = 'modular_rmh/icons/clothing/stockings.dmi'
-	mob_overlay_icon = 'modular_rmh/icons/clothing/onmob/stockings.dmi'
+	icon = 'modular_rmh/icons/clothing/underwear/stockings.dmi'
+	mob_overlay_icon = 'modular_rmh/icons/clothing/underwear/onmob/stockings.dmi'
 	icon_state = "fishnet"
 	color = "#9EA48E"
 	flags_inv = null
@@ -11,8 +11,8 @@
 /obj/item/clothing/pants/chainlegs/fishnet
 	name = "steel chain fishnets"
 	desc = "A legwear of chain interwoven."
-	icon = 'modular_rmh/icons/clothing/stockings.dmi'
-	mob_overlay_icon = 'modular_rmh/icons/clothing/onmob/stockings.dmi'
+	icon = 'modular_rmh/icons/clothing/underwear/stockings.dmi'
+	mob_overlay_icon = 'modular_rmh/icons/clothing/underwear/onmob/stockings.dmi'
 	icon_state = "fishnet"
 	color = "#9BADB7"
 	flags_inv = null
