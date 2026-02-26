@@ -3736,6 +3736,7 @@
 #include "modular_rmh\code\modules\clothing\armor\leather.dm"
 #include "modular_rmh\code\modules\clothing\armor\skirts.dm"
 #include "modular_rmh\code\modules\clothing\armor\stockings.dm"
+#include "modular_rmh\code\modules\clothing\face\fancy_spectacles.dm"
 #include "modular_rmh\code\modules\clothing\infraredbaron\armor.dm"
 #include "modular_rmh\code\modules\clothing\infraredbaron\cloaks.dm"
 #include "modular_rmh\code\modules\clothing\infraredbaron\hats.dm"

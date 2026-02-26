@@ -316,6 +316,16 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Halfmask"
 	item_path = /obj/item/clothing/face/shepherd/rag
 
+/datum/loadout_item/fancy_spectacles
+	name = "Fancy Spectacles"
+	item_path = /obj/item/clothing/face/spectacles/fancy
+	point_cost = 3
+
+/datum/loadout_item/fancy_spectacles_d
+	name = "Fancy Spectacles (Dark)"
+	item_path = /obj/item/clothing/face/spectacles/fancy_dark
+	point_cost = 3
+
 // CLOTHING - DRESSES & ROBES
 /datum/loadout_item/tri_ornate_dress
 	name = "Ornate Dress"
