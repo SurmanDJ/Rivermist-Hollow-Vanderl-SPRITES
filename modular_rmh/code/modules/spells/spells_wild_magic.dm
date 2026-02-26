@@ -69,8 +69,9 @@
 			targets += L
 	if(length(targets))
 		wild_target = pick(targets)
+	var/wild_magic_switch = rand(1,50)
 	owner.visible_message(span_notice("[owner] causes unpredictable magical effects."))
-	switch(rand(1,50))
+	switch(wild_magic_switch)
 		if(1)
 			/*var/datum/action/cooldown/spell/enchantment/green_flame/G = new
 			G.owner = owner
@@ -112,14 +113,18 @@
 			owner.visible_message(span_nicegreen("Living vines spiral around [owner]'s hand as Dendor answers the chaos!"))
 			H.cast(owner)
 		if(7)
-			var/datum/action/cooldown/spell/undirected/shapeshift/frog/F = new
+			/*var/datum/action/cooldown/spell/undirected/shapeshift/frog/F = new
 			F.owner = owner
 			owner.visible_message(span_danger("[owner]'s body twists and collapses into a small, croaking shape!"))
 			var/mob/living/frog = F.do_shapeshift(owner)
 			if(!frog)
 				return
 			addtimer(
-				CALLBACK(src, PROC_REF(restore_frog_form), frog), 10 SECONDS)
+				CALLBACK(src, PROC_REF(restore_frog_form), frog), 10 SECONDS)*/
+			var/datum/action/cooldown/spell/healing/greater/Hm= new
+			Hm.owner = owner
+			owner.visible_message(span_nicegreen("The [wild_target ? wild_target : owner]`s wounds instantly begin to heal."))
+			Hm.cast(wild_target ? wild_target : owner)
 		if(8)
 			var/datum/action/cooldown/spell/undirected/shapeshift/mist/M = new
 			M.owner = owner
@@ -128,6 +133,11 @@
 			if(!mist)
 				return
 			addtimer(CALLBACK(src, PROC_REF(restore_mist_form), mist), 10 SECONDS)
+			/*wild_magic_proc = TRUE
+			owner.visible_message(span_danger("Unstable energy pulses rhythmically from [owner], each heartbeat threatening another chaotic eruption."))
+			for(var/count = 0, count <= 10, count++)
+				addtimer(CALLBACK(src, PROC_REF(wild_magic_cast), cast_on), 6 SECONDS)		Я не ебу как это доделать, так что делать это не буду, но код оставлю
+			wild_magic_proc = FALSE*/
 		if(9)
 			var/datum/action/cooldown/spell/undirected/jaunt/ethereal_jaunt/J = new
 			J.owner = owner
