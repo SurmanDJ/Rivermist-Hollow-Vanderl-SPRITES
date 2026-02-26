@@ -1396,7 +1396,7 @@
 		switch(key)
 			if("strength")
 				/*success = living.stat_roll(STATKEY_STR, chance_per_point)
-				chance = living.get_stat(STATKEY_STR) все эти роллы нам не нужны из-за никти, новая система здравствует!*/
+				chance = living.get_stat(STATKEY_STR)*/
 				roll = rand(1,20)
 				bonus = floor((living.get_stat(STATKEY_STR)-10)/2)
 			if("perception")
