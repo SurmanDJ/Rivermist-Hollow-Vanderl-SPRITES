@@ -1,0 +1,208 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/wooddark/horizontal,
+/area/indoors/town/rmh)
+"b" = (
+/turf/open/floor/ruinedwood/herringbone,
+/area/indoors/town/rmh)
+"c" = (
+/turf/closed/wall/mineral/craftstone,
+/area/indoors/town/rmh)
+"g" = (
+/turf/closed/wall/mineral/wooddark/vertical,
+/area/indoors/town/rmh)
+"k" = (
+/obj/effect/decal/edge_corner{
+	dir = 2;
+	color = "#522f26";
+	pixel_y = 0
+	},
+/turf/open/floor/blocks/stonered,
+/area/indoors/town/rmh)
+"m" = (
+/obj/machinery/light/fueled/wallfire/candle/r,
+/turf/open/floor/ruinedwood/herringbone,
+/area/indoors/town/rmh)
+"n" = (
+/obj/machinery/light/fueled/hearth,
+/obj/machinery/light/fueled/oven/south,
+/turf/open/floor/cobblerock,
+/area/indoors/town/rmh)
+"o" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#522f26"
+	},
+/turf/open/floor/blocks/stonered/tiny,
+/area/indoors/town/rmh)
+"q" = (
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#522f26"
+	},
+/turf/open/floor/blocks/stonered/tiny,
+/area/indoors/town/rmh)
+"t" = (
+/obj/structure/window/openclose/reinforced{
+	dir = 4
+	},
+/obj/structure/curtain/dir{
+	dir = 4;
+	color = "#8a6b6b"
+	},
+/turf/open/floor/woodturned,
+/area/indoors/town/rmh)
+"w" = (
+/turf/open/floor/blocks/stonered/tiny,
+/area/indoors/town/rmh)
+"y" = (
+/obj/structure/door/weak/bolt{
+	dir = 4
+	},
+/turf/open/floor/ruinedwood,
+/area/indoors/town/rmh)
+"B" = (
+/obj/structure/closet/crate/chest/wicker,
+/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
+/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
+/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
+/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
+/obj/item/reagent_containers/food/snacks/meat/steak,
+/obj/item/reagent_containers/food/snacks/meat/steak,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/cabbage,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/potato,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/potato,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/potato,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/onion,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/onion,
+/turf/open/floor/ruinedwood/herringbone,
+/area/indoors/town/rmh)
+"C" = (
+/turf/closed/wall/mineral/wooddark,
+/area/indoors/town/rmh)
+"E" = (
+/obj/effect/decal/edge_corner{
+	dir = 8;
+	color = "#522f26";
+	pixel_y = 0
+	},
+/turf/open/floor/blocks/stonered,
+/area/indoors/town/rmh)
+"J" = (
+/turf/open/floor/ruinedwood/chevron,
+/area/indoors/town/rmh)
+"K" = (
+/obj/structure/sign/property_sign/claim,
+/turf/closed/wall/mineral/wooddark,
+/area/indoors/town/rmh)
+"L" = (
+/obj/effect/decal/edge{
+	dir = 10;
+	color = "#522f26"
+	},
+/turf/open/floor/blocks/stonered/tiny,
+/area/indoors/town/rmh)
+"N" = (
+/obj/effect/decal/edge_corner{
+	dir = 1;
+	color = "#522f26";
+	pixel_y = 0
+	},
+/turf/open/floor/blocks/stonered,
+/area/indoors/town/rmh)
+"Q" = (
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#522f26"
+	},
+/turf/open/floor/blocks/stonered,
+/area/indoors/town/rmh)
+"T" = (
+/obj/effect/decal/edge_corner{
+	dir = 4;
+	color = "#522f26"
+	},
+/turf/open/floor/blocks/stonered,
+/area/indoors/town/rmh)
+"X" = (
+/obj/machinery/light/fueled/wallfire/candle/l,
+/turf/open/floor/ruinedwood/herringbone,
+/area/indoors/town/rmh)
+"Y" = (
+/obj/structure/door{
+	lockid = "housing5";
+	name = "C-House V"
+	},
+/turf/open/floor/concrete,
+/area/indoors/town/rmh)
+
+(1,1,1) = {"
+C
+a
+t
+K
+Y
+C
+a
+C
+"}
+(2,1,1) = {"
+g
+E
+k
+b
+b
+X
+B
+g
+"}
+(3,1,1) = {"
+c
+q
+o
+b
+m
+b
+b
+g
+"}
+(4,1,1) = {"
+n
+q
+L
+k
+C
+y
+a
+C
+"}
+(5,1,1) = {"
+c
+q
+w
+o
+g
+J
+J
+g
+"}
+(6,1,1) = {"
+g
+N
+Q
+T
+g
+J
+J
+g
+"}
+(7,1,1) = {"
+C
+a
+a
+a
+C
+a
+a
+C
+"}

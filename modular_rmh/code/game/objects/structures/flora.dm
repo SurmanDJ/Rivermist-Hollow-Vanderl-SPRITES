@@ -101,19 +101,19 @@
 	name = "green bush"
 	icon = 'modular_rmh/icons/obj/flora/greenflora.dmi'
 	icon_state = "bush_green1"
-	base_icon_state = "bush_green1"
+	base_icon_state = "bush_green"
 
 /obj/structure/flora/grass/bush_meagre/green2
 	name = "green bush"
 	icon = 'modular_rmh/icons/obj/flora/greenflora.dmi'
 	icon_state = "bush_green2"
-	base_icon_state = "bush_green2"
+	base_icon_state = "bush_green"
 
 /obj/structure/flora/grass/bush_meagre/green3
 	name = "green bush"
 	icon = 'modular_rmh/icons/obj/flora/greenflora.dmi'
 	icon_state = "bush_green3"
-	base_icon_state = "bush_green3"
+	base_icon_state = "bush_green"
 
 /obj/structure/flora/mushroomcluster
 	name = "mushroom cluster"
@@ -155,3 +155,28 @@
 /obj/structure/flora/grass/both/Initialize()
 	icon_state = "snowgrassall[rand(1, 3)]"
 	. = ..()
+
+
+/obj/structure/flora/grass/sparegrass
+	name = "sparse grass"
+	desc = "Thin, sparse tufts of grass native to this area."
+	icon = 'icons/obj/flora/ausflora.dmi'
+	icon_state = "sparsegrass_1"
+	base_icon_state = "sparsegrass_"
+	max_integrity = 5
+
+/obj/structure/flora/grass/sparegrass/Initialize()
+	. = ..()
+	icon_state = "sparsegrass_[rand(1,3)]"
+
+/obj/structure/flora/grass/fullgrass
+	name = "full grass"
+	desc = "Thick, healthy clumps of grass."
+	icon = 'icons/obj/flora/ausflora.dmi'
+	icon_state = "fullgrass_1"
+	base_icon_state = "fullgrass_"
+	max_integrity = 6
+
+/obj/structure/flora/grass/fullgrass/Initialize()
+	. = ..()
+	icon_state = "fullgrass_[rand(1,3)]"
