@@ -1,5 +1,5 @@
 /obj/structure/fake_machine/vendor/inn_rmh
-	lock = /datum/lock/key/vendor
+	lockids = list(ACCESS_INN)
 
 /obj/structure/fake_machine/vendor/inn_rmh/Initialize()
     . = ..()

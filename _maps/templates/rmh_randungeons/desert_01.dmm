@@ -1,0 +1,5520 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/structure/well/fountain{
+	pixel_y = 0;
+	plane = -7;
+	layer = 5
+	},
+/turf/open/floor/tile/brick,
+/area/under/rmh_desert/pyramid)
+"az" = (
+/obj/effect/decal/edge{
+	color = "#7a684b";
+	dir = 8
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"aT" = (
+/obj/effect/decal/edge_corner{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/tile/harem,
+/area/under/rmh_desert/pyramid)
+"bv" = (
+/obj/effect/decal/edge_corner{
+	dir = 1;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"bz" = (
+/obj/structure/window/stained/yellow,
+/obj/effect/mapping_helpers/secret_door_creator{
+	name = "Desert Dungeon01 Door";
+	redstone_id = "Desertdoor3";
+	floor_turf = /turf/open/floor/concrete
+	},
+/turf/open/floor/sandstone_tile/five,
+/area/under/rmh_desert/pyramid)
+"bE" = (
+/obj/structure/trap/wall_projectile/fireball{
+	dir = 8;
+	alpha = 0;
+	name = "tough fireball plate trap"
+	},
+/turf/open/floor/tile/brownbrick,
+/area/under/rmh_desert/pyramid)
+"bH" = (
+/obj/effect/decal/borderfall{
+	pixel_y = 0;
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/structure/fluff/railing/corner{
+	dir = 9
+	},
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"bK" = (
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"cp" = (
+/obj/effect/decal/edge{
+	color = "#7a684b";
+	dir = 8
+	},
+/turf/open/floor/sandstone_tile/six,
+/area/under/rmh_desert/pyramid)
+"cu" = (
+/turf/open/floor/sandstone_tile/six,
+/area/under/rmh_desert/pyramid)
+"cx" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile/four,
+/area/under/rmh_desert/pyramid)
+"cI" = (
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#522f26"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"dg" = (
+/obj/effect/decal/borderfall{
+	pixel_y = 0;
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/effect/decal/borderfall{
+	dir = 1;
+	pixel_y = 8
+	},
+/obj/structure/fluff/railing/corner{
+	dir = 9
+	},
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"dj" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/floor/sandstone_tile/five,
+/area/under/rmh_desert/pyramid)
+"dp" = (
+/obj/effect/decal/edge_corner{
+	dir = 4;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"dO" = (
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile/five,
+/area/under/rmh_desert/pyramid)
+"el" = (
+/obj/structure/lever/hidden{
+	redstone_id = "Desertdoor2";
+	name = "secret lever"
+	},
+/turf/closed/wall/mineral/desert_soapstone,
+/area/under/rmh_desert/pyramid)
+"en" = (
+/obj/effect/decal/borderfall{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = 8
+	},
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"eo" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/effect/decal/edge{
+	dir = 10;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"es" = (
+/obj/effect/decal/edge{
+	dir = 5;
+	color = "#3b3b3b"
+	},
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#522f26"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"eB" = (
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#3b3b3b"
+	},
+/obj/effect/decal/edge{
+	dir = 10;
+	color = "#522f26"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"eO" = (
+/obj/structure/window/stained/yellow,
+/turf/closed/wall/mineral/desert_sandstone,
+/area/under/rmh_desert/pyramid)
+"eR" = (
+/obj/structure/flora/grass/bush/wall,
+/turf/open/floor/grass,
+/area/under/rmh_desert/pyramid)
+"fx" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/obj/structure/fluff/railing/corner{
+	dir = 9
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"fB" = (
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
+	},
+/obj/effect/decal/borderfall{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = 8
+	},
+/obj/structure/fluff/railing/corner/south_east,
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"fF" = (
+/obj/machinery/light/fueled/firebowl,
+/turf/closed/wall/mineral/desert_sandstone,
+/area/under/rmh_desert/pyramid)
+"fT" = (
+/obj/machinery/light/fueled/firebowl/church,
+/turf/closed/wall/mineral/desert_sandstone,
+/area/under/rmh_desert/pyramid)
+"gL" = (
+/obj/effect/decal/edge_corner{
+	dir = 8;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"ha" = (
+/obj/effect/decal/edge_corner{
+	color = "#7a684b";
+	dir = 8
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"hg" = (
+/obj/effect/decal/borderfall{
+	pixel_y = 0;
+	dir = 8;
+	pixel_x = -8
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"hx" = (
+/obj/effect/decal/edge{
+	color = "#7a684b"
+	},
+/turf/open/floor/sandstone_tile/six,
+/area/under/rmh_desert/pyramid)
+"hG" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"hI" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"hL" = (
+/obj/structure/pressure_plate{
+	redstone_id = "DQuiz1_3";
+	alpha = 5;
+	layer = 2;
+	name = "desert pressure plate"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"ii" = (
+/obj/structure/fluff/railing/border/west,
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"iu" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#3b3b3b";
+	pixel_y = 0
+	},
+/turf/open/floor/sandstone_tile/five,
+/area/under/rmh_desert/pyramid)
+"iV" = (
+/obj/effect/decal/edge{
+	dir = 6;
+	color = "#3b3b3b"
+	},
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#522f26"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"iX" = (
+/obj/structure/pressure_plate{
+	redstone_id = "DQuiz2_4";
+	alpha = 5;
+	layer = 2;
+	name = "desert pressure plate"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"jb" = (
+/obj/effect/decal/edge_corner{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"jq" = (
+/turf/open/floor/tile/brick,
+/area/under/rmh_desert/pyramid)
+"js" = (
+/obj/effect/decal/edge_corner{
+	dir = 8;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/tile/harem,
+/area/under/rmh_desert/pyramid)
+"jv" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/obj/effect/decal/borderfall{
+	dir = 1;
+	pixel_y = 8
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"jK" = (
+/obj/structure/trap/mine,
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"jT" = (
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
+	},
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"ke" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/obj/structure/fluff/railing/corner/north_east,
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"kg" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/floor/sandstone_tile/five,
+/area/under/rmh_desert/pyramid)
+"kj" = (
+/obj/structure/fluff/statue/femalestatue/cleanlying{
+	pixel_y = 0;
+	pixel_x = -18
+	},
+/obj/effect/decal/borderfall{
+	pixel_y = 0;
+	dir = 8;
+	pixel_x = -8
+	},
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"kG" = (
+/obj/effect/decal/edge_corner{
+	color = "#7a684b";
+	dir = 1
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"lJ" = (
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#3b3b3b";
+	pixel_y = 0
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"mf" = (
+/obj/structure/pressure_plate{
+	redstone_id = "DQuiz2_1";
+	alpha = 5;
+	layer = 2;
+	name = "desert pressure plate"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"mk" = (
+/obj/effect/decal/edge{
+	color = "#7a684b"
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"mG" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/effect/decal/edge{
+	dir = 6;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile/five,
+/area/under/rmh_desert/pyramid)
+"mK" = (
+/obj/structure/fluff/railing/corner/north_east,
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"np" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"nD" = (
+/turf/open/lava/acid,
+/area/under/rmh_desert/pyramid)
+"nU" = (
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	pixel_y = 0
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"nW" = (
+/obj/structure/lever,
+/turf/open/floor/sandstone_tile/six,
+/area/under/rmh_desert/pyramid)
+"od" = (
+/obj/structure/lever/hidden{
+	redstone_id = "doorMainDesert";
+	name = "secret lever"
+	},
+/turf/closed/wall/mineral/desert_soapstone,
+/area/under/rmh_desert/pyramid)
+"oj" = (
+/turf/open/floor/sandstone_tile/three,
+/area/under/rmh_desert/pyramid)
+"ov" = (
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	pixel_y = 0
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"ow" = (
+/obj/effect/decal/edge_corner{
+	dir = 1;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/tile/harem,
+/area/under/rmh_desert/pyramid)
+"pv" = (
+/obj/structure/stone_tile/block,
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"py" = (
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
+	},
+/obj/effect/decal/borderfall{
+	dir = 1;
+	pixel_y = 8
+	},
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"pR" = (
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"qk" = (
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 1
+	},
+/obj/effect/decal/edge{
+	dir = 9;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"ri" = (
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile/four,
+/area/under/rmh_desert/pyramid)
+"rC" = (
+/obj/effect/decal/borderfall{
+	pixel_y = 0;
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
+	},
+/obj/structure/fluff/railing/corner/south_west,
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"rG" = (
+/obj/structure/bars/passage{
+	damage_deflection = 9999;
+	redstone_id = "DQuiz2_3"
+	},
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"rL" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/obj/effect/decal/edge{
+	dir = 5;
+	color = "#522f26"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"sc" = (
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"sE" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/effect/decal/edge{
+	dir = 9;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"sL" = (
+/obj/effect/decal/edge{
+	color = "#7a684b";
+	dir = 10
+	},
+/turf/open/floor/sandstone_tile/six,
+/area/under/rmh_desert/pyramid)
+"tF" = (
+/obj/effect/decal/borderfall{
+	dir = 1;
+	pixel_y = 8
+	},
+/obj/effect/decal/borderfall{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = 8
+	},
+/obj/structure/fluff/railing/corner/north_east,
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"tM" = (
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#3b3b3b";
+	pixel_y = 0
+	},
+/turf/open/floor/sandstone_tile/six,
+/area/under/rmh_desert/pyramid)
+"tW" = (
+/obj/structure/pressure_plate{
+	redstone_id = "DQuiz1_4";
+	alpha = 5;
+	layer = 2;
+	name = "desert pressure plate"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"uk" = (
+/obj/structure/stone_tile/block/cracked,
+/turf/open/floor/sandstone_tile/five,
+/area/under/rmh_desert/pyramid)
+"uV" = (
+/obj/effect/decal/edge_corner{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"vs" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 1
+	},
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"vt" = (
+/obj/structure/pressure_plate,
+/turf/open/floor/sandstone_tile/six,
+/area/under/rmh_desert/pyramid)
+"vT" = (
+/obj/effect/decal/borderfall{
+	dir = 1;
+	pixel_y = 8
+	},
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"wb" = (
+/obj/effect/decal/edge{
+	color = "#7a684b";
+	dir = 6
+	},
+/turf/open/floor/sandstone_tile/six,
+/area/under/rmh_desert/pyramid)
+"wg" = (
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#3b3b3b";
+	pixel_y = 0
+	},
+/obj/structure/pressure_plate{
+	redstone_id = "Desertdoor4";
+	alpha = 5;
+	layer = 2;
+	pixel_x = 2
+	},
+/obj/structure/stone_tile/burnt{
+	dir = 4
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"wo" = (
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"wt" = (
+/obj/effect/decal/edge{
+	dir = 6;
+	color = "#3b3b3b"
+	},
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile/burnt,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	pixel_y = 0;
+	dir = 10
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"wL" = (
+/obj/structure/bars,
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"wM" = (
+/obj/structure/pressure_plate{
+	redstone_id = "DQuiz2_2";
+	alpha = 5;
+	layer = 2;
+	name = "desert pressure plate"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"xr" = (
+/obj/structure/fluff/railing/corner/south_east,
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"xL" = (
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/tile/harem,
+/area/under/rmh_desert/pyramid)
+"xP" = (
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile/burnt,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	pixel_y = 0;
+	dir = 10
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"yp" = (
+/obj/effect/decal/edge_corner{
+	dir = 1;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"yV" = (
+/obj/effect/decal/edge{
+	color = "#7a684b";
+	dir = 1
+	},
+/turf/open/floor/sandstone_tile/six,
+/area/under/rmh_desert/pyramid)
+"zh" = (
+/obj/structure/window/stained/yellow,
+/obj/effect/mapping_helpers/secret_door_creator{
+	name = "Desert Dungeon01 Door";
+	redstone_id = "Desertdoor2";
+	floor_turf = /turf/open/floor/concrete
+	},
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"Ac" = (
+/turf/closed/wall/mineral/desert_soapstone,
+/area/under/rmh_desert/pyramid)
+"Ao" = (
+/obj/machinery/light/fueled/firebowl/church{
+	pixel_y = 4
+	},
+/turf/closed/wall/mineral/desert_soapstone,
+/area/under/rmh_desert/pyramid)
+"AD" = (
+/obj/effect/decal/edge_corner{
+	dir = 4;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"AK" = (
+/obj/effect/decal/edge{
+	dir = 6;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/tile/harem,
+/area/under/rmh_desert/pyramid)
+"Bh" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/obj/structure/stone_tile/block,
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"Bi" = (
+/obj/structure/fluff/railing/corner{
+	dir = 9
+	},
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"BA" = (
+/obj/effect/decal/borderfall{
+	pixel_y = 0;
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/structure/fluff/railing/corner/south_west,
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"BN" = (
+/obj/structure/stone_tile/block,
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile/five,
+/area/under/rmh_desert/pyramid)
+"Da" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"Dd" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 1
+	},
+/obj/effect/decal/edge{
+	dir = 5;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"De" = (
+/obj/structure/trap/fire{
+	alpha = 0;
+	name = "tough flamejet plate trap";
+	mouse_opacity = 0
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"Dp" = (
+/obj/structure/bars/passage{
+	damage_deflection = 9999;
+	redstone_id = "DQuiz2_4"
+	},
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"DE" = (
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"Ee" = (
+/turf/open/floor/sandstone_tile/four,
+/area/under/rmh_desert/pyramid)
+"Eh" = (
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#3b3b3b"
+	},
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/floor/sandstone_tile/five,
+/area/under/rmh_desert/pyramid)
+"Em" = (
+/obj/effect/decal/edge{
+	dir = 10;
+	color = "#3b3b3b";
+	pixel_y = 0
+	},
+/turf/open/floor/tile/harem,
+/area/under/rmh_desert/pyramid)
+"EK" = (
+/obj/effect/decal/edge{
+	dir = 9;
+	color = "#3b3b3b";
+	pixel_y = 0
+	},
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#522f26"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"EQ" = (
+/obj/effect/decal/edge{
+	dir = 9;
+	color = "#3b3b3b";
+	pixel_y = 0
+	},
+/turf/open/floor/tile/harem,
+/area/under/rmh_desert/pyramid)
+"ET" = (
+/turf/open/floor/tile/brownbrick,
+/area/under/rmh_desert/pyramid)
+"FD" = (
+/obj/structure/window/stained/yellow,
+/obj/structure/lever/hidden{
+	redstone_id = "Desertdoor5";
+	name = "secret lever"
+	},
+/turf/closed/wall/mineral/desert_soapstone,
+/area/under/rmh_desert/pyramid)
+"FN" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#3b3b3b";
+	pixel_y = 0
+	},
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"FU" = (
+/obj/effect/decal/edge{
+	dir = 6;
+	color = "#3b3b3b"
+	},
+/obj/machinery/light/fueled/firebowl/church{
+	pixel_y = 4
+	},
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"GH" = (
+/obj/effect/decal/edge_corner{
+	dir = 4;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/tile/harem,
+/area/under/rmh_desert/pyramid)
+"GM" = (
+/obj/effect/mapping_helpers/secret_door_creator{
+	name = "Desert Dungeon01 Door";
+	redstone_id = "Desertdoor6";
+	floor_turf = /turf/open/floor/concrete
+	},
+/turf/closed/wall/mineral/desert_sandstone,
+/area/under/rmh_desert/pyramid)
+"GP" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile/six,
+/area/under/rmh_desert/pyramid)
+"Hx" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"HJ" = (
+/obj/structure/window/stained/yellow,
+/obj/effect/mapping_helpers/secret_door_creator{
+	name = "Desert Dungeon01 Door";
+	redstone_id = "Desertdoor4";
+	floor_turf = /turf/open/floor/concrete
+	},
+/turf/open/floor/sandstone_tile/five,
+/area/under/rmh_desert/pyramid)
+"HK" = (
+/obj/effect/decal/edge{
+	dir = 5;
+	color = "#3b3b3b"
+	},
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/floor/sandstone_tile/five,
+/area/under/rmh_desert/pyramid)
+"Iw" = (
+/obj/structure/pressure_plate{
+	redstone_id = "Desertdoor3";
+	alpha = 5;
+	layer = 2
+	},
+/turf/open/floor/sandstone_tile/three,
+/area/under/rmh_desert/pyramid)
+"IL" = (
+/obj/effect/decal/edge{
+	color = "#7a684b";
+	dir = 5
+	},
+/turf/open/floor/sandstone_tile/six,
+/area/under/rmh_desert/pyramid)
+"Jp" = (
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	pixel_y = 0
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/effect/decal/edge{
+	dir = 10;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"Js" = (
+/obj/effect/decal/borderfall{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = 8
+	},
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"JB" = (
+/obj/effect/mapping_helpers/secret_door_creator{
+	name = "Desert Dungeon01 Door";
+	redstone_id = "Desertdoor5";
+	floor_turf = /turf/open/floor/concrete
+	},
+/obj/structure/window/stained/yellow,
+/turf/closed/wall/mineral/desert_soapstone,
+/area/under/rmh_desert/pyramid)
+"JH" = (
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#3b3b3b";
+	pixel_y = 0
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"Ko" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/tile/harem,
+/area/under/rmh_desert/pyramid)
+"Kr" = (
+/obj/structure/stairs/stone{
+	dir = 4
+	},
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"Ks" = (
+/obj/structure/pressure_plate{
+	redstone_id = "DQuiz1_1";
+	alpha = 5;
+	layer = 2;
+	name = "desert pressure plate"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"Kv" = (
+/obj/structure/fluff/statue/aasimar,
+/obj/effect/decal/borderfall{
+	dir = 1;
+	pixel_y = 8
+	},
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
+	},
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"KI" = (
+/obj/effect/decal/borderfall{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = 8
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"La" = (
+/obj/effect/decal/edge{
+	color = "#7a684b";
+	dir = 4
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"Li" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"Ll" = (
+/obj/effect/mapping_helpers/secret_door_creator{
+	name = "Desert Dungeon01 Door";
+	redstone_id = "Desertdoor1";
+	floor_turf = /turf/open/floor/concrete
+	},
+/obj/structure/window/stained/yellow,
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"Lo" = (
+/obj/structure/bars/passage{
+	damage_deflection = 9999;
+	redstone_id = "DQuiz1_1"
+	},
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"Lq" = (
+/obj/effect/decal/edge{
+	dir = 10;
+	color = "#3b3b3b"
+	},
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#522f26"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"Lx" = (
+/obj/effect/decal/borderfall{
+	pixel_y = 0;
+	dir = 8;
+	pixel_x = -8
+	},
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"LL" = (
+/obj/effect/decal/edge{
+	dir = 10;
+	color = "#3b3b3b"
+	},
+/obj/structure/stone_tile/block/cracked,
+/turf/open/floor/sandstone_tile/five,
+/area/under/rmh_desert/pyramid)
+"LW" = (
+/obj/structure/bars/tough{
+	damage_deflection = 500
+	},
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"LY" = (
+/obj/effect/decal/edge{
+	dir = 5;
+	color = "#3b3b3b"
+	},
+/obj/machinery/light/fueled/firebowl/church{
+	pixel_y = 4
+	},
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"MT" = (
+/obj/structure/bars/passage{
+	damage_deflection = 9999;
+	redstone_id = "DQuiz1_2"
+	},
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"MY" = (
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#522f26"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"Nu" = (
+/obj/effect/decal/edge{
+	dir = 5;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/tile/harem,
+/area/under/rmh_desert/pyramid)
+"NU" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"NV" = (
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/tile/harem,
+/area/under/rmh_desert/pyramid)
+"Of" = (
+/obj/effect/decal/edge{
+	dir = 8;
+	color = "#3b3b3b";
+	pixel_y = 0
+	},
+/turf/open/floor/tile/harem,
+/area/under/rmh_desert/pyramid)
+"Op" = (
+/obj/structure/window/stained/yellow,
+/turf/closed/wall/mineral/desert_soapstone,
+/area/under/rmh_desert/pyramid)
+"OK" = (
+/obj/effect/decal/borderfall{
+	pixel_y = 0;
+	dir = 8;
+	pixel_x = -8
+	},
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"OS" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/obj/effect/decal/edge{
+	dir = 9;
+	color = "#522f26"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"Qf" = (
+/obj/structure/window/stained/yellow,
+/obj/structure/lever/hidden{
+	redstone_id = "Desertdoor1";
+	name = "secret lever"
+	},
+/turf/closed/wall/mineral/desert_sandstone,
+/area/under/rmh_desert/pyramid)
+"Ro" = (
+/obj/effect/decal/edge{
+	color = "#7a684b";
+	dir = 9
+	},
+/turf/open/floor/sandstone_tile/six,
+/area/under/rmh_desert/pyramid)
+"Rr" = (
+/obj/structure/pressure_plate{
+	redstone_id = "DQuiz2_3";
+	alpha = 5;
+	layer = 2;
+	name = "desert pressure plate"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"Rs" = (
+/obj/structure/pressure_plate{
+	redstone_id = "DQuiz1_2";
+	alpha = 5;
+	layer = 2;
+	name = "desert pressure plate"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"RB" = (
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"RG" = (
+/obj/structure/bars/passage{
+	damage_deflection = 9999;
+	redstone_id = "DQuiz1_4"
+	},
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"RT" = (
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"Sh" = (
+/obj/effect/decal/edge{
+	dir = 4;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile/six,
+/area/under/rmh_desert/pyramid)
+"SX" = (
+/obj/structure/lever/hidden{
+	redstone_id = "Desertdoor6";
+	name = "secret lever"
+	},
+/turf/closed/wall/mineral/desert_sandstone,
+/area/under/rmh_desert/pyramid)
+"Te" = (
+/turf/open/floor/sandstone_tile/five,
+/area/under/rmh_desert/pyramid)
+"Tp" = (
+/obj/structure/bars/passage{
+	damage_deflection = 9999;
+	redstone_id = "DQuiz2_1"
+	},
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"Ts" = (
+/turf/open/floor/tile,
+/area/under/rmh_desert/pyramid)
+"Tu" = (
+/obj/effect/decal/edge{
+	dir = 2;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone_tile/five,
+/area/under/rmh_desert/pyramid)
+"Tv" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"Ug" = (
+/obj/effect/decal/edge{
+	color = "#7a684b";
+	dir = 1
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"Up" = (
+/obj/effect/decal/edge_corner{
+	color = "#7a684b";
+	dir = 4
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"Vb" = (
+/turf/closed/wall/mineral/desert_sandstone,
+/area/under/rmh_desert/pyramid)
+"Vd" = (
+/obj/effect/decal/edge{
+	dir = 9;
+	color = "#3b3b3b"
+	},
+/obj/machinery/light/fueled/firebowl/church{
+	pixel_y = 4
+	},
+/turf/open/floor/sandstone_tile/two,
+/area/under/rmh_desert/pyramid)
+"Vw" = (
+/obj/effect/decal/edge_corner{
+	color = "#7a684b"
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"VN" = (
+/obj/machinery/light/fueled/firebowl/church{
+	pixel_y = 4
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"Wj" = (
+/turf/closed/mineral/bedrock{
+	name = "solid rock"
+	},
+/area/under/rmh_bedrock)
+"Wu" = (
+/obj/structure/bars/passage{
+	damage_deflection = 9999;
+	redstone_id = "dw"
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"WN" = (
+/obj/effect/decal/edge_corner{
+	dir = 8;
+	color = "#3b3b3b"
+	},
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
+"Xj" = (
+/obj/effect/decal/edge{
+	dir = 1;
+	color = "#3b3b3b"
+	},
+/obj/effect/decal/edge{
+	dir = 6;
+	color = "#522f26"
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"Xq" = (
+/obj/structure/stone_tile/block,
+/turf/open/floor/sandstone_tile/five,
+/area/under/rmh_desert/pyramid)
+"XN" = (
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 8
+	},
+/obj/structure/stone_tile/surrounding_tile/burnt{
+	dir = 1
+	},
+/turf/open/floor/sandstone_tile,
+/area/under/rmh_desert/pyramid)
+"Yh" = (
+/obj/structure/bars/passage{
+	damage_deflection = 9999;
+	redstone_id = "DQuiz2_2"
+	},
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"YM" = (
+/obj/structure/bars/passage{
+	damage_deflection = 9999;
+	redstone_id = "DQuiz1_3"
+	},
+/turf/open/floor/concrete,
+/area/under/rmh_desert/pyramid)
+"ZS" = (
+/obj/effect/decal/edge{
+	color = "#7a684b";
+	dir = 4
+	},
+/turf/open/floor/sandstone_tile/six,
+/area/under/rmh_desert/pyramid)
+
+(1,1,1) = {"
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Wj
+Wj
+Ac
+Vb
+Vb
+Op
+Vb
+Vb
+Ac
+Vb
+Vb
+Vb
+Ac
+Vb
+Vb
+Op
+Vb
+Vb
+Ac
+Vb
+Vb
+Ac
+Vb
+Vb
+Vb
+SX
+Ac
+Vb
+Vb
+Ac
+Wj
+Wj
+Ac
+Vb
+Vb
+Ao
+Op
+Vb
+Vb
+Op
+Ao
+Vb
+Vb
+Ac
+"}
+(2,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wt
+Eh
+HK
+hI
+ov
+Vb
+Ac
+Kv
+Ac
+Vb
+xP
+dj
+HK
+hI
+ov
+Vb
+dg
+OK
+BA
+ii
+ii
+ii
+ii
+bH
+OK
+rC
+Vb
+Wj
+Wj
+Vb
+ha
+az
+az
+az
+Vw
+ha
+az
+az
+az
+Vw
+Vb
+"}
+(3,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+Bh
+oj
+dO
+Te
+Hx
+Vb
+eR
+Ts
+eR
+Vb
+pv
+wo
+Te
+Iw
+Hx
+Vb
+vT
+cu
+cu
+cu
+wo
+wo
+tM
+cu
+cu
+jT
+Vb
+Wj
+Wj
+Vb
+Ug
+jK
+jK
+jK
+mk
+Ug
+jK
+wo
+jK
+mk
+Vb
+"}
+(4,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+eO
+LL
+JH
+Vd
+bK
+vs
+Op
+eR
+Ts
+eR
+Op
+uk
+wo
+VN
+wo
+Da
+Op
+vT
+wb
+Ao
+IL
+bE
+bE
+wb
+Ao
+IL
+jT
+Op
+Wj
+Wj
+Ao
+Ug
+wo
+hL
+jK
+mk
+Ug
+jK
+tW
+jK
+mk
+Ao
+"}
+(5,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+Xq
+wo
+bK
+wo
+Da
+Vb
+eR
+Ts
+eR
+Vb
+Xq
+Te
+wo
+Te
+Da
+Vb
+vT
+hx
+De
+yV
+wo
+wo
+hx
+De
+yV
+jT
+Vb
+Wj
+Wj
+Vb
+Ug
+jK
+jK
+jK
+mk
+Ug
+jK
+jK
+jK
+mk
+Vb
+"}
+(6,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+nU
+Tv
+Tv
+kg
+XN
+Vb
+Ac
+py
+Ac
+Vb
+nU
+Tv
+Tv
+kg
+XN
+Vb
+vT
+hx
+De
+yV
+wo
+wo
+hx
+De
+yV
+jT
+Vb
+Wj
+Wj
+Vb
+kG
+La
+La
+La
+Up
+kG
+La
+La
+La
+Up
+Vb
+"}
+(7,1,1) = {"
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+wo
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Wj
+Wj
+Ac
+Vb
+Vb
+ET
+Vb
+Vb
+Ac
+js
+Of
+aT
+Ac
+Vb
+Vb
+ET
+Vb
+Vb
+Ac
+vT
+hx
+Ac
+yV
+bE
+bE
+hx
+Ac
+yV
+jT
+Ac
+Vb
+Vb
+Ac
+jv
+Ts
+Ts
+Xj
+MY
+MY
+rL
+Ts
+Ts
+RT
+Op
+"}
+(8,1,1) = {"
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+wo
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+Ac
+eR
+Ts
+eR
+Ac
+js
+EQ
+jq
+Em
+aT
+Ac
+eR
+Ts
+eR
+Ac
+OK
+Bi
+hx
+De
+yV
+wo
+wo
+hx
+De
+yV
+jT
+GM
+hg
+hg
+hg
+fx
+Ts
+gL
+EK
+jq
+jq
+Lq
+uV
+Ts
+RT
+Vb
+"}
+(9,1,1) = {"
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+wo
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+kj
+Ts
+Ts
+Ts
+Lx
+xL
+jq
+aa
+jq
+Ko
+Lx
+Ts
+Ts
+Ts
+Lx
+ET
+ET
+hx
+De
+yV
+wo
+wo
+hx
+De
+yV
+jT
+GM
+KI
+KI
+KI
+ke
+Ts
+bv
+es
+jq
+jq
+iV
+dp
+Ts
+RT
+Vb
+"}
+(10,1,1) = {"
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+wo
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Wj
+Wj
+Vb
+en
+Ts
+Ts
+Ts
+en
+xL
+jq
+jq
+jq
+Ko
+en
+Ts
+Ts
+Ts
+en
+ET
+ET
+hx
+Ac
+yV
+bE
+bE
+hx
+Ac
+yV
+jT
+Vb
+Vb
+Vb
+Ac
+jv
+Ts
+Ts
+eB
+cI
+cI
+OS
+Ts
+Ts
+RT
+Op
+"}
+(11,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+Ac
+eR
+Ts
+eR
+Ac
+ow
+Nu
+jq
+AK
+GH
+Ac
+eR
+Ts
+eR
+Ac
+Js
+mK
+hx
+De
+yV
+wo
+wo
+hx
+De
+yV
+jT
+Vb
+Wj
+Wj
+Vb
+ha
+az
+az
+az
+Vw
+ha
+az
+az
+az
+Vw
+Vb
+"}
+(12,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+Vb
+Vb
+ET
+Vb
+Vb
+Ac
+ow
+NV
+GH
+Ac
+Vb
+Vb
+ET
+Vb
+Vb
+Ac
+vT
+hx
+De
+yV
+wo
+wo
+hx
+De
+yV
+jT
+Ac
+Wj
+Wj
+Vb
+Ug
+jK
+jK
+jK
+mk
+Ug
+jK
+jK
+jK
+mk
+Vb
+"}
+(13,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+xP
+dj
+dj
+hI
+ov
+Vb
+Ac
+py
+Ac
+Vb
+xP
+dj
+dj
+hI
+ov
+Vb
+vT
+sL
+Ao
+Ro
+bE
+bE
+sL
+Ao
+Ro
+jT
+Vb
+Wj
+Wj
+Ao
+Ug
+jK
+Rs
+jK
+mk
+Ug
+jK
+Ks
+wo
+mk
+Ao
+"}
+(14,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+pv
+wo
+Te
+Te
+Hx
+Vb
+eR
+Ts
+eR
+Vb
+pv
+wo
+Te
+Te
+hG
+Vb
+vT
+cu
+cu
+cu
+wo
+wo
+cu
+cu
+cu
+jT
+Vb
+Wj
+Wj
+Vb
+Ug
+jK
+wo
+jK
+mk
+Ug
+jK
+jK
+jK
+mk
+Vb
+"}
+(15,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Op
+mG
+RB
+LY
+bK
+vs
+Op
+eR
+Ts
+eR
+Op
+uk
+wo
+FU
+Sh
+Dd
+Op
+tF
+Js
+mK
+wo
+wo
+wo
+wo
+xr
+Js
+fB
+Op
+Wj
+Wj
+Vb
+kG
+La
+La
+La
+Up
+kG
+La
+La
+La
+Up
+Vb
+"}
+(16,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+BN
+oj
+pR
+wo
+vs
+Vb
+eR
+Ts
+eR
+Vb
+Xq
+wo
+GP
+oj
+Li
+Vb
+Vb
+Ac
+vT
+wo
+wo
+wo
+wo
+jT
+Ac
+Vb
+Vb
+Wj
+Wj
+Ac
+Vb
+Vb
+Ao
+Op
+Vb
+Vb
+Op
+Ao
+Vb
+Vb
+Ac
+"}
+(17,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+Jp
+FN
+sE
+kg
+XN
+Vb
+Ac
+DE
+Ac
+Vb
+nU
+Tv
+eo
+iu
+qk
+Vb
+DE
+Vb
+vT
+wb
+ZS
+ZS
+IL
+jT
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+"}
+(18,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Ac
+Vb
+Vb
+Op
+Vb
+Vb
+Ac
+Vb
+Ts
+Vb
+Vb
+Vb
+Vb
+Op
+Vb
+Vb
+Ac
+Vb
+Ac
+vT
+Ao
+De
+De
+Ao
+jT
+Ac
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+"}
+(19,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+Ts
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+vT
+sL
+cp
+cp
+Ro
+jT
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Wj
+"}
+(20,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+Ts
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+FD
+vT
+bv
+wo
+wo
+wo
+jT
+JB
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(21,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Vb
+Wj
+Wj
+Ac
+Ac
+Vb
+Vb
+Vb
+Vb
+Ac
+HJ
+Ac
+Vb
+Vb
+Vb
+Vb
+Ac
+Ac
+Wj
+Wj
+Vb
+tF
+Js
+Js
+Js
+Js
+fB
+Vb
+Vb
+Vb
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(22,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Ac
+cu
+cu
+cu
+cu
+cu
+dO
+bK
+cx
+cu
+cu
+cu
+cu
+cu
+Ac
+Wj
+Wj
+Ac
+Vb
+Vb
+Ac
+Ac
+Vb
+Vb
+Ac
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(23,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+cu
+WN
+lJ
+jb
+cu
+ri
+Ee
+Tu
+cu
+WN
+wg
+jb
+cu
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+wL
+wL
+Vb
+Lo
+Lo
+Vb
+RG
+RG
+Vb
+wL
+wL
+Vb
+Wj
+"}
+(24,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+cu
+RT
+fF
+NU
+cu
+ri
+Ee
+np
+cu
+RT
+fF
+NU
+cu
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+nD
+nD
+Vb
+wo
+wo
+Vb
+wo
+wo
+Vb
+nD
+nD
+Vb
+Wj
+"}
+(25,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Ac
+cu
+yp
+sc
+AD
+cu
+dO
+Ee
+np
+cu
+yp
+sc
+AD
+cu
+Ac
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+wL
+wL
+Vb
+MT
+MT
+Vb
+YM
+YM
+Vb
+wL
+wL
+Vb
+Wj
+"}
+(26,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+eO
+cu
+cu
+nW
+vt
+cu
+dO
+bK
+Tu
+cu
+cu
+cu
+cu
+cu
+bz
+Wu
+Te
+Te
+Te
+Te
+Te
+Te
+Te
+Te
+Te
+Te
+Te
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(27,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Ac
+cu
+WN
+lJ
+jb
+cu
+pR
+Ee
+cx
+cu
+WN
+lJ
+jb
+cu
+Ac
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(28,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+cu
+RT
+fF
+NU
+cu
+ri
+Te
+Tu
+cu
+RT
+fF
+NU
+cu
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+wL
+wL
+Vb
+YM
+YM
+Vb
+MT
+MT
+Vb
+wL
+wL
+Vb
+Wj
+"}
+(29,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+cu
+yp
+sc
+AD
+cu
+pR
+Ee
+cx
+cu
+yp
+sc
+AD
+cu
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+nD
+nD
+Vb
+wo
+wo
+Vb
+wo
+wo
+Vb
+nD
+nD
+Vb
+Wj
+"}
+(30,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Ac
+cu
+cu
+cu
+cu
+cu
+pR
+Ee
+Tu
+cu
+cu
+cu
+cu
+cu
+Ac
+Wj
+Wj
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Wj
+Wj
+Vb
+wL
+wL
+Vb
+RG
+RG
+Vb
+Lo
+Lo
+Vb
+wL
+wL
+Vb
+Wj
+"}
+(31,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Vb
+Wj
+Wj
+Ac
+Ac
+Vb
+Vb
+Vb
+Vb
+Ac
+zh
+Ac
+Vb
+Vb
+Vb
+Vb
+Ac
+Ac
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(32,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+Ts
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+LW
+Yh
+LW
+wo
+mf
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(33,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+el
+Ts
+Ac
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+wo
+wo
+LW
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(34,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Wj
+Wj
+Wj
+Vb
+Ts
+Vb
+Wj
+Wj
+Wj
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+LW
+Tp
+LW
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(35,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Ac
+Vb
+Ll
+Vb
+Ac
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+LW
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(36,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+fT
+Ts
+Ts
+Ts
+fT
+Wj
+Wj
+Vb
+Yh
+LW
+LW
+LW
+LW
+LW
+LW
+LW
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(37,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+od
+Ts
+Ts
+Ts
+od
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+LW
+Rr
+LW
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(38,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+fT
+Kr
+Kr
+Kr
+fT
+Wj
+Wj
+Vb
+LW
+LW
+LW
+LW
+Tp
+LW
+wo
+LW
+wo
+wo
+wo
+Vb
+Vb
+Vb
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(39,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Vb
+Vb
+Vb
+Vb
+wo
+Vb
+Vb
+Wj
+Wj
+Ac
+Vb
+Qf
+Vb
+Ac
+Wj
+Wj
+Vb
+wo
+wo
+Yh
+wo
+wo
+Dp
+wo
+LW
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(40,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Wj
+Vb
+wo
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+Tp
+LW
+LW
+LW
+LW
+LW
+LW
+LW
+wo
+wo
+wo
+Vb
+Vb
+Vb
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(41,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Wj
+Vb
+wo
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+wo
+wo
+Yh
+wo
+wo
+wo
+wo
+LW
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(42,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+Vb
+wo
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Wj
+Wj
+Vb
+Yh
+LW
+LW
+LW
+LW
+LW
+Tp
+LW
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(43,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+iX
+LW
+wo
+wo
+wo
+wo
+wo
+LW
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(44,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+LW
+LW
+LW
+Yh
+LW
+LW
+LW
+LW
+wo
+wM
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(45,1,1) = {"
+Vb
+Vb
+Vb
+Vb
+wo
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+rG
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(46,1,1) = {"
+Wj
+Wj
+Wj
+Vb
+wo
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+rG
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+"}
+(47,1,1) = {"
+Wj
+Wj
+Wj
+Vb
+wo
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+wo
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Wj
+Wj
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Wj
+"}
+(48,1,1) = {"
+Vb
+Vb
+Vb
+Vb
+wo
+Vb
+Vb
+Vb
+Wj
+Wj
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+wo
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+"}
+(49,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Vb
+wo
+Vb
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+Wj
+"}
+(50,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+wo
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Wj
+"}
+(51,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Wj
+"}
+(52,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Wj
+"}
+(53,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+"}
+(54,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+"}
+(55,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+"}
+(56,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+"}
+(57,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+"}
+(58,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+"}
+(59,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+"}
+(60,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+"}
+(61,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+"}
+(62,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+"}
+(63,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+"}
+(64,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+"}
+(65,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+"}
+(66,1,1) = {"
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+Wj
+Wj
+Vb
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+wo
+Vb
+"}
+(67,1,1) = {"
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Wj
+Wj
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+"}
