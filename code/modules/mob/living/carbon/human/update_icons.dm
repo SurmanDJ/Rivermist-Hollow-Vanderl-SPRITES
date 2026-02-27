@@ -885,7 +885,7 @@ GLOBAL_PROTECT(no_child_icons)
 					LAZYADD(overcloaks, back_overlay)
 					LAZYADD(backbehind, behindback_overlay)
 			else
-				back_overlay = backr.build_worn_icon(age, BACK_LAYER, 'icons/roguetown/clothing/onmob/back_r.dmi')
+				back_overlay = backr.build_worn_icon(age, BACK_LAYER, 'modular_rmh/icons/clothing/onmob/back_r.dmi')
 				if(LAZYACCESS(offsets, OFFSET_BACK))
 					back_overlay.pixel_x += offsets[OFFSET_BACK][1]
 					back_overlay.pixel_y += offsets[OFFSET_BACK][2]
