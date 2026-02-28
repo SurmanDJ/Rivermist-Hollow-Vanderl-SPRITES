@@ -26,6 +26,12 @@
 	if(!isnull(trait_exam))
 		LAZYADDASSOCLIST(., EXAMINE_SECT_HEALTH+0.9, trait_exam)
 
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		var/hierarchy_text = get_clan_hierarchy_examine(human_user)
+		if(hierarchy_text)
+			LAZYADDASSOCLIST(., EXAMINE_SECT_BODY, hierarchy_text)
+
 
 /mob/living/carbon/human/get_examine_face(mob/user, list/P, list/examine_list)
 	var/self_inspect = user == src

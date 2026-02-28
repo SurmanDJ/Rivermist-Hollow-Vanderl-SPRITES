@@ -53,4 +53,4 @@
 			situational_bonus = min(situational_bonus + 0.1, 2)
 	if(situational_bonus > 1)
 		to_chat(owner, span_greentext("Channeling Umberlee's power is easier in these conditions!"))
-	cast_on.blood_volume += BLOOD_VOLUME_OKAY * situational_bonus
+	cast_on.blood_volume = max(cast_on.blood_volume, min(cast_on.blood_volume + BLOOD_VOLUME_OKAY * situational_bonus, BLOOD_VOLUME_NORMAL))

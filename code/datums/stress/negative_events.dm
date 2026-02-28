@@ -213,6 +213,11 @@
 	if(is_helpless_child && prob(30))
 		user.freak_out()
 
+/datum/stress_event/its_the_fucking_daewalker
+	timer = 3 MINUTES
+	stress_change = 3
+	desc = span_phobia("IT'S THE FUCKING DAEWALKER!!")
+
 /datum/stress_event/fishface/get_desc(mob/living/user)
 	if(HAS_TRAIT(src, TRAIT_FISHFACE))
 		return "Eh, I've seen worse faces than that."

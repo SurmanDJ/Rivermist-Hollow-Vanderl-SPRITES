@@ -43,6 +43,7 @@
 	trigger_healing()
 
 /datum/coven_power/bloodheal/on_refresh()
+	. = ..()
 	trigger_healing()
 
 /datum/coven_power/bloodheal/proc/trigger_healing()
@@ -52,13 +53,11 @@
 
 	// Heal different damage types
 	owner.heal_overall_damage(bashing_lethal_heal, aggravated_heal)
+	owner.adjustToxLoss(-aggravated_heal * 0.5)
+	owner.blood_volume = max(owner.blood_volume, min(BLOOD_VOLUME_NORMAL, owner.blood_volume + vitae_cost))
 
-	// Heal wounds (only at higher levels)
-	if(length(owner.get_wounds()) && level >= 3)
-		var/wounds_to_heal = min(1, length(owner.get_wounds()))
-		for(var/i in 1 to wounds_to_heal)
-			var/datum/wound/wound = owner.get_wounds()[i]
-			wound.heal_wound(500 * level)
+	// This scales quickly, which is the point of the higher ranks.
+	owner.heal_wounds((bashing_lethal_heal + aggravated_heal) * level * 0.6)
 
 	// Brain damage healing (only at higher levels)
 	if(level >= 4)
@@ -76,15 +75,16 @@
 
 	// Masquerade violation check
 	if(level >= 3)
-		violates_masquerade = TRUE
 		if(prob(20)) // 20% chance per pulse to show visible healing
 			owner.visible_message(
 				span_warning("[owner]'s wounds slowly knit themselves back together!"),
 				span_warning("Your flesh slowly regenerates!")
 			)
 			owner.vampire_undisguise()
-	else
-		violates_masquerade = FALSE
+			do_masquerade_violation(owner)
+
+	if(level >= 7 && prob(5))
+		owner.regenerate_limb(silent = FALSE)
 
 	owner.update_damage_overlays()
 	owner.update_health_hud()

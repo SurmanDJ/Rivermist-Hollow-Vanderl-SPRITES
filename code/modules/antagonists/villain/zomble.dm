@@ -223,7 +223,6 @@
 
 	zombie.bloodpool = 0 // Again, just in case.
 
-	// zombies cant rp, thus shouldnt be playable for most people
 	zombie.ghostize()
 
 /datum/antagonist/zombie/greet()

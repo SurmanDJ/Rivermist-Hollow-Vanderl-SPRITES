@@ -745,6 +745,13 @@
 				/obj/item/reagent_containers/food/snacks/tallow = 1)
 	craftdiff = 4
 
+/datum/repeatable_crafting_recipe/leather/standalone/bracer_scabbard
+	name = "knife-sheath bracers"
+	output = /obj/item/clothing/wrists/bracers/leather/scabbard
+	requirements = list(/obj/item/natural/hide/cured = 1,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 4
+
 /datum/repeatable_crafting_recipe/leather/standalone/top_hat
 	name = "top hat"
 	output = /obj/item/clothing/head/tophat

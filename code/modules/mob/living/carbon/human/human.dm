@@ -248,7 +248,8 @@
 /mob/living/carbon/human/get_status_tab_items()
 	. = ..()
 	if(clan)
-		. += "VITAE: [bloodpool]"
+		. += "VITAE: [round(bloodpool)]/[maxbloodpool]"
+		. += "DETECTIONS: [detections]"
 
 /mob/living/carbon/human/show_inv(mob/user, extra_only = FALSE)
 	user.set_machine(src)

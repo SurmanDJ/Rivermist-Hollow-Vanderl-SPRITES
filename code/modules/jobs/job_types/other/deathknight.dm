@@ -33,7 +33,6 @@
 	)
 
 /datum/job/skeleton/knight/after_spawn(mob/living/carbon/spawned, client/player_client)
-	SSmapping.find_and_remove_world_trait(/datum/world_trait/death_knight)
 	SSmapping.retainer.death_knights |= spawned.mind
 	. = ..()
 
@@ -45,7 +44,7 @@
 /datum/outfit/deathknight
 	belt = /obj/item/storage/belt/leather
 	pants = /obj/item/clothing/pants/platelegs/ancient
-	shoes = /obj/item/clothing/shoes/boots/armor/vampire
+	shoes = /obj/item/clothing/shoes/boots/armor/ancient
 	armor = /obj/item/clothing/armor/plate/ancient
 	gloves = /obj/item/clothing/gloves/plate/ancient
 	backl = /obj/item/weapon/polearm/halberd/bardiche/ancient

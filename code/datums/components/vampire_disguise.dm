@@ -105,6 +105,7 @@
 
 	if(!disguise_status())
 		H.visible_message(span_bloody("[H]'s true nature is revealed!"), span_warning("My true nature is revealed!"), vision_distance = COMBAT_MESSAGE_RANGE)
+		H.vampire_detected(length(H.CheckEyewitness(H)) - 1) // Needs more than the vampire alone noticing it.
 	else
 		to_chat(H, span_warning("My true nature is revealed!"))
 	return TRUE
@@ -125,4 +126,8 @@
 		return
 	if(user == vampire)
 		return
-	LAZYADDASSOCLIST(examine_list, EXAMINE_SECT_FACE, span_warningbig("[P[THEYRE]] in [P[THEIR]] true form."))
+	if(!user.affects_masquerade(FALSE))
+		LAZYADDASSOCLIST(examine_list, EXAMINE_SECT_FACE, span_warningbig("[P[THEYRE]] in [P[THEIR]] true form."))
+		return
+	LAZYADDASSOCLIST(examine_list, EXAMINE_SECT_FACE, span_danger("NITEBEAST!"))
+	vampire.vampire_detected(length(vampire.CheckEyewitness(user)))
