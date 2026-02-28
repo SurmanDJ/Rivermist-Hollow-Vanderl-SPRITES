@@ -320,7 +320,7 @@
 	"Fire-Cast Shadows" = 'sound/instruments/guitar (1).ogg',
 	"The Forced Hand" = 'sound/instruments/guitar (2).ogg',
 	"Regrets Unpaid" = 'sound/instruments/guitar (3).ogg',
-	"'Took the Mammon and Ran'" = 'sound/instruments/guitar (4).ogg',
+	"'Took the Amna and Ran'" = 'sound/instruments/guitar (4).ogg',
 	"Poor Man's Tithe" = 'sound/instruments/guitar (5).ogg',
 	"In His Arms Ye'll Find Me" = 'sound/instruments/guitar (6).ogg',
 	"Sunset Ballad" = 'sound/instruments/guitar (7).ogg',
@@ -370,7 +370,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	song_list = list(
 	"Abyssor's Second Shanty" = 'sound/instruments/band/flute (b1).ogg',
-	"Half-Dragon's Ten Mammon" = 'sound/instruments/flute (1).ogg',
+	"Half-Dragon's Ten Amna" = 'sound/instruments/flute (1).ogg',
 	"The Local Favorite" = 'sound/instruments/flute (2).ogg',
 	"Rous in the Cellar" = 'sound/instruments/flute (3).ogg',
 	"Her Boots, So Incandescent" = 'sound/instruments/flute (4).ogg',

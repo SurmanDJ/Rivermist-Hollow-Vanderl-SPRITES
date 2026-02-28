@@ -1,8 +1,11 @@
+#define CTYPE_PLAT "p"
 #define CTYPE_GOLD "g"
+#define CTYPE_ELEC "e"
 #define CTYPE_SILV "s"
 #define CTYPE_COPP "c"
 #define CTYPE_INQU "i"
 #define CTYPE_ANCI "a"
+
 #define MAX_COIN_STACK_SIZE 20
 
 /obj/item/coin
@@ -17,6 +20,7 @@
 	sellprice = 0
 	static_price = TRUE
 	simpleton_price = TRUE
+	item_weight = 0.001
 
 	COOLDOWN_DECLARE(flip_cd)
 	var/heads_tails = TRUE
@@ -63,8 +67,12 @@
 			var/spawned_type = type
 			if(base_type)
 				switch(base_type)
+					if(CTYPE_PLAT)
+						spawned_type = /obj/item/coin/platinum
 					if(CTYPE_GOLD)
 						spawned_type = /obj/item/coin/gold
+					if(CTYPE_ELEC)
+						spawned_type = /obj/item/coin/electrum
 					if(CTYPE_SILV)
 						spawned_type = /obj/item/coin/silver
 					if("t")
@@ -109,7 +117,7 @@
 	. = ..()
 	var/denomination = quantity == 1 ? name : plural_name
 	if(isobserver(user))
-		. += span_info("[quantity_to_words(quantity)] [denomination] ([get_real_price()] mammon)")
+		. += span_info("[quantity_to_words(quantity)] [denomination] ([get_real_price()] amna)")
 		return
 
 	if(HAS_TRAIT(user, TRAIT_COIN_ILLITERATE))
@@ -121,7 +129,7 @@
 
 	var/intelligence = user.mind?.current.STAINT
 	if(quantity <= 1)  // Just so you don't count single coins, observers don't need to count.
-		. += span_info("One [name] ([sellprice] mammon)")
+		. += span_info("One [name] ([sellprice] amna)")
 		return
 
 	var/list/skill_data = coin_skill(user, quantity)
@@ -146,9 +154,9 @@
 	var/description = "[quantity_to_words(fuzzy_quantity)] [denomination]"
 	var/value_text
 	if(intelligence >= 10)
-		value_text = "[estimated_value] mammon"
+		value_text = "[estimated_value] amna"
 	else
-		value_text = "~[estimated_value] mammon"
+		value_text = "~[estimated_value] amna"
 		if(intelligence <= 7)
 			value_text = "[pick(uncertainty_phrases)] [value_text]"
 			if(prob(30))
@@ -312,8 +320,12 @@
 	var/spawned_type
 	if(base_type)
 		switch(base_type)
+			if(CTYPE_PLAT)
+				spawned_type = /obj/item/coin/platinum
 			if(CTYPE_GOLD)
 				spawned_type = /obj/item/coin/gold
+			if(CTYPE_ELEC)
+				spawned_type = /obj/item/coin/electrum
 			if(CTYPE_SILV)
 				spawned_type = /obj/item/coin/silver
 			if(CTYPE_INQU)
@@ -398,34 +410,51 @@
 		return
 	return ..()
 
+//PLATINUM
+/obj/item/coin/platinum
+	name = "roldon"
+	desc = "A platinum coin bearing the symbol of the Taurus and the pre-kingdom psycross. These were in the best condition of the provincial gold mints, the rest were melted down. It's valued at 1000 amna per coin."
+	icon_state = "p1"
+	sellprice = 1000
+	base_type = CTYPE_PLAT
+	plural_name = "roldone"
+
 //GOLD
 /obj/item/coin/gold
-	name = "zenar"
-	desc = "A gold coin bearing the symbol of the Taurus and the pre-kingdom psycross. These were in the best condition of the provincial gold mints, the rest were melted down. It's valued at 10 mammon per coin."
+	name = "danter"
+	desc = "A gold coin bearing the symbol of the Taurus and the pre-kingdom psycross. These were in the best condition of the provincial gold mints, the rest were melted down. It's valued at 100 amna per coin."
 	icon_state = "g1"
-	sellprice = 10
+	sellprice = 100
 	base_type = CTYPE_GOLD
-	plural_name = "zenarii"
+	plural_name = "dantere"
 
+//ELECTRUM
+/obj/item/coin/electrum
+	name = "centaur"
+	desc = "An ancient silver coin still in use due to its remarkable ability to last the ages. Though silver in name, the metal was alloyed and treated long ago, stripping it of any bane against the undead. It's valued at 50 amna per coin."
+	icon_state = "e1"
+	sellprice = 50
+	base_type = CTYPE_ELEC
+	plural_name = "centaure"
 
 // SILVER
 /obj/item/coin/silver
-	name = "ziliqua"
-	desc = "An ancient silver coin still in use due to its remarkable ability to last the ages. Though silver in name, the metal was alloyed and treated long ago, stripping it of any bane against the undead. It's valued at 5 mammon per coin."
+	name = "taran"
+	desc = "An ancient silver coin still in use due to its remarkable ability to last the ages. Though silver in name, the metal was alloyed and treated long ago, stripping it of any bane against the undead. It's valued at 10 amna per coin."
 	icon_state = "s1"
-	sellprice = 5
+	sellprice = 10
 	base_type = CTYPE_SILV
-	plural_name = "ziliquae"
+	plural_name = "tarane"
 
 
 // COPPER
 /obj/item/coin/copper
-	name = "zenny"
-	desc = "A brand-new bronze coin minted by the capital in an effort to be rid of the financial use of silver. It's valued at 1 mammon per coin."
+	name = "fandar"
+	desc = "A brand-new bronze coin minted by the capital in an effort to be rid of the financial use of silver. It's valued at 1 amna per coin."
 	icon_state = "c1"
 	sellprice = 1
 	base_type = CTYPE_COPP
-	plural_name = "zennies"
+	plural_name = "fandare"
 
 /obj/item/coin/copper/pile/Initialize(mapload, coin_amount)
 	. = ..()
@@ -476,7 +505,9 @@
 		heads_tails = FALSE
 	update_appearance(UPDATE_ICON_STATE)
 
+#undef CTYPE_PLAT
 #undef CTYPE_GOLD
+#undef CTYPE_ELEC
 #undef CTYPE_SILV
 #undef CTYPE_COPP
 #undef CTYPE_INQU

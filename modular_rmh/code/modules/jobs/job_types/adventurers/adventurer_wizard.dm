@@ -32,7 +32,7 @@
 
 /datum/job/adventurer_wizard/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
-	to_chat(spawned, "<br><font color='#855b14'><span class='bold'>If I wanted to make mammons by selling my services, or completing quests, the Adventurers Guild would be a good place to start.</span></font><br>")
+	to_chat(spawned, "<br><font color='#855b14'><span class='bold'>If I wanted to make amnas by selling my services, or completing quests, the Adventurers Guild would be a good place to start.</span></font><br>")
 
 /datum/job/adventurer_wizard/set_spawn_and_total_positions(count)
 	// Calculate the new spawn positions

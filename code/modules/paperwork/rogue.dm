@@ -193,9 +193,9 @@
 		info += "<ul>"
 		for(var/datum/supply_pack/A in orders)
 			if(!A.contraband)
-				info += "<li style='color:#06080F;font-size:11px;font-family:\"Segoe Script\"'>[A.name] x[orders[A]] - [A.cost * orders[A]] mammons</li><br/>"
+				info += "<li style='color:#06080F;font-size:11px;font-family:\"Segoe Script\"'>[A.name] x[orders[A]] - [A.cost * orders[A]] amnas</li><br/>"
 			else
-				info += "<li style='color:#610018;font-size:11px;font-family:\"Segoe Script\"'>[A.name] x[orders[A]] - [A.cost * orders[A]] mammons</li><br/>"
+				info += "<li style='color:#610018;font-size:11px;font-family:\"Segoe Script\"'>[A.name] x[orders[A]] - [A.cost * orders[A]] amnas</li><br/>"
 		info += "</ul>"
 
 	info += "<br/></font>"
@@ -576,7 +576,7 @@
 
 	if(length(items))
 		for(var/real_name in items)
-			info += "<li style='color:#06080F;font-size:11px;font-family:\"Segoe Script\"'>[count[real_name]]x[real_name] - [items[real_name]] mammons</li><br/>"
+			info += "<li style='color:#06080F;font-size:11px;font-family:\"Segoe Script\"'>[count[real_name]]x[real_name] - [items[real_name]] amnas</li><br/>"
 
 	info += "</div>"
 
@@ -627,7 +627,7 @@
 		info += "<ul>"
 		for(var/atom/type_path as anything in sell_prices)
 			var/list/prices = sell_prices[type_path]
-			info += "<li style='color:#06080F;font-size:9px;font-family:\"Segoe Script\"'>[initial(type_path.name)] [prices[1]] > [prices[2]] mammons</li><br/>"
+			info += "<li style='color:#06080F;font-size:9px;font-family:\"Segoe Script\"'>[initial(type_path.name)] [prices[1]] > [prices[2]] amnas</li><br/>"
 		info += "</ul>"
 
 	info += "<br/></font>"

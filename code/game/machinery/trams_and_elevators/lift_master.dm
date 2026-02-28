@@ -745,7 +745,7 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 			spawn_coins(total_coin_value, platform, crate_type = /obj/structure/closet/crate/chest/merchant)
 			var/obj/item/paper/failure_note = new(get_turf(platform))
 			failure_note.name = "delivery failure notice"
-			failure_note.info = "Order rejected: Insufficient payment. Required: [total_required_cost] mammons, Provided: [total_coin_value]."
+			failure_note.info = "Order rejected: Insufficient payment. Required: [total_required_cost] amnas, Provided: [total_coin_value]."
 			total_coin_value = 0
 			continue
 

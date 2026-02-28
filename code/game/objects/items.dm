@@ -1434,7 +1434,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(QDELETED(user))
 		return
 	if(get_real_price() > 0 && (HAS_TRAIT(user, TRAIT_SEEPRICES) || simpleton_price))
-		return span_info("Value: [get_real_price()] mammon")
+		return span_info("Value: [get_real_price()] amna")
 	return FALSE
 
 /obj/item/proc/get_stored_weight(has_trait)

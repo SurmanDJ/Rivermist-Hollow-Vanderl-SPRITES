@@ -141,7 +141,7 @@
 		var/money = I.get_real_price()
 		budget += money
 		qdel(I)
-		to_chat(user, span_info("I put [money] mammon in [src]."))
+		to_chat(user, span_info("I put [money] amna in [src]."))
 		playsound(src, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
 		return attack_hand(user)
 	return ..()
@@ -228,7 +228,7 @@
 	var/canread = user.can_read(src, TRUE)
 	var/contents
 	contents = "<center>GOLDFACE - In the name of greed.<BR>"
-	contents += "<a href='byond://?src=[REF(src)];change=1'>MAMMON LOADED:</a> [budget]<BR>"
+	contents += "<a href='byond://?src=[REF(src)];change=1'>AMNA LOADED:</a> [budget]<BR>"
 
 	var/mob/living/carbon/human/H = user
 	if(H.job == "Merchant")

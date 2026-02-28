@@ -134,7 +134,7 @@
 
 /datum/curse/matthios
 	name = "Matthios' Curse"
-	description = "I hate the sight of wealth, and I struggle to do anything with mammons."
+	description = "I hate the sight of wealth, and I struggle to do anything with amnas."
 	trait = TRAIT_MATTHIOS_CURSE
 
 /datum/curse/baotha

@@ -34,7 +34,7 @@ GLOBAL_VAR_INIT(adventurer_hugbox_duration_still, 3 MINUTES)
 
 /datum/job/adventurer_barbarian/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
-	to_chat(spawned, "<br><font color='#855b14'><span class='bold'>If I wanted to make mammons by selling my services, or completing quests, the Adventurers Guild would be a good place to start.</span></font><br>")
+	to_chat(spawned, "<br><font color='#855b14'><span class='bold'>If I wanted to make amnas by selling my services, or completing quests, the Adventurers Guild would be a good place to start.</span></font><br>")
 
 /datum/job/adventurer_barbarian/set_spawn_and_total_positions(count)
 	// Calculate the new spawn positions

@@ -173,7 +173,7 @@
 			scroll_text += "<b>Pickup location:</b> Reported sighting in [assigned_quest.target_spawn_area] region.<br>"
 			scroll_text += "<b>Destination Description:</b> [initial(assigned_quest.target_delivery_location.name)].<br>" // TODO: brief_descriptor
 
-	scroll_text += "<br><b>Reward:</b> [assigned_quest.reward_amount] mammon upon completion<br>"
+	scroll_text += "<br><b>Reward:</b> [assigned_quest.reward_amount] amna upon completion<br>"
 
 	if(assigned_quest.complete)
 		scroll_text += "<br><center><b>CONTRACT COMPLETE</b></center>"
