@@ -10,30 +10,41 @@
 	race = /datum/species/demihuman
 
 /datum/species/demihuman
-	name = "Hollow-Kin"
+	name = "Half-Beastkin"
 	id = SPEC_ID_HOLLOWKIN
-	desc = "Hollowkin are short lived, widely diverse, and have an insatiable hatred for dark elves. \
+	desc = "Half-Beastkin are short lived, widely diverse, and have an insatiable hatred for dark elves. \
 	This hate stems from their long standing political neighbor and rival, \
 	the dark-elven kingdoms of Subterra. \
 	Dendor and Xylix stand as the 'patron-deities' of this species despite having no hand in their creation. \
-	Hollowkin view freedom to be of the upmost importance due to their dark-elven neighbors' tendencies toward slavery and their own history of subjugation. \
+	Half-Beastkin view freedom to be of the upmost importance due to their dark-elven neighbors' tendencies toward slavery and their own history of subjugation. \
 	They also, often mistakenly, worship Dendor for the boon of their animalistic nature, perceiving him as the source of their traits, talents, and instinct. \
 	\n\n\
-	Their true origin is much darker. Hollowkin are the product of dark-elven ingenuity and fleshcrafting. \
+	Their true origin is much darker. Half-Beastkin are the product of dark-elven ingenuity and fleshcrafting. \
 	Their creation is a simple story of malice and greed- of sapient animal hybrid slave homunculi, \
 	a person turned product which they could market and sell to other great houses of modern Subterra. \
-	The true nature of their existence is largely lost to the hollowkin through centuries. \
+	The true nature of their existence is largely lost to the half-beastkin through centuries. \
 	The dark elves still recall, of course, viciously mocking their creations from deep within their caves, \
 	declaring them but nothing more than animals or pets. \
-	Hollowkin react violently to dark-elven attempts at oppression, this leads to conflicts across the world of Psydonia. \
+	Half-Beastkin react violently to dark-elven attempts at oppression, this leads to conflicts across the world of Psydonia. \
 	\n\n\
-	To the unaligned observer, hollowkin are often seen amongst bandit bands, working openly with Agents of Matthios, \
+	To the unaligned observer, half-beastkin are often seen amongst bandit bands, working openly with Agents of Matthios, \
 	conflating the idea of freedom between the two deities. There is, of course, the old wives' tales that circulate... \
-	how hollowkin lead to infestations of Werewolves. Hollowkin are often denied nobility from this rumour alone. \
+	how half-beastkin lead to infestations of Werewolves. Half-Beastkin are often denied nobility from this rumour alone. \
 	Whether this is true or not is unknown to the common person, \
 	but to those familiar with the horrendous magics used by the dark elves, they must only assume the worst. \
 	\n\n\
 	THIS IS A DISCRIMINATED SPECIES. EXPECT A MORE DIFFICULT EXPERIENCE. PLAY AT YOUR OWN RISK."
+
+	use_titles = TRUE
+	race_titles = list(
+	"Half-Cat", "Half-Dog", "Half-Volf", "Half-Lion", "Half-Venard",
+	"Half-Tiger", "Half-Sheep", "Half-Goat", "Half-Rous", "Half-Possum",
+	"Half-Pig", "Half-Boar", "Half-Rabbit", "Half-Horse", "Half-Donkey",
+	"Half-Hyena", "Half-Deer", "Half-Bear", "Half-Panda", "Half-Coyote",
+	"Half-Moose", "Half-Jackal", "Half-Panther", "Half-Lynx", "Half-Leopard",
+	"Half-Monkey", "Half-Bird", "Half-Seal", "Half-Frog", "Half-Bat", "Half-Otter", "Half-Cow",
+	"Half-Bull", "Half-Bee", "Half-Lizard", "Half-Insect", "Half-Spider", "Half-Monster"
+	)
 
 	allowed_pronouns = PRONOUNS_LIST
 	default_color = "FFFFFF"
@@ -44,6 +55,8 @@
 	disliked_food = NONE
 	liked_food = NONE
 	changesource_flags = WABBAJACK
+
+	order_num = 19
 
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mt.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fm.dmi'

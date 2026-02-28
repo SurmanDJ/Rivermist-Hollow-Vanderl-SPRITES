@@ -566,6 +566,10 @@ GLOBAL_PROTECT(no_child_icons)
 	remove_overlay(SHOES_LAYER)
 	remove_overlay(SHOESLEEVE_LAYER)
 
+	var/obj/item/bodypart/taur/taur = get_taur_tail()
+	if(taur)
+		return // taurs don't render shoes if they manage to even equip them
+
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_SHOES) + 1]
 		inv?.update_appearance(UPDATE_ICON_STATE)
@@ -948,6 +952,9 @@ GLOBAL_PROTECT(no_child_icons)
 	remove_overlay(CLOAK_BEHIND_LAYER)
 	remove_overlay(TABARD_LAYER)
 
+	var/obj/item/bodypart/taur/taur = get_taur_tail()
+	var/icon/c_mask = taur?.clip_mask
+
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_CLOAK) + 1]
 		inv?.update_appearance(UPDATE_ICON_STATE)
@@ -982,7 +989,7 @@ GLOBAL_PROTECT(no_child_icons)
 				client.screen += cloak
 		update_observer_view(cloak, 1)
 
-		var/mutable_appearance/cloak_overlay = cloak.build_worn_icon(age, CLOAK_LAYER, coom = use_female_sprites, customi = racecustom)
+		var/mutable_appearance/cloak_overlay = cloak.build_worn_icon(age, CLOAK_LAYER, coom = use_female_sprites, customi = racecustom, clip_mask = c_mask)
 
 		if(LAZYACCESS(offsets, OFFSET_CLOAK))
 			cloak_overlay.pixel_x += offsets[OFFSET_CLOAK][1]
@@ -1008,7 +1015,7 @@ GLOBAL_PROTECT(no_child_icons)
 
 	if(backr && backr.alternate_worn_layer == CLOAK_BEHIND_LAYER)
 		update_hud_backr(backr)
-		var/mutable_appearance/cloak_overlay = backr.build_worn_icon(age, CLOAK_LAYER, coom = use_female_sprites, customi = racecustom)
+		var/mutable_appearance/cloak_overlay = backr.build_worn_icon(age, CLOAK_LAYER, coom = use_female_sprites, customi = racecustom, clip_mask = c_mask)
 
 		if(LAZYACCESS(offsets, OFFSET_CLOAK))
 			cloak_overlay.pixel_x += offsets[OFFSET_CLOAK][1]
@@ -1041,6 +1048,9 @@ GLOBAL_PROTECT(no_child_icons)
 /mob/living/carbon/human/update_inv_shirt()
 	remove_overlay(SHIRT_LAYER)
 	remove_overlay(SHIRTSLEEVE_LAYER)
+
+	var/obj/item/bodypart/taur/taur = get_taur_tail()
+	var/icon/c_mask = taur?.clip_mask
 
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_SHIRT) + 1]
@@ -1078,7 +1088,7 @@ GLOBAL_PROTECT(no_child_icons)
 				racecustom = species.custom_id
 			else
 				racecustom = species.id
-		var/mutable_appearance/shirt_overlay = wear_shirt.build_worn_icon(age, SHIRT_LAYER, coom = use_female_sprites, customi = racecustom, sleeveindex = armsindex)
+		var/mutable_appearance/shirt_overlay = wear_shirt.build_worn_icon(age, SHIRT_LAYER, coom = use_female_sprites, customi = racecustom, sleeveindex = armsindex, clip_mask = c_mask)
 
 		if(LAZYACCESS(offsets, OFFSET_SHIRT))
 			shirt_overlay.pixel_x += offsets[OFFSET_SHIRT][1]
@@ -1107,6 +1117,9 @@ GLOBAL_PROTECT(no_child_icons)
 /mob/living/carbon/human/update_inv_armor()
 	remove_overlay(ARMOR_LAYER)
 	remove_overlay(ARMORSLEEVE_LAYER)
+
+	var/obj/item/bodypart/taur/taur = get_taur_tail()
+	var/icon/c_mask = taur?.clip_mask
 
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_ARMOR) + 1]
@@ -1142,7 +1155,7 @@ GLOBAL_PROTECT(no_child_icons)
 				racecustom = species?.custom_id
 			else
 				racecustom = species?.id
-		var/mutable_appearance/armor_overlay = wear_armor.build_worn_icon(age, ARMOR_LAYER, coom = use_female_sprites , customi = racecustom, sleeveindex = armsindex)
+		var/mutable_appearance/armor_overlay = wear_armor.build_worn_icon(age, ARMOR_LAYER, coom = use_female_sprites , customi = racecustom, sleeveindex = armsindex, clip_mask = c_mask)
 		if(LAZYACCESS(offsets, OFFSET_ARMOR))
 			armor_overlay.pixel_x += offsets[OFFSET_ARMOR][1]
 			armor_overlay.pixel_y += offsets[OFFSET_ARMOR][2]
@@ -1172,6 +1185,9 @@ GLOBAL_PROTECT(no_child_icons)
 	remove_overlay(PANTS_LAYER)
 	remove_overlay(LEGSLEEVE_LAYER)
 
+	var/obj/item/bodypart/taur/taur = get_taur_tail()
+	var/icon/c_mask = taur?.clip_mask
+
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_PANTS) + 1]
 		inv?.update_appearance(UPDATE_ICON_STATE)
@@ -1199,7 +1215,7 @@ GLOBAL_PROTECT(no_child_icons)
 				racecustom = species.custom_id
 			else
 				racecustom = species.id
-		var/mutable_appearance/pants_overlay = wear_pants.build_worn_icon(age, PANTS_LAYER, coom = use_female_sprites, customi = racecustom, sleeveindex = legsindex)
+		var/mutable_appearance/pants_overlay = wear_pants.build_worn_icon(age, PANTS_LAYER, coom = use_female_sprites, customi = racecustom, sleeveindex = legsindex, clip_mask = c_mask)
 
 		if(LAZYACCESS(offsets, OFFSET_PANTS))
 			pants_overlay.pixel_x += offsets[OFFSET_PANTS][1]
@@ -1299,6 +1315,9 @@ GLOBAL_PROTECT(no_child_icons)
 /mob/living/carbon/human/update_inv_socks() //on case by case basis for now
 	remove_overlay(LEGWEAR_LAYER)
 
+	var/obj/item/bodypart/taur/taur = get_taur_tail()
+	var/icon/c_mask = taur?.clip_mask
+
 	if(legwear_socks)
 		var/datum/species/species = dna?.species
 		var/use_female_sprites = FALSE
@@ -1316,7 +1335,7 @@ GLOBAL_PROTECT(no_child_icons)
 				racecustom = species.custom_id
 			else
 				racecustom = species.id
-		var/mutable_appearance/legwear_socks_overlay = legwear_socks.build_worn_icon(age, LEGWEAR_LAYER, coom = use_female_sprites, customi = racecustom)
+		var/mutable_appearance/legwear_socks_overlay = legwear_socks.build_worn_icon(age, LEGWEAR_LAYER, coom = use_female_sprites, customi = racecustom, clip_mask = c_mask)
 
 		if(LAZYACCESS(offsets, OFFSET_PANTS))
 			legwear_socks_overlay.pixel_x += offsets[OFFSET_PANTS][1]
@@ -1330,6 +1349,9 @@ GLOBAL_PROTECT(no_child_icons)
 
 /mob/living/carbon/human/update_inv_undie_top() //on case by case basis for now
 	remove_overlay(UNDERWEAR_TOP_LAYER)
+
+	var/obj/item/bodypart/taur/taur = get_taur_tail()
+	var/icon/c_mask = taur?.clip_mask
 
 	if(bra)
 		var/b_size = 0
@@ -1356,7 +1378,7 @@ GLOBAL_PROTECT(no_child_icons)
 			b_size = boob.organ_size
 		if(!bra.gendered)
 			use_female_sprites = FALSE
-		var/mutable_appearance/underwear_overlay = bra.build_worn_icon(age, UNDERWEAR_TOP_LAYER, coom = use_female_sprites, customi = racecustom, breast_size = b_size)
+		var/mutable_appearance/underwear_overlay = bra.build_worn_icon(age, UNDERWEAR_TOP_LAYER, coom = use_female_sprites, customi = racecustom, breast_size = b_size, clip_mask = c_mask)
 
 		if(LAZYACCESS(offsets, OFFSET_BRA))
 			underwear_overlay.pixel_x += offsets[OFFSET_BRA][1]
@@ -1407,6 +1429,9 @@ GLOBAL_PROTECT(no_child_icons)
 	remove_overlay(UNDERSHIRT_LAYER)
 	remove_overlay(UNDERSLEEVE_LAYER)
 
+	var/obj/item/bodypart/taur/taur = get_taur_tail()
+	var/icon/c_mask = taur?.clip_mask
+
 	if(undershirt)
 		var/b_size = 0
 		var/datum/species/species = dna?.species
@@ -1443,7 +1468,7 @@ GLOBAL_PROTECT(no_child_icons)
 
 		if(!undershirt.gendered)
 			use_female_sprites = FALSE
-		var/mutable_appearance/undershirt_overlay = undershirt.build_worn_icon(age, UNDERSHIRT_LAYER, coom = use_female_sprites, customi = racecustom, breast_size = b_size)
+		var/mutable_appearance/undershirt_overlay = undershirt.build_worn_icon(age, UNDERSHIRT_LAYER, coom = use_female_sprites, customi = racecustom, breast_size = b_size, clip_mask = c_mask)
 
 		if(LAZYACCESS(offsets, OFFSET_SHIRT))
 			undershirt_overlay.pixel_x += offsets[OFFSET_SHIRT][1]
@@ -1735,7 +1760,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 
 */
-/obj/item/proc/build_worn_icon(age = AGE_ADULT, default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, coom = FALSE, customi = null, sleeveindex, breast_size = 0)
+/obj/item/proc/build_worn_icon(age = AGE_ADULT, default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, coom = FALSE, customi = null, sleeveindex, breast_size = 0, icon/clip_mask = null)
 	var/t_state
 	var/sleevejazz = sleevetype
 	if(age == AGE_CHILD)
@@ -1846,6 +1871,9 @@ generate/load female uniform sprites matching all previously decided variables
 		if(L)
 			standing.pixel_x += L["x"] //+= because of center()ing
 			standing.pixel_y += L["y"]
+
+	if(istype(clip_mask)) //For taur bodies/tails clipping off parts of uniforms and suits.
+		standing.filters += filter(type = "alpha", icon = clip_mask)
 
 	standing.alpha = alpha
 	standing.color = color
@@ -1967,9 +1995,16 @@ generate/load female uniform sprites matching all previously decided variables
 //produces a key based on the human's limbs
 /mob/living/carbon/human/generate_icon_render_key()
 	. = list(dna.species.limbs_id)
+
 	if(dna.species.use_skintones)
 		. += "coloured"
 		. += skin_tone
+	else if(dna.species.fixed_mut_color)
+		. += "coloured"
+		. += dna.species.fixed_mut_color
+	else if(dna.features["mcolor"])
+		. += "coloured"
+		. += dna.features["mcolor"]
 	else
 		. += "not_coloured"
 

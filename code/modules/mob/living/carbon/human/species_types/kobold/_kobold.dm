@@ -50,6 +50,8 @@
 
 	changesource_flags = WABBAJACK
 
+	order_num = 17
+
 	native_language = "Gutter"
 
 	limbs_icon_m = 'icons/roguetown/mob/bodies/f/kobold.dmi'

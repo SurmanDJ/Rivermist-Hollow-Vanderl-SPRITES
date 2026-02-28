@@ -17,3 +17,5 @@
 	accessory_type = /datum/sprite_accessory/horns/triton
 
 /obj/item/organ/horns/demihuman
+
+/obj/item/organ/horns/aura

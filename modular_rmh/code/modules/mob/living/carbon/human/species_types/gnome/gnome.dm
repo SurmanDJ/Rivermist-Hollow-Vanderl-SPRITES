@@ -38,6 +38,8 @@
 
 	changesource_flags = WABBAJACK
 
+	order_num = 12
+
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/male_short.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fd.dmi'
 	swap_male_clothes = TRUE

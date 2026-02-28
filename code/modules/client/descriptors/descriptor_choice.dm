@@ -215,6 +215,35 @@
 		/datum/mob_descriptor/height/longshanked,
 	)
 
+/datum/descriptor_choice/fur
+	name = "Fur"
+	default_descriptor = /datum/mob_descriptor/fur/plain
+	descriptors = list(
+		/datum/mob_descriptor/fur/plain,
+		/datum/mob_descriptor/fur/short,
+		/datum/mob_descriptor/fur/coarse,
+		/datum/mob_descriptor/fur/bristly,
+		/datum/mob_descriptor/fur/fluffy,
+		/datum/mob_descriptor/fur/shaggy,
+		/datum/mob_descriptor/fur/silky,
+		/datum/mob_descriptor/fur/lank,
+		/datum/mob_descriptor/fur/mangy,
+		/datum/mob_descriptor/fur/velvety,
+		/datum/mob_descriptor/fur/dense,
+		/datum/mob_descriptor/fur/matted,
+	)
+
+/datum/descriptor_choice/scales
+	name = "Scales"
+	default_descriptor = /datum/mob_descriptor/scales/plain
+	descriptors = list(
+		/datum/mob_descriptor/scales/plain,
+		/datum/mob_descriptor/scales/rough,
+		/datum/mob_descriptor/scales/smooth,
+		/datum/mob_descriptor/scales/plated,
+		/datum/mob_descriptor/scales/peeling,
+	)
+
 // I'm keeping prominent_bottom for the 'Clap of my ass-cheeks alerting the guards,' jokes. -Aberra
 #define PROMINENT_DESCRIPTORS \
 	/datum/mob_descriptor/prominent/hunched_over,\

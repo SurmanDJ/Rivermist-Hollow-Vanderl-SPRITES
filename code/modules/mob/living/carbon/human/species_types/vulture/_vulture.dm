@@ -3,7 +3,7 @@
 
 /datum/species/medicator
 	name = "Medicator"
-	id = "medicator"
+	id = SPEC_ID_MEDICATOR
 	changesource_flags = WABBAJACK
 
 	meat = list(/obj/item/reagent_containers/food/snacks/meat/strange/inhumen = 1)
@@ -23,6 +23,8 @@
 	Medicators and Harpies often find themselves in conflict, mirroring the quarrels of their patrons, whether of conscious faith or not."
 
 	possible_ages = NORMAL_AGES_LIST
+
+	order_num = 21
 
 	default_color = "3e3e3e"
 	use_skintones = TRUE

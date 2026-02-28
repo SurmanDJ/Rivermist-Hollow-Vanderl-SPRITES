@@ -14,7 +14,7 @@
 	gendered = FALSE
 	var/base_icon = "ear_stud"
 
-/obj/item/earring/build_worn_icon(age = AGE_ADULT, default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, coom = FALSE, customi = null, sleeveindex, breast_size = 0)
+/obj/item/earring/build_worn_icon(age = AGE_ADULT, default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, coom = FALSE, customi = null, sleeveindex, breast_size = 0, icon/clip_mask = null)
 	icon_state = base_icon
 	if(default_layer == EARRING_L_LAYER)
 		icon_state = base_icon + "_l"

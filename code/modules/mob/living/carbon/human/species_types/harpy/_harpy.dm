@@ -30,6 +30,8 @@
 	possible_ages = NORMAL_AGES_LIST
 	changesource_flags = WABBAJACK
 
+	order_num = 19
+
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/harpy.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/harpy.dmi'
 

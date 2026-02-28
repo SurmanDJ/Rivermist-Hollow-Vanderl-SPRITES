@@ -15,23 +15,23 @@
 		return the_pq
 	else
 		if(the_pq >= 100)
-			return "<span style='color: #00ff00;'>Legendary</span>"
+			return "Legendary"
 		if(the_pq >= 70)
-			return "<span style='color: #74cde0;'>Exceptional</span>"
+			return "Exceptional"
 		if(the_pq >= 30)
-			return "<span style='color: #47b899;'>Great</span>"
+			return "Great"
 		if(the_pq >= 5)
-			return "<span style='color: #58a762;'>Good</span>"
+			return "Good"
 		if(the_pq >= -4)
 			return "Normal"
 		if(the_pq >= -30)
-			return "<span style='color: #be6941;'>Poor</span>"
+			return "Poor"
 		if(the_pq >= -70)
-			return "<span style='color: #cd4232;'>Terrible</span>"
+			return "Terrible"
 		if(the_pq >= -99)
-			return "<span style='color: #e2221d;'>Abysmal</span>"
+			return "Abysmal"
 		if(the_pq <= -100)
-			return "<span style='color: #ff00ff;'>Shitter</span>"
+			return "Shitter"
 		return "Normal"
 
 /proc/adjust_playerquality(amt, key, admin, reason)

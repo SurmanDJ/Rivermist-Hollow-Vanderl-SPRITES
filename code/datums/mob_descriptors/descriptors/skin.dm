@@ -60,3 +60,64 @@
 /datum/mob_descriptor/skin/freckles
 	name = "Freckles"
 
+
+/datum/mob_descriptor/fur
+	abstract_type = /datum/mob_descriptor/fur
+	slot = MOB_DESCRIPTOR_SLOT_SKIN
+	verbage = "%HAVE%"
+
+/datum/mob_descriptor/fur/plain
+	name = "Plain Fur"
+
+/datum/mob_descriptor/fur/short
+	name = "Short Fur"
+
+/datum/mob_descriptor/fur/coarse
+	name = "Coarse Fur"
+
+/datum/mob_descriptor/fur/bristly
+	name = "Bristly Fur"
+
+/datum/mob_descriptor/fur/fluffy
+	name = "Fluffy Fur"
+
+/datum/mob_descriptor/fur/shaggy
+	name = "Shaggy Fur"
+
+/datum/mob_descriptor/fur/silky
+	name = "Silky Fur"
+
+/datum/mob_descriptor/fur/lank
+	name = "Lank Fur"
+
+/datum/mob_descriptor/fur/mangy
+	name = "Mangy Fur"
+
+/datum/mob_descriptor/fur/velvety
+	name = "Velvety Fur"
+
+/datum/mob_descriptor/fur/dense
+	name = "Dense Fur"
+
+/datum/mob_descriptor/fur/matted
+	name = "Matted Fur"
+
+/datum/mob_descriptor/scales
+	abstract_type = /datum/mob_descriptor/scales
+	slot = MOB_DESCRIPTOR_SLOT_SKIN
+	verbage = "%HAVE%"
+
+/datum/mob_descriptor/scales/plain
+	name = "Plain Scales"
+
+/datum/mob_descriptor/scales/rough
+	name = "Rough Scales"
+
+/datum/mob_descriptor/scales/smooth
+	name = "Smooth Scales"
+
+/datum/mob_descriptor/scales/plated
+	name = "Plated Scales"
+
+/datum/mob_descriptor/scales/peeling
+	name = "Peeling Scales"

@@ -6,6 +6,8 @@
 #define BODY_ZONE_L_LEG		"l_leg"
 #define BODY_ZONE_R_LEG		"r_leg"
 
+#define BODY_ZONE_TAUR		"taur"
+
 #define BODY_ZONE_PRECISE_SKULL		"skull"
 #define BODY_ZONE_PRECISE_EARS		"ears"
 #define BODY_ZONE_PRECISE_R_EYE		"r_eye"

@@ -37,9 +37,10 @@
 		/datum/skill/misc/music = 2,
 		/datum/skill/misc/sneaking = 2,
 	)
-
 	use_skintones = TRUE
 	possible_ages = NORMAL_AGES_LIST
+
+	order_num = 5
 
 	changesource_flags = WABBAJACK
 

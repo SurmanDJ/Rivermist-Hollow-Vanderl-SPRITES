@@ -282,6 +282,12 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/list/customization_history = list()
 	var/current_loadout_slot = 1
 
+	var/taur_type = null
+	var/taur_color = "F2F2F2"
+	var/taur_markings = "F2F2F2"
+	var/taur_tertiary = "F2F2F2"
+	var/selected_title = "None"
+
 	var/list/preference_message_list = list()
 
 	/// Tracker to whether the person has ever spawned into the round, for purposes of applying the respawn ban
@@ -1676,6 +1682,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					var/list/skins = pref_species.get_skin_list()
 					skin_tone = skins[pick(skins)]
 				if("species")
+					user << browse(null, "window=misc_customization")
 					random_species()
 				if("all")
 					apply_character_randomization_prefs()
@@ -1841,6 +1848,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 							to_chat(user, "<i>[combat_music.desc]</i>")
 						if(combat_music.credits)
 							to_chat(user, span_info("Song name: <b>[combat_music.credits]</b>"))
+					show_misc_pref_ui(user)
 
 				if("voice")
 					var/new_voice = input(user, "SELECT YOUR HERO'S VOICE COLOR", "THE THROAT","#"+voice_color) as color|null
@@ -1941,9 +1949,10 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 						selectable[species.name] = species.type
 
-					var/result = browser_input_list(user, "SELECT YOUR HERO'S PEOPLE:", "VANDERLIN FAUNA", selectable, pref_species)
+					var/result = browser_input_list(user, "SELECT YOUR HERO'S PEOPLE:", "PEOPLE OF FAERUN", selectable, pref_species)
 
 					if(result)
+						user << browse(null, "window=misc_customization")
 						var/species_type = selectable[result]
 
 						pref_species = new species_type()
@@ -1959,6 +1968,13 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						else if(!(pronouns in pref_species.allowed_pronouns))
 							pronouns = pref_species.allowed_pronouns[1]
 
+						if(pref_species.forced_taur && pref_species.allowed_taur_types.len)
+							taur_type = pick(pref_species.allowed_taur_types)
+						else
+							taur_type = null
+
+
+						selected_title = "None"
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						real_name = pref_species.random_name(gender,1)
 						reset_jobs(user)
@@ -1970,6 +1986,106 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						reset_all_customizer_accessory_colors()
 						randomize_all_customizer_accessories()
 						accessory = "Nothing"
+
+				if("taur_type")
+					var/list/species_taur_list = pref_species.get_taur_list()
+					if(!LAZYLEN(species_taur_list))
+						taur_type = null
+						to_chat(user, span_bad("There are no available taur bodies for this species."))
+						return
+
+					var/list/taur_selection
+					if(pref_species.forced_taur)
+						taur_selection = list()
+					else
+						taur_selection = list("None")
+
+					for(var/obj/item/bodypart/taur/tt as anything in pref_species.get_taur_list())
+						taur_selection[tt::name] = tt
+
+					var/new_taur_type = tgui_input_list(user, "Choose your character's taur body", "TAUR BODY", taur_selection)
+					if(!new_taur_type)
+						return
+
+					if(new_taur_type == "None")
+						taur_type = null
+					else
+						taur_type = taur_selection[new_taur_type]
+
+					var/obj/item/bodypart/taur/tt = taur_type
+					to_chat(user, span_red("Your character now has [tt ? tt::name : "no taurtype."]."))
+					show_misc_pref_ui(user)
+
+				if("taur_color")
+					var/new_taur_color = input(user, "Choose your character's taur color:", "Character Preference", "#"+taur_color) as color|null
+					if(new_taur_color)
+						taur_color = sanitize_hexcolor(new_taur_color)
+					show_misc_pref_ui(user)
+
+				if("taur_markings")
+					var/new_taur_markings = input(user, "Choose your character's taur markings color:", "Character Preference", "#"+taur_markings) as color|null
+					if(new_taur_markings)
+						taur_markings = sanitize_hexcolor(new_taur_markings)
+					show_misc_pref_ui(user)
+
+				if("taur_tertiary")
+					var/new_taur_tertiary = input(user, "Choose your character's taur tertiary markings color:", "Character Preference", "#"+taur_tertiary) as color|null
+					if(new_taur_tertiary)
+						taur_tertiary = sanitize_hexcolor(new_taur_tertiary)
+					show_misc_pref_ui(user)
+
+				if("mutant_color")
+					var/new_mutantcolor = input(user, "Choose your character's mutant #1 color:", "Character Preference","#"+features["mcolor"]) as color|null
+					if(new_mutantcolor)
+
+						features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
+						try_update_mutant_colors()
+					show_misc_pref_ui(user)
+
+				if("mutant_color2")
+					var/new_mutantcolor = input(user, "Choose your character's mutant #2 color:", "Character Preference","#"+features["mcolor2"]) as color|null
+					if(new_mutantcolor)
+						features["mcolor2"] = sanitize_hexcolor(new_mutantcolor)
+						try_update_mutant_colors()
+					show_misc_pref_ui(user)
+
+				if("mutant_color3")
+					var/new_mutantcolor = input(user, "Choose your character's mutant #3 color:", "Character Preference","#"+features["mcolor3"]) as color|null
+					if(new_mutantcolor)
+						features["mcolor3"] = sanitize_hexcolor(new_mutantcolor)
+						try_update_mutant_colors()
+					show_misc_pref_ui(user)
+
+				if("skin_choice_pick")
+					var/prompt = alert(user, "Choose skin/scales color",, "Custom", "Predefined")
+					if(prompt == "Custom")
+						var/new_mutantcolor = input(user, "Choose your character's skin/scale color:", "Character Preference","#"+features["mcolor"]) as color|null
+						if(new_mutantcolor)
+							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
+							try_update_mutant_colors()
+					if(prompt == "Predefined")
+						var/listy = pref_species.get_skin_list()
+						var/new_mutantcolor = input(user, "Choose your character's skin tone:", "Sun")  as null|anything in listy
+						if(new_mutantcolor)
+							features["mcolor"] = listy[new_mutantcolor]
+							try_update_mutant_colors()
+					show_misc_pref_ui(user)
+				if("race_title")
+					var/list/titles = pref_species.race_titles
+					var/list/choices = list("None", "Custom")
+					for(var/A in titles)
+						choices += list(A)
+					if(user?.client)
+						var/result = tgui_input_list(user, "What do they call your kind?", "RACE TITLE", choices)
+
+						if(result == "Custom")
+							result = tgui_input_text(user, "Name of your people:", "RACE TITLE", "None",  encode = FALSE)
+						if(result)
+							if(result == "None")
+								selected_title = "None"
+							else
+								selected_title = result
+					show_misc_pref_ui(user)
 
 				if("flavortext")
 					to_chat(user, span_notice("["<span class='bold'>Flavortext should not include nonphysical nonsensory attributes such as backstory or the character's internal thoughts. NSFW descriptions are prohibited.</span>"]"))
@@ -2100,6 +2216,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					var/new_s_tone = browser_input_list(user, "CHOOSE YOUR HERO'S [uppertext(pref_species.skin_tone_wording)]", "THE SUN", listy)
 					if(new_s_tone)
 						skin_tone = listy[new_s_tone]
+						features["mcolor"] = listy[new_s_tone]
 
 				if("selected_accent")
 					if(length(pref_species.multiple_accents))
@@ -2389,6 +2506,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					lore_popup(user)
 
 				if("finished")
+					var/client/C = usr.client
+					if(C)
+						C.clear_character_previews()
 					user << browse(null, "window=latechoices") //closes late choices window
 					user << browse(null, "window=playersetup") //closes the player setup window
 					user << browse(null, "window=preferences") //closes job selection
@@ -2397,7 +2517,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					user << browse(null, "window=migration") // Closes migrant menu
 
 					SStriumphs.remove_triumph_buy_menu(user.client)
-
 					winshow(user, "stonekeep_prefwin", FALSE)
 					user << browse(null, "window=preferences_browser")
 					user << browse(null, "window=lobby_window")
@@ -2439,6 +2558,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 							save_character()
 
 				if("randomiseappearanceprefs")
+					user << browse(null, "window=misc_customization")
 					randomise_appearance_prefs()
 					customizer_entries = list()
 					validate_customizer_entries()
@@ -2522,6 +2642,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		//dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SKIN_TONE]'>[(randomise[RANDOM_SKIN_TONE]) ? "Lock" : "Unlock"]</A>"
 
 	dat += "<br>"
+	if(pref_species.use_titles)
+		var/display_title = selected_title ? selected_title : "None"
+		dat += "<b>Race Title:</b> <a href='?_src_=prefs;preference=race_title;task=input'>[display_title]</a><BR>"
 	dat += "<br><b>Markings:</b> <a href='?_src_=prefs;preference=markings;task=menu'>Change</a>"
 	dat += "<br><b>Smallclothes:</b> <a href='?_src_=prefs;preference=underwear;task=menu'>Change</a>"
 	dat += "<br><b>ERP:</b> <a href='?_src_=prefs;preference=erp;task=menu'>Change</a>"
@@ -2532,6 +2655,20 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	dat += "<br><b>NSFW Headshot:</b> <a href='?_src_=prefs;preference=nsfw_headshot;task=input'>Change</a>"
 	if(nsfw_headshot_link != null)
 		dat += "<br><img src='[nsfw_headshot_link]' width='125px' height='175px'>"
+
+	if((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
+
+		dat += "<br><b>Mutant Color #1:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color;task=input'>Change</a><BR>"
+		dat += "<b>Mutant Color #2:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor2"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color2;task=input'>Change</a><BR>"
+		dat += "<b>Mutant Color #3:</b> <span style='border: 1px solid #161616; background-color: #[features["mcolor3"]];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=mutant_color3;task=input'>Change</a><BR>"
+
+	if(LAZYLEN(pref_species.allowed_taur_types))
+		var/obj/item/bodypart/taur/T = taur_type
+		var/name = ispath(T) ? T::name : "None"
+		dat += "<br><b>Taur Body Type:</b> <a href='?_src_=prefs;preference=taur_type;task=input'>[name]</a><BR>"
+		dat += "<b>Taur Color:</b> <span style='border: 1px solid #161616; background-color: #[taur_color];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_color;task=input'>Change</a><BR>"
+		dat += "<b>Taur Markings:</b> <span style='border: 1px solid #161616; background-color: #[taur_markings];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_markings;task=input'>Change</a><BR>"
+		dat += "<b>Taur Tertiary:</b> <span style='border: 1px solid #161616; background-color: #[taur_tertiary];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=taur_tertiary;task=input'>Change</a><BR>"
 
 	dat += "<br></td>"
 
@@ -2569,7 +2706,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 /// Applies the given preferences to a human mob. Calling this directly will skip sanitisation.
 /// This is good if you are applying prefs to a mob as if you were cloning them.
-/datum/preferences/proc/apply_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE)
+/datum/preferences/proc/apply_prefs_to(mob/living/carbon/human/character, icon_updates = TRUE, character_setup = FALSE)
 	if(QDELETED(character) || !ishuman(character))
 		return
 	character.age = age
@@ -2610,71 +2747,72 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	character.pronouns = pronouns
 	character.voice_type = voice_type
 
-	//RMH Edit
-	generate_selectable_moanpacks()
-	if(moan_selection == MOANPACK_TYPE_DEF)
-		if(voice_type == VOICE_TYPE_MASC)
-			character.moan_selection = GLOB.selectable_moanpacks["MALE DEFAULT"]
-		else
-			character.moan_selection = GLOB.selectable_moanpacks["FEMALE DEFAULT"]
-	else
-		character.moan_selection = GLOB.selectable_moanpacks[moan_selection]
+	if(taur_type)
+		character.Taurize(taur_type, "#[taur_color]", "#[taur_markings]", "#[taur_tertiary]")
+	else if(character_setup)
+		// This should only ever ~do~ anything for previews
+		character.ensure_not_taur()
 
+
+	if((selected_title != "None" && pref_species.use_titles) && selected_title != null)
+		character.dna.species.name = selected_title
 
 	character.domhand = domhand
-	character.cmode_music_override = combat_music.musicpath
-	character.cmode_music_override_name = combat_music.name
-	character.voice_color = voice_color
 	character.set_patron(selected_patron)
 	character.familytree_pref = family
 	character.gender_choice_pref = gender_choice
-	character.setspouse = setspouse
-
-	if(length(quirks))
-		// ???
-		var/obj/item/bodypart/O = character.get_bodypart(BODY_ZONE_R_ARM)
-		if(O)
-			O.drop_limb()
-			qdel(O)
-		O = character.get_bodypart(BODY_ZONE_L_ARM)
-		if(O)
-			O.drop_limb()
-			qdel(O)
-		character.regenerate_limb(BODY_ZONE_R_ARM)
-		character.regenerate_limb(BODY_ZONE_L_ARM)
-		apply_quirks_to_character(character)
-
-	if(culinary_preferences)
-		apply_culinary_preferences(character)
 
 	if(smallclothes_preferences)
 		apply_smallclothes_preferences(character)
 
-	if(parent)
-		var/datum/role_bans/bans = get_role_bans_for_ckey(parent.ckey)
-		for(var/datum/role_ban_instance/ban as anything in bans.bans)
-			if(!ban.curses)
-				continue
-			for(var/curse_name as anything in ban.curses)
-				var/datum/curse/curse = GLOB.curse_names[curse_name]
-				character.add_curse(curse.type)
+	if(!character_setup)
+		//RMH Edit
+		generate_selectable_moanpacks()
+		if(moan_selection == MOANPACK_TYPE_DEF)
+			if(voice_type == VOICE_TYPE_MASC)
+				character.moan_selection = GLOB.selectable_moanpacks["MALE DEFAULT"]
+			else
+				character.moan_selection = GLOB.selectable_moanpacks["FEMALE DEFAULT"]
+		else
+			character.moan_selection = GLOB.selectable_moanpacks[moan_selection]
 
-		apply_trait_bans(character, parent.ckey)
+		character.cmode_music_override = combat_music.musicpath
+		character.cmode_music_override_name = combat_music.name
+		character.voice_color = voice_color
+		character.setspouse = setspouse
+		if(length(quirks))
+			// ???
+			apply_quirks_to_character(character)
 
-		if(is_misc_banned(parent.ckey, BAN_MISC_LEPROSY))
-			ADD_TRAIT(character, TRAIT_LEPROSY, TRAIT_BAN_PUNISHMENT)
-		if(is_misc_banned(parent.ckey, BAN_MISC_PUNISHMENT_CURSE))
-			ADD_TRAIT(character, TRAIT_PUNISHMENT_CURSE, TRAIT_BAN_PUNISHMENT)
+		if(culinary_preferences)
+			apply_culinary_preferences(character)
 
-	if(pref_species.multiple_accents && length(pref_species.multiple_accents))
-		change_accent = TRUE
-	else
-		change_accent = FALSE
 
-	character.accent = selected_accent
+		if(parent)
+			var/datum/role_bans/bans = get_role_bans_for_ckey(parent.ckey)
+			for(var/datum/role_ban_instance/ban as anything in bans.bans)
+				if(!ban.curses)
+					continue
+				for(var/curse_name as anything in ban.curses)
+					var/datum/curse/curse = GLOB.curse_names[curse_name]
+					character.add_curse(curse.type)
 
-	/* :V */
-	apply_character_kinks(character)
+			apply_trait_bans(character, parent.ckey)
+
+			if(is_misc_banned(parent.ckey, BAN_MISC_LEPROSY))
+				ADD_TRAIT(character, TRAIT_LEPROSY, TRAIT_BAN_PUNISHMENT)
+			if(is_misc_banned(parent.ckey, BAN_MISC_PUNISHMENT_CURSE))
+				ADD_TRAIT(character, TRAIT_PUNISHMENT_CURSE, TRAIT_BAN_PUNISHMENT)
+
+		if(pref_species.multiple_accents && length(pref_species.multiple_accents))
+			change_accent = TRUE
+		else
+			change_accent = FALSE
+
+		character.accent = selected_accent
+
+		/* :V */
+		apply_character_kinks(character)
 
 	if(icon_updates)
 		character.update_body()
@@ -2702,6 +2840,11 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			return
 		else
 			custom_names[name_id] = sanitized_name
+
+/datum/preferences/proc/try_update_mutant_colors()
+	if(update_mutant_colors)
+		reset_body_marking_colors()
+		reset_all_customizer_accessory_colors()
 
 /datum/preferences/proc/is_active_migrant()
 	if(!migrant)

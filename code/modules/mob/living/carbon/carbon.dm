@@ -1104,6 +1104,11 @@
 	new_bodypart.set_owner(src)
 
 	switch(new_bodypart.body_part)
+		if(LEGS)
+			if(istype(new_bodypart, /obj/item/bodypart/taur))
+				set_num_legs(num_legs + 2)
+				if(!new_bodypart.bodypart_disabled)
+					set_usable_legs(usable_legs + 2)
 		if(LEG_LEFT, LEG_RIGHT)
 			set_num_legs(num_legs + 1)
 			if(!new_bodypart.bodypart_disabled)
@@ -1118,6 +1123,11 @@
 	bodyparts -= old_bodypart
 
 	switch(old_bodypart.body_part)
+		if(LEGS)
+			if(istype(old_bodypart, /obj/item/bodypart/taur))
+				set_num_legs(num_legs - 2)
+				if(!old_bodypart.bodypart_disabled)
+					set_usable_legs(usable_legs - 2)
 		if(LEG_LEFT, LEG_RIGHT)
 			set_num_legs(num_legs - 1)
 			if(!old_bodypart.bodypart_disabled)

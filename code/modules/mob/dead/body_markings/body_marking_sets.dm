@@ -57,3 +57,20 @@
 	body_marking_list = list(
 		/datum/body_marking/tiger/dark
 	)
+/datum/body_marking_set/aura
+
+/datum/body_marking_set/aura/tranquility
+	name = "Tranquility"
+	body_marking_list = list(/datum/body_marking/aura/tranquility)
+
+/datum/body_marking_set/aura/word
+	name = "Word"
+	body_marking_list = list(/datum/body_marking/aura/word)
+
+/datum/body_marking_set/aura/force
+	name = "Force"
+	body_marking_list = list(/datum/body_marking/aura/force)
+
+/datum/body_marking_set/aura/balance
+	name = "Balance"
+	body_marking_list = list(/datum/body_marking/aura/balance)

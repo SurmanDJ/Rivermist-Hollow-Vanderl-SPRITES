@@ -14,11 +14,20 @@
 	if(H && H.dna && H.dna.species)
 		H.dna.species.stop_wagging_tail(H)
 
+/obj/item/organ/tail/anthro
+	name = "wild-kin tail"
+
 /obj/item/organ/tail/cat
 	name = "cat tail"
 
 /obj/item/organ/tail/demihuman
 	name = "hollowkin tail"
+
+/obj/item/organ/tail/dragontail
+	name = "dragon tail"
+
+/obj/item/organ/tail/lizard
+	name = "lizard tail"
 
 /obj/item/organ/tail/harpy
 	name = "harpy plumage"

@@ -107,6 +107,21 @@
 		/datum/sprite_accessory/ears/big/acrador_short,
 		)
 
+/datum/customizer/organ/ears/lizard
+	name = "Hood"
+	customizer_choices = list(/datum/customizer_choice/organ/ears/lizard)
+	allows_disabling = TRUE
+	default_disabled = TRUE
+
+/datum/customizer_choice/organ/ears/lizard
+	name = "Lizard Hood"
+	organ_type = /obj/item/organ/ears/anthro
+	generic_random_pick = TRUE
+	sprite_accessories = list(
+		/datum/sprite_accessory/ears/cobrahood,
+		/datum/sprite_accessory/ears/cobrahoodears,
+		)
+
 /datum/customizer/organ/ears/demihuman
 	customizer_choices = list(/datum/customizer_choice/organ/ears/demihuman)
 	allows_disabling = TRUE
@@ -187,4 +202,17 @@
 		/datum/sprite_accessory/ears/shark,
 		/datum/sprite_accessory/ears/fish,
 		/datum/sprite_accessory/ears/elf,
+		)
+
+// ---- Tajaran
+/datum/customizer/organ/ears/tajaran
+	customizer_choices = list(/datum/customizer_choice/organ/ears/tajaran)
+
+/datum/customizer_choice/organ/ears/tajaran
+	name = "Tabaxi Ears"
+	organ_type = /obj/item/organ/ears/rakshari         // Renamed them IN GAME but in-code they're still 'tajaran' because im afraid of breaking shit
+	sprite_accessories = list(
+		/datum/sprite_accessory/ears/cat_big,
+		/datum/sprite_accessory/ears/cat_normal,
+		/datum/sprite_accessory/ears/miqote,
 		)

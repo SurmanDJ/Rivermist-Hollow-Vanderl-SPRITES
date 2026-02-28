@@ -47,6 +47,8 @@
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/ft.dmi'
 	hairyness = "t1"
 
+	order_num = 4
+
 	customizers = list(
 		/datum/customizer/organ/ears/elf,
 		/datum/customizer/organ/horns/wood_elf,
