@@ -3,7 +3,7 @@
 
 /datum/species/tabaxi
 	name = "Tabaxi"
-	id = "tabaxi"
+	id = SPEC_ID_TABAXI
 
 	changesource_flags = WABBAJACK
 
@@ -18,13 +18,13 @@
 
 	skin_tone_wording = "Fur Colors"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,STUBBLE, MUTCOLORS)
-	possible_ages = ALL_AGES_LIST
+	possible_ages = NORMAL_AGES_LIST
 	limbs_icon_m = 'modular_rmh/icons/mob/bodies/m/mta.dmi'
 	limbs_icon_f = 'modular_rmh/icons/mob/bodies/f/fma.dmi'
 
 	soundpack_m = /datum/voicepack/male/tabaxi
 	soundpack_f = /datum/voicepack/female/tabaxi
-
+	order_num = 35
 	offset_features_m = list(
 		OFFSET_RING = list(0,0),\
 		OFFSET_GLOVES = list(0,0),\

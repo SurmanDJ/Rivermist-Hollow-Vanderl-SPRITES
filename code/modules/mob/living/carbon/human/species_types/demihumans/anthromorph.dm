@@ -42,7 +42,7 @@
 
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	changesource_flags = WABBAJACK
-	possible_ages = ALL_AGES_LIST
+	possible_ages = NORMAL_AGES_LIST
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mt.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fm.dmi'
 

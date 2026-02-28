@@ -32,6 +32,8 @@
 #define SPEC_ID_TAUR_KIN "taurkin"
 #define SPEC_ID_MINOTAUR "minotaur"
 #define SPEC_ID_DRYDER "dryder"
+#define SPEC_ID_LIZARDFOLK "lizardfolk"
+#define SPEC_ID_TABAXI "tabaxi"
 
 #define SPEC_ID_ORC	"orc"
 #define SPEC_ID_GOBLIN	"goblin"
@@ -61,6 +63,8 @@
 	SPEC_ID_HALF_BEASTKINSMALL,\
 	SPEC_ID_TAUR_KIN,\
 	SPEC_ID_DRAGONBORN,\
+	SPEC_ID_TABAXI,\
+	SPEC_ID_LIZARDFOLK,\
 	SPEC_ID_YUANTI,\
 	SPEC_ID_HALF_ORC,\
 	SPEC_ID_ORC,\
@@ -88,6 +92,8 @@
 	SPEC_ID_HALF_BEASTKINSMALL,\
 	SPEC_ID_TAUR_KIN,\
 	SPEC_ID_DRAGONBORN,\
+	SPEC_ID_TABAXI,\
+	SPEC_ID_LIZARDFOLK,\
 	SPEC_ID_YUANTI,\
 	SPEC_ID_HARPY,\
 	SPEC_ID_TIEFLING,\
@@ -147,6 +153,8 @@
 	SPEC_ID_TAUR_KIN,\
 	SPEC_ID_DRAGONBORN,\
 	SPEC_ID_YUANTI,\
+	SPEC_ID_TABAXI,\
+	SPEC_ID_LIZARDFOLK,\
 	SPEC_ID_HALF_ORC,\
 )
 
@@ -185,6 +193,8 @@
 	SPEC_ID_TAUR_KIN,\
 	SPEC_ID_DRAGONBORN,\
 	SPEC_ID_YUANTI,\
+	SPEC_ID_TABAXI,\
+	SPEC_ID_LIZARDFOLK,\
 )
 
 /// Species who are non-exotic to Rivermist Hollow. These are species from foreign lands with no local pull or uncommon species. Used in miscellaneous cases, when they would not be that role.
@@ -356,6 +366,8 @@
 	SPEC_ID_YUANTI,\
 	SPEC_ID_HALF_ORC,\
 	SPEC_ID_ZIZOMBIE,\
+	SPEC_ID_TABAXI,\
+	SPEC_ID_LIZARDFOLK,\
 )
 
 

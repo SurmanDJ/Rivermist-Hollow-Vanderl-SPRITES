@@ -3101,6 +3101,7 @@
 #include "code\modules\mob\living\carbon\human\species_types\other\halfdrow.dm"
 #include "code\modules\mob\living\carbon\human\species_types\other\halfelf.dm"
 #include "code\modules\mob\living\carbon\human\species_types\other\halforc.dm"
+#include "code\modules\mob\living\carbon\human\species_types\other\lizardfolk.dm"
 #include "code\modules\mob\living\carbon\human\species_types\other\tabaxi.dm"
 #include "code\modules\mob\living\carbon\human\species_types\other\tiefling.dm"
 #include "code\modules\mob\living\carbon\human\species_types\other\werewolf.dm"

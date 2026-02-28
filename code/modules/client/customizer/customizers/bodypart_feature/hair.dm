@@ -628,6 +628,12 @@
 
 		)
 
+/datum/customizer/bodypart_feature/hair/head/humanoid/bald_default
+	customizer_choices = list(/datum/customizer_choice/bodypart_feature/hair/head/humanoid/bald_default)
+
+/datum/customizer_choice/bodypart_feature/hair/head/humanoid/bald_default/get_random_accessory(datum/customizer_entry/entry, datum/preferences/prefs)
+	return /datum/sprite_accessory/hair/head/bald
+
 /datum/customizer/bodypart_feature/hair/head/humanoid/triton
 	customizer_choices = list(/datum/customizer_choice/bodypart_feature/hair/head/humanoid/triton)
 
@@ -781,3 +787,9 @@
 		return pick(sprite_accessories)
 	else
 		return /datum/sprite_accessory/hair/facial/shaved
+
+/datum/customizer/bodypart_feature/hair/facial/humanoid/shaved_default
+	customizer_choices = list(/datum/customizer_choice/bodypart_feature/hair/facial/humanoid/shaved_default)
+
+/datum/customizer_choice/bodypart_feature/hair/facial/humanoid/shaved_default/get_random_accessory(datum/customizer_entry/entry, datum/preferences/prefs)
+	return /datum/sprite_accessory/hair/facial/shaved

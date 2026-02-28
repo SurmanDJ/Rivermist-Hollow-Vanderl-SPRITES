@@ -79,6 +79,8 @@ GLOBAL_LIST_EMPTY(emote_list)
 	SPEC_ID_TAUR_KIN = 31,
 	SPEC_ID_MINOTAUR = 32,
 	SPEC_ID_DRYDER = 33,
+	SPEC_ID_LIZARDFOLK = 34,
+	SPEC_ID_TABAXI = 35,
 ))*/
 GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 	/turf/open/lava,

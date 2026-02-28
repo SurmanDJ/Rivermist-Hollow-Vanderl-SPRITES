@@ -1,35 +1,31 @@
-/mob/living/carbon/human/species/dragonborn
-	race = /datum/species/dragonborn
+/mob/living/carbon/human/species/lizardfolk
+	race = /datum/species/lizardfolk
 
-/datum/species/dragonborn
-	name = "Dragonborn"
-	id = SPEC_ID_DRAGONBORN
-	desc = "Dragonborn are a proud and ancient race that trace their heritage to dragons of old. \
-	They are highly protective of their bloodline and do everything in their power to make sure it does not spread beyond their own, \
-	as they believe themselves to be guardians of tradition and that it is their ultimate duty to maintain their prestige as a race. \
-	After all, a single drop of draconic blood in ones bloodline means that they will experience all of the benefits of having draconic ancestors such as agelessness.\
+/datum/species/lizardfolk
+	name = "Lizardfolk"
+	id = SPEC_ID_LIZARDFOLK
+	desc = "<b>Lizardfolk</b><br>\
+	Lizardfolk are hardy, reptilian people that share a unique bond among their kind due to being the target of oppression \
+	and enslavement by other races, particularly by Humans and Drakians. They take pride in their resilience and adaptability,\
+	and they can be found all over the world for one reason or another. Once a nomadic, tribal people, Lizardfolk are often forced \
+	to hide and settle in deserts, swamps, bogs, and other typically inhospitable lands. Their appearance changes based on the lands \
+	they adapt to, allowing for crocodilian appearance if from the swamp to lizard-like appearances if from the desert. \
 	<br><br> \
-	Yet, it comes at a cost. \
-	While initially viewed as one of the noblest races, \
-	they are now hated for their insufferable arrogance and often appear completely out of touch with the rest of society. \
-	Their inability to have a concept of time, refusal to compromise or intermarry, \
-	along with their rejection of any technology that threatens their supremacy have earned them countless enemies from Axians to Dwarves. \
-	For instance, they view any Wild-kin with draconic features or blood as inherently inferior. \
-	Yet, not all Dragonborn are like this with some believing it is their duty to help lesser races, although many still view these Dragonborn to be just as insufferable.\
-	<br><br> \
-	In the past, Dragonborn held positions of power and prestige across all the realms. \
-	Many try to style themselves after knight-philosophers in an attempt to hide their brutish ways. \
-	When in reality, most Dragonborn are known for being bloody conquerors. \
-	However, the rise of humans have caused their ambitions to crumble, forcing them to work with other races, especially at the climax of the Great Lizard Uprising. \
-	Furthermore, dwindling numbers have caused Dragonborn to increasingly abandon the ways of old, forcing them to adapt to a more modern way of life."
+	They can also be found in large, bustling cities, particularly slave cities where their strength, toughness, and endurance \
+	makes them particularly valuable. Lizardfolk often despise weakness and instead find solace in suffering. They tend to be \
+	highly religious, although of course, no race is monolithic. In fact, some Lizardfolk have become successful with some rising to \
+	the rank of nobility in many different kingdoms despite all adversity, but this often makes them targets of their jealous peers."
+	skin_tone_wording = "Skin Colors"
 	species_traits = list(EYECOLOR,LIPS,STUBBLE,MUTCOLORS)
-	possible_ages = ALL_AGES_LIST
-	changesource_flags = WABBAJACK
+	possible_ages = NORMAL_AGES_LIST
+	changesource_flags =  WABBAJACK
 	limbs_icon_m = 'modular_rmh/icons/mob/bodies/m/mta.dmi'
 	limbs_icon_f = 'modular_rmh/icons/mob/bodies/f/fma.dmi'
+
+	order_num = 34
+
 	soundpack_m = /datum/voicepack/male
 	soundpack_f = /datum/voicepack/female
-	order_num = 27
 
 	offset_features_m = list(
 		OFFSET_RING = list(0,0),\
@@ -70,9 +66,13 @@
 	)
 
 
-	specstats_m = list(STATKEY_STR = 2, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = -1, STATKEY_LCK = 0)
-	specstats_f = list(STATKEY_STR = 2, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = -1, STATKEY_LCK = 0)
+	specstats_m = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = -1, STATKEY_CON = 1, STATKEY_END = 1, STATKEY_SPD = 0, STATKEY_LCK = 0)
+	specstats_f = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = -1, STATKEY_CON = 1, STATKEY_END = 1, STATKEY_SPD = 0, STATKEY_LCK = 0)
+
+	inherent_traits = list(TRAIT_NASTY_EATER)
 	enflamed_icon = "widefire"
+
+
 	organs = list(
 		ORGAN_SLOT_BRAIN = /obj/item/organ/brain,
 		ORGAN_SLOT_HEART = /obj/item/organ/heart,
@@ -83,7 +83,7 @@
 		ORGAN_SLOT_LIVER = /obj/item/organ/liver,
 		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach,
 		ORGAN_SLOT_APPENDIX = /obj/item/organ/appendix,
-		ORGAN_SLOT_TAIL = /obj/item/organ/tail/dragontail,
+		ORGAN_SLOT_TAIL = /obj/item/organ/tail/lizard,
 		ORGAN_SLOT_SNOUT = /obj/item/organ/snout/lizard,
 		ORGAN_SLOT_TAIL_FEATURE = /obj/item/organ/tail_feature/lizard_spines,
 		ORGAN_SLOT_FRILLS = /obj/item/organ/frills/lizard,
@@ -91,22 +91,20 @@
 		)
 	customizers = list(
 		/datum/customizer/organ/eyes/humanoid,
-		/datum/customizer/bodypart_feature/hair/head/humanoid,
-		/datum/customizer/bodypart_feature/hair/facial/humanoid,
+		/datum/customizer/bodypart_feature/hair/head/humanoid/bald_default,
+		/datum/customizer/bodypart_feature/hair/facial/humanoid/shaved_default,
 		/datum/customizer/bodypart_feature/accessory,
 		/datum/customizer/bodypart_feature/face_detail,
-		/datum/customizer/organ/wings/dragonborn,
 		/datum/customizer/organ/tail/lizard,
 		/datum/customizer/organ/tail_feature/lizard_spines,
-		/datum/customizer/organ/snout/lizard/dragonborn,
+		/datum/customizer/organ/snout/lizard,
 		/datum/customizer/organ/ears/lizard,
 		/datum/customizer/organ/frills/lizard,
-		/datum/customizer/organ/horns/humanoid,
+		/datum/customizer/organ/horns/humanoid/lizardfolk,
 		/datum/customizer/organ/genitals/testicles/anthro,
 		/datum/customizer/organ/genitals/penis/anthro,
 		/datum/customizer/organ/genitals/breasts/animal,
-		/datum/customizer/organ/genitals/vagina/animal,
-		/datum/customizer/organ/ears/anthro,
+		/datum/customizer/organ/genitals/vagina/anthro,
 		)
 	body_marking_sets = list(
 		/datum/body_marking_set/none,
@@ -118,28 +116,19 @@
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
 		/datum/body_marking/plain,
-		/datum/body_marking/tiger,
-		/datum/body_marking/tiger/dark,
-		/datum/body_marking/sock,
-		/datum/body_marking/socklonger,
-		/datum/body_marking/tips,
 		/datum/body_marking/bellyscale,
 		/datum/body_marking/bellyscaleslim,
-		/datum/body_marking/bellyscalesmooth,
 		/datum/body_marking/bellyscaleslimsmooth,
 		/datum/body_marking/buttscale,
-		/datum/body_marking/belly,
-		/datum/body_marking/bellyslim,
-		/datum/body_marking/butt,
 		/datum/body_marking/tie,
 		/datum/body_marking/tiesmall,
-		/datum/body_marking/backspots,
 		/datum/body_marking/front,
+		/datum/body_marking/tiger,
+		/datum/body_marking/tiger/dark,
 		/datum/body_marking/drake_eyes,
 		/datum/body_marking/tonage,
-		/datum/body_marking/spotted,
+		/datum/body_marking/tips,
 	)
-
 	descriptor_choices = list(
 		/datum/descriptor_choice/stature,
 		/datum/descriptor_choice/height,
@@ -154,24 +143,24 @@
 		/datum/descriptor_choice/prominent_four,
 	)
 
-/datum/species/dragonborn/check_roundstart_eligible()
+/datum/species/lizardfolk/check_roundstart_eligible()
 	return TRUE
 
-/datum/species/dragonborn/qualifies_for_rank(rank, list/features)
+/datum/species/lizardfolk/qualifies_for_rank(rank, list/features)
 	return TRUE
 
-/datum/species/dragonborn/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/lizardfolk/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
-/datum/species/dragonborn/on_species_loss(mob/living/carbon/C)
+/datum/species/lizardfolk/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_SAY)
 
-/datum/species/dragonborn/get_random_body_markings(list/passed_features)
+/datum/species/lizardfolk/get_random_body_markings(list/passed_features)
 	return assemble_body_markings_from_set(GLOB.body_marking_sets_by_type[/datum/body_marking_set/bellyscale], passed_features, src)
 
-/datum/species/dragonborn/get_skin_list()
+/datum/species/lizardfolk/get_skin_list()
 	return list(
 		"Aquarela" = SKIN_COLOR_AQUARELA,
 		"Amor" = SKIN_COLOR_AMOR,

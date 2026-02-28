@@ -33,7 +33,6 @@
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	changesource_flags = WABBAJACK
-	possible_ages = ALL_AGES_LIST
 
 	limbs_icon_m = 'modular_rmh/icons/mob/species/anthro_small_malea.dmi'
 	limbs_icon_f = 'modular_rmh/icons/mob/species/anthro_small_femalea.dmi'
