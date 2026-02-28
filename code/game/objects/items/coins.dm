@@ -5,7 +5,7 @@
 #define CTYPE_COPP "c"
 #define CTYPE_INQU "i"
 #define CTYPE_ANCI "a"
-#define CTYPE_GUILD CTYPE_GUILD
+#define CTYPE_GUILD "t"
 
 #define MAX_COIN_STACK_SIZE 20
 

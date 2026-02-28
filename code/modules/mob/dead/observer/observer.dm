@@ -416,6 +416,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	client.view_size.setDefault(getScreenSize())
 	mind.current_ghost = null
 	mind.current.ckey = ckey(key)
+	if(HAS_TRAIT_FROM(mind.current, TRAIT_NOSLEEP, "aghost"))
+		REMOVE_TRAIT(mind.current, TRAIT_NOSLEEP, "aghost")
 	return TRUE
 
 

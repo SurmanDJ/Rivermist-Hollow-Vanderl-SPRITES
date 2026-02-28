@@ -1,5 +1,3 @@
-#define CTYPE_GILD_COIN "t"
-
 /obj/item/coin/gild
 
 	name = "Guild Token"
@@ -18,5 +16,3 @@
 	. = ..()
 	if(!coin_amount)
 		set_quantity(rand(4,14))
-
-#undef CTYPE_GILD_COIN
