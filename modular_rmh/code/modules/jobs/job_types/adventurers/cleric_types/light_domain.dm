@@ -51,17 +51,17 @@
 	. = ..()
 
 	var/static/list/selectable = list( \
-		"Silver Rungu" = /obj/item/weapon/mace/rungu/silver, \
-		"Silver Sengese" = /obj/item/weapon/sword/scimitar/sengese/silver \
+		"Morningstar" = /obj/item/weapon/mace/steel/morningstar, \
+		"Scimitar" = /obj/item/weapon/sword/scimitar \
 	)
 	var/choice = spawned.select_equippable(player_client, selectable, message = "What is your weapon of choice?")
 	if(!choice)
 		return
 
 	switch(choice)
-		if("Silver Rungu")
+		if("Morningstar")
 			spawned.adjust_skillrank(/datum/skill/combat/axesmaces, 4, TRUE)
-		if("Silver Sengese")
+		if("Scimitar")
 			spawned.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
 
 	var/holder = spawned.patron?.devotion_holder
@@ -73,13 +73,13 @@
 
 /datum/outfit/adventurer_cleric/light_domain
 	name = "Light Domain"
-	head = /obj/item/clothing/head/helmet/ironpot/lakkariancap
-	mask = null
+	head = /obj/item/clothing/head/roguehood/colored/red
+	mask = /obj/item/clothing/face/ambermask
 	neck = /obj/item/clothing/neck/chaincoif/iron
-	cloak = /obj/item/clothing/cloak/tabard/crusader
-	armor = /obj/item/clothing/armor/gambeson/heavy/lakkarijupon
-	shirt = /obj/item/clothing/shirt/undershirt/fancy
-	wrists = null
+	cloak = /obj/item/clothing/cloak/cape/colored/brown
+	armor = /obj/item/clothing/armor/chainmail/iron
+	shirt = /obj/item/clothing/armor/gambeson
+	wrists = /obj/item/clothing/wrists/bracers/leather
 	gloves = /obj/item/clothing/gloves/leather
 	pants = /obj/item/clothing/pants/trou/leather
 	shoes = /obj/item/clothing/shoes/boots/leather
@@ -90,7 +90,7 @@
 	beltr = null
 	ring = null
 	l_hand = null
-	r_hand = /obj/item/flashlight/flare/torch/prelit
+	r_hand = /obj/item/flashlight/flare/torch/lantern/bronzelamptern
 
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor = 1, /obj/item/reagent_containers/food/snacks/hardtack = 1)
 
