@@ -1262,6 +1262,10 @@
 				resist_leash() //trying to remove a leash.
 			else
 				resist_restraints() //trying to remove cuffs.
+			var/datum/component/riding/human/riding_datum = GetComponent(/datum/component/riding/human)
+			if(HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE) && riding_datum)
+				for(var/mob/M in buckled_mobs)
+					riding_datum.force_dismount(M)
 
 /mob/living/carbon/human/verb/ic_pray()
 	set name = "Prayer"

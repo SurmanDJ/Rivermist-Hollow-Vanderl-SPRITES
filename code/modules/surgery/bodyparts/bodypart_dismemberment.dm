@@ -301,6 +301,22 @@
 		C.update_inv_shoes()
 		C.update_inv_pants()
 
+/obj/item/bodypart/taur/drop_limb(special) //copypasta
+	var/mob/living/carbon/C = owner
+	. = ..()
+	if(C && !special)
+		if(HAS_TRAIT_FROM(C, TRAIT_PONYGIRL_RIDEABLE, BODY_ZONE_TAUR))
+			REMOVE_TRAIT(C, TRAIT_PONYGIRL_RIDEABLE, BODY_ZONE_TAUR)
+		if(C.legcuffed)
+			C.legcuffed.forceMove(C.drop_location())
+			C.legcuffed.dropped(C)
+			C.legcuffed = null
+			C.update_inv_legcuffed()
+		if(C.shoes && (C.get_num_legs(FALSE) < 1))
+			C.dropItemToGround(C.shoes, force = TRUE)
+		C.update_inv_shoes()
+		C.update_inv_pants()
+
 /obj/item/bodypart/head/drop_limb(special)
 	if(!special)
 		//Drop all worn head items
@@ -340,6 +356,8 @@
 	moveToNullspace()
 	set_owner(C)
 	C.add_bodypart(src)
+	if(src.body_zone == BODY_ZONE_TAUR)
+		ADD_TRAIT(C, TRAIT_PONYGIRL_RIDEABLE, BODY_ZONE_TAUR)
 	if(held_index)
 		if(held_index > C.hand_bodyparts.len)
 			C.hand_bodyparts.len = held_index

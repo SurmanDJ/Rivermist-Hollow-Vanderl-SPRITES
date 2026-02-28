@@ -75,6 +75,8 @@
 	possible_ages = ALL_AGES_LIST
 	use_skintones = TRUE
 
+	order_num = 22
+
 	native_language = "Common"
 
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/automaton.dmi'

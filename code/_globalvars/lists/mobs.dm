@@ -44,7 +44,42 @@ GLOBAL_LIST_EMPTY(latejoin_ai_cores)
 GLOBAL_LIST_EMPTY(mob_config_movespeed_type_lookup)
 
 GLOBAL_LIST_EMPTY(emote_list)
-
+/// Assoc list used for ordering races in displayed menus //not used actually lmao
+/*GLOBAL_LIST_INIT(species_order_list, list(
+	SPEC_ID_HUMAN_SPACE = 1,
+	SPEC_ID_HUMEN = 2,
+	SPEC_ID_ELF = 3,
+	SPEC_ID_ELF_W = 4,
+	SPEC_ID_HALF_ELF = 5,
+	SPEC_ID_DROW = 6,
+	SPEC_ID_HALF_DROW = 7,
+	SPEC_ID_TIEFLING = 8,
+	SPEC_ID_HALFLING = 9,
+	SPEC_ID_DWARF = 10,
+	SPEC_ID_DUERGAR = 11,
+	SPEC_ID_GNOME = 12,
+	SPEC_ID_GNOME_D = 13,
+	SPEC_ID_AASIMAR = 14,
+	SPEC_ID_HALF_ORC = 15,
+	SPEC_ID_RAKSHARI = 16,
+	SPEC_ID_KOBOLD = 17,
+	SPEC_ID_HOLLOWKIN = 18,
+	SPEC_ID_HARPY = 19,
+	SPEC_ID_TRITON = 20,
+	SPEC_ID_MEDICATOR = 21,
+	SPEC_ID_AUTOMATON = 22,
+	SPEC_ID_BEASTKIN = 23,
+	SPEC_ID_BEASTKINSMALL = 24,
+	SPEC_ID_HALF_BEASTKINSMALL = 25,
+	SPEC_ID_GYTH = 26,
+	SPEC_ID_DRAGONBORN = 27,
+	SPEC_ID_TRUE_ORC = 28,
+	SPEC_ID_PLAYER_GOBLIN = 29,
+	SPEC_ID_YUANTI = 30,
+	SPEC_ID_TAUR_KIN = 31,
+	SPEC_ID_MINOTAUR = 32,
+	SPEC_ID_DRYDER = 33,
+))*/
 GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 	/turf/open/lava,
 	/turf/open/openspace,

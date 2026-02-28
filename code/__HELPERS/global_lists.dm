@@ -17,8 +17,8 @@
 		if(species.check_roundstart_eligible())
 			GLOB.roundstart_species += species.id
 
-	sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_text_dsc))
-	sortTim(GLOB.roundstart_species, GLOBAL_PROC_REF(cmp_text_dsc))
+	sortTim(GLOB.species_list, GLOBAL_PROC_REF(cmp_species_order_asc))
+	sortTim(GLOB.roundstart_species, GLOBAL_PROC_REF(cmp_species_order_asc))
 
 	//Surgery steps
 	for(var/path in subtypesof(/datum/surgery_step))
@@ -121,3 +121,8 @@
 			continue
 		GLOB.curse_names |= initial(curse_type.name)
 		GLOB.curse_names[initial(curse_type.name)] = new curse_type
+
+/proc/cmp_species_order_asc(a, b)
+	var/datum/species/a_sp = GLOB.species_list[a]
+	var/datum/species/b_sp = GLOB.species_list[b]
+	return a_sp.order_num - b_sp.order_num //a.order_num - b.order_num

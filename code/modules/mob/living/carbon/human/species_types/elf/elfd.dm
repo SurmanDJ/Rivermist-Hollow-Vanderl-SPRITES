@@ -54,6 +54,8 @@
 	hairyness = "t3"
 	exotic_bloodtype = /datum/blood_type/human/delf
 
+	order_num = 6
+
 	organs = list(
 		ORGAN_SLOT_BRAIN = /obj/item/organ/brain,
 		ORGAN_SLOT_HEART = /obj/item/organ/heart,

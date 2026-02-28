@@ -241,6 +241,13 @@
 
 	quirks = sort_quirks(quirks)
 
+	var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_R_ARM)
+	if(!O)
+		H.regenerate_limb(BODY_ZONE_R_ARM)
+	O = H.get_bodypart(BODY_ZONE_L_ARM)
+	if(!O)
+		H.regenerate_limb(BODY_ZONE_L_ARM)
+
 	// Apply valid quirks to character
 	for(var/quirk_type in quirks)
 		var/custom_val = quirk_customizations[quirk_type]

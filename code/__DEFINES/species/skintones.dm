@@ -139,3 +139,13 @@
 #define SKIN_TONE_HIGH_ELF_WARM        "ffe6c9" // Warm Pale
 #define SKIN_TONE_HIGH_ELF_GOLDEN      "ffe0b3" // Golden Pale
 #define SKIN_TONE_HIGH_ELF_LIGHT_BEIGE "fcdcbf" // Light Beige
+
+//TABAXI FUR COLOR
+#define ORANGE_FUR "de7642"
+#define LIGHTGREY_FUR "a8aa97"
+#define DARKGREY_FUR "677881"
+#define LIGHTORANGE_FUR "da672a"
+#define LIGHTBROWN_FUR "6d4530"
+#define WHITEBROWN_FUR "c69b83"
+#define DARKBROWN_FUR "3b2e27"
+#define BLACK_FUR	 "271f1a"

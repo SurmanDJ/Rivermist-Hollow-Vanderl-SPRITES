@@ -26,8 +26,17 @@
 /datum/body_marking/proc/get_default_color(list/features, datum/species/pref_species) //Needs features for the color information
 	var/list/colors
 	switch(default_color)
+		if(DEFAULT_PRIMARY)
+			colors = features["mcolor"]
+		if(DEFAULT_SECONDARY)
+			colors = features["mcolor2"]
+		if(DEFAULT_TERTIARY)
+			colors = features["mcolor3"]
 		if(DEFAULT_SKIN_OR_PRIMARY)
-			colors = features["skin_color"]
+			if(pref_species && pref_species.use_skintones)
+				colors = features["skin_color"]
+			else
+				colors = features["mcolor"]
 		else
 			colors = default_color
 
@@ -348,3 +357,25 @@
 	icon_state = "stripes"
 	default_color = "FF0000"
 	affected_bodyparts = ARM_LEFT | ARM_RIGHT | LEG_LEFT | LEG_RIGHT
+
+/datum/body_marking/aura //thanks Twilight Axis
+	icon = 'modular_rmh/icons/mob/body_markings/aura_markings.dmi'
+	default_color = "FFF"
+	affected_bodyparts = CHEST | ARM_LEFT | ARM_RIGHT | LEG_RIGHT | LEG_LEFT
+	gendered = TRUE
+
+/datum/body_marking/aura/tranquility
+	name = "Tranquility"
+	icon_state = "z"
+
+/datum/body_marking/aura/word
+	name = "Word"
+	icon_state = "x"
+
+/datum/body_marking/aura/force
+	name = "Force"
+	icon_state = "c"
+
+/datum/body_marking/aura/balance
+	name = "Balance"
+	icon_state = "v"

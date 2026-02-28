@@ -1338,11 +1338,12 @@ GLOBAL_LIST_EMPTY(respawncounts)
 				O.screen_loc = "character_preview_map:0:4,0:26"
 
 /client/proc/clear_character_previews()
-	for(var/atom/movable/screen/S in char_render_holders)
-//		var/atom/movable/screen/S = char_render_holders[index]
-		screen -= S
-		qdel(S)
-	char_render_holders = list()
+
+	QDEL_LIST_ASSOC_VAL(char_render_holders)
+
+	for(var/O in screen)
+		if(istype(O, /atom/movable/screen/char_preview))
+			screen -= O
 
 /client/proc/fullscreen()
 	winset(src, "mainwindow", "statusbar=false")

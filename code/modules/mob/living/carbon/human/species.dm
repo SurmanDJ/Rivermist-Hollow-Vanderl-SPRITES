@@ -25,7 +25,8 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	var/sexes = TRUE
 	/// Whether this species a requires donator subscription to access, we removed all donator restrictions for species, but it's here if we ever want to reenable them or smth.
 	var/donator_req = FALSE
-
+	/// Used for sorting the species in the species_list, check out species_order_list for the order itself
+	var/order_num = 99 // so that if there's nothing in the species_order_list, we still don't break
 	/**
 	 * The list of pronouns this species allows in the character sheet.
 	 * If none are specified, it will default to the PRONOUNS_LIST.
@@ -105,6 +106,16 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	var/custom_clothes = FALSE
 	/// Custom id for custom_clothes
 	var/custom_id
+	/// Taur body list
+	var/list/allowed_taur_types = list()
+	/// Forced taur body
+	var/forced_taur = FALSE
+	/// Allows to set custom race title
+	var/use_titles = FALSE
+	/// To use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
+	var/fixed_mut_color = ""
+	/// Custom race title list
+	var/list/race_titles = list()
 	/**
 	 * Males use female clothes, offsets and damage icons.
 	 * Importantly males still use male limb icons.
@@ -575,6 +586,9 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 /datum/species/proc/oldhc2color(oldhc)
 	var/list/L = get_oldhc_list()
 	return L[oldhc]
+
+/datum/species/proc/get_taur_list()
+	return allowed_taur_types
 
 
 //Called when cloning, copies some vars that should be kept

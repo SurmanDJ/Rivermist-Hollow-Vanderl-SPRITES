@@ -493,6 +493,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["setspouse"] >> setspouse
 	S["selected_accent"] >> selected_accent
 	S["moan_selection"]	>> moan_selection //RMH edit
+	S["feature_mcolor"]		>> features["mcolor"]
+	S["feature_mcolor2"]	>> features["mcolor2"]
+	S["feature_mcolor3"]	>> features["mcolor3"]
+	S["taur_type"]			>> taur_type
+	S["taur_color"]			>> taur_color
+	S["taur_markings"]		>> taur_markings
+	S["taur_tertiary"]		>> taur_tertiary
+	S["selected_title"]		>> selected_title
 
 	// We load our list, but override everything to FALSE to stop a "tainted" save from making it random again.
 	randomise[RANDOM_BODY] = FALSE
@@ -590,6 +598,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooc_notes_display"] >> ooc_notes_display
 	S["ooc_extra"] >> ooc_extra
 	S["ooc_extra_link"] >> ooc_extra_link
+	var/list/valid_taur_types = pref_species.get_taur_list()
+	if(!(taur_type in valid_taur_types))
+		taur_type = null
+	taur_color = sanitize_hexcolor(taur_color, 6, 0)
+	taur_markings = sanitize_hexcolor(taur_markings, 6, 0)
+	taur_tertiary = sanitize_hexcolor(taur_tertiary, 6, 0)
+
+	if(!features["mcolor"] || features["mcolor"] == "#000")
+		features["mcolor"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+	if(!features["mcolor2"] || features["mcolor2"] == "#000")
+		features["mcolor2"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
+	if(!features["mcolor3"] || features["mcolor3"] == "#000")
+		features["mcolor3"] = pick("FFFFFF","7F7F7F", "7FFF7F", "7F7FFF", "FF7F7F", "7FFFFF", "FF7FFF", "FFFF7F")
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -621,9 +642,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	gender_choice = gender_choice
 	setspouse = setspouse
 	selected_accent ||= ACCENT_DEFAULT
+	selected_title  = selected_title
 
 	S["body_markings"] >> body_markings
 	body_markings = SANITIZE_LIST(body_markings)
+	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 6, 0)
+	features["mcolor2"]	= sanitize_hexcolor(features["mcolor2"], 6, 0)
+	features["mcolor3"]	= sanitize_hexcolor(features["mcolor3"], 6, 0)
 
 	validate_body_markings()
 
@@ -683,6 +708,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["moan_selection"] , moan_selection)	//RMH edit
 	WRITE_FILE(S["combat_music"], combat_music.type)
 	WRITE_FILE(S["species"]			, pref_species.id)
+	WRITE_FILE(S["selected_title"]		, selected_title)
 	// Loadout
 	WRITE_FILE(S["loadout1"] , preferences_typepath_or_null(loadout1))
 	WRITE_FILE(S["loadout2"] , preferences_typepath_or_null(loadout2))
@@ -732,11 +758,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	WRITE_FILE(S["culinary_preferences"], culinary_preferences)
 	WRITE_FILE(S["smallclothes_preferences"], smallclothes_preferences)
-	WRITE_FILE(S["family"]			, 	family)
-	WRITE_FILE(S["gender_choice"]			, 	gender_choice)
-	WRITE_FILE(S["setspouse"]			, 	setspouse)
-	WRITE_FILE(S["selected_accent"], selected_accent)
-	WRITE_FILE(S["culture"], culture)
+	WRITE_FILE(S["family"]				, family)
+	WRITE_FILE(S["gender_choice"]		, gender_choice)
+	WRITE_FILE(S["setspouse"]			, setspouse)
+	WRITE_FILE(S["selected_accent"]		, selected_accent)
+	WRITE_FILE(S["culture"]				, culture)
+	WRITE_FILE(S["feature_mcolor"]		, features["mcolor"])
+	WRITE_FILE(S["feature_mcolor2"]		, features["mcolor2"])
+	WRITE_FILE(S["feature_mcolor3"]		, features["mcolor3"])
+	WRITE_FILE(S["taur_type"]			, taur_type)
+	WRITE_FILE(S["taur_color"]			, taur_color)
+	WRITE_FILE(S["taur_markings"]		, taur_markings)
+	WRITE_FILE(S["taur_tertiary"]		, taur_tertiary)
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)

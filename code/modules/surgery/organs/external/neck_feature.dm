@@ -10,3 +10,5 @@
 	name = "medicator fluff"
 	desc = "It's slimy..."
 	accessory_type = /datum/sprite_accessory/neck_feature/fluff/medicator
+
+/obj/item/organ/neck_feature/anthro_fluff

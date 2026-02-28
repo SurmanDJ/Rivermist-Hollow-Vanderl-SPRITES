@@ -54,7 +54,11 @@
 
 /// TO BE DELETED, INTEGRATE INTO SPECIES DATUM
 /proc/random_features()
-	return MANDATORY_FEATURE_LIST
+	var/list/returned = MANDATORY_FEATURE_LIST
+	returned["mcolor"] = pick(list("E8A451", "D6AB96", "B0A39D", "8F8F8F"))
+	returned["mcolor2"] = pick(list("E8A451", "D6AB96", "B0A39D", "8F8F8F"))
+	returned["mcolor3"] = pick(list("E8A451", "D6AB96", "B0A39D", "8F8F8F"))
+	return returned
 
 /proc/random_unique_name(gender, attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)

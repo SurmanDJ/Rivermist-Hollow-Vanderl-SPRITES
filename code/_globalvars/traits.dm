@@ -322,6 +322,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_DARKLING = span_info("I am a creature of the dark and am sensitive to the light. The hateful sun is especially harsh on my eyes."),
 	TRAIT_WILDMAGIC = span_info("Unruly magic sparks and fizzes through my veins. Each time I cast a spell, my magic might surge and trigger a random magical effect.."),
 	TRAIT_DRUNKMASTER = span_info("You are Immune to the negative effects of being drunk. It makes you only stronger!"),
+	TRAIT_PONYGIRL_RIDEABLE = span_notice("Willing or not, I've been trained to carry other people's burdens."),
 ))
 
 /// value -> trait name, generated on use from trait_by_type global

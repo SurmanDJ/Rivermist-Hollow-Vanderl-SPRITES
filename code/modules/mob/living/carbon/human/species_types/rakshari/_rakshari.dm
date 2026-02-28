@@ -40,6 +40,8 @@
 
 	exotic_bloodtype = /datum/blood_type/human/rakshari
 
+	order_num = 16
+
 	offset_features_m = list(
 		OFFSET_RING = list(0,0),\
 		OFFSET_GLOVES = list(0,0),\
@@ -137,6 +139,19 @@
 		/datum/body_marking/front,
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
+	)
+	descriptor_choices = list(
+		/datum/descriptor_choice/stature,
+		/datum/descriptor_choice/height,
+		/datum/descriptor_choice/body,
+		/datum/descriptor_choice/face,
+		/datum/descriptor_choice/face_exp,
+		/datum/descriptor_choice/fur,
+		/datum/descriptor_choice/voice,
+		/datum/descriptor_choice/prominent_one,
+		/datum/descriptor_choice/prominent_two,
+		/datum/descriptor_choice/prominent_three,
+		/datum/descriptor_choice/prominent_four,
 	)
 	COOLDOWN_DECLARE(cat_meow_cooldown)
 
