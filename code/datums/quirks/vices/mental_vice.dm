@@ -31,7 +31,7 @@
 
 /datum/quirk/vice/greedy
 	name = "Greedy"
-	desc = "I can't get enough of mammons, I need more and more!"
+	desc = "I can't get enough of amnas, I need more and more!"
 	point_value = 4
 	var/last_checked_mammons = 0
 	var/required_mammons = 0
@@ -59,16 +59,16 @@
 	if(world.time >= next_mammon_increase)
 		if(last_passed_check + (50 MINUTES) < world.time)
 			required_mammons -= rand(10, 20)
-			to_chat(H, span_blue("Maybe a little less mammons is enough..."))
+			to_chat(H, span_blue("Maybe a little less amnas is enough..."))
 		else
 			required_mammons += rand(25, 35) + extra_increment_value
 		required_mammons = min(required_mammons, 250)
 		next_mammon_increase = world.time + rand(35 MINUTES, 40 MINUTES)
 		var/current_mammons = get_mammons_in_atom(H)
 		if(current_mammons >= required_mammons)
-			to_chat(H, span_blue("I'm quite happy with the amount of mammons I have..."))
+			to_chat(H, span_blue("I'm quite happy with the amount of amnas I have..."))
 		else
-			to_chat(H, span_boldwarning("I need more mammons, what I have is not enough..."))
+			to_chat(H, span_boldwarning("I need more amnas, what I have is not enough..."))
 		last_checked_mammons = current_mammons
 
 	var/new_mammon_amount = get_mammons_in_atom(H)
@@ -77,7 +77,7 @@
 
 	if(new_mammon_amount >= required_mammons)
 		if(H.has_stress_type(/datum/stress_event/vice))
-			to_chat(H, span_blue("[new_mammon_amount] mammons... That's more like it.."))
+			to_chat(H, span_blue("[new_mammon_amount] amnas... That's more like it.."))
 		H.remove_stress(/datum/stress_event/vice)
 		H.remove_status_effect(/datum/status_effect/debuff/addiction/greedy)
 		last_passed_check = world.time
@@ -91,9 +91,9 @@
 
 	if(do_update_msg)
 		if(ascending)
-			to_chat(H, span_warning("Only [new_mammon_amount] mammons.. I need more..."))
+			to_chat(H, span_warning("Only [new_mammon_amount] amnas.. I need more..."))
 		else
-			to_chat(H, span_boldwarning("No! My precious mammons..."))
+			to_chat(H, span_boldwarning("No! My precious amnas..."))
 
 	last_checked_mammons = new_mammon_amount
 

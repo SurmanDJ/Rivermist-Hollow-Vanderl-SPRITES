@@ -876,7 +876,7 @@
 					break
 
 	if(HAS_TRAIT(user, TRAIT_SEEPRICES) && sellprice)
-		. += "Is worth around [sellprice] mammons."
+		. += "Is worth around [sellprice] amnas."
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user

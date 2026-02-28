@@ -20,7 +20,7 @@
 	var/mammonsonperson = get_mammons_in_atom(cast_on)
 	var/mammonsinbank = SStreasury.bank_accounts[cast_on]
 	var/totalvalue = mammonsinbank + mammonsonperson
-	to_chat(owner, (span_notice("[cast_on] has [mammonsonperson] mammons on them, [mammonsinbank] in their meister, for a total of [totalvalue] mammons.")))
+	to_chat(owner, (span_notice("[cast_on] has [mammonsonperson] amnas on them, [mammonsinbank] in their meister, for a total of [totalvalue] amnas.")))
 
 /datum/action/cooldown/spell/appraise/holy
 	name = "Appraise"

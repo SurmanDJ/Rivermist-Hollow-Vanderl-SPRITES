@@ -617,7 +617,7 @@
 
 /datum/quirk/boon/richpouch
 	name = "Rich Pouch"
-	desc = "I have a pouch full of mammons."
+	desc = "I have a pouch full of amnas."
 	point_value = -2
 
 /datum/quirk/boon/richpouch/on_spawn()

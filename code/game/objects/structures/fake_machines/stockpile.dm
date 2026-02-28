@@ -169,7 +169,7 @@
 		playsound(src, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 		playsound(src, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 		if(user in SStreasury.bank_accounts)
-			say("Bulk sold for [total_value] mammon...")
+			say("Bulk sold for [total_value] amna...")
 		else
 			say("No account found. Submit your fingers to a Meister for inspection.")
 
@@ -190,7 +190,7 @@
 		contents += "<a href='byond://?src=[REF(parent_structure)];navigate=directory'>(back)</a><BR>"
 
 	contents += "--------------<BR>"
-	contents += "<a href='byond://?src=[REF(parent_structure)];change=1'>Stored Mammon: [budget]</a><BR>"
+	contents += "<a href='byond://?src=[REF(parent_structure)];change=1'>Stored amna: [budget]</a><BR>"
 	contents += "<a href='byond://?src=[REF(parent_structure)];compact=1'>Compact Mode: [compact ? "ENABLED" : "DISABLED"]</a></center><BR>"
 
 	if(compact)
@@ -226,7 +226,7 @@
 		if(D.get_held_count() <= 0)
 			parent_structure.say("Insufficient stock.")
 		else if(total_price > budget)
-			parent_structure.say("Insufficient mammon.")
+			parent_structure.say("Insufficient amna.")
 		else
 			var/obj/item/I = D.withdraw_item()
 			if(!I)
