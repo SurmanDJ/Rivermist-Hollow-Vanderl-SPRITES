@@ -5,6 +5,7 @@
 #define CTYPE_COPP "c"
 #define CTYPE_INQU "i"
 #define CTYPE_ANCI "a"
+#define CTYPE_GUILD CTYPE_GUILD
 
 #define MAX_COIN_STACK_SIZE 20
 
@@ -75,7 +76,7 @@
 						spawned_type = /obj/item/coin/electrum
 					if(CTYPE_SILV)
 						spawned_type = /obj/item/coin/silver
-					if("t")
+					if(CTYPE_GUILD)
 						spawned_type = /obj/item/coin/gild
 					if(CTYPE_COPP)
 						spawned_type = /obj/item/coin/copper
@@ -330,6 +331,8 @@
 				spawned_type = /obj/item/coin/silver
 			if(CTYPE_INQU)
 				spawned_type = /obj/item/coin/inqcoin
+			if("t1")
+				spawned_type = /obj/item/coin/gild
 			else
 				spawned_type = /obj/item/coin/copper
 	if(spawned_type)

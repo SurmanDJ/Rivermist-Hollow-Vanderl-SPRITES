@@ -7,7 +7,7 @@
 	icon = 'modular_rmh/icons/obj/items/tokens.dmi'
 	icon_state = "t1"
 	drop_sound = 'sound/foley/coinphy (1).ogg'
-	base_type = "t"
+	base_type = CTYPE_GUILD
 	plural_name = "guild tokens"
 	sellprice = 100
 
