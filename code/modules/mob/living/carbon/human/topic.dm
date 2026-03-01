@@ -3,8 +3,16 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 
 /mob/living/carbon/human/Topic(href, href_list)
 
-	if(href_list["task"] == "view_flavor_text" && (isobserver(usr) || usr.can_perform_action(src, NEED_LIGHT)))
+	if(href_list["task"] == "view_flavor_text")// && (isobserver(usr) || usr.can_perform_action(src, NEED_LIGHT)))
 		if(!ismob(usr))
+			return
+		var/datum/examine_panel/mob_examine_panel = new(src)
+		mob_examine_panel.holder = src
+		mob_examine_panel.viewing = usr
+		mob_examine_panel.ui_interact(usr)
+		return
+
+		/*if(!ismob(usr))
 			return
 		var/mob/user = usr
 		var/list/dat = list()
@@ -29,7 +37,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 
 		popup.set_content(dat.Join())
 		popup.open(FALSE)
-		return
+		return*/
 
 	if(href_list["view_descriptors"] && (isobserver(usr) || usr.can_perform_action(src, NEED_LIGHT)))
 		if(!ismob(usr))

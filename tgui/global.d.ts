@@ -193,6 +193,7 @@ const Byond: ByondType = {};
 
 interface Window {
   Byond: ByondType;
+  __store__: Store<unknown, AnyAction>;
   __augmentStack__: (stack: string, error?: Error) => string;
 
   // IE IndexedDB stuff.

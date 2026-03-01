@@ -598,6 +598,18 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooc_notes_display"] >> ooc_notes_display
 	S["ooc_extra"] >> ooc_extra
 	S["ooc_extra_link"] >> ooc_extra_link
+
+	S["song_link"]			>> song_link
+	S["song_artist"]		>> song_artist
+	S["song_title"]			>> song_title
+	S["nsfwflavortext"]		>> nsfwflavortext
+	S["erpprefs_flavor"]	>> erpprefs_flavor
+	S["img_gallery"]	>> img_gallery
+	img_gallery = SANITIZE_LIST(img_gallery)
+	S["nsfw_img_gallery"]	>> nsfw_img_gallery
+	nsfw_img_gallery = SANITIZE_LIST(nsfw_img_gallery)
+
+
 	var/list/valid_taur_types = pref_species.get_taur_list()
 	if(!(taur_type in valid_taur_types))
 		taur_type = null
@@ -802,6 +814,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	// Descriptor entries
 	WRITE_FILE(S["descriptor_entries"], descriptor_entries)
 	WRITE_FILE(S["custom_descriptors"], custom_descriptors)
+
+	WRITE_FILE(S["erpprefs_flavor"] , html_decode(erpprefs_flavor))
+	WRITE_FILE(S["nsfwflavortext"] , html_decode(nsfwflavortext))
+	WRITE_FILE(S["song_link"] , song_link)
+	WRITE_FILE(S["song_artist"] , song_artist)
+	WRITE_FILE(S["song_title"] , song_title)
+	WRITE_FILE(S["img_gallery"] , img_gallery)
+	WRITE_FILE(S["nsfw_img_gallery"] , nsfw_img_gallery)
 
 	save_erp_preferences(S)
 

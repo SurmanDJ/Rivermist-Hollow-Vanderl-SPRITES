@@ -490,6 +490,9 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	fps = prefs.clientfps
 
+	// Instantiate tgui panel
+	tgui_panel = new(src, "browseroutput")
+
 	if(fexists(roundend_report_file()))
 		add_verb(src, /client/proc/show_previous_roundend_report)
 
@@ -580,6 +583,8 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	if(alert_mob_dupe_login)
 		spawn()
 			alert(mob, "You have logged in already with another key this round, please log out of this one NOW or risk being banned!")
+
+	tgui_panel.initialize()
 
 	connection_time = world.time
 	connection_realtime = world.realtime
@@ -762,6 +767,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 
 	GLOB.clients -= src
 	GLOB.directory -= ckey
+	QDEL_NULL(tgui_panel)
 
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
