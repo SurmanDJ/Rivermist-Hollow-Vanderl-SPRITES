@@ -1,7 +1,7 @@
 /datum/quest/kill/raid
 	quest_type = QUEST_RAID
 	mob_types_to_spawn = QUEST_RAID_LIST
-	count_min = 4
+	count_min = 2
 	count_max = 6
 
 /datum/quest/kill/raid/get_title()

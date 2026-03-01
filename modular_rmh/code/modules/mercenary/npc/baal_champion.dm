@@ -1,5 +1,6 @@
+// TO DO:
 /* *
- * Deranged Knight
+ * Champion of Baal
  * A miniboss for quest system, designed to be a high-level challenge for multiple players.
  * Uses fuckoff gear that should not be looted - hence snowflake dismemberment code.
  */
@@ -15,7 +16,7 @@ GLOBAL_LIST_INIT(aggro, world.file2list("strings/rt/species_hostile.txt"))
 	base_fortune = 30
 
 /datum/outfit/npc/baal_champion/pre_equip(mob/living/carbon/human/H)
-
+	..()
 	armor = /obj/item/clothing/armor/plate/full/graggar
 	pants = /obj/item/clothing/pants/platelegs/graggar
 	shoes = /obj/item/clothing/shoes/boots/armor/graggar
@@ -31,17 +32,16 @@ GLOBAL_LIST_INIT(aggro, world.file2list("strings/rt/species_hostile.txt"))
 
 /mob/living/carbon/human/proc/empower_equipment(integrity_bonus = 200, weapon_bonus = 0)
 
-	for(var/obj/item/I in src.get_equipped_items())
-		if(!I)
-			continue
+    for(var/obj/item/I in src.get_equipped_items())
+        if(!I)
+            continue
 
-		if("max_integrity" in I.vars)
-			I.vars["max_integrity"] += integrity_bonus
-			I.vars["integrity"] = I.vars["max_integrity"]
+        if(I.uses_integrity)
+            I.max_integrity += integrity_bonus
+            I.atom_integrity = I.max_integrity
 
-		if(weapon_bonus && istype(I, /obj/item/weapon))
-			if("force" in I.vars)
-				I.vars["force"] += weapon_bonus
+        if(weapon_bonus && hasvar(I, "force"))
+            I.force += weapon_bonus
 
 /mob/living/carbon/human/species/human/northern/base/very_skilled/heavy_gear/baal_champion/after_creation()
 	..()
@@ -70,4 +70,4 @@ GLOBAL_LIST_INIT(aggro, world.file2list("strings/rt/species_hostile.txt"))
 	ai_controller?.blackboard[BB_ARMOR_CLASS] = 3
 
 	equipOutfit(new /datum/outfit/npc/baal_champion)
-	empower_equipment(1000, 50)
+	addtimer(CALLBACK(src, PROC_REF(empower_equipment), 1000, 50), 1)

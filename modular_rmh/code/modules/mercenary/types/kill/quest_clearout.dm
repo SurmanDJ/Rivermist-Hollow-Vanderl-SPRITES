@@ -1,8 +1,8 @@
 /datum/quest/kill/clearout
 	quest_type = QUEST_CLEAR_OUT
 	mob_types_to_spawn = QUEST_KILL_MEDIUM_LIST
-	count_min = 3
-	count_max = 6
+	count_min = 5
+	count_max = 20
 
 /datum/quest/kill/clearout/get_title()
 	if(title)

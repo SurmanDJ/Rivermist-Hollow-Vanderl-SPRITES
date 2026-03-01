@@ -3,7 +3,7 @@
 	quest_type = QUEST_KILL_EASY
 	mob_types_to_spawn = QUEST_KILL_MOBS_LIST
 	count_min = 1
-	count_max = 3
+	count_max = 5
 
 /datum/quest/kill/easy/get_title()
 	if(title)
@@ -17,6 +17,6 @@
 	..()
 	if(!landmark)
 		return FALSE
-	spawn_kill_mobs(landmark)	
+	spawn_kill_mobs(landmark)
 
 	return TRUE
