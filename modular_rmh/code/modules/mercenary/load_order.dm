@@ -9,15 +9,15 @@
 #include "questing_landmarks.dm"
 
 // --- Items ---
-//#include "items\parcel.dm"
+//#include "items\parcel.dm" // TO DO
 #include "items\quest_scroll.dm"
 #include "items\spawn_effect.dm"
 
 // --- Base Types ---
 #include "types\__quest.dm"
 #include "types\__quest_list.dm"
-//#include "types\quest_courier.dm" - custom locatiom, works in the future
-//#include "types\quest_retrieval.dm" - fix for now (1)
+//#include "types\quest_courier.dm"  // TO DO
+//#include "types\quest_retrieval.dm"  // TO DO
 
 // --- Kill Quests ---
 #include "types\kill\__quest_kill_base.dm"

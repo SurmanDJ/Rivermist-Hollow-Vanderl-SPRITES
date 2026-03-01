@@ -163,7 +163,7 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 
 	var/scroll_text = "<center>HELP NEEDED</center><br>"
 	scroll_text += "<center><b>[assigned_quest.get_title()]</b></center><br>"
-	scroll_text += "<b>Issued by:</b> [assigned_quest.quest_giver_name ? "[assigned_quest.quest_giver_name]" : "The Mercenary's Guild"].<br>"
+	scroll_text += "<b>Issued by:</b> [assigned_quest.quest_giver_name ? "[assigned_quest.quest_giver_name]" : "Blue Sage Adventurer's Guild"].<br>"
 	scroll_text += "<b>Issued to:</b> [assigned_quest.quest_receiver_name ? assigned_quest.quest_receiver_name : "whoever it may concern"].<br>"
 	scroll_text += "<b>Type:</b> [assigned_quest.quest_type] contract.<br>"
 	scroll_text += "<b>Difficulty:</b> [assigned_quest.quest_difficulty].<br><br>"
