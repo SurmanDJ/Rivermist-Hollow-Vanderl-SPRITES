@@ -5,16 +5,16 @@
 	name = "Taur-Kin"
 	id = SPEC_ID_TAUR_KIN
 
-	desc = "Beast-kins are a highly diverse and varied group of people, the majority of which are descendants of the \
+	desc = "Taur-Kins are a highly diverse and varied group of people, the majority of which are descendants of the \
 	first followers of Dendor who rejected civilization in favour of the deep forests. However, some came from \
 	magical anomalies or curses, Divine or otherwise. \
 	<br><br> \ Their bloodlines were blessed by Dendor for their ancestor&#39;s devotion \
-	and this is reflected in their appearance. Some descendants of the first Dendorite beast-kins, \
+	and this is reflected in their appearance. Some descendants of the first Dendorite Taur-Kins, \
 	especially those not as devoted to the ways of Dendor and filled \
 	with wanderlust, emerged from their remote communities to embrace the civilization their ancestors had once rejected. \
 	<br><br> \
 	At first, they faced discrimination from people wary of their abnormal appearances. Yet, their appearance was a blessing \
-	from Dendor, and the clergy of the Ten made this known throughout the lands of the faithful. Beast-kins are now fully \
+	from Dendor, and the clergy of the Ten made this known throughout the lands of the faithful. Taur-Kins are now fully \
 	accepted, with many even holding titles of landed nobility. However, there is still an air of distrust and uncertainty \
 	surrounding them, especially for those who acquired their features during life rather than through birth."
 
@@ -67,8 +67,8 @@
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	changesource_flags = WABBAJACK
 	possible_ages = ALL_AGES_LIST
-	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mt.dmi'
-	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fm.dmi'
+	limbs_icon_m = 'modular_rmh/icons/mob/bodies/m/mta.dmi'
+	limbs_icon_f = 'modular_rmh/icons/mob/bodies/f/fma.dmi'
 
 	order_num = 31
 

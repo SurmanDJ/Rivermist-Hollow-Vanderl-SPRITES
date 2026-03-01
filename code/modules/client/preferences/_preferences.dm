@@ -2100,7 +2100,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 				if("flavortext")
 					to_chat(user, span_notice("["<span class='bold'>Flavortext should not include nonphysical nonsensory attributes such as backstory or the character's internal thoughts. NSFW descriptions are prohibited.</span>"]"))
-					var/new_flavortext = tgui_input_text(user, "Input your character description", "DESCRIBE YOURSELF", flavortext, multiline = TRUE,  encode = FALSE)  // browser_input_text sanitizes in the box itself, which makes it look kind of ugly when editing A LOT of FTs
+					var/new_flavortext = input(user, "Input your character description", "DESCRIBE YOURSELF", flavortext) as message|null  // browser_input_text sanitizes in the box itself, which makes it look kind of ugly when editing A LOT of FTs
 					if(new_flavortext == null)
 						return
 					if(new_flavortext == "")
@@ -2134,7 +2134,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 				if("ooc_notes")
 					to_chat(user, span_notice("["<span class='bold'>Do not put anything NSFW here. This feature is for stuff that wouldn't fit in the flavortext.</span>"]"))
-					var/new_ooc_notes = tgui_input_text(user, "Input your OOC preferences:", "OOC notes", ooc_notes, multiline = TRUE,  encode = FALSE)
+					var/new_ooc_notes = input(user, "Input your OOC preferences:", "OOC notes", ooc_notes) as message|null
 					if(new_ooc_notes == null)
 						return
 					if(new_ooc_notes == "")
@@ -2176,7 +2176,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 				if("nsfwflavortext")
 					to_chat(user, "<span class='notice'>["<span class='bold'>NSFW Flavortext can be used for setting things like body descriptions and other physical details that may be conisdered explicit.</span>"]</span>")
 					to_chat(user, "<font color = '#d6d6d6'>Leave blank to clear.</font>")
-					var/new_nsfwflavortext = tgui_input_text(user, "Input your character description:", "NSFW Flavortext", nsfwflavortext, multiline = TRUE,  encode = FALSE)
+					var/new_nsfwflavortext = input(user, "Input your character description:", "NSFW Flavortext", nsfwflavortext) as message|null
 					if(new_nsfwflavortext == null)
 						return
 					if(new_nsfwflavortext == "")
@@ -2323,7 +2323,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 				if("ooc_extra")
 					to_chat(user, "<span class='notice'>["<span class='bold'>Erotic Roleplay preferences. If you put 'anything goes' or 'no limits' here, do not be surprised if people take you up on it.</span>"]</span>")
 					to_chat(user, "<font color = '#d6d6d6'>Leave blank to clear.</font>")
-					var/new_erpprefs = tgui_input_text(user, "Input your preferences:", "ERP Preferences", erpprefs_flavor, multiline = TRUE,  encode = FALSE)
+					var/new_erpprefs = input(user, "Input your preferences:", "ERP Preferences", erpprefs_flavor) as message|null
 					if(new_erpprefs == null)
 						return
 					if(new_erpprefs == "")
