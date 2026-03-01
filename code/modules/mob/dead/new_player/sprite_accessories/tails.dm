@@ -1,6 +1,6 @@
 /datum/sprite_accessory/tail
 	abstract_type = /datum/sprite_accessory/tail
-	icon = 'icons/mob/sprite_accessory/tails/tails.dmi'
+	icon = 'modular_rmh/icons/mob/sprite_accessory/tails/tails.dmi'
 	color_key_name = "Tail"
 	relevant_layers = list(BODY_FRONT_LAYER, BODY_BEHIND_LAYER)
 	color_key_defaults = list(KEY_HAIR_COLOR)
