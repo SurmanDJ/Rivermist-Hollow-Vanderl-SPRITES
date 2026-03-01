@@ -18,7 +18,6 @@ export const FlavorTextPage = (props) => {
   } = data;
   const [oocNotesIndex, setOocNotesIndex] = useState('SFW');
   const [flavorTextIndex, setFlavorTextIndex] = useState('SFW');
-  const [headshotState, setHeadshotState] = useState('SFW');
 
   const flavorHTML = useMemo(() => ({
     __html: `<span className='Chat'>${flavor_text}</span>`,
@@ -115,7 +114,6 @@ export const FlavorTextPage = (props) => {
                     bold={flavorTextIndex === 'SFW'}
                     onClick={() => {
                       setFlavorTextIndex('SFW');
-                      setHeadshotState('SFW');
                       document.getElementById('headshot_image').src = resolveAsset(headshot) ;
                       }
                     }
@@ -130,7 +128,6 @@ export const FlavorTextPage = (props) => {
                     bold={flavorTextIndex === 'NSFW'}
                     onClick={() => {
                       setFlavorTextIndex('NSFW');
-                      setHeadshotState('NSFW');
                       document.getElementById('headshot_image').src= resolveAsset(nsfw_headshot) ;
                       }
                     }
