@@ -3,7 +3,8 @@
 	icon = 'questing.dmi'
 	icon_state = "quest_marker"
 	var/quest_difficulty = list(QUEST_DIFFICULTY_EASY, QUEST_DIFFICULTY_MEDIUM, QUEST_DIFFICULTY_HARD)
-	var/quest_type = list(QUEST_RETRIEVAL, QUEST_COURIER, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_KILL_EASY, QUEST_BEACON, QUEST_OUTLAW)
+//	var/quest_type = list(QUEST_RETRIEVAL, QUEST_COURIER, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_KILL_EASY, QUEST_BEACON, QUEST_OUTLAW)
+	var/quest_type = list(QUEST_CLEAR_OUT, QUEST_RAID, QUEST_KILL_EASY, QUEST_BEACON, QUEST_OUTLAW)
 
 /obj/effect/landmark/quest_spawner/Initialize()
 	. = ..()
@@ -48,17 +49,17 @@
 /obj/effect/landmark/quest_spawner/easy
 	name = "easy quest landmark"
 	icon_state = "quest_marker_low"
-	quest_difficulty = "Easy"
+	quest_difficulty = QUEST_DIFFICULTY_EASY
 	quest_type = list(QUEST_RETRIEVAL, QUEST_COURIER, QUEST_KILL_EASY, QUEST_BEACON)
 
 /obj/effect/landmark/quest_spawner/medium
 	name = "medium quest landmark"
 	icon_state = "quest_marker_mid"
-	quest_difficulty = "Medium"
+	quest_difficulty = QUEST_DIFFICULTY_MEDIUM
 	quest_type = list(QUEST_KILL_EASY, QUEST_CLEAR_OUT, QUEST_BEACON)
 
 /obj/effect/landmark/quest_spawner/hard
 	name = "hard quest landmark"
 	icon_state = "quest_marker_high"
-	quest_difficulty = "Hard"
+	quest_difficulty = QUEST_DIFFICULTY_HARD
 	quest_type = list(QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BEACON, QUEST_OUTLAW)

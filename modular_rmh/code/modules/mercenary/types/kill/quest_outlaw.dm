@@ -1,6 +1,6 @@
 /datum/quest/kill/outlaw
 	quest_type = QUEST_OUTLAW
-	mob_types_to_spawn = list(/mob/living/carbon/human)
+	mob_types_to_spawn = QUEST_OUTLAW_KILL_LIST
 
 	count_min = 1
 	count_max = 1
