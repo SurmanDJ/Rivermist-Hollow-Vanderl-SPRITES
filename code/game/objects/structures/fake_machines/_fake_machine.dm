@@ -39,13 +39,23 @@
 				type_to_put = /obj/item/coin/inqcoin
 	else
 		var/highest_found = FALSE
-		var/zenars = floor(budget/10)
+		var/zenars = floor(budget/1000)
+		if(zenars)
+			budget -= zenars * 1000
+			highest_found = TRUE
+			type_to_put = /obj/item/coin/platinum
+		zenars = floor(budget/100)
 		if(zenars)
 			budget -= zenars * 100
 			highest_found = TRUE
 			type_to_put = /obj/item/coin/gold
 			zenars_to_put = zenars
-		zenars = floor(budget/100)
+		zenars = floor(budget/50)
+		if(zenars)
+			budget -= zenars * 50
+			highest_found = TRUE
+			type_to_put = /obj/item/coin/electrum
+		zenars = floor(budget/10)
 		if(zenars)
 			budget -= zenars * 10
 			if(!highest_found)
