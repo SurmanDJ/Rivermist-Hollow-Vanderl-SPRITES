@@ -1,7 +1,7 @@
 /obj/item/parcel
 	name = "parcel wrapping paper"
 	desc = "A sturdy piece of paper used to wrap items for secure delivery. The final size of the parcel depends on the size of the original item."
-	icon = 'modular/Neu_Food/icons/cookware/ration.dmi'
+	icon = 'modular_rmh/code/modules/mercenary/ration.dmi'
 	icon_state = "ration_wrapper"
 	w_class = WEIGHT_CLASS_TINY
 	grid_height = 32

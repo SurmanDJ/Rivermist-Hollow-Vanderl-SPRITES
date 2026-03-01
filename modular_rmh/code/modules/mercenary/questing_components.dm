@@ -151,7 +151,7 @@
 			do_sparks(3, TRUE, get_turf(dropped_item))
 			qdel(dropped_item)
 			return
-
+/* -- NO COURIER FOR NOW
 /// Component for courier quests - handles delivery
 /datum/component/quest_object/courier
 
@@ -192,7 +192,7 @@
 		Q.progress_current++
 		Q.on_progress_update()
 		return
-
+*/
 /// Component for kill quest spawners
 /datum/component/quest_object/mob_spawner
 	override_compatibility = TRUE

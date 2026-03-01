@@ -5,9 +5,9 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	name = "enchanted contract scroll"
 	desc = "A scroll oft known as a \"whispering scroll\". Enchanted with magicks to make it whisper to its bearer when opened the location of its target.\n\
 	The magical protections make it resistant to damage and tampering. It will only whisper when carried on the person of the contract bearer."
-	icon = 'code/modules/roguetown/roguemachine/questing/questing.dmi'
+	icon = 'modular_rmh/code/modules/mercenary/questing.dmi'
 	icon_state = "scroll_quest"
-	var/base_icon_state = "scroll_quest"
+	base_icon_state = "scroll_quest"
 	var/datum/quest/assigned_quest
 	var/last_compass_direction = ""
 	var/last_z_level_hint = ""

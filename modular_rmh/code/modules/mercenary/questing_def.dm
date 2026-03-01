@@ -2,8 +2,8 @@
 #define QUEST_DIFFICULTY_MEDIUM "Medium"
 #define QUEST_DIFFICULTY_HARD "Hard"
 
-#define QUEST_RETRIEVAL "Retrieval"
-#define QUEST_COURIER "Courier"
+//#define QUEST_RETRIEVAL "Retrieval"
+//#define QUEST_COURIER "Courier"
 #define QUEST_KILL_EASY "Kill"
 #define QUEST_CLEAR_OUT "Clear Out"
 #define QUEST_RAID "Raid"

@@ -1,7 +1,7 @@
 /obj/structure/roguemachine/contractledger
 	name = "Grand Contract Ledger"
 	desc = "A massive ledger book with gilded edges, sitting atop a pedestal with the Mercenary's Guild banner. Its myriad enchanted pages are filled with various contracts and bounties issued by Mercenary's Guild, with arcane scripts that appears and fades as contracts are issued and completed."
-	icon = 'code/modules/roguetown/roguemachine/questing/questing.dmi'
+	icon = 'questing.dmi'
 	icon_state = "contractledger"
 	density = TRUE
 	anchored = TRUE
@@ -107,12 +107,12 @@
 	// Instantiate appropriate quest subtype
 	var/datum/quest/attached_quest
 	switch(type_selection)
-		if(QUEST_RETRIEVAL)
-			attached_quest = new /datum/quest/retrieval()
+//		if(QUEST_RETRIEVAL)
+//			attached_quest = new /datum/quest/retrieval()
 		if(QUEST_KILL_EASY)
 			attached_quest = new /datum/quest/kill/easy()
-		if(QUEST_COURIER)
-			attached_quest = new /datum/quest/courier()
+//		if(QUEST_COURIER)
+//			attached_quest = new /datum/quest/courier()
 		if(QUEST_CLEAR_OUT)
 			attached_quest = new /datum/quest/kill/clearout()
 		if(QUEST_RAID)
@@ -272,15 +272,15 @@
 
 /obj/structure/roguemachine/contractledger/proc/cash_in(reward, original_reward, tax_amt)
 	var/list/coin_types = list(
-		/obj/item/roguecoin/gold = FLOOR(reward / 10, 1),
-		/obj/item/roguecoin/silver = FLOOR(reward % 10 / 5, 1),
-		/obj/item/roguecoin/copper = reward % 5
+		/obj/item/coin/gold = FLOOR(reward / 10, 1),
+		/obj/item/coin/silver = FLOOR(reward % 10 / 5, 1),
+		/obj/item/coin/copper = reward % 5
 	)
 
 	for(var/coin_type in coin_types)
 		var/amount = coin_types[coin_type]
 		if(amount > 0)
-			var/obj/item/roguecoin/coin_stack = new coin_type(get_turf(src))
+			var/obj/item/coin/coin_stack = new coin_type(get_turf(src))
 			coin_stack.quantity = amount
 			coin_stack.update_icon()
 			coin_stack.update_transform()
