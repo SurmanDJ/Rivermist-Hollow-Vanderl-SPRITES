@@ -599,6 +599,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooc_extra"] >> ooc_extra
 	S["ooc_extra_link"] >> ooc_extra_link
 
+	S["rumour"]				>> rumour
+	S["noble_gossip"]		>> noble_gossip
 	S["song_link"]			>> song_link
 	S["song_artist"]		>> song_artist
 	S["song_title"]			>> song_title
@@ -815,6 +817,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["descriptor_entries"], descriptor_entries)
 	WRITE_FILE(S["custom_descriptors"], custom_descriptors)
 
+	WRITE_FILE(S["rumour"] , html_decode(rumour))
+	WRITE_FILE(S["noble_gossip"] , html_decode(noble_gossip))
 	WRITE_FILE(S["erpprefs_flavor"] , html_decode(erpprefs_flavor))
 	WRITE_FILE(S["nsfwflavortext"] , html_decode(nsfwflavortext))
 	WRITE_FILE(S["song_link"] , song_link)
