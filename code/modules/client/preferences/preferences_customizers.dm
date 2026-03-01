@@ -240,3 +240,15 @@
 			else
 				entry.disabled = TRUE
 			break
+
+/datum/preferences/proc/clear_flavor()
+	flavortext = null
+	nsfwflavortext = null
+	erpprefs_flavor = null
+	ooc_notes = null
+	ooc_extra = null
+	song_title = null
+	song_artist = null
+	headshot_link = null
+	img_gallery = null
+	nsfw_img_gallery = null

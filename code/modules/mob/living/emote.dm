@@ -1334,9 +1334,9 @@
 
 	message = jointext(message, "")
 
-	to_chat(user, message)*/
+	to_chat(user, message)
 
-/*
+
 /datum/emote/beep
 	key = "beep"
 	key_third_person = "beeps"
@@ -1439,7 +1439,7 @@
 
 
 		//chance *= chance_per_point
-		/*var/msg = /*success ? span_green(*/"rolls a [roll][bonus >= 0 ? "+[bonus]" : "[bonus]"] on dice"/*) : span_danger("FAILS and [pick(failure_message_list)] [chance]%")*/*/
+		/*var/msg = success ? span_green("rolls a [roll][bonus >= 0 ? "+[bonus]" : "[bonus]"] on dice") : span_danger("FAILS and [pick(failure_message_list)] [chance]%")*/
 
 		msg = replace_pronoun(user, msg)
 

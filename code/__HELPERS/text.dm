@@ -536,7 +536,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	return t
 
-/proc/parsemarkdown_basic_step2(t, limited = FALSE)
+/proc/parsemarkdown_basic_step2(t, limited = FALSE, hyperlink = FALSE)
 	if(length(t) <= 0)
 		return
 
@@ -569,9 +569,9 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
  * * Limited: Doesn't parse lists, headers, or small tags. (Used in paper / crayon / flavortext code.)
  * * Barebones: Doesn't parse bold, italics, or underline. (Used in say / emote code, mostly.)
  */
-/proc/parsemarkdown_basic(t, limited=FALSE, barebones = FALSE)
+/proc/parsemarkdown_basic(t, hyperlink = FALSE, limited=FALSE, barebones = FALSE)
 	t = parsemarkdown_basic_step1(t, limited, barebones)
-	t = parsemarkdown_basic_step2(t, limited)
+	t = parsemarkdown_basic_step2(t, limited, hyperlink)
 	return t
 
 /proc/parsemarkdown(t, mob/user=null, limited=FALSE)
