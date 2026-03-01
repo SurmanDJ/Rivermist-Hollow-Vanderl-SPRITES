@@ -66,4 +66,4 @@
 #define QUEST_KILL_MOBS_LIST list(/mob/living/carbon/human)
 #define QUEST_KILL_MEDIUM_LIST list(/mob/living/carbon/human)
 #define QUEST_RAID_LIST list(/mob/living/carbon/human)
-#define QUEST_OUTLAW_KILL_LIST list(/mob/living/carbon/human)
+#define QUEST_OUTLAW_KILL_LIST list(/mob/living/carbon/human/species/human/northern/base/very_skilled/heavy_gear/baal_champion)
