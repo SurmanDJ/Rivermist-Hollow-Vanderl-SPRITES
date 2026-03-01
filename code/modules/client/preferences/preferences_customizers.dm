@@ -86,7 +86,7 @@
 
 		dat += "</td></table><br>"
 		iterated_customizers += 1
-		if(iterated_customizers >= 5)
+		if(iterated_customizers >= 8)
 			dat += "</td><td valign='top' width='33%'>"
 			iterated_customizers = 0
 	dat += "</td></table>"
