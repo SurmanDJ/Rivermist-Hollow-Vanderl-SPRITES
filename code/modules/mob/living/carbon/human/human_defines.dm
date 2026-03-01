@@ -126,6 +126,8 @@
 	var/list/img_gallery = list()
 	var/list/nsfw_img_gallery = list()
 
+	var/noble_gossip
+	var/rumour
 
 	var/confession_points = 0 // Used to track how many confessions the Inquisitor has gotten signed. Used to buy items at mailboxes.
 	var/purchase_history = null // Used to track what the Inquisitor has bought from the mailbox.
