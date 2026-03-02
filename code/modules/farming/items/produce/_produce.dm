@@ -655,7 +655,7 @@
 
 /obj/item/reagent_containers/food/snacks/produce/mushroom/merkel
 	name = "merkel"
-	desc = "A rare fungus popularized by the ruling class of Grenzelhoft. It has been said that these mushrooms smell SO divine when prepared correctly, it could raise a man from the dead."
+	desc = "A rare fungus popularized by the ruling class of Darkhold. It has been said that these mushrooms smell SO divine when prepared correctly, it could raise a man from the dead."
 	icon_state = "merkel"
 	seed = /obj/item/neuFarm/seed/spore/merkel
 	throwforce = 0

@@ -30,22 +30,30 @@
 			say("Your balance is NEGATIVE.")
 			return
 		var/list/choicez = list()
+		if(amt >= 1000)
+			choicez += "ROLDON"
+		if(amt >= 100)
+			choicez += "DANTER"
+		if(amt >= 50)
+			choicez += "CENTAUR"
 		if(amt >= 10)
-			choicez += "GOLD"
-		if(amt >= 5)
-			choicez += "SILVER"
-		if(amt > 1) choicez += "BRONZE"
+			choicez += "TARAN"
+		if(amt > 1) choicez += "FANDAR"
 		var/selection = input(user_mob, "Make a Selection", src) as null|anything in choicez
 		if(!selection)
 			return
 		amt = SStreasury.bank_accounts[user_mob]
 		var/mod = 1
-		if(selection == "GOLD")
+		if(selection == "ROLDON")
+			mod = 1000
+		if(selection == "DANTER")
+			mod = 100
+		if(selection == "CENTAUR")
+			mod = 50
+		if(selection == "TARAN")
 			mod = 10
-		if(selection == "SILVER")
-			mod = 5
-		if(selection == "BRONZE") mod = 1
-		var/coin_amt = input(user_mob, "There is [SStreasury.treasury_value] mammon in the treasury. You may withdraw [amt/mod] [selection] COINS from your account.", src) as null|num
+		if(selection == "FANDAR") mod = 1
+		var/coin_amt = input(user_mob, "There is [amt] amna on your account. You may withdraw [amt/mod] [selection] COINS from your account.", src) as null|num
 		coin_amt = round(coin_amt)
 		if(coin_amt < 1)
 			return
@@ -94,7 +102,7 @@
 				if(islist(deposit_results))
 					record_round_statistic(STATS_MAMMONS_DEPOSITED, deposit_results[1] - deposit_results[2])
 					if(deposit_results[2] != 0)
-						say("Your deposit was taxed [deposit_results[2]] mammon.")
+						say("Your deposit was taxed [deposit_results[2]] amna.")
 						record_featured_stat(FEATURED_STATS_TAX_PAYERS, H, deposit_results[2])
 						record_round_statistic(STATS_TAXES_COLLECTED, deposit_results[2])
 				qdel(P)

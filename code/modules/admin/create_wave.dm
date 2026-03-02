@@ -11,6 +11,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	can_random = FALSE
 	can_have_apprentices = FALSE
 	job_flags = (JOB_EQUIP_RANK)
+	rune_linked = FALSE
 
 /datum/create_wave
 	var/datum/admins/admin_holder = null
@@ -2079,9 +2080,6 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		if(antag_role)
 			character.mind.add_antag_datum(antag_role)
 
-		if(assigned_job.rune_linked)
-			GLOB.rune_roundstart_mobs += character
-
 		var/mob/living/carbon/human/human_character = character
 		var/fakekey = get_display_ckey(human_character.ckey)
 		GLOB.character_list[human_character.mobid] = "[fakekey] was [human_character.real_name] ([assigned_job.title])<BR>"
@@ -2091,6 +2089,14 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		to_chat(character, span_notice("*-----------------*"))
 		to_chat(character, span_notice("[CW.greeting_text]"))
 
+		if(assigned_job.rune_linked)
+			for(var/obj/structure/resurrection_rune/rune_l in GLOB.global_resurrunes)
+				if(rune_l.is_main)
+					continue
+				human_character.get_rune_linked(rune_l)
+				break
+			GLOB.rune_roundstart_mobs += character
+
 	message_admins("The [CW.name] was deployed successfully with [length(CW.candidates)] participants!")
 
 	if(CW.timer)
@@ -2098,6 +2104,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		CW.timer = null
 	CW.spawn_landmark = null
 	CW.candidates = list()
+
+
 
 /datum/custom_wave/proc/can_be_roles(client/player)
 	if(!player || !player.prefs)

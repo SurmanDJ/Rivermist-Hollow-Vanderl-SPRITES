@@ -270,13 +270,13 @@ SUBSYSTEM_DEF(vote)
 						break
 					choices.Add(option)
 			if("endround")
-				var/rng = rand(1, 1000)
+				/*var/rng = rand(1, 1000)
 				if(rng > 200) // 80%
 					initiator_key = pick("Astrata", "Noc", "Dendor", "Abyssor", "Necra", "Ravox", "Xylix", "Pestra", "Malum", "Eora")
 				else if(rng > 50) // 15%
 					initiator_key = pick("Zizo", "Graggar", "Matthios", "Baotha")
-				else
-					initiator_key = "Psydon"
+				else*/
+				initiator_key = "Ao"
 				choices.Add("Continue Playing","End Round")
 			if("storyteller")
 				choices.Add(SSgamemode.storyteller_vote_choices())

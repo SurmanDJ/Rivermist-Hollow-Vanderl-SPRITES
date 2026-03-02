@@ -18,8 +18,8 @@
 
 /obj/item/clothing/pants/chainlegs/iron/studdedskirt
 	name = "studded leather skirt"
-	icon = 'modular_rmh/icons/armor/pants.dmi'
-	mob_overlay_icon = 'modular_rmh/icons/armor/onmob/pants.dmi'
+	icon = 'modular_rmh/icons/clothing/armor/pants.dmi'
+	mob_overlay_icon = 'modular_rmh/icons/clothing/armor/onmob/pants.dmi'
 	armor = ARMOR_LEATHER_GOOD
 	desc = "Short studded skirt made of fine leather and iron."
 	icon_state = "studdedskirt"

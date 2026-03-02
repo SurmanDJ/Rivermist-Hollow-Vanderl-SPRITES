@@ -210,7 +210,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	var/mob/living/spawning_mob = mind.assigned_role.get_spawn_mob(client, destination, islatejoin)
 	mind.transfer_to(spawning_mob)
 	spawning_mob.after_creation()
-	GLOB.chosen_names += spawning_mob.real_name
+	if(!(spawning_mob.real_name in GLOB.chosen_names))
+		GLOB.chosen_names += spawning_mob.real_name
 	new_character = spawning_mob
 	return spawning_mob
 
@@ -244,6 +245,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	src << browse(null, "window=smallclothes_customization")
 	src << browse(null, "window=undies_selection")
 	src << browse(null, "window=legwear_selection")
+	src << browse(null, "window=misc_customization")
 
 	SStriumphs.remove_triumph_buy_menu(client)
 

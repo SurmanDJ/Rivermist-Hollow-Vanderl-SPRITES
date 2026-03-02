@@ -661,7 +661,7 @@
 			html += `<div class='tooltip-section'>`;
 			html += `<b>Status:</b> ${agreement.active ? 'Active' : 'Inactive'}<br>`;
 			html += `<b>Requested:</b> ${agreement.remaining} items<br>`;
-			html += `<b>Reward:</b> ${agreement.reward} mammons`;
+			html += `<b>Reward:</b> ${agreement.reward} amnas`;
 
 			if(agreement.bonus_items) {
 				html += `<br><b>Bonus Items:</b> ${agreement.bonus_items} items`;
@@ -753,7 +753,7 @@
 				html += `</div>`;
 
 				if(agreement.reward > 0) {
-					html += `<div class='agreement-rewards'>Reward: ${agreement.reward} mammons</div>`;
+					html += `<div class='agreement-rewards'>Reward: ${agreement.reward} amnas</div>`;
 				}
 
 				if(!agreement.active) {

@@ -1334,9 +1334,9 @@
 
 	message = jointext(message, "")
 
-	to_chat(user, message)*/
+	to_chat(user, message)
 
-/*
+
 /datum/emote/beep
 	key = "beep"
 	key_third_person = "beeps"
@@ -1387,36 +1387,59 @@
 		sleep(delay)
 
 		var/mob/living/living = user
-		var/chance_per_point = 5
-		var/success = FALSE
-		var/chance = 0
-
+		//var/chance_per_point = 5
+		//var/success = FALSE
+		//var/chance = 0
+		var/roll = 0
+		var/bonus = 0
+		var/msg = "rolls a [roll][bonus >= 0 ? "+[bonus]" : "[bonus]"] on dice"
 		switch(key)
 			if("strength")
-				success = living.stat_roll(STATKEY_STR, chance_per_point)
-				chance = living.get_stat(STATKEY_STR)
+				/*success = living.stat_roll(STATKEY_STR, chance_per_point)
+				chance = living.get_stat(STATKEY_STR)*/
+				roll = rand(1,20)
+				bonus = floor((living.get_stat(STATKEY_STR)-10)/2)
+				msg = "rolls a [roll][bonus >= 0 ? "+[bonus]" : "[bonus]"] on strength dice"
 			if("perception")
-				success = living.stat_roll(STATKEY_PER, chance_per_point)
-				chance = living.get_stat(STATKEY_PER)
+				/*uccess = living.stat_roll(STATKEY_PER, chance_per_point)
+				chance = living.get_stat(STATKEY_PER)*/
+				roll = rand(1,20)
+				bonus = floor((living.get_stat(STATKEY_PER)-10)/2)
+				msg = "rolls a [roll][bonus >= 0 ? "+[bonus]" : "[bonus]"] on perception dice"
 			if("intelligence")
-				success = living.stat_roll(STATKEY_INT, chance_per_point)
-				chance = living.get_stat(STATKEY_INT)
+				/*success = living.stat_roll(STATKEY_INT, chance_per_point)
+				chance = living.get_stat(STATKEY_INT)*/
+				roll = rand(1,20)
+				bonus = floor((living.get_stat(STATKEY_INT)-10)/2)
+				msg = "rolls a [roll][bonus >= 0 ? "+[bonus]" : "[bonus]"] on intelligence dice"
 			if("constitution")
-				success = living.stat_roll(STATKEY_CON, chance_per_point)
-				chance = living.get_stat(STATKEY_CON)
+				/*success = living.stat_roll(STATKEY_CON, chance_per_point)
+				chance = living.get_stat(STATKEY_CON)*/
+				roll = rand(1,20)
+				bonus = floor((living.get_stat(STATKEY_CON)-10)/2)
+				msg = "rolls a [roll][bonus >= 0 ? "+[bonus]" : "[bonus]"] on constitution dice"
 			if("endurance")
-				success = living.stat_roll(STATKEY_END, chance_per_point)
-				chance = living.get_stat(STATKEY_END)
+				/*success = living.stat_roll(STATKEY_END, chance_per_point)
+				chance = living.get_stat(STATKEY_END)*/
+				roll = rand(1,20)
+				bonus = floor((living.get_stat(STATKEY_END)-10)/2)
+				msg = "rolls a [roll][bonus >= 0 ? "+[bonus]" : "[bonus]"] on endurance dice"
 			if("speed")
-				success = living.stat_roll(STATKEY_SPD, chance_per_point)
-				chance = living.get_stat(STATKEY_SPD)
+				/*success = living.stat_roll(STATKEY_SPD, chance_per_point)
+				chance = living.get_stat(STATKEY_SPD)*/
+				roll = rand(1,20)
+				bonus = floor((living.get_stat(STATKEY_SPD)-10)/2)
+				msg = "rolls a [roll][bonus >= 0 ? "+[bonus]" : "[bonus]"] on speed dice"
 			if("fortune")
-				success = living.stat_roll(STATKEY_LCK, chance_per_point)
-				chance = living.get_stat(STATKEY_LCK)
+				/*success = living.stat_roll(STATKEY_LCK, chance_per_point)
+				chance = living.get_stat(STATKEY_LCK)*/
+				roll = rand(1,20)
+				bonus = floor((living.get_stat(STATKEY_LCK)-10)/2)
+				msg = "rolls a [roll][bonus >= 0 ? "+[bonus]" : "[bonus]"] on fortune dice"
 
-		chance *= chance_per_point
 
-		var/msg = success ? span_green("SUCCEEDS and [pick(success_message_list)]") : span_danger("FAILS and [pick(failure_message_list)] [chance]%")
+		//chance *= chance_per_point
+		/*var/msg = success ? span_green("rolls a [roll][bonus >= 0 ? "+[bonus]" : "[bonus]"] on dice") : span_danger("FAILS and [pick(failure_message_list)] [chance]%")*/
 
 		msg = replace_pronoun(user, msg)
 

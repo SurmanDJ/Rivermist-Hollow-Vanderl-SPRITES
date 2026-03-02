@@ -1,14 +1,16 @@
 
-/datum/quirk/vice/hunted
-	name = "Hunted"
-	desc = "Something in your past has made you a target. You're always looking over your shoulder. THIS IS A DIFFICULT QUIRK - You will be hunted and have assassination attempts made against you without any escalation. EXPECT A MORE DIFFICULT EXPERIENCE. PLAY AT YOUR OWN RISK."
+/datum/quirk/vice/wanted
+	name = "Wanted"
+	desc = "Something in my past has made me a target. I am marked as an outlaw in these lands. I'm always looking over my shoulder. And protect my loins...	\
+	\nTHIS IS A DIFFICULT FLAW, YOU WILL BE HUNTED AND HAVE NON-CON AND RAPE ATTEMPTS MADE AGAINST YOU WITHOUT ANY ESCALATION. \
+	PLAY AT YOUR OWN RISK."
 	point_value = 5
 	customization_type = QUIRK_TEXT
 	customization_label = "Why are you being hunted?"
 	customization_placeholder = "Fleeing prison."
 	var/logged = FALSE
 
-/datum/quirk/vice/hunted/get_desc(datum/preferences/prefs)
+/datum/quirk/vice/wanted/get_desc(datum/preferences/prefs)
 	var/reason = prefs?.quirk_customizations[type]
 	if(!reason)
 		reason = customization_value
@@ -16,13 +18,14 @@
 		return "[desc]<br><br><b>Reason:</b> [reason]"
 	return "[desc]<br><br><b>Reason:</b> Unknown - a mystery from your past."
 
-/datum/quirk/vice/hunted/on_life(mob/living/user)
+/datum/quirk/vice/wanted/on_life(mob/living/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
 	if(!logged && H.name)
 		log_hunted("[H.ckey] playing as [H.name] has the hunted quirk.")
 		logged = TRUE
+		GLOB.outlawed_players += H.real_name
 
 /datum/quirk/vice/pacifist
 	name = "Pacifist"

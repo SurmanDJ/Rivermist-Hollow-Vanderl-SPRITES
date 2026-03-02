@@ -1,4 +1,4 @@
-/datum/round_event_control/antagonist/solo/zizo_cult
+/*/datum/round_event_control/antagonist/solo/zizo_cult
 	name = "Zizo Cult"
 	tags = list(
 		TAG_ZIZO,
@@ -30,4 +30,4 @@
 		antag_mind.add_antag_datum(/datum/antagonist/zizocultist/leader)
 		leader = TRUE
 	else
-		antag_mind.add_antag_datum(antag_datum)
+		antag_mind.add_antag_datum(antag_datum)*/

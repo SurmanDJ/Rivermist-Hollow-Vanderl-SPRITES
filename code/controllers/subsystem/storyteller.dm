@@ -1608,7 +1608,7 @@ SUBSYSTEM_DEF(gamemode)
 				record_round_statistic(STATS_KLEPTOMANIACS)
 			if(human_mob.has_quirk(/datum/quirk/vice/greedy))
 				record_round_statistic(STATS_GREEDY_PEOPLE)
-			if(human_mob.has_quirk(/datum/quirk/vice/hunted))
+			if(human_mob.has_quirk(/datum/quirk/vice/wanted))
 				record_round_statistic(STATS_HUNTED_PEOPLE)
 			if(HAS_TRAIT_NOT_FROM(human_mob, TRAIT_PACIFISM, "hugbox"))
 				record_round_statistic(STATS_PACIFISTS)
@@ -1695,7 +1695,7 @@ SUBSYSTEM_DEF(gamemode)
 			total_wealth += wealth
 			if(wealth > highest_wealth)
 				highest_wealth = wealth
-				set_chronicle_stat(CHRONICLE_STATS_RICHEST_PERSON, human_mob, "MAGNATE", "#d8dd90", "[wealth] mammons")
+				set_chronicle_stat(CHRONICLE_STATS_RICHEST_PERSON, human_mob, "MAGNATE", "#d8dd90", "[wealth] amnas")
 
 			if(isnull(lowest_total_stats))
 				lowest_total_stats = total_stats
@@ -1734,10 +1734,10 @@ SUBSYSTEM_DEF(gamemode)
 
 			if(isnull(lowest_wealth))
 				lowest_wealth = wealth
-				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#909c63", "[wealth] mammons")
+				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#909c63", "[wealth] amnas")
 			else if(wealth < lowest_wealth)
 				lowest_wealth = wealth
-				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#909c63", "[wealth] mammons")
+				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#909c63", "[wealth] amnas")
 
 			if(isnull(lowest_perception))
 				lowest_perception = human_mob.STAPER

@@ -2,7 +2,7 @@
 	name = "clothline"
 	desc = "This seems like a nice place to dry some clothes."
 	icon = 'icons/roguetown/misc/structure.dmi'
-	icon_state = "dryclothes"
+	icon_state = "dryrack"
 	max_integrity = 200
 	density = TRUE
 	climbable = TRUE

@@ -1,4 +1,4 @@
-/datum/round_event_control/antagonist/solo/rebel
+/*/datum/round_event_control/antagonist/solo/rebel
 	name = "Rebels"
 	tags = list(
 		TAG_MATTHIOS,
@@ -27,4 +27,4 @@
 		return TRUE
 	return FALSE
 
-/datum/round_event/antagonist/solo/rebel
+/datum/round_event/antagonist/solo/rebel*/

@@ -120,16 +120,16 @@
 		if(!D)
 			return
 		if(SStreasury.treasury_value < D.get_import_price())
-			say("Insufficient mammon.")
+			say("Insufficient amna.")
 			return
 		var/amt = D.get_import_price()
 		SStreasury.treasury_value -= amt
 		SStreasury.log_to_steward("-[amt] imported [D.name]")
 		record_round_statistic(STATS_STOCKPILE_IMPORTS_VALUE, amt)
 		if(amt >= 100)
-			scom_announce("[SSmapping.config.map_name] imports [D.name] for [amt] mammon.")
+			scom_announce("[SSmapping.config.map_name] imports [D.name] for [amt] amna.")
 		else
-			say("[SSmapping.config.map_name] imports [D.name] for [amt] mammon.")
+			say("[SSmapping.config.map_name] imports [D.name] for [amt] amna.")
 		D.raise_demand()
 		addtimer(CALLBACK(src, PROC_REF(do_import), D.type), 10 SECONDS)
 	if(href_list["export"])
@@ -164,9 +164,9 @@
 		record_round_statistic(STATS_STOCKPILE_EXPORTS_VALUE, total_value)
 
 		if(total_value >= 100)
-			scom_announce("[SSmapping.config.map_name] exports [items_exported] [D.name] for [total_value] mammon.")
+			scom_announce("[SSmapping.config.map_name] exports [items_exported] [D.name] for [total_value] amna.")
 		else
-			say("[SSmapping.config.map_name] exports [items_exported] [D.name] for [total_value] mammon.")
+			say("[SSmapping.config.map_name] exports [items_exported] [D.name] for [total_value] amna.")
 
 		D.lower_demand()
 

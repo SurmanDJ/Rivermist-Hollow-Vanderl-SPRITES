@@ -13,6 +13,7 @@
 	anvilrepair = null
 	abstract_type = /obj/item/clothing/cloak
 	smeltresult = /obj/item/fertilizer/ash
+	flags_inv = HIDEBUTT
 
 	grid_width = 64
 	grid_height = 64

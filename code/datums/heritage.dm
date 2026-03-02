@@ -72,7 +72,7 @@
 	icon_state = "debuff"
 
 	var/static/list/hunger_tips = list(
-		"Your stomach growls like a caged volf...",
+		"Your stomach growls like a caged wolf...",
 		"You feel the weight of your family's curse.",
 		"Even the grandest feast was never enough."
 	)

@@ -53,10 +53,20 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 	D.in_use = TRUE
 	return D
 
-/proc/unset_busy_human_dummy(slotnumber)
+/proc/unset_busy_human_dummy(slotnumber, delete_after = FALSE)
 	if(!slotnumber)
 		return
 	var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotnumber]
 	if(istype(D))
 		D.wipe_state()
 		D.in_use = FALSE
+	if(delete_after)
+		delete_human_dummy(slotnumber)
+
+/proc/delete_human_dummy(slotnumber)
+	if(!slotnumber)
+		return
+	var/mob/living/carbon/human/dummy/D = GLOB.human_dummy_list[slotnumber]
+	GLOB.human_dummy_list.Remove(slotnumber)
+	if(!QDELETED(D))
+		qdel(D)

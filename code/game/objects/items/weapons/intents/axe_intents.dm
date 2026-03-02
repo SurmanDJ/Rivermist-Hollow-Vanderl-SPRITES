@@ -26,6 +26,7 @@
 /datum/intent/axe/chop/greataxe //Essentially a better polearm chop, this weapon is made to chop people limbs off.
 	penfactor = AP_GREATAXE_CHOP  // Same AP as the polearm CHOP
 	clickcd = 16
+	reach = 2
 	swingdelay = 2
 	damfactor = 1.2
 	misscost = 15
@@ -33,6 +34,7 @@
 /datum/intent/axe/chop/greataxe/doublehead //Stronger than the one bladed axe but heavier
 	penfactor = AP_GREATAXE_CHOP
 	clickcd = 18
+	reach = 2
 	swingdelay = 2.5
 	damfactor = 1.3 // Stronger
 	misscost = 18 // Costs more if you miss
@@ -51,14 +53,14 @@
 	acc_bonus = 12
 
 /datum/intent/axe/cut/greataxe //Decent to cut as well
-	reach = 1
+	reach = 2
 	damfactor = 1.1
 	swingdelay = 1
 	misscost = 8
 	item_damage_type = "slash"
 
 /datum/intent/axe/cut/greataxe/doublehead //Better to cut as well
-	reach = 1
+	reach = 2
 	clickcd = 16
 	damfactor = 1.2 // More damage as well
 	swingdelay = 1.5

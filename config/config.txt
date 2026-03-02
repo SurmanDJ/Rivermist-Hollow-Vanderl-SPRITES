@@ -16,19 +16,19 @@ $include plexora.txt
 # There are various options which are hard-locked for security reasons.
 
 ## Server name: This appears at the top of the screen in-game and in the BYOND hub. Uncomment and replace 'tgstation' with the name of your choice.
-SERVERNAME Vanderlin
+SERVERNAME RMH
 
 ## Server subtitle: This appears right after the server name in the BYOND hub.
 SERVERSUBTITLE Dark Medieval Fantasy Roleplay
 
 ## Hosted By: Shows below
-HOSTEDBY Vanderlin
+HOSTEDBY RMH
 
 ## Server SQL name: This is the name used to identify the server to the SQL DB, distinct from SERVERNAME as it must be at most 32 characters.
 # SERVERSQLNAME tgstation
 
 ## Station name: The name of the station as it is referred to in-game. If commented out, the game will generate a random name instead.
-STATIONNAME Vanderlin
+STATIONNAME RMH
 
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
 #HUB
@@ -249,7 +249,7 @@ WIKIURL https://wiki.monkestation.com/en/vanderlin
 RULESURL https://wiki.monkestation.com/en/vanderlin/rules
 
 ## Github address
-GITHUBURL https://github.com/Monkestation/Vanderlin
+GITHUBURL https://github.com/sheetofseaweed/Rivermist-Hollow-Vanderlin
 
 ## Round specific stats address
 ## Link to round specific parsed logs; IE statbus. It is appended with the RoundID automatically by ticker/Reboot()
@@ -268,7 +268,7 @@ GITHUBURL https://github.com/Monkestation/Vanderlin
 # GITHUBREPOID 3234987
 
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
-BANAPPEALS https://discord.monkestation.com
+BANAPPEALS https://github.com/sheetofseaweed/Rivermist-Hollow-Vanderlin
 
 ## System command that invokes youtube-dl, used by Play Internet Sound.
 ## You can install youtube-dl with

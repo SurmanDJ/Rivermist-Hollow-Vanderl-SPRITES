@@ -1,4 +1,4 @@
-/datum/action/cooldown/spell/undirected/create_abyssoid
+/*/datum/action/cooldown/spell/undirected/create_abyssoid
 	name = "Create Abyssoid"
 	button_icon_state = "bloodsteal"
 	has_visual_effects = FALSE
@@ -61,4 +61,4 @@
 	follower.visible_message(span_warning("[follower] completes the ritual, transforming the leech!"), \
 						span_red("The leech transforms into a holy abyssoid leech!"))
 
-	SEND_SIGNAL(follower, COMSIG_ABYSSOID_CREATED)
+	SEND_SIGNAL(follower, COMSIG_ABYSSOID_CREATED)*/

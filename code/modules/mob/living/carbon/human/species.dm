@@ -25,7 +25,8 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	var/sexes = TRUE
 	/// Whether this species a requires donator subscription to access, we removed all donator restrictions for species, but it's here if we ever want to reenable them or smth.
 	var/donator_req = FALSE
-
+	/// Used for sorting the species in the species_list, check out species_order_list for the order itself
+	var/order_num = 99 // so that if there's nothing in the species_order_list, we still don't break
 	/**
 	 * The list of pronouns this species allows in the character sheet.
 	 * If none are specified, it will default to the PRONOUNS_LIST.
@@ -105,6 +106,16 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	var/custom_clothes = FALSE
 	/// Custom id for custom_clothes
 	var/custom_id
+	/// Taur body list
+	var/list/allowed_taur_types = list()
+	/// Forced taur body
+	var/forced_taur = FALSE
+	/// Allows to set custom race title
+	var/use_titles = FALSE
+	/// To use MUTCOLOR with a fixed color that's independent of dna.feature["mcolor"]
+	var/fixed_mut_color = ""
+	/// Custom race title list
+	var/list/race_titles = list()
 	/**
 	 * Males use female clothes, offsets and damage icons.
 	 * Importantly males still use male limb icons.
@@ -119,7 +130,13 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	 * Females will lose their boob overlays.
 	 */
 	var/swap_female_clothes = FALSE
-
+/**
+	 * Males use female clothes and damage icons, but not offsets
+	 * Importantly males still use male limb icons.
+	 * This does not effect stats or inherent traits/skills.
+	 * Males will not get boob overlays from this.
+	 */
+	var/swap_male_clothes_but_not_offsets = FALSE
 	var/no_boobs = FALSE
 	/**
 	 * For species that don't have mammaries, like Rakshari.
@@ -311,7 +328,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	switch(language)
 		if("Old Psydonic", "Psydonic")
 			return strings("accents/grenz_replacement.json", "grenz")
-		if("Zalad")
+		if("Zakhra")
 			return strings("accents/zalad_replacement.json", "arabic")
 		if("Imperial")
 			return
@@ -336,7 +353,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 			return strings("accents/triton_replacement.json", "triton")
 		if("Pirate")
 			return strings("accents/pirate_replacement.json", "pirate")
-		if("Zizo Chant")
+		if("Undead Chant")
 			return
 	return
 
@@ -424,11 +441,9 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 				/datum/language/hellspeak = "Infernal",
 				/datum/language/orcish = "Orcish",
 				/datum/language/celestial = "Celestial",
-				/datum/language/zalad = "Zalad",
 				/datum/language/deepspeak = "Deepspeak",
-				/datum/language/oldpsydonic = "Old Psydonic",
-				/datum/language/newpsydonic = "Psydonic",
-				/datum/language/undead = "Zizo Chant"
+				/datum/language/zalad = "Zakhara",
+				/datum/language/undead = "Undead Chant"
 			)
 
 			if (language in language_map)
@@ -571,6 +586,9 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 /datum/species/proc/oldhc2color(oldhc)
 	var/list/L = get_oldhc_list()
 	return L[oldhc]
+
+/datum/species/proc/get_taur_list()
+	return allowed_taur_types
 
 
 //Called when cloning, copies some vars that should be kept
@@ -876,7 +894,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 		if(species.sexes)
 			if(H.gender == FEMALE && !species.swap_female_clothes || H.gender == MALE && species.swap_male_clothes)
 				use_female_sprites = FEMALE_BOOB
-		if(use_female_sprites)
+		if(use_female_sprites && !(H.gender == MALE && species.swap_male_clothes_but_not_offsets))
 			offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
 		else
 			offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
@@ -2392,24 +2410,24 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 		var/list/obscured = H.check_obscured_slots(TRUE)
 		//HEAD//
 
-		if(H.wear_mask && !(obscured & ITEM_SLOT_MASK))
+		if(H.wear_mask && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_MASK))
 			burning_items += H.wear_mask
-		if(H.wear_neck && !(obscured & ITEM_SLOT_NECK))
+		if(H.wear_neck && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_NECK))
 			burning_items += H.wear_neck
-		if(H.head && !(obscured & ITEM_SLOT_HEAD))
+		if(H.head && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_HEAD))
 			burning_items += H.head
 
 		//CHEST//
-		if(H.wear_pants && !(obscured & ITEM_SLOT_PANTS))
+		if(H.wear_pants && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_PANTS))
 			burning_items += H.wear_pants
-		if(H.wear_shirt && !(obscured & ITEM_SLOT_SHIRT))
+		if(H.wear_shirt && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_SHIRT))
 			burning_items += H.wear_shirt
-		if(H.wear_armor && !(obscured & ITEM_SLOT_ARMOR))
+		if(H.wear_armor && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_ARMOR))
 			burning_items += H.wear_armor
 
 		//ARMS & HANDS//
 		var/obj/item/clothing/arm_clothes = null
-		if(H.gloves && !(obscured & ITEM_SLOT_GLOVES))
+		if(H.gloves && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_GLOVES))
 			arm_clothes = H.gloves
 		else if(H.wear_armor && ((H.wear_armor.body_parts_covered & HANDS) || (H.wear_armor.body_parts_covered & ARMS)))
 			arm_clothes = H.wear_armor
@@ -2420,7 +2438,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 
 		//LEGS & FEET//
 		var/obj/item/clothing/leg_clothes = null
-		if(H.shoes && !(obscured & ITEM_SLOT_SHOES))
+		if(H.shoes && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_SHOES))
 			leg_clothes = H.shoes
 		else if(H.wear_armor && ((H.wear_armor.body_parts_covered & FEET) || (H.wear_armor.body_parts_covered & LEGS)))
 			leg_clothes = H.wear_armor

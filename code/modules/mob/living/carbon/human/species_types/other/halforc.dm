@@ -36,6 +36,8 @@
 	possible_ages = NORMAL_AGES_LIST
 	changesource_flags = WABBAJACK
 
+	order_num = 15
+
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mt_muscular.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/ft_muscular.dmi'
 
@@ -63,14 +65,6 @@
 		OFFSET_SHIRT = list(0,1),\
 		OFFSET_ARMOR = list(0,1),\
 		OFFSET_UNDIES = list(0,0),\
-	)
-
-	offset_genitals_m = list(
-		OFFSET_BREASTS = list(0, 3),\
-	)
-
-	offset_genitals_f = list(
-		OFFSET_BREASTS = list(0, 3),\
 	)
 
 	offset_features_f = list()
@@ -192,7 +186,7 @@
 /datum/species/halforc/get_hairc_list()
 	return sortList(list(
 		"brown - minotaur" = "58433b",
-		"brown - volf" = "48322a",
+		"brown - wolf" = "48322a",
 		"brown - bark" = "2d1300",
 
 		"green - maneater" = "458745",

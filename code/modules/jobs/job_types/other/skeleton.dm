@@ -12,6 +12,7 @@
 	outfit = /datum/outfit/skeleton
 	give_bank_account = FALSE
 	languages = list(/datum/language/undead)
+	rune_linked = FALSE
 
 	traits = list(
 		TRAIT_NOMOOD,
@@ -129,7 +130,7 @@
 	spawned.recalculate_stats(FALSE)
 
 	if(spawned.dna?.species)
-		spawned.dna.species.native_language = "Zizo Chant"
+		spawned.dna.species.native_language = "Undead Chant"
 		spawned.dna.species.accent_language = spawned.dna.species.get_accent(spawned.dna.species.native_language)
 
 	add_verb(spawned, /mob/living/carbon/human/proc/praise)

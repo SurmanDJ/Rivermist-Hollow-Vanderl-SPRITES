@@ -147,11 +147,21 @@
 		if((grabstate == null || grabstate < src.required_grab_state))
 			return FALSE
 
-	if(self_target)
+	var/hidden_slots = NONE
+	for(var/obj/item/I in target.get_equipped_items())
+		if(istype(I, /obj/item/clothing))
+			var/obj/item/clothing/C = I
+			if(C.armor_class > AC_LIGHT)
+				hidden_slots |= C.body_parts_covered
+	if(location in body_parts_covered2organ_names(hidden_slots))
+		return FALSE
+
+	return TRUE
+	/*if(self_target)
 		grabs = FALSE
 
-	var/result = get_location_accessible(target, location = location, grabs = grabs, skipundies = skipundies) || target.get_erp_pref(/datum/erp_preference/boolean/clothed_sex)
-	return result
+	var/result = get_location_accessible(target, location = location, grabs = grabs, skipundies = skipundies)
+	return result*/
 
 /datum/sex_action/proc/check_hole_storage_available(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	if(!hole_id || !stored_item_type)

@@ -100,7 +100,7 @@ SUBSYSTEM_DEF(ticker)
 		"Still no Ruler is readied..",
 		"I'm going to lose my mind if we don't get a Ruler readied up.",
 		"No. The game will not start because there is no Ruler.",
-		"What's the point of Vanderlin without a Ruler?"
+		"What's the point of Rivermist Hollow without a Ruler?"
 	)
 
 	/// ID of round reboot timer, if it exists
@@ -215,7 +215,7 @@ SUBSYSTEM_DEF(ticker)
 					timeLeft = null
 					Master.SetRunLevel(RUNLEVEL_LOBBY)
 				else
-					send2chat(new /datum/tgs_message_content("New round starting on Vanderlin!"), CONFIG_GET(string/chat_announce_new_game))
+					send2chat(new /datum/tgs_message_content("New round starting on Rivermist Hollow!"), CONFIG_GET(string/chat_announce_new_game))
 					SEND_SIGNAL(src, COMSIG_TICKER_ENTER_SETTING_UP)
 					current_state = GAME_STATE_SETTING_UP
 					Master.SetRunLevel(RUNLEVEL_SETUP)

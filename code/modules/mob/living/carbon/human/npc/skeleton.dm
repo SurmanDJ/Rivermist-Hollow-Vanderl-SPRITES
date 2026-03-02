@@ -36,6 +36,8 @@
 	if(ai_controller && should_have_aggro)
 		AddComponent(/datum/component/ai_aggro_system)
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
+	for(var/obj/item/bodypart/chest/C in src.bodyparts)
+		C.dismemberable = 0
 
 /mob/living/carbon/human/species/skeleton/after_creation()
 	..()

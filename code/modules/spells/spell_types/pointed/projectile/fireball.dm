@@ -17,8 +17,8 @@
 	charge_time = 2.5 SECONDS
 	charge_drain = 1
 	charge_slowdown = 0.7
-	cooldown_time = 25 SECONDS
-	spell_cost = 30
+	cooldown_time = 40 SECONDS
+	spell_cost = 40
 	spell_flags = SPELL_RITUOS
 	projectile_type = /obj/projectile/magic/aoe/fireball/rogue
 
@@ -39,7 +39,7 @@
 
 	charge_time = 4 SECONDS
 	spell_cost = 150
-	cooldown_time = 60 SECONDS
+	cooldown_time = 80 SECONDS
 
 /datum/action/cooldown/spell/projectile/fireball/greater
 	name = "Fireball (Greater)"
@@ -54,8 +54,8 @@
 	charge_time = 4 SECONDS
 	charge_drain = 2
 	charge_slowdown = 1.3
-	cooldown_time = 35 SECONDS
-	spell_cost = 50
+	cooldown_time = 70 SECONDS
+	spell_cost = 80
 	spell_flags = NONE
 
 	projectile_type = /obj/projectile/magic/aoe/fireball/rogue/great
@@ -66,12 +66,12 @@
 	exp_light = 3
 	exp_flash = 0
 	exp_fire = 3
-	damage = 80
+	damage = 50
 	damage_type = BURN
 	nodamage = FALSE
 	flag = "magic"
 	hitsound = 'sound/fireball.ogg'
-	aoe_range = 5
+	aoe_range = 0
 	speed = 3
 
 /obj/projectile/magic/aoe/fireball/rogue/great
@@ -81,7 +81,7 @@
 	exp_light = 5
 	exp_flash = 0
 	exp_fire = 4
-	damage = 180
+	damage = 130
 	exp_hotspot = 0
-	aoe_range = 8
+	aoe_range = 0
 	speed = 6

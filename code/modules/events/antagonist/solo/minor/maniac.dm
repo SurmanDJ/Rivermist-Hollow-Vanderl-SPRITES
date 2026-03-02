@@ -1,4 +1,4 @@
-/datum/round_event_control/antagonist/solo/maniac
+/*/datum/round_event_control/antagonist/solo/maniac
 	name = "Maniacs"
 	tags = list(
 		TAG_ZIZO,
@@ -75,4 +75,4 @@
 			break
 		weighted_list -= M
 		final_candidates += M
-	return final_candidates
+	return final_candidates*/

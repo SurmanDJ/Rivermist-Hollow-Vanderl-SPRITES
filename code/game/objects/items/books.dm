@@ -732,7 +732,7 @@
 			var/availability_text = is_available ? "" : " (Out of Stock)"
 			var/action_url = is_available ? "add_to_cart" : (allow_reputation_purchase ? "add_to_cart_reputation" : "add_to_cart")
 
-			html += "<a class='item-link [availability_class] [stock_class] [reputation_class]' data-in-stock='[is_available ? "true" : "false"]' href='byond://?src=\ref[src];action=[action_url]&item=\ref[pack]&quantity=1' style='[display_style]'>[pack.name] ([pack.cost] mammons)[availability_text][reputation_cost_text]</a>"
+			html += "<a class='item-link [availability_class] [stock_class] [reputation_class]' data-in-stock='[is_available ? "true" : "false"]' href='byond://?src=\ref[src];action=[action_url]&item=\ref[pack]&quantity=1' style='[display_style]'>[pack.name] ([pack.cost] amnas)[availability_text][reputation_cost_text]</a>"
 
 	html += {"
 						<div id="noMatchesMsg" class="no-matches">No matching items found.</div>
@@ -776,11 +776,11 @@
 			html += "<input type='submit' value='Update' class='add-btn' style='padding: 3px 8px; font-size: 0.8em;'>"
 			html += "</form>"
 			html += "</td>"
-			html += "<td>[item_cost] mammons[is_reputation_purchase ? " + [reputation_cost] rep" : ""]</td>"
+			html += "<td>[item_cost] amnas[is_reputation_purchase ? " + [reputation_cost] rep" : ""]</td>"
 			html += "<td><span class='remove-item' onclick=\"location.href='byond://?src=\ref[src];action=remove_from_cart&item=\ref[pack]'\">✖</span></td>"
 			html += "</tr>"
 
-		html += "<tr><td colspan='2'><strong>Total:</strong></td><td colspan='2'><strong>[total_cost] mammons"
+		html += "<tr><td colspan='2'><strong>Total:</strong></td><td colspan='2'><strong>[total_cost] amnas"
 		if(total_reputation_cost > 0)
 			html += " + [total_reputation_cost] reputation"
 		html += "</strong></td></tr>"
@@ -924,7 +924,7 @@
 			var/expiration_time = faction.bounty_refresh_times[bounty_type]
 			var/time_remaining = expiration_time - world.time
 			qdel(temp)
-			html += "<li class='bounty-item'>[bounty_name] ([multiplier]x - [total_value] mammon) - <small>[time_to_text(time_remaining)]</small></li>"
+			html += "<li class='bounty-item'>[bounty_name] ([multiplier]x - [total_value] amna) - <small>[time_to_text(time_remaining)]</small></li>"
 	else
 		html += "<li>No active bounties</li>"
 	html += {"
@@ -1097,7 +1097,7 @@
 		var/cost_multiplier = (pack in reputation_cart) ? 2 : 1
 		total_mammon_cost += pack.cost * quantity * cost_multiplier
 
-	to_chat(usr, "<span class='notice'>Order scroll created! Cost: [total_mammon_cost] mammons[total_reputation_cost > 0 ? " + [total_reputation_cost] reputation" : ""]</span>")
+	to_chat(usr, "<span class='notice'>Order scroll created! Cost: [total_mammon_cost] amnas[total_reputation_cost > 0 ? " + [total_reputation_cost] reputation" : ""]</span>")
 
 	if(total_reputation_cost > 0)
 		to_chat(usr, "<span class='boldwarning'>This order includes out-of-stock items that will cost [total_reputation_cost] reputation points when processed!</span>")
@@ -1224,7 +1224,7 @@
 	bookfile = "tales2.json"
 
 /obj/item/book/tales3
-	name = "Myths & Legends of Rockhill & Beyond Volume I"
+	name = "Myths & Legends of Waterdeep & Beyond Volume I"
 	desc = "Arbalius The Younger"
 	icon_state ="book3_0"
 	base_icon_state = "book3"
@@ -1658,7 +1658,7 @@ ____________End of Example*/
 
 /obj/item/book/psybibleplayerbook
 	name = "Psybible"
-	desc = "An old tome, authored by Father Ambrose of Grenzelhoft."
+	desc = "An old tome, authored by Father Ambrose of Darkhold."
 	bookfile = "PsyBible.json"
 	random_cover = TRUE
 

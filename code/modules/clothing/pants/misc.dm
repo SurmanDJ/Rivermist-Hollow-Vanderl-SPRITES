@@ -9,7 +9,7 @@
 	salvage_result = /obj/item/natural/silk
 
 /obj/item/clothing/pants/grenzelpants
-	name = "grenzelhoftian paumpers"
+	name = "darkholdian paumpers"
 	desc = "Padded pants for extra comfort and protection, adorned in vibrant colors."
 	icon_state = "grenzelpants"
 	item_state = "grenzelpants"

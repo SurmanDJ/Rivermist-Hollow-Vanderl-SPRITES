@@ -1,4 +1,4 @@
-/datum/round_event_control/antagonist/solo/werewolf
+/*/datum/round_event_control/antagonist/solo/werewolf
 	name = "Verevolfs"
 	tags = list(
 		TAG_DENDOR,
@@ -31,4 +31,4 @@
 		return TRUE
 	return FALSE
 
-/datum/round_event/antagonist/solo/werewolf
+/datum/round_event/antagonist/solo/werewolf*/

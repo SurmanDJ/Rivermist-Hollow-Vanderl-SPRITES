@@ -892,7 +892,18 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 	//Healing while sleeping in a bed
 	if(stat >= UNCONSCIOUS)
-		var/sleepy_mod = buckled?.sleepy || 0.5
+		var/obj/structure/sleep_surface = buckled
+		if(!sleep_surface)
+			var/turf/T = get_turf(src)
+			for(var/obj/structure/bed/B in T)
+				sleep_surface = B
+				break
+			if(!sleep_surface)
+				for(var/obj/structure/chair/C in T)
+					sleep_surface = C
+					break
+
+		var/sleepy_mod = sleep_surface?.sleepy || 0.5
 		var/bleed_rate = get_bleed_rate()
 		var/yess = HAS_TRAIT(src, TRAIT_NOHUNGER)
 		if(nutrition > 0 || yess)
@@ -921,13 +932,25 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		tiredness = 0
 	else if(!IsSleeping() && !HAS_TRAIT(src, TRAIT_NOSLEEP))
 		// Resting on a bed or something
-		if(buckled?.sleepy)
+		var/obj/structure/sleep_surface = buckled
+		if(!sleep_surface)
+			var/turf/T = get_turf(src)
+			for(var/obj/structure/bed/B in T)
+				sleep_surface = B
+				break
+			if(!sleep_surface)
+				for(var/obj/structure/chair/C in T)
+					sleep_surface = C
+					break
+
+		if(sleep_surface?.sleepy)
+
 			if(eyesclosed && !cant_fall_asleep || (eyesclosed && !(fallingas >= 10 && cant_fall_asleep)))
 				if(!fallingas)
 					to_chat(src, span_warning("I'll fall asleep soon..."))
 				fallingas++
-				if(istype(buckled, /obj/structure/bed))
-					var/obj/structure/bed/bed_check = buckled
+				if(istype(sleep_surface, /obj/structure/bed))
+					var/obj/structure/bed/bed_check = sleep_surface
 					if(bed_check.sheet_tucked)
 						if(fallingas > 10)
 							to_chat(src, ("This bed is so cozy..."))
@@ -942,7 +965,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 					to_chat(src, span_boldwarning("I can't sleep...[cause]"))
 				fallingas -= 5
 			else
-				adjust_energy(buckled.sleepy * (max_energy * 0.01))
+				adjust_energy(sleep_surface.sleepy * (max_energy * 0.01))
 		// Resting on the ground (not sleeping or with eyes closed and about to fall asleep)
 		else if(body_position == LYING_DOWN)
 			if(eyesclosed && !cant_fall_asleep || (eyesclosed && !(fallingas >= 10 && cant_fall_asleep)))

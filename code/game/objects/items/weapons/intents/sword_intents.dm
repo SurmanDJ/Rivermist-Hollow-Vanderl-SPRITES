@@ -65,6 +65,7 @@
 
 /datum/intent/sword/thrust/zwei
 	name = "thrust"
+	reach = 2
 	clickcd = 14
 	warnie = "mobwarning"
 	swingdelay = 1
@@ -193,6 +194,7 @@
 	blade_class = BCLASS_CHOP
 	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
 	item_damage_type = "slash"
+	reach = 2
 	swingdelay = 1.5
 	clickcd = 14
 	misscost = 14

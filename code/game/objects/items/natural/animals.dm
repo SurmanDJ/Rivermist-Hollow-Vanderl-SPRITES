@@ -56,7 +56,7 @@
 	icon_state = "pelt_gote"
 
 /obj/item/natural/fur/volf
-	desc = "Pelt from a volf."
+	desc = "Pelt from a wolf."
 	icon_state = "pelt_volf"
 
 /obj/item/natural/fur/mole
@@ -145,8 +145,8 @@
 	..()
 
 /obj/item/natural/head/volf
-	name = "volf head"
-	desc = "The severed head of a fearsome volf."
+	name = "wolf head"
+	desc = "The severed head of a fearsome wolf."
 	icon_state = "volfhead"
 	headpricemin = 3
 	headpricemax = 7

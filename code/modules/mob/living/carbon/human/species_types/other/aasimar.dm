@@ -36,6 +36,8 @@
 	possible_ages = list(AGE_IMMORTAL)
 	changesource_flags = WABBAJACK
 
+	order_num = 14
+
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mm.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fm.dmi'
 

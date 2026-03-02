@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY(letters_sent)
 
 /obj/structure/fake_machine/mail
 	name = "HERMES"
-	desc = "Carrier zads have fallen severely out of fashion ever since the advent of this hydropneumatic mail system."
+	desc = "Carrier crows have fallen severely out of fashion ever since the advent of this hydropneumatic mail system."
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "mail"
 	density = FALSE
@@ -547,11 +547,11 @@ GLOBAL_LIST_EMPTY(letters_sent)
 	if(alert(user, "Send Mail?",,"YES","NO") != "YES")
 		return
 
-	var/send_to = browser_input_text(user, "Where to? (Person or #number)", "Vanderlin", null)
+	var/send_to = browser_input_text(user, "Where to? (Person or #number)", "Rivermist Hollow", null)
 	if(!send_to)
 		return
 
-	var/sent_from = browser_input_text(user, "Who is this from?", "Vanderlin", null)
+	var/sent_from = browser_input_text(user, "Who is this from?", "Rivermist Hollow", null)
 	if(!sent_from)
 		sent_from = "Anonymous"
 

@@ -12,6 +12,8 @@
 //1: stuff in mob, 2: stuff in backpack, 3: stuff in box in backpack, etc
 #define INVENTORY_DEPTH		2
 #define STORAGE_VIEW_DEPTH	2
+#define SLOT_CHECK_REGULAR	1
+#define SLOT_CHECK_EXTRA	2
 
 //ITEM INVENTORY SLOT BITMASKS
 
@@ -39,10 +41,10 @@
 
 #define ITEM_SLOT_EXTRA			(1<<23)
 
-#define ITEM_SLOT_UNDER_BOTTOM	(ITEM_SLOT_EXTRA | (1<<0))
-#define ITEM_SLOT_UNDER_TOP		(ITEM_SLOT_EXTRA | (1<<1))
-#define ITEM_SLOT_UNDERSHIRT	(ITEM_SLOT_EXTRA | (1<<2))
-#define ITEM_SLOT_SOCKS			(ITEM_SLOT_EXTRA | (1<<3))
+#define ITEM_SLOT_UNDER_BOTTOM	(ITEM_SLOT_EXTRA | (1<<22))
+#define ITEM_SLOT_UNDER_TOP		(ITEM_SLOT_EXTRA | (1<<21))
+#define ITEM_SLOT_UNDERSHIRT	(ITEM_SLOT_EXTRA | (1<<20))
+#define ITEM_SLOT_SOCKS			(ITEM_SLOT_EXTRA | (1<<19))
 #define ITEM_SLOT_CHOKER		(ITEM_SLOT_EXTRA | (1<<4))
 #define ITEM_SLOT_GARTER		(ITEM_SLOT_EXTRA | (1<<5))
 #define ITEM_SLOT_EARRING_L		(ITEM_SLOT_EXTRA | (1<<6))
@@ -111,6 +113,8 @@
 #define HIDEBUTT (1<<16)
 #define HIDEBELLY (1<<17)
 #define HIDECROTCH	(1<<18)
+#define HIDECLOSEBODY (1<<19)
+#define HIDECLOSELEGS (1<<20)
 /// Don't show either
 #define HIDEUNDIES (HIDEUNDIESTOP | HIDEUNDIESBOT)
 

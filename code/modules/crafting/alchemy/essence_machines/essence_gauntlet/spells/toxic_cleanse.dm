@@ -16,6 +16,7 @@
 	for(var/mob/living/M in range(2, target_turf))
 		M.reagents?.remove_all_type(/datum/reagent/toxin)
 		M.reagents?.remove_all_type(/datum/reagent/poison)
+		M.setToxLoss(0, TRUE, FALSE)
 		M.apply_status_effect(/datum/status_effect/buff/toxin_immunity, 300 SECONDS)
 		new /obj/effect/temp_visual/snake/twin_up(null, M)
 
@@ -31,9 +32,9 @@
 
 /datum/status_effect/buff/toxin_immunity/on_apply()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_TOXINLOVER, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_TOXIMMUNE, TRAIT_STATUS_EFFECT(id))
 	to_chat(owner, span_notice("Toxins cannot harm you!"))
 
 /datum/status_effect/buff/toxin_immunity/on_remove()
 	. = ..()
-	REMOVE_TRAIT(owner, TRAIT_TOXINLOVER, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_TOXIMMUNE, TRAIT_STATUS_EFFECT(id))

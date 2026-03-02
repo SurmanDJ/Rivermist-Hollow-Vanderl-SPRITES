@@ -772,7 +772,7 @@
 			html += {"
 							<div class="contract-header">
 								<span class="contract-type">[contract.contract_type]</span>
-								<span class="contract-payment">[contract.payment] Mammons</span>
+								<span class="contract-payment">[contract.payment] Amna</span>
 							</div>
 							<div class="contract-target">Target: [contract.target_name]</div>
 							<div class="contract-details">
@@ -896,7 +896,7 @@
 						</select>
 					</div>
 					<div class="form-group">
-						<label class="form-label">Mammons</label>
+						<label class="form-label">Amnas</label>
 						<input type="number" class="form-input" id="payment" min="1" required>
 					</div>
 					<div class="form-group">
@@ -1636,7 +1636,7 @@
 			if(M.ckey == harlequinn_ckey && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				add_mammons_to_atom(H, payment)
-				to_chat(H, span_notice("You have been paid [payment] Mammons for completing the contract!"))
+				to_chat(H, span_notice("You have been paid [payment] Amnas for completing the contract!"))
 				break
 
 	// Remove from active contracts and add to completed
@@ -1658,7 +1658,7 @@
 			if(M.ckey == contractor_ckey && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				add_mammons_to_atom(H, payment)
-				to_chat(H, span_notice("Your contract has failed. [payment] Mammons have been returned."))
+				to_chat(H, span_notice("Your contract has failed. [payment] Amnas have been returned."))
 				break
 
 	// Remove from active contracts

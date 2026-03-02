@@ -322,13 +322,13 @@
 		if(HAS_TRAIT(src, TRAIT_MANIAC_AWOKEN))
 			. += span_userdanger("THE WORLD TWISTS! MANIAC!")
 
-	var/obscured = check_obscured_slots()
+	var/list/obscured = check_obscured_slots()
 
-	if(wear_shirt && !(obscured & ITEM_SLOT_SHIRT))
+	if(wear_shirt && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_SHIRT))
 		. += "[m3] [wear_shirt.get_examine_string(user)]."
 
 	//uniform
-	if(wear_pants && !(obscured & ITEM_SLOT_PANTS))
+	if(wear_pants && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_PANTS))
 		//accessory
 		var/accessory_msg
 		if(istype(wear_pants, /obj/item/clothing/pants))
@@ -339,19 +339,19 @@
 		. += "[m3] [wear_pants.get_examine_string(user)][accessory_msg]."
 
 	//head
-	if(head && !(obscured & ITEM_SLOT_HEAD))
+	if(head && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_HEAD))
 		. += "[m3] [head.get_examine_string(user)] on [m2] head."
 	//armorF
-	if(wear_armor && !(obscured & ITEM_SLOT_ARMOR))
+	if(wear_armor && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_ARMOR))
 		. += "[m3] [wear_armor.get_examine_string(user)]."
 
-	if(cloak && !(obscured & ITEM_SLOT_CLOAK))
+	if(cloak && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_CLOAK))
 		. += "[m3] [cloak.get_examine_string(user)] on [m2] shoulders."
 
-	if(backr && !(obscured & ITEM_SLOT_BACK_R))
+	if(backr && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_BACK_R))
 		. += "[m3] [backr.get_examine_string(user)] on [m2] back."
 
-	if(backl && !(obscured & ITEM_SLOT_BACK_L))
+	if(backl && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_BACK_L))
 		. += "[m3] [backl.get_examine_string(user)] on [m2] back."
 
 	//Hands
@@ -360,34 +360,34 @@
 			. += "[m1] holding [I.get_examine_string(user)] in [m2] [get_held_index_name(get_held_index_of_item(I))]."
 
 	//gloves
-	if(gloves && !(obscured & ITEM_SLOT_GLOVES))
+	if(gloves && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_GLOVES))
 		. += "[m3] [gloves.get_examine_string(user)] on [m2] hands."
 	else if(GET_ATOM_BLOOD_DNA_LENGTH(src))
 		if(num_hands)
 			. += span_warning("[m3] [num_hands > 1 ? "" : "a"] blood-stained hand[num_hands > 1 ? "s" : ""]!")
 
 	//belt
-	if(belt && !(obscured & ITEM_SLOT_BELT))
+	if(belt && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_BELT))
 		. += "[m3] [belt.get_examine_string(user)] about [m2] waist."
 
-	if(beltr && !(obscured & ITEM_SLOT_BELT_R))
+	if(beltr && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_BELT_R))
 		. += "[m3] [beltr.get_examine_string(user)] on [m2] belt."
 
-	if(beltl && !(obscured & ITEM_SLOT_BELT_L))
+	if(beltl && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_BELT_L))
 		. += "[m3] [beltl.get_examine_string(user)] on [m2] belt."
 
 	//shoes
-	if(shoes && !(obscured & ITEM_SLOT_SHOES))
+	if(shoes && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_SHOES))
 		. += "[m3] [shoes.get_examine_string(user)] on [m2] feet."
 
 	//mask
-	if(wear_mask && !(obscured & ITEM_SLOT_MASK))
+	if(wear_mask && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_MASK))
 		. += "[m3] [wear_mask.get_examine_string(user)] on [m2] face."
 
-	if(mouth && !(obscured & ITEM_SLOT_MOUTH))
+	if(mouth && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_MOUTH))
 		. += "[m3] [mouth.get_examine_string(user)] in [m2] mouth."
 
-	if(wear_neck && !(obscured & ITEM_SLOT_NECK))
+	if(wear_neck && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_NECK))
 		. += "[m3] [wear_neck.get_examine_string(user)] around [m2] neck."
 
 		if(istype(wear_neck, /obj/item/clothing/neck/slave_collar)) //control collar
@@ -402,39 +402,39 @@
 		. += span_warning("<B>[capitalize(m2)] eyes are glowing an unnatural red!</B>")
 
 	//ID
-	if(wear_ring && !(obscured & ITEM_SLOT_RING))
+	if(wear_ring && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_RING))
 		. += "[m3] [wear_ring.get_examine_string(user)]."
 
-	if(wear_wrists && !(obscured & ITEM_SLOT_WRISTS))
+	if(wear_wrists && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_WRISTS))
 		. += "[m3] [wear_wrists.get_examine_string(user)]."
 
-	var/extra_obscured = (obscured << 1) >> 1 //We "cut off" the 24th bit of the extra slots flag so that the bitwise & can work.
-	if(underwear && !((extra_obscured & ITEM_SLOT_UNDER_BOTTOM) && (obscured & ITEM_SLOT_EXTRA)))
+	var/extra_obscured = (obscured[SLOT_CHECK_EXTRA] << 1) >> 1 //We "cut off" the 24th bit of the extra slots flag so that the bitwise & can work.
+	if(underwear && !((extra_obscured & ITEM_SLOT_UNDER_BOTTOM) && (obscured[SLOT_CHECK_EXTRA] & ITEM_SLOT_EXTRA)))
 		. += "[m3] [underwear.get_examine_string(user)]."
 
-	if(bra && !((extra_obscured & ITEM_SLOT_UNDER_TOP) && (obscured & ITEM_SLOT_EXTRA)))
+	if(bra && !((extra_obscured & ITEM_SLOT_UNDER_TOP) && (obscured[SLOT_CHECK_EXTRA] & ITEM_SLOT_EXTRA)))
 		. += "[m3] [bra.get_examine_string(user)]."
 
-	if(undershirt && !((extra_obscured & ITEM_SLOT_UNDERSHIRT) && (obscured & ITEM_SLOT_EXTRA)))
+	if(undershirt && !((extra_obscured & ITEM_SLOT_UNDERSHIRT) && (obscured[SLOT_CHECK_EXTRA] & ITEM_SLOT_EXTRA)))
 		. += "[m3] [undershirt.get_examine_string(user)]."
 
-	if(armsleeves && !((extra_obscured & ITEM_SLOT_ARMSLEEVES) && (obscured & ITEM_SLOT_EXTRA)))
+	if(armsleeves && !((extra_obscured & ITEM_SLOT_ARMSLEEVES) && (obscured[SLOT_CHECK_EXTRA] & ITEM_SLOT_EXTRA)))
 		. += "[m3] [armsleeves.get_examine_string(user)] on [m2] arms."
 
-	if(garter && !((extra_obscured & ITEM_SLOT_GARTER) && (obscured & ITEM_SLOT_EXTRA)))
+	if(garter && !((extra_obscured & ITEM_SLOT_GARTER) && (obscured[SLOT_CHECK_EXTRA] & ITEM_SLOT_EXTRA)))
 		. += "[m3] [garter.get_examine_string(user)] on [m2] waist."
 
-	if(choker && !((extra_obscured & ITEM_SLOT_CHOKER) && (obscured & ITEM_SLOT_EXTRA)))
+	if(choker && !((extra_obscured & ITEM_SLOT_CHOKER) && (obscured[SLOT_CHECK_EXTRA] & ITEM_SLOT_EXTRA)))
 		. += "[m3] [choker.get_examine_string(user)] around [m2] neck."
 
-	if(legwear_socks && !((extra_obscured & ITEM_SLOT_SOCKS) && (obscured & ITEM_SLOT_EXTRA)))
+	if(legwear_socks && !((extra_obscured & ITEM_SLOT_SOCKS) && (obscured[SLOT_CHECK_EXTRA] & ITEM_SLOT_EXTRA)))
 		. += "[m3] [legwear_socks.get_examine_string(user)] on [m2] legs."
 
-	if(earring_l && !((extra_obscured & ITEM_SLOT_EARRING_L) && (obscured & ITEM_SLOT_EXTRA)))
+	if(earring_l && !((extra_obscured & ITEM_SLOT_EARRING_L) && (obscured[SLOT_CHECK_EXTRA] & ITEM_SLOT_EXTRA)))
 		. += "[m3] [earring_l.get_examine_string(user)] in [m2] left ear."
 
-	if(earring_r && !((extra_obscured & ITEM_SLOT_EARRING_R) && (obscured & ITEM_SLOT_EXTRA)))
-		. += "[m3] [earring_r.get_examine_string(user)] around [m2] right ear."
+	if(earring_r && !((extra_obscured & ITEM_SLOT_EARRING_R) && (obscured[SLOT_CHECK_EXTRA] & ITEM_SLOT_EXTRA)))
+		. += "[m3] [earring_r.get_examine_string(user)] in [m2] right ear."
 
 	// Facial/creampie effect message
 	var/observer_privilege = isobserver(user)
@@ -852,21 +852,37 @@
 		. += "<a href='byond://?src=[REF(src)];view_descriptors=1'>Look at Features</a>"
 
 	// Characters with the hunted flaw will freak out if they can't see someone's face.
-	if(!appears_dead)
+	/*if(!appears_dead)
 		if(!self_inspect && obscure_name && isliving(user))
 			var/mob/living/liver = user
-			if(liver.has_quirk(/datum/quirk/vice/hunted))
-				user.add_stress(/datum/stress_event/traumatized)
+			if(liver.has_quirk(/datum/quirk/vice/wanted))
+				user.add_stress(/datum/stress_event/traumatized)*/
 
 	if(!obscure_name && (flavortext || headshot_link || ooc_extra_link))
 		. += "<a href='?src=[REF(src)];task=view_flavor_text;'>Examine Closer</a>"
+
+	/// Rumours & Gossip
+	if(length(rumour) || length(noble_gossip))
+		if(!obscure_name || observer_privilege)
+			. += "<a href='?src=[REF(src)];task=view_rumours_gossip;'>Recall Rumours & Gossip</a>"
+
+	if(lip_style)
+		switch(lip_color)
+			if("red")
+				. += "<span class='info' style='color: #a81324'>[m1] wearing red lipstick.</span>"
+			if("purple")
+				. += "<span class='info' style='color: #800080'>[m1] wearing purple lipstick.</span>"
+			if("lime")
+				. += "<span class='info' style='color: #00FF00'>[m1] wearing lime lipstick.</span>"
+			if("black")
+				. += "<span class='info' style='color: #313131ff'>[m1] wearing black lipstick.</span>"
 
 	var/trait_exam = common_trait_examine()
 	if(!isnull(trait_exam))
 		. += trait_exam
 
 	// The Assassin's profane dagger can sniff out their targets, even masked.
-	if(HAS_TRAIT(user, TRAIT_ASSASSIN) && ((has_quirk(/datum/quirk/vice/hunted) || HAS_TRAIT(src, TRAIT_ZIZOID_HUNTED))))
+	if(HAS_TRAIT(user, TRAIT_ASSASSIN) && HAS_TRAIT(src, TRAIT_ZIZOID_HUNTED))
 		//TODO: move this to an examinate signal call
 		if ((src != user) && iscarbon(user))
 			var/mob/living/carbon/assassin = user
@@ -876,7 +892,7 @@
 					break
 
 	if(HAS_TRAIT(user, TRAIT_SEEPRICES) && sellprice)
-		. += "Is worth around [sellprice] mammons."
+		. += "Is worth around [sellprice] amnas."
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user

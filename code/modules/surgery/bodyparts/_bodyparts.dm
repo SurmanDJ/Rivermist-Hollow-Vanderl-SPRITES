@@ -594,7 +594,14 @@
 		body_gender = H.gender
 		should_draw_gender = S.sexes
 
-		species_color = ""
+		if((MUTCOLORS in S.species_traits) || (DYNCOLORS in S.species_traits))
+			if(S.fixed_mut_color)
+				species_color = S.fixed_mut_color
+			else
+				species_color = H.dna.features["mcolor"]
+			should_draw_greyscale = TRUE
+		else
+			species_color = ""
 
 		mutation_color = ""
 
@@ -1199,6 +1206,10 @@
 /obj/item/bodypart/proc/get_specific_markings_overlays(list/specific_markings, aux = FALSE, mob/living/carbon/human/human_owner, override_color)
 	var/list/appearance_list = list()
 	var/specific_layer = aux ? aux_layer : BODYPARTS_LAYER
+	if(aux_layer == HANDS_PART_LAYER)
+		specific_layer = aux_layer
+	else if(aux_layer == LEG_PART_LAYER)
+		specific_layer = aux_layer - 0.1
 	var/specific_render_zone = aux ? aux_zone : body_zone
 	for(var/key in specific_markings)
 		var/color = specific_markings[key]

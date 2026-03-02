@@ -42,6 +42,12 @@
 	hover_only = TRUE
 	flight_time = 5 SECONDS
 
+/obj/item/organ/wings/flight/dragonborn
+	name = "dragonborn wings"
+	accessory_type = /datum/sprite_accessory/wings/huge/dragon
+	flight_for_species = list(SPEC_ID_DRAGONBORN)
+	flight_time = 20 SECONDS
+
 /obj/effect/flyer_shadow
 	name = "humanoid shadow"
 	desc = "A shadow cast from something flying above."

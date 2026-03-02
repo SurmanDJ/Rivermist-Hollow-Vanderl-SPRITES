@@ -5,11 +5,11 @@
 /datum/species/automaton
 	name = "Automaton"
 	id = SPEC_ID_AUTOMATON
-	desc = "The Brass Men of Heartfelt, engineered servants of the Makers Guild. \
+	desc = "The Brass Men of Baldur's Gate, engineered servants of the Artificers Guild. \
 	These mechanical beings house souls bound to brass and steel, compelled to serve through ancient artifice. \
 	\n\n\
-	Following the catastrophic events at Heartfelt, automatons are forbidden from wielding weapons - only tools may grace their metal hands. \
-	They exist in servitude to the Makers Guild and nobility, bound by a single immutable law: obey the last order given. \
+	Following the catastrophic events at Baldur's Gate, automatons are forbidden from wielding weapons - only tools may grace their metal hands. \
+	They exist in servitude to the Artificers Guild and nobility, bound by a single immutable law: obey the last order given. \
 	\n\n\
 	Their speech comes not from lips but from pre-recorded proclamations, their thoughts trapped within a prison of brass and binding runes. \
 	\n\n\
@@ -75,6 +75,8 @@
 	possible_ages = ALL_AGES_LIST
 	use_skintones = TRUE
 
+	order_num = 22
+
 	native_language = "Common"
 
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/automaton.dmi'
@@ -111,6 +113,7 @@
 	. = ..()
 	C.AddComponent(/datum/component/abberant_eater, list(/obj/item/ore/coal, /obj/item/grown/log/tree))
 	C.AddComponent(/datum/component/steam_life)
+	C.AddComponent(/datum/component/command_follower)
 	C.AddComponent(/datum/component/augmentable)
 
 	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))

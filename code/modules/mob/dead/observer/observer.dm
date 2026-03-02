@@ -416,6 +416,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	client.view_size.setDefault(getScreenSize())
 	mind.current_ghost = null
 	mind.current.ckey = ckey(key)
+	if(HAS_TRAIT_FROM(mind.current, TRAIT_NOSLEEP, "aghost"))
+		REMOVE_TRAIT(mind.current, TRAIT_NOSLEEP, "aghost")
 	return TRUE
 
 
@@ -760,7 +762,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	var/bt = world.time
 	SEND_SOUND(src, sound('sound/misc/notice (2).ogg'))
-	if(alert(src, "You have been summoned to destroy Vanderlin!", "Join the Horde", "Yes", "No") == "Yes")
+	if(alert(src, "You have been summoned to destroy Rivermist Hollow!", "Join the Horde", "Yes", "No") == "Yes")
 		if(world.time > bt + 5 MINUTES)
 			to_chat(src, "<span class='warning'>Too late.</span>")
 			return FALSE

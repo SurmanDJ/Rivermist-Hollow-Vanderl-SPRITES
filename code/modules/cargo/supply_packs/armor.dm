@@ -162,12 +162,12 @@
 	contains = /obj/item/clothing/head/helmet/visored/hounskull
 
 /datum/supply_pack/armor/steel/zplatehelm
-	name = "Zalad Plate Helm"
+	name = "Zakhara Plate Helm"
 	cost = 90
 	contains = /obj/item/clothing/head/rare/zaladplate
 
 /datum/supply_pack/armor/steel/zsallet
-	name = "Zalad Sallet"
+	name = "Zakhara Sallet"
 	cost = 60
 	contains = /obj/item/clothing/head/helmet/sallet/zalad
 
@@ -241,7 +241,7 @@
 	contains = /obj/item/clothing/armor/medium/scale/steppe
 
 /datum/supply_pack/armor/steel/zplatearmor
-	name = "Zalad Plate"
+	name = "Zakhara Plate"
 	cost = 140
 	contains = /obj/item/clothing/armor/rare/zaladplate
 
@@ -295,7 +295,7 @@
 	contains = /obj/item/clothing/wrists/bracers
 
 /datum/supply_pack/armor/steel/zplategloves
-	name = "Zalad Plate Gloves"
+	name = "Zakhara Plate Gloves"
 	cost = 55
 	contains = /obj/item/clothing/armor/rare/zaladplate
 
@@ -329,6 +329,6 @@
 	contains = /obj/item/clothing/shoes/boots/armor
 
 /datum/supply_pack/armor/steel/zplateboots
-	name = "Zalad Plate Boots"
+	name = "Zakhara Plate Boots"
 	cost = 55
 	contains = /obj/item/clothing/shoes/boots/rare/zaladplate

@@ -10,7 +10,7 @@
 	slot_flags = ITEM_SLOT_HIP
 	populate_contents = list(
 		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/syringe,
+		/obj/item/natural/bundle/cloth/bandage/full,
 		/obj/item/storage/fancy/pilltin/sate,
 		/obj/item/storage/fancy/pilltin/devour,
 		/obj/item/candle/yellow,
@@ -35,6 +35,11 @@
 		else
 			. += "There are [contents.len <= 0 ? "no" : "[contents.len]"] items left."
 
-/obj/item/storage/fancy/ifak/attack_self(mob/user, params)
+/obj/item/storage/fancy/ifak/attack_self(mob/user, list/modifiers)
 	. = ..()
 	to_chat(user, span_notice("[src] is now [is_open ? "open" : "closed"]."))
+
+/obj/item/storage/fancy/ifak/MiddleClick(mob/user, list/modifiers)
+	. = ..()
+	to_chat(user, span_notice("[src] is now [is_open ? "open" : "closed"]."))
+

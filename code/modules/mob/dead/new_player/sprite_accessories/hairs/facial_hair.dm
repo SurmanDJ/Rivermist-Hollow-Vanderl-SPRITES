@@ -7,6 +7,9 @@
 	icon = 'icons/roguetown/mob/facial.dmi'
 	gender = MALE
 
+/datum/sprite_accessory/hair/facial/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	return is_human_part_visible(owner, HIDEFACIALHAIR)
+
 /datum/sprite_accessory/hair/facial/rakshari
 	icon = 'icons/mob/sprite_accessory/hair/facial/rakshari.dmi'
 	gender = MALE

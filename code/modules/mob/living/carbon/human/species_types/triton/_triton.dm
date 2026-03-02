@@ -52,6 +52,8 @@
 	soundpack_m = /datum/voicepack/female
 	soundpack_f = /datum/voicepack/male
 
+	order_num = 20
+
 	exotic_bloodtype = /datum/blood_type/human/triton
 	enflamed_icon = "widefire"
 

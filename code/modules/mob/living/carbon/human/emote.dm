@@ -87,7 +87,7 @@
 
 /mob/living/carbon/human/verb/emote_pale()
 	set name = "Go pale"
-	set category = "Emotes"
+	set category = "Emotes.Silent"
 	emote("pale", intentional = TRUE)
 
 /datum/emote/living/carbon/human/raise
@@ -98,7 +98,7 @@
 
 /mob/living/carbon/human/verb/emote_raise()
 	set name = "Raise hand"
-	set category = "Emotes"
+	set category = "Emotes.Silent"
 	emote("raise", intentional = TRUE)
 
 /datum/emote/living/carbon/human/salute
@@ -110,7 +110,7 @@
 
 /mob/living/carbon/human/verb/emote_salute()
 	set name = "Salute"
-	set category = "Emotes"
+	set category = "Emotes.Silent"
 	emote("salute", intentional = TRUE)
 
 /datum/emote/living/carbon/human/shrug
@@ -120,12 +120,12 @@
 
 /mob/living/carbon/human/verb/emote_shrug()
 	set name = "Shrug"
-	set category = "Emotes"
+	set category = "Emotes.Silent"
 	emote("shrug", intentional = TRUE)
 
 /mob/living/carbon/human/verb/emote_wag()
 	set name = "Wag"
-	set category = "Emotes"
+	set category = "Emotes.Silent"
 	emote("wag", intentional = TRUE)
 
 /datum/emote/living/carbon/human/wag
@@ -179,13 +179,24 @@
 	emote_type = EMOTE_AUDIBLE
 
 /mob/living/carbon/human/species/rakshari/verb/emote_purr()
-	set name = "purr"
+	set name = "Purr"
 	set category = "Emotes.Noises"
 	emote("purr", intentional = TRUE)
 
 /mob/living/carbon/human/species/rakshari/verb/emote_meow()
-	set name = "meow"
+	set name = "Meow"
 	set category = "Emotes.Noises"
 	emote("meow", intentional = TRUE)
+
+/datum/emote/living/carbon/human/rawr
+	key = "rawr"
+	key_third_person = "rawrs"
+	message = "rawrs!"
+	emote_type = EMOTE_AUDIBLE
+
+/mob/living/carbon/human/verb/emote_rawr()
+	set name = "Rawr"
+	set category = "Emotes.Noises"
+	emote("rawr", intentional = TRUE)
 
 //Ayy lmao

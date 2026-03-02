@@ -71,6 +71,7 @@
 #define HEALTH_THRESHOLD_NEARDEATH -90 //Not used mechanically, but to determine if someone is so close to death they hear the other side
 
 #define DAMAGE_THRESHOLD_FIRE_CRIT 150
+#define DAMAGE_THRESHOLD_BRUTE_CRIT 150
 
 #define HALFWAYCRITDEATH ((HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) * 0.5)
 

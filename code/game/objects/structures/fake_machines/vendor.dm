@@ -84,7 +84,7 @@
 		var/money = I.get_real_price()
 		budget += money
 		qdel(I)
-		to_chat(user, span_info("I put [money] mammon in \the [src]."))
+		to_chat(user, span_info("I put [money] amna in \the [src]."))
 		playsound(src, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
 		attack_hand(user)
 		return
@@ -212,13 +212,13 @@
 	if(canread)
 		contents = "<center>THE PEDDLER, THIRD ITERATION<BR>"
 		if(locked())
-			contents += "<a href='byond://?src=[REF(src)];change=1'>Stored Mammon:</a> [budget]<BR>"
+			contents += "<a href='byond://?src=[REF(src)];change=1'>Stored amna:</a> [budget]<BR>"
 		else
 			contents += "<a href='byond://?src=[REF(src)];withdrawgain=1'>Stored Profits:</a> [wgain]<BR>"
 	else
 		contents = "<center>[stars("THE PEDDLER, THIRD ITERATION")]<BR>"
 		if(locked())
-			contents += "<a href='byond://?src=[REF(src)];change=1'>[stars("Stored Mammon:")]</a> [budget]<BR>"
+			contents += "<a href='byond://?src=[REF(src)];change=1'>[stars("Stored amna:")]</a> [budget]<BR>"
 		else
 			contents += "<a href='byond://?src=[REF(src)];withdrawgain=1'>[stars("Stored Profits:")]</a> [wgain]<BR>"
 
@@ -257,7 +257,7 @@
 			var/item = pick(held_items)
 			var/sale = LAZYACCESSASSOC(held_items, item, "NAME")
 			var/price = LAZYACCESSASSOC(held_items, item, "PRICE")
-			say("[sale] for sale! [price] mammons!")
+			say("[sale] for sale! [price] amnas!")
 
 /obj/structure/fake_machine/vendor/nolock
 	lock = null
@@ -306,7 +306,7 @@
 		held_items[I] = list()
 		held_items[I]["NAME"] = I.name
 		held_items[I]["PRICE"] = 100
-	var/obj/I = new /obj/item/key/houses/house7(src) ///house 7 doesn't exist on Vanderlin. need to make map specific peddlers if we want to continue doing this.
+	var/obj/I = new /obj/item/key/houses/house7(src) ///house 7 doesn't exist on Vanderlin(the map). need to make map specific peddlers if we want to continue doing this.
 	held_items[I] = list()
 	held_items[I]["NAME"] = I.name
 	held_items[I]["PRICE"] = 120

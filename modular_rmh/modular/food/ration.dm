@@ -52,3 +52,15 @@
 			F.rotprocess = initial(F.rotprocess)
 			food = null
 			qdel(src) // No reusing wrapper
+
+/datum/repeatable_crafting_recipe/survival/ration_wrapper
+	name = "ration wrapping paper (x2)"
+	output = /obj/item/ration
+	requirements = list(
+		/obj/item/paper = 1,
+		/obj/item/natural/fibers = 1,
+		/obj/item/reagent_containers/food/snacks/tallow = 1,
+		)
+	skillcraft = /datum/skill/craft/cooking
+	craftdiff = 3
+	output_amount = 2

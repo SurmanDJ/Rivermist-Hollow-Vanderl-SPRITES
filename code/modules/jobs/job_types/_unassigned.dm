@@ -6,3 +6,4 @@
 
 /datum/job/unassigned
 	title = "Unassigned"
+	rune_linked = FALSE

@@ -217,6 +217,8 @@
 	possible_item_intents = list(DAGGER_CUT, DAGGER_THRUST)
 	sellprice = 12
 
+	weapon_special = /datum/special_intent/triple_stab
+
 /obj/item/weapon/knife/dagger/jile
 	name = "iron jile"
 	desc = "A curved iron dagger from the fallen east."
@@ -407,7 +409,7 @@
 /obj/item/weapon/knife/dagger/steel/profane/pre_attack(mob/living/carbon/human/target, mob/living/user, list/modifiers)
 	if(!istype(target))
 		return FALSE
-	if(target.has_quirk(/datum/quirk/vice/hunted) || HAS_TRAIT(target, TRAIT_ZIZOID_HUNTED)) // Check to see if the dagger will do 20 damage or 14
+	if(HAS_TRAIT(target, TRAIT_ZIZOID_HUNTED)) // Check to see if the dagger will do 20 damage or 14
 		force = DAMAGE_KNIFE * 2
 	else
 		force = DAMAGE_DAGGER + 2
@@ -464,7 +466,7 @@
 
 			return
 
-		if(target.has_quirk(/datum/quirk/vice/hunted) || HAS_TRAIT(target, TRAIT_ZIZOID_HUNTED)) // The profane dagger only thirsts for those who are hunted, by flaw or by zizoid curse.
+		if(HAS_TRAIT(target, TRAIT_ZIZOID_HUNTED)) // The profane dagger only thirsts for those who are hunted, by flaw or by zizoid curse.
 			if(target.has_quirk(/datum/quirk/vice/hardcore))
 				if(HAS_TRAIT(target, TRAIT_HARDCORE_PROFANE))
 					return
@@ -655,7 +657,7 @@
 
 /obj/item/weapon/knife/throwingknife/throwcard
 	name = "Calling Card"
-	desc = "A thin sheet of pig-iron stamped into a calling card, too thin and useless to be smelted. You've been had. From Heartfelt with love."
+	desc = "A thin sheet of pig-iron stamped into a calling card, too thin and useless to be smelted. You've been had. From Silvermoon with love."
 	icon_state = "throwcard"
 	throw_speed = 5
 	max_integrity = INTEGRITY_WORST - 50 // It's not about how effective it is, it's about sending a message.

@@ -1,5 +1,5 @@
 /datum/language/undead
-	name = "Zizo Chant"
+	name = "Undead Chant"
 	desc = ""
 	speech_verb = "chants"
 	ask_verb = "questions"
@@ -134,7 +134,6 @@
 "ann",
 "chu",
 "ean",
-"Zizo",
 "rai",
 "tha",
 "rea",

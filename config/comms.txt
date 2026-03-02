@@ -20,4 +20,4 @@ COMMS_KEY house123
 #ISSUE_KEY github_pat_EXAMPLE
 
 ##Github API 'slug' for issue reporting, format owner/repo
-ISSUE_SLUG Monkestation/Vanderlin
+ISSUE_SLUG x/x

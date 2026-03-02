@@ -124,6 +124,8 @@
 	/// Variable dictating if the spell will use turf based aim assist.
 	var/aim_assist = TRUE
 
+	/// Variable dictating if the spell will use aouto aim (for Magic Missile for example)
+	var/auto_aim = FALSE
 	// Charged vars
 	/// If the spell requires time to charge.
 	var/charge_required = TRUE
@@ -353,7 +355,6 @@
 		end_charging()
 		RegisterSignal(owner.client, COMSIG_CLIENT_MOUSEDOWN, PROC_REF(start_casting))
 		return
-
 	var/atom/aim_assist_target
 	if(aim_assist && isturf(click_target))
 		// Find any human in the list. We aren't picky, it's aim assist after all
@@ -361,6 +362,11 @@
 		if(!aim_assist_target)
 			// If we didn't find a human, we settle for any living at all
 			aim_assist_target = locate(/mob/living) in click_target
+
+	if(!aim_assist_target && auto_aim)
+		for(var/atom/i in view(click_target, 2))
+			if(istype(i, /mob/living))
+				aim_assist_target = i
 
 	return ..(clicker, modifiers, aim_assist_target || click_target)
 

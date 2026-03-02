@@ -327,8 +327,8 @@
 #define OFFSET_BUTT "butt"
 /* Noctra edit END */
 
-#define HUNGER_FACTOR		0.2	//factor at which mob nutrition decreases
-#define	HYGIENE_FACTOR  	0.05  //factor at which hygiene decreases
+#define HUNGER_FACTOR		0.12	//factor at which mob nutrition decreases
+#define	HYGIENE_FACTOR  	0.02  //factor at which hygiene decreases
 #define ETHEREAL_CHARGE_FACTOR	0.12 //factor at which ethereal's charge decreases
 #define REAGENTS_METABOLISM 1	//How many units of reagent are consumed per tick, by default.
 #define REAGENTS_SLOW_METABOLISM 0.1 // needed to have poisons have powerful effect at low doses without making it too fast

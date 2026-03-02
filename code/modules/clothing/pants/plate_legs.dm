@@ -107,7 +107,7 @@
 
 /obj/item/clothing/pants/platelegs/matthios
 	name = "gilded leggings"
-	desc = "Plate leggings. perfect for sprinting away after a theft of mammon, or life."
+	desc = "Plate leggings. perfect for sprinting away after a theft of amna, or life."
 	icon_state = "matthioslegs"
 	icon = 'icons/roguetown/clothing/special/evilarmor.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'

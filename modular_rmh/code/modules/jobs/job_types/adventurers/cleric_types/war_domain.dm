@@ -7,29 +7,26 @@
 	give_bank_account = TRUE
 
 	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_INT = 1,
-		STATKEY_CON = 1,
+		STATKEY_STR = 2,
+		STATKEY_CON = 2,
 		STATKEY_END = 2,
 		STATKEY_SPD = -1,
 	)
 
 	skills = list(
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2,
+		/datum/skill/combat/wrestling = 3,
+		/datum/skill/combat/unarmed = 3,
 		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/swimming = 1,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/magic/holy = 3,
-		/datum/skill/craft/cooking = 1,
-		/datum/skill/misc/sewing = 1,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/labor/mathematics = 2,
+		/datum/skill/misc/swimming = 2,
+		/datum/skill/misc/athletics = 4,
+		/datum/skill/misc/reading = 1,
+		/datum/skill/magic/holy = 2,
+		/datum/skill/labor/mathematics = 1,
 	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,
+		TRAIT_HEAVYARMOR,
 		TRAIT_STEELHEARTED,
 		TRAIT_HOLY,
 	)
@@ -44,7 +41,6 @@
 		/datum/action/cooldown/spell/sacred_flame,
 		/datum/action/cooldown/spell/undirected/blade_ward,
 		/datum/action/cooldown/spell/aoe/churn_undead,
-		/datum/action/cooldown/spell/projectile/moonlit_dagger,
 		/datum/action/cooldown/spell/undirected/divine_strike
 	)
 
@@ -58,14 +54,14 @@
 		devotion.grant_to(spawned)
 
 	var/list/selectableweapon = list(
-		"Sword" = pick(list(/obj/item/weapon/sword/iron, /obj/item/weapon/sword/scimitar/messer, /obj/item/weapon/sword/sabre/scythe)),
+		"Messer" = /obj/item/weapon/sword/scimitar/messer,
 		"Axe" = /obj/item/weapon/axe/iron,
-		"Mace" = pick(list(/obj/item/weapon/mace/bludgeon, /obj/item/weapon/mace/warhammer, /obj/item/weapon/mace/spiked, /obj/item/weapon/hammer/sledgehammer)),
+		"Warhammer" = /obj/item/weapon/mace/warhammer,
 		"Spear" = /obj/item/weapon/polearm/spear,
-		"Flail" = pick(list(/obj/item/weapon/flail, /obj/item/weapon/flail/militia)),
+		"Flail" = /obj/item/weapon/flail,
 		"Great flail" = /obj/item/weapon/flail/peasant,
 		"Goedendag" = /obj/item/weapon/mace/goden,
-		"Great axe" = /obj/item/weapon/polearm/halberd/bardiche/woodcutter,
+		"Claymor" = /obj/item/weapon/sword/long/greatsword/claymore/iron,
 	)
 
 	var/weaponchoice = spawned.select_equippable(player_client, selectableweapon, message = "Choose Your Specialisation", title = "Warrior of the ten!")
@@ -76,9 +72,9 @@
 	var/weapon_skill_path
 
 	switch(weaponchoice)
-		if("Sword")
+		if("Messer","Claymor")
 			weapon_skill_path = /datum/skill/combat/swords
-		if("Axe", "Mace", "Goedendag", "Great axe")
+		if("Axe", "Warhammer", "Goedendag")
 			weapon_skill_path = /datum/skill/combat/axesmaces
 		if("Spear")
 			weapon_skill_path = /datum/skill/combat/polearms
@@ -89,7 +85,7 @@
 		spawned.adjust_skillrank(weapon_skill_path, 3, TRUE)
 
 	switch(weaponchoice)
-		if("Great flail", "Goedendag", "Great axe")
+		if("Great flail", "Goedendag", "Claymor")
 			grant_shield = FALSE
 		if("Spear")
 			var/obj/item/weapon/shield/tower/buckleriron/buckler = new /obj/item/weapon/shield/tower/buckleriron()
@@ -98,7 +94,7 @@
 			grant_shield = FALSE
 
 	if(grant_shield)
-		var/shield_path = pick(list(/obj/item/weapon/shield/heater, /obj/item/weapon/shield/wood))
+		var/shield_path = /obj/item/weapon/shield/heater
 		var/obj/item/shield = new shield_path()
 		if(!spawned.equip_to_appropriate_slot(shield))
 			qdel(shield)
@@ -106,15 +102,15 @@
 
 /datum/outfit/adventurer_cleric/war_domain
 	name = "War Domain"
-	head = /obj/item/clothing/head/helmet/skullcap
+	head = /obj/item/clothing/head/helmet/visored/sallet/iron
 	mask = null
-	neck = /obj/item/clothing/neck/chaincoif/iron
-	cloak = /obj/item/clothing/cloak/tabard/crusader
-	armor = /obj/item/clothing/armor/chainmail/iron
-	shirt = /obj/item/clothing/armor/gambeson
-	wrists = null
-	gloves = /obj/item/clothing/gloves/leather
-	pants = /obj/item/clothing/pants/trou/leather
+	neck = /obj/item/clothing/neck/bevor/iron
+	cloak = /obj/item/clothing/cloak/tabard
+	armor = /obj/item/clothing/armor/plate/iron
+	shirt = /obj/item/clothing/armor/gambeson/light
+	wrists = /obj/item/clothing/wrists/bracers/iron
+	gloves = /obj/item/clothing/gloves/chain/iron
+	pants = /obj/item/clothing/pants/chainlegs/iron
 	shoes = /obj/item/clothing/shoes/boots/leather
 	backr = null
 	backl = /obj/item/storage/backpack/satchel
@@ -130,8 +126,3 @@
 /datum/outfit/adventurer_cleric/war_domain/pre_equip(mob/living/carbon/human/equipped_human, visuals_only)
 	. = ..()
 	equipped_human.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
-
-	head = pick(/obj/item/clothing/head/helmet/skullcap, /obj/item/clothing/head/helmet/ironpot, /obj/item/clothing/head/helmet/sallet/iron, /obj/item/clothing/head/helmet/leather/headscarf)
-	neck = pick(/obj/item/clothing/neck/chaincoif/iron, /obj/item/clothing/neck/gorget, /obj/item/clothing/neck/highcollier/iron, /obj/item/clothing/neck/coif/cloth, /obj/item/clothing/neck/coif)
-	armor = pick(/obj/item/clothing/armor/chainmail/iron, /obj/item/clothing/armor/leather/splint, /obj/item/clothing/armor/cuirass/iron)
-	backl = pick(/obj/item/storage/backpack/satchel, /obj/item/storage/backpack/satchel/cloth)

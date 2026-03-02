@@ -27,7 +27,7 @@
 	var/noble_cooldown = 1 MINUTES
 	COOLDOWN_DECLARE(nearby_ring_bell)
 	var/nearby_cooldown = 5 SECONDS
-	var/hear_distance = 40 // just a little shorter than Vanderlin's manor
+	var/hear_distance = 40 // just a little shorter than Rivermist Hollow's manor
 
 /obj/item/servant_bell/Initialize(mapload)
 	. = ..()
@@ -77,7 +77,7 @@
 			to_chat(user, span_noticesmall("I bind [H] to [src]."))
 	COOLDOWN_START(src, nearby_ring_bell, nearby_cooldown)
 
-/obj/item/servant_bell/attack_hand_secondary(mob/user, params)
+/obj/item/servant_bell/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return

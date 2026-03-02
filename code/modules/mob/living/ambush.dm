@@ -80,7 +80,7 @@
 
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src
-		var/heart_value = 30
+		var/heart_value = 40
 		if(HAS_TRAIT(C, TRAIT_WEAK_HEART))
 			heart_value *= 0.5
 		if(C.stress >= heart_value && (prob(50)))

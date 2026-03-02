@@ -19,13 +19,19 @@
 	var/zenars_to_put
 	if(specify)
 		switch(specify)
-			if("GOLD")
-				zenars_to_put = budget/10
+			if("ROLDON")
+				zenars_to_put = budget/1000
+				type_to_put = /obj/item/coin/platinum
+			if("DANTER")
+				zenars_to_put = budget/100
 				type_to_put = /obj/item/coin/gold
-			if("SILVER")
-				zenars_to_put = budget/5
+			if("CENTAUR")
+				zenars_to_put = budget/50
+				type_to_put = /obj/item/coin/electrum
+			if("TARAN")
+				zenars_to_put = budget/10
 				type_to_put = /obj/item/coin/silver
-			if("BRONZE")
+			if("FANDAR")
 				zenars_to_put = budget
 				type_to_put = /obj/item/coin/copper
 			if("MARQUE")
@@ -33,15 +39,25 @@
 				type_to_put = /obj/item/coin/inqcoin
 	else
 		var/highest_found = FALSE
-		var/zenars = floor(budget/10)
+		var/zenars = floor(budget/1000)
 		if(zenars)
-			budget -= zenars * 10
+			budget -= zenars * 1000
+			highest_found = TRUE
+			type_to_put = /obj/item/coin/platinum
+		zenars = floor(budget/100)
+		if(zenars)
+			budget -= zenars * 100
 			highest_found = TRUE
 			type_to_put = /obj/item/coin/gold
 			zenars_to_put = zenars
-		zenars = floor(budget/5)
+		zenars = floor(budget/50)
 		if(zenars)
-			budget -= zenars * 5
+			budget -= zenars * 50
+			highest_found = TRUE
+			type_to_put = /obj/item/coin/electrum
+		zenars = floor(budget/10)
+		if(zenars)
+			budget -= zenars * 10
 			if(!highest_found)
 				highest_found = TRUE
 				type_to_put = /obj/item/coin/silver

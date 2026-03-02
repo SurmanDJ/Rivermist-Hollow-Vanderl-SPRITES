@@ -193,8 +193,8 @@
 
 	sleep_adv_points += max(dream_points, 1)
 	sleep_adv_cycle++
-
-	show_ui(mind.current)
+	if(mind.current.client)
+		show_ui(mind.current)
 
 /datum/sleep_adv/proc/show_ui(mob/living/user)
 	var/list/dat = list()

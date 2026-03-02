@@ -56,7 +56,7 @@
 	if(!M)
 		return
 
-	var/mob/A = src
+	var/mob/A = src.mob
 	var/turf/T = get_turf(M)
 
 	if(T && isturf(T))

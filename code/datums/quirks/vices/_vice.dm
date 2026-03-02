@@ -3,14 +3,14 @@
 	quirk_category = QUIRK_VICE
 	var/next_sate = 0
 	var/sated = TRUE
-	var/time = 5 MINUTES
+	var/time = 50 MINUTES
 	var/debuff = /datum/status_effect/debuff/addiction
 	var/needsate_text
 	var/sated_text = "That's much better..."
 	var/unsate_time
 
 /datum/quirk/vice/on_spawn()
-	next_sate = world.time + rand(10 MINUTES, 20 MINUTES)
+	next_sate = world.time + time
 
 /datum/quirk/vice/on_life(mob/living/user)
 	if(!ishuman(user))
@@ -92,7 +92,7 @@
 	name = "Fire Servant"
 	desc = "The warmth and just seeing something turn to ash is so much fun!"
 	point_value = 3
-	time = 10 MINUTES
+	time = 2 HOURS
 	debuff = /datum/status_effect/debuff/addiction/pyromaniac
 	needsate_text = "I need to see something turn to ash, or be on fire. Anything!"
 
@@ -100,7 +100,7 @@
 	name = "Thief-Borne"
 	desc = "As a child I had to rely on theft to survive. Whether that changed or not, I just can't get over it."
 	point_value = 4
-	time = 30 MINUTES
+	time = 50 MINUTES
 	debuff = /datum/status_effect/debuff/addiction/kleptomaniac
 	needsate_text = "I need to STEAL something! I'll die if I don't!"
 
@@ -108,7 +108,7 @@
 	name = "Devout Follower"
 	desc = "I need to pray to my Patron, their blessings are stronger."
 	point_value = 1
-	time = 40 MINUTES
+	time = 50 MINUTES
 	debuff = /datum/status_effect/debuff/addiction/godfearing
 	needsate_text = "Time to pray."
 
@@ -128,6 +128,7 @@
 		owner.sate_addiction(src.type)
 
 /datum/quirk/vice/maniac
+	abstract_type = /datum/quirk/vice/maniac
 	name = "Maniac"
 	desc = "The worms call me the maniac... I just like seeing limbs fly and blood drip, is there something so BAD about that?"
 	random_exempt = TRUE

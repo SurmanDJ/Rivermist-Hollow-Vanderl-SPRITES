@@ -13,7 +13,8 @@
 	var/datum/component/body_storage/nipple/comp = GetComponent(/datum/component/body_storage/nipple)
 	comp?.RemoveComponent()
 	qdel(comp)
-	qdel(src)
+	if(!QDELETED(src))
+		qdel(src)
 
 /obj/item/organ/genitals/nipple/left
 	name = "left nipple"

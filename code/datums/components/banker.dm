@@ -158,7 +158,7 @@
 		banker.say("You don't have any coins to deposit.")
 		return
 
-	banker.say("You have [coins_in_hand] mammons in your possession. How much would you like to deposit to your persistent vault?")
+	banker.say("You have [coins_in_hand] amnas in your possession. How much would you like to deposit to your persistent vault?")
 
 	var/deposit_amount = input(customer, "Enter amount to deposit (1-[coins_in_hand]):", "Deposit Amount") as num|null
 	if(!deposit_amount || deposit_amount <= 0 || !can_bank(customer))
@@ -175,7 +175,7 @@
 		return
 
 	deposit_to_persistent_vault(customer, actual_removed)
-	banker.say("Deposited [actual_removed] mammons to your persistent vault.")
+	banker.say("Deposited [actual_removed] amnas to your persistent vault.")
 
 /**
  * Handle withdrawing coins from persistent storage only
@@ -201,7 +201,7 @@
 
 	withdraw_from_persistent_vault(customer, withdraw_amount)
 	add_mammons_to_atom(customer, withdraw_amount)
-	banker.say("Withdrew [withdraw_amount] mammons from your persistent vault.")
+	banker.say("Withdrew [withdraw_amount] amnas from your persistent vault.")
 
 /**
  * Handle access to player's storage container
@@ -260,12 +260,12 @@
 
 	var/list/balance_info = list(
 		span_green("=== ACCOUNT SUMMARY ==="),
-		span_notice("Persistent Vault: [persistent_balance] mammons"),
+		span_notice("Persistent Vault: [persistent_balance] amnas"),
 		span_notice("Round Storage: Available via Storage option")
 	)
 
 	if(loan_info["has_loan"])
-		balance_info += span_warning("Outstanding Loan: [loan_info["amount"]] mammons")
+		balance_info += span_warning("Outstanding Loan: [loan_info["amount"]] amnas")
 		balance_info += span_notice("Interest Rate: [loan_interest_rate]%")
 
 	to_chat(customer, balance_info.Join("\n"))
@@ -282,10 +282,10 @@
 	var/list/loan_options = list()
 
 	if(loan_info["has_loan"])
-		loan_options["Repay Loan ([loan_info["amount"]] mammons)"] = "repay"
+		loan_options["Repay Loan ([loan_info["amount"]] amnas)"] = "repay"
 		loan_options["Loan Information"] = "info"
 	else
-		loan_options["Take Out Loan (Max: [max_loan_amount] mammons)"] = "borrow"
+		loan_options["Take Out Loan (Max: [max_loan_amount] amnas)"] = "borrow"
 
 	loan_options["Cancel"] = "cancel"
 
@@ -318,7 +318,7 @@
 	for(var/upgrade_id in available_upgrades)
 		var/list/upgrade_data = available_upgrades[upgrade_id]
 		var/owned = has_upgrade(customer, upgrade_id)
-		var/status = owned ? " (OWNED)" : " ([upgrade_data["cost"]] mammons)"
+		var/status = owned ? " (OWNED)" : " ([upgrade_data["cost"]] amnas)"
 		upgrade_options["[upgrade_data["name"]][status]"] = upgrade_id
 
 	upgrade_options["Cancel"] = "cancel"
@@ -376,7 +376,7 @@
 	if(!loan_amount || loan_amount <= 0 || !can_bank(customer))
 		return
 
-	banker.say("You're requesting a loan of [loan_amount] mammons at [loan_interest_rate]% interest. Do you accept these terms?")
+	banker.say("You're requesting a loan of [loan_amount] amnas at [loan_interest_rate]% interest. Do you accept these terms?")
 
 	var/list/loan_confirm = list(
 		BANKER_OPTION_YES = radial_icons_cache[BANKER_RADIAL_YES],
@@ -393,7 +393,7 @@
 		var/loan_with_interest = loan_amount + (loan_amount * loan_interest_rate / 100)
 		SM.set_data("banking", "loan_amount", loan_with_interest)
 		add_mammons_to_atom(customer, loan_amount)
-		banker.say("Loan approved! You now owe [loan_with_interest] mammons total.")
+		banker.say("Loan approved! You now owe [loan_with_interest] amnas total.")
 
 /datum/component/banker/proc/handle_loan_repayment(mob/customer)
 	var/mob/living/banker = parent
@@ -407,10 +407,10 @@
 	var/loan_amount = loan_info["amount"]
 
 	if(coins_available < loan_amount)
-		banker.say("You need [loan_amount - coins_available] more mammons to fully repay your loan.")
+		banker.say("You need [loan_amount - coins_available] more amnas to fully repay your loan.")
 		return
 
-	banker.say("Repaying your loan of [loan_amount] mammons. Confirm?")
+	banker.say("Repaying your loan of [loan_amount] amnas. Confirm?")
 
 	var/list/repay_confirm = list(
 		BANKER_OPTION_YES = radial_icons_cache[BANKER_RADIAL_YES],
@@ -432,9 +432,9 @@
 /datum/component/banker/proc/show_loan_info(mob/customer)
 	var/loan_info = get_loan_info(customer)
 	if(loan_info["has_loan"])
-		to_chat(customer, span_warning("Outstanding Loan: [loan_info["amount"]] mammons at [loan_interest_rate]% interest"))
+		to_chat(customer, span_warning("Outstanding Loan: [loan_info["amount"]] amnas at [loan_interest_rate]% interest"))
 	else
-		to_chat(customer, span_notice("No outstanding loans. Maximum loan amount: [max_loan_amount] mammons"))
+		to_chat(customer, span_notice("No outstanding loans. Maximum loan amount: [max_loan_amount] amnas"))
 
 // Upgrade System Functions (modified to use only persistent balance)
 
@@ -482,10 +482,10 @@
 
 	var/persistent_balance = get_persistent_balance(customer)
 	if(persistent_balance < upgrade_data["cost"])
-		banker.say("You need [upgrade_data["cost"] - persistent_balance] more mammons in your persistent vault for this upgrade.")
+		banker.say("You need [upgrade_data["cost"] - persistent_balance] more amnas in your persistent vault for this upgrade.")
 		return FALSE
 
-	banker.say("[upgrade_data["description"]] for [upgrade_data["cost"]] mammons. Purchase?")
+	banker.say("[upgrade_data["description"]] for [upgrade_data["cost"]] amnas. Purchase?")
 
 	var/list/purchase_confirm = list(
 		BANKER_OPTION_YES = radial_icons_cache[BANKER_RADIAL_YES],

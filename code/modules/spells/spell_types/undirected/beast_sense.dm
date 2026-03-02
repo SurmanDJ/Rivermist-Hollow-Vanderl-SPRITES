@@ -11,7 +11,7 @@
 		/datum/attunement/earth = 0.5,
 	)
 
-	invocation = "Beast-Lord, lend me the eyes of the zad, the nose of the volf."
+	invocation = "Beast-Lord, lend me the eyes of the crow, the nose of the wolf."
 	invocation_type = INVOCATION_WHISPER
 
 	charge_required = FALSE

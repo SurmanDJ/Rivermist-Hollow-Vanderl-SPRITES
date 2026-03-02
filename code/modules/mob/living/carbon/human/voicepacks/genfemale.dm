@@ -91,4 +91,6 @@
 				used = list('sound/vo/female/gen/moan (1).ogg','sound/vo/female/gen/moan (2).ogg','sound/vo/female/gen/moan (3).ogg')
 			if("clap")
 				used = list('sound/vo/clap (1).ogg', 'sound/vo/clap (2).ogg', 'sound/vo/clap (3).ogg', 'sound/vo/clap (4).ogg')
+			if("rawr")
+				used = list('sound/vo/rawrf1.ogg', 'sound/vo/rawrf2.ogg', 'sound/vo/rawrf3.ogg')
 	return used

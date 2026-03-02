@@ -3,8 +3,16 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 
 /mob/living/carbon/human/Topic(href, href_list)
 
-	if(href_list["task"] == "view_flavor_text" && (isobserver(usr) || usr.can_perform_action(src, NEED_LIGHT)))
+	if(href_list["task"] == "view_flavor_text")// && (isobserver(usr) || usr.can_perform_action(src, NEED_LIGHT)))
 		if(!ismob(usr))
+			return
+		var/datum/examine_panel/mob_examine_panel = new(src)
+		mob_examine_panel.holder = src
+		mob_examine_panel.viewing = usr
+		mob_examine_panel.ui_interact(usr)
+		return
+
+		/*if(!ismob(usr))
 			return
 		var/mob/user = usr
 		var/list/dat = list()
@@ -29,7 +37,7 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 
 		popup.set_content(dat.Join())
 		popup.open(FALSE)
-		return
+		return*/
 
 	if(href_list["view_descriptors"] && (isobserver(usr) || usr.can_perform_action(src, NEED_LIGHT)))
 		if(!ismob(usr))
@@ -113,14 +121,37 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 
 	if(href_list["item"]) //canUseTopic check for this is handled by mob/Topic()
 		var/slot = text2num(href_list["item"])
-		var/obscured = check_obscured_slots(TRUE)
-		var/obscured_extra = (obscured << 1) >> 1 //We "cut off" the 24th bit of the extra slots flag so that the bitwise & can work.
-		if((!(slot & ITEM_SLOT_EXTRA) && (slot & obscured)) || ((slot & ITEM_SLOT_EXTRA) && (slot & obscured_extra)))
-			if((slot & ITEM_SLOT_EXTRA) && get_erp_pref(/datum/erp_preference/boolean/clothed_sex))
+		var/list/obscured = check_obscured_slots(TRUE)
+		var/obscured_extra = (obscured[SLOT_CHECK_EXTRA] << 1) >> 1 //We "cut off" the 24th bit of the extra slots flag so that the bitwise & can work.
+		if((slot & obscured[SLOT_CHECK_REGULAR]) || ((slot & ITEM_SLOT_EXTRA) && (slot & obscured_extra)))
+			var/list/armor_cover = check_armor_obscured_slots(TRUE)
+			if((slot & ITEM_SLOT_EXTRA) && !(slot & armor_cover[SLOT_CHECK_EXTRA]))
 				to_chat(usr, span_info("I reach under [src]'s clothes..."))
 			else
 				to_chat(usr, span_warning("I can't reach that! Something is covering it."))
 				return
+
+	if(href_list["task"] == "view_rumours_gossip")
+		if(!ismob(usr))
+			return
+		var/msg = ""
+		if(rumour && length(rumour))
+			var/rumour_display = rumour
+			rumour_display = html_encode(rumour_display)
+			rumour_display = parsemarkdown_basic(rumour_display, hyperlink = TRUE)
+			msg += "<b>You recall what you heard around Town about [src]...</b><br>[rumour_display]"
+		if(((HAS_TRAIT(usr, TRAIT_NOBLE)) || isobserver(usr)) && length(noble_gossip))
+			if(msg)
+				msg += "<br><br>"
+			var/gossip_display = noble_gossip
+			gossip_display = html_encode(gossip_display)
+			gossip_display = parsemarkdown_basic(gossip_display, hyperlink = TRUE)
+			msg += "<b>You recall what the other Blue-bloods hushed about [src]...</b><br>[gossip_display]"
+		if(msg)
+			to_chat(usr, "<span class='info'>[msg]</span>")
+		else //Edge-case of there being ONLY noble gossip, but we aren't a noble.
+			to_chat(usr, "<span class='info'>Any tales of intrigue of this one are reserved to the nobility...</span>")
+		return
 
 	return ..() //end of this massive fucking chain. TODO: make the hud chain not spooky. - Yeah, great job doing that.
 

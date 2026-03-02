@@ -11,7 +11,7 @@
 	outfit = /datum/outfit/towner/bard
 
 /datum/world_faction/coastal_merchants
-	faction_name = "Coastal Trade Union"
+	faction_name = "Waterdeep Merchants"
 	desc = "Seafaring traders with exotic wares"
 	faction_color = "#4682B4"
 	trader_outfits = list(

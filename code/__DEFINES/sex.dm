@@ -332,3 +332,6 @@ GLOBAL_LIST_EMPTY(locked_sex_objects)
 
 
 #define DRAW_ABOVE "draw_above" //for drawing organs above the clothes
+
+#define HORNY_MOBS_TAG_MALES (1 << 0)
+#define HORNY_MOBS_TAG_FEMALES (1 << 1)

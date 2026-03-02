@@ -2,7 +2,7 @@
 	name = "Briar Claw"
 	desc = "Turns one hand into a wolf's claw."
 	button_icon_state = "dendor"
-	invocation = "Beast-Lord, lend me the claws of a volf."
+	invocation = "Beast-Lord, lend me the claws of a wolf."
 	invocation_type = INVOCATION_WHISPER
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
@@ -45,7 +45,7 @@
 /obj/item/weapon/briar_claw
 	parent_type = /obj/item/weapon/werewolf_claw
 	name = "briar claw"
-	desc = "A volf's claw."
+	desc = "A wolf's claw."
 	force = DAMAGE_KATAR
 	wdefense = MEDIOCRE_PARRY
 	armor_penetration = 7

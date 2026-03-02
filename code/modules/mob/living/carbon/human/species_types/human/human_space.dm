@@ -34,6 +34,8 @@
 	inherent_traits = list(TRAIT_NOMOBSWAP)
 	use_skintones = TRUE
 
+	order_num = 1
+
 	possible_ages = NORMAL_AGES_LIST
 
 	changesource_flags = WABBAJACK

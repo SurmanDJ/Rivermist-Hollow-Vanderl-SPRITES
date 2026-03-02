@@ -1,8 +1,8 @@
 /obj/item/clothing/legwears
 	name = "stockings"
 	desc = "A legwear made just for the pure aesthetics. Popular in courts and brothels alike."
-	icon = 'modular_rmh/icons/clothing/stockings.dmi'
-	mob_overlay_icon = 'modular_rmh/icons/clothing/onmob/stockings.dmi'
+	icon = 'modular_rmh/icons/clothing/underwear/stockings.dmi'
+	mob_overlay_icon = 'modular_rmh/icons/clothing/underwear/onmob/stockings.dmi'
 	icon_state = "stockings"
 	item_state = "stockings"
 	resistance_flags = FLAMMABLE

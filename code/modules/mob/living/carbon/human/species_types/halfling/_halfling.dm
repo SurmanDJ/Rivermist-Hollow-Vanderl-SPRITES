@@ -45,6 +45,8 @@
 	custom_clothes = TRUE
 	custom_id = SPEC_ID_DWARF
 
+	order_num = 9
+
 	// Both from female dwarf
 	offset_features_m = list(
 		OFFSET_RING = list(0,-4),\

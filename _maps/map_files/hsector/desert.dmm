@@ -13014,11 +13014,11 @@
 /turf/open/floor/sandstone,
 /area/under/rmh_desert/tea/palacecellar)
 "qmP" = (
-/obj/structure/fluff/traveltile{
-	aportalgoesto = "merchanttown";
-	aportalid = "merchantdesert";
-	required_trait = list("seeprices", "cratemover");
-	name = "Merchant's Boat"
+/obj/structure/fluff/traveltile/rmh_guildleader{
+	name = "Boat Handling";
+	aportalid = "boatin";
+	aportalgoesto = "boatexit";
+	required_trait = "Golden Blood"
 	},
 /turf/open/floor/ruinedwood/darker,
 /area/outdoors/rmh_desert/port)
@@ -98688,7 +98688,7 @@ vFl
 vFl
 vFl
 bHJ
-qmP
+aWQ
 pUZ
 pUZ
 kCG
@@ -98945,7 +98945,7 @@ vFl
 vFl
 vFl
 sBi
-aWQ
+qmP
 aWQ
 pUZ
 kCG

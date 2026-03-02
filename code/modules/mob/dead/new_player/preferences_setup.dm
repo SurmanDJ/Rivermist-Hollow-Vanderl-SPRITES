@@ -86,6 +86,11 @@
 	if(randomise_flags & RANDOMIZE_EYE_COLOR)
 		eye_color = random_eye_color()
 
+	if(pref_species.forced_taur && pref_species.allowed_taur_types.len)
+		taur_type = pick(pref_species.allowed_taur_types)
+	else
+		taur_type = null
+
 	//if(randomise_flags & RANDOMIZE_FEATURES)
 		//features = random_features()
 
@@ -136,6 +141,10 @@
 	pref_species = new rando_race()
 	if(randomise[RANDOM_NAME])
 		real_name = pref_species.random_name(gender, TRUE)
+	if(pref_species.forced_taur && pref_species.allowed_taur_types.len)
+		taur_type = pick(pref_species.allowed_taur_types)
+	else
+		taur_type = null
 
 /datum/preferences/proc/update_preview_icon()
 	set waitfor = 0
@@ -151,15 +160,17 @@
 
 	// Set up the dummy for its photoshoot
 	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
-	for(var/datum/quirk/quirk in mannequin.quirks)
-		mannequin.remove_quirk(quirk.type)
+	//for(var/datum/quirk/quirk in mannequin.quirks)
+	//	mannequin.remove_quirk(quirk.type)
 	mannequin.transform = matrix()
 
-	apply_prefs_to(mannequin, TRUE)
-
-	if(previewJob)
+	apply_prefs_to(mannequin, TRUE, TRUE)
+	if(preview_subclass)
+		mannequin.job = preview_subclass.title
+		mannequin.dress_up_as_job(preview_subclass, TRUE)
+	else if(previewJob)
 		mannequin.job = previewJob.title
 		mannequin.dress_up_as_job(previewJob, TRUE)
 
 	parent.show_character_previews(new /mutable_appearance(mannequin))
-	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
+	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES, TRUE)

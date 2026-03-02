@@ -30,8 +30,8 @@
 	var/enrapture_to_public = pick("[cast_on] shivers uncontrollably!", "[cast_on] struggles to stay standing!", "[cast_on] clutches their chest!", "[cast_on]' eyes glaze over!")
 	var/enrapture_to_target = pick("A thrill runs down your spine!", "Your knees go weak!", "Your heart thrills in euphoria!", "Your imagination runs wild!")
 	cast_on.visible_message(
-		("<span class='aphrodisiac'>([enrapture_to_public]</span>"),
-		("<span class='aphrodisiac'>([enrapture_to_target]</span>"))
+		("<span class='aphrodisiac'>[enrapture_to_public]</span>"),
+		("<span class='aphrodisiac'>[enrapture_to_target]</span>"))
 	cast_on.Immobilize(85)
 	cast_on.adjust_jitter(20)
 	cast_on.add_stress(/datum/stress_event/enrapture)

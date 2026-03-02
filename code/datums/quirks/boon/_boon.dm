@@ -77,8 +77,6 @@
 		/datum/language/elvish,
 		/datum/language/dwarvish,
 		/datum/language/deepspeak,
-		/datum/language/zalad,
-		/datum/language/newpsydonic,
 		/datum/language/hellspeak,
 		/datum/language/orcish,
 	)
@@ -363,7 +361,7 @@
 	desc = "I sword training and stashed a short sword."
 	point_value = -2
 
-/datum/quirk/boon/duelist/on_spawn()
+/datum/quirk/boon/duelist/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)
 	if(H.mind)
@@ -374,7 +372,7 @@
 	desc = "I have trained in agile sword fighting. I dodge more easily without wearing anything and have stashed my rapier nearby."
 	point_value = -4
 
-/datum/quirk/boon/fence/on_spawn()
+/datum/quirk/boon/fence/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, "[type]")
 	H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)
@@ -386,7 +384,7 @@
 	desc = "I sword training and stashed a short sword."
 	point_value = -2
 
-/datum/quirk/boon/duelist/on_spawn()
+/datum/quirk/boon/duelist/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/combat/swords, 3, TRUE)
 	if(H.mind)
@@ -397,7 +395,7 @@
 	desc = "I have mace training and stashed a mace."
 	point_value = -3
 
-/datum/quirk/boon/training2/on_spawn()
+/datum/quirk/boon/training2/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/combat/axesmaces, 3, TRUE)
 	if(H.mind)
@@ -408,7 +406,7 @@
 	desc = "I have polearm training and stashed a spear."
 	point_value = -3
 
-/datum/quirk/boon/training4/on_spawn()
+/datum/quirk/boon/training4/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/combat/polearms, 3, TRUE)
 	if(H.mind)
@@ -419,7 +417,7 @@
 	desc = "I have knife training and stashed a parrying dagger."
 	point_value = -3
 
-/datum/quirk/boon/training5/on_spawn()
+/datum/quirk/boon/training5/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/combat/knives, 3, TRUE)
 	if(H.mind)
@@ -430,7 +428,7 @@
 	desc = "I have training with axes and am a capable jumberjack. I've also stashed a copper axe."
 	point_value = -3
 
-/datum/quirk/boon/training6/on_spawn()
+/datum/quirk/boon/training6/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/combat/axesmaces, 3, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/labor/lumberjacking, 3, TRUE)
@@ -442,7 +440,7 @@
 	desc = "I have shield training and stashed a shield. As long as I have a shield in one hand I can catch arrows with ease."
 	point_value = -3
 
-/datum/quirk/boon/training8/on_spawn()
+/datum/quirk/boon/training8/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/combat/shields, 3, TRUE)
 	if(H.mind)
@@ -453,7 +451,7 @@
 	desc = "I have journeyman unarmed training and stashed some dusters."
 	point_value = -3
 
-/datum/quirk/boon/training9/on_spawn()
+/datum/quirk/boon/training9/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/combat/unarmed, 3, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/combat/wrestling, 3, TRUE)
@@ -463,7 +461,7 @@
 	desc = "I have basic medical training and stashed some med supplies."
 	point_value = -2
 
-/datum/quirk/boon/mtraining1/on_spawn()
+/datum/quirk/boon/mtraining1/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/misc/medicine, 4, TRUE)
 	H.add_spell(/datum/action/cooldown/spell/diagnose)
@@ -476,7 +474,7 @@
 	desc = "I've always been rather good at tending to plants, and I have some powerful fertilizer stashed away and a women of ill repute. (Raises skill to journeyman)"
 	point_value = -2
 
-/datum/quirk/boon/greenthumb/on_spawn()
+/datum/quirk/boon/greenthumb/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/labor/farming, 4, TRUE)
 	if(H.mind)
@@ -490,7 +488,7 @@
 	desc = "I was always good at spotting distant things."
 	point_value = -2
 
-/datum/quirk/boon/eagle_eyed/on_spawn()
+/datum/quirk/boon/eagle_eyed/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.change_stat(STATKEY_PER, 2)
 
@@ -499,7 +497,7 @@
 	desc = "I have journeyman bow training and stashed a bow."
 	point_value = -3
 
-/datum/quirk/boon/training10/on_spawn()
+/datum/quirk/boon/training10/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/combat/bows, 3, TRUE)
 	if(H.mind)
@@ -511,7 +509,7 @@
 	desc = "I love books and I became quite skilled at reading and writing. What's more, my mind is much sharper for the experience."
 	point_value = -2
 
-/datum/quirk/boon/bookworm/on_spawn()
+/datum/quirk/boon/bookworm/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/misc/reading, 4, TRUE)
 	H.change_stat("intelligence", 2)
@@ -521,7 +519,8 @@
 	desc = "Life's not easy around here, but I've made mine a little easier by taking things of others. I am a great at picking pockets and locks. I've stashed some picks nearby."
 	point_value = -4
 
-/datum/quirk/boon/thief/on_spawn()
+/datum/quirk/boon/thief/after_job_spawn(datum/job/job)
+	. = ..()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/misc/stealing, 4, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/misc/lockpicking, 4, TRUE)
@@ -564,7 +563,7 @@
 	desc = "I have experience in putting up large structures and foundations for buildings. I can even use a sawmill if I can find one, and I have a handcart and two sacks hidden away for transporting my construction materials."
 	point_value = -2 // I have a lot of respect for people who actually bother making buildings that will be deleted within an hour or two.
 
-/datum/quirk/boon/masterbuilder/on_spawn()
+/datum/quirk/boon/masterbuilder/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/craft/carpentry, 4, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/craft/masonry, 4, TRUE)
@@ -580,7 +579,7 @@
 	desc = "I am a metalworker by trade, and I have the tools for my practice stashed away." // Needs looking at after the smithing rework goes through.
 	point_value = -4 // Armor-making. Weapon-making. Everyone wants the gamer gear.
 
-/datum/quirk/boon/mastersmith/on_spawn()
+/datum/quirk/boon/mastersmith/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/craft/blacksmithing, 4, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/craft/engineering, 4, TRUE)
@@ -596,7 +595,7 @@
 	desc = "I'm particularly skilled in working with needle, thread, and loom. I also have a needle, thread, and scissors hidden away."
 	point_value = -4
 
-/datum/quirk/boon/mastertailor/on_spawn()
+/datum/quirk/boon/mastertailor/after_job_spawn()
 	var/mob/living/carbon/human/H = owner
 	H.adjust_skillrank_up_to(/datum/skill/misc/sewing, 4, TRUE)
 	H.adjust_skillrank_up_to(/datum/skill/craft/crafting, 4, TRUE)
@@ -618,7 +617,7 @@
 
 /datum/quirk/boon/richpouch
 	name = "Rich Pouch"
-	desc = "I have a pouch full of mammons."
+	desc = "I have a pouch full of amnas."
 	point_value = -2
 
 /datum/quirk/boon/richpouch/on_spawn()

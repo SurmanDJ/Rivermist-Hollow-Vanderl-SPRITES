@@ -1,4 +1,4 @@
-/datum/round_event_control/antagonist/solo/lich
+/*/datum/round_event_control/antagonist/solo/lich
 	name = "Lich"
 	tags = list(
 		TAG_ZIZO,
@@ -33,4 +33,4 @@
 		return TRUE
 	return FALSE
 
-/datum/round_event/antagonist/solo/lich
+/datum/round_event/antagonist/solo/lich*/

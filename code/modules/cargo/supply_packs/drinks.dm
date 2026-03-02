@@ -12,7 +12,7 @@
 	contains = /obj/item/reagent_containers/glass/bottle/beer
 
 /datum/supply_pack/food/drinks/spottedhen
-	name = "Rockhill Brewed"
+	name = "Waterdeep Brewed"
 	cost = 10
 	contains = /obj/item/reagent_containers/glass/bottle/beer/spottedhen
 
@@ -27,7 +27,7 @@
 	contains = /obj/item/reagent_containers/glass/bottle/beer/ratkept
 
 /datum/supply_pack/food/drinks/grenzelbeer
-	name = "Grenzelhoftian Bitter Beer"
+	name = "Darkholdian Bitter Beer"
 	cost = 19
 	contains = /obj/item/reagent_containers/glass/bottle/beer/hagwoodbitter
 
@@ -57,22 +57,22 @@
 	contains = /obj/item/reagent_containers/glass/bottle/beer/voddena
 
 /datum/supply_pack/food/drinks/winezaladin
-	name = "Zaladin Wine"
+	name = "Zakharani Wine"
 	cost = 20
 	contains = /obj/item/reagent_containers/glass/bottle/wine
 
 /datum/supply_pack/food/drinks/winegrenzel
-	name = "Grenzelhoftian Sour Wine"
+	name = "Darkholdian Sour Wine"
 	cost = 25
 	contains = /obj/item/reagent_containers/glass/bottle/wine/sourwine
 
 /datum/supply_pack/food/drinks/winevalorred
-	name = "Valorian Red Wine"
+	name = "Luskanian Red Wine"
 	cost = 45
 	contains = /obj/item/reagent_containers/glass/bottle/redwine
 
 /datum/supply_pack/food/drinks/winevalorwhite
-	name = "Valorian White Wine"
+	name = "Luskanian White Wine"
 	cost = 35
 	contains = /obj/item/reagent_containers/glass/bottle/whitewine
 

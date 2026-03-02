@@ -27,7 +27,7 @@
 
 
 /obj/structure/fake_machine/lottery_roguetown/attack_hand(mob/living/user)
-	say("Your current tithe is [gamblingprice] mammons. Care to spin?")
+	say("Your current tithe is [gamblingprice] amnas. Care to spin?")
 	playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 	return
 
@@ -50,19 +50,19 @@
 
 	// Validate tithe amount
 	if(new_total > maxtithing)
-		say("This puts the starting tithe over [maxtithing] mammons.")
+		say("This puts the starting tithe over [maxtithing] amnas.")
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
 
 	if(new_total < mintithing)
-		say("This is below [mintithing] mammons.")
+		say("This is below [mintithing] amnas.")
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		return
 
 	// Accept the coin
 	gamblingprice += coin_value
 	qdel(P)
-	say("Your current tithe is now [gamblingprice] mammons. Care to spin?")
+	say("Your current tithe is now [gamblingprice] amnas. Care to spin?")
 	playsound(src, 'sound/misc/machinequestion.ogg', 100, FALSE, -1)
 	return
 
@@ -74,7 +74,7 @@
 	// Check if player has bet
 	if(gamblingprice == 0)
 		say(pick(
-			"Eager fool; you need mammons to gamble your life away.", \
+			"Eager fool; you need amnas to gamble your life away.", \
 			"You are missing your tithe.", \
 			"A lord without land is no lord at all."\
 		))
@@ -129,8 +129,8 @@
 	letsgogamblinggamblers()
 
 	say(pick(
-		"Well-maneuvered, aristocrat! Your peasant's tithe is now [gamblingprice] mammons. Play again?",\
-		"A bountiful harvest, this year- the peasant's tithe rises to [gamblingprice] mammons. Spin me again?"\
+		"Well-maneuvered, aristocrat! Your peasant's tithe is now [gamblingprice] amnas. Play again?",\
+		"A bountiful harvest, this year- the peasant's tithe rises to [gamblingprice] amnas. Spin me again?"\
 	))
 
 	playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
@@ -172,7 +172,7 @@
 	stopgambling = 0
 
 
-/obj/structure/fake_machine/lottery_roguetown/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/structure/fake_machine/lottery_roguetown/attackby_secondary(obj/item/weapon, mob/user, list/modifiers)
 	. = ..()
 
 	if(!ishuman(user) || stopgambling)
@@ -205,7 +205,7 @@
 	if(selection == "SILVER")
 		mod = 5
 
-	var/coin_amt = input(user, "Sayyid, you have [gamblingprice] mammon in tithes. You may withdraw [floor(gamblingprice/mod)] [selection] COINS.", src) as null|num
+	var/coin_amt = input(user, "Sayyid, you have [gamblingprice] amna in tithes. You may withdraw [floor(gamblingprice/mod)] [selection] COINS.", src) as null|num
 	coin_amt = round(coin_amt)
 
 	if(coin_amt < 1)

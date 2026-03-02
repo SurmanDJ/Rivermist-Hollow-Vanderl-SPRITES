@@ -49,6 +49,7 @@
 		if(CLONE)
 			adjustCloneLoss(damage_amount, forced = forced)
 	update_damage_overlays()
+
 	return 1
 
 /mob/living/proc/apply_damage_type(damage = 0, damagetype = BRUTE) //like apply damage except it always uses the damage procs
@@ -148,7 +149,6 @@
 	bruteloss = amount
 	if(updating_health)
 		updatehealth(amount)
-		check_damage_threshold()
 
 /mob/living/proc/getOxyLoss()
 	return oxyloss
@@ -161,7 +161,6 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_ADJUSTED, (amount * CONFIG_GET(number/damage_multiplier)), OXY)
 	if(updating_health)
 		updatehealth(amount)
-		check_damage_threshold()
 
 /mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && status_flags & GODMODE)
@@ -170,7 +169,6 @@
 	oxyloss = amount
 	if(updating_health)
 		updatehealth(amount)
-		check_damage_threshold()
 
 /mob/living/proc/getToxLoss()
 	return toxloss
@@ -182,7 +180,6 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_ADJUSTED, (amount * CONFIG_GET(number/damage_multiplier)), TOX)
 	if(updating_health)
 		updatehealth(amount)
-		check_damage_threshold()
 	return amount
 
 /mob/living/proc/setToxLoss(amount, updating_health = TRUE, forced = FALSE)

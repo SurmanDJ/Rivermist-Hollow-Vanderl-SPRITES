@@ -195,7 +195,7 @@
 	output = /obj/item/clothing/gloves/leather/apothecary
 
 /datum/repeatable_crafting_recipe/leather/gloves/otavan_gloves
-	name = "grenzelhoftian gloves"
+	name = "darkholdian gloves"
 	requirements = list(
 		/obj/item/natural/hide/cured = 2,
 		/obj/item/natural/fibers = 1
@@ -774,7 +774,7 @@
 	craftdiff = 4
 
 /datum/repeatable_crafting_recipe/leather/standalone/otavan_shoes
-	name = "grenzelhoftian shoes"
+	name = "darkholdian shoes"
 	output = /obj/item/clothing/shoes/otavan
 	requirements = list(/obj/item/natural/hide/cured = 3,
 				/obj/item/natural/fibers = 1)
@@ -823,14 +823,14 @@
 	craftdiff = 4
 
 /datum/repeatable_crafting_recipe/leather/standalone/grenzelhoft_leather_boots
-	name = "grenzelhoftian leather boots"
+	name = "darkholdian leather boots"
 	output = /obj/item/clothing/shoes/rare/grenzelhoft
 	requirements = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4
 
 /datum/repeatable_crafting_recipe/leather/grenzelhoft_heavy_leather_gloves
-	name = "grenzelhoftian heavy leather gloves"
+	name = "darkholdian heavy leather gloves"
 	requirements = list(
 		/obj/item/natural/hide/cured = 2,
 		/obj/item/natural/fur = 1,

@@ -557,3 +557,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WILDMAGIC "Wildmagic"
 #define TRAIT_DRUNKMASTER "Drunkmaster"
 #define TRAIT_RUNE_SEVERED				"runesevered"
+/// This mob cannot cast spells
+#define TRAIT_NO_SELF_MAGIC "noselfmagic"
+
+#define TRAIT_PONYGIRL_RIDEABLE "Mount" //riding

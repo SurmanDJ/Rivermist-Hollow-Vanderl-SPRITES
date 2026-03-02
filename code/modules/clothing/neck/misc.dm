@@ -623,13 +623,13 @@
 	if(isturf(A))
 		for(var/obj/item/I in A.contents)
 			total_sellprice += I.sellprice
-		to_chat(user, span_notice("Everything on the ground is worth [total_sellprice] mammons."))
+		to_chat(user, span_notice("Everything on the ground is worth [total_sellprice] amnas."))
 	else if(istype(A, /obj/item))
 		var/obj/item/I = A
 		total_sellprice += I.sellprice
 		for(var/obj/item/item in I.contents)
 			total_sellprice += item.sellprice
-		to_chat(user, span_notice("The item and its contents are worth [total_sellprice] mammons."))
+		to_chat(user, span_notice("The item and its contents are worth [total_sellprice] amnas."))
 
 /obj/item/clothing/neck/shalal
 	name = "desert rider medal"

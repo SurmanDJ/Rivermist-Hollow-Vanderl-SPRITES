@@ -1,4 +1,4 @@
-/datum/round_event_control/antagonist/solo/vampires_and_werewolves
+/*/datum/round_event_control/antagonist/solo/vampires_and_werewolves
 	name = "Vampires and Verevolves"
 	tags = list(
 		TAG_DENDOR,
@@ -66,4 +66,4 @@
 			if(SSmapping.config.map_name != "Voyage")
 				antag_mind.current.unequip_everything()
 			antag_mind.add_antag_datum(/datum/antagonist/vampire/lords_spawn)
-		return
+		return*/

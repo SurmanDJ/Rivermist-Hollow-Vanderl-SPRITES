@@ -10,7 +10,10 @@
 	var/category = "General"
 
 /datum/erp_preference/proc/get_value(datum/preferences/prefs)
-	return prefs.erp_preferences[type] || default_value
+	if(isnull(prefs.erp_preferences[type]))
+		return default_value
+	else
+		return prefs.erp_preferences[type]
 
 /datum/erp_preference/proc/set_value(datum/preferences/prefs, value)
 	if(!prefs.erp_preferences)

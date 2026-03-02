@@ -1085,6 +1085,8 @@ GLOBAL_VAR_INIT(mobids, 1)
  * * magic_flags (optional) A bitfield with the type of magic being cast (see flags at: /datum/component/anti_magic)
 **/
 /mob/proc/can_cast_magic(magic_flags = MAGIC_RESISTANCE)
+	if(HAS_TRAIT(src, TRAIT_NO_SELF_MAGIC)) // Cannot ever cast with the nomagic trait
+		return FALSE
 	if(magic_flags == NONE) // magic with the NONE flag can always be cast
 		return TRUE
 

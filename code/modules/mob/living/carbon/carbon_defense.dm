@@ -154,6 +154,9 @@
 	var/used_limb = BODY_ZONE_CHEST
 	var/missing_nose = HAS_TRAIT(src, TRAIT_MISSING_NOSE)
 	var/obj/item/bodypart/affecting
+	if(src.get_bodypart(BODY_ZONE_TAUR)) // respect taur bodies
+		if(user.zone_selected == BODY_ZONE_L_LEG || user.zone_selected == BODY_ZONE_R_LEG || user.zone_selected == BODY_ZONE_PRECISE_L_FOOT || user.zone_selected == BODY_ZONE_PRECISE_R_FOOT)
+			user.zone_selected = BODY_ZONE_TAUR
 	var/selzone = user.zone_selected
 	if(cmode && !accurate)
 		selzone = accuracy_check(user.zone_selected, user, src, /datum/skill/combat/wrestling, user.used_intent)

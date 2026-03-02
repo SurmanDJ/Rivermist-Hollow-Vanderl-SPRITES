@@ -84,6 +84,7 @@
 		if(departing_mob in rr.resrunecontroler.linked_users)
 
 			rr.resrunecontroler.remove_user(departing_mob)
+			GLOB.rune_roundstart_mobs -= departing_mob
 	GLOB.chosen_names -= departing_mob.real_name
 	departing_mob.returntolobby()
 	qdel(departing_mob)
@@ -101,7 +102,7 @@
 
 /obj/structure/train/carriage/not_train
 	name = "carriage"
-	desc = "A wooden carriage to carry passengers across land without the blessings of Heartfeltian underground train infrastructure."
+	desc = "A wooden carriage to carry passengers across land."
 	icon = 'icons/roguetown/underworld/enigma_carriage.dmi'
 	icon_state = "carriage_normal"
 

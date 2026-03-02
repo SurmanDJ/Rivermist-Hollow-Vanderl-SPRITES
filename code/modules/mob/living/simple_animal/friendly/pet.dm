@@ -15,7 +15,7 @@
 
 /mob/living/simple_animal/pet/giraffe
 	name = "Giraffe Automaton"
-	desc = "An experimental automaton imported from Heartfelt, the pinnacle of creation. She's simply adorable. Everybody loves her."
+	desc = "An experimental automaton imported from dwarven cities, the pinnacle of creation. She's simply adorable. Everybody loves her."
 	icon_state = "gg"
 	icon_living = "gg"
 	icon_dead = "gg_dead"

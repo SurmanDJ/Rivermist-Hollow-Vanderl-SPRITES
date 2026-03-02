@@ -1,4 +1,4 @@
-#define RUNE_DAMAGE_THRESHOLD 80
+#define RUNE_DAMAGE_THRESHOLD 90
 
 
 /datum/resurrection_rune_controller
@@ -42,7 +42,7 @@
 			to_chat(mind_user.get_ghost(TRUE, TRUE), span_blue("Somewhere, you are being remade anew..."))
 			resurrecting |= mind_user
 			addtimer(CALLBACK(src, PROC_REF(spawn_new_body), mind_user), 5 SECONDS)
-	for(var/mob/H in GLOB.rune_roundstart_mobs) //revive unlinked bodies //idk how to add unlinked souls though
+	/*for(var/mob/H in GLOB.rune_roundstart_mobs) //revive unlinked bodies //idk how to add unlinked souls though
 		if(!H)
 			return
 		if(sub_rune.is_main)
@@ -58,7 +58,7 @@
 						if(!(unlinked in resurrecting))
 							resurrecting |= unlinked
 							to_chat(unlinked.mind.get_ghost(TRUE, TRUE), span_blue("An alien force suddenly <b>YANKS</b> you back to life!"))
-							addtimer(CALLBACK(src, PROC_REF(start_revival), unlinked, FALSE), 1 SECONDS)
+							addtimer(CALLBACK(src, PROC_REF(start_revival), unlinked, FALSE), 1 SECONDS)*/
 
 
 /datum/resurrection_rune_controller/proc/spawn_new_body(datum/mind/mind)
@@ -88,6 +88,7 @@
 	linked_users_names[user.name] = user
 	body_mind_link[user.mind] = user
 	RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(start_revive))
+	RegisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(start_revive))
 	var/mob/living/carbon/human/H = user
 	H.rune_linked = TRUE
 	return TRUE
@@ -101,6 +102,7 @@
 	linked_users_names.Remove(user.name)
 	body_mind_link.Remove(user.mind)
 	UnregisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(start_revive))
+	UnregisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(start_revive))
 	var/mob/living/carbon/human/H = user
 	H.rune_linked = FALSE
 	return TRUE
@@ -116,9 +118,13 @@
 
 	if(!(target in linked_users)) //sanity check
 		return
-
+	var/brute = target.getBruteLoss() * 0.13 //yeah, magic numbers, but idc
+	var/burn  = target.getFireLoss() * 0.2 // the carbon update_health proc doesn't really count brute and burn damage to the limbs, so we have to do this little trick
+	var/tox   = target.getToxLoss()
+	var/oxy   = target.getOxyLoss()
+	var/total_damage = brute + burn + tox + oxy
 	var/turf/tur = get_turf(target)
-	if(target.maxHealth - target.health >= RUNE_DAMAGE_THRESHOLD || target.is_dead() || istype(tur, /turf/open/lava) || istype(tur, /turf/open/lava/acid))
+	if(total_damage >= RUNE_DAMAGE_THRESHOLD || target.is_dead() || istype(tur, /turf/open/lava) || istype(tur, /turf/open/lava/acid))
 		if(target in resurrecting)
 			return
 		start_revival(target)
@@ -136,10 +142,6 @@
 
 
 /datum/resurrection_rune_controller/proc/revive_mob(mob/living/carbon/user, is_linked)
-	/*if(!IS_RES_ELIGIBLE(user) && !(istype(get_turf(user), /turf/open/lava) || istype(get_turf(user), /turf/open/lava/acid)))
-		resurrecting -= user
-		to_chat(user.mind, span_blue("The tugging stops; you seem to be recovering."))
-		return*/
 	var/turf/T = get_turf(sub_rune)
 	var/mob/living/carbon/body = user
 	if(!body)
@@ -238,6 +240,8 @@
 		if(istype(rune, /obj/structure/resurrection_rune/control))
 			main_rune_link = rune
 			resrunecontroler.control_rune = rune
+			return TRUE
+	return FALSE
 
 /obj/structure/resurrection_rune/attack_hand(mob/user)
 	. = ..()
@@ -322,3 +326,9 @@
 			return
 		else
 			return
+
+/mob/living/carbon/proc/get_rune_linked(obj/structure/resurrection_rune/resrune)
+	if(!resrune.main_rune_link)
+		resrune.find_master()
+	if(resrune.resrunecontroler.add_user(src))
+		to_chat(src, span_blue("You are protected from Death."))

@@ -43,6 +43,8 @@
 		/datum/skill/misc/riding = 1,
 	)
 
+	order_num = 2
+
 	use_skintones = TRUE
 
 	possible_ages = NORMAL_AGES_LIST

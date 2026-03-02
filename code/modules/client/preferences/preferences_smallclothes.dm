@@ -293,7 +293,7 @@ GLOBAL_LIST_EMPTY(cached_armsleeves_flat_icons)
 			var/preference_type = href_list["preference_type"]
 			if(ispath(undershirt_type, /obj/item/clothing/undershirt) && (undershirt_type in GLOB.selectable_undershirts) || isnull(undershirt_type))
 				smallclothes_preferences[preference_type] = undershirt_type
-				user << browse(null, "window=garter_selection")
+				user << browse(null, "window=undershirt_selection")
 				update_preview_icon()
 				show_smallclothes_ui(user)
 
@@ -302,7 +302,7 @@ GLOBAL_LIST_EMPTY(cached_armsleeves_flat_icons)
 			var/preference_type = href_list["preference_type"]
 			if(ispath(armsleeve_type, /obj/item/clothing/armsleeves) && (armsleeve_type in GLOB.selectable_armsleeves) || isnull(armsleeve_type))
 				smallclothes_preferences[preference_type] = armsleeve_type
-				user << browse(null, "window=garter_selection")
+				user << browse(null, "window=armsleeve_selection")
 				update_preview_icon()
 				show_smallclothes_ui(user)
 
@@ -494,7 +494,7 @@ GLOBAL_LIST_EMPTY(cached_armsleeves_flat_icons)
 	if (bra_color)
 		dat += "<a href='byond://?_src_=prefs;bra_type=[current_bra];preference=bra_color;preference_type=[SMALCLOTHES_BRA_COLOR_PREFERENCES];task=change_smallclothes_preferences'> <span style='border: 1px solid #161616; background-color: [bra_color ? bra_color : "#FFFFFF"];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>"
 	else
-		dat += "<a href='byond://?_src_=prefs;bra_type=[current_bra];preference=bra_color;preference_type=[SMALCLOTHES_BRA_COLOR_PREFERENCES];task=change_smallclothes_preferences'>(C)</a>"
+		dat += "<a href='byond://?_src_=prefs;bra_type=[current_bra];preference=bra_color;preference_type=[SMALCLOTHES_BRA_COLOR_PREFERENCES];task=change_smallclothes_preferences'>(Select color)</a>"
 	dat += "</span></div>"
 
 	dat += "<div [random_preferences ? "" : "class='smallclothes-item'"]><b>Garter: </b> <span class='smallclothes-icon'>[garter_icon]</span> <span class='smallclothes-text'>"
@@ -505,7 +505,7 @@ GLOBAL_LIST_EMPTY(cached_armsleeves_flat_icons)
 	if (garter_color)
 		dat += "<a href='byond://?_src_=prefs;garter_type=[current_garter];preference=garter_color;preference_type=[SMALCLOTHES_GARTER_COLOR_PREFERENCES];task=change_smallclothes_preferences'> <span style='border: 1px solid #161616; background-color: [garter_color ? garter_color : "#FFFFFF"];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>"
 	else
-		dat += "<a href='byond://?_src_=prefs;garter_type=[current_garter];preference=garter_color;preference_type=[SMALCLOTHES_GARTER_COLOR_PREFERENCES];task=change_smallclothes_preferences'>(C)</a>"
+		dat += "<a href='byond://?_src_=prefs;garter_type=[current_garter];preference=garter_color;preference_type=[SMALCLOTHES_GARTER_COLOR_PREFERENCES];task=change_smallclothes_preferences'>(Select color)</a>"
 	dat += "</span></div>"
 
 	dat += "<div [random_preferences ? "" : "class='smallclothes-item'"]><b>Undershirt: </b> <span class='smallclothes-icon'>[undershirt_icon]</span> <span class='smallclothes-text'>"
@@ -516,7 +516,7 @@ GLOBAL_LIST_EMPTY(cached_armsleeves_flat_icons)
 	if (undershirt_color)
 		dat += "<a href='byond://?_src_=prefs;undershirt_type=[current_undershirt];preference=undershirt_color;preference_type=[SMALCLOTHES_UNDERSHIRT_COLOR_PREFERENCES];task=change_smallclothes_preferences'> <span style='border: 1px solid #161616; background-color: [undershirt_color ? undershirt_color : "#FFFFFF"];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>"
 	else
-		dat += "<a href='byond://?_src_=prefs;undershirt_type=[current_undershirt];preference=undershirt_color;preference_type=[SMALCLOTHES_UNDERSHIRT_COLOR_PREFERENCES];task=change_smallclothes_preferences'>(C)</a>"
+		dat += "<a href='byond://?_src_=prefs;undershirt_type=[current_undershirt];preference=undershirt_color;preference_type=[SMALCLOTHES_UNDERSHIRT_COLOR_PREFERENCES];task=change_smallclothes_preferences'>(Select color)</a>"
 	dat += "</span></div>"
 
 	dat += "<div [random_preferences ? "" : "class='smallclothes-item'"]><b>Armsleeves: </b> <span class='smallclothes-icon'>[armsleeve_icon]</span> <span class='smallclothes-text'>"
@@ -527,7 +527,7 @@ GLOBAL_LIST_EMPTY(cached_armsleeves_flat_icons)
 	if (armsleeve_color)
 		dat += "<a href='byond://?_src_=prefs;armsleeve_type=[current_armsleeve];preference=armsleeve_color;preference_type=[SMALCLOTHES_ARMSLEEVE_COLOR_PREFERENCES];task=change_smallclothes_preferences'> <span style='border: 1px solid #161616; background-color: [armsleeve_color ? armsleeve_color : "#FFFFFF"];'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>"
 	else
-		dat += "<a href='byond://?_src_=prefs;armsleeve_type=[current_armsleeve];preference=armsleeve_color;preference_type=[SMALCLOTHES_ARMSLEEVE_COLOR_PREFERENCES];task=change_smallclothes_preferences'>(C)</a>"
+		dat += "<a href='byond://?_src_=prefs;armsleeve_type=[current_armsleeve];preference=armsleeve_color;preference_type=[SMALCLOTHES_ARMSLEEVE_COLOR_PREFERENCES];task=change_smallclothes_preferences'>(Select color)</a>"
 	dat += "</span></div>"
 	return dat
 

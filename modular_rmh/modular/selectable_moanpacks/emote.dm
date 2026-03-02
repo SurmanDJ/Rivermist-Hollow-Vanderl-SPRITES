@@ -67,7 +67,7 @@
 
 /mob/living/carbon/human/verb/sex_moan()
 	set name = "Moan"
-	set category = "Noises"
+	set category = "Emotes.Noises"
 
 	var/list/arousal_data = list()
 	SEND_SIGNAL(src, COMSIG_SEX_GET_AROUSAL, arousal_data)

@@ -64,11 +64,11 @@
 
 	var/use_female_sprites = FALSE
 	if(species?.sexes)
-		if(H.gender == FEMALE && !species.swap_female_clothes || H.gender == MALE && species.swap_male_clothes)
+		if(H.gender == FEMALE && !species.swap_female_clothes || H.gender == MALE && species.swap_male_clothes || H.gender == MALE && species.swap_male_clothes_but_not_offsets)
 			use_female_sprites = FEMALE_SPRITES
 
 	var/list/offsets
-	if(use_female_sprites)
+	if(use_female_sprites && !(H.gender == MALE && species.swap_male_clothes_but_not_offsets))
 		offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
 	else
 		offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
@@ -301,8 +301,15 @@
 
 /proc/color_key_source_list_from_prefs(datum/preferences/prefs)
 	if(istype(prefs))
+		var/list/features = prefs.features
 		var/list/sources = list()
-		sources[KEY_SKIN_COLOR] = prefs.skin_tone
+		sources[KEY_MUT_COLOR_ONE] = features["mcolor"]
+		sources[KEY_MUT_COLOR_TWO] = features["mcolor2"]
+		sources[KEY_MUT_COLOR_THREE] = features["mcolor3"]
+		if(MUTCOLORS in prefs.pref_species.species_traits)
+			sources[KEY_SKIN_COLOR] = sources[KEY_MUT_COLOR_ONE]
+		else
+			sources[KEY_SKIN_COLOR] = prefs.skin_tone
 		sources[KEY_EYE_COLOR] = prefs.get_eye_color()
 		sources[KEY_HAIR_COLOR] = prefs.get_hair_color()
 		sources[KEY_FACE_HAIR_COLOR] = prefs.get_facial_hair_color()
@@ -317,10 +324,19 @@
 
 /proc/color_key_source_list_from_carbon(mob/living/carbon/carbon)
 	var/list/sources = list()
+	var/datum/dna/dna = carbon.dna
+	var/datum/species/species = dna.species
+	var/list/features = dna.features
+	sources[KEY_MUT_COLOR_ONE] = features["mcolor"]
+	sources[KEY_MUT_COLOR_TWO] = features["mcolor2"]
+	sources[KEY_MUT_COLOR_THREE] = features["mcolor3"]
 	/// Read specific organ DNA entries to deduce eye, hair and facial hair color
 	if(ishuman(carbon))
 		var/mob/living/carbon/human/human = carbon
-		sources[KEY_SKIN_COLOR] = human.skin_tone
+		if(MUTCOLORS in species.species_traits)
+			sources[KEY_SKIN_COLOR] = sources[KEY_MUT_COLOR_ONE]
+		else
+			sources[KEY_SKIN_COLOR] = human.skin_tone
 		sources[KEY_EYE_COLOR] = human.get_eye_color()
 		sources[KEY_HAIR_COLOR] = human.get_hair_color()
 		sources[KEY_FACE_HAIR_COLOR] = human.get_facial_hair_color()

@@ -44,7 +44,7 @@
 
 /datum/job/adventurer_druid/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
-	to_chat(spawned, "<br><font color='#855b14'><span class='bold'>If I wanted to make mammons by selling my services, or completing quests, the Adventurers Guild would be a good place to start.</span></font><br>")
+	to_chat(spawned, "<br><font color='#855b14'><span class='bold'>If I wanted to make amnas by selling my services, or completing quests, the Adventurers Guild would be a good place to start.</span></font><br>")
 	var/holder = spawned.patron?.devotion_holder
 	if(holder)
 		var/datum/devotion/devotion = new holder()

@@ -24,7 +24,7 @@
 	salvage_result = /obj/item/natural/fibers
 
 /obj/item/clothing/head/articap
-	desc = "A sporting cap with a small gear adornment. Popular fashion amongst Heartfelt engineers."
+	desc = "A sporting cap with a small gear adornment. Popular fashion amongst Baldurian engineers."
 	icon_state = "articap"
 
 /obj/item/clothing/head/articap/porter
@@ -160,6 +160,6 @@
 
 /obj/item/clothing/head/maidband
 	name = "maid headband"
-	desc = "A pleated cloth headband. It has gained widespread popularity from Valorian nobles travelling with their servants."
+	desc = "A pleated cloth headband. It has gained widespread popularity from Luskanian nobles travelling with their servants."
 	icon_state = "maidband"
 	body_parts_covered = NONE

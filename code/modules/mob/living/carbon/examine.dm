@@ -8,7 +8,7 @@
 	var/t_is = p_are()
 
 	. = list("<span class='info'>ᛉ ------------ ᛉ\nThis is \a <EM>[src]</EM>!")
-	var/obscured = check_obscured_slots()
+	var/list/obscured = check_obscured_slots()
 
 	var/m1 = "[t_He] [t_is]"
 	var/m2 = "[t_his]"
@@ -22,9 +22,9 @@
 		. += "<span class='warning'>[m1] tied up with \a [handcuffed]!</span>"
 	if (head)
 		. += "[m3] [head.get_examine_string(user)] on [m2] head. "
-	if(wear_mask && !(obscured & ITEM_SLOT_MASK))
+	if(wear_mask && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_MASK))
 		. += "[m3] [wear_mask.get_examine_string(user)] on [m2] face."
-	if(wear_neck && !(obscured & ITEM_SLOT_NECK))
+	if(wear_neck && !(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_NECK))
 		. += "[m3] [wear_neck.get_examine_string(user)] around [m2] neck."
 
 	for(var/obj/item/I in held_items)

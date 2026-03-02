@@ -986,7 +986,8 @@
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has put [frommob.key] in control of [tomob.name].</span>")
 	log_admin("[key_name(usr)] stuffed [frommob.key] into [tomob.name].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Ghost Drag Control")
-
+	if(HAS_TRAIT_FROM(frommob, TRAIT_NOSLEEP, "aghost"))
+		REMOVE_TRAIT(frommob, TRAIT_NOSLEEP, "aghost")
 	tomob.ckey = frommob.ckey
 	qdel(frommob)
 

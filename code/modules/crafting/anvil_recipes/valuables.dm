@@ -66,8 +66,8 @@
 	created_item = /obj/item/statue/silver
 
 /datum/anvil_recipe/valuables/silver/volf
-	name = "Silver Volf Bust (+Silver Bar)"
-	recipe_name = "a Silver Volf Bust"
+	name = "Silver Wolf Bust (+Silver Bar)"
+	recipe_name = "a Silver Wolf Bust"
 	additional_items = list(/obj/item/ingot/silver)
 	created_item = /obj/item/statue/silver/volf
 
@@ -254,8 +254,8 @@
 	created_item = /obj/item/statue/gold/finger
 
 /datum/anvil_recipe/valuables/gold/volf
-	name = "Golden Volf Bust (+ Gold Bar)"
-	recipe_name = "a Golden Volf Bust"
+	name = "Golden Wolf Bust (+ Gold Bar)"
+	recipe_name = "a Golden Wolf Bust"
 	additional_items = list(/obj/item/ingot/gold)
 	created_item = /obj/item/statue/gold/volf
 
@@ -455,8 +455,8 @@
 	created_item = /obj/item/statue/bronze/bust
 
 /datum/anvil_recipe/valuables/bronze/volf
-	name = "Bronze Volf Bust (+ Bronze Bar)"
-	recipe_name = "a Bronze Volf Bust"
+	name = "Bronze Wolf Bust (+ Bronze Bar)"
+	recipe_name = "a Bronze Wolf Bust"
 	additional_items = list(/obj/item/ingot/bronze)
 	created_item = /obj/item/statue/bronze/volf
 

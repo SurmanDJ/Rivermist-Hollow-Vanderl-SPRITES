@@ -1,5 +1,3 @@
-#define CTYPE_GILD_COIN "t"
-
 /obj/item/coin/gild
 
 	name = "Guild Token"
@@ -7,7 +5,7 @@
 	icon = 'modular_rmh/icons/obj/items/tokens.dmi'
 	icon_state = "t1"
 	drop_sound = 'sound/foley/coinphy (1).ogg'
-	base_type = "t"
+	base_type = CTYPE_GUILD
 	plural_name = "guild tokens"
 	sellprice = 100
 
@@ -18,5 +16,3 @@
 	. = ..()
 	if(!coin_amount)
 		set_quantity(rand(4,14))
-
-#undef CTYPE_GILD_COIN

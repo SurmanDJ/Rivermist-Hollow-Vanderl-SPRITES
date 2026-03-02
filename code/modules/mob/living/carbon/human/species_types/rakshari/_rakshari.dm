@@ -5,19 +5,19 @@
 	name = "Rakshari"
 	id = SPEC_ID_RAKSHARI
 	changesource_flags = WABBAJACK
-	native_language = "Zalad"
+	native_language = "Zakhara"
 
 	desc = "Rakshari origins trace back to nomadic desert tribes, \
 	whose survival in the harsh sands cultivated a culture steeped in resilience, cunning, and adaptability. \
 	\n\n\
-	Over centuries, the Rakshari united under the banners of powerful Zalad merchant-kings and warlords,\
+	Over centuries, the Rakshari united under the banners of powerful Zakhara merchant-kings and warlords,\
 	transforming their scattered clans into a dominant slaver force across the region. \
 	They would often raid weaker settlements and rival caravans, \
 	capturing slaves to fuel their expanding cities and economies. \
 	Practice of this was justified through religious doctrines, \
 	venerating strength and dominance as divine virtues. \
 	\n\n\
-	As they further attached themselves to Zaladin, however, \
+	As they further attached themselves to Zakharani, however, \
 	their people would integrate more sophisticated forms of servitude, \
 	such as indentured contracts and debt bondage. \
 	\n\n\
@@ -39,6 +39,8 @@
 	child_icon = 'icons/roguetown/mob/bodies/c/child-rakshari.dmi'
 
 	exotic_bloodtype = /datum/blood_type/human/rakshari
+
+	order_num = 16
 
 	offset_features_m = list(
 		OFFSET_RING = list(0,0),\
@@ -138,6 +140,19 @@
 		/datum/body_marking/flushed_cheeks,
 		/datum/body_marking/eyeliner,
 	)
+	descriptor_choices = list(
+		/datum/descriptor_choice/stature,
+		/datum/descriptor_choice/height,
+		/datum/descriptor_choice/body,
+		/datum/descriptor_choice/face,
+		/datum/descriptor_choice/face_exp,
+		/datum/descriptor_choice/fur,
+		/datum/descriptor_choice/voice,
+		/datum/descriptor_choice/prominent_one,
+		/datum/descriptor_choice/prominent_two,
+		/datum/descriptor_choice/prominent_three,
+		/datum/descriptor_choice/prominent_four,
+	)
 	COOLDOWN_DECLARE(cat_meow_cooldown)
 
 /datum/species/rakshari/on_species_gain(mob/living/carbon/C, datum/species/old_species)
@@ -147,7 +162,7 @@
 	C.grant_language(/datum/language/zalad)
 	add_verb(C, /mob/living/carbon/human/species/rakshari/verb/emote_meow)
 	add_verb(C, /mob/living/carbon/human/species/rakshari/verb/emote_purr)
-	to_chat(C, "<span class='info'>I can speak Zalad with ,z before my speech.</span>")
+	to_chat(C, "<span class='info'>I can speak Zakhara with ,z before my speech.</span>")
 
 /datum/species/rakshari/check_roundstart_eligible()
 	return TRUE

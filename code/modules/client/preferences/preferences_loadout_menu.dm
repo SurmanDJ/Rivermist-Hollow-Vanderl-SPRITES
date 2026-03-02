@@ -775,6 +775,8 @@ GLOBAL_LIST_EMPTY(cached_loadout_icons)
 	return html
 
 /datum/preferences/Topic(href, href_list)
+	if(href_list["close"])
+		return
 	. = ..()
 
 	// Handle loadout item selection from icon menu

@@ -8,7 +8,7 @@
 
 /datum/objective/bandit/update_explanation_text()
 	..()
-	explanation_text = "Feed [SSmapping.retainer.bandit_goal] mammon to an idol of greed."
+	explanation_text = "Feed [SSmapping.retainer.bandit_goal] amna to an idol of greed."
 
 
 /datum/objective/delf

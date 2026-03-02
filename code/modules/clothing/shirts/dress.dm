@@ -7,7 +7,7 @@
 	item_state = "dress"
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
-	flags_inv = HIDEUNDIESBOT|HIDEUNDIESTOP|HIDEBELLY|HIDEBUTT|HIDEBOOB|HIDECROTCH
+	flags_inv = HIDEUNDIESBOT|HIDEUNDIESTOP|HIDEBELLY|HIDEBUTT|HIDEBOOB|HIDECROTCH|HIDECLOSEBODY
 
 /obj/item/clothing/shirt/dress/gen
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_SHIRT
@@ -76,7 +76,7 @@
 
 /obj/item/clothing/shirt/dress/stewarddress
 	name = "steward's dress"
-	desc = "A heartfeltian-styled black dress with shining bronze buttons."
+	desc = "A baldurian-styled black dress with shining bronze buttons."
 	icon = 'icons/roguetown/clothing/special/steward.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/steward.dmi'
 	icon_state = "stewarddress"

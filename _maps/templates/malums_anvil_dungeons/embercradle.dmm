@@ -811,7 +811,7 @@
 /turf/open/floor/cobblerock,
 /area/under/mountains/anvil/dungeon/lower)
 "lO" = (
-/mob/living/simple_animal/hostile/haunt,
+,
 /turf/open/floor/dirt/road,
 /area/under/mountains/anvil/dungeon/lower)
 "lQ" = (

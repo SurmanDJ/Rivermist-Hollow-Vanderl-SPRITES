@@ -114,7 +114,7 @@
 #define GAMEMODE_PANEL_MAIN "Main"
 #define GAMEMODE_PANEL_VARIABLES "Variables"
 
-/// The concrete number for what is considered "lowpop" on Vanderlin
+/// The concrete number for what is considered "lowpop" on Rivermist Hollow
 #define LOWPOP_THRESHOLD 35
 
 #define MUNDANE_POINT_THRESHOLD 20

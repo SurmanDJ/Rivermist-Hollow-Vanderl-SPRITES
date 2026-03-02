@@ -1,9 +1,9 @@
 /obj/item/clothing/armsleeves
 	name = "cloth armsleeve"
 	desc = "Beautiful, form-fitting long armsleeves."
-	icon = 'modular_rmh/icons/clothing/sleeves_undershirts.dmi'
-	mob_overlay_icon = 'modular_rmh/icons/clothing/onmob/sleeves_undershirts.dmi'
-	sleeved = 'modular_rmh/icons/clothing/onmob/sleeves_undershirts.dmi'
+	icon = 'modular_rmh/icons/clothing/underwear/sleeves_undershirts.dmi'
+	mob_overlay_icon = 'modular_rmh/icons/clothing/underwear/onmob/sleeves_undershirts.dmi'
+	sleeved = 'modular_rmh/icons/clothing/underwear/onmob/sleeves_undershirts.dmi'
 	sleevetype = "shirt"
 	icon_state = "solid"
 	item_state = "solid"

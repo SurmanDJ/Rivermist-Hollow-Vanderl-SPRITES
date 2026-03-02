@@ -515,17 +515,17 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 /datum/mind/proc/recall_targets(mob/recipient, window=1)
 	var/output = "<B>[recipient.real_name]'s Hitlist:</B><br>"
 	for (var/mob/living/carbon in GLOB.mob_living_list)
-		if ((carbon.real_name != recipient.real_name) && ((carbon.has_quirk(/datum/quirk/vice/hunted) || HAS_TRAIT(carbon, TRAIT_ZIZOID_HUNTED)) && (!istype(carbon, /mob/living/carbon/human/dummy))))
+		if (HAS_TRAIT(carbon, TRAIT_ZIZOID_HUNTED) && (!istype(carbon, /mob/living/carbon/human/dummy)))
 			output += "<br><b>[carbon.real_name]</b>"
 			if (carbon.job)
 				output += " - [carbon.job]"
 
 			// Get the hunted quirk and display the reason
-			var/datum/quirk/vice/hunted/hunted_quirk = carbon.get_quirk(/datum/quirk/vice/hunted)
+			var/datum/quirk/vice/wanted/hunted_quirk = carbon.get_quirk(/datum/quirk/vice/wanted)
 			if(hunted_quirk && hunted_quirk.customization_value && hunted_quirk.customization_value != "")
-				output += "<br><i>Hunted for: [hunted_quirk.customization_value]</i>"
+				output += "<br><i>Wanted for: [hunted_quirk.customization_value]</i>"
 			else
-				output += "<br><i>Hunted for: Unknown reasons</i>"
+				output += "<br><i>Wanted for: Unknown reasons</i>"
 
 	output += "<br><br>Your creed is blood, your faith is steel. You will not rest until these souls are yours. Use the profane dagger to trap their souls for Graggar."
 	if(window)

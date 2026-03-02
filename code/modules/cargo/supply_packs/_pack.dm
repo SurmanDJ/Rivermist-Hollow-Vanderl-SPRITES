@@ -9,7 +9,7 @@
 	var/list/contains = null
 	var/crate_name = "crate"
 	var/desc = ""//no desc by default
-	var/crate_type = /obj/structure/closet/crate
+	var/crate_type = /obj/structure/closet/crate/chest
 	var/dangerous = FALSE // Should we message admins?
 	var/special = FALSE //Event/Station Goals/Admin enabled packs
 	var/special_enabled = FALSE

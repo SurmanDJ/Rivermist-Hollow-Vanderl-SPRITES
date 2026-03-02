@@ -157,7 +157,7 @@
 
 /obj/item/carvedgem/shell/turtle
 	name = "turtle carving"
-	desc = "A medium-sized carving of a sea turtle made out of clamshell. Sea turtle eggs have unfortunately become a delicacy for Grenzelhoftians, causing their population to rapidly decline."
+	desc = "A medium-sized carving of a sea turtle made out of clamshell."
 	icon_state = "turtle_shell"
 	grid_height = 64
 	grid_width = 64

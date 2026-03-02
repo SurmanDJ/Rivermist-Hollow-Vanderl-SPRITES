@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	item_path = /obj/item/clothing/cloak/half
 
 /datum/loadout_item/volfmantle
-	name = "Volf Mantle"
+	name = "Wolf Mantle"
 	item_path = /obj/item/clothing/cloak/volfmantle
 
 /datum/loadout_item/sash
@@ -315,6 +315,16 @@ GLOBAL_LIST_EMPTY(loadout_items)
 /datum/loadout_item/ragmask
 	name = "Halfmask"
 	item_path = /obj/item/clothing/face/shepherd/rag
+
+/datum/loadout_item/fancy_spectacles
+	name = "Fancy Spectacles"
+	item_path = /obj/item/clothing/face/spectacles/fancy
+	point_cost = 3
+
+/datum/loadout_item/fancy_spectacles_d
+	name = "Fancy Spectacles (Dark)"
+	item_path = /obj/item/clothing/face/spectacles/fancy_dark
+	point_cost = 3
 
 // CLOTHING - DRESSES & ROBES
 /datum/loadout_item/tri_ornate_dress
@@ -596,14 +606,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Sexy Nun Hat"
 	item_path = /obj/item/clothing/head/sexy_nun_hat
 
-/datum/loadout_item/sexy_nun_robe_alt
-	name = "Sexy Nun Robe Alt"
-	item_path = /obj/item/clothing/shirt/undershirt/sexy_nun_robe_alt
-
-/datum/loadout_item/sexy_nun_hat_alt
-	name = "Sexy Nun Hat Alt"
-	item_path = /obj/item/clothing/head/sexy_nun_hat_alt
-
 /datum/loadout_item/exoticsilkbelt
 	name = "Exotic Silk Belt"
 	item_path = /obj/item/storage/belt/leather/exoticsilkbelt
@@ -637,10 +639,6 @@ GLOBAL_LIST_EMPTY(loadout_items)
 	name = "Sophisticated Coat"
 	item_path = /obj/item/clothing/armor/gambeson/sophisticated_coat
 	point_cost = 3
-
-/datum/loadout_item/undershirtcerera
-	name = "Tunic With Corset"
-	item_path = /obj/item/clothing/shirt/undershirt/cerera
 
 /datum/loadout_item/corset
 	name = "Corset"

@@ -250,7 +250,7 @@
 			S.alpha = 70
 
 /client/verb/anonymize()
-	set category = "Options"
+	set category = "OOC"
 	set name = "Anonymize"
 
 	if(prefs.anonymize == TRUE)

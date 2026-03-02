@@ -73,8 +73,8 @@
 
 //............... Grenzelhoft Plume Hat ............... // - worn over a skullcap
 /obj/item/clothing/head/helmet/skullcap/grenzelhoft
-	name = "grenzelhoft plume hat"
-	desc = "Slaying foul creachers or fair maidens: Grenzelhoft stands. A stylish hat concealing an iron skullcap."
+	name = "darkhold plume hat"
+	desc = "Slaying foul creachers or fair maidens: Darkhold stands. A stylish hat concealing an iron skullcap."
 	icon_state = "grenzelhat"
 	item_state = "grenzelhat"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
@@ -285,8 +285,8 @@
 //	icon_state = "elven_barbute_winged"
 //	item_state = "elven_barbute_winged"
 
-//................ Zalad Kulah Khud ............... //
-/obj/item/clothing/head/helmet/sallet/zalad // Unique Zaladin merc kit
+//................ Zakhara Kulah Khud ............... //
+/obj/item/clothing/head/helmet/sallet/zalad // Unique Zakharani merc kit
 	name = "kulah khud"
 	desc = "Known as devil masks amongst the Western Kingdoms, these serve part decorative headpiece, part protective helmet."
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'

@@ -13,9 +13,6 @@
 		/datum/language/common,
 		/datum/language/dwarvish,
 		/datum/language/elvish,
-		/datum/language/oldpsydonic,
-		/datum/language/newpsydonic,
-		/datum/language/zalad,
 		/datum/language/celestial,
 		/datum/language/hellspeak,
 		/datum/language/beast,
@@ -23,7 +20,8 @@
 		/datum/language/orcish,
 		/datum/language/deepspeak,
 		/datum/language/undead,
-		/datum/language/halfling
+		/datum/language/halfling,
+		/datum/language/zalad
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)
@@ -170,3 +168,10 @@
 	var/static/regex/stretch_regex = regex(@"(\l)", "g") // every letter, case-insensitive, return match in group 1
 	stretch_regex.Replace(message, "$1$1$1") // triple every letter
 	speech_args[SPEECH_MESSAGE] = stretch_regex.Replace(message, "$1$1$1") // triple every letter
+
+/obj/item/organ/tongue/lizard
+	name = "forked tongue"
+	desc = ""
+	//icon_state = "tonguelizard"
+	say_mod = "hisses"
+	taste_sensitivity = 10 // combined nose + tongue, extra sensitive

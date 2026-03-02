@@ -26,7 +26,7 @@
 
 /obj/item/clothing/cloak/captain
 	name = "captain's cape"
-	desc = "A cape with a gold-embroidered heraldry of Vanderlin."
+	desc = "A cape with a gold-embroidered heraldry of Dusk Spire."
 	icon = 'icons/roguetown/clothing/special/captain.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/captain.dmi'

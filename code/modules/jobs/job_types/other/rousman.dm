@@ -7,6 +7,7 @@
 	spawn_type = /mob/living/carbon/human/species/rousman
 	outfit = /datum/outfit/rousman
 	give_bank_account = FALSE
+	rune_linked = FALSE
 
 	traits = list(
 		TRAIT_HEAVYARMOR

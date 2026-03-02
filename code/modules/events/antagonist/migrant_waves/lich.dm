@@ -1,4 +1,4 @@
-/datum/round_event_control/antagonist/migrant_wave/lich
+/*/datum/round_event_control/antagonist/migrant_wave/lich
 	name = "Wandering Lich"
 	wave_type = /datum/migrant_wave/lich
 
@@ -18,4 +18,4 @@
 	roles = list(
 		/datum/migrant_role/lich = 1,
 	)
-	can_roll = FALSE
+	can_roll = FALSE*/

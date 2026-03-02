@@ -37,6 +37,8 @@
 
 	changesource_flags = WABBAJACK
 
+	order_num = 13
+
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/male_short.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fd.dmi'
 	swap_male_clothes = TRUE
@@ -200,6 +202,20 @@
 		"Black 1"      = SKIN_TONE_BLACK1,
 		"Black 2"      = SKIN_TONE_BLACK2,
 		"Black 3"      = SKIN_TONE_BLACK3,
+		"Pale Blue"       = SKIN_TONE_DROW_PALE_BLUE,       // #9796a9
+		"Pale Purple"     = SKIN_TONE_DROW_PALE_PURPLE,     // #897489
+		"Pale Grey"       = SKIN_TONE_DROW_PALE_GREY,       // #938f9c
+		"Deep Grey"       = SKIN_TONE_DROW_DEEP_GREY,       // #737373
+		"Grey-Purple"     = SKIN_TONE_DROW_GREY_PURPLE,     // #6a616d
+		"Grey-Blue"       = SKIN_TONE_DROW_GREY_BLUE,       // #5f5f70
+		"Black-Blue"      = SKIN_TONE_DROW_BLACK_BLUE,      // #2F2F38
+		"Very Pale"       = SKIN_TONE_DROW_VERY_PALE,       // #fff0e9
+		"Light Purple"    = SKIN_TONE_DROW_LIGHT_PURPLE,    // #a191a1
+		"Mid Purple"      = SKIN_TONE_DROW_MID_PURPLE,      // #897489
+		"Dark Purple"     = SKIN_TONE_DROW_DARK_PURPLE,     // #5f5f70
+		"Depth Grey-Blue" = SKIN_TONE_DROW_DEPTH_GREY_BLUE, // #5f5f70
+		"Pink"            = SKIN_TONE_DROW_PINK,            // #897489
+		"Very Pale"		  = SKIN_COLOR_DROW_PALE,	       // #fff0e9
 	))
 
 /datum/species/gnome/deep/on_species_gain(mob/living/carbon/C, datum/species/old_species)

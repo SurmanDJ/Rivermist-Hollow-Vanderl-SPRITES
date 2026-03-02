@@ -203,3 +203,13 @@
 
 /datum/sprite_accessory/horns/triton/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	return is_human_part_visible(owner, HIDEMASK)
+
+/datum/sprite_accessory/horns/dragonhorn
+	name = "Dragon Horns"
+	icon = 'modular_rmh/icons/mob/sprite_accessory/horns/aura.dmi'
+	icon_state = "dragonhorn"
+
+/datum/sprite_accessory/horns/dragonfaceguard
+	name = "Dragon Faceguard"
+	icon = 'modular_rmh/icons/mob/sprite_accessory/horns/aura.dmi'
+	icon_state = "dragonfaceguard"

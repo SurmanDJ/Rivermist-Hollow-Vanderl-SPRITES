@@ -1,57 +1,47 @@
 /mob/living
-    var/threshold_brute = 3000
-    var/threshold_burn = 3000
-    var/threshold_tox = 3000
-    var/threshold_oxy = 3000
+	var/threshold_brute = 3000
+	var/threshold_burn = 3000
+	var/threshold_tox = 3000
+	var/threshold_oxy = 3000
 
-    var/chance_escape = 0
+	var/chance_escape = 0
 
-/mob/living/proc/check_damage_threshold()
+
+/mob/living/Life()
+	npc_damage_threshold()
+	. = ..()
+
+/mob/living/proc/npc_damage_threshold()
+
 	if(client)
 		return
 
 	if(stat == DEAD)
 		return
-
-	var/damagetype = 0
-	var/damage_mod = 0
-	var/total_damage = 200
-
-	if(getBruteLoss() >= threshold_brute)
-		damagetype |= BRUTELOSS
-	if(getFireLoss() >= threshold_burn)
-		damagetype |= FIRELOSS
-	if(getToxLoss() >= threshold_tox)
-		damagetype |= TOXLOSS
-	if(getOxyLoss() >= threshold_oxy)
-		damagetype |= OXYLOSS
-
-	if(!damagetype)
+	if(status_flags & GODMODE)
 		return
 
-	if(prob(chance_escape) && stat != DEAD)
-		visible_message("<span class='warning'>[src] escapes!</span>")
-		do_smoke(1, get_turf(src), /obj/effect/particle_effect/smoke)
-		qdel(src)
-		return
+	var/brute = getBruteLoss() * 0.5
+	var/burn  = getFireLoss() * 0.5
+	var/tox   = getToxLoss()
+	var/oxy   = getOxyLoss()
 
-	for(var/T in list(BRUTELOSS, FIRELOSS, TOXLOSS, OXYLOSS))
-		if(damagetype & T)
-			damage_mod += 1
-	damage_mod = max(1, damage_mod)
+	if(brute >= threshold_brute || \
+	   burn  >= threshold_burn  || \
+	   tox   >= threshold_tox   || \
+	   oxy   >= threshold_oxy)
 
-	if(damagetype & BRUTELOSS)
-		adjustBruteLoss(total_damage / damage_mod)
-	if(damagetype & FIRELOSS)
-		adjustFireLoss(total_damage / damage_mod)
-	if(damagetype & TOXLOSS)
-		adjustToxLoss(total_damage / damage_mod)
-	if(damagetype & OXYLOSS)
-		adjustOxyLoss(total_damage / damage_mod)
 
-	if(!(damagetype & (BRUTELOSS | FIRELOSS | TOXLOSS | OXYLOSS)))
-		adjustOxyLoss(max(total_damage - getBruteLoss() - getFireLoss() - getToxLoss() - getOxyLoss(), 0))
-
-	death(FALSE)
-	visible_message("<span class='warning'>[src] dies!</span>")
+		if(prob(chance_escape))
+			visible_message("<span class='warning'>[src] escapes!</span>")
+			do_smoke(1, get_turf(src), /obj/effect/particle_effect/smoke)
+			qdel(src)
+			return
+		else
+			visible_message("<span class='danger'>[src] dies!</span>")
+			var/total_damage = brute + burn + tox + oxy
+			if(total_damage < 200)
+				adjustOxyLoss(200 - total_damage)
+			death(FALSE)
+			return
 	return

@@ -44,6 +44,8 @@
 	possible_ages = NORMAL_AGES_LIST
 	use_skintones = TRUE
 
+	order_num = 10
+
 	changesource_flags = WABBAJACK
 
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/md.dmi'

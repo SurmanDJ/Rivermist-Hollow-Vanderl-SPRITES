@@ -14,8 +14,8 @@
 	var/event_icon_state
 	var/minor_roleset = FALSE
 	var/list/secondary_events = list(
-		/datum/round_event_control/antagonist/solo/aspirant,
-		/datum/round_event_control/antagonist/solo/maniac
+	//	/datum/round_event_control/antagonist/solo/aspirant,
+	//	/datum/round_event_control/antagonist/solo/maniac
 	)
 	var/secondary_prob = 25
 

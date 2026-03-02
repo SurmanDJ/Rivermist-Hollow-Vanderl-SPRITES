@@ -61,6 +61,10 @@
 	is_open = TRUE
 	update_appearance(UPDATE_ICON)
 
+/obj/item/storage/fancy/MiddleClick(mob/user, list/modifiers)
+	. = ..()
+	is_open = !is_open
+	update_appearance(UPDATE_ICON)
 /*
  * Egg Box
  */

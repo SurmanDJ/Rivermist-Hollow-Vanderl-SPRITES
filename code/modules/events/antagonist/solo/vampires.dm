@@ -1,4 +1,4 @@
-/datum/round_event_control/antagonist/solo/vampires
+/*/datum/round_event_control/antagonist/solo/vampires
 	name = "Vampires"
 	tags = list(
 		TAG_COMBAT,
@@ -38,4 +38,4 @@
 	antag_mind.add_antag_datum(antag_datum)
 	var/datum/antagonist/vampire/lord/lord = antag_mind.has_antag_datum(/datum/antagonist/vampire/lord)
 	lord.get_thralls()
-	return
+	return*/

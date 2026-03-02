@@ -1,6 +1,6 @@
 /datum/sprite_accessory/tail
 	abstract_type = /datum/sprite_accessory/tail
-	icon = 'icons/mob/sprite_accessory/tails/tails.dmi'
+	icon = 'modular_rmh/icons/mob/sprite_accessory/tails/tails.dmi'
 	color_key_name = "Tail"
 	relevant_layers = list(BODY_FRONT_LAYER, BODY_BEHIND_LAYER)
 	color_key_defaults = list(KEY_HAIR_COLOR)
@@ -212,6 +212,12 @@
 	color_keys = 3
 	color_key_names = list("Tail", "Inner", "Stripes")
 
+/datum/sprite_accessory/tail/jackal
+	name = "Jackal"
+	icon_state = "jackal"
+	color_keys = 3
+	color_key_names = list("Tail", "Inside", "Stripes")
+
 /datum/sprite_accessory/tail/stripe
 	name = "Stripe"
 	icon_state = "stripe"
@@ -417,3 +423,68 @@
 	icon = 'icons/mob/sprite_accessory/tails/medicator.dmi'
 	icon_state = "vulture"
 	specuse = list(SPEC_ID_MEDICATOR)
+
+/datum/sprite_accessory/tail/rattlesnake
+	name = "Rattlesnake"
+	icon_state = "rattlesnake"
+	color_keys = 2
+	color_key_names = list("Tail", "Tip")
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/lynx
+	name = "Lynx"
+	icon_state = "lynx"
+	color_keys = 2
+	color_key_names = list("Tail", "Tip")
+
+/datum/sprite_accessory/tail/owl
+	name = "Owl"
+	icon_state = "owl"
+
+/datum/sprite_accessory/tail/pinecone
+	name = "Pinecone"
+	icon_state = "expi"
+	color_keys = 2
+	color_key_names = list("Upper", "Tip")
+
+/datum/sprite_accessory/tail/forked_long
+	name = "Forked Long"
+	icon_state = "forked_long"
+
+/datum/sprite_accessory/tail/haven
+	name = "Haven"
+	icon_state = "haven"
+
+/datum/sprite_accessory/tail/swallow
+	name = "Swallow"
+	icon_state = "swallow"
+
+/datum/sprite_accessory/tail/zorzor
+	name = "Zorgoia"
+	icon_state = "zorgoia"
+	color_keys = 3
+	color_key_names = list("Tail", "Tail Fluff", "Tail Barb")
+
+//From Caustic Cove
+/datum/sprite_accessory/tail/large_snake
+	icon = 'modular_rmh/icons/mob/sprite_accessory/tails/large_snake.dmi'
+	name = "Large Snake"
+	icon_state = "large_snake"
+	color_keys = 2
+	color_key_names = list("Tail", "Underbelly")
+
+/datum/sprite_accessory/tail/large_snake_plain
+	icon = 'modular_rmh/icons/mob/sprite_accessory/tails/large_snake.dmi'
+	name = "Large Snake Plain"
+	icon_state = "large_snake_plain"
+
+/datum/sprite_accessory/tail/tentacle
+	name = "Tentacle"
+	icon_state = "tentacle"
+	can_wag = TRUE
+
+/datum/sprite_accessory/tail/aura/dragontail
+	name = "Dragon Tail"
+	icon = 'modular_rmh/icons/mob/sprite_accessory/tails/aura.dmi'
+	icon_state = "dragontail"
+	can_wag = TRUE

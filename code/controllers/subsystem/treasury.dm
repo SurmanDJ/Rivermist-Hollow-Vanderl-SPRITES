@@ -199,18 +199,18 @@ SUBSYSTEM_DEF(treasury)
 	if (amt > 0)
 		// Player received money
 		if(source)
-			send_ooc_note("<b>MEISTER:</b> Your account has received [amt] mammon. ([source])", name = target_name)
+			send_ooc_note("<b>MEISTER:</b> Your account has received [amt] amna. ([source])", name = target_name)
 			log_to_steward("+[amt] from treasury to [target_name] ([source])")
 		else
-			send_ooc_note("<b>MEISTER:</b> Your account has received [amt] mammon.", name = target_name)
+			send_ooc_note("<b>MEISTER:</b> Your account has received [amt] amna.", name = target_name)
 			log_to_steward("+[amt] from treasury to [target_name]")
 	else if (amt < 0)
 		// Player was fined
 		if(source)
-			send_ooc_note("<b>MEISTER:</b> Your account was fined [abs(amt)] mammon. ([source])", name = target_name)
+			send_ooc_note("<b>MEISTER:</b> Your account was fined [abs(amt)] amna. ([source])", name = target_name)
 			log_to_steward("[abs(amt)] was fined from [target_name] ([source])")
 		else
-			send_ooc_note("<b>MEISTER:</b> Your account was fined [abs(amt)] mammon.", name = target_name)
+			send_ooc_note("<b>MEISTER:</b> Your account was fined [abs(amt)] amna.", name = target_name)
 			log_to_steward("[abs(amt)] was fined from [target_name]")
 
 	return TRUE
@@ -291,4 +291,4 @@ SUBSYSTEM_DEF(treasury)
 		var/how_much = noble_incomes[welfare_dependant]
 		record_round_statistic(STATS_NOBLE_INCOME_TOTAL, how_much)
 		give_money_treasury(how_much, silent = TRUE)
-		give_money_account(how_much, welfare_dependant, "Vanderlin Noble Estate")
+		give_money_account(how_much, welfare_dependant, "Dusk Spire Noble Estate")

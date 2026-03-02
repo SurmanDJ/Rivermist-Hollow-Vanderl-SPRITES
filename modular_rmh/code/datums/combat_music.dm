@@ -245,9 +245,9 @@ GLOBAL_LIST_EMPTY(cmode_tracks_by_name)
 	musicpath = list('modular_rmh/sound/music/combat/combat_fullplate.ogg')
 
 /datum/combat_music/grenzelhoft
-	name = "Grenzelhoft Mercenary"
+	name = "Darkhold Mercenary"
 	desc = "Your attitude is intolerable and your smile is disgusting. You're hired."
-	shortname = "Grenzelhoft"
+	shortname = "Darkhold"
 	credits = "Helbrede - Sons of Tyr"
 	musicpath = list('modular_rmh/sound/music/combat/combat_grenzelhoft.ogg')
 

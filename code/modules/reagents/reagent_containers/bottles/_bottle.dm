@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	spillable = FALSE
 	closed = TRUE
 	reagent_flags = TRANSPARENT
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = WEIGHT_CLASS_TINY
 	grid_width = 32
 	grid_height = 32
 	drinksounds = list('sound/items/drink_bottle (1).ogg','sound/items/drink_bottle (2).ogg')

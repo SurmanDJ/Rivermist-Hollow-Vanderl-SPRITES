@@ -76,7 +76,7 @@
 	contains = /obj/item/clothing/head/mentorhat
 
 /datum/supply_pack/apparel/grenzelhat
-	name = "Grenzel Hat"
+	name = "Darkhold Hat"
 	cost = 30
 	contains = /obj/item/clothing/head/helmet/skullcap/grenzelhoft
 
@@ -351,7 +351,7 @@
 	contains = /obj/item/clothing/shirt/shortshirt/colored/random
 
 /datum/supply_pack/apparel/grenzel_shirt
-	name = "Grenzel Shirt"
+	name = "Darkhold Shirt"
 	cost = 35
 	contains = /obj/item/clothing/shirt/grenzelhoft
 
@@ -397,7 +397,7 @@
 	contains = /obj/item/clothing/pants/skirt/colored/random
 
 /datum/supply_pack/apparel/grenzel_trousers
-	name = "Grenzel Trousers"
+	name = "Darkhold Trousers"
 	cost = 35
 	contains = /obj/item/clothing/pants/grenzelpants
 
@@ -511,7 +511,7 @@
 	contains = /obj/item/clothing/gloves/fingerless
 
 /datum/supply_pack/apparel/grenzel_gloves
-	name = "Grenzel Gloves"
+	name = "Darkhold Gloves"
 	cost = 25
 	contains = /obj/item/clothing/gloves/angle/grenzel
 

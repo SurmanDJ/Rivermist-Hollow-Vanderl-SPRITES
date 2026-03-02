@@ -1,4 +1,4 @@
-/datum/round_event_control/antagonist/solo/aspirant
+/*/datum/round_event_control/antagonist/solo/aspirant
 	name = "Aspirant"
 	tags = list(
 		TAG_ZIZO,
@@ -67,4 +67,4 @@
 		helper.mind.add_antag_datum(/datum/antagonist/aspirant/supporter)
 
 	if(SSticker.rulermob?.mind)
-		SSticker.rulermob.mind.add_antag_datum(/datum/antagonist/aspirant/ruler)
+		SSticker.rulermob.mind.add_antag_datum(/datum/antagonist/aspirant/ruler)*/

@@ -99,7 +99,7 @@
 		if(!gibbed && yeae)
 			for(var/mob/living/carbon/human/HU in viewers(7, src))
 				if(HU != src && !HU.is_blind())
-					if(!HAS_TRAIT(HU, TRAIT_VILLAIN)) //temporary measure for npc skeletons
+					if(!HAS_TRAIT(HU, TRAIT_VILLAIN) && !HU.client) //temporary measure for npc skeletons
 						if(HU.dna?.species && dna?.species)
 							if(HU.dna.species.id == dna.species.id)
 								var/mob/living/carbon/D = HU

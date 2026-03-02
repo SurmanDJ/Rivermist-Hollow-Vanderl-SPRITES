@@ -21,6 +21,19 @@
 #define SPEC_ID_GNOME "gnome"
 #define SPEC_ID_GNOME_D "deep gnome"
 #define SPEC_ID_AUTOMATON "automaton"
+#define SPEC_ID_BEASTKIN "beastkin"
+#define SPEC_ID_BEASTKINSMALL "beastkin small"
+#define SPEC_ID_HALF_BEASTKINSMALL "half-beastkin small"//placeholders for sorting
+#define SPEC_ID_GYTH "gyth"
+#define SPEC_ID_DRAGONBORN "dragonborn"
+#define SPEC_ID_TRUE_ORC "true orc"
+#define SPEC_ID_PLAYER_GOBLIN "player goblin"
+#define SPEC_ID_YUANTI "yuan-ti"
+#define SPEC_ID_TAUR_KIN "taurkin"
+#define SPEC_ID_MINOTAUR "minotaur"
+#define SPEC_ID_DRYDER "dryder"
+#define SPEC_ID_LIZARDFOLK "lizardfolk"
+#define SPEC_ID_TABAXI "tabaxi"
 
 #define SPEC_ID_ORC	"orc"
 #define SPEC_ID_GOBLIN	"goblin"
@@ -45,6 +58,14 @@
 	SPEC_ID_MEDICATOR,\
 	SPEC_ID_KOBOLD,\
 	SPEC_ID_HOLLOWKIN,\
+	SPEC_ID_BEASTKIN,\
+	SPEC_ID_BEASTKINSMALL,\
+	SPEC_ID_HALF_BEASTKINSMALL,\
+	SPEC_ID_TAUR_KIN,\
+	SPEC_ID_DRAGONBORN,\
+	SPEC_ID_TABAXI,\
+	SPEC_ID_LIZARDFOLK,\
+	SPEC_ID_YUANTI,\
 	SPEC_ID_HALF_ORC,\
 	SPEC_ID_ORC,\
 	SPEC_ID_GOBLIN,\
@@ -66,6 +87,14 @@
 	SPEC_ID_DROW,\
 	SPEC_ID_HALF_DROW,\
 	SPEC_ID_HOLLOWKIN,\
+	SPEC_ID_BEASTKIN,\
+	SPEC_ID_BEASTKINSMALL,\
+	SPEC_ID_HALF_BEASTKINSMALL,\
+	SPEC_ID_TAUR_KIN,\
+	SPEC_ID_DRAGONBORN,\
+	SPEC_ID_TABAXI,\
+	SPEC_ID_LIZARDFOLK,\
+	SPEC_ID_YUANTI,\
 	SPEC_ID_HARPY,\
 	SPEC_ID_TIEFLING,\
 	SPEC_ID_AASIMAR,\
@@ -79,6 +108,12 @@
 #define RACES_UNDERWEAR_MALE list(\
 	SPEC_ID_HUMEN,\
 	SPEC_ID_HOLLOWKIN,\
+	SPEC_ID_BEASTKIN,\
+	SPEC_ID_BEASTKINSMALL,\
+	SPEC_ID_HALF_BEASTKINSMALL,\
+	SPEC_ID_TAUR_KIN,\
+	SPEC_ID_DRAGONBORN,\
+	SPEC_ID_YUANTI,\
 	SPEC_ID_HARPY,\
 	SPEC_ID_TIEFLING,\
 	SPEC_ID_AASIMAR,\
@@ -112,10 +147,18 @@
 	SPEC_ID_MEDICATOR,\
 	SPEC_ID_KOBOLD,\
 	SPEC_ID_HOLLOWKIN,\
+	SPEC_ID_BEASTKIN,\
+	SPEC_ID_BEASTKINSMALL,\
+	SPEC_ID_HALF_BEASTKINSMALL,\
+	SPEC_ID_TAUR_KIN,\
+	SPEC_ID_DRAGONBORN,\
+	SPEC_ID_YUANTI,\
+	SPEC_ID_TABAXI,\
+	SPEC_ID_LIZARDFOLK,\
 	SPEC_ID_HALF_ORC,\
 )
 
-/// Species not considered discriminated against in Vanderlin. Used for nobility, etc.
+/// Species not considered discriminated against in Rivermist Hollow. Used for nobility, etc.
 #define RACES_PLAYER_NONDISCRIMINATED list(\
 	SPEC_ID_HUMEN,\
 	SPEC_ID_DWARF,\
@@ -144,9 +187,17 @@
 	SPEC_ID_TRITON,\
 	SPEC_ID_MEDICATOR,\
 	SPEC_ID_HOLLOWKIN,\
+	SPEC_ID_BEASTKIN,\
+	SPEC_ID_BEASTKINSMALL,\
+	SPEC_ID_HALF_BEASTKINSMALL,\
+	SPEC_ID_TAUR_KIN,\
+	SPEC_ID_DRAGONBORN,\
+	SPEC_ID_YUANTI,\
+	SPEC_ID_TABAXI,\
+	SPEC_ID_LIZARDFOLK,\
 )
 
-/// Species who are non-exotic to Vanderlin. These are species from foreign lands with no local pull or uncommon species. Used in miscellaneous cases, when they would not be that role.
+/// Species who are non-exotic to Rivermist Hollow. These are species from foreign lands with no local pull or uncommon species. Used in miscellaneous cases, when they would not be that role.
 #define RACES_PLAYER_NONEXOTIC list(\
 	SPEC_ID_HUMEN,\
 	SPEC_ID_DWARF,\
@@ -166,34 +217,6 @@
 	SPEC_ID_MEDICATOR,\
 	SPEC_ID_HOLLOWKIN,\
 	SPEC_ID_HALF_ORC,\
-)
-
-/// Species that lack lux. Any who have no ties to divinity anymore, whether it be their creation story or otherwise taken from them (Hollow-kin)
-#define RACES_PLAYER_LUXLESS list(\
-	SPEC_ID_KOBOLD,\
-	SPEC_ID_HOLLOWKIN,\
-	SPEC_ID_RAKSHARI,\
-	SPEC_ID_HUMAN_SPACE,\
-	SPEC_ID_ROUSMAN,\
-	SPEC_ID_GOBLIN,\
-	SPEC_ID_ORC,\
-)
-
-/// Species who are affiliated with Grenzelhoft or Psydon specifically.
-#define RACES_PLAYER_GRENZ list(\
-	SPEC_ID_HUMEN,\
-	SPEC_ID_DWARF,\
-	SPEC_ID_AASIMAR,\
-)
-
-/// Species who are affiliated with Zaladin
-#define RACES_PLAYER_ZALADIN list(\
-	SPEC_ID_HUMEN,\
-	SPEC_ID_RAKSHARI,\
-	SPEC_ID_ELF,\
-	SPEC_ID_ELF_W,\
-	SPEC_ID_HALF_ELF,\
-	SPEC_ID_DWARF,\
 )
 
 /// Elves and Half-Elves
@@ -238,7 +261,7 @@
 	SPEC_ID_HOLLOWKIN,\
 )
 
-/// Vanderlin royalty
+/// Rivermist Hollow "royalty"
 #define RACES_PLAYER_ROYALTY list(\
 	SPEC_ID_HUMEN,\
 	SPEC_ID_HALF_ELF,\
@@ -337,8 +360,14 @@
 	SPEC_ID_TRITON,\
 	SPEC_ID_MEDICATOR,\
 	SPEC_ID_HOLLOWKIN,\
+	SPEC_ID_BEASTKIN,\
+	SPEC_ID_TAUR_KIN,\
+	SPEC_ID_DRAGONBORN,\
+	SPEC_ID_YUANTI,\
 	SPEC_ID_HALF_ORC,\
 	SPEC_ID_ZIZOMBIE,\
+	SPEC_ID_TABAXI,\
+	SPEC_ID_LIZARDFOLK,\
 )
 
 

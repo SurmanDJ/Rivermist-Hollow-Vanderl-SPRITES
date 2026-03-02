@@ -3,7 +3,7 @@
 	icon_state = "artigoggles"
 	desc = "Protective goggles with green lenses. Perfect for staring into fires."
 	resistance_flags = FIRE_PROOF
-	slot_flags = list(ITEM_SLOT_HEAD, ITEM_SLOT_MASK)
+	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_MASK
 	body_parts_covered = EYES
 	toggle_icon_state = TRUE
 	adjustable = CAN_CADJUST
