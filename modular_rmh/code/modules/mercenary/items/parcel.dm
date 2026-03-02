@@ -1,7 +1,7 @@
 /obj/item/parcel
 	name = "parcel wrapping paper"
 	desc = "A sturdy piece of paper used to wrap items for secure delivery. The final size of the parcel depends on the size of the original item."
-	icon = 'modular/Neu_Food/icons/cookware/ration.dmi'
+	icon = 'modular_rmh/code/modules/mercenary/ration.dmi'
 	icon_state = "ration_wrapper"
 	w_class = WEIGHT_CLASS_TINY
 	grid_height = 32
@@ -10,6 +10,7 @@
 	var/obj/item/contained_item = null
 	var/list/allowed_jobs = list()
 	var/delivery_area_type
+	var/datum/proximity_monitor/proximity_monitor
 
 /obj/item/parcel/Initialize(mapload)
 	. = ..()
@@ -22,7 +23,7 @@
 			RegisterSignal(courier_quest, COMSIG_PARENT_QDELETING, PROC_REF(on_quest_component_deleted))
 
 	invisibility = INVISIBILITY_OBSERVER
-	proximity_monitor = new(src, 7)
+	proximity_monitor = new(src, 5)
 
 /obj/item/parcel/HasProximity(mob/nearby)
 	if(!istype(nearby))
@@ -36,7 +37,7 @@
 	if(!istype(quest))
 		return
 
-	if(get_dist(get_turf(src), get_turf(quest.quest_scroll_ref?.resolve())) > 7)
+	if(get_dist(get_turf(src), get_turf(quest.quest_scroll_ref?.resolve())) > 5)
 		return
 
 	var/image/I = image(icon = 'icons/effects/effects.dmi', loc = get_turf(src), icon_state = "hidden", layer = 18)
@@ -51,16 +52,16 @@
 
 /obj/item/parcel/proc/get_area_jobs(area_type)
 	var/static/list/area_jobs = list(
-		/area/indoors/town/tavern = list("Innkeeper", "Tapster", "Cook"),
-		/area/indoors/town/bath = list("Bathhouse Attendant", "Bathmaster"),
-		/area/indoors/town/church = list("Priest", "Acolyte", "Templar", "Churchling"),
-		/area/indoors/town/dwarfin = list("Guildmaster", "Guildsman"),
-		/area/indoors/town/shop = list("Merchant", "Shophand"),
-		/area/indoors//area/indoors/town/keep = list("Councillor", "Nobleman", "Hand", "Knight Captain", "Marshal", "Steward", "Clerk", "Head Mage", "Duke"),
-		/area/indoors/town/magician = list("Court Magician", "Magicians Associate"),
-		/area/indoors/town = list("Guild Handler")
+		/area/rogue/indoors/town/tavern = list("Innkeeper", "Tapster", "Cook"),
+		/area/rogue/indoors/town/bath = list("Bathhouse Attendant", "Bathmaster"),
+		/area/rogue/indoors/town/church = list("Bishop", "Acolyte", "Templar", "Sexton", "Martyr"),
+		/area/rogue/indoors/town/dwarfin = list("Guildmaster", "Guildsman"),
+		/area/rogue/indoors/town/shop = list("Merchant", "Shophand"),
+		/area/rogue/indoors/town/manor = list("Councillor", "Seneschal", "Servant", "Hand", "Knight", "Marshal", "Steward", "Clerk", "Grand Duke"),
+		/area/rogue/indoors/town/magician = list("Court Magician", "Magicians Associate", "Archivist"),
+		/area/rogue/indoors/town = list("Guild Handler")
 	)
-	return area_jobs[area_type] || list("Town Elder", "Steward", "Merchant")
+	return area_jobs[area_type] || list("Town Crier", "Steward", "Merchant")
 
 /obj/item/parcel/proc/on_quest_component_deleted(datum/source)
 	SIGNAL_HANDLER
