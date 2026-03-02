@@ -192,6 +192,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"Drunkmaster" = TRAIT_DRUNKMASTER,
 		"Rune Severed" = TRAIT_RUNE_SEVERED,
 		"Inflexible" = TRAIT_UNDODGING,
+		"Freeze Hunger" = TRAIT_FREEZEHUNGER,
 	),
 	/obj/item/bodypart = list(
 		"TRAIT_PARALYSIS" = TRAIT_PARALYSIS
