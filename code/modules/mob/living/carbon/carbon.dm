@@ -522,7 +522,8 @@
 	. += "CON: \Roman[STACON]"
 	. += "END: \Roman[STAEND]"
 	. += "SPD: \Roman[STASPD]"
-	. += "PATRON: [uppertext(patron.name)]"
+	if(patron)
+		. += "PATRON: [uppertext(patron.name)]"
 
 /mob/living/carbon/attack_ui(slot)
 	if(!has_hand_for_held_index(active_hand_index))
