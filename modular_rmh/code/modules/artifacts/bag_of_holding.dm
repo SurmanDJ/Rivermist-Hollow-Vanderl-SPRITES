@@ -12,4 +12,3 @@
 	equip_sound = 'sound/blank.ogg'
 	bloody_icon_state = "bodyblood"
 	component_type = /datum/component/storage/concrete/grid/bag_of_holding
-	misc_flags = CRAFTING_TEST_EXCLUDE
