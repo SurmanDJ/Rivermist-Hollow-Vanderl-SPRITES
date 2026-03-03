@@ -45358,6 +45358,10 @@
 /mob/living/carbon/human/species/rousman/npc,
 /turf/open/floor/cobble,
 /area/indoors/dungeon)
+"vJt" = (
+/obj/structure/fake_machine/contractledger,
+/turf/open/floor/ruinedwood/darker,
+/area/indoors/town/tavern)
 "vJB" = (
 /obj/structure/table/wood/plain_alt,
 /obj/item/reagent_containers/glass/bowl{
@@ -114544,7 +114548,7 @@ wrm
 wrm
 wrm
 bqc
-cfr
+vJt
 cfr
 kse
 itp
