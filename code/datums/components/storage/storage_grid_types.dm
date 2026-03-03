@@ -410,8 +410,8 @@
 	set_holdable(list(/obj/item/plate))
 
 /datum/component/storage/concrete/grid/bag_of_holding
-	screen_max_rows = 8
-	screen_max_columns = 7
+	screen_max_rows = 20
+	screen_max_columns = 20
 	max_w_class = WEIGHT_CLASS_HUGE
 
 /datum/component/storage/concrete/grid/bag_of_holding/New(datum/P, ...)
