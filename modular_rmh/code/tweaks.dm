@@ -1,3 +1,8 @@
+#define STEEL 8
+#define IRON 6
+#define LEATHER 3
+#define CLOTH 3
+
 /datum/quirk/vice/goodman
 	name = "Good man"
 	desc = "I try to live by honor and law. I help those in need, respect the authorities, and avoid needless cruelty. \
@@ -12,21 +17,27 @@
 /obj/item
 	var/integrity_scaled = FALSE
 
+/obj/item/Initialize()
+	. = ..()
 
-/obj/item/proc/get_integrity_multiplier()
-	var/mult = 1
+	if (attack_verb)
+		attack_verb = typelist("attack_verb", attack_verb)
 
-	switch(max_integrity)
-		if(INTEGRITY_STRONGEST) // steel
-			mult = 5
-		if(INTEGRITY_STRONG) // iron
-			mult = 4
-		if(INTEGRITY_STANDARD) // leather
-			mult = 3
-		if(INTEGRITY_POOR) // cloth
-			mult = 3
+	if(sharpness)
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
+	else
+		max_blade_int = 0
+		blade_int = 0
 
-	return mult
+	// Random sharpness
+	if(max_blade_int && !blade_int)
+		blade_int = max_blade_int + rand(-(max_blade_int * 0.4), 0)
+
+	apply_item_scaling()
+
+	if(!pixel_x && !pixel_y && !bigboy)
+		pixel_x = rand(-5,5)
+		pixel_y = rand(-5,5)
 
 
 /obj/item/proc/apply_item_scaling()
@@ -51,31 +62,22 @@
 		blade_int *= mult
 		dismember_blade_int *= mult
 
+/obj/item/proc/get_integrity_multiplier()
+	var/mult = 1
 
+	switch(max_integrity)
+		if(INTEGRITY_STRONGEST) // steel
+			mult = STEEL
+		if(INTEGRITY_STRONG) // iron
+			mult = IRON
+		if(INTEGRITY_STANDARD) // leather
+			mult = LEATHER
+		if(INTEGRITY_POOR) // cloth
+			mult = CLOTH
 
-/obj/item/Initialize(mapload)
+	return mult
 
-	if (attack_verb)
-		attack_verb = typelist("attack_verb", attack_verb)
-
-	if(sharpness)
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
-	else
-		max_blade_int = 0
-		blade_int = 0
-
-	// Random sharpness
-	if(max_blade_int && !blade_int)
-		blade_int = max_blade_int + rand(-(max_blade_int * 0.4), 0)
-
-	// APPLY SCALING
-	apply_item_scaling()
-
-	if(!pixel_x && !pixel_y && !bigboy)
-		pixel_x = rand(-5,5)
-		pixel_y = rand(-5,5)
-
-	update_transform()
-	apply_components()
-
-	return ..()
+#undef STEEL
+#undef IRON
+#undef LEATHER
+#undef CLOTH
