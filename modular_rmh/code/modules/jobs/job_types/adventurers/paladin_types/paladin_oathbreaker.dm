@@ -1,3 +1,6 @@
+#define EVIL_POWER 10
+#define EVIL_COLDOWN 60 SECONDS
+
 /datum/job/advclass/combat/adventurer_paladin/oathbreaker
 	title = "Oath Of Oathbreaker"
 	tutorial = "An oathbreaker is a paladin who breaks their sacred oaths to pursue some dark ambition or serve an evil power.\
@@ -59,6 +62,9 @@
 		TRAIT_NOBLE,
 		TRAIT_STEELHEARTED,
 		TRAIT_HOLY,
+		TRAIT_CABAL,
+		TRAIT_GRAVEROBBER,
+		TRAIT_DEADNOSE
 	)
 
 	spells = list(
@@ -66,11 +72,14 @@
 		/datum/action/cooldown/spell/status/guidance,
 		/datum/action/cooldown/spell/essence/purify_water,
 		/datum/action/cooldown/spell/healing,
-		/datum/action/cooldown/spell/sacred_flame,
-		/datum/action/cooldown/spell/undirected/blade_ward,
+		/datum/action/cooldown/spell/sacred_flame/oathbreaker,
+		/datum/action/cooldown/spell/conjure/raise_lesser_undead/necromancer,
+		/datum/action/cooldown/spell/gravemark,
+		/datum/action/cooldown/spell/control_undead,
+
 	)
 
-/datum/job/advclass/combat/adventurer_paladin/devotion/after_spawn(mob/living/carbon/human/spawned, client/player_client)
+/datum/job/advclass/combat/adventurer_paladin/oathbreaker/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
 //	spawned.grant_language(/datum/language/abyss)
 
@@ -108,6 +117,7 @@
 	. = ..()
 	equipped_human.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
 
+//Evil registration
 /datum/job/advclass/combat/adventurer_paladin/oathbreaker/New()
 	. = ..()
 	GLOB.paladin_evil_subclasses |= type
@@ -120,3 +130,77 @@
 
 	job_subclasses = job_subclasses.Copy()
 	job_subclasses += /datum/job/advclass/combat/adventurer_paladin/oathbreaker
+
+//Evil miracle
+
+/datum/action/cooldown/spell/sacred_flame/oathbreaker
+	name = "Hellfire"
+	desc = "Burn the target with infernal flames."
+	cooldown_time = EVIL_COLDOWN
+	button_icon_state = "hellfire"
+
+	spell_type = SPELL_MIRACLE
+	antimagic_flags = MAGIC_RESISTANCE_UNHOLY
+
+	invocation = "Infernal flames, arise!"
+	sound = 'sound/magic/fireball.ogg'
+	charge_sound = 'sound/magic/holycharging.ogg'
+
+/datum/action/cooldown/spell/sacred_flame/oathbreaker/cast(atom/cast_on)
+	. = ..()
+
+	if(!isliving(cast_on))
+		return
+
+	var/mob/living/target = cast_on
+
+	owner.visible_message(
+		"<font color='#550000'>[owner] unleashes hellfire upon [target]!</font>",
+		"<font color='#550000'>I unleash hellfire upon [target]!</font>"
+	)
+
+	var/mob/living/carbon/human/H = owner
+	if(H?.patron)
+		to_chat(target, span_userdanger("[H.patron.name] HATES YOU!!!"))
+		owner.say("[H.patron.name] HATES YOU!!!")
+
+	target.adjust_fire_stacks(EVIL_POWER)
+	target.IgniteMob()
+	target.AddElement(/datum/element/hellfire_overlay)
+
+/datum/element/hellfire_overlay
+	element_flags = ELEMENT_BESPOKE
+	var/mutable_appearance/fire
+	var/mob/living/holder
+
+/datum/element/hellfire_overlay/Attach(datum/target)
+	. = ..()
+	if(!isliving(target))
+		return ELEMENT_INCOMPATIBLE
+
+	holder = target
+
+	fire = mutable_appearance('icons/effects/fire.dmi', "fire")
+	fire.color = "#330000"
+
+	holder.add_overlay(fire)
+
+	START_PROCESSING(SSobj, src)
+
+/datum/element/hellfire_overlay/Detach(datum/source)
+	if(holder)
+		holder.cut_overlay(fire)
+
+	STOP_PROCESSING(SSobj, src)
+
+	return ..()
+
+/datum/element/hellfire_overlay/process()
+	if(!holder || QDELETED(holder))
+		qdel(src)
+		return
+
+	if(!holder.on_fire)
+		holder.RemoveElement(/datum/element/hellfire_overlay)
+
+#undef EVIL_POWER
