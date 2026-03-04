@@ -5,30 +5,32 @@
 
 	outfit = /datum/outfit/adventurer_paladin/oathbreaker
 	category_tags = list(CAT_ADVENTURER_PALADIN)
-	give_bank_account = TRUE
+	give_bank_account = FALSE
+
+	allowed_patrons = subtypesof(/datum/patron/faerun/evil_gods) + subtypesof(/datum/patron/faerun/neutral_gods)
 
 	skills = list(
 		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/combat/wrestling = 2,
+		/datum/skill/combat/wrestling = 3,
 		/datum/skill/combat/unarmed = 3,
-		/datum/skill/combat/swords = 3,
+		/datum/skill/combat/swords = 4,
 		/datum/skill/combat/shields = 3,
 		/datum/skill/misc/climbing = 1,
 		/datum/skill/misc/athletics = 3,
 		/datum/skill/misc/reading = 3,
-		/datum/skill/magic/holy = 2,
+		/datum/skill/magic/holy = 3,
 		/datum/skill/craft/cooking = 1,
 		/datum/skill/labor/mathematics = 3,
 	)
 
 	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_PER = 2,
-		STATKEY_INT = 2,
-		STATKEY_CON = 1,
-		STATKEY_END = 1,
-		STATKEY_SPD = -2,
-		STATKEY_LCK = 1,
+		STATKEY_STR = 3,
+		STATKEY_PER = 1,
+		STATKEY_INT = 3,
+		STATKEY_CON = 3,
+		STATKEY_END = 3,
+		STATKEY_SPD = 1,
+		STATKEY_LCK = -2,
 	)
 
 	traits = list(
@@ -62,25 +64,29 @@
 
 /datum/outfit/adventurer_paladin/oathbreaker
 	name = "Oath Of Oathbreaker"
-	head = /obj/item/clothing/head/helmet/heavy/holysee
-	mask = null
-	neck = /obj/item/clothing/neck/chaincoif
-	cloak = /obj/item/clothing/cloak/holysee
-	armor = /obj/item/clothing/armor/plate/full/holysee
+	head = /obj/item/clothing/head/helmet/heavy/graggar
+	mask = /obj/item/clothing/face/facemask/steel
+	neck = /obj/item/clothing/neck/highcollier
+	cloak = /obj/item/clothing/cloak/graggar
+	armor = /obj/item/clothing/armor/plate/full/graggar
 	shirt = /obj/item/clothing/armor/chainmail
 	wrists = null
-	gloves = /obj/item/clothing/gloves/plate
-	pants = /obj/item/clothing/pants/platelegs/holysee
-	shoes = /obj/item/clothing/shoes/boots/armor
+	gloves = /obj/item/clothing/gloves/plate/graggar
+	pants = /obj/item/clothing/pants/platelegs/graggar
+	shoes = /obj/item/clothing/shoes/boots/armor/graggar
 	backr = /obj/item/storage/backpack/satchel
-	backl = /obj/item/weapon/sword/long/martyr
+	backl = /obj/item/weapon/sword/long/greatsword/ziz
 	belt = /obj/item/storage/belt/leather/steel/adventurers_subclasses
 	beltl = /obj/item/storage/belt/pouch/coins/mid
 	beltr = null
-	ring = /obj/item/clothing/ring/silver/gemerald
-	l_hand = null
+	ring = null
+	r_hand = null
 	r_hand = null
 
 /datum/outfit/adventurer_paladin/devotion/pre_equip(mob/living/carbon/human/equipped_human, visuals_only)
 	. = ..()
 	equipped_human.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
+
+/datum/job/adventurer_paladin/Initialize()
+	. = ..()
+	job_subclasses += /datum/job/advclass/combat/adventurer_paladin/oathbreaker
