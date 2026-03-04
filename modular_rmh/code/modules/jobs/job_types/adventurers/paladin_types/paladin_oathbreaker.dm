@@ -2,10 +2,33 @@
 	title = "Oath Of Oathbreaker"
 	tutorial = "An oathbreaker is a paladin who breaks their sacred oaths to pursue some dark ambition or serve an evil power.\
 	Whatever light burned in the paladin's heart been extinguished. Only darkness remains."
-
 	outfit = /datum/outfit/adventurer_paladin/oathbreaker
 	category_tags = list(CAT_ADVENTURER_PALADIN)
 	give_bank_account = FALSE
+	allowed_patrons = list(
+	/datum/patron/faerun/evil_gods/Mask,
+	/datum/patron/faerun/evil_gods/Vlaakith,
+	/datum/patron/faerun/evil_gods/Lolth,
+	/datum/patron/faerun/evil_gods/Shar,
+	/datum/patron/faerun/evil_gods/Gruumsh,
+	/datum/patron/faerun/evil_gods/Laduguer,
+	/datum/patron/faerun/evil_gods/Talos,
+	/datum/patron/faerun/evil_gods/Tiamat,
+	/datum/patron/faerun/evil_gods/Malar,
+	/datum/patron/faerun/evil_gods/Maglubiyet,
+	/datum/patron/faerun/evil_gods/Umberlee,
+	/datum/patron/faerun/evil_gods/Blissara,
+	/datum/patron/faerun/evil_gods/Loviatar,
+	/datum/patron/faerun/evil_gods/Asmodeus,
+
+	/datum/patron/faerun/neutral_gods/Helm,
+	/datum/patron/faerun/neutral_gods/Mystra,
+	/datum/patron/faerun/neutral_gods/Oghma,
+	/datum/patron/faerun/neutral_gods/Tempus,
+	/datum/patron/faerun/neutral_gods/Tymora,
+	/datum/patron/faerun/neutral_gods/Silvanus,
+	/datum/patron/faerun/neutral_gods/Jergal
+	)
 
 	skills = list(
 		/datum/skill/combat/axesmaces = 2,
@@ -78,18 +101,22 @@
 	beltl = /obj/item/storage/belt/pouch/coins/mid
 	beltr = null
 	ring = null
-	r_hand = null
+	l_hand = null
 	r_hand = null
 
 /datum/outfit/adventurer_paladin/devotion/pre_equip(mob/living/carbon/human/equipped_human, visuals_only)
 	. = ..()
 	equipped_human.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
 
+/datum/job/advclass/combat/adventurer_paladin/oathbreaker/New()
+	. = ..()
+	GLOB.paladin_evil_subclasses |= type
+
 /datum/job/adventurer_paladin/New()
 	. = ..()
-	job_subclasses += /datum/job/advclass/combat/adventurer_paladin/oathbreaker
 
-/datum/job/adventurer_paladin/oathbreaker/New()
-	. = ..()
-	allowed_patrons = subtypesof(/datum/patron/faerun/evil_gods)
-	allowed_patrons += subtypesof(/datum/patron/faerun/neutral_gods)
+	allowed_patrons = allowed_patrons.Copy()
+	allowed_patrons += subtypesof(/datum/patron/faerun/evil_gods)
+
+	job_subclasses = job_subclasses.Copy()
+	job_subclasses += /datum/job/advclass/combat/adventurer_paladin/oathbreaker
