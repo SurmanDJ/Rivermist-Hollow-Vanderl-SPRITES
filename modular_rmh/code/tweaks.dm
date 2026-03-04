@@ -74,6 +74,8 @@
 			mult = LEATHER
 		if(INTEGRITY_POOR) // cloth
 			mult = CLOTH
+	if(mult == 1 && max_integrity > INTEGRITY_WORST)
+		mult = 3
 
 	return mult
 
