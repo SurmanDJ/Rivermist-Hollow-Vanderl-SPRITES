@@ -33,3 +33,13 @@
 	. = ..()
 	var/datum/component/body_storage/vagina/comp = GetComponent(/datum/component/body_storage/vagina)
 	comp?.RemoveComponent()
+
+/obj/item/organ/genitals/filling_organ/vagina/get_availability(datum/species/owner_species, mob/living/C, datum/preferences/pref_load)
+	if(issimple(C))
+		return C.gender == FEMALE
+	else
+		if(pref_load)
+			return pref_load.get_customizer_entry_of_type(/datum/customizer_entry/organ/genitals/vagina)
+		else
+			return C.gender == FEMALE
+
