@@ -1,7 +1,7 @@
-#define STEEL 8
-#define IRON 6
-#define LEATHER 3
-#define CLOTH 3
+#define STEEL_INT 8
+#define IRON_INT 6
+#define LEATHER_INT 3
+#define CLOTH_INT 3
 
 /datum/quirk/vice/goodman
 	name = "Good man"
@@ -67,19 +67,19 @@
 
 	switch(max_integrity)
 		if(INTEGRITY_STRONGEST) // steel
-			mult = STEEL
+			mult = STEEL_INT
 		if(INTEGRITY_STRONG) // iron
-			mult = IRON
+			mult = IRON_INT
 		if(INTEGRITY_STANDARD) // leather
-			mult = LEATHER
+			mult = LEATHER_INT
 		if(INTEGRITY_POOR) // cloth
-			mult = CLOTH
+			mult = CLOTH_INT
 	if(mult == 1 && max_integrity > INTEGRITY_WORST)
 		mult = 3
 
 	return mult
 
-#undef STEEL
-#undef IRON
-#undef LEATHER
-#undef CLOTH
+#undef STEEL_INT
+#undef IRON_INT
+#undef LEATHER_INT
+#undef CLOTH_INT
