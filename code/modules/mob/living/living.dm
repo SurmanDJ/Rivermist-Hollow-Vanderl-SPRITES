@@ -1722,7 +1722,7 @@
 /mob/living/proc/resist_fire()
 	return
 
-/mob/living/proc/resist_restraints()
+/mob/living/proc/resist_restraints(instant = FALSE)
 	return
 
 /mob/living/proc/get_visible_name()
