@@ -7,7 +7,7 @@
 	Whatever light burned in the paladin's heart been extinguished. Only darkness remains."
 	outfit = /datum/outfit/adventurer_paladin/oathbreaker
 	category_tags = list(CAT_ADVENTURER_PALADIN)
-	give_bank_account = FALSE
+	give_bank_account = TRUE
 	allowed_patrons = list(
 	/datum/patron/faerun/evil_gods/Mask,
 	/datum/patron/faerun/evil_gods/Vlaakith,
