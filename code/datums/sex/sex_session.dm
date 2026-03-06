@@ -183,6 +183,9 @@
 			break
 
 		action.on_perform(user, target)
+		if(istype(user.loc, /obj/structure/closet))
+			var/obj/structure/closet/sex_shack = user.loc
+			sex_shack.Shake(1, 3, 15)
 
 		if(user.has_kink(KINK_VISUAL_EFFECTS)) //Hearts played on action that can be turned off at will
 			action.show_sex_effects(user)
