@@ -1667,8 +1667,8 @@
 /obj/structure/table/map{
 	dir = 6
 	},
-/obj/structure/roguemachine/contractledger{
-	layer = 3
+/obj/structure/fake_machine/contractledger{
+	plane = -9
 	},
 /turf/open/floor/tile/bfloorz,
 /area/indoors/town/rmh/tavern)
@@ -4719,6 +4719,7 @@
 /area/outdoors/rmh_field/north)
 "bUN" = (
 /obj/machinery/light/fueled/torchholder/r,
+/obj/effect/landmark/quest_spawner,
 /turf/open/floor/ruinedwood/turned,
 /area/outdoors/river)
 "bUS" = (
@@ -29313,8 +29314,8 @@
 	pixel_x = 18
 	},
 /obj/machinery/light/fueled/wallfire/candle/blue/l,
-/obj/structure/roguemachine/contractledger{
-	layer = 3;
+/obj/structure/fake_machine/contractledger{
+	plane = -9;
 	pixel_x = 16
 	},
 /turf/open/floor/blocks,

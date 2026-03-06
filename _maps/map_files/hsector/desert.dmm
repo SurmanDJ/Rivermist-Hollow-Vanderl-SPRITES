@@ -13933,6 +13933,10 @@
 /obj/structure/fluff/railing/wood/north,
 /turf/open/floor/ruinedwood,
 /area/outdoors/rmh_desert/roofs)
+"rxO" = (
+/obj/effect/landmark/quest_spawner,
+/turf/open/floor/sand/desertsand/oasis,
+/area/outdoors/rmh_desert/oasis)
 "ryg" = (
 /obj/structure/door/stone,
 /turf/open/floor/concrete,
@@ -14686,6 +14690,11 @@
 /obj/machinery/light/fueled/wallfire/candle/skull/l,
 /turf/open/floor/churchmarble,
 /area/under/cave/mazedungeon)
+"syY" = (
+/obj/structure/flora/grass,
+/obj/effect/landmark/quest_spawner,
+/turf/open/floor/dirt,
+/area/outdoors/rmh_desert/oasis)
 "szb" = (
 /obj/structure/table/wood/large/corner/middle_east,
 /turf/open/floor/blocks/stonered,
@@ -18472,6 +18481,10 @@
 	},
 /turf/open/floor/tile/diamond,
 /area/under/rmh_desert/tea/palacecasemates)
+"xqP" = (
+/obj/effect/landmark/quest_spawner/hard,
+/turf/open/floor/sand/dunes,
+/area/outdoors/rmh_desert)
 "xqT" = (
 /turf/closed/wall/mineral/desert_sandstone/window/brass,
 /area/indoors/rmh_desert/phouse)
@@ -18761,6 +18774,10 @@
 	},
 /turf/open/floor/carpet/royalblack,
 /area/indoors/rmh_desert/tea)
+"xKr" = (
+/obj/effect/landmark/quest_spawner/medium,
+/turf/open/floor/sand/dunes,
+/area/outdoors/rmh_desert)
 "xKv" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble,
@@ -141800,7 +141817,7 @@ oeD
 aYw
 oeD
 nfc
-oeD
+rxO
 hVQ
 qHK
 qHK
@@ -168029,7 +168046,7 @@ nYm
 nYm
 nYm
 nYm
-nYm
+xKr
 nYm
 nYm
 nYm
@@ -172821,7 +172838,7 @@ nYm
 nYm
 nYm
 nYm
-nYm
+xqP
 nYm
 nYm
 nYm
@@ -182930,7 +182947,7 @@ wCt
 wCt
 oeD
 oeD
-eTb
+syY
 eQd
 oeD
 lus
@@ -184758,7 +184775,7 @@ nYm
 nYm
 nYm
 nYm
-nYm
+xqP
 nYm
 nYm
 nYm
@@ -193247,7 +193264,7 @@ nYm
 nYm
 nYm
 nYm
-nYm
+xKr
 nYm
 nYm
 nYm
@@ -196296,7 +196313,7 @@ nYm
 nYm
 nYm
 nYm
-nYm
+xqP
 nYm
 nYm
 nYm
