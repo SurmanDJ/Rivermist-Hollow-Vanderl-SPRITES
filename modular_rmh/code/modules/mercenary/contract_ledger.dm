@@ -1,7 +1,7 @@
 /obj/structure/roguemachine/contractledger
 	name = "Grand Contract Ledger"
 	desc = "A massive ledger book with gilded edges, sitting atop a pedestal with the Mercenary's Guild banner. Its myriad enchanted pages are filled with various contracts and bounties issued by Mercenary's Guild, with arcane scripts that appears and fades as contracts are issued and completed."
-	icon = 'questing.dmi'
+	icon = 'modular_rmh/code/modules/mercenary/questing.dmi'
 	icon_state = "contractledger"
 	density = TRUE
 	anchored = TRUE
