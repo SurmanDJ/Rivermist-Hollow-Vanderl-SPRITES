@@ -3873,6 +3873,7 @@
 #include "modular_rmh\code\modules\jobs\job_types\adventurers\paladin_types\paladin_conquest.dm"
 #include "modular_rmh\code\modules\jobs\job_types\adventurers\paladin_types\paladin_crown.dm"
 #include "modular_rmh\code\modules\jobs\job_types\adventurers\paladin_types\paladin_devotion.dm"
+#include "modular_rmh\code\modules\jobs\job_types\adventurers\paladin_types\paladin_oathbreaker.dm"
 #include "modular_rmh\code\modules\jobs\job_types\adventurers\paladin_types\paladin_vengeance.dm"
 #include "modular_rmh\code\modules\jobs\job_types\adventurers\ranger_types\beastmaster.dm"
 #include "modular_rmh\code\modules\jobs\job_types\adventurers\ranger_types\borderland_rider.dm"
