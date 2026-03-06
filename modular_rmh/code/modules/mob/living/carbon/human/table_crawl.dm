@@ -7,10 +7,23 @@
 	var/tmp/table_crawl_hidden = FALSE
 	var/tmp/table_crawl_hidden_alpha = 255
 	var/tmp/table_crawl_validating = FALSE
+	var/tmp/table_crawl_restoring = FALSE
 	var/tmp/datum/action/innate/table_crawl_hide/table_crawl_hide_action
 
 /mob/living/carbon/human/proc/is_table_crawl_player()
 	return !!mind && !!client
+
+/mob/living/carbon/human/on_lying_down(new_lying_angle)
+	. = ..()
+	if(is_table_crawl_player())
+		enable_table_crawl_state()
+
+/mob/living/carbon/human/on_standing_up()
+	. = ..()
+	if(table_crawl_under_table || table_crawl_pending_entry)
+		return
+	if(table_crawl_state_enabled)
+		disable_table_crawl_state()
 
 /mob/living/carbon/human/proc/enable_table_crawl_state()
 	if(table_crawl_state_enabled)
@@ -111,6 +124,9 @@
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon/human, begin_table_crawl_attempt), target_table, target_turf)
 
 /mob/living/carbon/human/proc/begin_table_crawl_attempt(obj/structure/table/target_table, turf/target_turf)
+	if(QDELETED(src) || QDELETED(target_table) || QDELETED(target_turf))
+		table_crawl_attempting = FALSE
+		return
 	if(!can_finish_table_crawl(target_table, target_turf))
 		table_crawl_attempting = FALSE
 		return
@@ -128,6 +144,7 @@
 	if(!(pass_flags & PASSTABLE))
 		table_crawl_passtable_owned = TRUE
 		pass_flags |= PASSTABLE
+		queue_table_crawl_passtable_cleanup()
 
 	enable_table_crawl_state()
 	table_crawl_pending_entry = TRUE
@@ -135,7 +152,6 @@
 	if(!crawl_direction || !step(src, crawl_direction))
 		table_crawl_pending_entry = FALSE
 		clear_table_crawl_passtable()
-		disable_table_crawl_state()
 
 /mob/living/carbon/human/proc/table_crawl_head_bonk()
 	var/obj/structure/table/target_table = get_table_crawl_table()
@@ -188,6 +204,23 @@
 	table_crawl_passtable_owned = FALSE
 	pass_flags &= ~PASSTABLE
 
+/mob/living/carbon/human/proc/queue_table_crawl_passtable_cleanup()
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon/human, clear_table_crawl_passtable)), world.tick_lag, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/mob/living/carbon/human/proc/queue_table_crawl_restore()
+	if(table_crawl_restoring)
+		return
+	table_crawl_restoring = TRUE
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon/human, restore_table_crawl_pose)), world.tick_lag, TIMER_UNIQUE | TIMER_OVERRIDE)
+
+/mob/living/carbon/human/proc/restore_table_crawl_pose()
+	table_crawl_restoring = FALSE
+	if(QDELETED(src) || !table_crawl_under_table)
+		return
+	if(resting && body_position == LYING_DOWN)
+		return
+	set_resting(TRUE, TRUE, TRUE)
+
 /mob/living/carbon/human/proc/clear_table_crawl_visual()
 	var/obj/structure/table/table = get_table_crawl_table()
 	if(table?.climb_offset)
@@ -207,31 +240,21 @@
 		clear_table_crawl_passtable()
 	if(!table_crawl_under_table)
 		update_table_crawl_hide_action()
-		if(table_crawl_state_enabled && !table_crawl_pending_entry)
-			disable_table_crawl_state()
+		clear_table_crawl_visual()
 		return
 	if(!can_table_crawl() || !get_table_crawl_table())
 		table_crawl_under_table = FALSE
 		update_table_crawl_hide_action()
 		clear_table_crawl_visual()
 		clear_table_crawl_passtable()
-		if(table_crawl_state_enabled)
-			disable_table_crawl_state()
 		return
 	apply_table_crawl_visual()
 	update_table_crawl_hide_action()
 
-/obj/structure/table/AltClick(mob/user, list/modifiers)
+/obj/structure/table/examine(mob/user)
 	. = ..()
-	if(!ishuman(user))
-		return
-	if(!user.can_interact_with(src))
-		return
-	if(!Adjacent(user))
-		return
-
-	var/mob/living/carbon/human/table_crawler = user
-	table_crawler.try_offer_table_crawl(src, get_turf(src))
+	. += span_notice("Use <b>\[Sneak\] + \[Lay down\]</b> and move into it to crawl under it.")
+	. += span_notice("Large creatures cannot fit under tables.")
 
 /datum/element/table_crawl
 	element_flags = ELEMENT_DETACH
@@ -258,15 +281,27 @@
 	source.table_crawl_attempting = FALSE
 	source.table_crawl_pending_entry = FALSE
 	source.table_crawl_under_table = FALSE
+	source.table_crawl_restoring = FALSE
 	source.update_table_crawl_hide_action()
 	source.clear_table_crawl_passtable()
 	source.clear_table_crawl_visual()
-	QDEL_NULL(source.table_crawl_hide_action)
 	return ..()
 
 /datum/element/table_crawl/proc/on_pre_move(mob/living/carbon/human/source, atom/new_loc, dir)
 	SIGNAL_HANDLER
+	if(source.table_crawl_pending_entry)
+		return NONE
 	if(!source.table_crawl_under_table)
+		var/obj/structure/table/target_table = source.get_table_crawl_table(new_loc)
+		if(!target_table)
+			return NONE
+		if(source.table_crawl_attempting)
+			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+		if(!source.can_start_table_crawl())
+			return NONE
+		source.try_offer_table_crawl(target_table, get_turf(target_table))
+		if(source.table_crawl_attempting)
+			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 		return NONE
 	if(source.can_table_crawl())
 		return NONE
@@ -295,7 +330,7 @@
 	if(source.table_crawl_under_table && old_body_position == LYING_DOWN && new_body_position == STANDING_UP)
 		if(!HAS_TRAIT(source, TRAIT_INCAPACITATED))
 			source.table_crawl_head_bonk()
-		addtimer(CALLBACK(source, TYPE_PROC_REF(/mob/living/carbon/human, set_resting), TRUE, TRUE, TRUE), world.tick_lag)
+		source.queue_table_crawl_restore()
 		return
 	source.refresh_table_crawl()
 
