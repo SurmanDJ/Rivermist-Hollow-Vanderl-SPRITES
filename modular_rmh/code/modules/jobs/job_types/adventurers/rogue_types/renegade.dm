@@ -44,13 +44,10 @@
 /datum/job/advclass/combat/adventurer_rogue/renegade/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
 	if(alert("Do you wish for a random title? You will not receive one if you click No.", "", "Yes", "No") == "Yes")
-		var/prev_real_name = spawned.real_name
-		var/prev_name = spawned.name
 		var/title
 		var/list/titles = list("The Showoff", "The Gunslinger", "Amna Shot", "The Desperado", "Last Sight", "The Courier", "Lethal Shot", "Guns Blazing", "Punished Shade", "The One Who Sold Creation", "V1", "V2", "The Opposition", "Mattarella", "High Noon", "Underdark-Walker", "Big Iron", "The Hanged Man", "The Equalizer", "Bodystacker", "Schotgonne Surgeon", "Of The Gallows", "The Renegade", "The Wanted Man", "Dead or Alive", "The Killer Seven", "The Cleaner", "The Son of a Bitch", "Mister Fridae Nite", "Heaven's Smile", "Of No Paradise", "Number One", "The Hitman", "Corpsestacker", "The First Murderer", "The Amna-Taker", "The Lifestealer", "The Power-Monger")
 		title = pick(titles)
-		spawned.real_name = "[prev_real_name], [title]"
-		spawned.name = "[prev_name], [title]"
+		spawned.honorary_suffix = title
 
 /datum/outfit/adventurer_rogue/renegade
 	name = "Renegade"

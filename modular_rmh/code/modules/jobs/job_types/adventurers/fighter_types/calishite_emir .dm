@@ -7,6 +7,9 @@
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
 	total_positions = 1
+	is_recognized = TRUE
+	honorary = "Emir"
+	honorary_f = "Amirah"
 
 	jobstats = list(
 		STATKEY_INT = 1,
@@ -39,13 +42,14 @@
 
 /datum/job/advclass/combat/adventurer_fighter/calishite_emir/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
-	var/prev_real_name = spawned.real_name
-	var/prev_name = spawned.name
-	var/honorary = "Emir"
-	if(spawned.pronouns == SHE_HER)
-		honorary = "Amirah"
-	spawned.real_name = "[honorary] [prev_real_name]"
-	spawned.name = "[honorary] [prev_name]"
+	if(spawned.dna?.species)
+		if(spawned.dna.species.id == SPEC_ID_HUMEN)
+			spawned.dna.species.native_language = "Zalad"
+			spawned.dna.species.accent_language = spawned.dna.species.get_accent(spawned.dna.species.native_language)
+		if(spawned.dna.species.id == SPEC_ID_HALF_ELF)
+			if(spawned.dna.species.native_language == "Imperial")
+				spawned.dna.species.native_language = "Zalad"
+				spawned.dna.species.accent_language = spawned.dna.species.get_accent(spawned.dna.species.native_language)
 
 /datum/outfit/adventurer_fighter/calishite_emir
 	name = "Calishite Trade-Emir"

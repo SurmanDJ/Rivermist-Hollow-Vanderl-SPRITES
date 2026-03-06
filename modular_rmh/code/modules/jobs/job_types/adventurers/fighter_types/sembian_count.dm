@@ -6,6 +6,9 @@
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
 	total_positions = 1
+	is_recognized = TRUE
+	honorary = "Count"
+	honorary_f = "Countess"
 
 	jobstats = list(
 		STATKEY_INT = 1,
@@ -40,13 +43,9 @@
 
 /datum/job/advclass/combat/adventurer_fighter/sembian_count/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
-	var/prev_real_name = spawned.real_name
-	var/prev_name = spawned.name
-	var/honorary = "Count"
-	if(spawned.pronouns == SHE_HER)
-		honorary = "Countess"
-	spawned.real_name = "[honorary] [prev_real_name]"
-	spawned.name = "[honorary] [prev_name]"
+	if(spawned.dna?.species.id == SPEC_ID_HUMEN)
+		spawned.dna.species.native_language = "Old Psydonic"
+		spawned.dna.species.accent_language = spawned.dna.species.get_accent(spawned.dna.species.native_language)
 
 /datum/outfit/adventurer_fighter/sembian_count
 	name = "Sembian Count"

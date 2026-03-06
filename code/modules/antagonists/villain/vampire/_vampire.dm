@@ -31,6 +31,14 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	else
 		default_clan = incoming_clan
 
+/datum/antagonist/vampire/examine_target(mob/examiner, mob/living/carbon/examined, list/P, list/examine_contents)
+	. = ..()
+	if(!istype(examined))
+		return
+	if(NOBLOOD in examined.dna?.species?.species_traits)
+		return
+	LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_bloody("Blood Volume: [round(examined.blood_volume)]"))
+
 /datum/antagonist/vampire/outcast
 	name = "Outcast Vampire"
 	antag_hud_type = ANTAG_HUD_VAMPIRE

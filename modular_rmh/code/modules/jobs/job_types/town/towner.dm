@@ -178,17 +178,11 @@
 	traits = list(
 		TRAIT_NOBLE
 	)
+	honorary = "Lord"
+	honorary_f = "Lady"
 
 /datum/job/advclass/towner/patrician/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
-	var/prev_real_name = spawned.real_name
-	var/prev_name = spawned.name
-	var/honorary = "Lord"
-	if(spawned.pronouns == SHE_HER)
-		honorary = "Lady"
-	spawned.real_name = "[honorary] [prev_real_name]"
-	spawned.name = "[honorary] [prev_name]"
-
 	var/static/list/selectable = list( \
 		"Dagger" = /obj/item/weapon/knife/dagger/silver, \
 		"Rapier" = /obj/item/weapon/sword/rapier/dec, \

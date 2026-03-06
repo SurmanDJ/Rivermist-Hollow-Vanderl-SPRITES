@@ -8,6 +8,8 @@
 	faction = FACTION_TOWN
 	total_positions = 0
 	spawn_positions = 0
+	honorary = "Sir"
+	honorary_f = "Dame"
 
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 
@@ -60,14 +62,6 @@
 
 /datum/job/captain/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
-	var/prev_real_name = spawned.real_name
-	var/prev_name = spawned.name
-	var/honorary = "Sir"
-	if(spawned.pronouns == SHE_HER)
-		honorary = "Dame"
-	spawned.real_name = "[honorary] [prev_real_name]"
-	spawned.name = "[honorary] [prev_name]"
-
 	add_verb(spawned, /mob/proc/haltyell)
 
 	if(spawned.dna?.species?.id == SPEC_ID_HUMEN)

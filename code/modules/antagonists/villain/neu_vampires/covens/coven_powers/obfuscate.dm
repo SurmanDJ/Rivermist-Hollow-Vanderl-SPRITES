@@ -162,6 +162,8 @@
 	var/old_gender
 	var/old_voice
 	var/transformed = FALSE
+	var/old_honorary
+	var/old_honorary_s
 	var/mob/living/carbon/human/current_target
 
 	grouped_powers = list(
@@ -184,6 +186,9 @@
 	old_facial_hair_color = transformer.get_facial_hair_color()
 	old_facial_hair = facial?.accessory_type
 	old_gender = transformer.gender
+	old_honorary = transformer.honorary
+	old_honorary_s = transformer.honorary_suffix
+
 
 /datum/coven_power/obfuscate/mask_of_a_thousand_faces/activate()
 	. = ..()
@@ -221,6 +226,9 @@
 	user.real_name = target.dna.real_name
 	user.name = target.get_visible_name()
 	user.gender = target.gender
+	user.honorary = target.honorary
+	user.honorary_suffix = target.honorary_suffix
+
 
 	// Copy physical features with high accuracy
 	var/datum/bodypart_feature/hair/target_feature = target.get_bodypart_feature_of_slot(BODYPART_FEATURE_HAIR)
@@ -255,6 +263,10 @@
 	user.real_name = old_dna.real_name
 	user.name = user.get_visible_name()
 	user.gender = old_gender
+	user.honorary = old_honorary
+	user.honorary_suffix = old_honorary_s
+
+
 
 	var/obj/item/organ/eyes/eyes = user.getorganslot(ORGAN_SLOT_EYES)
 	eyes.eye_color = old_eye_color

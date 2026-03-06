@@ -27,6 +27,10 @@
 	var/obj/item/clothing/gloves = null //only used by humans
 	var/obj/item/clothing/shoes = null //only used by humans.
 
+	var/name_override //For temporary visible name changes
+	var/honorary // A title prepended to the beginning of the name
+	var/honorary_suffix // A title appended to the end of the name
+
 
 	var/obj/item/clothing/undies/underwear = null	//Underwear item
 	var/obj/item/clothing/legwears/legwear_socks = null	//legwear item

@@ -49,6 +49,13 @@
 		TRAIT_NOBLE,
 	)
 
+/datum/job/advclass/combat/adventurer_rogue/royal_outcast/after_spawn(mob/living/carbon/human/spawned, client/player_client)
+	. = ..()
+	addtimer(CALLBACK(SSfamilytree, TYPE_PROC_REF(/datum/controller/subsystem/familytree, AddRoyal), spawned, FAMILY_PROGENY), 10 SECONDS)
+
+	if(alert("Do you wish to use your rejected royal title?", "", "Yes", "No") == "Yes")
+		spawned.honorary = spawned.pronouns == SHE_HER ? "Rejected Princess" : "Rejected Prince"
+
 /datum/outfit/adventurer_rogue/royal_outcast
 	name = "Royal Outcast"
 	head = /obj/item/clothing/head/crown/circlet

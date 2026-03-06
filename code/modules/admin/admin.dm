@@ -1124,8 +1124,10 @@
 			priest_job?.remove_spells(HL)
 			GLOB.excommunicated_players |= HL.real_name
 			HL.cleric?.excommunicate()
+			HL.honorary = null
 
 	priest_job?.add_spells(M)
+	priest_job?.assign_honorary_titles(M)
 	M.mind.set_assigned_role(/datum/job/moon_priest)
 	M.job = "Priest"
 	M.set_patron(/datum/patron/divine/astrata)

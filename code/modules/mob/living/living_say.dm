@@ -109,9 +109,11 @@
 			return
 
 	language = message_mods[LANGUAGE_EXTENSION] || get_default_language()
+	var/datum/language/speaker_language = GLOB.language_datum_instances[language]
+	var/signed = speaker_language?.flags & SIGNLANG
 
-	if(!can_speak_vocal(message))
-		to_chat(src, "<span class='warning'>I can't talk.</span>")
+	if(!signed && !can_speak_vocal(message))
+		to_chat(src, span_warning("I can't talk."))
 		return
 
 	var/message_range = 7
@@ -187,7 +189,6 @@
 	if(radio_return & NOPASS)
 		return TRUE
 
-	var/datum/language/speaker_language = GLOB.language_datum_instances[language]
 	if(speaker_language?.flags & SIGNLANG)
 		send_speech_sign(message, message_range, src, bubble_type, spans, language, message_mods, original_message)
 	else
@@ -369,7 +370,7 @@
 			final_spans = list()
 		final_spans |= "subtle"
 
-	var/rendered = compose_message(src, message_language, message, null, final_spans, message_mods)
+	var/rendered = compose_message(src, message_language, message, null, final_spans, message_mods, TRUE)
 
 	for(var/atom/movable/hearing_movable as anything in listening)
 		if(!hearing_movable)

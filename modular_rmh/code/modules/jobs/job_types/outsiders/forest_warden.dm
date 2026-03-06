@@ -26,6 +26,7 @@
 	spells = list(/datum/action/cooldown/spell/undirected/list_target/convert_role/forest_ranger)
 
 	job_bitflag = BITFLAG_GARRISON
+	honorary = "Warden"
 
 	jobstats = list(
 		STATKEY_STR = 2,
@@ -68,7 +69,7 @@
 /datum/job/forest_warden/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
 	spawned.update_sight()
-	spawned.verbs |= /mob/proc/haltyell
+	add_verb(spawned, /mob/proc/haltyell)
 
 /datum/outfit/forest_warden
 	name = "Forest Warden"

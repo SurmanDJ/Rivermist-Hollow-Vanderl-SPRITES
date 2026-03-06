@@ -431,14 +431,6 @@ h2.alert {
   font-size: 140%;
 }
 
-.small {
-  font-size: 90%;
-}
-
-.smaller {
-  font-size: 60%;
-}
-
 .tinydanger {
   font-size: 85%;
 }
@@ -447,10 +439,17 @@ h2.alert {
   color: hsl(0, 100%, 50%);
 }
 
+.tinywarning {
+  color: hsl(0, 100%, 50%);
+  font-size: 85%;
+}
+
 .alertwarning {
   color: hsl(0, 100%, 50%);
   font-weight: bold;
 }
+
+
 
 .boldwarning {
   color: hsl(0, 100%, 50%);
@@ -523,20 +522,8 @@ h2.alert {
   font-size: 85%;
 }
 
-.tinynoticeital {
-  color: hsl(240, 100%, 30%);
-  font-style: italic;
-  font-size: 85%;
-}
-
 .smallnotice {
   color: hsl(240, 100%, 30%);
-  font-size: 90%;
-}
-
-.smallnoticeital {
-  color: hsl(240, 100%, 30%);
-  font-style: italic;
   font-size: 90%;
 }
 
@@ -582,16 +569,6 @@ h2.alert {
 
 .nicegreen {
   color: hsl(132.6, 78.7%, 36.9%);
-}
-
-.boldnicegreen {
-  color: hsl(132.6, 78.7%, 36.9%);
-  font-weight: bold;
-}
-
-.tinynicegreen {
-  color: hsl(132.6, 78.7%, 36.9%);
-  font-size: 85%;
 }
 
 .cult {
@@ -746,11 +723,19 @@ h2.alert {
   color: hsl(111, 100%, 56%);
 }
 
-.small {
+.smaller {
   font-size: 60%;
 }
 
-.slightly_larger {
+.tiny {
+  font-size: 85%;
+}
+
+.small {
+  font-size: 90%;
+}
+
+.slightlylarger {
   font-size: 115%;
 }
 
@@ -760,6 +745,10 @@ h2.alert {
 
 .reallybig {
   font-size: 245%;
+}
+
+.larger {
+  font-size: 140%;
 }
 
 .extremelybig {

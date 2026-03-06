@@ -8,6 +8,8 @@
 	outfit = /datum/outfit/adventurer_fighter/hedgeknight
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
+	honorary = "Ritter"
+	honorary_f = "Ritterin"
 
 	skills = list(
 		/datum/skill/combat/wrestling = 2,
@@ -32,14 +34,6 @@
 
 /datum/job/advclass/combat/adventurer_fighter/hedgeknight/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
-	var/prev_real_name = spawned.real_name
-	var/prev_name = spawned.name
-	var/honorary = "Ritter"
-	if(spawned.pronouns == SHE_HER)
-		honorary = "Ritterin"
-	spawned.real_name = "[honorary] [prev_real_name]"
-	spawned.name = "[honorary] [prev_name]"
-
 	var/datum/species/species = spawned.dna?.species
 	if(species && species.id == SPEC_ID_HUMEN)
 		species.soundpack_m = new /datum/voicepack/male/knight()

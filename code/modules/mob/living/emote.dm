@@ -52,7 +52,7 @@
 	for(var/mob/living/crit_guy in hearers(2, follower)) //as of writing succumb_timer does literally nothing btw
 		crit_guy.succumb_timer = world.time
 
-/proc/send_prayer(mob/living/follower, prayer, patron_name)
+/proc/send_prayer(mob/living/follower, prayer, patron_name, bigger = FALSE)
 	var/ident_string = "[follower.key]/([follower.real_name]) (follower of [patron_name])"
 	if(follower.has_quirk(/datum/quirk/vice/godfearing))
 		ident_string += "[SPAN_GOD_GENERIC("(GODFEARING)")]"
@@ -61,6 +61,8 @@
 	if(patron_name in COLORFUL_PATRONS)
 		lowercase_god = ckey(patron_name)//Getting the game to correctly pull this has been the biggest pain in the butt.
 	var/message = SPAN_PRAYER_WRAPPER(span_admin("[span_prefix("PRAYER: ")][ident_string] [ADMIN_SM(follower)] [ADMIN_NRT(follower)] [ADMIN_FLW(follower)] prays: <span class='god_[lowercase_god]'>[html_encode(prayer)]</span>"))
+	if(bigger)
+		message = span_slightlylarger(message)
 	for(var/client/admin_client in GLOB.admins)
 		if(check_rights_for(admin_client, R_ADMIN))
 			to_chat(admin_client, message)

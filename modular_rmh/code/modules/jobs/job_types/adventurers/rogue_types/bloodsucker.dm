@@ -87,8 +87,6 @@
 	spawned.grant_undead_eyes()
 
 	if(alert("Do you wish for a random title? You will not receive one if you click No.", "", "Yes", "No") == "Yes")
-		var/prev_real_name = spawned.real_name
-		var/prev_name = spawned.name
 		var/title
 		var/list/titles = list(
 			"The Nitebeest", "The Ravenous", "The Reborn", "The Immortal", "The Revenant",
@@ -97,5 +95,4 @@
 			"The Blade", "The Strangler", "The Shadowed", "The Lurker", "The Collector"
 		)
 		title = pick(titles)
-		spawned.real_name = "[prev_real_name], [title]"
-		spawned.name = "[prev_name], [title]"
+		spawned.honorary_suffix = title
