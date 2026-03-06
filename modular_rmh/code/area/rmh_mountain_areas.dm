@@ -3,12 +3,11 @@
 /area/outdoors/mountains/rmh_mountains/frozen
 	name = "Dusk Spire Mountains"
 	icon_state = "decap"
-	ambush_mobs = null
 	ambientsounds = DRONING_MOUNTAIN
 	ambientnight = DRONING_MOUNTAIN
 	background_track = 'sound/music/area/decap.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/decap.ogg'
+	background_track_night = 'sound/music/area/decap.ogg'
 	first_time_text = "DUSK SPIRE MOUNTAINS"
 	ambush_times = list("night","dawn","dusk")
 	ambush_mobs = list(
