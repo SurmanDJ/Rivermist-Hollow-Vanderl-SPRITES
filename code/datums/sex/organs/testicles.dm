@@ -41,3 +41,13 @@
 	var/datum/component/body_storage/testicles/comp = GetComponent(/datum/component/body_storage/testicles)
 	comp?.RemoveComponent()
 	qdel(comp)
+
+/obj/item/organ/genitals/filling_organ/testicles/get_availability(datum/species/owner_species, mob/living/C, datum/preferences/pref_load)
+	if(issimple(C))
+		return C.gender == MALE
+	else
+		if(pref_load)
+			return pref_load.get_customizer_entry_of_type(/datum/customizer_entry/organ/genitals/testicles)
+		else
+			return C.gender == MALE
+

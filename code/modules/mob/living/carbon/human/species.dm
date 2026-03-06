@@ -651,7 +651,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 		var/used_neworgan = FALSE
 		var/should_have
 		if(neworgan)
-			should_have = neworgan.get_availability(src)
+			should_have = neworgan.get_availability(src, C, pref_load)
 		else
 			should_have = TRUE
 
