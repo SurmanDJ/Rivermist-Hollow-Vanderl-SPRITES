@@ -22,3 +22,12 @@
 #define THREAT_REGION_MOUNT_DECAP "Mount Decapitation"
 #define THREAT_REGION_TERRORBOG "Terrorbog"
 #define THREAT_REGION_COAST "Coast"
+
+//RMH
+#define THREAT_REGION_RMH_MOUNTAINS "Dusk Spire"
+#define THREAT_REGION_RMH_DWARF_FORTRESS "Dwarf Fort"
+#define THREAT_REGION_RMH_BOG "The Swamps"
+#define THREAT_REGION_RMH_ORC_FORT "Orc Fort"
+#define THREAT_REGION_RMG_DARK_FOREST "Dark Forest"
+#define THREAT_REGION_RMH_DESERT "Enchanted Desert"
+#define THREAT_REGION_RMH_UNDERDARK "RMH Underdark"

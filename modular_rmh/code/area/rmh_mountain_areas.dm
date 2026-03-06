@@ -11,15 +11,14 @@
 	background_track_night = null
 	first_time_text = "DUSK SPIRE MOUNTAINS"
 	ambush_times = list("night","dawn","dusk")
-	/*ambush_mobs = list(
-				/mob/living/carbon/human/species/dwarfskeleton/ambush/knight = 11,
-				/mob/living/carbon/human/species/dwarfskeleton/ambush = 11,
+	ambush_mobs = list(
+				/mob/living/carbon/human/species/skeleton/npc/ambush = 11,
 				/mob/living/simple_animal/hostile/retaliate/direbear = 13,
-				/mob/living/simple_animal/hostile/retaliate/minotaur/wounded/chained = 5,
-				/mob/living/simple_animal/hostile/retaliate/wolf/bobcat = 21,
+				/mob/living/simple_animal/hostile/retaliate/bobcat = 21,
 				/mob/living/simple_animal/hostile/retaliate/wolf = 21,
-				/mob/living/simple_animal/hostile/retaliate/wolf_undead = 18)*/
+				/mob/living/simple_animal/hostile/retaliate/wolf_undead = 18)
 	converted_type = /area/indoors/shelter/mountains/rmh_mountains/frozen
+	threat_region = THREAT_REGION_RMH_MOUNTAINS
 	//deathsight_message = "a spire pass"
 
 /area/indoors/shelter/mountains/rmh_mountains/frozen
@@ -113,6 +112,7 @@
 	background_track_night = null
 	converted_type = /area/outdoors/exposed/rmh_dwarf_keep
 	ceiling_protected = TRUE
+	threat_region = THREAT_REGION_RMH_DWARF_FORTRESS
 
 
 /area/outdoors/exposed/rmh_dwarf_keep
@@ -126,6 +126,7 @@
 	//spookynight = AMBIENCE_CAVE
 	background_track_dusk = null
 	background_track_night = null
+	threat_region = THREAT_REGION_RMH_DWARF_FORTRESS
 
 /area/indoors/cave/rmh_dwarf_keep/entrance
 	name = "Kêdnath Acöb Entrance Hall"

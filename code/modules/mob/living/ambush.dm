@@ -13,7 +13,7 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 		return FALSE
 	if(!MOBTIMER_FINISHED(src, MT_AMBUSHLAST, 5 MINUTES))
 		return FALSE
-	return ambushable && !HAS_TRAIT(src, TRAIT_NOAMBUSH)
+	return ambushable && !HAS_TRAIT(src, TRAIT_NOAMBUSH) && !HAS_TRAIT(src, TRAIT_PACIFISM)
 
 /mob/living/proc/consider_ambush(always = FALSE, ignore_cooldown = FALSE, min_dist = 1, max_dist = 7)
 	if(!always)

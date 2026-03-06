@@ -1597,6 +1597,7 @@
 #include "code\datums\threat_regions\mount_decap.dm"
 #include "code\datums\threat_regions\north_grove.dm"
 #include "code\datums\threat_regions\outer_grove.dm"
+#include "code\datums\threat_regions\rmh_rhreat_regions.dm"
 #include "code\datums\threat_regions\terror_bog.dm"
 #include "code\datums\world_factions\_base.dm"
 #include "code\datums\world_factions\coastal.dm"
