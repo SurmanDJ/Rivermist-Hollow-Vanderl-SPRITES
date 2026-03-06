@@ -38,7 +38,7 @@
 		/datum/skill/combat/wrestling = 3,
 		/datum/skill/combat/unarmed = 3,
 		/datum/skill/combat/swords = 4,
-		/datum/skill/combat/shields = 3,
+		/datum/skill/combat/shields = 2,
 		/datum/skill/misc/climbing = 1,
 		/datum/skill/misc/athletics = 3,
 		/datum/skill/misc/reading = 3,
@@ -48,17 +48,17 @@
 	)
 
 	jobstats = list(
-		STATKEY_STR = 3,
-		STATKEY_PER = 1,
-		STATKEY_INT = 3,
-		STATKEY_CON = 3,
-		STATKEY_END = 3,
-		STATKEY_SPD = 1,
-		STATKEY_LCK = -3,
+		STATKEY_STR = 2,
+		STATKEY_INT = 1,
+		STATKEY_CON = 2,
+		STATKEY_END = 2,
+		STATKEY_SPD = -1,
+		STATKEY_LCK = -1,
 	)
 
 	traits = list(
 		TRAIT_HEAVYARMOR,
+		TRAIT_MEDIUM,
 		TRAIT_NOBLE,
 		TRAIT_STEELHEARTED,
 		TRAIT_HOLY,
