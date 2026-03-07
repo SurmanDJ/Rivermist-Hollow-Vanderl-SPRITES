@@ -131,7 +131,7 @@
 	if(. && required_trait && isliving(AM))
 		var/mob/living/L = AM
 		if(HAS_TRAIT(L, required_trait))
-			if(world.time > L.last_client_interact + 0.3 SECONDS)
+			if(world.time > L.last_client_interact + 5 MINUTES)
 				return FALSE // must have moved or clicked recently
 			return TRUE
 		else

@@ -68,6 +68,8 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 		var/mobs_to_spawn_single = FALSE
 		var/max_spawns = 3
 		var/mustype = 1
+		if(!length(AR.ambush_mobs))
+			return
 		var/spawnedtype = pickweight(AR.ambush_mobs)
 
 		// This is the part where we scale ambush difficulty based on threat. Due to how we have a mix of
