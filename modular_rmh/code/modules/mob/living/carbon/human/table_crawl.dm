@@ -66,7 +66,7 @@
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		adjusted_climb_time *= 2
 	adjusted_climb_time -= STASPD * 2
-	return max(adjusted_climb_time, 0)
+	return max(adjusted_climb_time, 2 SECONDS)
 
 /mob/living/carbon/human/proc/can_virtual_table_climb(obj/structure/table/target_table, turf/target_turf)
 	var/turf/source_turf = get_turf(src)
@@ -266,6 +266,7 @@
 
 	RegisterSignal(target, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(on_pre_move))
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(target, COMSIG_MOVABLE_BUMP, PROC_REF(on_bump))
 	RegisterSignal(target, COMSIG_LIVING_SET_RESTING, PROC_REF(on_resting_change))
 	RegisterSignal(target, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(on_body_position_change))
 	RegisterSignal(target, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_buckled_change))
@@ -274,6 +275,7 @@
 	UnregisterSignal(source, list(
 		COMSIG_MOVABLE_PRE_MOVE,
 		COMSIG_MOVABLE_MOVED,
+		COMSIG_MOVABLE_BUMP,
 		COMSIG_LIVING_SET_RESTING,
 		COMSIG_LIVING_SET_BODY_POSITION,
 		COMSIG_LIVING_SET_BUCKLED,
@@ -292,22 +294,25 @@
 	if(source.table_crawl_pending_entry)
 		return NONE
 	if(!source.table_crawl_under_table)
-		var/obj/structure/table/target_table = source.get_table_crawl_table(new_loc)
-		if(!target_table)
-			return NONE
-		if(source.table_crawl_attempting)
-			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
-		if(!source.can_start_table_crawl())
-			return NONE
-		source.try_offer_table_crawl(target_table, get_turf(target_table))
-		if(source.table_crawl_attempting)
-			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 		return NONE
 	if(source.can_table_crawl())
 		return NONE
 	if(!source.get_table_crawl_table(new_loc))
 		return NONE
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
+
+/datum/element/table_crawl/proc/on_bump(mob/living/carbon/human/source, atom/obstacle)
+	SIGNAL_HANDLER
+	if(source.table_crawl_pending_entry || source.table_crawl_under_table || source.table_crawl_attempting)
+		return NONE
+	if(!source.can_start_table_crawl())
+		return NONE
+	if(!istype(obstacle, /obj/structure/table))
+		return NONE
+
+	var/obj/structure/table/target_table = obstacle
+	source.try_offer_table_crawl(target_table, get_turf(target_table))
+	return NONE
 
 /datum/element/table_crawl/proc/on_moved(mob/living/carbon/human/source, atom/old_loc, direction, forced)
 	SIGNAL_HANDLER
