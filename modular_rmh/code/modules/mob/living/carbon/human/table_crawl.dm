@@ -8,6 +8,7 @@
 	var/tmp/table_crawl_hidden_alpha = 255
 	var/tmp/table_crawl_validating = FALSE
 	var/tmp/table_crawl_restoring = FALSE
+	var/tmp/table_crawl_next_bonk = 0
 	var/tmp/datum/action/innate/table_crawl_hide/table_crawl_hide_action
 
 /mob/living/carbon/human/proc/is_table_crawl_player()
@@ -24,6 +25,11 @@
 		return
 	if(table_crawl_state_enabled)
 		disable_table_crawl_state()
+
+/mob/living/carbon/human/toggle_rogmove_intent(intent, silent = FALSE)
+	. = ..()
+	if(table_crawl_state_enabled)
+		refresh_table_crawl()
 
 /mob/living/carbon/human/proc/enable_table_crawl_state()
 	if(table_crawl_state_enabled)
@@ -50,6 +56,15 @@
 
 /mob/living/carbon/human/proc/can_start_table_crawl()
 	if(!can_table_crawl())
+		return FALSE
+	return resting
+
+/mob/living/carbon/human/proc/can_remain_table_crawl()
+	if(buckled)
+		return FALSE
+	if(body_position != LYING_DOWN)
+		return FALSE
+	if(mob_size >= MOB_SIZE_LARGE)
 		return FALSE
 	return resting
 
@@ -164,6 +179,14 @@
 	playsound(sound_source, "genblunt", 100, TRUE)
 	Stun(5 SECONDS)
 
+/mob/living/carbon/human/proc/try_table_crawl_head_bonk()
+	if(!table_crawl_under_table || !get_table_crawl_table())
+		return FALSE
+	if(world.time >= table_crawl_next_bonk)
+		table_crawl_next_bonk = world.time + 1 SECONDS
+		table_crawl_head_bonk()
+	return TRUE
+
 /mob/living/carbon/human/proc/set_table_crawl_hidden(hidden)
 	if(table_crawl_hidden == hidden)
 		return
@@ -242,7 +265,7 @@
 		update_table_crawl_hide_action()
 		clear_table_crawl_visual()
 		return
-	if(!can_table_crawl() || !get_table_crawl_table())
+	if(!can_remain_table_crawl() || !get_table_crawl_table())
 		table_crawl_under_table = FALSE
 		update_table_crawl_hide_action()
 		clear_table_crawl_visual()
@@ -284,6 +307,7 @@
 	source.table_crawl_pending_entry = FALSE
 	source.table_crawl_under_table = FALSE
 	source.table_crawl_restoring = FALSE
+	source.table_crawl_next_bonk = 0
 	source.update_table_crawl_hide_action()
 	source.clear_table_crawl_passtable()
 	source.clear_table_crawl_visual()
@@ -295,7 +319,7 @@
 		return NONE
 	if(!source.table_crawl_under_table)
 		return NONE
-	if(source.can_table_crawl())
+	if(source.can_remain_table_crawl())
 		return NONE
 	if(!source.get_table_crawl_table(new_loc))
 		return NONE
@@ -327,14 +351,14 @@
 /datum/element/table_crawl/proc/on_resting_change(mob/living/carbon/human/source, new_resting)
 	SIGNAL_HANDLER
 	if(source.table_crawl_under_table && !new_resting && source.body_position == LYING_DOWN)
-		source.table_crawl_head_bonk()
+		source.try_table_crawl_head_bonk()
 	source.refresh_table_crawl()
 
 /datum/element/table_crawl/proc/on_body_position_change(mob/living/carbon/human/source, new_body_position, old_body_position)
 	SIGNAL_HANDLER
 	if(source.table_crawl_under_table && old_body_position == LYING_DOWN && new_body_position == STANDING_UP)
 		if(!HAS_TRAIT(source, TRAIT_INCAPACITATED))
-			source.table_crawl_head_bonk()
+			source.try_table_crawl_head_bonk()
 		source.queue_table_crawl_restore()
 		return
 	source.refresh_table_crawl()
