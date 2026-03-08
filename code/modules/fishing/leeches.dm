@@ -35,7 +35,7 @@
 	var/blood_maximum = BLOOD_VOLUME_SURVIVE
 	// Completely silent, no do_after and no visible_message
 	var/completely_silent = FALSE
-
+	bstorage_visible_layer = STORAGE_LAYER_OUTER
 	has_body_storage_overlay = TRUE
 	storage_overlay_icon = 'modular_rmh/icons/obj/lewd/leeches_overlay.dmi'
 	var/obj/item/organ/target_organ = null
@@ -121,7 +121,7 @@
 
 		if(/obj/item/organ/genitals/filling_organ/vagina)
 			var/obj/item/organ/genitals/filling_organ/vagina/vagina = target_organ
-
+			var/storage_layer = SEND_SIGNAL(vagina, COMSIG_BODYSTORAGE_FIND_ITEM_LAYER, src)
 			SEND_SIGNAL(H, COMSIG_SEX_ADJUST_AROUSAL, rand(2, 6))
 			if(H.reagents?.get_reagent_amount(/datum/reagent/consumable/aphrodisiac) <= 9)
 				H.reagents?.add_reagent(/datum/reagent/consumable/aphrodisiac, 0.1)
@@ -129,9 +129,21 @@
 			vagina.reagents.trans_to(reagents, fluid_to_take)
 			fluid_storage += fluid_to_take
 			if(fluid_storage >= max_storage)
-				horny_leech_unattach(H, target_organ, STORAGE_LAYER_OUTER)
-				to_chat(H, span_info("The sated leech falls off my [target_organ.name]."))
-				return
+				if(prob(30))
+					if(horny_leech_move_deeper(H, target_organ, storage_layer))
+						fluid_storage = 0
+						to_chat(H, span_info("The greedy leech moves deeper inside your [target_organ.name]!"))
+					else if(storage_layer == STORAGE_LAYER_INNER || storage_layer == STORAGE_LAYER_DEEP)
+						to_chat(H, span_warn("You feel the leech calm down deep inside you - it doesn't want to come out!"))
+						return PROCESS_KILL
+					else
+						horny_leech_unattach(H, target_organ, storage_layer)
+						to_chat(H, span_info("The sated leech falls off my [target_organ.name]."))
+					return
+				else
+					horny_leech_unattach(H, target_organ, storage_layer)
+					to_chat(H, span_info("The sated leech falls off my [target_organ.name]."))
+					return
 			if(prob(25))
 				var/chosen_verb = pick(list("A leech is sucking my vagina!", "Something slimy is sucking on my clit!", "It's sucking out my juices!"))
 				to_chat(H, span_warning(chosen_verb))
@@ -353,6 +365,21 @@
 		visible_message(span_info("unble to find a puchase, [src] falls off!"))
 		target_organ = null
 	trying_to_attach = FALSE
+
+/obj/item/natural/worms/leech/proc/horny_leech_move_deeper(mob/living/user, obj/item/organ/target_organ, storage_layer)
+	if(QDELETED(src))
+		return
+	var/new_storage_layer = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_FIND_ITEM_LAYER, src)
+	if(new_storage_layer == STORAGE_LAYER_OUTER)
+		new_storage_layer = STORAGE_LAYER_INNER
+	else if(new_storage_layer == STORAGE_LAYER_INNER)
+		new_storage_layer = STORAGE_LAYER_DEEP
+	else
+		return
+	SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_TRY_REMOVE, src, storage_layer)
+	//doMove(get_turf(user))
+	var/success = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_TRY_INSERT, src, new_storage_layer, TRUE)
+	return success
 
 
 /// LEECH LORE... Collect em all!

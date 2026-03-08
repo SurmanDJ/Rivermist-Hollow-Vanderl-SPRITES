@@ -312,6 +312,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/body_storage_bulk
 	/// If this item has visual overlay when inserted into a body_storage
 	var/has_body_storage_overlay = FALSE
+	/// If the item has visual overlay only on specific layer
+	var/bstorage_visible_layer
 	/// If this item has visual overlay when inserted into a body_storage
 	var/loadout_blacklisted = FALSE
 
