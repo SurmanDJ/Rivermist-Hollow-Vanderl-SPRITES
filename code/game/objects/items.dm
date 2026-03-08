@@ -23,6 +23,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	//Forced mob worn layer instead of the standard preferred ssize.
 	var/alternate_worn_layer
 
+	///Hole storage icon override
+	var/icon/storage_overlay_icon
+	///Hole storage icon state override
+	var/storage_icon_state
+
 	//Dimensions of the icon file used when this item is worn, eg: hats.dmi
 	//eg: 32x32 sprite, 64x64 sprite, etc.
 	//allows inhands/worn sprites to be of any size, but still centered on a mob properly
