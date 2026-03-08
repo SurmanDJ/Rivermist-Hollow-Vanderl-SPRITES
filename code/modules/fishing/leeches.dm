@@ -186,8 +186,9 @@
 			return
 
 		if(H.get_erp_pref(/datum/erp_preference/boolean/allow_horny_leeches))
-			var/choice = input(user, "Are you aiming for more private areas?", "Love Leech", FALSE)
-			if(choice)
+			var/choice = FALSE
+			choice = alert(user, "Are you aiming for more private areas?", "Love Leech", "Yes", "No")
+			if(choice == "Yes")
 				if(!(user.zone_selected in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN)))
 					to_chat(user, "The leech refuses to attach here, it seeks other nutrition.")
 					return
@@ -198,20 +199,18 @@
 						var/organ_choice = browser_input_list(user, "Select the side:", "Suck", list("Left Nipple", "Right Nipple"))
 						switch(organ_choice)
 							if("Left Nipple")
-								storage_icon_state = ORGAN_SLOT_LEFT_NIP
 								target_organ = H.getorganslot(ORGAN_SLOT_LEFT_NIP)
+								storage_icon_state = target_organ.slot
 								if(!target_organ)
 									to_chat(user, "This spot won't offer much to the leech...")
 									return
-								storage_icon_state = "boob_left"
 								to_chat(user, "The leech begins to crawl towards the area of interest and opens its soft mouth...")
 							if("Right Nipple")
-								storage_icon_state = ORGAN_SLOT_LEFT_NIP
 								target_organ = H.getorganslot(ORGAN_SLOT_LEFT_NIP)
+								storage_icon_state = target_organ.slot
 								if(!target_organ)
 									to_chat(user, "This spot won't offer much to the leech...")
 									return
-								storage_icon_state = "boob_right"
 								to_chat(user, "The leech begins to crawl towards the area of interest and opens its soft mouth...")
 
 					if(BODY_ZONE_PRECISE_GROIN)
@@ -236,9 +235,9 @@
 				var/success = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_TRY_INSERT, src, STORAGE_LAYER_OUTER)
 				if(success)
 					if(M == user)
-						user.visible_message("<span class='notice'>[user] places [src] on [user.p_their()] [selected_organ].</span>", "<span class='notice'>I place a leech on my [selected_organ].</span>")
+						user.visible_message("<span class='notice'>[user] places [src] on [user.p_their()] [selected_organ].</span>", "<span class='notice'>I place a leech on my [target_organ.name].</span>")
 					else
-						user.visible_message("<span class='notice'>[user] places [src] on [M]'s [selected_organ].</span>", "<span class='notice'>I place a leech on [M]'s [selected_organ].</span>")
+						user.visible_message("<span class='notice'>[user] places [src] on [M]'s [selected_organ].</span>", "<span class='notice'>I place a leech on [M]'s [target_organ.name].</span>")
 					START_PROCESSING(SSobj, src)
 				else
 					target_organ = null
@@ -361,6 +360,7 @@
 	if(consistent)
 		return FALSE
 	horny = rand(0, 1)
+	drainage = horny
 	var/static/list/all_colors = list(
 		"#8471a7" = 8,
 		"#94ad6a" = 4,
