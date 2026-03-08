@@ -323,7 +323,10 @@
 	if(!i_item)
 		return
 
-	var/mutable_appearance/item_overlay = mutable_appearance(i_item.mob_overlay_icon, i_item.icon_state, -BODY_LAYER)
+	var/icon = i_item.storage_overlay_icon ? i_item.storage_overlay_icon : i_item.mob_overlay_icon
+	var/state = i_item.storage_icon_state ? i_item.storage_icon_state : i_item.icon_state
+
+	var/mutable_appearance/item_overlay = mutable_appearance(icon, state, -BODY_LAYER)
 
 	owner.add_overlay(item_overlay)
 	outer_overlays[i_item] = item_overlay

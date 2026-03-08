@@ -284,6 +284,7 @@
 
 
 /mob/living
+	var/list/attached_sex_toys = list()
 
 	///npc organs to use
 	var/ball_organ = /obj/item/organ/genitals/filling_organ/testicles
