@@ -55,7 +55,7 @@
 		collective.sessions -= src
 		// If this was the last session in the collective, remove the collective
 		if(!length(collective.sessions))
-			collective.unregister_collective_tab()
+			//collective.unregister_collective_tab()
 			LAZYREMOVE(GLOB.sex_collectives, collective)
 			qdel(collective)
 
@@ -183,6 +183,9 @@
 			break
 
 		action.on_perform(user, target)
+		if(istype(user.loc, /obj/structure/closet))
+			var/obj/structure/closet/sex_shack = user.loc
+			sex_shack.Shake(1, 3, 15)
 
 		if(user.has_kink(KINK_VISUAL_EFFECTS)) //Hearts played on action that can be turned off at will
 			action.show_sex_effects(user)
@@ -218,11 +221,11 @@
 		return FALSE
 	if(user.stat != CONSCIOUS)
 		return FALSE
-	if(!user.Adjacent(target) && action.check_distance)
+	if(!user.adjacent_or_closet(target) && action.check_distance)
 		return FALSE
 	if(action.check_incapacitated && user.incapacitated())
 		return FALSE
-	if(action.check_same_tile)
+	if(action.check_same_tile && !user.check_closet(target))
 		var/same_tile = (get_turf(user) == get_turf(target))
 		var/grab_bypass = (action.aggro_grab_instead_same_tile && user.get_highest_grab_state_on(target) == GRAB_AGGRESSIVE)
 		if(!same_tile && !grab_bypass)
@@ -1030,7 +1033,7 @@
 			var/new_name = url_decode(href_list["name"])
 			if(new_name && collective)
 				collective.collective_display_name = new_name
-				collective.update_collective_tab()
+				//collective.update_collective_tab()
 				to_chat(user, "<span class='notice'>Session name updated to '[new_name]'</span>")
 
 		if("toggle_subtle")

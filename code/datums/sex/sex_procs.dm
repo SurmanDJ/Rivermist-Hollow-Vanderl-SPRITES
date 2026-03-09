@@ -284,6 +284,7 @@
 
 
 /mob/living
+	var/list/attached_sex_toys = list()
 
 	///npc organs to use
 	var/ball_organ = /obj/item/organ/genitals/filling_organ/testicles
@@ -374,3 +375,14 @@
 					penis.organ_size = rand(penis_min, penis_max)
 					penis.Insert(user, TRUE)
 		color_key_source_list_from_carbon(src)
+
+/mob/living/proc/adjacent_or_closet(atom/neighbor)
+	if(istype(loc, /obj/structure/closet) || istype(loc, /obj/structure/handcart) || istype(neighbor.loc, /obj/structure/closet) || istype(neighbor.loc, /obj/structure/handcart)) // within container
+		return loc == neighbor.loc
+	return Adjacent(neighbor)
+
+/mob/living/proc/check_closet(atom/neighbor)
+	if(istype(loc, /obj/structure/closet) || istype(loc, /obj/structure/handcart) || istype(neighbor.loc, /obj/structure/closet) || istype(neighbor.loc, /obj/structure/handcart)) // within container
+		return loc == neighbor.loc
+	else
+		return FALSE

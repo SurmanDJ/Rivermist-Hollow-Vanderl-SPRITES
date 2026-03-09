@@ -651,7 +651,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 		var/used_neworgan = FALSE
 		var/should_have
 		if(neworgan)
-			should_have = neworgan.get_availability(src)
+			should_have = neworgan.get_availability(src, C, pref_load)
 		else
 			should_have = TRUE
 
@@ -1918,8 +1918,12 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 
 	if(!selzone)
 		selzone = user.zone_selected
+
 	if(!accurate)
 		selzone = accuracy_check(selzone, user, H, I.associated_skill, user.used_intent, I)
+		if(selzone != user.zone_selected)
+			H.balloon_alert(user, "miss! [selzone]!", DISABLE_BALLOON_COMBAT)
+
 	affecting = H.get_bodypart(check_zone(selzone))
 
 	if(!affecting)

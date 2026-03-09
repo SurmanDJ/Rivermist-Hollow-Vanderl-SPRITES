@@ -192,21 +192,23 @@
 
 
 /datum/sex_action/hole_storage/anus_remove_deep
-	name = "Remove items deep from anus"
+	name = "Push out items from deep inside ass"
 	hole_id = ORGAN_SLOT_ANUS
-	do_time = 10
+	do_time = 100
+	var/fail_counter = 0
+	var/list/stored_items_layer
 
 /datum/sex_action/hole_storage/anus_remove_deep/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	if(!target.getorganslot(ORGAN_SLOT_ANUS))
+	if(!target.getorganslot(hole_id))
 		return FALSE
-	if(check_sex_lock(target, ORGAN_SLOT_ANUS))
+	if(check_sex_lock(target, hole_id))
 		return FALSE
-	if(user == target)
-		target_organ = user.getorganslot(hole_id)
-	else
-		target_organ = target.getorganslot(hole_id)
+	if(user != target)
+		return FALSE
+
+	target_organ = target.getorganslot(hole_id)
 	var/list/stored_items = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_GET_LISTS)
-	var/list/stored_items_layer = stored_items[STORAGE_LAYER_DEEP]
+	stored_items_layer = stored_items[STORAGE_LAYER_DEEP]
 	if(!stored_items_layer.len)
 		return FALSE
 	return TRUE
@@ -219,48 +221,54 @@
 		return FALSE
 	if(user.get_active_held_item())
 		return FALSE
+	if(user != target)
+		return FALSE
 	return TRUE
 
 /datum/sex_action/hole_storage/anus_remove_deep/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	. = ..()
+	target_organ = user.getorganslot(hole_id)
+	var/list/stored_items = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_GET_LISTS)
+	stored_items_layer = stored_items[STORAGE_LAYER_DEEP]
 
-	if(user == target)
-		target_organ = user.getorganslot(hole_id)
-		to_chat(user, span_warning("I start removing items from deep in my ass..."))
-	else
-		target_organ = target.getorganslot(hole_id)
-		user.visible_message(span_warning("[user] starts removing items from deep in [target]'s ass..."))
+	to_chat(user, span_warning("I brace myself and start pushing out items from deep inside my ass..."))
 
 	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, ignore_walls = FALSE)
 
 
 /datum/sex_action/hole_storage/anus_remove_deep/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	var/pain_amt = 2 //base pain amt to use
-
-	var/datum/sex_session/sex_session = get_sex_session(user, target)
-	var/self = (user == target)
+	var/pain_amt = 1 //base pain amt to use
 
 	if(!target_organ)
-		if(self)
-			target_organ = user.getorganslot(hole_id)
+		target_organ = target.getorganslot(hole_id)
+
+	var/list/stored_items = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_GET_LISTS)
+	stored_items_layer = stored_items[STORAGE_LAYER_DEEP]
+
+	var/datum/sex_session/sex_session = get_sex_session(user, target)
+
+	target.adjust_stamina(15)
+	target.adjust_energy(-20)
+
+	to_chat(user, sex_session.spanify_force("I *squeeze* my ass and try to push..."))
+	if(prob(30))
+		if(stored_items_layer.len)
+			to_chat(user, span_love("...But nothing comes out, yet I can still feel it in there."))
+			return
 		else
-			target_organ = target.getorganslot(hole_id)
+			to_chat(user, span_love("...But nothing comes out, and I finally feel empty."))
+			sex_session.stop_current_action()
+			return
 
 	var/obj/item/removed_item
 	removed_item = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_REMOVE_RAND_ITEM, STORAGE_LAYER_DEEP)
 	if(!removed_item)
-		to_chat(user, sex_session.spanify_force("I couldn't find anything inside..."))
+		to_chat(user, sex_session.spanify_force("There was nothing inside."))
 		sex_session.stop_current_action()
 		return
-	if(user.get_active_held_item())
-		user.visible_message(sex_session.spanify_force("The [removed_item] falls down on the floor..."))
-		removed_item.doMove(get_turf(user))
-	else
-		if(self)
-			to_chat(user, sex_session.spanify_force("I fish out the [removed_item] from deep in my ass..."))
-		else
-			user.visible_message(sex_session.spanify_force("I fish out the [removed_item] from deep in [target]'s ass..."))
-		removed_item.doMove(get_turf(user))
-		user.put_in_active_hand(removed_item)
+
+	user.visible_message("<span class='love_mid'>[user] tenses up and pushes [removed_item] out of their ass.</span>", "<span class='love_mid'>With some effort, I push out [removed_item].</span>")
+	removed_item.doMove(get_turf(user))
+
 	sex_session.perform_sex_action(user, target, 0.5, pain_amt, 0.5, src)
 	sex_session.handle_passive_ejaculation()
