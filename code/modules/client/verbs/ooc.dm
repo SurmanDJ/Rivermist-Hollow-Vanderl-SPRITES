@@ -380,7 +380,6 @@ GLOBAL_LIST_INIT(oocpronouns_required, list(
 	set category = "OOC.Fix"
 	set hidden = FALSE
 
-	nuke_chat()
 
 	to_chat(src, "Going back to old chat.")
 	winset(src, "output_selector.legacy_output_selector", "left=output_legacy")

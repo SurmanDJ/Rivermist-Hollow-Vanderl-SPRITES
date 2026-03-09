@@ -134,15 +134,7 @@
 	id = "Exercised"
 	duration = 1200
 	alert_type = null
-
-/datum/status_effect/exercised/on_creation(mob/living/new_owner, duration_override, ...)
-	. = ..()
-	STOP_PROCESSING(SSfastprocess, src)
-	START_PROCESSING(SSprocessing, src) //this lasts 20 minutes, so SSfastprocess isn't needed.
-
-/datum/status_effect/exercised/Destroy()
-	. = ..()
-	STOP_PROCESSING(SSprocessing, src)
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 
 /datum/status_effect/good_music
 	id = "Good Music"

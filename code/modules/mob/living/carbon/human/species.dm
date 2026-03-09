@@ -1326,7 +1326,8 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 /datum/species/proc/handle_digestion(mob/living/carbon/human/H)
 	if(HAS_TRAIT(H, TRAIT_NOHUNGER))
 		return //hunger is for BABIES
-
+	if(!H.mind)
+		return //brainless hunger
 	// nutrition decrease and satiety
 	if(H.nutrition > 0 && H.stat != DEAD)
 		var/hunger_rate = (HUNGER_FACTOR * nutrition_mod)

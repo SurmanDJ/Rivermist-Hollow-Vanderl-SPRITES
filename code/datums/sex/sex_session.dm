@@ -42,7 +42,7 @@
 
 	add_ui_tracking("sexcon[our_sex_id]")
 
-	addtimer(CALLBACK(src, PROC_REF(check_sex)), 180 SECONDS, flags = TIMER_LOOP)
+	addtimer(CALLBACK(src, PROC_REF(check_sex)), 30 SECONDS)
 
 /datum/sex_session/Destroy(force, ...)
 	UnregisterSignal(user, list(COMSIG_SEX_CLIMAX, COMSIG_SEX_AROUSAL_CHANGED))
@@ -84,6 +84,7 @@
 	inactivity++
 
 	if(inactivity < 5)
+		addtimer(CALLBACK(src, PROC_REF(check_sex)), 30 SECONDS)
 		return
 	qdel(src)
 
