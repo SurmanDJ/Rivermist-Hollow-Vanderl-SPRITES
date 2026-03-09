@@ -3772,6 +3772,7 @@
 #include "interface\menu.dm"
 #include "interface\stylesheet.dm"
 #include "interface\skin.dmf"
+#include "modular_rmh\code\tweaks.dm"
 #include "interface\fonts\datums\_fonts_datum.dm"
 #include "interface\fonts\datums\arabolical.dm"
 #include "interface\fonts\datums\blackmoor.dm"
