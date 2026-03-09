@@ -281,10 +281,14 @@
 		for(var/i in slots_to_check)
 			var/obj/item/organ/org = H.getorganslot(i)
 			if(org)
+				if(SEND_SIGNAL(org, COMSIG_BODYSTORAGE_SELECT_RAND_ITEM, STORAGE_LAYER_OUTER))
+					continue
 				available_organs += org
 		if(LAZYLEN(available_organs))
 			target_organ = pick(available_organs)
 		else
+			if(bodypart)
+				bodypart.remove_embedded_object(src)
 			return
 
 		trying_to_attach = TRUE
@@ -362,7 +366,7 @@
 		to_chat(H, span_love("It's latched on!"))
 		START_PROCESSING(SSobj, src)
 	else
-		visible_message(span_info("unble to find a puchase, [src] falls off!"))
+		visible_message(span_info("Unble to find a puchase, [src] falls off!"))
 		target_organ = null
 	trying_to_attach = FALSE
 
