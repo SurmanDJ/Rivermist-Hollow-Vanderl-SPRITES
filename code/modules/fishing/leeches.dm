@@ -115,7 +115,7 @@
 				to_chat(H, span_info("The sated leech falls off my [target_organ.name]."))
 				return
 			if(prob(25))
-				var/chosen_verb = pick(list("A leech is sucking my penis!", "It's sucking cum straight from my balls!", " Something slimy is sucking omn my dick!"))
+				var/chosen_verb = pick(list("A leech is sucking my penis!", "It's sucking cum straight from my balls!", " Something slimy is sucking on my dick!"))
 				to_chat(H, span_warning(chosen_verb))
 			return
 
