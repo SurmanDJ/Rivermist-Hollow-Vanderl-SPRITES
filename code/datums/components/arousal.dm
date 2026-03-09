@@ -49,6 +49,7 @@
 	RegisterSignal(parent, COMSIG_SEX_FREEZE_AROUSAL, PROC_REF(freeze_arousal))
 	RegisterSignal(parent, COMSIG_SEX_GET_AROUSAL, PROC_REF(get_arousal))
 	RegisterSignal(parent, COMSIG_SEX_RECEIVE_ACTION, PROC_REF(receive_sex_action))
+	RegisterSignal(parent, COMSIG_SEX_GENERIC_ACTION, PROC_REF(receive_generic_sex_action))
 	RegisterSignal(parent, COMSIG_SEX_ADJUST_EDGING, PROC_REF(adjust_edging))
 	RegisterSignal(parent, COMSIG_SEX_SET_EDGING, PROC_REF(set_edging))
 	RegisterSignal(parent, COMSIG_SEX_SET_HOLDING, PROC_REF(set_holding_pleasure))
@@ -59,6 +60,7 @@
 	RegisterSignal(parent, COMSIG_SEX_ADJUST_ORGASM_PROG, PROC_REF(adjust_orgasm_prog))
 	RegisterSignal(parent, COMSIG_SEX_SET_ORGASM_PROG, PROC_REF(set_orgasm_prog))
 	RegisterSignal(parent, COMSIG_SEX_EDGED_BY_OTHER_STATE, PROC_REF(set_edging_state))
+	RegisterSignal(parent, COMSIG_SEX_ORGASM, PROC_REF(manual_orgasm))
 
 /datum/component/arousal/UnregisterFromParent()
 	. = ..()
@@ -67,6 +69,7 @@
 	UnregisterSignal(parent, COMSIG_SEX_FREEZE_AROUSAL)
 	UnregisterSignal(parent, COMSIG_SEX_GET_AROUSAL)
 	UnregisterSignal(parent, COMSIG_SEX_RECEIVE_ACTION)
+	UnregisterSignal(parent, COMSIG_SEX_GENERIC_ACTION)
 	UnregisterSignal(parent, COMSIG_SEX_ADJUST_EDGING)
 	UnregisterSignal(parent, COMSIG_SEX_SET_EDGING)
 	UnregisterSignal(parent, COMSIG_SEX_SET_HOLDING)
@@ -76,6 +79,7 @@
 	UnregisterSignal(parent, COMSIG_SEX_HOLE_AFTER_REMOVE)
 	UnregisterSignal(parent, COMSIG_SEX_ADJUST_ORGASM_PROG)
 	UnregisterSignal(parent, COMSIG_SEX_SET_ORGASM_PROG)
+	UnregisterSignal(parent, COMSIG_SEX_ORGASM)
 
 /datum/component/arousal/process()
 	handle_charge()
@@ -208,6 +212,101 @@
 /datum/component/arousal/proc/set_edging(datum/source, amount)
 	edging_charge = clamp(amount, 0, MAX_EDGING)
 
+/datum/component/arousal/proc/receive_generic_sex_action(datum/source, mob/living/carbon/human/action_target, arousal_amt, pain_amt, orgasm_prog_amt, action_initiator)
+	var/mob/living/user = parent
+	var/giving = action_target != action_initiator
+	var/datum/sex_action/generic/s_action = new()
+
+	if(user.stat == DEAD)
+		arousal_amt = 0
+		pain_amt = 0
+		orgasm_prog_amt = 0
+	var/applied_resist = RESIST_NONE
+	var/applied_force = SEX_FORCE_MID
+	var/datum/sex_session/s_session = get_sex_session(action_target, action_target)
+
+	if(s_session)
+		applied_resist = s_session.get_current_resist()
+		applied_force = s_session.get_current_force()
+
+	var/isnymph = FALSE
+	if(HAS_TRAIT(user, TRAIT_NYMPHO_CURSE) || user.has_quirk(/datum/quirk/vice/lovefiend))
+		isnymph = TRUE
+
+	if(user.has_status_effect(/datum/status_effect/debuff/orgasmbroken))
+		if(isnymph)
+			arousal_amt *= 2
+		else
+			arousal_amt *= 1.5
+		update_aching(1, giving)
+		var/lovermessage = pick("This feels too good!", "I must never stop!", "I want MORE!", "I need this!")
+		if(prob(15))
+			to_chat(user, span_love(lovermessage))
+
+	else if(user.has_status_effect(/datum/status_effect/debuff/cumbrained))
+		update_aching(5, giving)
+		var/lovermessage
+		if(!isnymph)
+			arousal_amt *= 0.5
+			lovermessage = pick("My mind is going blank!", "I'm too spent!", "This is too much!")
+		else
+			lovermessage = pick("This feels too good!", "I must never stop!", "I want MORE!", "I need this!", "I LOVE this!")
+		if(prob(15))
+			to_chat(user, span_love(lovermessage))
+
+
+	else if(user.has_status_effect(/datum/status_effect/debuff/loinspent))
+		update_aching(2, giving)
+		var/lovermessage
+		if(!isnymph)
+			arousal_amt *= 0.8
+			lovermessage = pick("This is starting to feel unpleasant...", "Maybe I should rest soon...", "My loins are starting to chafe a bit.")
+		else
+			lovermessage = pick("This is starting to feel interesting.", "We're getting there...", "I love this feeling.")
+		if(prob(15))
+			to_chat(user, span_love(lovermessage))
+
+	if(user.has_status_effect(/datum/status_effect/edging_overstimulation))
+		arousal_amt *= 2
+		if(prob(15))
+			var/stimmessage
+			stimmessage = pick("I'm too sensitive!", "There's too much pleasure!")
+			to_chat(user, span_love(stimmessage))
+
+	if(arousal > 35 && applied_resist > RESIST_NONE)
+		var/resmessage
+		if(user.has_status_effect(/datum/status_effect/debuff/cumbrained))
+			if(prob(15))
+				resmessage = pick("I can't hold in the pleasure!", "My mind is blank, I can't concentrate on not cumming!")
+				to_chat(user, span_love(resmessage))
+		else
+			arousal_amt *= get_resist_multiplier(applied_resist)
+			orgasm_prog_amt *= get_resist_multiplier(applied_resist)
+			if(prob(5))
+				resmessage = pick("I focus on holding in the pleasure.", "I concentrate on trying not to cum...")
+				to_chat(user, span_love(resmessage))
+
+	if(arousal > AROUSAL_EDGING_THRESHOLD)
+		adjust_edging(source, arousal_amt / 3)
+
+	if(is_spent() || is_manhood_overstimulated())
+		arousal_amt *= 0.8
+		update_aching(8, giving)
+		if(prob(5))
+			var/spentmessage = pick("I need to let my loins rest!", "I came too much too quickly!")
+			to_chat(user, span_warn(spentmessage))
+
+	if(!arousal_frozen)
+		adjust_arousal(source, arousal_amt)
+
+	orgasm_prog_amt *= CLAMP(arousal / 60, 0.3, 2)
+	adjust_orgasm_prog(parent, orgasm_prog_amt)
+
+	damage_from_pain(pain_amt, giving)
+	try_ejaculate(s_action, action_initiator, action_target, giving)
+	try_do_moan(arousal_amt, pain_amt, applied_force, giving)
+	try_do_pain_effect(pain_amt, giving)
+
 /datum/component/arousal/proc/receive_sex_action(datum/source, datum/sex_action/s_action, mob/living/carbon/human/action_initiator, mob/living/carbon/human/action_target, arousal_amt, pain_amt, orgasm_prog_amt, giving, applied_force, applied_speed, applied_resist)
 	var/mob/living/user = parent
 
@@ -262,9 +361,9 @@
 						if(prob(3))
 							to_chat(devouser, span_info("I feel Viiritri guide me."))*/
 
-	var/isnymph = 0
+	var/isnymph = FALSE
 	if(HAS_TRAIT(user, TRAIT_NYMPHO_CURSE) || user.has_quirk(/datum/quirk/vice/lovefiend))
-		isnymph = 2
+		isnymph = TRUE
 	if(user.has_status_effect(/datum/status_effect/debuff/orgasmbroken))
 		if(isnymph)
 			arousal_amt *= 2
@@ -281,7 +380,7 @@
 			arousal_amt *= 0.5
 			lovermessage = pick("My mind is going blank!", "I'm too spent!", "This is too much!")
 		else
-			lovermessage = pick("My mind is getting fucked out!", "I'm soo full!", "I LOVE this!")
+			lovermessage = pick("This feels too good!", "I must never stop!", "I want MORE!", "I need this!", "I LOVE this!")
 		if(prob(15))
 			to_chat(user, span_love(lovermessage))
 	else if(user.has_status_effect(/datum/status_effect/debuff/loinspent))
@@ -355,6 +454,9 @@
 	if(!can_climax())
 		return
 	ejaculate(s_action, action_initiator, action_target, giving)
+
+/datum/component/arousal/proc/manual_orgasm(datum/source)
+	ejaculate()
 
 /datum/component/arousal/proc/ejaculate(datum/sex_action/s_action, mob/living/carbon/human/action_initiator, mob/living/carbon/human/action_target, giving = FALSE)
 
