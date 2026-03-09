@@ -3,7 +3,7 @@
 #define LEATHER_INT 3
 #define CLOTH_INT 3
 
-/datum/quirk/vice/goodman
+/datum/quirk/peculiarity/goodman
 	name = "Good man"
 	desc = "I try to live by honor and law. I help those in need, respect the authorities, and avoid needless cruelty. \
 	My reputation as a good and honest man precedes me, and people often expect me to act with fairness and restraint. \
@@ -11,7 +11,7 @@
 	Criminal behavior, cruelty, and senseless violence go against your character. \
 	Others may seek your help, rely on your judgment, or hold you to higher moral standards. \
 	Play responsibly and stay true to your principles."
-	point_value = 3
+	point_value = 0
 	incompatible_quirks = list(/datum/quirk/vice/wanted)
 
 /obj/item
@@ -20,24 +20,7 @@
 /obj/item/Initialize()
 	. = ..()
 
-	if (attack_verb)
-		attack_verb = typelist("attack_verb", attack_verb)
-
-	if(sharpness)
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
-	else
-		max_blade_int = 0
-		blade_int = 0
-
-	// Random sharpness
-	if(max_blade_int && !blade_int)
-		blade_int = max_blade_int + rand(-(max_blade_int * 0.4), 0)
-
 	apply_item_scaling()
-
-	if(!pixel_x && !pixel_y && !bigboy)
-		pixel_x = rand(-5,5)
-		pixel_y = rand(-5,5)
 
 
 /obj/item/proc/apply_item_scaling()
