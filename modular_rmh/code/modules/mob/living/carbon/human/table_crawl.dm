@@ -1,3 +1,8 @@
+#define TABLE_CRAWL_BONK_STUN (5 SECONDS)
+#define TABLE_CRAWL_BONK_COOLDOWN (1 SECONDS)
+#define TABLE_CRAWL_BONK_SOUND_VOLUME 100
+#define TABLE_CRAWL_UNDER_LAYER_OFFSET 0.1
+
 /mob/living/carbon/human
 	var/tmp/table_crawl_state_enabled = FALSE
 	var/tmp/table_crawl_under_table = FALSE
@@ -55,18 +60,10 @@
 	return TRUE
 
 /mob/living/carbon/human/proc/can_start_table_crawl()
-	if(!can_table_crawl())
-		return FALSE
-	return resting
+	return can_table_crawl() && resting
 
 /mob/living/carbon/human/proc/can_remain_table_crawl()
-	if(buckled)
-		return FALSE
-	if(body_position != LYING_DOWN)
-		return FALSE
-	if(mob_size >= MOB_SIZE_LARGE)
-		return FALSE
-	return resting
+	return !buckled && body_position == LYING_DOWN && mob_size < MOB_SIZE_LARGE && resting
 
 /mob/living/carbon/human/proc/get_table_crawl_table(atom/location = loc)
 	var/turf/table_turf = get_turf(location)
@@ -170,20 +167,18 @@
 
 /mob/living/carbon/human/proc/table_crawl_head_bonk()
 	var/obj/structure/table/target_table = get_table_crawl_table()
-	var/atom/sound_source = src
+	var/atom/sound_source = target_table || src
 	var/table_name = target_table ? "[target_table]" : "the underside of the table"
-	if(target_table)
-		sound_source = target_table
 
 	visible_message(span_warning("[src] bumps their head on [table_name]!"), span_warning("You bump your head on [table_name]!"))
-	playsound(sound_source, "genblunt", 100, TRUE)
-	Stun(5 SECONDS)
+	playsound(sound_source, "genblunt", TABLE_CRAWL_BONK_SOUND_VOLUME, TRUE)
+	Stun(TABLE_CRAWL_BONK_STUN)
 
 /mob/living/carbon/human/proc/try_table_crawl_head_bonk()
 	if(!table_crawl_under_table || !get_table_crawl_table())
 		return FALSE
 	if(world.time >= table_crawl_next_bonk)
-		table_crawl_next_bonk = world.time + 1 SECONDS
+		table_crawl_next_bonk = world.time + TABLE_CRAWL_BONK_COOLDOWN
 		table_crawl_head_bonk()
 	return TRUE
 
@@ -218,7 +213,7 @@
 
 /mob/living/carbon/human/proc/apply_table_crawl_visual()
 	reset_offsets("structure_climb")
-	layer = TABLE_LAYER - 0.1
+	layer = TABLE_LAYER - TABLE_CRAWL_UNDER_LAYER_OFFSET
 	plane = GAME_PLANE_LOWER
 
 /mob/living/carbon/human/proc/clear_table_crawl_passtable()
@@ -336,7 +331,6 @@
 
 	var/obj/structure/table/target_table = obstacle
 	source.try_offer_table_crawl(target_table, get_turf(target_table))
-	return NONE
 
 /datum/element/table_crawl/proc/on_moved(mob/living/carbon/human/source, atom/old_loc, direction, forced)
 	SIGNAL_HANDLER
@@ -344,7 +338,6 @@
 		source.table_crawl_pending_entry = FALSE
 		if(source.get_table_crawl_table())
 			source.table_crawl_under_table = TRUE
-			source.apply_table_crawl_visual()
 	source.clear_table_crawl_passtable()
 	source.refresh_table_crawl()
 
@@ -352,6 +345,8 @@
 	SIGNAL_HANDLER
 	if(source.table_crawl_under_table && !new_resting && source.body_position == LYING_DOWN)
 		source.try_table_crawl_head_bonk()
+		source.queue_table_crawl_restore()
+		return
 	source.refresh_table_crawl()
 
 /datum/element/table_crawl/proc/on_body_position_change(mob/living/carbon/human/source, new_body_position, old_body_position)
@@ -404,3 +399,8 @@
 	if(active)
 		Deactivate()
 	return ..()
+
+#undef TABLE_CRAWL_BONK_STUN
+#undef TABLE_CRAWL_BONK_COOLDOWN
+#undef TABLE_CRAWL_BONK_SOUND_VOLUME
+#undef TABLE_CRAWL_UNDER_LAYER_OFFSET
