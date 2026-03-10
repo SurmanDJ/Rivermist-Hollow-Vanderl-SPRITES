@@ -39,7 +39,9 @@
 	if(Q && !Q.complete && isitem(parent))
 		var/obj/item/I = parent
 		I.remove_filter(outline_filter_id)
-		if(Q.quest_type == QUEST_COURIER && (Q.target_delivery_item && istype(I, Q.target_delivery_item)) && !QDELETED(I))
+		if(Q.quest_type == QUEST_COURIER && istype(I, /obj/item/parcel) && !QDELETED(I))
+			qdel(I)
+		else if(Q.quest_type == QUEST_COURIER && Q.target_delivery_item && istype(I, Q.target_delivery_item) && !QDELETED(I))
 			Q.target_delivery_item = null
 			qdel(I)
 
@@ -67,10 +69,14 @@
 	if(!Q || Q.complete)
 		return
 
+	var/mob/living/target_mob = parent
+	if(target_mob.stat == DEAD)
+		return
+
 	var/list/user_scrolls = find_quest_scrolls(user)
 	for(var/obj/item/paper/scroll/quest/scroll in user_scrolls)
 		var/datum/quest/user_quest = scroll.assigned_quest
-		if(user_quest && (user_quest.quest_type in list(QUEST_KILL_EASY, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_OUTLAW)) && istype(parent, user_quest.target_mob_type))
+		if(user_quest && (user_quest.quest_type in list(QUEST_HUNT, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOSS)) && istype(parent, user_quest.target_mob_type))
 			examine_list += span_notice("This looks like the target of your quest: [user_quest.title]!")
 			if(Q.target_spawn_area != get_area(get_turf(src)))
 				examine_list += span_notice("It was last reported in the [Q.target_spawn_area] area, however.")
@@ -116,19 +122,70 @@
 		var/obj/item/I = parent
 		I.remove_filter(outline_filter_id)
 		// Only delete the item if it's part of an incomplete fetch or courier quest
-		if(Q && !Q.complete && ((Q.quest_type == QUEST_RETRIEVAL && istype(I, Q.target_item_type)) || (Q.quest_type == QUEST_COURIER && istype(I, Q.target_delivery_item))))
+		if(Q && !Q.complete && ((Q.quest_type == QUEST_RETRIEVAL && istype(I, Q.target_item_type)) || (Q.quest_type == QUEST_COURIER && (istype(I, /obj/item/parcel) || (Q.target_delivery_item && istype(I, Q.target_delivery_item))))))
 			qdel(I)
 	qdel(src)
 
 // ==================== SPECIALIZED COMPONENT SUBTYPES ====================
 
-/// Component for kill/clearout/outlaw quests - handles mob death
+/// Component for hunt/clearout/raid/boss quests - handles mob death
 /datum/component/quest_object/kill
+	var/completion_counted = FALSE
 
 /datum/component/quest_object/kill/Initialize(datum/quest/target_quest)
 	. = ..()
 	if(. == COMPONENT_INCOMPATIBLE)
 		return
+	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_target_qdeleting))
+
+/datum/component/quest_object/kill/proc/complete_target(mob/living/target_mob)
+	if(completion_counted)
+		return FALSE
+
+	var/datum/quest/Q = quest_ref.resolve()
+	if(!Q || Q.complete || !istype(target_mob, Q.target_mob_type))
+		return FALSE
+
+	completion_counted = TRUE
+	target_mob.remove_filter(outline_filter_id)
+	Q.remove_tracked_atom(target_mob)
+	Q.progress_current++
+	Q.on_progress_update()
+	qdel(src)
+	return TRUE
+
+/datum/component/quest_object/kill/on_target_death(mob/living/dead_mob, gibbed)
+	SIGNAL_HANDLER
+
+	complete_target(dead_mob)
+
+/datum/component/quest_object/kill/proc/on_target_qdeleting(datum/source)
+	SIGNAL_HANDLER
+
+	var/mob/living/target_mob = parent
+	if(target_mob?.stat == DEAD)
+		complete_target(target_mob)
+
+/datum/component/quest_object/kill/boss/complete_target(mob/living/target_mob)
+	if(completion_counted)
+		return FALSE
+
+	var/datum/quest/Q = quest_ref.resolve()
+	if(!Q || Q.complete || !istype(target_mob, Q.target_mob_type))
+		return FALSE
+
+	maybe_drop_boss_ring(target_mob)
+	return ..()
+
+/datum/component/quest_object/kill/boss/proc/maybe_drop_boss_ring(mob/living/target_mob)
+	if(!prob(50))
+		return
+
+	var/turf/drop_turf = get_turf(target_mob)
+	if(!drop_turf)
+		return
+
+	new /obj/item/clothing/ring/gold/boss_prize(drop_turf)
 
 /// Component for retrieval quests - handles item collection
 /datum/component/quest_object/retrieval

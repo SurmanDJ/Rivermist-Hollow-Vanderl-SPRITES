@@ -11,6 +11,7 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	var/datum/quest/assigned_quest
 	var/last_compass_direction = ""
 	var/last_z_level_hint = ""
+	var/last_target_map_text = ""
 	var/last_whisper = 0 // Last time the scroll whispered to the user
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | INDESTRUCTIBLE | UNACIDABLE
 	max_integrity = 1000
@@ -29,25 +30,21 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 /obj/item/paper/scroll/quest/Destroy()
 	GLOB.quest_scrolls -= src
 	if(assigned_quest)
-		// Return deposit if scroll is destroyed before completion
 		if(!assigned_quest.complete)
-			var/refund = assigned_quest.calculate_deposit()
-
-			// First try to return to quest giver if available
-			var/mob/giver = assigned_quest.quest_giver_reference?.resolve()
-			if(giver && (giver in SStreasury.bank_accounts))
-				SStreasury.bank_accounts[giver] += refund
-				SStreasury.treasury_value -= refund
-				SStreasury.log_entries += "-[refund] from treasury (contract scroll destroyed refund to giver [giver.real_name])"
-			// Otherwise try quest receiver
-			else if(assigned_quest.quest_receiver_reference)
-				var/mob/receiver = assigned_quest.quest_receiver_reference.resolve()
-				if(receiver && (receiver in SStreasury.bank_accounts))
-					SStreasury.bank_accounts[receiver] += refund
+			var/refund = assigned_quest.deposit_amount || assigned_quest.calculate_deposit(assigned_quest.reward_amount)
+			if(refund > 0)
+				var/mob/giver = assigned_quest.quest_giver_reference?.resolve()
+				if(giver && (giver in SStreasury.bank_accounts))
+					SStreasury.bank_accounts[giver] += refund
 					SStreasury.treasury_value -= refund
-					SStreasury.log_entries += "-[refund] from treasury (contract scroll destroyed refund to receiver [receiver.real_name])"
+					SStreasury.log_entries += "-[refund] from treasury (contract scroll destroyed refund to giver [giver.real_name])"
+				else if(assigned_quest.quest_receiver_reference)
+					var/mob/receiver = assigned_quest.quest_receiver_reference.resolve()
+					if(receiver && (receiver in SStreasury.bank_accounts))
+						SStreasury.bank_accounts[receiver] += refund
+						SStreasury.treasury_value -= refund
+						SStreasury.log_entries += "-[refund] from treasury (contract scroll destroyed refund to receiver [receiver.real_name])"
 
-		// Clean up the quest
 		qdel(assigned_quest)
 		assigned_quest = null
 	STOP_PROCESSING(SSprocessing, src)
@@ -87,7 +84,7 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 		message = "[last_compass_direction]"
 		if(last_z_level_hint)
 			message += " ([last_z_level_hint])"
-		to_chat(quest_bearer, span_info("The scroll whispers to you, the target is [message]"))
+		to_chat(quest_bearer, span_info("The scroll whispers to you, the target is [message]."))
 
 /obj/item/paper/scroll/quest/examine(mob/user)
 	. = ..()
@@ -168,13 +165,13 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 
 	COOLDOWN_START(src, next_compass_scan, 2 SECONDS)
 
-	var/turf/target_turf = assigned_quest.get_target_location()
-	if(!target_turf)
-		to_chat(user, span_warning("The scroll cannot sense its target."))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 	var/turf/user_turf = get_turf(user)
 	if(!user_turf)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	var/turf/target_turf = assigned_quest.get_target_location(user_turf)
+	if(!target_turf)
+		to_chat(user, span_warning("The scroll cannot sense its target."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	var/turf/compass_target = target_turf
@@ -186,9 +183,9 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 			var/obj/structure/fluff/traveltile/portal = find_portal_to_area(target_area, user_turf)
 			if(portal)
 				compass_target = get_turf(portal)
-				portal_hint = "traverse to [target_area.name]"
+				portal_hint = "route to [target_area.name] on another map"
 			else
-				to_chat(user, span_info("The scroll pulses faintly - the target is in [target_area.name], but you sense no path from here."))
+				to_chat(user, span_info("The scroll pulses faintly - the target is on another map, somewhere in [target_area.name], but you sense no path from here."))
 				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		else
 			to_chat(user, span_info("The scroll pulses faintly - the target is on a different level."))
@@ -240,8 +237,9 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	scroll_text += "<center><b>[assigned_quest.get_title()]</b></center><br>"
 	scroll_text += "<b>Issued by:</b> [assigned_quest.quest_giver_name ? "[assigned_quest.quest_giver_name]" : "The Mercenary's Guild"].<br>"
 	scroll_text += "<b>Issued to:</b> [assigned_quest.quest_receiver_name ? assigned_quest.quest_receiver_name : "whoever it may concern"].<br>"
+	scroll_text += "<b>Group:</b> [assigned_quest.contract_group].<br>"
 	scroll_text += "<b>Type:</b> [assigned_quest.quest_type] contract.<br>"
-	scroll_text += "<b>Difficulty:</b> [assigned_quest.quest_difficulty].<br><br>"
+	scroll_text += "<b>Threat:</b> [assigned_quest.get_tier_label()].<br><br>"
 
 	if(last_compass_direction)
 		scroll_text += "<b>Direction:</b> The target is [last_compass_direction]. "
@@ -255,8 +253,12 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	if(assigned_quest.progress_required > 1)
 		scroll_text += "<b>Progress:</b> [assigned_quest.progress_current]/[assigned_quest.progress_required]<br>"
 
+	var/current_map_text = assigned_quest.get_target_map_text(get_turf(src))
+	if(!assigned_quest.complete || !last_target_map_text || findtext(current_map_text, "Error:") != 1)
+		last_target_map_text = current_map_text
+	scroll_text += "<b>Map:</b> [last_target_map_text]<br>"
 	scroll_text += "<b>Location:</b> [assigned_quest.get_location_text()]<br>"
-	scroll_text += "<br><b>Reward:</b> [assigned_quest.reward_amount] mammon upon completion<br>"
+	scroll_text += "<br><b>Reward:</b> [assigned_quest.reward_amount] amna upon completion<br>"
 
 	if(assigned_quest.complete)
 		scroll_text += "<br><center><b>CONTRACT COMPLETE</b></center>"
@@ -265,13 +267,13 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 		if(assigned_quest.quest_giver_reference)
 			scroll_text += "<br><br><i>Return this to [assigned_quest.quest_giver_name] for increased pay!</i>"
 		else
-			scroll_text += "<br><br><i>Consider getting in touch with a Merchant or a Steward for your next quest for increased pay!</i>"
+			scroll_text += "<br><br><i>Consider getting in touch with a Merchant, Banker, or Steward for your next quest for increased pay!</i>"
 	else
 		scroll_text += "<br><i>The magic in this scroll will update as you progress.</i>"
 		if(assigned_quest.quest_giver_reference)
 			scroll_text += "<br><br><i>Returning this to [assigned_quest.quest_giver_name] upon completion will yield increased pay!</i>"
 		else
-			scroll_text += "<br><br><i>Consider getting in touch with a Merchant or a Steward for your next quest for increased pay!</i>"
+			scroll_text += "<br><br><i>Consider getting in touch with a Merchant, Banker, or Steward for your next quest for increased pay!</i>"
 
 	info = scroll_text
 	update_icon()
@@ -304,9 +306,9 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	last_compass_direction = "Searching for target..."
 	last_z_level_hint = ""
 
-	var/turf/target_turf = assigned_quest.get_target_location()
+	var/turf/target_turf = assigned_quest.get_target_location(user_turf)
 	if(!target_turf)
-		last_compass_direction = "location unknown"
+		last_compass_direction = "at an unknown location"
 		last_z_level_hint = ""
 		return
 
@@ -318,14 +320,14 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 			var/obj/structure/fluff/traveltile/portal = find_portal_to_area(target_area, user_turf)
 			if(portal)
 				compass_target = get_turf(portal)
-				last_z_level_hint = "traverse to [target_area.name]"
+				last_z_level_hint = "use a route to [target_area.name] on another map"
 			else
-				last_z_level_hint = "in [target_area.name]"
+				last_z_level_hint = "on another map: [target_area.name]"
 		else
 			var/z_diff = abs(target_turf.z - user_turf.z)
 			last_z_level_hint = target_turf.z > user_turf.z ? \
-				"[z_diff] level\s above you" : \
-				"[z_diff] level\s below you"
+				"[z_diff] [z_diff == 1 ? "level" : "levels"] above you" : \
+				"[z_diff] [z_diff == 1 ? "level" : "levels"] below you"
 
 	// Use compass_target (portal or actual target) for all direction math below
 	var/dx = compass_target.x - user_turf.x
@@ -334,8 +336,9 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 
 	// If very close, don't show direction
 	if(distance <= 7)
-		last_compass_direction = "is nearby"
-		last_z_level_hint = ""
+		last_compass_direction = "nearby"
+		if(target_turf.z == user_turf.z)
+			last_z_level_hint = ""
 		return
 
 	// Get precise direction text
@@ -355,7 +358,7 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 		if(101 to INFINITY)
 			distance_text = "far away"
 
-	last_compass_direction = "[distance_text] to the [direction_text]"
+	last_compass_direction = distance_text ? "[distance_text] to the [direction_text]" : "to the [direction_text]"
 	if(!last_z_level_hint)
 		last_z_level_hint = "on this level"
 

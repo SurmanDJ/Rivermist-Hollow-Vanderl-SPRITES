@@ -43,57 +43,84 @@
 /obj/structure/fake_machine/contractledger/attack_hand(mob/living/carbon/human/user)
 	if(!ishuman(user))
 		return
-	// Inshallah I'll make this TGUI one day.
+	// Keep this browser-driven; native list input is faster here than TGUI.
 	var/contents = "<center><h2>Grand Contract Ledger</h2>"
 	contents += "<a href='?src=[REF(src)];consultcontracts=1'>Consult Contracts</a><br>"
 	contents += "<a href='?src=[REF(src)];turnincontract=1'>Turn in Contract</a><br>"
 	contents += "<a href='?src=[REF(src)];abandoncontract=1'>Abandon Contract</a><br>"
-	var/datum/job/mob_job = user.job ? SSjob.GetJob(user.job) : null
-	if(mob_job?.is_quest_giver)
+	if(is_quest_handler(user))
 		contents += "<a href='?src=[REF(src)];printcontracts=1'>Print Issued Contracts</a><br>"
 	contents += "</center>"
 	var/datum/browser/popup = new(user, "Grand Contract Ledger", "", 500, 300)
 	popup.set_content(contents)
 	popup.open()
 
+/obj/structure/fake_machine/contractledger/proc/is_quest_handler(mob/user)
+	if(!user)
+		return FALSE
+
+	var/datum/job/mob_job = user.job ? SSjob.GetJob(user.job) : null
+	if(!mob_job)
+		return FALSE
+
+	var/job_name = lowertext(mob_job.title ? mob_job.title : user.job)
+	return mob_job.is_quest_giver || findtext(job_name, "merchant") || findtext(job_name, "banker") || findtext(job_name, "steward")
+
+/obj/structure/fake_machine/contractledger/proc/is_boss_raid_issuer(mob/user)
+	if(!user)
+		return FALSE
+
+	var/datum/job/mob_job = user.job ? SSjob.GetJob(user.job) : null
+	if(!mob_job)
+		return FALSE
+
+	var/job_name = lowertext(mob_job.title ? mob_job.title : user.job)
+	return is_burgmeister_job(mob_job) || \
+		findtext(job_name, "councilor") || \
+		is_adventurers_guildmaster_job(mob_job) || \
+		is_adventurers_assistant_job(mob_job) || \
+		(findtext(job_name, "guildmaster") && findtext(job_name, "adventurer")) || \
+		(findtext(job_name, "assistant") && findtext(job_name, "adventurer"))
+
+/obj/structure/fake_machine/contractledger/proc/create_quest_for_type(contract_type)
+	var/quest_path = GLOB.global_quest_registry[contract_type]
+	if(!quest_path)
+		return null
+	return new quest_path
+
+/obj/structure/fake_machine/contractledger/proc/get_available_contract_groups(mob/user)
+	var/list/group_choices = list()
+	for(var/contract_group in GLOB.global_quest_contract_groups)
+		var/list/types_in_group = get_available_contract_types(user, contract_group)
+		if(length(types_in_group))
+			group_choices[contract_group] = contract_group
+	return group_choices
+
+/obj/structure/fake_machine/contractledger/proc/get_available_contract_types(mob/user, contract_group)
+	var/list/type_choices = list()
+	var/list/group_types = GLOB.global_quest_contract_groups[contract_group] || list()
+
+	for(var/contract_type in group_types)
+		if((contract_type in list(QUEST_RAID, QUEST_BOSS)) && !is_boss_raid_issuer(user))
+			continue
+
+		var/datum/quest/template = create_quest_for_type(contract_type)
+		if(!template)
+			continue
+
+		type_choices["[template.quest_type] ([template.get_tier_band_text()])"] = contract_type
+		qdel(template)
+
+	return type_choices
+
 /obj/structure/fake_machine/contractledger/proc/consult_contracts(mob/user)
 	if(!(user in SStreasury.bank_accounts))
 		say("You have no bank account.")
 		return
 
-	var/list/difficulty_data = list(
-		QUEST_DIFFICULTY_EASY = list(deposit = QUEST_DEPOSIT_EASY),
-		QUEST_DIFFICULTY_MEDIUM = list(deposit = QUEST_DEPOSIT_MEDIUM),
-		QUEST_DIFFICULTY_HARD = list(deposit = QUEST_DEPOSIT_HARD)
-	)
-
-	// Create a list with formatted difficulty choices showing deposits
-	var/list/difficulty_choices = list()
-	for(var/difficulty in difficulty_data)
-		var/deposit = difficulty_data[difficulty]["deposit"]
-		difficulty_choices["[difficulty] ([deposit] mammon deposit)"] = difficulty
-
-	var/selection = tgui_input_list(user, "Select contract difficulty (deposit required)", "CONTRACTS", difficulty_choices)
-	if(!selection)
-		return
-
-	// Get the actual difficulty key from our formatted choice
-	var/actual_difficulty = difficulty_choices[selection]
-	var/deposit = difficulty_data[actual_difficulty]["deposit"]
-
-	if(SStreasury.bank_accounts[user] < deposit)
-		say("Insufficient balance funds. You need [deposit] mammons in your meister.")
-		return
-
-	var/type_choices = GLOB.global_quest_types
-
-	var/type_selection = tgui_input_list(user, "Select contract type", "CONTRACTS", type_choices[actual_difficulty])
-
-	if(!type_selection)
-		return
-
 	var/datum/job/mob_job = user.job ? SSjob.GetJob(user.job) : null
-	if(!mob_job?.is_quest_giver)
+	var/is_handler = is_quest_handler(user)
+	if(!is_handler)
 		var/quest_number = 0
 		for(var/obj/item/paper/scroll/quest/quest_scroll in GLOB.quest_scrolls)
 			var/datum/weakref/weakref_datum = WEAKREF(user)
@@ -104,32 +131,42 @@
 			say("You have reached the maximum number of active quests. You can take up to [max_quests_for_job] active quests at a time.")
 			return
 
-	// Instantiate appropriate quest subtype
-	var/datum/quest/attached_quest
-	switch(type_selection)
-		if(QUEST_RETRIEVAL)
-			attached_quest = new /datum/quest/retrieval()
-		if(QUEST_KILL_EASY)
-			attached_quest = new /datum/quest/kill/easy()
-		if(QUEST_COURIER)
-			attached_quest = new /datum/quest/courier()
-		if(QUEST_CLEAR_OUT)
-			attached_quest = new /datum/quest/kill/clearout()
-		if(QUEST_RAID)
-			attached_quest = new /datum/quest/kill/raid()
-		if(QUEST_OUTLAW)
-			attached_quest = new /datum/quest/kill/outlaw()
+	var/list/group_choices = get_available_contract_groups(user)
+	if(!length(group_choices))
+		say("No contract groups are currently available.")
+		return
+
+	var/group_selection = input(user, "Select contract group", "CONTRACTS") as null|anything in group_choices
+	if(!group_selection)
+		return
+
+	var/selected_group = group_choices[group_selection]
+	var/list/type_choices = get_available_contract_types(user, selected_group)
+	if(!length(type_choices))
+		say("No contracts are currently available in that group.")
+		return
+
+	var/type_selection_label = input(user, "Select contract type", "CONTRACTS") as null|anything in type_choices
+	if(!type_selection_label)
+		return
+
+	var/type_selection = type_choices[type_selection_label]
+	var/datum/quest/attached_quest = create_quest_for_type(type_selection)
 
 	if(!attached_quest)
 		to_chat(user, span_warning("Invalid quest type selected!"))
 		return
 
-	// Configure quest
-	attached_quest.quest_difficulty = actual_difficulty
-	attached_quest.deposit_amount = attached_quest.calculate_deposit()
+	var/list/tier_choices = attached_quest.get_tier_choices()
+	var/tier_selection = input(user, "Select contract threat tier", "CONTRACTS") as null|anything in tier_choices
+	if(!tier_selection)
+		qdel(attached_quest)
+		return
+
+	attached_quest.requested_tier = tier_choices[tier_selection]
 
 	// Set giver or receiver
-	if(mob_job?.is_quest_giver)
+	if(is_handler)
 		attached_quest.quest_giver_name = user.real_name
 		attached_quest.quest_giver_reference = WEAKREF(user)
 	else
@@ -137,7 +174,7 @@
 		attached_quest.quest_receiver_name = user.real_name
 
 	// Find appropriate landmark
-	var/obj/effect/landmark/quest_spawner/chosen_landmark = find_quest_landmark(actual_difficulty, type_selection)
+	var/obj/effect/landmark/quest_spawner/chosen_landmark = find_quest_landmark(attached_quest.requested_tier, type_selection)
 	if(!chosen_landmark)
 		to_chat(user, span_warning("No suitable location found for this contract!"))
 		qdel(attached_quest)
@@ -151,30 +188,43 @@
 
 	// Create scroll
 	var/obj/item/paper/scroll/quest/spawned_scroll = new(get_turf(src))
-	user.put_in_hands(spawned_scroll)
-	log_quest(user.ckey, user.mind, user, "Take [attached_quest.quest_type]")
-	spawned_scroll.base_icon_state = attached_quest.get_scroll_icon()
 	spawned_scroll.assigned_quest = attached_quest
 	attached_quest.quest_scroll = spawned_scroll
 	attached_quest.quest_scroll_ref = WEAKREF(spawned_scroll)
 
-	// Reward calculation comes after generation & scroll creation to factor in distance for courier quests
+	// Reward calculation comes after generation & scroll creation to factor in delivery/pickup distance.
 	attached_quest.reward_amount = attached_quest.calculate_reward(get_turf(chosen_landmark))
+	attached_quest.deposit_amount = attached_quest.calculate_deposit(attached_quest.reward_amount)
+	spawned_scroll.base_icon_state = attached_quest.get_scroll_icon()
+
+	if(SStreasury.bank_accounts[user] < attached_quest.deposit_amount)
+		to_chat(user, span_warning("Insufficient balance funds. You need [attached_quest.deposit_amount] amna in your meister."))
+		attached_quest.quest_scroll = null
+		attached_quest.quest_scroll_ref = null
+		attached_quest.deposit_amount = 0
+		spawned_scroll.assigned_quest = null
+		qdel(spawned_scroll)
+		qdel(attached_quest)
+		return
+
+	user.put_in_hands(spawned_scroll)
+	log_quest(user.ckey, user.mind, user, "Take [attached_quest.quest_type]")
 
 	// Update scroll text
 	spawned_scroll.update_quest_text()
 
 	// Charge deposit
-	SStreasury.bank_accounts[user] -= deposit
-	SStreasury.treasury_value += deposit
-	SStreasury.log_entries += "+[deposit] to treasury (quest deposit)"
+	SStreasury.bank_accounts[user] -= attached_quest.deposit_amount
+	SStreasury.treasury_value += attached_quest.deposit_amount
+	SStreasury.log_entries += "+[attached_quest.deposit_amount] to treasury (quest deposit)"
 
-/obj/structure/fake_machine/contractledger/proc/find_quest_landmark(difficulty, type)
-	// First try to find landmarks that match both difficulty AND type
-	var/list/correctest_landmarks = list()
+/obj/structure/fake_machine/contractledger/proc/find_quest_landmark(contract_tier, contract_type)
+	var/list/exact_landmarks = list()
+	var/list/closest_landmarks = list()
+	var/best_gap = INFINITY
 	GLOB.quest_landmarks_list = shuffle(GLOB.quest_landmarks_list)
 	for(var/obj/effect/landmark/quest_spawner/landmark in GLOB.quest_landmarks_list)
-		if(landmark.quest_difficulty != difficulty || !(type in landmark.quest_type))
+		if(!landmark.supports_contract_type(contract_type))
 			continue
 
 		var/has_clients_around = FALSE
@@ -187,31 +237,22 @@
 		if(has_clients_around)
 			continue
 
-		correctest_landmarks += landmark
-
-	if(length(correctest_landmarks))
-		return pick(correctest_landmarks)
-
-	// If none found, try landmarks that match just the difficulty
-	var/list/correcter_landmarks = list()
-	for(var/obj/effect/landmark/quest_spawner/landmark in GLOB.quest_landmarks_list)
-		if(landmark.quest_difficulty != difficulty)
+		if(landmark.supports_contract_tier(contract_tier))
+			exact_landmarks += landmark
 			continue
 
-		var/has_clients_around = FALSE
-		for(var/mob/M in get_hearers_in_view(world.view, landmark))
-			if(!M.client)
-				continue
+		var/tier_gap = landmark.get_tier_gap(contract_tier)
+		if(tier_gap < best_gap)
+			best_gap = tier_gap
+			closest_landmarks = list(landmark)
+		else if(tier_gap == best_gap)
+			closest_landmarks += landmark
 
-			has_clients_around = TRUE
+	if(length(exact_landmarks))
+		return pick(exact_landmarks)
 
-		if(has_clients_around)
-			continue
-
-		correcter_landmarks += landmark
-
-	if(length(correcter_landmarks))
-		return pick(correcter_landmarks)
+	if(length(closest_landmarks))
+		return pick(closest_landmarks)
 
 	return null
 
@@ -243,12 +284,11 @@
 		original_reward += base_reward
 
 		// Calculate deposit return
-		var/deposit_return = scroll.assigned_quest.calculate_deposit()
+		var/deposit_return = scroll.assigned_quest.deposit_amount || scroll.assigned_quest.calculate_deposit(scroll.assigned_quest.reward_amount)
 		total_deposit_return += deposit_return
 
 		// Apply Steward/Mechant bonus if applicable (only to the base reward)
-		var/datum/job/mob_job = user.job ? SSjob.GetJob(user.job) : null
-		if(mob_job?.is_quest_giver)
+		if(is_quest_handler(user))
 			reward += base_reward * QUEST_HANDLER_REWARD_MULTIPLIER
 		else
 			reward += base_reward
@@ -275,8 +315,8 @@
 
 	if(reward > 0)
 		say(reward > original_reward ? \
-			"Your handler assistance-increased reward of [reward] mammons has been dispensed! The difference is [reward - original_reward] mammons. ([tax_amt] mammons taxed.)" : \
-			"Your reward of [reward] mammons has been dispensed. ([tax_amt] mammons taxed.)")
+			"Your handler assistance-increased reward of [reward] amna has been dispensed! The difference is [reward - original_reward] amna. ([tax_amt] amna taxed.)" : \
+			"Your reward of [reward] amna has been dispensed. ([tax_amt] amna taxed.)")
 
 /obj/structure/fake_machine/contractledger/proc/abandon_contract(mob/user)
 	var/obj/item/paper/scroll/quest/abandoned_scroll = locate() in input_point
@@ -293,7 +333,7 @@
 		turn_in_contract(user)
 		return
 
-	var/refund = quest.calculate_deposit()
+	var/refund = quest.deposit_amount || quest.calculate_deposit(quest.reward_amount)
 
 	// First try to return to quest giver
 	var/mob/giver = quest.quest_giver_reference?.resolve()
@@ -309,23 +349,12 @@
 			SStreasury.bank_accounts[receiver] += refund
 			SStreasury.treasury_value -= refund
 			SStreasury.log_entries += "-[refund] from treasury (contract refund to volunteer)"
-			to_chat(user, span_notice("You receive a [refund] mammon refund for abandoning the contract."))
+			to_chat(user, span_notice("You receive a [refund] amna refund for abandoning the contract."))
 		else
-			cash_in(user, refund)
+			cash_in(user, refund, refund, 0)
 			SStreasury.treasury_value -= refund
 			SStreasury.log_entries += "-[refund] from treasury (contract refund)"
-			to_chat(user, span_notice("Your refund of [refund] mammon has been dispensed."))
-
-	// Clean up quest items
-	if(quest.quest_type == QUEST_COURIER && quest.target_delivery_item)
-		quest.target_delivery_item = null
-		for(var/obj/item/I in world)
-			if(istype(I, quest.target_delivery_item))
-				var/datum/component/quest_object/Q = I.GetComponent(/datum/component/quest_object)
-				if(Q && Q.quest_ref == WEAKREF(quest))
-					I.remove_filter("quest_item_outline")
-					qdel(Q)
-					qdel(I)
+			to_chat(user, span_notice("Your refund of [refund] amna has been dispensed."))
 
 	log_quest(user.ckey, user.mind, user, "Abandon [abandoned_scroll.assigned_quest.quest_type]")
 	abandoned_scroll.assigned_quest = null
@@ -355,10 +384,11 @@
 		report_text += "<b>Title:</b> [quest.title].<br>"
 		report_text += "<b>Issuer:</b> [quest.quest_giver_name ? quest.quest_giver_name : "Mercenary's Guild"].<br>"
 		report_text += "<b>Recipient:</b> [quest.quest_receiver_name ? quest.quest_receiver_name : "Unclaimed"].<br>"
+		report_text += "<b>Group:</b> [quest.contract_group].<br>"
 		report_text += "<b>Type:</b> [quest.quest_type].<br>"
-		report_text += "<b>Difficulty:</b> [quest.quest_difficulty].<br>"
+		report_text += "<b>Threat:</b> [quest.get_tier_label()].<br>"
 		report_text += "<b>Last Known Location:</b> [quest_area ? quest_area.name : "Unknown Location"].<br>"
-		report_text += "<b>Reward:</b> [quest.reward_amount] mammons.<br><br>"
+		report_text += "<b>Reward:</b> [quest.reward_amount] amna.<br><br>"
 
 	report.info = report_text
 	say("Contract report printed.")

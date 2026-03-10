@@ -5,7 +5,12 @@
 	var/datum/weakref/quest_receiver_reference
 	var/quest_receiver_name = ""
 	var/quest_type = ""
-	var/quest_difficulty = ""
+	var/contract_group = QUEST_GROUP_ERRANDS
+	var/requested_tier = QUEST_TIER_ROUTINE
+	var/threat_tier = QUEST_TIER_ROUTINE
+	var/minimum_tier = QUEST_TIER_ROUTINE
+	var/maximum_tier = QUEST_TIER_MYTHIC
+	var/base_reward_value = 0
 	var/reward_amount = 0
 	var/deposit_amount = 0
 	var/complete = FALSE
@@ -24,6 +29,10 @@
 	var/area/indoors/town/target_delivery_location
 	/// Location name for kill/clear quests
 	var/target_spawn_area = ""
+	/// Stable anchor coordinates for resolving the quest's map context.
+	var/target_anchor_x = 0
+	var/target_anchor_y = 0
+	var/target_anchor_z = 0
 
 	/// Scroll icon state
 	var/quest_icon = "scroll_quest"
@@ -48,11 +57,13 @@
 		if(QDELETED(target_atom))
 			continue
 
-		// Only delete the item if it's part of a fetch or courier quest
-		if(quest_type == QUEST_RETRIEVAL && istype(target_atom, target_item_type))
-			qdel(target_atom)
-		else if(quest_type == QUEST_COURIER && istype(target_atom, target_delivery_item))
-			qdel(target_atom)
+		if(!complete)
+			if(ismob(target_atom))
+				qdel(target_atom)
+			else if(quest_type == QUEST_RETRIEVAL && istype(target_atom, target_item_type))
+				qdel(target_atom)
+			else if(quest_type == QUEST_COURIER && (istype(target_atom, /obj/item/parcel) || (target_delivery_item && istype(target_atom, target_delivery_item))))
+				qdel(target_atom)
 
 		tracked_atoms -= tracked_weakref
 		qdel(tracked_weakref)
@@ -71,10 +82,245 @@
 /datum/quest/proc/add_tracked_atom(atom/movable/to_track)
 	tracked_atoms += WEAKREF(to_track)
 
+/datum/quest/proc/remove_tracked_atom(atom/movable/to_untrack)
+	if(!to_untrack)
+		return FALSE
+
+	for(var/datum/weakref/tracked_ref in tracked_atoms.Copy())
+		if(tracked_ref.resolve() != to_untrack)
+			continue
+
+		tracked_atoms -= tracked_ref
+		qdel(tracked_ref)
+		return TRUE
+
+	return FALSE
+
+/datum/quest/proc/set_target_anchor(atom/source)
+	var/turf/anchor_turf = get_turf(source)
+	if(!anchor_turf)
+		return FALSE
+
+	target_anchor_x = anchor_turf.x
+	target_anchor_y = anchor_turf.y
+	target_anchor_z = anchor_turf.z
+	return TRUE
+
+/datum/quest/proc/get_target_anchor_turf()
+	if(!target_anchor_x || !target_anchor_y || !target_anchor_z)
+		return null
+
+	return locate(target_anchor_x, target_anchor_y, target_anchor_z)
+
+/datum/quest/proc/get_map_file_for_turf(turf/target_turf)
+	if(!target_turf)
+		return null
+
+	var/map_file = level_trait(target_turf.z, ZTRAIT_MAP_FILE)
+	if(!map_file)
+		return null
+
+	return lowertext("[map_file]")
+
+/datum/quest/proc/get_nearest_tracked_location(turf/reference_turf, include_held_items = TRUE)
+	var/turf/origin_turf = reference_turf ? get_turf(reference_turf) : (quest_scroll ? get_turf(quest_scroll) : null)
+	if(!origin_turf)
+		return null
+
+	var/turf/closest
+	var/min_dist = INFINITY
+	var/list/stale_refs = list()
+
+	for(var/datum/weakref/ref in tracked_atoms)
+		var/atom/movable/A = ref.resolve()
+		if(!A || QDELETED(A))
+			stale_refs += ref
+			continue
+
+		if(ismob(A))
+			var/mob/living/tracked_mob = A
+			if(tracked_mob.stat == DEAD)
+				stale_refs += ref
+				continue
+		else if(isitem(A) && !include_held_items)
+			if(recursive_loc_check(A, /mob/living))
+				continue
+
+		var/turf/A_turf = get_turf(A)
+		if(!A_turf)
+			stale_refs += ref
+			continue
+
+		var/dist = get_dist(origin_turf, A_turf)
+		if(dist < min_dist)
+			min_dist = dist
+			closest = A_turf
+
+	for(var/datum/weakref/stale_ref in stale_refs)
+		tracked_atoms -= stale_ref
+		qdel(stale_ref)
+
+	return closest
+
+/datum/quest/proc/has_tracked_item_in_inventory()
+	var/list/stale_refs = list()
+
+	for(var/datum/weakref/ref in tracked_atoms)
+		var/obj/item/tracked_item = ref.resolve()
+		if(!tracked_item || QDELETED(tracked_item))
+			stale_refs += ref
+			continue
+
+		if(recursive_loc_check(tracked_item, /mob/living))
+			for(var/datum/weakref/stale_ref in stale_refs)
+				tracked_atoms -= stale_ref
+				qdel(stale_ref)
+			return TRUE
+
+	for(var/datum/weakref/stale_ref in stale_refs)
+		tracked_atoms -= stale_ref
+		qdel(stale_ref)
+
+	return FALSE
+
+/datum/quest/proc/get_area_target_turf(area/target_area, turf/reference_turf)
+	if(!target_area)
+		return null
+
+	var/turf/origin_turf = reference_turf ? get_turf(reference_turf) : null
+	if(origin_turf)
+		var/list/same_z_turfs = target_area.get_turfs_by_zlevel(origin_turf.z)
+		if(length(same_z_turfs))
+			return same_z_turfs[1]
+
+	for(var/list/zlevel_turfs as anything in target_area.get_zlevel_turf_lists())
+		if(length(zlevel_turfs))
+			return zlevel_turfs[1]
+
+	return null
+
+/datum/quest/proc/get_turn_in_target_turf(turf/reference_turf)
+	var/turf/origin_turf = reference_turf ? get_turf(reference_turf) : (quest_scroll ? get_turf(quest_scroll) : null)
+	var/turf/best_turf
+	var/best_score = INFINITY
+
+	for(var/obj/effect/decal/marker_export/marker in world)
+		var/turf/marker_turf = get_turf(marker)
+		if(!marker_turf)
+			continue
+
+		if(!origin_turf)
+			return marker_turf
+
+		var/score = marker_turf.z == origin_turf.z ? get_dist(origin_turf, marker_turf) : 1000 + abs(marker_turf.z - origin_turf.z)
+		if(score < best_score)
+			best_score = score
+			best_turf = marker_turf
+
+	return best_turf
+
+/datum/quest/proc/should_use_live_target_location(turf/live_target_turf)
+	if(!live_target_turf)
+		return FALSE
+
+	var/turf/anchor_turf = get_target_anchor_turf()
+	if(!anchor_turf)
+		return TRUE
+
+	var/anchor_map_file = get_map_file_for_turf(anchor_turf)
+	if(!anchor_map_file)
+		return TRUE
+
+	var/live_map_file = get_map_file_for_turf(live_target_turf)
+	if(!live_map_file)
+		return FALSE
+
+	return live_map_file == anchor_map_file
+
+/datum/quest/proc/get_anchor_safe_target_location(turf/reference_turf, turf/live_target_turf)
+	if(should_use_live_target_location(live_target_turf))
+		return live_target_turf
+
+	return get_target_anchor_turf() || live_target_turf
+
+/datum/quest/proc/get_target_map_anchor(turf/reference_turf)
+	return get_target_anchor_turf() || get_target_location(reference_turf)
+
+/datum/quest/proc/get_supported_map_name(map_file)
+	if(!map_file)
+		return null
+
+	var/static/list/supported_map_names = list(
+		"bogforest.dmm" = "Bog Forest",
+		"desert.dmm" = "Desert",
+		"frozen_mountains.dmm" = "Frozen Mountains",
+		"hsector.dmm" = "Rivermist City",
+		"hsector_snow.dmm" = "Rivermist City (Winter)",
+		"underdark.dmm" = "Underdark",
+	)
+
+	return supported_map_names[lowertext("[map_file]")]
+
+/datum/quest/proc/get_target_map_text(turf/reference_turf)
+	var/turf/map_anchor = get_target_map_anchor(reference_turf)
+	if(!map_anchor)
+		return "Error: target location could not be determined."
+
+	var/map_file = get_map_file_for_turf(map_anchor)
+	if(!map_file)
+		return "Error: target is not on a supported quest map."
+
+	var/map_name = get_supported_map_name(map_file)
+	if(!map_name)
+		return "Error: target is on an unsupported map ([map_file])."
+
+	return map_name
+
+/datum/quest/proc/get_tier_label(tier = threat_tier)
+	switch(tier)
+		if(QUEST_TIER_ROUTINE)
+			return "Tier I - Routine"
+		if(QUEST_TIER_RISKY)
+			return "Tier II - Risky"
+		if(QUEST_TIER_DANGEROUS)
+			return "Tier III - Dangerous"
+		if(QUEST_TIER_DEADLY)
+			return "Tier IV - Deadly"
+		if(QUEST_TIER_LETHAL)
+			return "Tier V - Lethal"
+		if(QUEST_TIER_MYTHIC)
+			return "Tier VI - Mythic"
+	return "Tier ?"
+
+/datum/quest/proc/get_tier_band_text()
+	return "[get_tier_label(minimum_tier)] to [get_tier_label(maximum_tier)]"
+
+/datum/quest/proc/get_tier_choices()
+	var/list/choices = list()
+	for(var/tier in minimum_tier to maximum_tier)
+		choices[get_tier_label(tier)] = tier
+	return choices
+
+/datum/quest/proc/get_effective_requested_tier(obj/effect/landmark/quest_spawner/landmark)
+	var/tier = requested_tier
+	if(!tier && landmark)
+		tier = landmark.get_default_contract_tier()
+	if(!tier)
+		tier = minimum_tier
+
+	tier = clamp(tier, minimum_tier, maximum_tier)
+	if(landmark)
+		tier = clamp(tier, landmark.min_contract_tier, landmark.max_contract_tier)
+	return tier
+
 /// Generate quest content - override in subtypes
 /datum/quest/proc/generate(obj/effect/landmark/quest_spawner/landmark)
 	if(!title)
 		title = get_title()
+	if(landmark)
+		set_target_anchor(landmark)
+		requested_tier = get_effective_requested_tier(landmark)
+		threat_tier = requested_tier
 	return TRUE
 
 /// Get the quest title - override in subtypes for dynamic titles
@@ -105,72 +351,57 @@
 	complete = TRUE
 	quest_scroll?.update_quest_text()
 
-// Base reward scaled only to difficulty
+/// Base reward by contract type, without randomization.
 /datum/quest/proc/get_base_reward()
-	switch(quest_difficulty)
-		if(QUEST_DIFFICULTY_EASY)
-			return rand(QUEST_REWARD_EASY_LOW, QUEST_REWARD_EASY_HIGH)
-		if(QUEST_DIFFICULTY_MEDIUM)
-			return rand(QUEST_REWARD_MEDIUM_LOW, QUEST_REWARD_MEDIUM_HIGH)
-		if(QUEST_DIFFICULTY_HARD)
-			return rand(QUEST_REWARD_HARD_LOW, QUEST_REWARD_HARD_HIGH)
+	return base_reward_value
 
-// Additional reward, override in subtypes for specific calculations. Called AFTER generation.
-/datum/quest/proc/get_additional_reward(turf/target_turf)
+/datum/quest/proc/get_risk_score(turf/target_turf)
+	return requested_tier
+
+/datum/quest/proc/get_workload_reward(turf/target_turf)
 	return 0
 
-/// Calculate reward based on base + additional reward. Called AFTER generation.
+/datum/quest/proc/get_tier_from_risk_score(risk_score)
+	if(risk_score <= 3)
+		return QUEST_TIER_ROUTINE
+	if(risk_score <= 5)
+		return QUEST_TIER_RISKY
+	if(risk_score <= 7)
+		return QUEST_TIER_DANGEROUS
+	if(risk_score <= 10)
+		return QUEST_TIER_DEADLY
+	if(risk_score <= 13)
+		return QUEST_TIER_LETHAL
+	return QUEST_TIER_MYTHIC
+
+/// Calculate reward from base type value + concrete risk score + workload done.
 /datum/quest/proc/calculate_reward(turf/target_turf)
-	var/base = get_base_reward()
-	var/additional = get_additional_reward(target_turf)
-	return base + additional
+	var/risk_score = max(1, ROUND_UP(get_risk_score(target_turf)))
+	var/workload_reward = max(0, ROUND_UP(get_workload_reward(target_turf)))
+	threat_tier = get_tier_from_risk_score(risk_score)
+	return max(0, ROUND_UP(get_base_reward() + (risk_score * QUEST_REWARD_PER_RISK_POINT) + workload_reward))
 
-/// Calculate deposit based on difficulty
-/datum/quest/proc/calculate_deposit()
-	switch(quest_difficulty)
-		if(QUEST_DIFFICULTY_EASY)
-			return QUEST_DEPOSIT_EASY
-		if(QUEST_DIFFICULTY_MEDIUM)
-			return QUEST_DEPOSIT_MEDIUM
-		if(QUEST_DIFFICULTY_HARD)
-			return QUEST_DEPOSIT_HARD
-	return 0
+/datum/quest/proc/calculate_deposit(reward_override)
+	var/reward_reference = isnum(reward_override) ? reward_override : reward_amount
+	if(reward_reference <= 0)
+		reward_reference = get_base_reward() + (get_effective_requested_tier(null) * QUEST_REWARD_PER_RISK_POINT)
+	return clamp(ROUND_UP(max(QUEST_MIN_DEPOSIT, reward_reference * QUEST_DEPOSIT_RATE)), QUEST_MIN_DEPOSIT, QUEST_MAX_DEPOSIT)
 
-/// Get icon for scroll based on difficulty
+/// Get icon for scroll based on actual threat tier.
 /datum/quest/proc/get_scroll_icon()
-	switch(quest_difficulty)
-		if(QUEST_DIFFICULTY_EASY)
+	switch(threat_tier)
+		if(QUEST_TIER_ROUTINE, QUEST_TIER_RISKY)
 			return "scroll_quest_low"
-		if(QUEST_DIFFICULTY_MEDIUM)
+		if(QUEST_TIER_DANGEROUS, QUEST_TIER_DEADLY)
 			return "scroll_quest_mid"
-		if(QUEST_DIFFICULTY_HARD)
+		if(QUEST_TIER_LETHAL, QUEST_TIER_MYTHIC)
 			return "scroll_quest_high"
 	return quest_icon
 
 /// Get target location for compass - returns turf of nearest tracked atom
-/datum/quest/proc/get_target_location()
-	var/turf/user_turf = quest_scroll ? get_turf(quest_scroll) : null
-	if(!user_turf)
-		return null
-
-	var/turf/closest
-	var/min_dist = INFINITY
-
-	for(var/datum/weakref/ref in tracked_atoms)
-		var/atom/A = ref.resolve()
-		if(!A || QDELETED(A))
-			continue
-
-		var/turf/A_turf = get_turf(A)
-		if(!A_turf)
-			continue
-
-		var/dist = get_dist(user_turf, A_turf)
-		if(dist < min_dist)
-			min_dist = dist
-			closest = A_turf
-
-	return closest
+/datum/quest/proc/get_target_location(turf/reference_turf)
+	var/turf/live_target_turf = get_nearest_tracked_location(reference_turf)
+	return get_anchor_safe_target_location(reference_turf, live_target_turf)
 
 /// Check if a user can claim this quest - override for restrictions
 /datum/quest/proc/can_claim(mob/user)

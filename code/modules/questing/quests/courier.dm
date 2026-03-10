@@ -1,5 +1,9 @@
 /datum/quest/courier
 	quest_type = QUEST_COURIER
+	contract_group = QUEST_GROUP_ERRANDS
+	minimum_tier = QUEST_TIER_ROUTINE
+	maximum_tier = QUEST_TIER_DEADLY
+	base_reward_value = QUEST_BASE_REWARD_COURIER
 	var/list/target_delivery_locations = list(
 		/area/indoors/town/tavern,
 		/area/indoors/town/church,
@@ -24,10 +28,15 @@
 	text += "Destination: [initial(target_delivery_location.name)]."
 	return text
 
-/datum/quest/courier/get_additional_reward(target_turf)
+/datum/quest/courier/get_risk_score(turf/target_turf)
+	return requested_tier + 1
+
+/datum/quest/courier/get_workload_reward(target_turf)
 	var/turf/scroll_turf = get_turf(quest_scroll)
-	var/distance = CLAMP(get_dist(scroll_turf, target_turf), 0, 200) // Avoid infinity rewards if it bugs out
-	var/distance_reward = (distance / QUEST_DELIVERY_DISTANCE_DIVISOR) * QUEST_DELIVERY_DISTANCE_BONUS
+	var/pickup_distance = (scroll_turf && target_turf) ? CLAMP(get_dist(scroll_turf, target_turf), 0, 200) : 0
+	var/turf/delivery_turf = get_area_target_turf(target_delivery_location, target_turf)
+	var/delivery_distance = (target_turf && delivery_turf) ? CLAMP(get_dist(target_turf, delivery_turf), 0, 200) : 0
+	var/distance_reward = ((pickup_distance + delivery_distance) / QUEST_DELIVERY_DISTANCE_DIVISOR) * QUEST_DELIVERY_DISTANCE_BONUS
 	return ROUND_UP(distance_reward + QUEST_COURIER_BONUS_FLAT)
 
 /datum/quest/courier/proc/spawn_courier_item(area/delivery_area, obj/effect/landmark/quest_spawner/landmark)
@@ -99,8 +108,26 @@
 	delivery_parcel.AddComponent(/datum/component/quest_object/courier, src)
 	contained_item.AddComponent(/datum/component/quest_object/courier, src)
 	add_tracked_atom(delivery_parcel)
+	add_tracked_atom(contained_item)
 
 	return delivery_parcel
+
+/datum/quest/courier/get_target_location(turf/reference_turf)
+	var/turf/item_turf = get_nearest_tracked_location(reference_turf, FALSE)
+	if(item_turf)
+		return get_anchor_safe_target_location(reference_turf, item_turf)
+
+	if(has_tracked_item_in_inventory())
+		return get_area_target_turf(target_delivery_location, reference_turf)
+
+	var/turf/live_target_turf = get_nearest_tracked_location(reference_turf)
+	return get_anchor_safe_target_location(reference_turf, live_target_turf)
+
+/datum/quest/courier/get_target_map_anchor(turf/reference_turf)
+	if(has_tracked_item_in_inventory())
+		return get_area_target_turf(target_delivery_location, reference_turf)
+
+	return get_target_anchor_turf()
 
 /datum/quest/courier/generate(obj/effect/landmark/quest_spawner/landmark)
 	..()

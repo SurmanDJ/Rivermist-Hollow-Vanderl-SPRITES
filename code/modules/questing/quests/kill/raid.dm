@@ -1,8 +1,13 @@
 /datum/quest/kill/raid
 	quest_type = QUEST_RAID
+	contract_group = QUEST_GROUP_BOUNTIES
 	mob_types_to_spawn = QUEST_RAID_LIST
 	count_min = 2
 	count_max = 6
+	minimum_tier = QUEST_TIER_DEADLY
+	maximum_tier = QUEST_TIER_LETHAL
+	base_reward_value = QUEST_BASE_REWARD_RAID
+	type_risk_bonus = QUEST_RAID_RISK_BONUS
 
 /datum/quest/kill/raid/get_title()
 	if(title)
@@ -19,6 +24,7 @@
 	..()
 	if(!landmark)
 		return FALSE
-	spawn_kill_mobs(landmark)
+	if(!spawn_kill_mobs(landmark))
+		return FALSE
 
 	return TRUE

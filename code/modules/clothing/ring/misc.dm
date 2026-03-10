@@ -125,6 +125,95 @@
 	icon_state = "ring_opal"
 	sellprice = 90
 
+/datum/component/boss_ring_stat_boost
+	var/source_key
+	var/stat_key = STATKEY_STR
+	var/target_value = 16
+
+/datum/component/boss_ring_stat_boost/Initialize(source_key, stat_key, target_value = 16)
+	if(!istype(parent, /mob/living) || !source_key || !(stat_key in MOBSTATS))
+		return COMPONENT_INCOMPATIBLE
+
+	src.source_key = source_key
+	src.stat_key = stat_key
+	src.target_value = target_value
+	apply_bonus()
+
+/datum/component/boss_ring_stat_boost/Destroy()
+	remove_bonus()
+	return ..()
+
+/datum/component/boss_ring_stat_boost/proc/apply_bonus()
+	var/mob/living/living_parent = parent
+	if(!living_parent)
+		return
+
+	var/current_stat = living_parent.get_stat_level(stat_key)
+	living_parent.set_stat_modifier(source_key, stat_key, max(0, target_value - current_stat))
+
+/datum/component/boss_ring_stat_boost/proc/remove_bonus()
+	var/mob/living/living_parent = parent
+	if(!living_parent)
+		return
+
+	living_parent.remove_stat_modifier(source_key)
+
+/obj/item/clothing/ring/gold/boss_prize
+	name = "Ring of Strength"
+	desc = "An enchanted ring taken from a defeated boss. When worn, it raises one attribute to 16."
+	icon_state = "ring_protection"
+	sellprice = 600
+	var/boosted_stat = STATKEY_STR
+	var/boost_target_value = 16
+	var/datum/component/boss_ring_stat_boost/equipped_stat_bonus
+	var/datum/weakref/bonus_owner_ref
+
+/obj/item/clothing/ring/gold/boss_prize/Initialize(mapload)
+	. = ..()
+	assign_random_bonus()
+
+/obj/item/clothing/ring/gold/boss_prize/equipped(mob/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_RING) || !istype(user, /mob/living))
+		remove_stat_bonus()
+		return
+
+	apply_stat_bonus(user)
+
+/obj/item/clothing/ring/gold/boss_prize/dropped(mob/user, silent)
+	. = ..()
+	remove_stat_bonus()
+
+/obj/item/clothing/ring/gold/boss_prize/Destroy()
+	remove_stat_bonus()
+	return ..()
+
+/obj/item/clothing/ring/gold/boss_prize/proc/assign_random_bonus()
+	var/static/list/stat_names = list(
+		STATKEY_STR = "Strength",
+		STATKEY_PER = "Perception",
+		STATKEY_END = "Endurance",
+		STATKEY_CON = "Constitution",
+		STATKEY_INT = "Intelligence",
+		STATKEY_SPD = "Speed",
+		STATKEY_LCK = "Fortune",
+	)
+
+	boosted_stat = pick(MOBSTATS)
+	name = "Ring of [stat_names[boosted_stat]]"
+
+/obj/item/clothing/ring/gold/boss_prize/proc/apply_stat_bonus(mob/living/user)
+	remove_stat_bonus()
+	bonus_owner_ref = WEAKREF(user)
+	equipped_stat_bonus = user.AddComponent(/datum/component/boss_ring_stat_boost, "boss_ring_[REF(src)]", boosted_stat, boost_target_value)
+
+/obj/item/clothing/ring/gold/boss_prize/proc/remove_stat_bonus()
+	if(equipped_stat_bonus)
+		equipped_stat_bonus.RemoveComponent()
+		equipped_stat_bonus = null
+
+	bonus_owner_ref = null
+
 /obj/item/clothing/ring/active
 	var/active = FALSE
 	desc = "Unfortunately, like most magic rings, it must be used sparingly. (Right-click me to activate)"
