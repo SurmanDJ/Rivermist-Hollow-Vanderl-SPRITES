@@ -191,7 +191,10 @@ SUBSYSTEM_DEF(mapping)
 	var/start_z = world.maxz + 1
 	var/i = 0
 	for (var/level in traits)
-		var/list/level_traits = islist(level) ? level.Copy() : list()
+		var/list/level_traits = list()
+		if(islist(level))
+			level_traits = level
+			level_traits = level_traits.Copy()
 		level_traits[ZTRAIT_MAP_FILE] = map_files_by_level[i + 1]
 		add_new_zlevel("[name][i ? " [i + 1]" : ""]", level_traits, delve = delve)
 		++i

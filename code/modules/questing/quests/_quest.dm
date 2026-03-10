@@ -116,7 +116,7 @@
 	if(!target_turf)
 		return null
 
-	var/map_file = level_trait(target_turf.z, ZTRAIT_MAP_FILE)
+	var/map_file = SSmapping.level_trait(target_turf.z, ZTRAIT_MAP_FILE)
 	if(!map_file)
 		return null
 
