@@ -1,6 +1,6 @@
 # Router
 
-Generated on 2026-03-11. Use this file to choose exactly one small helper before opening source files.
+Generated on 2026-03-11. This is the primary Fast Start entrypoint for normal tasks.
 
 Terminology note:
 
@@ -8,6 +8,14 @@ Terminology note:
 - It does not mean game maps, `_maps/**`, `code/modules/mapping/**`, or mapping subsystems.
 
 The `ai_navigation/` navigation layer may lag behind the codebase by up to one monthly manual refresh cycle. Use it for routing, then verify in source. If the navigation layer and code disagree, trust the code.
+
+## Start Mode
+
+This file is for `Fast Start`.
+
+Use `ai_navigation/AGENTS.md` only for `Guided Start`.
+Use `ai_navigation/update_policy.md` for `Maintenance Start`.
+If the start mode is still unclear, open `ai_navigation/start_matrix.md`.
 
 ## Dispatch
 
@@ -42,3 +50,4 @@ The `ai_navigation/` navigation layer may lag behind the codebase by up to one m
 - Before editing medium/high/unknown-risk work, stop and get human approval.
 - For whole-loop stalls with no runtimes, do a blocking-call sweep before blaming load.
 - Escalate only if unresolved.
+- For normal tasks, this file is cheaper than opening `ai_navigation/AGENTS.md` first.
