@@ -72,7 +72,7 @@
 
 			var/obj/item/organ/genitals/filling_organ/breasts/breasts = H.getorganslot(ORGAN_SLOT_BREASTS)
 
-			SEND_SIGNAL(H, COMSIG_SEX_ADJUST_AROUSAL, rand(2, 6))
+			SEND_SIGNAL(H, COMSIG_SEX_GENERIC_ACTION, H, rand(2, 6), rand(2, 6), rand(3, 5))
 			if(H.reagents?.get_reagent_amount(/datum/reagent/consumable/aphrodisiac) <= 9)
 				H.reagents?.add_reagent(/datum/reagent/consumable/aphrodisiac, 0.1)
 
@@ -96,6 +96,7 @@
 				to_chat(H, span_info("The sated leech falls off my [target_organ.name]."))
 				return
 			if(prob(25))
+				H.adjust_jitter(2 SECONDS)
 				to_chat(H, span_warning("You feel the leech squeezing your nipple, injecting a stream of milk into itself."))
 			return
 
@@ -103,7 +104,7 @@
 			var/obj/item/organ/genitals/filling_organ/testicles/testicles = H.getorganslot(ORGAN_SLOT_TESTICLES)
 
 
-			SEND_SIGNAL(H, COMSIG_SEX_ADJUST_AROUSAL, rand(2, 6))
+			SEND_SIGNAL(H, COMSIG_SEX_GENERIC_ACTION, H, rand(2, 6), rand(2, 6), 1)
 			if(H.reagents?.get_reagent_amount(/datum/reagent/consumable/aphrodisiac) <= 9)
 				H.reagents?.add_reagent(/datum/reagent/consumable/aphrodisiac, 0.1)
 			if(testicles)
@@ -115,14 +116,15 @@
 				to_chat(H, span_info("The sated leech falls off my [target_organ.name]."))
 				return
 			if(prob(25))
-				var/chosen_verb = pick(list("A leech is sucking my penis!", "It's sucking cum straight from my balls!", " Something slimy is sucking omn my dick!"))
+				H.adjust_jitter(2 SECONDS)
+				var/chosen_verb = pick(list("A leech is sucking my penis!", "It's sucking cum straight from my balls!", "Something slimy is sucking on my dick!"))
 				to_chat(H, span_warning(chosen_verb))
 			return
 
 		if(/obj/item/organ/genitals/filling_organ/vagina)
 			var/obj/item/organ/genitals/filling_organ/vagina/vagina = target_organ
 			var/storage_layer = SEND_SIGNAL(vagina, COMSIG_BODYSTORAGE_FIND_ITEM_LAYER, src)
-			SEND_SIGNAL(H, COMSIG_SEX_ADJUST_AROUSAL, rand(2, 6))
+			SEND_SIGNAL(H, COMSIG_SEX_GENERIC_ACTION, H, rand(2, 6), rand(2, 6), rand(3, 5))
 			if(H.reagents?.get_reagent_amount(/datum/reagent/consumable/aphrodisiac) <= 9)
 				H.reagents?.add_reagent(/datum/reagent/consumable/aphrodisiac, 0.1)
 			var/fluid_to_take = min(max_storage - fluid_storage, vagina.reagents.total_volume, fluid_sucking)
@@ -132,6 +134,7 @@
 				if(prob(30))
 					if(horny_leech_move_deeper(H, target_organ, storage_layer))
 						fluid_storage = 0
+						H.adjust_jitter(2 SECONDS)
 						to_chat(H, span_info("The greedy leech moves deeper inside your [target_organ.name]!"))
 					else if(storage_layer == STORAGE_LAYER_INNER || storage_layer == STORAGE_LAYER_DEEP)
 						to_chat(H, span_warn("You feel the leech calm down deep inside you - it doesn't want to come out!"))
@@ -145,6 +148,7 @@
 					to_chat(H, span_info("The sated leech falls off my [target_organ.name]."))
 					return
 			if(prob(25))
+				H.adjust_jitter(2 SECONDS)
 				var/chosen_verb = pick(list("A leech is sucking my vagina!", "Something slimy is sucking on my clit!", "It's sucking out my juices!"))
 				to_chat(H, span_warning(chosen_verb))
 			return
@@ -218,12 +222,14 @@
 									return
 								to_chat(user, "The leech begins to crawl towards the area of interest and opens its soft mouth...")
 							if("Right Nipple")
-								target_organ = H.getorganslot(ORGAN_SLOT_LEFT_NIP)
+								target_organ = H.getorganslot(ORGAN_SLOT_RIGHT_NIP)
 								storage_icon_state = target_organ.slot
 								if(!target_organ)
 									to_chat(user, "This spot won't offer much to the leech...")
 									return
 								to_chat(user, "The leech begins to crawl towards the area of interest and opens its soft mouth...")
+							else
+								return
 
 					if(BODY_ZONE_PRECISE_GROIN)
 						var/organ_choice = browser_input_list(user, "Select the organ to which you will attach the leech.", "Suck", list("Vagina", "Penis"))
@@ -242,6 +248,8 @@
 									to_chat(user, "Seems that your taget doesn't posess the necessary bits...")
 									return
 								to_chat(user, "The leech opens its mouth wide and swallows the penis, starting to squeeze it...")
+							else
+								return
 
 				user.dropItemToGround(src)
 				var/success = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_TRY_INSERT, src, STORAGE_LAYER_OUTER)
@@ -281,10 +289,14 @@
 		for(var/i in slots_to_check)
 			var/obj/item/organ/org = H.getorganslot(i)
 			if(org)
+				if(SEND_SIGNAL(org, COMSIG_BODYSTORAGE_SELECT_RAND_ITEM, STORAGE_LAYER_OUTER))
+					continue
 				available_organs += org
 		if(LAZYLEN(available_organs))
 			target_organ = pick(available_organs)
 		else
+			if(bodypart)
+				bodypart.remove_embedded_object(src)
 			return
 
 		trying_to_attach = TRUE
@@ -362,7 +374,7 @@
 		to_chat(H, span_love("It's latched on!"))
 		START_PROCESSING(SSobj, src)
 	else
-		visible_message(span_info("unble to find a puchase, [src] falls off!"))
+		visible_message(span_info("Unble to find a puchase, [src] falls off!"))
 		target_organ = null
 	trying_to_attach = FALSE
 

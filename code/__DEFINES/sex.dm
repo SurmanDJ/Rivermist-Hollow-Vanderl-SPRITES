@@ -15,6 +15,7 @@ GLOBAL_LIST_EMPTY(locked_sex_objects)
 #define COMSIG_SEX_GET_AROUSAL "sex_get_arousal"                        // () - Get current arousal info
 #define COMSIG_SEX_CLIMAX "sex_climax"                                  // (type, target) - Handle climax event
 #define COMSIG_SEX_RECEIVE_ACTION "sex_receive_action"                  // (arousal_amt, pain_amt, giving, force, speed) - Receive action effects
+#define COMSIG_SEX_GENERIC_ACTION "sex_receive_gen_action"					// ... - for generic actions without the sex session panel
 #define COMSIG_SEX_ADJUST_EDGING "sex_adjust_edging"                 	// (amount) - Adjust edging level
 #define COMSIG_SEX_SET_EDGING "sex_set_edging"                        	// (amount) - Set edging to specific value
 #define COMSIG_SEX_EDGING_CHANGED "sex_edging_change"					// fires to the parent about a change
@@ -27,6 +28,7 @@ GLOBAL_LIST_EMPTY(locked_sex_objects)
 #define COMSIG_SEX_SET_ORGASM_PROG "sex_set_orgasm_prog"                        // (amount) - Set orgasm prog to specific value
 #define COMSIG_SEX_EDGED_BY_OTHER_STATE "sex_set_edged_state"                        // (amount) - Set orgasm prog to specific value
 #define COMSIG_SET_ERECT_STATE "sex_set_erectness"						// when we set manual arousal
+#define COMSIG_SEX_ORGASM "sex_orgasm"									// manual orgasm
 
 // Knotting Component Signals
 /// Attempts to knot a target. Args: (target, force_level)

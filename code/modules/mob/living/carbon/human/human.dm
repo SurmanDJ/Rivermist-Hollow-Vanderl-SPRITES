@@ -192,7 +192,8 @@
 
 	id_check_in_5()
 
-	AddComponent(/datum/component/arousal) //arousal - for humans for now
+	if(!GetComponent(/datum/component/arousal))
+		AddComponent(/datum/component/arousal)
 
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
