@@ -1,6 +1,6 @@
 # Type Index
 
-Generated on 2026-03-11. Use this file when the task gives a BYOND type path and you need the cheapest route before opening the full `ai/type_tree.md`.
+Generated on 2026-03-11. Use this file when the task gives a BYOND type path and you need the cheapest route before opening the full `ai_navigation/type_tree.md`.
 
 ## Major Roots
 
@@ -19,14 +19,14 @@ Generated on 2026-03-11. Use this file when the task gives a BYOND type path and
 
 | Type branch | Open first | Then check |
 |---|---|---|
-| `/datum/controller/subsystem/...` | `code/controllers/subsystem/**` | `ai/subsystem_map.md`, `code/controllers/master.dm` |
+| `/datum/controller/subsystem/...` | `code/controllers/subsystem/**` | `ai_navigation/subsystem_map.md`, `code/controllers/master.dm` |
 | `/datum/antagonist/...` | `code/modules/antagonists/**` | `code/modules/events/antagonist/**`, `code/datums/migrants/waves/antagonist/**` |
-| `/datum/action/...` | `code/modules/spells/**` and feature-specific module files | `ai/runtime_flow.md`, `code/datums/status_effects/**` |
+| `/datum/action/...` | `code/modules/spells/**` and feature-specific module files | `ai_navigation/runtime_flow.md`, `code/datums/status_effects/**` |
 | `/datum/status_effect/...` | `code/datums/status_effects/**` | `code/modules/spells/**`, `code/datums/components/**`, `code/datums/elements/**` |
-| `/datum/component/...` | `code/datums/components/**` | `code/__DEFINES/dcs/**`, `ai/runtime_flow.md` |
-| `/datum/element/...` | `code/datums/elements/**` | `code/__DEFINES/dcs/**`, `ai/runtime_flow.md` |
-| `/datum/ai_controller/...` or `/datum/ai_behavior/...` | `code/datums/ai/**` | `code/modules/mob/**`, `ai/subsystem_map.md` |
-| `/datum/storyteller/...`, `/datum/round_event_control/...`, `/datum/round_event/...` | `code/datums/storytellers/**`, `code/modules/events/**` | `ai/runtime_flow.md`, `ai/system_dependencies.md` |
+| `/datum/component/...` | `code/datums/components/**` | `code/__DEFINES/dcs/**`, `ai_navigation/runtime_flow.md` |
+| `/datum/element/...` | `code/datums/elements/**` | `code/__DEFINES/dcs/**`, `ai_navigation/runtime_flow.md` |
+| `/datum/ai_controller/...` or `/datum/ai_behavior/...` | `code/datums/ai/**` | `code/modules/mob/**`, `ai_navigation/subsystem_map.md` |
+| `/datum/storyteller/...`, `/datum/round_event_control/...`, `/datum/round_event/...` | `code/datums/storytellers/**`, `code/modules/events/**` | `ai_navigation/runtime_flow.md`, `ai_navigation/system_dependencies.md` |
 | `/datum/migrant_wave/...` or `/datum/migrant_role/...` | `code/datums/migrants/**` | `code/modules/jobs/**`, `modular_rmh/code/modules/jobs/**` |
 | `/mob/living/...` | `code/modules/mob/living/**` | feature modules touching that mob family |
 | `/mob/living/carbon/human/...` | `code/modules/mob/living/carbon/**` | jobs, species, antagonists, status systems |
@@ -37,8 +37,8 @@ Generated on 2026-03-11. Use this file when the task gives a BYOND type path and
 
 ## Cheap Rules
 
-- Start with this file, not `ai/type_tree.md`, unless you truly need inheritance depth.
+- Start with this file, not `ai_navigation/type_tree.md`, unless you truly need inheritance depth.
 - If the branch matches one row above, open the mapped directory family before doing a repo-wide search.
-- If the path is feature-local and not obvious from the branch, use `ai/entrypoints.md` or `ai/system_map.md`.
+- If the path is feature-local and not obvious from the branch, use `ai_navigation/entrypoints.md` or `ai_navigation/system_map.md`.
 - After locating the core branch in `code/`, check whether `modular_rmh` extends the same path.
-- Escalate to `ai/type_tree.md` only when parent/child inheritance is itself the problem.
+- Escalate to `ai_navigation/type_tree.md` only when parent/child inheritance is itself the problem.

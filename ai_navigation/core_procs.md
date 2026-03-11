@@ -41,7 +41,7 @@ These are the main proc families for direct combat routing:
 - `fire`
 - `on_hit`
 
-Use these when behavior follows item attacks, unarmed attacks, projectiles, or hit-side reactions. For proc-and-signal combat contracts, open `ai/combat_signal_map.md`.
+Use these when behavior follows item attacks, unarmed attacks, projectiles, or hit-side reactions. For proc-and-signal combat contracts, open `ai_navigation/combat_signal_map.md`.
 
 ## Action And Spell Hooks
 
@@ -66,7 +66,7 @@ Use these when behavior follows action buttons, click intercepts, cast validatio
 - `Uncrossed`
 - `Bump`
 
-Use these when behavior follows stepping, transit, collision, or turf/object movement. For client movement, move loops, throws, pulls, or buckle chains, open `ai/movement_signal_map.md`.
+Use these when behavior follows stepping, transit, collision, or turf/object movement. For client movement, move loops, throws, pulls, or buckle chains, open `ai_navigation/movement_signal_map.md`.
 
 ## Timed And Status Hooks
 
@@ -115,8 +115,8 @@ Use these when behavior is component-driven or the visible cause is far from the
 
 - If it happens on creation, start with `Initialize`.
 - If it happens on use, start with interaction procs.
-- If it happens in combat or hit resolution, open `ai/combat_signal_map.md`.
-- If it happens in a cooldown-action or spell lifecycle, start with the action/spell hooks and then open `ai/spell_signal_map.md`.
-- If it happens in stepping, collisions, pull chains, or automated movement, open `ai/movement_signal_map.md`.
+- If it happens in combat or hit resolution, open `ai_navigation/combat_signal_map.md`.
+- If it happens in a cooldown-action or spell lifecycle, start with the action/spell hooks and then open `ai_navigation/spell_signal_map.md`.
+- If it happens in stepping, collisions, pull chains, or automated movement, open `ai_navigation/movement_signal_map.md`.
 - If it happens over time, start with `process` or `tick`.
-- If it feels indirect, switch immediately to `ai/signal_map.md`.
+- If it feels indirect, switch immediately to `ai_navigation/signal_map.md`.

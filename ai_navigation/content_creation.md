@@ -32,7 +32,7 @@ These answers define the server cost surface before any code is written.
    - trigger frequency
    - active lifetime
 3. Prefer the minimum-server-cost design that satisfies that usage surface.
-4. Classify change risk with `ai/human_checking.md`.
+4. Classify change risk with `ai_navigation/human_checking.md`.
 5. If the audience, blast radius, or hot-path cost is unclear, ask the human before choosing architecture.
 6. Find the narrowest existing owner branch that already matches that behavior.
 7. Reuse the closest existing pattern before inventing a new abstraction.
@@ -49,8 +49,8 @@ These answers define the server cost surface before any code is written.
    - per-step or per-tick only as a last resort
 10. Gate the behavior by the active state that actually needs it.
 11. Check the same branch in `modular_rmh` before adding a duplicate extension path.
-12. If the content brief is still vague, open `ai/content_breakdown.md`.
-13. If the implementation shape is still unclear, open `ai/content_patterns.md`.
+12. If the content brief is still vague, open `ai_navigation/content_breakdown.md`.
+13. If the implementation shape is still unclear, open `ai_navigation/content_patterns.md`.
 14. Define the spawn/trigger/cleanup verification before coding.
 
 ## Cost Lens

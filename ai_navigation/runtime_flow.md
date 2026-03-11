@@ -63,7 +63,7 @@ Generated on 2026-03-11. Use this file when the question is about order of execu
 
 ## Escalation Rules
 
-- If you know the keyword but not the flow, start with `ai/entrypoints.md`.
-- If you know the flow but not the owner, use `ai/subsystem_map.md`.
-- If you know the systems involved but not how they connect, use `ai/system_dependencies.md`.
+- If you know the keyword but not the flow, start with `ai_navigation/entrypoints.md`.
+- If you know the flow but not the owner, use `ai_navigation/subsystem_map.md`.
+- If you know the systems involved but not how they connect, use `ai_navigation/system_dependencies.md`.
 - If the issue is still local after identifying the flow, go back to source files instead of opening more maps.

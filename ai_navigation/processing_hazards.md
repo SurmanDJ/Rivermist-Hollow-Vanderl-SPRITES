@@ -32,7 +32,7 @@ Safe-looking async escape hatches to check for:
 1. Find the owner subsystem and open its `fire()` or processing file.
 2. Inspect the affected datum's `process()` or `tick()` path.
 3. Sweep for blocking calls in that path before assuming overload.
-4. If the owner is known but the exact break mode is still unclear, open `ai/failure_modes.md`.
+4. If the owner is known but the exact break mode is still unclear, open `ai_navigation/failure_modes.md`.
 5. If the current source still does not explain the freeze, optionally inspect recent changes.
 6. Only then fall back to overload, starvation, or scheduler-budget hypotheses.
 

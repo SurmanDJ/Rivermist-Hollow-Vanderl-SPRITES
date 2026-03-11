@@ -2,15 +2,15 @@
 
 These are copy-paste templates for giving agents better task briefs in this repository.
 
-Use them when you want the agent to start cleanly, avoid broad scans, and route itself through the `ai/` maps.
+Use them when you want the agent to start cleanly, avoid broad scans, and route itself through the `ai_navigation/` navigation layer.
 
 Default routing rule for all templates:
 
 ```text
-Start with AGENTS.md.
-Then open ai/router.md.
+Start with ai_navigation/AGENTS.md.
+Then open ai_navigation/router.md.
 Use exactly one small helper first.
-Escalate to larger maps only if still ambiguous.
+Escalate to larger navigation docs only if still ambiguous.
 ```
 
 ## 1. Minimal Fast Task
@@ -31,7 +31,7 @@ Verification:
 <what must be true in the end>
 
 Repository guidance:
-Start with AGENTS.md. Use one small helper first; for minimal tasks this is usually ai/entrypoints.md or ai/type_index.md.
+Start with ai_navigation/AGENTS.md. Use one small helper first; for minimal tasks this is usually ai_navigation/entrypoints.md or ai_navigation/type_index.md.
 ```
 
 ## 2. Bugfix Template
@@ -70,7 +70,7 @@ Verification:
 - Mention which files and runtime owners were involved.
 
 Repository guidance:
-Start with AGENTS.md. For bug reports, prefer ai/debug_routes.md first; add ai/runtime_flow.md or ai/subsystem_map.md only if runtime ownership is involved.
+Start with ai_navigation/AGENTS.md. For bug reports, prefer ai_navigation/debug_routes.md first; add ai_navigation/runtime_flow.md or ai_navigation/subsystem_map.md only if runtime ownership is involved.
 ```
 
 ## 3. New Feature Template
@@ -113,7 +113,7 @@ Verification:
 - Describe what success looks like.
 
 Repository guidance:
-Start with AGENTS.md. For new mechanics, begin with ai/content_creation.md. If the request is still vague, open ai/content_breakdown.md. If the implementation form is still fuzzy after that, open ai/content_patterns.md. Then use ai/entrypoints.md or ai/type_index.md. Add ai/system_dependencies.md, ai/system_map.md, and ai/type_tree.md only if the feature touches multiple branches.
+Start with ai_navigation/AGENTS.md. For new mechanics, begin with ai_navigation/content_creation.md. If the request is still vague, open ai_navigation/content_breakdown.md. If the implementation form is still fuzzy after that, open ai_navigation/content_patterns.md. Then use ai_navigation/entrypoints.md or ai_navigation/type_index.md. Add ai_navigation/system_dependencies.md, ai_navigation/system_map.md, and ai_navigation/type_tree.md only if the feature touches multiple branches.
 ```
 
 ## 4. Refactor / Cleanup Template
@@ -141,7 +141,7 @@ Verification:
 - Mention any residual risk.
 
 Repository guidance:
-Start with AGENTS.md. Use one small helper first, then add ai/system_dependencies.md, ai/architecture.md, and ai/system_map.md only as needed.
+Start with ai_navigation/AGENTS.md. Use one small helper first, then add ai_navigation/system_dependencies.md, ai_navigation/architecture.md, and ai_navigation/system_map.md only as needed.
 ```
 
 ## 5. Architecture / Investigation Template
@@ -165,7 +165,7 @@ Constraints:
 - No code changes unless explicitly approved.
 
 Repository guidance:
-Start with AGENTS.md. Pick the one helper that best matches the investigation anchor, then escalate to larger maps only if that route is insufficient.
+Start with ai_navigation/AGENTS.md. Pick the one helper that best matches the investigation anchor, then escalate to larger navigation docs only if that route is insufficient.
 ```
 
 ## 6. Code Review Template
@@ -192,7 +192,7 @@ Constraints:
 - Do not rewrite code unless asked.
 
 Repository guidance:
-Start with AGENTS.md. Usually begin with ai/entrypoints.md; add ai/system_dependencies.md and ai/subsystem_map.md when ownership or handoff matters.
+Start with ai_navigation/AGENTS.md. Usually begin with ai_navigation/entrypoints.md; add ai_navigation/system_dependencies.md and ai_navigation/subsystem_map.md when ownership or handoff matters.
 ```
 
 ## 7. Runtime / Performance Template
@@ -217,7 +217,7 @@ Constraints:
 - Prioritize identifying the owner and the narrowest hot path.
 
 Repository guidance:
-Start with AGENTS.md. For runtime/performance work, begin with ai/runtime_flow.md or ai/debug_routes.md, then ai/subsystem_map.md, then ai/architecture.md if needed.
+Start with ai_navigation/AGENTS.md. For runtime/performance work, begin with ai_navigation/runtime_flow.md or ai_navigation/debug_routes.md, then ai_navigation/subsystem_map.md, then ai_navigation/architecture.md if needed.
 ```
 
 ## 8. Content / Data Template
@@ -256,7 +256,43 @@ Verification:
 - Explain how the new content is reached or spawned.
 
 Repository guidance:
-Start with AGENTS.md. For content additions, begin with ai/content_creation.md. If the request is still fuzzy, use ai/content_breakdown.md. If pattern selection is unclear after that, use ai/content_patterns.md, then ai/type_index.md or ai/entrypoints.md. Use ai/type_tree.md only if inheritance depth matters, and add ai/system_dependencies.md if the content branches into other systems.
+Start with ai_navigation/AGENTS.md. For content additions, begin with ai_navigation/content_creation.md. If the request is still fuzzy, use ai_navigation/content_breakdown.md. If pattern selection is unclear after that, use ai_navigation/content_patterns.md, then ai_navigation/type_index.md or ai_navigation/entrypoints.md. Use ai_navigation/type_tree.md only if inheritance depth matters, and add ai_navigation/system_dependencies.md if the content branches into other systems.
+```
+
+## 9. Map Refresh / Migration Template
+
+Use when updating the `ai_navigation/` layer itself or porting it to another codebase.
+
+```text
+Goal:
+Refresh the repository navigation layer / migrate the AI mapping system to <target repo>.
+
+Scope:
+- refresh only / partial rebuild / full rebuild / migration
+- docs only unless explicitly approved otherwise
+
+Known drift:
+- <what changed in the repo, if known>
+- <which navigation docs are most likely stale>
+
+Constraints:
+- Rebuild from source, not from the old navigation docs alone.
+- Keep the routing layer cheap.
+- Preserve the reasoning model even if exact paths change.
+
+Output needed:
+- updated navigation docs
+- short note on what changed
+- any missing equivalents in the target repo
+
+Verification:
+- router targets exist
+- major entrypoints still resolve
+- runtime owners were rechecked
+- no source code changed unless explicitly requested
+
+Repository guidance:
+Start with ai_navigation/AGENTS.md. Use ai_navigation/update_policy.md first. Rebuild runtime ownership and routing layers before deep reference layers.
 ```
 
 ## Recommended Human Workflow
@@ -264,7 +300,7 @@ Start with AGENTS.md. For content additions, begin with ai/content_creation.md. 
 If you want a future agent to work well from the first turn, do this:
 
 1. Send the goal using one of the templates above.
-2. Then send the repository and tell the agent to start with `AGENTS.md`.
+2. Then send the repository and tell the agent to start with `ai_navigation/AGENTS.md`.
 
 That matches the intended operating model for this repository:
 

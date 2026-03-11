@@ -148,4 +148,4 @@ Use this path for AI walking, `walk_to`-style behavior, repathing, or movement t
 - If the issue starts from player input, start at `/client/Move`.
 - If the move succeeds but side effects are wrong, start at `Moved` and the movable signal families.
 - If the issue continues without new input, start at `SSmovement` and the moveloop signals.
-- If collision or projectile travel is part of the bug, read this file together with `ai/combat_signal_map.md`.
+- If collision or projectile travel is part of the bug, read this file together with `ai_navigation/combat_signal_map.md`.

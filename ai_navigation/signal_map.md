@@ -18,13 +18,13 @@ Signals are a first-class behavior path here, not an edge case.
 Some systems have stable proc-and-signal contracts and should be read through those contracts first.
 
 - spells and miracles:
-  `ai/spell_signal_map.md`
+  `ai_navigation/spell_signal_map.md`
 - combat and hit chains:
-  `ai/combat_signal_map.md`
+  `ai_navigation/combat_signal_map.md`
 - doll movement, collisions, and moveloops:
-  `ai/movement_signal_map.md`
+  `ai_navigation/movement_signal_map.md`
 - generic hook families:
-  `ai/core_procs.md`
+  `ai_navigation/core_procs.md`
 
 If a system has a dedicated contract helper, prefer that over this generic map.
 
@@ -46,9 +46,9 @@ Start from these define roots:
 When the feature feels indirect, check these first:
 
 - item and attack chains:
-  `COMSIG_ITEM_*`, `COMSIG_ATOM_ATTACKBY*`, `COMSIG_ITEM_AFTERATTACK*`, then `ai/combat_signal_map.md`
+  `COMSIG_ITEM_*`, `COMSIG_ATOM_ATTACKBY*`, `COMSIG_ITEM_AFTERATTACK*`, then `ai_navigation/combat_signal_map.md`
 - movement and location:
-  `COMSIG_MOVABLE_*`, `COMSIG_MOVELOOP_*`, then `ai/movement_signal_map.md`
+  `COMSIG_MOVABLE_*`, `COMSIG_MOVELOOP_*`, then `ai_navigation/movement_signal_map.md`
 - mob and living state:
   `COMSIG_LIVING_*`, `COMSIG_MOB_*`
 - subsystem and round flow:
@@ -65,9 +65,9 @@ When the feature feels indirect, check these first:
 3. Find `SEND_SIGNAL(` call sites for the event source.
 4. Find `RegisterSignal(` listeners on the target or shared subsystem.
 5. Check whether a component or element is the real receiver.
-6. If the system is spell-like, switch to `ai/spell_signal_map.md` before widening further.
-7. If the system is combat-like, switch to `ai/combat_signal_map.md`.
-8. If the system is movement-like, switch to `ai/movement_signal_map.md`.
+6. If the system is spell-like, switch to `ai_navigation/spell_signal_map.md` before widening further.
+7. If the system is combat-like, switch to `ai_navigation/combat_signal_map.md`.
+8. If the system is movement-like, switch to `ai_navigation/movement_signal_map.md`.
 
 ## Cheap Search Patterns
 

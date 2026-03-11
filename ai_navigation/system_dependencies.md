@@ -37,4 +37,4 @@ Generated on 2026-03-11. Use this file when the task spans more than one system 
 - If an antagonist issue is not local to `code/modules/antagonists/**`, check `events`, then `jobs/migrants`, then `mapping` for landmarks/spawn points.
 - If a role/spawn issue is not local to jobs, check `migrants`, then `role_class_handler`, then map-specific landmarks/templates.
 - If AI behavior looks wrong, split the question into three layers: controller selection, behavior execution, movement/pathing.
-- If the bug is timing-dependent, switch to `ai/runtime_flow.md` and `ai/subsystem_map.md` before reading more feature files.
+- If the bug is timing-dependent, switch to `ai_navigation/runtime_flow.md` and `ai_navigation/subsystem_map.md` before reading more feature files.

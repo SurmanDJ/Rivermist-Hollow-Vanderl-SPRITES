@@ -114,7 +114,7 @@ Base proc chain in `code/modules/projectiles/projectile.dm`:
   - `COMSIG_PROJECTILE_ON_HIT`
   - `COMSIG_PROJECTILE_SELF_ON_HIT`
 
-Projectile travel also overlaps with movement and bump behavior. If pathing or collisions look wrong, add `ai/movement_signal_map.md`.
+Projectile travel also overlaps with movement and bump behavior. If pathing or collisions look wrong, add `ai_navigation/movement_signal_map.md`.
 
 ## Target Selection And Combat Coordination
 
@@ -160,4 +160,4 @@ If combat behavior looks "smart" or reactive instead of directly coded in the we
 - If a weapon effect appears on click or hit, start at `code/_onclick/item_attack.dm`.
 - If the issue is unarmed, disarm, or hand-target logic, start at `code/_onclick/other_mobs.dm`.
 - If the visible subtype looks too small for the observed behavior, the real logic is probably in a combat signal listener.
-- If a ranged issue mixes collision and hit logic, read `ai/movement_signal_map.md` together with this file.
+- If a ranged issue mixes collision and hit logic, read `ai_navigation/movement_signal_map.md` together with this file.

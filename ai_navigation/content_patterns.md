@@ -1,6 +1,6 @@
 # Content Patterns
 
-Generated on 2026-03-11. Use this file after `ai/content_creation.md` when the feature goal is clear but the implementation shape is still undecided.
+Generated on 2026-03-11. Use this file after `ai_navigation/content_creation.md` when the feature goal is clear but the implementation shape is still undecided.
 
 ## Goal
 
@@ -40,8 +40,8 @@ Before coding, be able to answer all of these:
 - What is the exact host branch?
 - What is the exact trigger?
 - What stops the behavior?
-- Is the chosen pattern consistent with `ai/human_checking.md`?
-- Do `ai/core_procs.md` or `ai/signal_map.md` suggest a cheaper existing hook?
+- Is the chosen pattern consistent with `ai_navigation/human_checking.md`?
+- Do `ai_navigation/core_procs.md` or `ai_navigation/signal_map.md` suggest a cheaper existing hook?
 
 ## Smell Check
 
