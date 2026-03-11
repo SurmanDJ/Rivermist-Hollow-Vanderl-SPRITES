@@ -32,6 +32,9 @@ If the owner is known but the cause is still unclear, use `ai/failure_modes.md` 
 - content feature decomposition: `ai/content_breakdown.md`
 - content implementation archetypes: `ai/content_patterns.md`
 - signal routing and DCS hotspots: `ai/signal_map.md`
+- spell signal contract and lifecycle: `ai/spell_signal_map.md`
+- combat signal contract and hit routing: `ai/combat_signal_map.md`
+- doll movement signal contract and moveloops: `ai/movement_signal_map.md`
 - core proc families and entry hooks: `ai/core_procs.md`
 - process-chain hazards: `ai/processing_hazards.md`
 - subsystem/process failure classification: `ai/failure_modes.md`

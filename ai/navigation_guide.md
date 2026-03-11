@@ -15,6 +15,9 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
    - `ai/content_breakdown.md`
    - `ai/content_patterns.md`
    - `ai/signal_map.md`
+   - `ai/spell_signal_map.md`
+   - `ai/combat_signal_map.md`
+   - `ai/movement_signal_map.md`
    - `ai/core_procs.md`
    - `ai/processing_hazards.md`
    - `ai/failure_modes.md`
@@ -38,6 +41,9 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 - If the content request is still fuzzy at the fantasy/spec level, use `ai/content_breakdown.md`.
 - If the content goal is known but the implementation shape is still fuzzy, use `ai/content_patterns.md`.
 - If behavior feels indirect, component-driven, or COMSIG-like, use `ai/signal_map.md`.
+- If the system is spell-like and the proc lifecycle matters as much as the signals, use `ai/spell_signal_map.md`.
+- If the system is combat-like and the hit chain matters as much as the signals, use `ai/combat_signal_map.md`.
+- If the system is about doll movement, collisions, pulls, buckles, throws, or moveloops, use `ai/movement_signal_map.md`.
 - If you need the likely hook family before searching code, use `ai/core_procs.md`.
 - If the task says a whole loop froze, timers stopped, or there are no runtimes, use `ai/processing_hazards.md` before generic symptom routing.
 - If the owner is already known but the exact break mode is unclear, use `ai/failure_modes.md`.
@@ -49,6 +55,9 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 - `SS*` subsystem mention: find the global in `ai/subsystem_map.md`; open the mapped file in `code/controllers/subsystem/**` and then inspect any type roots it schedules.
 - Jobs, classes, spawn roles: inspect `code/modules/jobs/**`, `code/datums/migrants/**`, then `modular_rmh/code/modules/jobs/**` for RMH-specific roles and subclasses.
 - Spells, actions, status effects: inspect `code/modules/spells/**`, `code/datums/status_effects/**`, `code/datums/components/**`, `code/datums/elements/**`, then the parallel RMH paths in `modular_rmh/`.
+- Combat, weapons, projectiles, hit effects: inspect `ai/combat_signal_map.md`, `code/_onclick/item_attack.dm`, `code/_onclick/other_mobs.dm`, and `code/modules/projectiles/projectile.dm` before widening into weapon or mob subtypes.
+- Doll movement, collisions, pulls, buckles, or automated movement: inspect `ai/movement_signal_map.md`, `code/modules/mob/mob_movement.dm`, `code/modules/mob/living/living_movement.dm`, and `code/controllers/subsystem/movement/**`.
+- Sex, arousal, ERP, lewd systems: inspect `code/datums/sex/**`, `code/datums/components/arousal.dm`, then the matching mob/chat hooks and RMH lewd or horny-AI overlays.
 - AI and NPC behavior: inspect `code/datums/ai/**`, then the AI-related entries in `ai/subsystem_map.md`, then any mob-specific files in `code/modules/mob/**` or `modular_rmh/code/modules/mob/**`.
 - Worldgen, maps, dungeons, voyage: inspect `_maps/**`, `code/modules/mapping/**`, `code/modules/procedural_mapping/**`, and the mapping-related subsystem files (`mapping.dm`, `minor_mapping.dm`, `dungeon_generator.dm`, `voyage.dm`).
 - Economy, property, regional simulation: inspect economy + treasury + property-management subsystems, then `code/datums/world_factions/**`, `code/datums/nation/**`, and `code/datums/rts/**` if the issue is strategic or settlement-related.
@@ -75,6 +84,9 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 - For new content, decompose delivery/base/delta/effect before choosing code shape.
 - For new content, prefer an existing implementation pattern before designing a new abstraction.
 - For indirect behavior, check signals and core proc families before doing a broad code walk.
+- For spells and similar cooldown-action systems, check the spell signal contract before doing a broad DCS walk.
+- For combat and hit chains, check the combat signal contract before walking individual weapons or mobs.
+- For player or looped movement, check the movement signal contract before broad searches through mob code.
 - If a shared subsystem silently stalls, check for blocking calls before assuming scheduler pressure.
 - If ownership is clear but cause is not, classify the failure mode before tracing more code.
 - When behavior feels indirect, assume signals/components are involved and search DCS hooks before tracing every proc call by hand.

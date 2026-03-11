@@ -13,6 +13,9 @@ The `ai/` maps may lag behind the codebase by up to one monthly manual refresh c
 | content request is vague and needs delivery/base/delta/effect decomposition | `ai/content_breakdown.md` |
 | content goal is clear but the implementation form is undecided | `ai/content_patterns.md` |
 | signals, components, or indirect event routing seem involved | `ai/signal_map.md` |
+| spell, miracle, or cooldown action behavior depends on both core procs and signals | `ai/spell_signal_map.md` |
+| melee, projectile, hit, disarm, or combat chains depend on both core procs and signals | `ai/combat_signal_map.md` |
+| client movement, collisions, buckle, pull, throw, or moveloop behavior depends on both core procs and signals | `ai/movement_signal_map.md` |
 | you need the main proc entrypoints before searching source | `ai/core_procs.md` |
 | whole subsystem or process loop freezes, hangs, or stops without runtimes | `ai/processing_hazards.md` |
 | explicit failure-mode analysis after the owner is already known | `ai/failure_modes.md` |
