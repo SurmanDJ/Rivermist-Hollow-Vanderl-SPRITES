@@ -62,6 +62,9 @@ Constraints:
 - Do not refactor unrelated systems.
 - Check whether modular_rmh extends the same path.
 
+Human check:
+- If the fix touches a shared branch, hot path, or subsystem, stop for approval before edits.
+
 Verification:
 - Confirm the reproduced scenario now behaves correctly.
 - Mention which files and runtime owners were involved.
@@ -85,18 +88,27 @@ Expected shape:
 - New type path(s): <if known>
 - User-facing behavior: <what the player/admin sees>
 - Runtime owner: <if known; e.g. SSmagic, SSmigrants, SSmapping>
+- Usage surface:
+  - who uses it now: <exact audience>
+  - who may use it later: <real future users, if any>
+  - frequency: <action / state change / while active / per step / per tick>
+  - concurrency: <how many instances can exist in one round>
 
 Constraints:
 - Reuse existing patterns in this repo.
 - Prefer extending the existing type tree over inventing a parallel system.
 - Check whether the change belongs in core code or in modular_rmh.
 
+Human check:
+- If this affects a broad audience, shared branch, or hot path, get approval before edits.
+- If future users are uncertain, ask instead of assuming.
+
 Verification:
 - Describe how to trigger the feature.
 - Describe what success looks like.
 
 Repository guidance:
-Start with AGENTS.md. Usually begin with ai/entrypoints.md or ai/type_index.md; add ai/system_dependencies.md, ai/system_map.md, and ai/type_tree.md only if the feature touches multiple branches.
+Start with AGENTS.md. For new mechanics, begin with ai/content_creation.md, then ai/entrypoints.md or ai/type_index.md. Add ai/system_dependencies.md, ai/system_map.md, and ai/type_tree.md only if the feature touches multiple branches.
 ```
 
 ## 4. Refactor / Cleanup Template
@@ -217,17 +229,24 @@ Likely location:
 Desired result:
 - <new content>
 - <availability / unlock condition / trigger>
+- Usage surface:
+  - <who uses it>
+  - <how often it triggers>
+  - <how many instances may exist at once>
 
 Constraints:
 - Follow existing content conventions.
 - Keep balance and role gating in mind.
 - Check both core and modular_rmh before adding a duplicate branch.
 
+Human check:
+- If this should work for a high-count branch, broad audience, common object family, or large NPC/AI population, confirm the intended scope before edits.
+
 Verification:
 - Explain how the new content is reached or spawned.
 
 Repository guidance:
-Start with AGENTS.md. Usually begin with ai/type_index.md or ai/entrypoints.md; use ai/type_tree.md only if inheritance depth matters, and add ai/system_dependencies.md if the content branches into other systems.
+Start with AGENTS.md. For content additions, begin with ai/content_creation.md, then ai/type_index.md or ai/entrypoints.md. Use ai/type_tree.md only if inheritance depth matters, and add ai/system_dependencies.md if the content branches into other systems.
 ```
 
 ## Recommended Human Workflow

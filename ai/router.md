@@ -8,6 +8,8 @@ The `ai/` maps may lag behind the codebase by up to one monthly manual refresh c
 
 | If the task looks like | Open this helper |
 |---|---|
+| planned change may be broad, risky, or needs approval before edits | `ai/human_checking.md` |
+| new mechanic, gameplay content, or extension to an existing feature | `ai/content_creation.md` |
 | whole subsystem or process loop freezes, hangs, or stops without runtimes | `ai/processing_hazards.md` |
 | explicit failure-mode analysis after the owner is already known | `ai/failure_modes.md` |
 | symptom-first bug report | `ai/debug_routes.md` |
@@ -24,5 +26,6 @@ The `ai/` maps may lag behind the codebase by up to one monthly manual refresh c
 - Open exactly 1 helper first.
 - Then open up to 2 source files.
 - Check `modular_rmh` on the same branch.
+- Before editing medium/high/unknown-risk work, stop and get human approval.
 - For whole-loop stalls with no runtimes, do a blocking-call sweep before blaming load.
 - Escalate only if unresolved.
