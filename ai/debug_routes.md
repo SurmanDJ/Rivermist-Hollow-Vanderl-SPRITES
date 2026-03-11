@@ -15,7 +15,7 @@ Generated on 2026-03-11. Use this file when the task starts from a symptom inste
 | UI opens, but values are wrong or stale | `code/modules/tgui/**`, `code/modules/visual_ui/**`, `tgui/packages/**` | underlying gameplay datum/mob, status/components, browser handlers | `SStgui`, `SSvisual_ui`, `SSchat` |
 | Roundstart/startup/runtime order looks wrong | `code/world.dm`, `code/controllers/master.dm`, `ai/runtime_flow.md`, `ai/subsystem_map.md` | target subsystem file and its `fire()/Initialize()` path | `Master`, target `SS*` |
 | Map landmark is missing or wrong place is used | `_maps/**`, `code/modules/mapping/**`, `ai/runtime_flow.md` (mapping flow) | landmark type path, event/job consumer, procedural mapgen | `SSmapping`, `SSminor_mapping`, `SSdungeon_generator` |
-| Feature changes state indirectly and there is no obvious proc chain | `code/datums/components/**`, `code/datums/elements/**`, `ai/runtime_flow.md` (signal path) | `code/__DEFINES/dcs/**`, original caller via `SEND_SIGNAL` | `SSdcs` plus the owning feature subsystem |
+| Feature changes state indirectly and there is no obvious proc chain | `ai/signal_map.md`, `code/datums/components/**`, `code/datums/elements/**` | `code/__DEFINES/dcs/**`, original caller via `SEND_SIGNAL`, then `ai/core_procs.md` if the hook family is still unclear | `SSdcs` plus the owning feature subsystem |
 | Lag, hitching, runaway processing, or MC pressure | `ai/subsystem_map.md`, `ai/runtime_flow.md`, owner subsystem file | hot feature files, signal/component hotspots, high-frequency loops | target `SS*`, `Master` |
 
 ## Cheap Debugging Rules

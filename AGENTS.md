@@ -31,6 +31,8 @@ If the owner is known but the cause is still unclear, use `ai/failure_modes.md` 
 - content-first implementation rules: `ai/content_creation.md`
 - content feature decomposition: `ai/content_breakdown.md`
 - content implementation archetypes: `ai/content_patterns.md`
+- signal routing and DCS hotspots: `ai/signal_map.md`
+- core proc families and entry hooks: `ai/core_procs.md`
 - process-chain hazards: `ai/processing_hazards.md`
 - subsystem/process failure classification: `ai/failure_modes.md`
 - larger system map: `ai/system_map.md`

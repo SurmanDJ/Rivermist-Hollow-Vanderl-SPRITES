@@ -14,6 +14,8 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
    - `ai/content_creation.md`
    - `ai/content_breakdown.md`
    - `ai/content_patterns.md`
+   - `ai/signal_map.md`
+   - `ai/core_procs.md`
    - `ai/processing_hazards.md`
    - `ai/failure_modes.md`
    - `ai/system_map.md`
@@ -35,6 +37,8 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 - If the task is about adding a mechanic or content, use `ai/content_creation.md` before broad architectural maps.
 - If the content request is still fuzzy at the fantasy/spec level, use `ai/content_breakdown.md`.
 - If the content goal is known but the implementation shape is still fuzzy, use `ai/content_patterns.md`.
+- If behavior feels indirect, component-driven, or COMSIG-like, use `ai/signal_map.md`.
+- If you need the likely hook family before searching code, use `ai/core_procs.md`.
 - If the task says a whole loop froze, timers stopped, or there are no runtimes, use `ai/processing_hazards.md` before generic symptom routing.
 - If the owner is already known but the exact break mode is unclear, use `ai/failure_modes.md`.
 - If the task gives a BYOND type path, use `ai/type_index.md` before `ai/type_tree.md`.
@@ -70,6 +74,7 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 - For new content, minimize host scope first and minimize trigger frequency second.
 - For new content, decompose delivery/base/delta/effect before choosing code shape.
 - For new content, prefer an existing implementation pattern before designing a new abstraction.
+- For indirect behavior, check signals and core proc families before doing a broad code walk.
 - If a shared subsystem silently stalls, check for blocking calls before assuming scheduler pressure.
 - If ownership is clear but cause is not, classify the failure mode before tracing more code.
 - When behavior feels indirect, assume signals/components are involved and search DCS hooks before tracing every proc call by hand.

@@ -41,6 +41,7 @@ Before coding, be able to answer all of these:
 - What is the exact trigger?
 - What stops the behavior?
 - Is the chosen pattern consistent with `ai/human_checking.md`?
+- Do `ai/core_procs.md` or `ai/signal_map.md` suggest a cheaper existing hook?
 
 ## Smell Check
 
