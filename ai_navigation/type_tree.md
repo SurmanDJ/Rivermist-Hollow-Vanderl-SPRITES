@@ -15403,6 +15403,7 @@ Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro
 │ │ └ turq
 │ ├ portallight
 │ ├ psydonmusicbox
+│ ├ quest_compass
 │ ├ queen_bee
 │ ├ quicksilver
 │ │ └ 
