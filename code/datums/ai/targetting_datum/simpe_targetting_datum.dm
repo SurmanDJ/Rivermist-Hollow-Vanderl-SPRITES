@@ -1,5 +1,7 @@
 ///Datum for basic mobs to define what they can attack.
 /datum/targetting_datum
+	/// If true, the regular targetting datum should also participate in horny AI prioritisation.
+	var/prioritize_horny_targets = FALSE
 
 ///Returns true or false depending on if the target can be attacked by the mob
 /datum/targetting_datum/proc/can_attack(mob/living/living_mob, atom/target)
@@ -51,7 +53,7 @@
 		if(faction_check(living_mob, L) || L.stat >= DEAD) //basic targetting doesn't target dead people
 			return FALSE
 		var/list/retaliate_list = living_mob.ai_controller?.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
-		if(living_mob.ai_controller?.blackboard[BB_HORNY_TARGETTING_DATUM] && retaliate_list && !isnull(retaliate_list[L]))
+		if(prioritize_horny_targets && retaliate_list && !isnull(retaliate_list[L]))
 			if(retaliate_list[L] + 2 MINUTES >= world.time)
 				return TRUE
 			living_mob.ai_controller.remove_thing_from_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST, L)
@@ -114,6 +116,9 @@
 		if(target.mind?.has_antag_datum(/datum/antagonist/zizocultist))
 			return FALSE
 	. = ..()
+
+/datum/targetting_datum/basic/horny
+	prioritize_horny_targets = TRUE
 
 ///Returns true or false depending on if the target can be attacked by the mob
 /datum/targetting_datum/proc/should_disarm(mob/living/living_mob, atom/target)

@@ -2,14 +2,13 @@
 	movement_delay = 0.7 SECONDS
 	ai_movement = /datum/ai_movement/hybrid_pathing
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/horny(),
 		BB_MINOTAUR_RAGE_METER = 0,
 		BB_MINOTAUR_PHASE = 1,
 		BB_MINOTAUR_CHARGE_COOLDOWN = 0,
 		BB_MINOTAUR_SUMMON_COOLDOWN = 0,
 		BB_MINOTAUR_SLAM_COOLDOWN = 0,
 		BB_MINOTAUR_LAST_SPECIAL_ATTACK = null,
-		BB_HORNY_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_horny,

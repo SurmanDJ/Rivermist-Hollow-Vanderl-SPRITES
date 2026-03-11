@@ -4,8 +4,7 @@
 	ai_movement = /datum/ai_movement/hybrid_pathing
 
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
-		BB_HORNY_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/horny(),
 	)
 
 	planning_subtrees = list(

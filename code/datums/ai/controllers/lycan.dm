@@ -2,7 +2,7 @@
 	movement_delay = 0.5 SECONDS
 	ai_movement = /datum/ai_movement/hybrid_pathing
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/leyline(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/leyline/horny(),
 		BB_LEYLINE_SOURCE = null,
 		BB_TELEPORT_COOLDOWN = 0,
 		BB_ENERGY_SURGE_COOLDOWN = 0,
@@ -10,7 +10,6 @@
 		BB_LEYLINE_ENERGY = 100,
 		BB_MAX_LEYLINE_ENERGY = 100,
 		BB_ENERGY_REGEN_RATE = 0.5,
-		BB_HORNY_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_horny,
@@ -41,6 +40,9 @@
 		return
 
 /datum/targetting_datum/basic/leyline
+
+/datum/targetting_datum/basic/leyline/horny
+	prioritize_horny_targets = TRUE
 
 /datum/targetting_datum/basic/leyline/can_attack(mob/living/living_mob, atom/the_target)
 	if(isturf(the_target) || !the_target ) // bail out on invalids

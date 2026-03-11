@@ -9,6 +9,9 @@
 	/// BB key that holds the target typepath to use
 	var/target_item_key = BB_TARGET_HELD_ITEM
 
+/datum/targetting_datum/basic/allow_items/not_holding_item/horny
+	prioritize_horny_targets = TRUE
+
 ///Returns true or false depending on if the target can be attacked by the mob
 /datum/targetting_datum/basic/allow_items/not_holding_item/can_attack(mob/living/living_mob, atom/target, vision_range)
 	var/datum/ai_controller/controller = living_mob.ai_controller
