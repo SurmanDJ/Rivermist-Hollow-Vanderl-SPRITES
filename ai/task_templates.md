@@ -8,12 +8,8 @@ Default routing rule for all templates:
 
 ```text
 Start with AGENTS.md.
-Use exactly one small helper first:
-- ai/entrypoints.md for keyword/feature routing
-- ai/debug_routes.md for symptom-first bugs
-- ai/type_index.md for BYOND type paths
-- ai/runtime_flow.md for lifecycle/order/tick issues
-- ai/system_dependencies.md for cross-system handoffs
+Then open ai/router.md.
+Use exactly one small helper first.
 Escalate to larger maps only if still ambiguous.
 ```
 

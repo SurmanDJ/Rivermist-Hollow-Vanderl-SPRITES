@@ -6,14 +6,10 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 
 ## Read Order
 
-1. Start with exactly one small helper file:
-   - `ai/entrypoints.md` for keyword or feature-name routing
-   - `ai/debug_routes.md` for symptom-first debugging
-   - `ai/type_index.md` for BYOND type paths
-   - `ai/runtime_flow.md` for lifecycle/order/tick questions
-   - `ai/system_dependencies.md` for cross-system handoffs
-2. Open up to 2 source files for that route.
-3. Escalate only if the route is still ambiguous:
+1. Start with `ai/router.md`.
+2. Open exactly one helper file.
+3. Open up to 2 source files for that route.
+4. Escalate only if the route is still ambiguous:
    - `ai/system_map.md`
    - `ai/subsystem_map.md`
    - `ai/architecture.md`
@@ -21,7 +17,7 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 
 ## Read Budget
 
-- Stage 1: one small helper file + up to 2 source files.
+- Stage 1: `ai/router.md` + one small helper file + up to 2 source files.
 - Stage 2: one more helper file or one `SS*` file + up to 2 more source files.
 - Stage 3: only then open the larger maps or do broader searches.
 
@@ -32,6 +28,7 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 - If the task gives a BYOND type path, use `ai/type_index.md` before `ai/type_tree.md`.
 - If you know the systems but not their handoff, use `ai/system_dependencies.md` before opening more source files.
 - If you know the symptom is timing/order related, use `ai/runtime_flow.md` before doing a broad search.
+- Use `ai/router.md` only as dispatch; do not treat it as a large reference file.
 - Unknown type path: search the exact path in `ai/type_index.md`; use `ai/type_tree.md` only if inheritance depth is the issue.
 - `SS*` subsystem mention: find the global in `ai/subsystem_map.md`; open the mapped file in `code/controllers/subsystem/**` and then inspect any type roots it schedules.
 - Jobs, classes, spawn roles: inspect `code/modules/jobs/**`, `code/datums/migrants/**`, then `modular_rmh/code/modules/jobs/**` for RMH-specific roles and subclasses.
