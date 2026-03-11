@@ -2,6 +2,8 @@
 
 Use this guide to avoid rescanning the whole repository when a task can be localized quickly.
 
+If you are framing a new task for an agent, use `ai/task_templates.md` together with this guide.
+
 ## Read Order
 
 1. Start with `ai/architecture.md` to understand runtime ownership and layer boundaries.
