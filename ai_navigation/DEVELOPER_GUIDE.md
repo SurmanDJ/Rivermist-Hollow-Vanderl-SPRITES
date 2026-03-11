@@ -22,14 +22,43 @@ It is not:
 - `code/modules/mapping/**`
 - `SSmapping`
 
+### Start Modes
+
+There are 3 startup modes:
+
+- `Fast Start`
+  default for normal work
+- `Guided Start`
+  when you want full repository guidance first
+- `Maintenance Start`
+  for refreshes and migrations of the navigation layer
+
+Use the cheapest mode that fits the task.
+
+If the correct mode or first helper is still unclear, use:
+
+- `ai_navigation/start_matrix.md`
+
 ### Minimum Handoff
+
+Default recommendation: use `Fast Start`, not `Guided Start`.
 
 Use this 2-message pattern:
 
 1. message 1: the goal
-2. message 2: the repository and the instruction to start with `ai_navigation/AGENTS.md`
+2. message 2: the repository and the instruction to start with `ai_navigation/router.md`
 
 Recommended wording:
+
+```text
+Here is the goal:
+<your task>
+
+Here is the repository with guidance.
+Start with ai_navigation/router.md.
+```
+
+If you explicitly want the full guided bootstrap:
 
 ```text
 Here is the goal:
@@ -41,7 +70,14 @@ Start with ai_navigation/AGENTS.md.
 
 ### What The Agent Should Do
 
-The expected startup path is:
+The expected `Fast Start` path is:
+
+1. open `ai_navigation/router.md`
+2. choose exactly one small helper
+3. open up to 2 source files
+4. escalate only if still ambiguous
+
+The expected `Guided Start` path is:
 
 1. open `ai_navigation/AGENTS.md`
 2. open `ai_navigation/router.md`
@@ -53,6 +89,8 @@ This is the main cost-saving rule.
 
 ### Which File To Mention For Special Cases
 
+- startup mode choice by task shape:
+  `ai_navigation/start_matrix.md`
 - bug investigation:
   `ai_navigation/debug_routes.md`
 - new content or mechanics:
@@ -88,7 +126,7 @@ Verification:
 <what must be true in the end>
 
 Repository guidance:
-Start with ai_navigation/AGENTS.md.
+Start with ai_navigation/router.md.
 ```
 
 If the task is broad, risky, or scope is unclear, the agent is expected to classify risk with `ai_navigation/human_checking.md` before edits.
@@ -103,7 +141,7 @@ Recommended wording:
 
 ```text
 Refresh the AI navigation layer for this repository.
-Start with ai_navigation/AGENTS.md, then open ai_navigation/update_policy.md.
+Start with ai_navigation/update_policy.md.
 Docs only unless explicitly approved otherwise.
 ```
 
@@ -111,7 +149,7 @@ Or:
 
 ```text
 Migrate this AI navigation layer to another repository.
-Start with ai_navigation/AGENTS.md, then open ai_navigation/update_policy.md.
+Start with ai_navigation/update_policy.md.
 Preserve the navigation model, not the exact paths.
 ```
 
@@ -139,14 +177,39 @@ The agent must still verify conclusions against source code.
 - `code/modules/mapping/**`
 - `SSmapping`
 
+### Режимы Старта
+
+Есть 3 режима входа:
+
+- `Fast Start`
+  режим по умолчанию для обычной работы
+- `Guided Start`
+  если нужно сначала пройти полное руководство по репозиторию
+- `Maintenance Start`
+  для апдейтов и миграций navigation layer
+
+Используй самый дешёвый режим, который подходит задаче.
+
 ### Минимальный Handoff
+
+Рекомендуемый вариант по умолчанию: `Fast Start`, а не `Guided Start`.
 
 Используй схему из 2 сообщений:
 
 1. сообщение 1: цель
-2. сообщение 2: репозиторий и указание начать с `ai_navigation/AGENTS.md`
+2. сообщение 2: репозиторий и указание начать с `ai_navigation/router.md`
 
 Рекомендуемая формулировка:
+
+```text
+Вот цель:
+<твоя задача>
+
+Вот репозиторий с руководством.
+Начни с ai_navigation/router.md.
+```
+
+Если тебе нужен полный guided bootstrap:
 
 ```text
 Вот цель:
@@ -158,7 +221,14 @@ The agent must still verify conclusions against source code.
 
 ### Что Должен Делать Агент
 
-Ожидаемый стартовый маршрут такой:
+Ожидаемый маршрут для `Fast Start` такой:
+
+1. открыть `ai_navigation/router.md`
+2. выбрать ровно один маленький helper
+3. открыть до 2 исходников
+4. эскалировать только если всё ещё неясно
+
+Ожидаемый маршрут для `Guided Start` такой:
 
 1. открыть `ai_navigation/AGENTS.md`
 2. открыть `ai_navigation/router.md`
@@ -170,6 +240,8 @@ The agent must still verify conclusions against source code.
 
 ### Какой Файл Указывать Для Частных Случаев
 
+- выбор режима старта по типу задачи:
+  `ai_navigation/start_matrix.md`
 - баги:
   `ai_navigation/debug_routes.md`
 - новый контент или механика:
@@ -205,7 +277,7 @@ The agent must still verify conclusions against source code.
 <что должно быть верно в конце>
 
 Руководство по репозиторию:
-Начни с ai_navigation/AGENTS.md.
+Начни с ai_navigation/router.md.
 ```
 
 Если задача широкая, рискованная или неясен blast radius, агент должен сначала прогнать `ai_navigation/human_checking.md`, а уже потом править код.
@@ -220,7 +292,7 @@ The agent must still verify conclusions against source code.
 
 ```text
 Обнови AI navigation layer этого репозитория.
-Начни с ai_navigation/AGENTS.md, затем открой ai_navigation/update_policy.md.
+Начни с ai_navigation/update_policy.md.
 Только документация, если отдельно не согласовано иное.
 ```
 
@@ -228,7 +300,7 @@ The agent must still verify conclusions against source code.
 
 ```text
 Мигрируй этот AI navigation layer на другой репозиторий.
-Начни с ai_navigation/AGENTS.md, затем открой ai_navigation/update_policy.md.
+Начни с ai_navigation/update_policy.md.
 Сохраняй модель навигации, а не буквальные пути.
 ```
 
