@@ -33,9 +33,6 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	///Does the mob wander around when idle?
 	var/wander = 1
 
-	var/obj/item/handcuffed = null //Whether or not the mob is handcuffed
-	var/obj/item/legcuffed = null  //Same as handcuffs but for legs. Bear traps use this.
-
 	///When someone interacts with the simple animal.
 	///Help-intent verb in present continuous tense.
 	var/response_help_continuous = "pokes"

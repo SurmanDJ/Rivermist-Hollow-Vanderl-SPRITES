@@ -126,6 +126,8 @@
 	if(!source_key_list)
 		if(!owner)
 			return
+		if(!iscarbon(owner))
+			return
 		source_key_list = color_key_source_list_from_carbon(owner)
 	accessory_colors = accessory.get_default_colors(source_key_list)
 	accessory_colors = accessory.validate_color_keys_for_owner(owner, accessory_colors)

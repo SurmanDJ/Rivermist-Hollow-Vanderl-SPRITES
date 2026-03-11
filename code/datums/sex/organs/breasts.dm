@@ -15,7 +15,7 @@
 	additional_blocker = "bra"
 	organ_sizeable = TRUE
 
-/obj/item/organ/genitals/filling_organ/breasts/Insert(mob/living/carbon/M, special, drop_if_replaced)
+/obj/item/organ/genitals/filling_organ/breasts/Insert(mob/living/M, special, drop_if_replaced)
 	. = ..()
 	if(M.breast_milk)
 		reagent_to_make = M.breast_milk
@@ -41,7 +41,7 @@
 	else if(badonkas.organ_size == BREAST_SIZE_FLAT)
 		M.apply_status_effect(/datum/status_effect/debuff/flatboobs/permanent/lite)
 
-/obj/item/organ/genitals/filling_organ/breasts/Remove(mob/living/carbon/M, special, drop_if_replaced)
+/obj/item/organ/genitals/filling_organ/breasts/Remove(mob/living/M, special, drop_if_replaced)
 	. = ..()
 	var/datum/component/body_storage/breasts/comp = GetComponent(/datum/component/body_storage/breasts)
 	comp?.RemoveComponent()
