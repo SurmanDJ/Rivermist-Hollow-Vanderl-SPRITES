@@ -18,10 +18,14 @@ Recommended handoff pattern:
 5. Escalate only if unresolved.
 
 Do not start with a full repository scan if the maps already narrow the task.
+If a whole process loop or effect family freezes without runtimes, sweep for blocking calls before blaming load.
+If the owner is known but the cause is still unclear, use `ai/failure_modes.md` to classify the break mode before guessing.
 
 ## If You Need More
 
 - task framing: `ai/task_templates.md`
+- process-chain hazards: `ai/processing_hazards.md`
+- subsystem/process failure classification: `ai/failure_modes.md`
 - larger system map: `ai/system_map.md`
 - runtime ownership: `ai/subsystem_map.md`
 - architecture/layers: `ai/architecture.md`

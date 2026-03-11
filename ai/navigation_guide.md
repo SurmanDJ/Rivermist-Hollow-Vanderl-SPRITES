@@ -10,6 +10,8 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 2. Open exactly one helper file.
 3. Open up to 2 source files for that route.
 4. Escalate only if the route is still ambiguous:
+   - `ai/processing_hazards.md`
+   - `ai/failure_modes.md`
    - `ai/system_map.md`
    - `ai/subsystem_map.md`
    - `ai/architecture.md`
@@ -25,6 +27,8 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 
 - If a keyword in `ai/entrypoints.md` already matches the task, use that route before opening the larger maps.
 - If the task begins with a symptom, use `ai/debug_routes.md` before anything else.
+- If the task says a whole loop froze, timers stopped, or there are no runtimes, use `ai/processing_hazards.md` before generic symptom routing.
+- If the owner is already known but the exact break mode is unclear, use `ai/failure_modes.md`.
 - If the task gives a BYOND type path, use `ai/type_index.md` before `ai/type_tree.md`.
 - If you know the systems but not their handoff, use `ai/system_dependencies.md` before opening more source files.
 - If you know the symptom is timing/order related, use `ai/runtime_flow.md` before doing a broad search.
@@ -54,5 +58,7 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 - Prefer one helper file plus source files over multiple helper files in a row.
 - Prefer directory families over whole-repo scans: `code/datums` for logic/state, `code/modules` for feature slices, `code/game` for concrete world objects.
 - If a system is content-heavy, inspect `modular_rmh` early; if it is scheduler/runtime-heavy, inspect `code/controllers` first.
+- If a shared subsystem silently stalls, check for blocking calls before assuming scheduler pressure.
+- If ownership is clear but cause is not, classify the failure mode before tracing more code.
 - When behavior feels indirect, assume signals/components are involved and search DCS hooks before tracing every proc call by hand.
 - When an issue is round-start or lifecycle related, always open `code/world.dm`, `code/controllers/master.dm`, and the relevant `SS*` entry before diving into content files.

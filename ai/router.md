@@ -8,6 +8,8 @@ The `ai/` maps may lag behind the codebase by up to one monthly manual refresh c
 
 | If the task looks like | Open this helper |
 |---|---|
+| whole subsystem or process loop freezes, hangs, or stops without runtimes | `ai/processing_hazards.md` |
+| explicit failure-mode analysis after the owner is already known | `ai/failure_modes.md` |
 | symptom-first bug report | `ai/debug_routes.md` |
 | keyword or feature-name routing | `ai/entrypoints.md` |
 | BYOND type path like `/datum/...`, `/mob/...`, `/obj/...` | `ai/type_index.md` |
@@ -22,4 +24,5 @@ The `ai/` maps may lag behind the codebase by up to one monthly manual refresh c
 - Open exactly 1 helper first.
 - Then open up to 2 source files.
 - Check `modular_rmh` on the same branch.
+- For whole-loop stalls with no runtimes, do a blocking-call sweep before blaming load.
 - Escalate only if unresolved.
