@@ -276,6 +276,75 @@
 
 	return map_name
 
+/datum/quest/proc/find_portal_to_area(area/target_area, turf/from_turf)
+	if(!target_area || !from_turf)
+		return null
+
+	var/obj/structure/fluff/traveltile/best
+	var/best_dist = INFINITY
+
+	for(var/obj/structure/fluff/traveltile/tile in GLOB.traveltiles)
+		var/turf/tile_turf = get_turf(tile)
+		if(!tile_turf || !is_in_zweb(tile_turf.z, from_turf.z))
+			continue
+		if(tile.cached_destination_area != target_area)
+			continue
+
+		var/distance = get_dist(from_turf, tile_turf)
+		if(distance < best_dist)
+			best_dist = distance
+			best = tile
+
+	return best
+
+/datum/quest/proc/get_compass_signal_label(turf/reference_turf, using_live_target)
+	return using_live_target ? "Live target signal" : "Quest spawner echo"
+
+/datum/quest/proc/get_compass_signal_data(turf/reference_turf)
+	var/list/signal_data = list(
+		"compass_target" = null,
+		"resolved_target" = null,
+		"status_text" = "The signal cannot be resolved.",
+	)
+	if(!reference_turf)
+		return signal_data
+
+	var/turf/live_target_turf = get_nearest_tracked_location(reference_turf)
+	var/turf/resolved_target = get_target_location(reference_turf)
+	var/using_live_target = resolved_target && live_target_turf && resolved_target == live_target_turf
+	var/signal_label = get_compass_signal_label(reference_turf, using_live_target)
+
+	if(!resolved_target)
+		signal_data["status_text"] = "[signal_label] unavailable."
+		return signal_data
+
+	signal_data["resolved_target"] = resolved_target
+	signal_data["compass_target"] = resolved_target
+
+	if(resolved_target.z != reference_turf.z)
+		if(!is_in_zweb(resolved_target.z, reference_turf.z))
+			var/area/target_area = get_area(resolved_target)
+			var/obj/structure/fluff/traveltile/portal = find_portal_to_area(target_area, reference_turf)
+			if(portal)
+				signal_data["compass_target"] = get_turf(portal)
+				signal_data["status_text"] = "[signal_label] routed through a local gate."
+				return signal_data
+
+			signal_data["compass_target"] = null
+			signal_data["status_text"] = "[signal_label] is on another map."
+			return signal_data
+
+		signal_data["compass_target"] = null
+		signal_data["status_text"] = resolved_target.z > reference_turf.z ? "[signal_label] is above you." : "[signal_label] is below you."
+		return signal_data
+
+	if(get_dist(reference_turf, resolved_target) <= 1)
+		signal_data["status_text"] = "[signal_label] is very close."
+	else
+		signal_data["status_text"] = "[signal_label] is active."
+
+	return signal_data
+
 /datum/quest/proc/get_tier_label(tier = threat_tier)
 	switch(tier)
 		if(QUEST_TIER_ROUTINE)

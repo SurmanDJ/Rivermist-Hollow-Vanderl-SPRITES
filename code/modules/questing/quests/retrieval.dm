@@ -18,6 +18,11 @@
 /datum/quest/retrieval/get_objective_text()
 	return "Retrieve [progress_required] [initial(target_item_type.name)]."
 
+/datum/quest/retrieval/get_compass_signal_label(turf/reference_turf, using_live_target)
+	if(has_tracked_item_in_inventory())
+		return "Turn-in signal"
+	return ..()
+
 
 /datum/quest/retrieval/get_risk_score(turf/target_turf)
 	return requested_tier + max(progress_required - 1, 0)

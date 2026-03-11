@@ -1,30 +1,22 @@
 GLOBAL_LIST_EMPTY(quest_scrolls)
-
-#define WHISPER_COOLDOWN 10 SECONDS
 /obj/item/paper/scroll/quest
 	name = "enchanted contract scroll"
-	desc = "A scroll oft known as a \"whispering scroll\". Enchanted with magicks to make it whisper to its bearer when opened the location of its target.\n\
-	The magical protections make it resistant to damage and tampering. It will only whisper when carried on the person of the contract bearer."
+	desc = "A scroll oft known as a \"whispering scroll\". Its enchantment remembers the contract's target and the proper map, but directional tracking must be read through a linked compass.\n\
+	The magical protections make it resistant to damage and tampering."
 	icon = 'icons/obj/questing.dmi'
 	icon_state = "scroll_quest"
 	base_icon_state = "scroll_quest"
 	var/datum/quest/assigned_quest
-	var/last_compass_direction = ""
-	var/last_z_level_hint = ""
 	var/last_target_map_text = ""
-	var/last_whisper = 0 // Last time the scroll whispered to the user
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | INDESTRUCTIBLE | UNACIDABLE
 	max_integrity = 1000
 	armor = list("blunt" = 100, "slash" = 100, "stab" = 100, "piercing" = 100, "fire" = 100, "acid" = 100)
-
-	COOLDOWN_DECLARE(next_compass_scan)
 
 /obj/item/paper/scroll/quest/Initialize()
 	. = ..()
 	if(assigned_quest)
 		assigned_quest.quest_scroll = src
 	update_quest_text()
-	START_PROCESSING(SSprocessing, src)
 	GLOB.quest_scrolls += src
 
 /obj/item/paper/scroll/quest/Destroy()
@@ -47,7 +39,6 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 
 		qdel(assigned_quest)
 		assigned_quest = null
-	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
 /obj/item/paper/scroll/quest/update_icon_state()
@@ -56,35 +47,6 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 		icon_state = info ? "[base_icon_state]_info" : "[base_icon_state]"
 	else
 		icon_state = "[base_icon_state]_closed"
-
-
-/obj/item/paper/scroll/quest/process()
-	if(world.time > last_whisper + WHISPER_COOLDOWN)
-		last_whisper = world.time
-		target_whisper()
-
-/obj/item/paper/scroll/quest/proc/target_whisper()
-	if(!assigned_quest || assigned_quest.complete || !assigned_quest.quest_receiver_reference)
-		return
-	var/obj/itemloc = src.loc
-	var/mob/quest_bearer = assigned_quest.quest_receiver_reference?.resolve()
-	// I should refactor this out at some point
-	if(!istype(itemloc, /mob/living))
-		while(!istype(itemloc, /mob/living))
-			if(isnull(itemloc))
-				return
-			itemloc = itemloc.loc
-			if(istype(itemloc, /turf))
-				return
-	if(itemloc != quest_bearer)
-		return
-	if(open && quest_bearer)
-		update_compass(quest_bearer)
-		var/message = ""
-		message = "[last_compass_direction]"
-		if(last_z_level_hint)
-			message += " ([last_z_level_hint])"
-		to_chat(quest_bearer, span_info("The scroll whispers to you, the target is [message]."))
 
 /obj/item/paper/scroll/quest/examine(mob/user)
 	. = ..()
@@ -101,6 +63,10 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 /obj/item/paper/scroll/quest/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	if(P.get_sharpness())
 		to_chat(user, span_warning("The enchanted scroll resists your attempts to tear it."))
+		return
+	if(istype(P, /obj/item/quest_compass))
+		var/obj/item/quest_compass/quest_compass = P
+		quest_compass.link_to_scroll(src, user)
 		return
 	if(istype(P, /obj/item/paper)) // Prevent merging with other papers/scrolls
 		to_chat(user, span_warning("The magical energies prevent you from combining this with other scrolls."))
@@ -135,7 +101,8 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	return // No fire to extinguish
 
 /obj/item/paper/scroll/quest/read(mob/user)
-	refresh_compass(user)
+	ensure_quest_compass(user)
+	update_quest_text()
 	return ..()
 
 /obj/item/paper/scroll/quest/attack_self(mob/user)
@@ -145,7 +112,7 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 
 	// Only do claim logic if unclaimed
 	if(!assigned_quest || assigned_quest.quest_receiver_reference)
-		refresh_compass(user) // Refresh compass when opened by claimed user
+		ensure_quest_compass(user)
 		update_quest_text()
 		return
 
@@ -154,79 +121,12 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	assigned_quest.quest_receiver_name = user.real_name
 
 	to_chat(user, span_notice("You claim this contract for yourself!"))
+	ensure_quest_compass(user)
 	update_quest_text()
-	refresh_compass(user) // Update compass after claiming
 
 /obj/item/paper/scroll/quest/attack_self_secondary(mob/user)
-	if(!assigned_quest || assigned_quest.complete)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(!COOLDOWN_FINISHED(src, next_compass_scan))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	COOLDOWN_START(src, next_compass_scan, 2 SECONDS)
-
-	var/turf/user_turf = get_turf(user)
-	if(!user_turf)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	var/turf/target_turf = assigned_quest.get_target_location(user_turf)
-	if(!target_turf)
-		to_chat(user, span_warning("The scroll cannot sense its target."))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	var/turf/compass_target = target_turf
-	var/portal_hint
-
-	if(target_turf.z != user_turf.z)
-		if(!is_in_zweb(target_turf.z, user_turf.z))
-			var/area/target_area = get_area(target_turf)
-			var/obj/structure/fluff/traveltile/portal = find_portal_to_area(target_area, user_turf)
-			if(portal)
-				compass_target = get_turf(portal)
-				portal_hint = "route to [target_area.name] on another map"
-			else
-				to_chat(user, span_info("The scroll pulses faintly - the target is on another map, somewhere in [target_area.name], but you sense no path from here."))
-				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		else
-			to_chat(user, span_info("The scroll pulses faintly - the target is on a different level."))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	var/dir = get_dir(user_turf, compass_target)
-	if(!dir)
-		if(portal_hint)
-			to_chat(user, span_info("The scroll pulses warmly - the [portal_hint] is nearby."))
-		else
-			to_chat(user, span_info("The scroll pulses warmly - you are nearby."))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	var/distance = get_dist(user_turf, compass_target)
-	var/arrow_color
-	switch(distance)
-		if(1 to 15)
-			arrow_color = COLOR_GREEN
-		if(16 to 40)
-			arrow_color = COLOR_YELLOW
-		if(41 to 100)
-			arrow_color = COLOR_ORANGE
-		else
-			arrow_color = COLOR_RED
-
-	var/datum/hud/user_hud = user.hud_used
-	if(!user_hud || !istype(user_hud, /datum/hud) || !islist(user_hud.infodisplay))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	var/atom/movable/screen/multitool_arrow/arrow = new(null, user_hud)
-	arrow.color = arrow_color
-	arrow.screen_loc = "CENTER-1,CENTER-1"
-	arrow.transform = matrix(dir2angle(dir), MATRIX_ROTATE)
-
-	user_hud.infodisplay += arrow
-	user_hud.show_hud(user_hud.hud_version)
-
-	if(portal_hint)
-		to_chat(user, span_info("The scroll points toward the [portal_hint]."))
-
-	QDEL_IN(arrow, 1.5 SECONDS)
+	ensure_quest_compass(user)
+	to_chat(user, span_notice("The scroll remembers the route, but only a linked compass can point the way."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/paper/scroll/quest/proc/update_quest_text()
@@ -241,12 +141,6 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	scroll_text += "<b>Type:</b> [assigned_quest.quest_type] contract.<br>"
 	scroll_text += "<b>Threat:</b> [assigned_quest.get_tier_label()].<br><br>"
 
-	if(last_compass_direction)
-		scroll_text += "<b>Direction:</b> The target is [last_compass_direction]. "
-		if(last_z_level_hint)
-			scroll_text += " ([last_z_level_hint])"
-		scroll_text += "<br>"
-
 	scroll_text += "<b>Objective:</b> [assigned_quest.get_objective_text()]<br>"
 
 	// Show progress if applicable
@@ -257,6 +151,7 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	if(!assigned_quest.complete || !last_target_map_text || findtext(current_map_text, "Error:") != 1)
 		last_target_map_text = current_map_text
 	scroll_text += "<b>Map:</b> [last_target_map_text]<br>"
+	scroll_text += "<b>Compass:</b> Use a linked quest compass for directional tracking.<br>"
 	scroll_text += "<b>Location:</b> [assigned_quest.get_location_text()]<br>"
 	scroll_text += "<br><b>Reward:</b> [assigned_quest.reward_amount] amna upon completion<br>"
 
@@ -278,104 +173,27 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	info = scroll_text
 	update_icon()
 
-/obj/item/paper/scroll/quest/proc/refresh_compass(mob/user)
-	if(!assigned_quest || assigned_quest.complete)
-		return FALSE
+/obj/item/paper/scroll/quest/proc/ensure_quest_compass(mob/user)
+	if(!user || !assigned_quest || assigned_quest.complete)
+		return null
 
-	// Update compass with precise directions
-	update_compass(user)
+	var/mob/quest_bearer = assigned_quest.quest_receiver_reference?.resolve()
+	if(!quest_bearer || quest_bearer != user)
+		return null
 
-	// Only update text if we have a valid direction
-	if(last_compass_direction)
-		update_quest_text()
-		return TRUE
+	var/obj/item/quest_compass/free_compass
+	for(var/obj/item/quest_compass/quest_compass in user.GetAllContents(/obj/item/quest_compass))
+		if(quest_compass.is_linked_to_scroll(src))
+			return quest_compass
+		if(!quest_compass.get_linked_scroll() && !free_compass)
+			free_compass = quest_compass
 
-	return FALSE
+	if(free_compass)
+		free_compass.link_to_scroll(src, user, TRUE)
+		return free_compass
 
-/obj/item/paper/scroll/quest/proc/update_compass(mob/user)
-	if(!assigned_quest || assigned_quest.complete)
-		return
-
-	var/turf/user_turf = user ? get_turf(user) : get_turf(src)
-	if(!user_turf)
-		last_compass_direction = "No signal detected"
-		last_z_level_hint = ""
-		return
-
-	// Reset compass values
-	last_compass_direction = "Searching for target..."
-	last_z_level_hint = ""
-
-	var/turf/target_turf = assigned_quest.get_target_location(user_turf)
-	if(!target_turf)
-		last_compass_direction = "at an unknown location"
-		last_z_level_hint = ""
-		return
-
-	var/turf/compass_target = target_turf // may be overridden to a portal
-
-	if(target_turf.z != user_turf.z)
-		if(!is_in_zweb(target_turf.z, user_turf.z))
-			var/area/target_area = get_area(target_turf)
-			var/obj/structure/fluff/traveltile/portal = find_portal_to_area(target_area, user_turf)
-			if(portal)
-				compass_target = get_turf(portal)
-				last_z_level_hint = "use a route to [target_area.name] on another map"
-			else
-				last_z_level_hint = "on another map: [target_area.name]"
-		else
-			var/z_diff = abs(target_turf.z - user_turf.z)
-			last_z_level_hint = target_turf.z > user_turf.z ? \
-				"[z_diff] [z_diff == 1 ? "level" : "levels"] above you" : \
-				"[z_diff] [z_diff == 1 ? "level" : "levels"] below you"
-
-	// Use compass_target (portal or actual target) for all direction math below
-	var/dx = compass_target.x - user_turf.x
-	var/dy = compass_target.y - user_turf.y
-	var/distance = sqrt(dx*dx + dy*dy)
-
-	// If very close, don't show direction
-	if(distance <= 7)
-		last_compass_direction = "nearby"
-		if(target_turf.z == user_turf.z)
-			last_z_level_hint = ""
-		return
-
-	// Get precise direction text
-	var/direction_text = get_precise_direction_between(user_turf, compass_target)
-	if(!direction_text)
-		direction_text = "unknown direction"
-
-	// Determine distance description
-	var/distance_text
-	switch(distance)
-		if(0 to 14)
-			distance_text = "very close"
-		if(15 to 40)
-			distance_text = "close"
-		if(41 to 100)
-			distance_text = ""
-		if(101 to INFINITY)
-			distance_text = "far away"
-
-	last_compass_direction = distance_text ? "[distance_text] to the [direction_text]" : "to the [direction_text]"
-	if(!last_z_level_hint)
-		last_z_level_hint = "on this level"
-
-#undef WHISPER_COOLDOWN
-
-/obj/item/paper/scroll/quest/proc/find_portal_to_area(area/target_area, turf/from_turf)
-	var/obj/structure/fluff/traveltile/best
-	var/best_dist = INFINITY
-
-	for(var/obj/structure/fluff/traveltile/tile in GLOB.traveltiles)
-		var/turf/get_turf = get_turf(tile)
-		if(!is_in_zweb(get_turf.z, from_turf.z))
-			continue
-		if(tile.cached_destination_area == target_area)
-			var/d = get_dist(from_turf, get_turf(tile))
-			if(d < best_dist)
-				best_dist = d
-				best = tile
-
-	return best
+	var/obj/item/quest_compass/new_compass = new(get_turf(user))
+	new_compass.link_to_scroll(src, user, TRUE)
+	user.put_in_hands(new_compass)
+	to_chat(user, span_notice("A quest compass attunes itself to the contract."))
+	return new_compass

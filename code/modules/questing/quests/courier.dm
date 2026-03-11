@@ -28,6 +28,11 @@
 	text += "Destination: [initial(target_delivery_location.name)]."
 	return text
 
+/datum/quest/courier/get_compass_signal_label(turf/reference_turf, using_live_target)
+	if(has_tracked_item_in_inventory())
+		return "Delivery signal"
+	return ..()
+
 /datum/quest/courier/get_risk_score(turf/target_turf)
 	return requested_tier + 1
 

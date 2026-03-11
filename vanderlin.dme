@@ -3383,6 +3383,7 @@
 #include "code\modules\questing\landmarks.dm"
 #include "code\modules\questing\quest_object.dm"
 #include "code\modules\questing\items\parcel.dm"
+#include "code\modules\questing\items\quest_compass.dm"
 #include "code\modules\questing\items\quest_scroll.dm"
 #include "code\modules\questing\items\spawn_effect.dm"
 #include "code\modules\questing\quests\__quest_list.dm"

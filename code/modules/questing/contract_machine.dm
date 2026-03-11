@@ -212,6 +212,7 @@
 
 	// Update scroll text
 	spawned_scroll.update_quest_text()
+	spawned_scroll.ensure_quest_compass(user)
 
 	// Charge deposit
 	SStreasury.bank_accounts[user] -= attached_quest.deposit_amount
