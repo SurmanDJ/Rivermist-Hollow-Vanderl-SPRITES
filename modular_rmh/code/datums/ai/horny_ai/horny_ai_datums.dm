@@ -56,7 +56,6 @@
 		return FALSE
 	set_movement_target(controller, target)
 
-	basic_mob.AddElement(/datum/element/ai_retaliate)
 	RegisterSignal(basic_mob, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
 	controller.set_blackboard_key(BB_HORNY_STUN_COOLDOWN, world.time)

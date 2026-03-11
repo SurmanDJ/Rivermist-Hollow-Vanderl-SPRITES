@@ -149,7 +149,7 @@
 		return FALSE
 	if(!ismob(checking) && !is_type_in_typecache(checking, GLOB.target_interested_atoms))
 		return FALSE
-	if(strategy.prioritize_horny_targets && strategy.can_horny(pawn, checking))
+	if(strategy.should_prioritize_horny_targets(pawn) && strategy.can_horny(pawn, checking))
 		return TRUE
 	if(!strategy.can_attack(pawn, checking))
 		return FALSE
@@ -201,7 +201,7 @@
 
 	var/mob/highest_threat = controller.blackboard[BB_HIGHEST_THREAT_MOB]
 
-	if(strategy.prioritize_horny_targets && strategy.can_horny(controller.pawn, highest_threat))
+	if(strategy.should_prioritize_horny_targets(controller.pawn) && strategy.can_horny(controller.pawn, highest_threat))
 		var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]
 		qdel(field)
 		controller.CancelActions()

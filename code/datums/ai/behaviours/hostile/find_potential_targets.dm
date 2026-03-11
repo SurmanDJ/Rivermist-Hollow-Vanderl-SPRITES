@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob)))
 		return FALSE
 	if(!ismob(checking) && !is_type_in_typecache(checking, GLOB.target_interested_atoms))
 		return FALSE
-	if(strategy.prioritize_horny_targets && strategy.can_horny(pawn, checking))
+	if(strategy.should_prioritize_horny_targets(pawn) && strategy.can_horny(pawn, checking))
 		return TRUE
 	if(!strategy.can_attack(pawn, checking))
 		return FALSE
@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob)))
 	// Alright, we found something acceptable, let's use it yeah?
 	var/atom/target = pick_final_target(controller, accepted_targets)
 
-	if(strategy.prioritize_horny_targets && strategy.can_horny(controller.pawn, target))
+	if(strategy.should_prioritize_horny_targets(controller.pawn) && strategy.can_horny(controller.pawn, target))
 		var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]
 		controller.CancelActions() // On retarget cancel any further queued actions so that they will setup again with new target
 		qdel(field) // autoclears so it's fine

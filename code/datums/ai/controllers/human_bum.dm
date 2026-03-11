@@ -7,7 +7,7 @@
 		BB_WEAPON_TYPE = /obj/item/weapon,
 		BB_ARMOR_CLASS = 2,
 
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/horny(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
 		BB_PET_TARGETING_DATUM = new /datum/targetting_datum/basic/not_friends(),
 	)
 

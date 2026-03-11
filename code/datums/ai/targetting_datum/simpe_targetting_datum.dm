@@ -1,7 +1,5 @@
 ///Datum for basic mobs to define what they can attack.
 /datum/targetting_datum
-	/// If true, the regular targetting datum should also participate in horny AI prioritisation.
-	var/prioritize_horny_targets = FALSE
 
 ///Returns true or false depending on if the target can be attacked by the mob
 /datum/targetting_datum/proc/can_attack(mob/living/living_mob, atom/target)
@@ -9,6 +7,10 @@
 
 ///Returns true or false depending on if the target can be used by horny AI
 /datum/targetting_datum/proc/can_horny(mob/living/living_mob, atom/target)
+	return FALSE
+
+/// Returns true if this targetting datum should let horny AI pre-empt combat targeting.
+/datum/targetting_datum/proc/should_prioritize_horny_targets(mob/living/living_mob)
 	return FALSE
 
 ///Returns something the target might be hiding inside of
@@ -53,7 +55,7 @@
 		if(faction_check(living_mob, L) || L.stat >= DEAD) //basic targetting doesn't target dead people
 			return FALSE
 		var/list/retaliate_list = living_mob.ai_controller?.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
-		if(prioritize_horny_targets && retaliate_list && !isnull(retaliate_list[L]))
+		if(should_prioritize_horny_targets(living_mob) && retaliate_list && !isnull(retaliate_list[L]))
 			if(retaliate_list[L] + 2 MINUTES >= world.time)
 				return TRUE
 			living_mob.ai_controller.remove_thing_from_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST, L)
@@ -117,8 +119,11 @@
 			return FALSE
 	. = ..()
 
-/datum/targetting_datum/basic/horny
-	prioritize_horny_targets = TRUE
+/datum/targetting_datum/basic/should_prioritize_horny_targets(mob/living/living_mob)
+	var/datum/ai_controller/controller = living_mob?.ai_controller
+	if(!controller)
+		return FALSE
+	return locate(/datum/ai_planning_subtree/horny) in controller.planning_subtrees
 
 ///Returns true or false depending on if the target can be attacked by the mob
 /datum/targetting_datum/proc/should_disarm(mob/living/living_mob, atom/target)

@@ -2,9 +2,6 @@
 /// Careful, this can go wrong and keep a mob hyperfocused on an item it can't lose aggro on
 /datum/targetting_datum/basic/allow_items
 
-/datum/targetting_datum/basic/allow_items/horny
-	prioritize_horny_targets = TRUE
-
 /datum/targetting_datum/basic/allow_items/can_attack(mob/living/living_mob, atom/the_target)
 	. = ..()
 	if(isitem(the_target))

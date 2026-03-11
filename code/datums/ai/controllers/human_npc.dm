@@ -6,7 +6,7 @@
 	blackboard = list(
 		BB_WEAPON_TYPE = /obj/item/weapon,
 		BB_ARMOR_CLASS = 2,
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/horny(),
+		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
 		BB_PET_TARGETING_DATUM = new /datum/targetting_datum/basic/not_friends(),
 
 		BB_HUMAN_NPC_ATTACK_ZONE_COUNTER = 0,  // how many times we've hit the same zone
