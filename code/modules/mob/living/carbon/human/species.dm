@@ -630,8 +630,9 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	for(var/slot in slots_to_iterate)
 		var/obj/item/organ/oldorgan = C.getorganslot(slot) //used in removing
 		var/obj/item/organ/neworgan
+		var/has_saved_organ_dna = !!C.dna.organ_dna[slot]
 
-		if(C.dna.organ_dna[slot])
+		if(has_saved_organ_dna)
 			var/datum/organ_dna/organ_dna = C.dna.organ_dna[slot]
 			if(organ_dna.can_create_organ())
 				neworgan = organ_dna.create_organ(species = src)
@@ -652,6 +653,9 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 		var/should_have
 		if(neworgan)
 			should_have = neworgan.get_availability(src, C, pref_load)
+			// fully_heal() does not pass pref_load, so keep organs that are already part of this body's saved organ DNA.
+			if(!pref_load && has_saved_organ_dna)
+				should_have = TRUE
 		else
 			should_have = TRUE
 
