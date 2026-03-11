@@ -23,6 +23,12 @@
 		return "Turn-in signal"
 	return ..()
 
+/datum/quest/retrieval/resolve_compass_focus_target(turf/reference_turf, atom/movable/preferred_atom = null)
+	var/atom/movable/item_target = get_nearest_tracked_atom(reference_turf, FALSE, preferred_atom)
+	if(item_target)
+		return item_target
+	return get_nearest_tracked_atom(reference_turf, TRUE, preferred_atom)
+
 
 /datum/quest/retrieval/get_risk_score(turf/target_turf)
 	return requested_tier + max(progress_required - 1, 0)
@@ -63,15 +69,15 @@
 	progress_required = spawned_items
 	return TRUE
 
-/datum/quest/retrieval/get_target_location(turf/reference_turf)
-	var/turf/item_turf = get_nearest_tracked_location(reference_turf, FALSE)
+/datum/quest/retrieval/get_target_location(turf/reference_turf, atom/movable/preferred_target = null)
+	var/turf/item_turf = get_nearest_tracked_location(reference_turf, FALSE, preferred_target)
 	if(item_turf)
 		return get_anchor_safe_target_location(reference_turf, item_turf)
 
 	if(has_tracked_item_in_inventory())
 		return get_turn_in_target_turf(reference_turf)
 
-	var/turf/live_target_turf = get_nearest_tracked_location(reference_turf)
+	var/turf/live_target_turf = get_nearest_tracked_location(reference_turf, TRUE, preferred_target)
 	return get_anchor_safe_target_location(reference_turf, live_target_turf)
 
 /datum/quest/retrieval/get_target_map_anchor(turf/reference_turf)

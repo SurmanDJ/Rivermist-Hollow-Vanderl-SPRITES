@@ -1,3 +1,5 @@
+GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
+
 /obj/structure/fake_machine/contractledger
 	name = "Grand Contract Ledger"
 	desc = "A massive ledger book with gilded edges, sitting atop a pedestal with the Mercenary's Guild banner. Its myriad enchanted pages are filled with various contracts and bounties issued by Mercenary's Guild, with arcane scripts that appears and fades as contracts are issued and completed."
@@ -26,34 +28,179 @@
 
 /obj/structure/fake_machine/contractledger/Topic(href, href_list)
 	. = ..()
-	if(href_list["consultcontracts"])
-		consult_contracts(usr)
-		return attack_hand(usr)
-	if(href_list["turnincontract"])
-		turn_in_contract(usr)
-		return attack_hand(usr)
-	if(href_list["abandoncontract"])
-		abandon_contract(usr)
-		return attack_hand(usr)
-	if(href_list["printcontracts"])
-		print_contracts(usr)
+	var/action_id = href_list["ledger_action"]
+	if(action_id)
+		handle_ledger_action(usr, action_id)
 		return attack_hand(usr)
 	return attack_hand(usr)
 
 /obj/structure/fake_machine/contractledger/attack_hand(mob/living/carbon/human/user)
 	if(!ishuman(user))
 		return
-	// Keep this browser-driven; native list input is faster here than TGUI.
-	var/contents = "<center><h2>Grand Contract Ledger</h2>"
-	contents += "<a href='?src=[REF(src)];consultcontracts=1'>Consult Contracts</a><br>"
-	contents += "<a href='?src=[REF(src)];turnincontract=1'>Turn in Contract</a><br>"
-	contents += "<a href='?src=[REF(src)];abandoncontract=1'>Abandon Contract</a><br>"
-	if(is_quest_handler(user))
-		contents += "<a href='?src=[REF(src)];printcontracts=1'>Print Issued Contracts</a><br>"
-	contents += "</center>"
+	var/contents = build_ledger_browser_content(user)
 	var/datum/browser/popup = new(user, "Grand Contract Ledger", "", 500, 300)
 	popup.set_content(contents)
 	popup.open()
+
+/obj/structure/fake_machine/contractledger/proc/build_ledger_browser_content(mob/living/carbon/human/user)
+	var/list/ui_state = get_ledger_ui_state(user)
+	var/list/actions = ui_state["actions"] || list()
+	var/title = ui_state["title"] || "Grand Contract Ledger"
+	var/contents = "<center><h2>[title]</h2>"
+
+	for(var/action_id in actions)
+		var/list/action_entry = actions[action_id]
+		var/label = action_entry["label"] || action_id
+		if(action_entry["enabled"])
+			contents += "<a href='?src=[REF(src)];ledger_action=[action_id]'>[label]</a><br>"
+		else
+			contents += "[label]<br>"
+
+	contents += "</center>"
+	return contents
+
+/obj/structure/fake_machine/contractledger/proc/get_ledger_ui_state(mob/living/carbon/human/user)
+	// Keep the menu state data-driven so a future TGUI can reuse this without re-deriving button visibility.
+	var/list/actions = list()
+	var/has_bank_account = FALSE
+	if(user in SStreasury.bank_accounts)
+		has_bank_account = TRUE
+	actions["consultcontracts"] = list(
+		"label" = "Consult Contracts",
+		"enabled" = TRUE,
+	)
+	actions["getcompass"] = list(
+		"label" = get_compass_action_label(user),
+		"enabled" = can_issue_quest_compass(user),
+	)
+	actions["turnincontract"] = list(
+		"label" = "Turn in Contract",
+		"enabled" = TRUE,
+	)
+	actions["abandoncontract"] = list(
+		"label" = "Abandon Contract",
+		"enabled" = TRUE,
+	)
+	if(is_quest_handler(user))
+		actions["printcontracts"] = list(
+			"label" = "Print Issued Contracts",
+			"enabled" = TRUE,
+		)
+
+	return list(
+		"title" = "Grand Contract Ledger",
+		"actions" = actions,
+		"is_handler" = is_quest_handler(user),
+		"has_bank_account" = has_bank_account,
+		"active_contract_count" = get_active_contract_count(user),
+		"contract_limit" = get_contract_limit(user),
+		"can_claim_compass" = can_issue_quest_compass(user),
+		"has_claimed_compass" = has_claimed_quest_compass(user),
+		"has_quest_compass" = has_user_quest_compass(user),
+	)
+
+/obj/structure/fake_machine/contractledger/proc/handle_ledger_action(mob/living/carbon/human/user, action_id)
+	if(!ishuman(user))
+		return FALSE
+
+	switch(action_id)
+		if("consultcontracts")
+			consult_contracts(user)
+		if("getcompass")
+			issue_quest_compass(user)
+		if("turnincontract")
+			turn_in_contract(user)
+		if("abandoncontract")
+			abandon_contract(user)
+		if("printcontracts")
+			print_contracts(user)
+		else
+			return FALSE
+	return TRUE
+
+/obj/structure/fake_machine/contractledger/proc/get_compass_claimant(mob/living/carbon/human/user)
+	if(!user)
+		return null
+	return user.mind ? user.mind : user
+
+/obj/structure/fake_machine/contractledger/proc/has_claimed_quest_compass(mob/living/carbon/human/user)
+	var/datum/claimant = get_compass_claimant(user)
+	if(!claimant)
+		return FALSE
+
+	for(var/datum/weakref/claim_ref in GLOB.claimed_quest_compass_users.Copy())
+		var/datum/resolved_claimant = claim_ref.resolve()
+		if(!resolved_claimant)
+			GLOB.claimed_quest_compass_users -= claim_ref
+			qdel(claim_ref)
+			continue
+		if(resolved_claimant == claimant)
+			return TRUE
+
+	return FALSE
+
+/obj/structure/fake_machine/contractledger/proc/mark_quest_compass_claimed(mob/living/carbon/human/user)
+	var/datum/claimant = get_compass_claimant(user)
+	if(!claimant || has_claimed_quest_compass(user))
+		return FALSE
+
+	GLOB.claimed_quest_compass_users += WEAKREF(claimant)
+	return TRUE
+
+/obj/structure/fake_machine/contractledger/proc/has_user_quest_compass(mob/living/carbon/human/user)
+	if(!user)
+		return FALSE
+	for(var/obj/item/quest_compass/quest_compass in user.GetAllContents(/obj/item/quest_compass))
+		return TRUE
+	return FALSE
+
+/obj/structure/fake_machine/contractledger/proc/can_issue_quest_compass(mob/living/carbon/human/user)
+	if(!user)
+		return FALSE
+	if(has_claimed_quest_compass(user))
+		return FALSE
+	if(has_user_quest_compass(user))
+		return FALSE
+	return TRUE
+
+/obj/structure/fake_machine/contractledger/proc/get_compass_action_label(mob/living/carbon/human/user)
+	if(has_user_quest_compass(user))
+		return "Quest Compass Already Carried"
+	if(has_claimed_quest_compass(user))
+		return "Quest Compass Already Claimed"
+	return "Get Quest Compass"
+
+/obj/structure/fake_machine/contractledger/proc/get_active_contract_count(mob/user)
+	if(!user)
+		return 0
+
+	var/quest_count = 0
+	for(var/obj/item/paper/scroll/quest/quest_scroll in GLOB.quest_scrolls)
+		var/mob/quest_receiver = quest_scroll.assigned_quest?.quest_receiver_reference?.resolve()
+		if(quest_scroll.assigned_quest && !quest_scroll.assigned_quest.complete && quest_receiver == user)
+			quest_count++
+
+	return quest_count
+
+/obj/structure/fake_machine/contractledger/proc/get_contract_limit(mob/user)
+	var/datum/job/mob_job = user?.job ? SSjob.GetJob(user.job) : null
+	return mob_job?.max_active_quests || 3
+
+/obj/structure/fake_machine/contractledger/proc/issue_quest_compass(mob/living/carbon/human/user)
+	if(!user)
+		return FALSE
+	if(has_user_quest_compass(user))
+		to_chat(user, span_notice("You already carry a quest compass."))
+		return FALSE
+	if(has_claimed_quest_compass(user))
+		to_chat(user, span_warning("The ledger will not attune another quest compass to you."))
+		return FALSE
+
+	var/obj/item/quest_compass/new_compass = new(get_turf(user))
+	mark_quest_compass_claimed(user)
+	user.put_in_hands(new_compass)
+	to_chat(user, span_notice("The ledger attunes a quest compass to you. Use it on a contract scroll to link it."))
+	return TRUE
 
 /obj/structure/fake_machine/contractledger/proc/is_quest_handler(mob/user)
 	if(!user)
@@ -107,6 +254,9 @@
 		var/datum/quest/template = create_quest_for_type(contract_type)
 		if(!template)
 			continue
+		if(!template.can_generate_for_world())
+			qdel(template)
+			continue
 
 		type_choices["[template.quest_type] ([template.get_tier_band_text()])"] = contract_type
 		qdel(template)
@@ -118,15 +268,10 @@
 		say("You have no bank account.")
 		return
 
-	var/datum/job/mob_job = user.job ? SSjob.GetJob(user.job) : null
 	var/is_handler = is_quest_handler(user)
 	if(!is_handler)
-		var/quest_number = 0
-		for(var/obj/item/paper/scroll/quest/quest_scroll in GLOB.quest_scrolls)
-			var/datum/weakref/weakref_datum = WEAKREF(user)
-			if(quest_scroll.assigned_quest && !quest_scroll.assigned_quest.complete && quest_scroll.assigned_quest.quest_receiver_reference == weakref_datum)
-				quest_number++
-		var/max_quests_for_job = mob_job?.max_active_quests || 3
+		var/quest_number = get_active_contract_count(user)
+		var/max_quests_for_job = get_contract_limit(user)
 		if(quest_number >= max_quests_for_job)
 			say("You have reached the maximum number of active quests. You can take up to [max_quests_for_job] active quests at a time.")
 			return
@@ -212,7 +357,6 @@
 
 	// Update scroll text
 	spawned_scroll.update_quest_text()
-	spawned_scroll.ensure_quest_compass(user)
 
 	// Charge deposit
 	SStreasury.bank_accounts[user] -= attached_quest.deposit_amount

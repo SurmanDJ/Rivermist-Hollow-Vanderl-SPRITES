@@ -155,16 +155,13 @@
 		if(!spawn_turf)
 			continue
 
-		var/obj/effect/quest_spawn/spawn_effect = new /obj/effect/quest_spawn(spawn_turf)
-		var/mob/living/new_mob = new target_mob_type(spawn_effect)
+		var/mob/living/new_mob = new target_mob_type(spawn_turf)
 		new_mob.faction |= "quest"
 		new_mob.AddComponent(kill_component_type, src)
 		new_mob.setup_quest_spawn_lockdown()
 		ADD_TRAIT(new_mob, TRAIT_FRESHSPAWN, "[type]")
 		addtimer(TRAIT_CALLBACK_REMOVE(new_mob, TRAIT_FRESHSPAWN, "[type]"), 60 SECONDS)
 		addtimer(CALLBACK(new_mob, TYPE_PROC_REF(/mob/living, setup_quest_spawn_lockdown)), 3 SECONDS)
-		spawn_effect.contained_atom = new_mob
-		spawn_effect.AddComponent(/datum/component/quest_object/mob_spawner, src)
 		add_tracked_atom(new_mob)
 		landmark.add_quest_faction_to_nearby_mobs(spawn_turf)
 		spawned_targets++

@@ -101,7 +101,6 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	return // No fire to extinguish
 
 /obj/item/paper/scroll/quest/read(mob/user)
-	ensure_quest_compass(user)
 	update_quest_text()
 	return ..()
 
@@ -112,7 +111,6 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 
 	// Only do claim logic if unclaimed
 	if(!assigned_quest || assigned_quest.quest_receiver_reference)
-		ensure_quest_compass(user)
 		update_quest_text()
 		return
 
@@ -121,18 +119,17 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	assigned_quest.quest_receiver_name = user.real_name
 
 	to_chat(user, span_notice("You claim this contract for yourself!"))
-	ensure_quest_compass(user)
 	update_quest_text()
 
 /obj/item/paper/scroll/quest/attack_self_secondary(mob/user)
-	ensure_quest_compass(user)
-	to_chat(user, span_notice("The scroll remembers the route, but only a linked compass can point the way."))
+	to_chat(user, span_notice("The scroll remembers the route, but you must claim a quest compass from the Grand Contract Ledger and link it manually."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/paper/scroll/quest/proc/update_quest_text()
 	if(!assigned_quest)
 		return
 
+	var/compass_hint_text = "Claim a quest compass from the Grand Contract Ledger, then use it on this scroll."
 	var/scroll_text = "<center>HELP NEEDED</center><br>"
 	scroll_text += "<center><b>[assigned_quest.get_title()]</b></center><br>"
 	scroll_text += "<b>Issued by:</b> [assigned_quest.quest_giver_name ? "[assigned_quest.quest_giver_name]" : "The Mercenary's Guild"].<br>"
@@ -151,7 +148,6 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	if(!assigned_quest.complete || !last_target_map_text || findtext(current_map_text, "Error:") != 1)
 		last_target_map_text = current_map_text
 	scroll_text += "<b>Map:</b> [last_target_map_text]<br>"
-	scroll_text += "<b>Compass:</b> Use a linked quest compass for directional tracking.<br>"
 	scroll_text += "<b>Location:</b> [assigned_quest.get_location_text()]<br>"
 	scroll_text += "<br><b>Reward:</b> [assigned_quest.reward_amount] amna upon completion<br>"
 
@@ -169,31 +165,7 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 			scroll_text += "<br><br><i>Returning this to [assigned_quest.quest_giver_name] upon completion will yield increased pay!</i>"
 		else
 			scroll_text += "<br><br><i>Consider getting in touch with a Merchant, Banker, or Steward for your next quest for increased pay!</i>"
+		scroll_text += "<br><i>[compass_hint_text]</i>"
 
 	info = scroll_text
 	update_icon()
-
-/obj/item/paper/scroll/quest/proc/ensure_quest_compass(mob/user)
-	if(!user || !assigned_quest || assigned_quest.complete)
-		return null
-
-	var/mob/quest_bearer = assigned_quest.quest_receiver_reference?.resolve()
-	if(!quest_bearer || quest_bearer != user)
-		return null
-
-	var/obj/item/quest_compass/free_compass
-	for(var/obj/item/quest_compass/quest_compass in user.GetAllContents(/obj/item/quest_compass))
-		if(quest_compass.is_linked_to_scroll(src))
-			return quest_compass
-		if(!quest_compass.get_linked_scroll() && !free_compass)
-			free_compass = quest_compass
-
-	if(free_compass)
-		free_compass.link_to_scroll(src, user, TRUE)
-		return free_compass
-
-	var/obj/item/quest_compass/new_compass = new(get_turf(user))
-	new_compass.link_to_scroll(src, user, TRUE)
-	user.put_in_hands(new_compass)
-	to_chat(user, span_notice("A quest compass attunes itself to the contract."))
-	return new_compass

@@ -14,6 +14,7 @@
 	var/reward_amount = 0
 	var/deposit_amount = 0
 	var/complete = FALSE
+	var/being_destroyed = FALSE
 
 	/// Progress tracking
 	var/progress_current = 0
@@ -45,6 +46,8 @@
 	var/list/datum/weakref/tracked_atoms = list()
 
 /datum/quest/Destroy()
+	being_destroyed = TRUE
+
 	// Clean up mobs with quest components
 	for(var/mob/living/M in GLOB.mob_list)
 		var/datum/component/quest_object/Q = M.GetComponent(/datum/component/quest_object)
@@ -122,12 +125,12 @@
 
 	return lowertext("[map_file]")
 
-/datum/quest/proc/get_nearest_tracked_location(turf/reference_turf, include_held_items = TRUE)
+/datum/quest/proc/get_nearest_tracked_atom(turf/reference_turf, include_held_items = TRUE, atom/movable/preferred_atom = null)
 	var/turf/origin_turf = reference_turf ? get_turf(reference_turf) : (quest_scroll ? get_turf(quest_scroll) : null)
 	if(!origin_turf)
 		return null
 
-	var/turf/closest
+	var/atom/movable/closest
 	var/min_dist = INFINITY
 	var/list/stale_refs = list()
 
@@ -151,16 +154,29 @@
 			stale_refs += ref
 			continue
 
+		if(preferred_atom && A == preferred_atom)
+			for(var/datum/weakref/stale_ref in stale_refs)
+				tracked_atoms -= stale_ref
+				qdel(stale_ref)
+			return A
+
 		var/dist = get_dist(origin_turf, A_turf)
 		if(dist < min_dist)
 			min_dist = dist
-			closest = A_turf
+			closest = A
 
 	for(var/datum/weakref/stale_ref in stale_refs)
 		tracked_atoms -= stale_ref
 		qdel(stale_ref)
 
 	return closest
+
+/datum/quest/proc/get_nearest_tracked_location(turf/reference_turf, include_held_items = TRUE, atom/movable/preferred_atom = null)
+	var/atom/movable/closest_atom = get_nearest_tracked_atom(reference_turf, include_held_items, preferred_atom)
+	return get_turf(closest_atom)
+
+/datum/quest/proc/resolve_compass_focus_target(turf/reference_turf, atom/movable/preferred_atom = null)
+	return get_nearest_tracked_atom(reference_turf, TRUE, preferred_atom)
 
 /datum/quest/proc/has_tracked_item_in_inventory()
 	var/list/stale_refs = list()
@@ -183,7 +199,15 @@
 
 	return FALSE
 
-/datum/quest/proc/get_area_target_turf(area/target_area, turf/reference_turf)
+/datum/quest/proc/resolve_target_area(target_area_or_type)
+	if(isarea(target_area_or_type))
+		return target_area_or_type
+	if(ispath(target_area_or_type, /area))
+		return GLOB.areas_by_type[target_area_or_type]
+	return null
+
+/datum/quest/proc/get_area_target_turf(target_area_or_type, turf/reference_turf)
+	var/area/target_area = resolve_target_area(target_area_or_type)
 	if(!target_area)
 		return null
 
@@ -300,7 +324,7 @@
 /datum/quest/proc/get_compass_signal_label(turf/reference_turf, using_live_target)
 	return using_live_target ? "Live target signal" : "Quest spawner echo"
 
-/datum/quest/proc/get_compass_signal_data(turf/reference_turf)
+/datum/quest/proc/get_compass_signal_data(turf/reference_turf, atom/movable/preferred_target = null)
 	var/list/signal_data = list(
 		"compass_target" = null,
 		"resolved_target" = null,
@@ -309,8 +333,9 @@
 	if(!reference_turf)
 		return signal_data
 
-	var/turf/live_target_turf = get_nearest_tracked_location(reference_turf)
-	var/turf/resolved_target = get_target_location(reference_turf)
+	var/atom/movable/live_target_atom = resolve_compass_focus_target(reference_turf, preferred_target)
+	var/turf/live_target_turf = get_turf(live_target_atom)
+	var/turf/resolved_target = get_target_location(reference_turf, preferred_target)
 	var/using_live_target = resolved_target && live_target_turf && resolved_target == live_target_turf
 	var/signal_label = get_compass_signal_label(reference_turf, using_live_target)
 
@@ -468,9 +493,12 @@
 	return quest_icon
 
 /// Get target location for compass - returns turf of nearest tracked atom
-/datum/quest/proc/get_target_location(turf/reference_turf)
-	var/turf/live_target_turf = get_nearest_tracked_location(reference_turf)
+/datum/quest/proc/get_target_location(turf/reference_turf, atom/movable/preferred_target = null)
+	var/turf/live_target_turf = get_nearest_tracked_location(reference_turf, TRUE, preferred_target)
 	return get_anchor_safe_target_location(reference_turf, live_target_turf)
+
+/datum/quest/proc/can_generate_for_world()
+	return TRUE
 
 /// Check if a user can claim this quest - override for restrictions
 /datum/quest/proc/can_claim(mob/user)

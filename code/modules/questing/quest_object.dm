@@ -143,7 +143,7 @@
 		return FALSE
 
 	var/datum/quest/Q = quest_ref.resolve()
-	if(!Q || Q.complete || !istype(target_mob, Q.target_mob_type))
+	if(!Q || Q.complete || Q.being_destroyed || !istype(target_mob, Q.target_mob_type))
 		return FALSE
 
 	completion_counted = TRUE
@@ -163,7 +163,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/target_mob = parent
-	if(target_mob?.stat == DEAD)
+	if(target_mob)
 		complete_target(target_mob)
 
 /datum/component/quest_object/kill/boss/complete_target(mob/living/target_mob)

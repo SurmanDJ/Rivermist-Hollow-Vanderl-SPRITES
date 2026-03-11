@@ -28,10 +28,30 @@
 	text += "Destination: [initial(target_delivery_location.name)]."
 	return text
 
+/datum/quest/courier/proc/get_available_delivery_locations()
+	var/list/available_locations = list()
+	for(var/area_type in target_delivery_locations)
+		var/area/resolved_area = resolve_target_area(area_type)
+		if(!resolved_area)
+			continue
+		if(!length(resolved_area.get_zlevel_turf_lists()))
+			continue
+		available_locations += area_type
+	return available_locations
+
+/datum/quest/courier/can_generate_for_world()
+	return length(get_available_delivery_locations()) > 0
+
 /datum/quest/courier/get_compass_signal_label(turf/reference_turf, using_live_target)
 	if(has_tracked_item_in_inventory())
 		return "Delivery signal"
 	return ..()
+
+/datum/quest/courier/resolve_compass_focus_target(turf/reference_turf, atom/movable/preferred_atom = null)
+	var/atom/movable/item_target = get_nearest_tracked_atom(reference_turf, FALSE, preferred_atom)
+	if(item_target)
+		return item_target
+	return get_nearest_tracked_atom(reference_turf, TRUE, preferred_atom)
 
 /datum/quest/courier/get_risk_score(turf/target_turf)
 	return requested_tier + 1
@@ -117,15 +137,15 @@
 
 	return delivery_parcel
 
-/datum/quest/courier/get_target_location(turf/reference_turf)
-	var/turf/item_turf = get_nearest_tracked_location(reference_turf, FALSE)
+/datum/quest/courier/get_target_location(turf/reference_turf, atom/movable/preferred_target = null)
+	var/turf/item_turf = get_nearest_tracked_location(reference_turf, FALSE, preferred_target)
 	if(item_turf)
 		return get_anchor_safe_target_location(reference_turf, item_turf)
 
 	if(has_tracked_item_in_inventory())
 		return get_area_target_turf(target_delivery_location, reference_turf)
 
-	var/turf/live_target_turf = get_nearest_tracked_location(reference_turf)
+	var/turf/live_target_turf = get_nearest_tracked_location(reference_turf, TRUE, preferred_target)
 	return get_anchor_safe_target_location(reference_turf, live_target_turf)
 
 /datum/quest/courier/get_target_map_anchor(turf/reference_turf)
@@ -140,7 +160,11 @@
 		return FALSE
 
 	// Select delivery location
-	target_delivery_location = pick(target_delivery_locations)
+	var/list/available_delivery_locations = get_available_delivery_locations()
+	if(!length(available_delivery_locations))
+		return FALSE
+
+	target_delivery_location = pick(available_delivery_locations)
 	progress_required = 1
 	target_spawn_area = get_area_name(get_turf(landmark))
 
