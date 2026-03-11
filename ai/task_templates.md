@@ -4,6 +4,19 @@ These are copy-paste templates for giving agents better task briefs in this repo
 
 Use them when you want the agent to start cleanly, avoid broad scans, and route itself through the `ai/` maps.
 
+Default routing rule for all templates:
+
+```text
+Start with AGENTS.md.
+Use exactly one small helper first:
+- ai/entrypoints.md for keyword/feature routing
+- ai/debug_routes.md for symptom-first bugs
+- ai/type_index.md for BYOND type paths
+- ai/runtime_flow.md for lifecycle/order/tick issues
+- ai/system_dependencies.md for cross-system handoffs
+Escalate to larger maps only if still ambiguous.
+```
+
 ## 1. Minimal Fast Task
 
 Use when you already know the system and want the shortest workable brief.
@@ -22,7 +35,7 @@ Verification:
 <what must be true in the end>
 
 Repository guidance:
-Start with AGENTS.md and ai/entrypoints.md, then open ai/system_dependencies.md or ai/runtime_flow.md only if the task crosses systems or depends on lifecycle/order.
+Start with AGENTS.md. Use one small helper first; for minimal tasks this is usually ai/entrypoints.md or ai/type_index.md.
 ```
 
 ## 2. Bugfix Template
@@ -58,7 +71,7 @@ Verification:
 - Mention which files and runtime owners were involved.
 
 Repository guidance:
-Start with AGENTS.md and ai/entrypoints.md, then use ai/system_dependencies.md, ai/runtime_flow.md, and ai/subsystem_map.md only if the bug crosses systems or depends on runtime ownership.
+Start with AGENTS.md. For bug reports, prefer ai/debug_routes.md first; add ai/runtime_flow.md or ai/subsystem_map.md only if runtime ownership is involved.
 ```
 
 ## 3. New Feature Template
@@ -87,7 +100,7 @@ Verification:
 - Describe what success looks like.
 
 Repository guidance:
-Start with AGENTS.md, then ai/entrypoints.md; add ai/system_dependencies.md, ai/system_map.md, and ai/type_tree.md if the feature touches multiple branches.
+Start with AGENTS.md. Usually begin with ai/entrypoints.md or ai/type_index.md; add ai/system_dependencies.md, ai/system_map.md, and ai/type_tree.md only if the feature touches multiple branches.
 ```
 
 ## 4. Refactor / Cleanup Template
@@ -115,7 +128,7 @@ Verification:
 - Mention any residual risk.
 
 Repository guidance:
-Start with AGENTS.md, then ai/entrypoints.md; add ai/system_dependencies.md, ai/architecture.md, and ai/system_map.md as needed.
+Start with AGENTS.md. Use one small helper first, then add ai/system_dependencies.md, ai/architecture.md, and ai/system_map.md only as needed.
 ```
 
 ## 5. Architecture / Investigation Template
@@ -139,7 +152,7 @@ Constraints:
 - No code changes unless explicitly approved.
 
 Repository guidance:
-Start with AGENTS.md and use ai/entrypoints.md, ai/system_dependencies.md, ai/runtime_flow.md, ai/architecture.md, ai/system_map.md, ai/subsystem_map.md, and ai/type_tree.md as needed.
+Start with AGENTS.md. Pick the one helper that best matches the investigation anchor, then escalate to larger maps only if that route is insufficient.
 ```
 
 ## 6. Code Review Template
@@ -166,7 +179,7 @@ Constraints:
 - Do not rewrite code unless asked.
 
 Repository guidance:
-Start with AGENTS.md and use ai/entrypoints.md, ai/system_dependencies.md, ai/system_map.md, plus ai/subsystem_map.md for ownership.
+Start with AGENTS.md. Usually begin with ai/entrypoints.md; add ai/system_dependencies.md and ai/subsystem_map.md when ownership or handoff matters.
 ```
 
 ## 7. Runtime / Performance Template
@@ -191,7 +204,7 @@ Constraints:
 - Prioritize identifying the owner and the narrowest hot path.
 
 Repository guidance:
-Start with AGENTS.md, then ai/entrypoints.md, ai/runtime_flow.md, ai/subsystem_map.md, and ai/architecture.md.
+Start with AGENTS.md. For runtime/performance work, begin with ai/runtime_flow.md or ai/debug_routes.md, then ai/subsystem_map.md, then ai/architecture.md if needed.
 ```
 
 ## 8. Content / Data Template
@@ -218,7 +231,7 @@ Verification:
 - Explain how the new content is reached or spawned.
 
 Repository guidance:
-Start with AGENTS.md, then ai/entrypoints.md, ai/type_tree.md, and ai/system_map.md; add ai/system_dependencies.md if the content branches into other systems.
+Start with AGENTS.md. Usually begin with ai/type_index.md or ai/entrypoints.md; use ai/type_tree.md only if inheritance depth matters, and add ai/system_dependencies.md if the content branches into other systems.
 ```
 
 ## Recommended Human Workflow

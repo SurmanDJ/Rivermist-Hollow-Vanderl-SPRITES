@@ -6,20 +6,33 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 
 ## Read Order
 
-1. Start with `ai/entrypoints.md` to route common tasks without opening the larger maps.
-2. Open `ai/system_dependencies.md` if the task crosses more than one gameplay/infrastructure system.
-3. Open `ai/runtime_flow.md` if the task is about lifecycle, order, or runtime ownership.
-4. Open `ai/architecture.md` if you need layer boundaries or wider runtime context.
-5. Open `ai/system_map.md` if the task still is not localized.
-6. If the task mentions an `SS*` global or a processing loop, go straight to `ai/subsystem_map.md`.
-7. If the task mentions a BYOND type path, use `ai/type_tree.md` to find the correct inheritance root before searching files.
+1. Start with exactly one small helper file:
+   - `ai/entrypoints.md` for keyword or feature-name routing
+   - `ai/debug_routes.md` for symptom-first debugging
+   - `ai/type_index.md` for BYOND type paths
+   - `ai/runtime_flow.md` for lifecycle/order/tick questions
+   - `ai/system_dependencies.md` for cross-system handoffs
+2. Open up to 2 source files for that route.
+3. Escalate only if the route is still ambiguous:
+   - `ai/system_map.md`
+   - `ai/subsystem_map.md`
+   - `ai/architecture.md`
+   - `ai/type_tree.md`
+
+## Read Budget
+
+- Stage 1: one small helper file + up to 2 source files.
+- Stage 2: one more helper file or one `SS*` file + up to 2 more source files.
+- Stage 3: only then open the larger maps or do broader searches.
 
 ## Fast Routing Rules
 
 - If a keyword in `ai/entrypoints.md` already matches the task, use that route before opening the larger maps.
+- If the task begins with a symptom, use `ai/debug_routes.md` before anything else.
+- If the task gives a BYOND type path, use `ai/type_index.md` before `ai/type_tree.md`.
 - If you know the systems but not their handoff, use `ai/system_dependencies.md` before opening more source files.
 - If you know the symptom is timing/order related, use `ai/runtime_flow.md` before doing a broad search.
-- Unknown type path: search the exact path in `ai/type_tree.md`; once you know the root (`/datum`, `/obj`, `/mob`, etc.), search the corresponding directory family first.
+- Unknown type path: search the exact path in `ai/type_index.md`; use `ai/type_tree.md` only if inheritance depth is the issue.
 - `SS*` subsystem mention: find the global in `ai/subsystem_map.md`; open the mapped file in `code/controllers/subsystem/**` and then inspect any type roots it schedules.
 - Jobs, classes, spawn roles: inspect `code/modules/jobs/**`, `code/datums/migrants/**`, then `modular_rmh/code/modules/jobs/**` for RMH-specific roles and subclasses.
 - Spells, actions, status effects: inspect `code/modules/spells/**`, `code/datums/status_effects/**`, `code/datums/components/**`, `code/datums/elements/**`, then the parallel RMH paths in `modular_rmh/`.
@@ -41,6 +54,7 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 
 ## Heuristics That Save Time
 
+- Prefer one helper file plus source files over multiple helper files in a row.
 - Prefer directory families over whole-repo scans: `code/datums` for logic/state, `code/modules` for feature slices, `code/game` for concrete world objects.
 - If a system is content-heavy, inspect `modular_rmh` early; if it is scheduler/runtime-heavy, inspect `code/controllers` first.
 - When behavior feels indirect, assume signals/components are involved and search DCS hooks before tracing every proc call by hand.
