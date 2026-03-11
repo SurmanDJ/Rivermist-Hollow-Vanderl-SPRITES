@@ -5,7 +5,7 @@
 
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items(),
-		BB_HORNY_TARGETTING_DATUM = new /datum/horny_targetting_datum/basic(),
+		BB_HORNY_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
 
 	)
 

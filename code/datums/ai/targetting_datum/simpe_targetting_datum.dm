@@ -5,6 +5,10 @@
 /datum/targetting_datum/proc/can_attack(mob/living/living_mob, atom/target)
 	return
 
+///Returns true or false depending on if the target can be used by horny AI
+/datum/targetting_datum/proc/can_horny(mob/living/living_mob, atom/target)
+	return FALSE
+
 ///Returns something the target might be hiding inside of
 /datum/targetting_datum/proc/find_hidden_mobs(mob/living/living_mob, atom/target)
 	if(!target)
@@ -46,6 +50,11 @@
 			mobs_flags = 0
 		if(faction_check(living_mob, L) || L.stat >= DEAD) //basic targetting doesn't target dead people
 			return FALSE
+		var/list/retaliate_list = living_mob.ai_controller?.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
+		if(living_mob.ai_controller?.blackboard[BB_HORNY_TARGETTING_DATUM] && retaliate_list && !isnull(retaliate_list[L]))
+			if(retaliate_list[L] + 2 MINUTES >= world.time)
+				return TRUE
+			living_mob.ai_controller.remove_thing_from_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST, L)
 		if(((mobs_flags & HORNY_MOBS_TAG_MALES) && living_mob.gender == MALE) || ((mobs_flags & HORNY_MOBS_TAG_FEMALES) && living_mob.gender == FEMALE) || HAS_TRAIT(L, TRAIT_PACIFISM) || L.surrendering)
 			return FALSE
 		if((L.body_position == LYING_DOWN) && !L.get_active_held_item() && L.ckey && !L.cmode) //if is laying and holding nothing, and not in cmode. Ignore.
@@ -56,6 +65,35 @@
 				return FALSE
 		return TRUE
 
+	return FALSE
+
+/datum/targetting_datum/basic/can_horny(mob/living/living_mob, atom/the_target)
+	if(isturf(the_target) || !the_target) // bail out on invalids
+		return FALSE
+	if(issimple(living_mob))
+		var/mob/living/simple_animal/attacker = living_mob
+		if(attacker.binded == TRUE)
+			return FALSE
+	if(ismob(the_target)) //Target is in godmode, ignore it.
+		var/mob/M = the_target
+		if(M.status_flags & GODMODE)
+			return FALSE
+		if(M.stat == DEAD)
+			return FALSE
+	if(living_mob.see_invisible < the_target.invisibility)//Target's invisible to us, forget it
+		return FALSE
+
+	if(isturf(the_target.loc) && living_mob.z != the_target.z)
+		return FALSE
+
+	if(ishuman(the_target))
+		var/mob/living/carbon/human/th = the_target
+
+		var/mobs_flags = th.client?.prefs?.erp_preferences[/datum/erp_preference/bitflag/horny_mobs]
+		if(!mobs_flags)
+			mobs_flags = 0
+		if((mobs_flags & HORNY_MOBS_TAG_MALES) && living_mob.gender == MALE || (mobs_flags & HORNY_MOBS_TAG_FEMALES) && living_mob.gender == FEMALE)
+			return TRUE
 	return FALSE
 
 /datum/targetting_datum/basic/proc/faction_check(mob/living/living_mob, mob/living/the_target)

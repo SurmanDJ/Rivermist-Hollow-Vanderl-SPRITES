@@ -10,7 +10,7 @@
 
 /datum/ai_behavior/horny/setup(datum/ai_controller/controller, target_key, targetting_datum_key)
 	. = ..()
-	var/datum/horny_targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 	if(isnull(targetting_datum))
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
 
@@ -56,6 +56,9 @@
 		return FALSE
 	set_movement_target(controller, target)
 
+	basic_mob.AddElement(/datum/element/ai_retaliate)
+	RegisterSignal(basic_mob, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+
 	controller.set_blackboard_key(BB_HORNY_STUN_COOLDOWN, world.time)
 	SEND_SIGNAL(controller.pawn, COMSIG_HORNY_TARGET_SET, TRUE)
 
@@ -67,7 +70,7 @@
 		controller.modify_cooldown(controller, world.time)
 		return FALSE
 
-	var/datum/horny_targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 
 	if(!targetting_datum)
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
@@ -256,12 +259,40 @@
 				wrong_action = TRUE
 				finish_action(controller, FALSE, target_key)
 
+/datum/ai_behavior/horny/proc/on_attacked(mob/living/source, atom/attacker, damage)
+	SIGNAL_HANDLER
+	if(!damage || !source?.ai_controller || !attacker)
+		return
+	if(attacker == source || QDELETED(attacker) || isturf(attacker))
+		return
+	if(ismob(attacker))
+		var/mob/M = attacker
+		if(M.status_flags & GODMODE || M.stat == DEAD)
+			return
+	if(source.see_invisible < attacker.invisibility)
+		return
+
+	var/datum/ai_controller/controller = source.ai_controller
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[BB_TARGETTING_DATUM]
+
+	controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, attacker)
+
+	var/atom/potential_hiding_location = targetting_datum?.find_hidden_mobs(source, attacker)
+	if(potential_hiding_location)
+		controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION, potential_hiding_location)
+	else
+		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+
+	controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_HORNY_TARGET)
+	controller.CancelActions()
 
 
 
 /datum/ai_behavior/horny/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	var/mob/living/basic_mob = controller.pawn
+
+	UnregisterSignal(basic_mob, COMSIG_ATOM_WAS_ATTACKED)
 
 	SEND_SIGNAL(basic_mob, COMSIG_SET_ERECT_STATE, 0)
 

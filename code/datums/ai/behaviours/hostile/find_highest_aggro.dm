@@ -145,7 +145,7 @@
 
 /// Helper proc to check if an atom is allowed for aggro targeting
 /datum/ai_behavior/find_aggro_targets/proc/atom_allowed(atom/movable/checking, datum/targetting_datum/strategy, mob/pawn, datum/ai_controller/controller)
-	var/datum/horny_targetting_datum/horny_targetting_datum = controller.blackboard[BB_HORNY_TARGETTING_DATUM]
+	var/datum/targetting_datum/horny_targetting_datum = controller.blackboard[BB_HORNY_TARGETTING_DATUM]
 	if(checking == pawn)
 		return FALSE
 	if(!ismob(checking) && !is_type_in_typecache(checking, GLOB.target_interested_atoms))
@@ -203,7 +203,7 @@
 
 	var/mob/highest_threat = controller.blackboard[BB_HIGHEST_THREAT_MOB]
 
-	var/datum/horny_targetting_datum/horny_targetting_datum = controller.blackboard[BB_HORNY_TARGETTING_DATUM]
+	var/datum/targetting_datum/horny_targetting_datum = controller.blackboard[BB_HORNY_TARGETTING_DATUM]
 	if(!isnull(horny_targetting_datum))
 		if(horny_targetting_datum.can_horny(controller.pawn, highest_threat))
 			var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]

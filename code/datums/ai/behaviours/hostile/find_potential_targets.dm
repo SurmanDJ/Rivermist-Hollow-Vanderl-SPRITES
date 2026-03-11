@@ -114,7 +114,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob)))
 	controller.modify_cooldown(src, world.time)
 
 /datum/ai_behavior/find_potential_targets/proc/atom_allowed(atom/movable/checking, datum/targetting_datum/strategy, mob/pawn, datum/ai_controller/controller)
-	var/datum/horny_targetting_datum/horny_targetting_datum = controller.blackboard[BB_HORNY_TARGETTING_DATUM]
+	var/datum/targetting_datum/horny_targetting_datum = controller.blackboard[BB_HORNY_TARGETTING_DATUM]
 	if(checking == pawn)
 		return FALSE
 	if(!ismob(checking) && !is_type_in_typecache(checking, GLOB.target_interested_atoms))
@@ -146,7 +146,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob)))
 	// Alright, we found something acceptable, let's use it yeah?
 	var/atom/target = pick_final_target(controller, accepted_targets)
 
-	var/datum/horny_targetting_datum/horny_targetting_datum = controller.blackboard[BB_HORNY_TARGETTING_DATUM]
+	var/datum/targetting_datum/horny_targetting_datum = controller.blackboard[BB_HORNY_TARGETTING_DATUM]
 	if(!isnull(horny_targetting_datum))
 		if(horny_targetting_datum.can_horny(controller.pawn, target))
 			var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]
