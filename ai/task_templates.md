@@ -93,6 +93,11 @@ Expected shape:
   - who may use it later: <real future users, if any>
   - frequency: <action / state change / while active / per step / per tick>
   - concurrency: <how many instances can exist in one round>
+- Feature breakdown:
+  - delivery channel: <crafting / loadout / loot / merchant / admin / etc.>
+  - base archetype: <closest existing thing to extend>
+  - delta set: <what changes from the base>
+  - effect carrier: <override / proc / action / status / component / element / subsystem>
 
 Constraints:
 - Reuse existing patterns in this repo.
@@ -108,7 +113,7 @@ Verification:
 - Describe what success looks like.
 
 Repository guidance:
-Start with AGENTS.md. For new mechanics, begin with ai/content_creation.md, then ai/entrypoints.md or ai/type_index.md. Add ai/system_dependencies.md, ai/system_map.md, and ai/type_tree.md only if the feature touches multiple branches.
+Start with AGENTS.md. For new mechanics, begin with ai/content_creation.md. If the request is still vague, open ai/content_breakdown.md. If the implementation form is still fuzzy after that, open ai/content_patterns.md. Then use ai/entrypoints.md or ai/type_index.md. Add ai/system_dependencies.md, ai/system_map.md, and ai/type_tree.md only if the feature touches multiple branches.
 ```
 
 ## 4. Refactor / Cleanup Template
@@ -233,6 +238,11 @@ Desired result:
   - <who uses it>
   - <how often it triggers>
   - <how many instances may exist at once>
+- Feature breakdown:
+  - <how it enters the game>
+  - <what existing thing it extends>
+  - <what actually changes>
+  - <where the new behavior should live>
 
 Constraints:
 - Follow existing content conventions.
@@ -246,7 +256,7 @@ Verification:
 - Explain how the new content is reached or spawned.
 
 Repository guidance:
-Start with AGENTS.md. For content additions, begin with ai/content_creation.md, then ai/type_index.md or ai/entrypoints.md. Use ai/type_tree.md only if inheritance depth matters, and add ai/system_dependencies.md if the content branches into other systems.
+Start with AGENTS.md. For content additions, begin with ai/content_creation.md. If the request is still fuzzy, use ai/content_breakdown.md. If pattern selection is unclear after that, use ai/content_patterns.md, then ai/type_index.md or ai/entrypoints.md. Use ai/type_tree.md only if inheritance depth matters, and add ai/system_dependencies.md if the content branches into other systems.
 ```
 
 ## Recommended Human Workflow

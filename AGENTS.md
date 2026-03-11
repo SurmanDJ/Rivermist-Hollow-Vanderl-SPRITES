@@ -29,6 +29,8 @@ If the owner is known but the cause is still unclear, use `ai/failure_modes.md` 
 - task framing: `ai/task_templates.md`
 - human approval and risk gates: `ai/human_checking.md`
 - content-first implementation rules: `ai/content_creation.md`
+- content feature decomposition: `ai/content_breakdown.md`
+- content implementation archetypes: `ai/content_patterns.md`
 - process-chain hazards: `ai/processing_hazards.md`
 - subsystem/process failure classification: `ai/failure_modes.md`
 - larger system map: `ai/system_map.md`

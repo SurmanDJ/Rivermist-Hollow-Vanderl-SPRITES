@@ -12,6 +12,8 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 4. Escalate only if the route is still ambiguous:
    - `ai/human_checking.md`
    - `ai/content_creation.md`
+   - `ai/content_breakdown.md`
+   - `ai/content_patterns.md`
    - `ai/processing_hazards.md`
    - `ai/failure_modes.md`
    - `ai/system_map.md`
@@ -31,6 +33,8 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 - If the task begins with a symptom, use `ai/debug_routes.md` before anything else.
 - If the planned change may touch a shared branch or hot path, use `ai/human_checking.md` before editing.
 - If the task is about adding a mechanic or content, use `ai/content_creation.md` before broad architectural maps.
+- If the content request is still fuzzy at the fantasy/spec level, use `ai/content_breakdown.md`.
+- If the content goal is known but the implementation shape is still fuzzy, use `ai/content_patterns.md`.
 - If the task says a whole loop froze, timers stopped, or there are no runtimes, use `ai/processing_hazards.md` before generic symptom routing.
 - If the owner is already known but the exact break mode is unclear, use `ai/failure_modes.md`.
 - If the task gives a BYOND type path, use `ai/type_index.md` before `ai/type_tree.md`.
@@ -64,6 +68,8 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 - If a system is content-heavy, inspect `modular_rmh` early; if it is scheduler/runtime-heavy, inspect `code/controllers` first.
 - Before editing anything broad, classify risk and ask for approval if the scope is medium, high, or ambiguous.
 - For new content, minimize host scope first and minimize trigger frequency second.
+- For new content, decompose delivery/base/delta/effect before choosing code shape.
+- For new content, prefer an existing implementation pattern before designing a new abstraction.
 - If a shared subsystem silently stalls, check for blocking calls before assuming scheduler pressure.
 - If ownership is clear but cause is not, classify the failure mode before tracing more code.
 - When behavior feels indirect, assume signals/components are involved and search DCS hooks before tracing every proc call by hand.

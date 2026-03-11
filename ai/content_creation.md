@@ -49,7 +49,9 @@ These answers define the server cost surface before any code is written.
    - per-step or per-tick only as a last resort
 10. Gate the behavior by the active state that actually needs it.
 11. Check the same branch in `modular_rmh` before adding a duplicate extension path.
-12. Define the spawn/trigger/cleanup verification before coding.
+12. If the content brief is still vague, open `ai/content_breakdown.md`.
+13. If the implementation shape is still unclear, open `ai/content_patterns.md`.
+14. Define the spawn/trigger/cleanup verification before coding.
 
 ## Cost Lens
 
@@ -92,6 +94,11 @@ The broader the audience and the higher the frequency, the more the design must 
 - What is the trigger frequency?
 - Can this be event-driven instead of process-driven?
 - Does this cross into medium or high risk and need approval first?
+- Which existing content pattern already matches this feature?
+- What is the delivery channel?
+- What is the base archetype?
+- What is the actual delta from the base?
+- What is the cheapest carrier for the new effect?
 - Who is the narrowest correct host type?
 - What is the exact trigger?
 - When should it stop running?
