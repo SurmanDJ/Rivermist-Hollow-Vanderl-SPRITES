@@ -2,6 +2,8 @@
 
 Generated on 2026-03-11. Use this file to choose exactly one small helper before opening source files.
 
+The `ai/` maps may lag behind the codebase by up to one monthly manual refresh cycle. Use them for routing, then verify in source. If maps and code disagree, trust the code.
+
 ## Dispatch
 
 | If the task looks like | Open this helper |

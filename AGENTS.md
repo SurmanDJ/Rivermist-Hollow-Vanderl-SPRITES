@@ -2,6 +2,8 @@
 
 This repository is meant to be handed to agents after a separate goal statement from the user.
 
+The `ai/` maps are a navigation aid, not a source of truth. They may lag behind the codebase by up to one monthly manual refresh cycle. Use them to localize work quickly, then verify against source files before making conclusions or edits. If maps and code disagree, trust the code and report the mismatch.
+
 Recommended handoff pattern:
 
 1. First message: the goal.
