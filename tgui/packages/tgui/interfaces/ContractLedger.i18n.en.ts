@@ -97,6 +97,10 @@ const resolveText = (key, args = {}) => {
       return 'Choose a threat tier to preview possible targets.';
     case 'preview.no_valid':
       return 'No valid hostile previews are available for the selected contract.';
+    case 'preload.initializing':
+      return 'Initializing ledger records and target previews.';
+    case 'preload.waiting':
+      return 'Preparing available contract entries...';
     case 'compass.action.get':
       return 'Claim quest compass';
     case 'compass.action.carried':

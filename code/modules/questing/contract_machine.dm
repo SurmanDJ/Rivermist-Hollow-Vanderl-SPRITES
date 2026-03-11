@@ -1,5 +1,9 @@
 GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 
+/obj/effect/abstract/contract_preview_proxy
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+
 /obj/structure/fake_machine/contractledger
 	name = "Grand Contract Ledger"
 	desc = "A massive ledger book with gilded edges, sitting atop a pedestal with the Mercenary's Guild banner. Its myriad enchanted pages are filled with various contracts and bounties issued by Mercenary's Guild, with arcane scripts that appears and fades as contracts are issued and completed."
@@ -63,18 +67,33 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 
 /obj/structure/fake_machine/contractledger/ui_close(mob/user)
 	. = ..()
-	clear_ui_session(user)
 
 /obj/structure/fake_machine/contractledger/ui_data(mob/living/carbon/human/user)
 	var/list/session = get_ui_session(user)
 	var/consult_block_reason = get_consult_block_reason(user)
+	var/can_consult_contracts = !consult_block_reason
+	if(can_consult_contracts)
+		ensure_preview_preload_state(user, session)
+		if(!is_preview_preload_ready(session))
+			return get_preload_ui_data(user, session)
+
 	var/selected_group = session["selected_group"]
 	var/selected_type = session["selected_type"]
 	var/selected_tier = session["selected_tier"] || 0
-	var/list/preview_state = get_contract_preview_state(user, selected_type, selected_tier)
+	var/list/preview_state
+	if(can_consult_contracts)
+		preview_state = get_contract_preview_state(user, selected_type, selected_tier)
+	else
+		preview_state = list(
+			"title_key" = "preview.possible_targets",
+			"entries" = list(),
+			"message_key" = "preview.choose_type",
+			"hidden_count" = 0,
+		)
 	var/list/notice_state = get_session_notice_state(user)
 
 	var/list/data = list(
+		"is_preloading" = FALSE,
 		"title" = "Grand Contract Ledger",
 		"role_label" = get_role_label(user),
 		"is_handler" = is_quest_handler(user),
@@ -82,7 +101,7 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		"active_contract_count" = get_active_contract_count(user),
 		"contract_limit" = get_contract_limit(user),
 		"consult_block_reason_key" = consult_block_reason,
-		"can_consult_contracts" = !consult_block_reason,
+		"can_consult_contracts" = can_consult_contracts,
 		"can_take_contract" = can_take_selected_contract(user, selected_type, selected_tier),
 		"can_claim_compass" = can_issue_quest_compass(user),
 		"has_claimed_compass" = has_claimed_quest_compass(user),
@@ -117,6 +136,13 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		return FALSE
 
 	switch(action)
+		if("preload")
+			var/list/session = get_ui_session(user)
+			ensure_preview_preload_state(user, session)
+			if(!session["preview_preload_started"])
+				session["preview_preload_started"] = TRUE
+			advance_preview_preload(session)
+			return TRUE
 		if("consultcontracts")
 			prepare_contract_draft(user)
 			return TRUE
@@ -262,8 +288,7 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	return get_ui_language(user) == "ru" ? "ContractLedgerRu" : "ContractLedger"
 
 /obj/structure/fake_machine/contractledger/proc/get_ledger_window_title(mob/user)
-	return get_ui_language(user) == "ru" ? "Главный контрактный леджер" : "Grand Contract Ledger"
-
+	return get_ui_language(user) == "ru" ? "Книга Контрактов" : "Grand Contract Ledger"
 /obj/structure/fake_machine/contractledger/proc/get_ui_session_key(mob/user)
 	if(!user)
 		return null
@@ -336,6 +361,140 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	session["notice_key"] = notice_key
 	session["notice_type"] = notice_type
 	session["notice_args"] = notice_args || list()
+
+/obj/structure/fake_machine/contractledger/proc/get_preview_cache_key(contract_type, selected_tier)
+	return "[contract_type]#[selected_tier]"
+
+/obj/structure/fake_machine/contractledger/proc/is_preview_preload_ready(list/session)
+	if(!islist(session))
+		return FALSE
+	return session["preview_preload_ready"] ? TRUE : FALSE
+
+/obj/structure/fake_machine/contractledger/proc/get_preload_ui_data(mob/living/carbon/human/user, list/session)
+	var/preload_total = max(session["preview_preload_total"] || 0, 1)
+	return list(
+		"is_preloading" = TRUE,
+		"title" = "Grand Contract Ledger",
+		"role_label" = get_role_label(user),
+		"active_contract_count" = get_active_contract_count(user),
+		"contract_limit" = get_contract_limit(user),
+		"can_claim_compass" = can_issue_quest_compass(user),
+		"compass_action_key" = get_compass_action_key(user),
+		"preload_current" = session["preview_preload_completed"] || 0,
+		"preload_total" = preload_total,
+		"preload_label" = session["preview_preload_label"] || null,
+	)
+
+/obj/structure/fake_machine/contractledger/proc/ensure_preview_preload_state(mob/living/carbon/human/user, list/session)
+	if(!user || !islist(session) || session["preview_preload_bootstrapped"])
+		return
+
+	var/list/preview_cache = list()
+	var/list/preload_queue = list()
+	var/list/seen_types = list()
+
+	for(var/contract_group in get_available_contract_group_values(user))
+		for(var/contract_type in get_available_contract_type_values(user, contract_group))
+			if(contract_type in seen_types)
+				continue
+			seen_types += contract_type
+			if(!(contract_type in list(QUEST_HUNT, QUEST_CLEAR_OUT, QUEST_RAID, QUEST_BOSS)))
+				continue
+
+			var/datum/quest/quest_template = create_quest_for_type(contract_type)
+			if(!istype(quest_template, /datum/quest/kill))
+				if(quest_template)
+					qdel(quest_template)
+				continue
+
+			var/datum/quest/kill/kill_template = quest_template
+			var/list/tier_choices = kill_template.get_tier_choices()
+			for(var/tier_label in tier_choices)
+				var/tier_value = tier_choices[tier_label]
+				kill_template.requested_tier = tier_value
+				var/preview_key = get_preview_cache_key(contract_type, tier_value)
+				var/list/cache_entry = list(
+					"entries" = list(),
+					"message_key" = "preview.no_valid",
+				)
+				preview_cache[preview_key] = cache_entry
+
+				var/list/candidate_pool = kill_template.get_candidate_target_pool()
+				if(!length(candidate_pool))
+					continue
+
+				cache_entry["message_key"] = null
+				for(var/mob_type in candidate_pool)
+					preload_queue += list(list(
+						"preview_key" = preview_key,
+						"mob_type" = mob_type,
+						"risk" = kill_template.get_mob_risk_value(mob_type),
+						"spawn_weight" = kill_template.get_mob_spawn_weight(mob_type),
+						"group_min" = kill_template.get_mob_group_min(mob_type),
+						"group_max" = kill_template.get_mob_group_max(mob_type),
+					))
+
+			qdel(kill_template)
+
+	session["preview_state_cache"] = preview_cache
+	session["preview_preload_queue"] = preload_queue
+	session["preview_preload_total"] = length(preload_queue)
+	session["preview_preload_completed"] = 0
+	session["preview_preload_label"] = null
+	session["preview_preload_bootstrapped"] = TRUE
+	session["preview_preload_started"] = FALSE
+	session["preview_preload_ready"] = !length(preload_queue)
+
+/obj/structure/fake_machine/contractledger/proc/advance_preview_preload(list/session, step_count = 4)
+	if(!islist(session) || session["preview_preload_ready"])
+		return
+
+	var/list/preload_queue = session["preview_preload_queue"]
+	var/list/preview_cache = session["preview_state_cache"]
+	if(!islist(preload_queue) || !islist(preview_cache))
+		session["preview_preload_ready"] = TRUE
+		return
+
+	var/steps_to_process = min(step_count, length(preload_queue))
+	for(var/step in 1 to steps_to_process)
+		var/list/task = preload_queue[1]
+		preload_queue.Cut(1, 2)
+		if(!islist(task))
+			continue
+
+		var/mob_type = task["mob_type"]
+		var/list/icon_data = get_target_preview_icon_data(mob_type)
+		var/list/cache_entry = preview_cache[task["preview_key"]]
+		if(!islist(cache_entry))
+			cache_entry = list(
+				"entries" = list(),
+				"message_key" = null,
+			)
+			preview_cache[task["preview_key"]] = cache_entry
+
+		var/list/entries = cache_entry["entries"]
+		if(!islist(entries))
+			entries = list()
+			cache_entry["entries"] = entries
+
+		var/list/entry = list(
+			"id" = "[mob_type]",
+			"name" = icon_data["name"] || get_target_preview_name(mob_type),
+			"risk" = task["risk"],
+			"spawn_weight" = task["spawn_weight"],
+			"group_min" = task["group_min"],
+			"group_max" = task["group_max"],
+			"icon" = icon_data["icon"],
+			"icon_state" = icon_data["icon_state"],
+			"image" = icon_data["image"],
+		)
+		insert_preview_entry(entries, entry)
+		session["preview_preload_completed"] = (session["preview_preload_completed"] || 0) + 1
+		session["preview_preload_label"] = entry["name"]
+
+	if(!length(preload_queue))
+		session["preview_preload_ready"] = TRUE
+		session["preview_preload_label"] = null
 
 /obj/structure/fake_machine/contractledger/proc/get_consult_block_reason(mob/living/carbon/human/user)
 	if(!user)
@@ -545,21 +704,45 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	var/job_name = lowertext(mob_job.title ? mob_job.title : user.job)
 	return mob_job.is_quest_giver || findtext(job_name, "merchant") || findtext(job_name, "banker") || findtext(job_name, "steward")
 
+/obj/structure/fake_machine/contractledger/proc/get_assigned_job(mob/user)
+	var/datum/job/assigned_job = user?.mind?.assigned_role
+	if(istype(assigned_job, /datum/job))
+		return assigned_job
+	return null
+
+/obj/structure/fake_machine/contractledger/proc/get_visible_job(mob/user)
+	if(!user?.job)
+		return null
+
+	var/datum/job/visible_job = SSjob.GetJob(user.job)
+	if(istype(visible_job, /datum/job))
+		return visible_job
+	return null
+
+/obj/structure/fake_machine/contractledger/proc/is_adventurers_guild_role(datum/job/job_type)
+	return istype(job_type, /datum/job/adventurers_guildmaster) || \
+		istype(job_type, /datum/job/advclass/adventurers_guildmaster) || \
+		istype(job_type, /datum/job/adventurers_assistant)
+
+/obj/structure/fake_machine/contractledger/proc/is_townhall_contract_role(datum/job/job_type)
+	return istype(job_type, /datum/job/burgmeister) || \
+		istype(job_type, /datum/job/advclass/burgmeister) || \
+		istype(job_type, /datum/job/councilor) || \
+		istype(job_type, /datum/job/advclass/councilor)
+
 /obj/structure/fake_machine/contractledger/proc/is_boss_raid_issuer(mob/user)
 	if(!user)
 		return FALSE
 
-	var/datum/job/mob_job = user.job ? SSjob.GetJob(user.job) : null
-	if(!mob_job)
-		return FALSE
+	var/datum/job/assigned_job = get_assigned_job(user)
+	if(is_adventurers_guild_role(assigned_job) || is_townhall_contract_role(assigned_job))
+		return TRUE
 
-	var/job_name = lowertext(mob_job.title ? mob_job.title : user.job)
-	return is_burgmeister_job(mob_job) || \
-		findtext(job_name, "councilor") || \
-		is_adventurers_guildmaster_job(mob_job) || \
-		is_adventurers_assistant_job(mob_job) || \
-		(findtext(job_name, "guildmaster") && findtext(job_name, "adventurer")) || \
-		(findtext(job_name, "assistant") && findtext(job_name, "adventurer"))
+	var/datum/job/visible_job = get_visible_job(user)
+	if(is_adventurers_guild_role(visible_job) || is_townhall_contract_role(visible_job))
+		return TRUE
+
+	return FALSE
 
 /obj/structure/fake_machine/contractledger/proc/create_quest_for_type(contract_type)
 	var/quest_path = GLOB.global_quest_registry[contract_type]
@@ -585,6 +768,25 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 
 	if(!selected_tier)
 		preview_state["message_key"] = "preview.choose_tier"
+		return preview_state
+
+	var/list/session = get_ui_session(user)
+	var/list/preview_cache = session["preview_state_cache"]
+	var/list/cached_entry = islist(preview_cache) ? preview_cache[get_preview_cache_key(contract_type, selected_tier)] : null
+	if(islist(cached_entry))
+		var/list/cached_entries = cached_entry["entries"]
+		if(!length(cached_entries))
+			preview_state["message_key"] = cached_entry["message_key"] || "preview.no_valid"
+			return preview_state
+
+		var/list/entries = cached_entries.Copy()
+		var/hidden_count = max(length(entries) - 8, 0)
+		if(hidden_count)
+			entries.Cut(9)
+
+		preview_state["entries"] = entries
+		preview_state["message_key"] = null
+		preview_state["hidden_count"] = hidden_count
 		return preview_state
 
 	var/list/entries = get_target_preview_entries(contract_type, selected_tier)
@@ -619,7 +821,7 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		var/group_max = kill_template.get_mob_group_max(mob_type)
 		var/list/entry = list(
 			"id" = "[mob_type]",
-			"name" = get_target_preview_name(mob_type),
+			"name" = icon_data["name"] || get_target_preview_name(mob_type),
 			"risk" = kill_template.get_mob_risk_value(mob_type),
 			"spawn_weight" = kill_template.get_mob_spawn_weight(mob_type),
 			"group_min" = group_min,
@@ -662,33 +864,43 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	return "Unknown target"
 
 /obj/structure/fake_machine/contractledger/proc/get_target_preview_icon_data(atom/mob_type)
-	var/cache_key = "preview_v3:[mob_type]"
+	var/cache_key = "preview_v5:[mob_type]"
 	var/list/cached_data = quest_target_preview_icon_cache[cache_key]
 	if(cached_data)
 		return cached_data
 
 	var/list/icon_data = list(
+		"name" = get_target_preview_name(mob_type),
 		"icon" = null,
 		"icon_state" = null,
 		"image" = null,
 	)
 
-	var/icon_file = get_target_preview_icon_file(mob_type)
-	var/icon_state = get_target_preview_icon_state(mob_type)
-	if(icon_file)
-		icon_data["icon"] = icon_file
-	if(icon_state && is_valid_preview_icon_state(icon_file, icon_state))
-		icon_data["icon_state"] = icon_state
+	var/icon/preview_icon
+	var/list/runtime_icon_data
+	if(ispath(mob_type, /mob/living/carbon/human))
+		runtime_icon_data = get_runtime_target_preview_icon_data(mob_type)
+	else
+		var/icon_file = get_target_preview_icon_file(mob_type)
+		var/icon_state = get_target_preview_icon_state(mob_type)
+		if(icon_file)
+			icon_data["icon"] = icon_file
+		if(icon_state && is_valid_preview_icon_state(icon_file, icon_state))
+			icon_data["icon_state"] = icon_state
 
-	var/icon/preview_icon = build_target_preview_icon(mob_type, icon_file, icon_state)
-	if(!preview_icon)
-		var/list/runtime_icon_data = get_runtime_target_preview_icon_data(mob_type)
-		if(runtime_icon_data)
-			if(runtime_icon_data["icon"])
-				icon_data["icon"] = runtime_icon_data["icon"]
-			if(runtime_icon_data["icon_state"])
-				icon_data["icon_state"] = runtime_icon_data["icon_state"]
-			preview_icon = runtime_icon_data["preview_icon"]
+		preview_icon = build_target_preview_icon(mob_type, icon_file, icon_state)
+		if(!preview_icon)
+			runtime_icon_data = get_runtime_target_preview_icon_data(mob_type)
+
+	if(runtime_icon_data)
+		if(runtime_icon_data["name"])
+			icon_data["name"] = runtime_icon_data["name"]
+		if(runtime_icon_data["icon"])
+			icon_data["icon"] = runtime_icon_data["icon"]
+		if(runtime_icon_data["icon_state"])
+			icon_data["icon_state"] = runtime_icon_data["icon_state"]
+		preview_icon = runtime_icon_data["preview_icon"]
+
 	if(preview_icon)
 		icon_data["image"] = "data:image/png;base64,[icon2base64(preview_icon, cache_key)]"
 
@@ -748,6 +960,40 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 
 	return preview_icon
 
+/obj/structure/fake_machine/contractledger/proc/finalize_preview_mob(mob/temp_mob)
+	if(!temp_mob)
+		return
+
+	temp_mob.after_creation()
+	if(istype(temp_mob, /mob/living/carbon/human))
+		var/mob/living/carbon/human/temp_human = temp_mob
+		temp_human.regenerate_icons()
+
+/obj/structure/fake_machine/contractledger/proc/build_preview_proxy_icon(mob/temp_mob)
+	var/turf/preview_turf = get_turf(temp_mob)
+	if(!preview_turf)
+		return null
+
+	var/obj/effect/abstract/contract_preview_proxy/render_proxy = new(preview_turf)
+	render_proxy.icon = temp_mob.icon
+	render_proxy.icon_state = temp_mob.icon_state
+	render_proxy.dir = SOUTH
+	render_proxy.color = temp_mob.color
+	render_proxy.alpha = temp_mob.alpha
+	render_proxy.pixel_x = temp_mob.pixel_x
+	render_proxy.pixel_y = temp_mob.pixel_y
+	if(length(temp_mob.overlays))
+		render_proxy.overlays = temp_mob.overlays.Copy()
+	if(length(temp_mob.underlays))
+		render_proxy.underlays = temp_mob.underlays.Copy()
+	render_proxy.transform = temp_mob.transform
+
+	var/icon/flattened_icon = getFlatIcon(render_proxy, SOUTH, no_anim = TRUE)
+	qdel(render_proxy)
+	if(!flattened_icon)
+		return null
+	return icon(flattened_icon, frame = 1)
+
 /obj/structure/fake_machine/contractledger/proc/get_runtime_target_preview_icon_data(atom/mob_type)
 	if(!ispath(mob_type, /mob))
 		return null
@@ -762,21 +1008,25 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		return null
 
 	temp_mob.setDir(SOUTH)
+	finalize_preview_mob(temp_mob)
 
-	var/icon/flattened_icon = getFlatIcon(temp_mob, SOUTH, no_anim = TRUE)
-	var/icon/preview_icon = flattened_icon ? icon(flattened_icon, frame = 1) : null
+	var/icon/preview_icon
+	if(istype(temp_mob, /mob/living/carbon/human))
+		preview_icon = build_preview_proxy_icon(temp_mob)
+	else
+		var/icon/flattened_icon = getFlatIcon(temp_mob, SOUTH, no_anim = TRUE)
+		preview_icon = flattened_icon ? icon(flattened_icon, frame = 1) : null
 	var/icon_file = temp_mob.icon
 	var/icon_state = temp_mob.icon_state
+	var/preview_name = temp_mob.name || initial(mob_type.name) || "Unknown target"
 
 	qdel(temp_mob)
-
-	if(!preview_icon)
-		return null
 
 	if(icon_state && !is_valid_preview_icon_state(icon_file, icon_state))
 		icon_state = null
 
 	return list(
+		"name" = preview_name,
 		"icon" = icon_file,
 		"icon_state" = icon_state,
 		"preview_icon" = preview_icon,

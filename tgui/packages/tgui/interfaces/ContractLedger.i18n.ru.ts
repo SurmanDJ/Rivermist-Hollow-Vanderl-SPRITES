@@ -50,9 +50,9 @@ const resolveText = (key, args = {}) => {
     case 'notice.compass_carried':
       return 'У вас уже есть квестовый компас.';
     case 'notice.compass_already_claimed':
-      return 'Леджер больше не настроит на вас ещё один квестовый компас.';
+      return 'Книга Контрактов больше не настроит на вас ещё один квестовый компас.';
     case 'notice.compass_attuned':
-      return 'Леджер настроил на вас квестовый компас. Используйте его на свитке, чтобы связать их.';
+      return 'Книга Контрактов настроила на вас квестовый компас. Используйте его на свитке, чтобы связать их.';
     case 'notice.choose_all_fields':
       return 'Перед получением задания выберите группу, тип и тир.';
     case 'notice.group_unavailable':
@@ -97,6 +97,10 @@ const resolveText = (key, args = {}) => {
       return 'Выберите тир угрозы, чтобы увидеть возможные цели.';
     case 'preview.no_valid':
       return 'Для выбранного контракта не найдено подходящих враждебных целей.';
+    case 'preload.initializing':
+      return 'Книга Контрактов подготавливает записи и превью целей.';
+    case 'preload.waiting':
+      return 'Подготовка доступных записей контракта...';
     case 'compass.action.get':
       return 'Получить квестовый компас';
     case 'compass.action.carried':
@@ -109,7 +113,7 @@ const resolveText = (key, args = {}) => {
 };
 
 export default {
-  windowTitle: 'Главный контрактный леджер',
+  windowTitle: 'Книга Контрактов',
   labels: {
     contractLimit: 'Лимит контрактов',
     currentRole: 'Текущая роль',
