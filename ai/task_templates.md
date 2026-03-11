@@ -22,7 +22,7 @@ Verification:
 <what must be true in the end>
 
 Repository guidance:
-Start with AGENTS.md and the ai/ maps.
+Start with AGENTS.md and ai/entrypoints.md, then open ai/system_dependencies.md or ai/runtime_flow.md only if the task crosses systems or depends on lifecycle/order.
 ```
 
 ## 2. Bugfix Template
@@ -58,7 +58,7 @@ Verification:
 - Mention which files and runtime owners were involved.
 
 Repository guidance:
-Start with AGENTS.md, then use ai/system_map.md and ai/subsystem_map.md if SS* is involved.
+Start with AGENTS.md and ai/entrypoints.md, then use ai/system_dependencies.md, ai/runtime_flow.md, and ai/subsystem_map.md only if the bug crosses systems or depends on runtime ownership.
 ```
 
 ## 3. New Feature Template
@@ -87,7 +87,7 @@ Verification:
 - Describe what success looks like.
 
 Repository guidance:
-Start with AGENTS.md, then ai/system_map.md and ai/type_tree.md.
+Start with AGENTS.md, then ai/entrypoints.md; add ai/system_dependencies.md, ai/system_map.md, and ai/type_tree.md if the feature touches multiple branches.
 ```
 
 ## 4. Refactor / Cleanup Template
@@ -115,7 +115,7 @@ Verification:
 - Mention any residual risk.
 
 Repository guidance:
-Start with AGENTS.md, then ai/architecture.md and ai/system_map.md.
+Start with AGENTS.md, then ai/entrypoints.md; add ai/system_dependencies.md, ai/architecture.md, and ai/system_map.md as needed.
 ```
 
 ## 5. Architecture / Investigation Template
@@ -139,7 +139,7 @@ Constraints:
 - No code changes unless explicitly approved.
 
 Repository guidance:
-Start with AGENTS.md and use ai/architecture.md, ai/system_map.md, ai/subsystem_map.md, and ai/type_tree.md as needed.
+Start with AGENTS.md and use ai/entrypoints.md, ai/system_dependencies.md, ai/runtime_flow.md, ai/architecture.md, ai/system_map.md, ai/subsystem_map.md, and ai/type_tree.md as needed.
 ```
 
 ## 6. Code Review Template
@@ -166,7 +166,7 @@ Constraints:
 - Do not rewrite code unless asked.
 
 Repository guidance:
-Start with AGENTS.md and use ai/system_map.md plus ai/subsystem_map.md for ownership.
+Start with AGENTS.md and use ai/entrypoints.md, ai/system_dependencies.md, ai/system_map.md, plus ai/subsystem_map.md for ownership.
 ```
 
 ## 7. Runtime / Performance Template
@@ -191,7 +191,7 @@ Constraints:
 - Prioritize identifying the owner and the narrowest hot path.
 
 Repository guidance:
-Start with AGENTS.md, then ai/subsystem_map.md and ai/architecture.md.
+Start with AGENTS.md, then ai/entrypoints.md, ai/runtime_flow.md, ai/subsystem_map.md, and ai/architecture.md.
 ```
 
 ## 8. Content / Data Template
@@ -218,7 +218,7 @@ Verification:
 - Explain how the new content is reached or spawned.
 
 Repository guidance:
-Start with AGENTS.md, then ai/type_tree.md and ai/system_map.md.
+Start with AGENTS.md, then ai/entrypoints.md, ai/type_tree.md, and ai/system_map.md; add ai/system_dependencies.md if the content branches into other systems.
 ```
 
 ## Recommended Human Workflow

@@ -14,11 +14,14 @@ When that happens, treat the user goal as authoritative and use this file to loc
 Read in this order unless the task is trivial:
 
 1. `AGENTS.md`
-2. `ai/architecture.md`
-3. `ai/system_map.md`
-4. `ai/subsystem_map.md` if the task mentions `SS*`, scheduling, processing, round flow, or runtime ownership
-5. `ai/type_tree.md` if the task mentions a BYOND type path or unknown inheritance branch
-6. `ai/task_templates.md` if you need a stronger intake structure or want to convert a vague goal into an execution plan
+2. `ai/entrypoints.md` for the cheapest first-pass route
+3. `ai/system_dependencies.md` if the task crosses more than one system
+4. `ai/runtime_flow.md` if the task is about order, lifecycle, or runtime ownership
+5. `ai/architecture.md`
+6. `ai/system_map.md`
+7. `ai/subsystem_map.md` if the task mentions `SS*`, scheduling, processing, round flow, or runtime ownership
+8. `ai/type_tree.md` if the task mentions a BYOND type path or unknown inheritance branch
+9. `ai/task_templates.md` if you need a stronger intake structure or want to convert a vague goal into an execution plan
 
 ## Operating Rules
 
@@ -38,12 +41,18 @@ The best tasks include:
 - Constraints: what not to touch, acceptable scope, balance or compatibility limits.
 - Verification: what behavior should be true after the work.
 
-If context is missing, use `ai/system_map.md` first.
+If context is missing, use `ai/entrypoints.md` first.
+If multiple systems are involved, use `ai/system_dependencies.md`.
+If the question is about execution order or lifecycle, use `ai/runtime_flow.md`.
+If the fast route is still ambiguous, use `ai/system_map.md`.
 If runtime ownership is unclear, use `ai/subsystem_map.md`.
 If the type branch is unclear, use `ai/type_tree.md`.
 
 ## Quick Routing
 
+- Cheapest keyword-to-system route: `ai/entrypoints.md`
+- Cross-system handoff question: `ai/system_dependencies.md`
+- Lifecycle / tick / order question: `ai/runtime_flow.md`
 - Bug in a gameplay feature: `ai/system_map.md`
 - Unknown inheritance/type branch: `ai/type_tree.md`
 - `SS*` global or processing loop: `ai/subsystem_map.md`

@@ -6,13 +6,19 @@ If you are framing a new task for an agent, use `ai/task_templates.md` together 
 
 ## Read Order
 
-1. Start with `ai/architecture.md` to understand runtime ownership and layer boundaries.
-2. Open `ai/system_map.md` to locate the relevant gameplay or infrastructure system.
-3. If the task mentions an `SS*` global or a processing loop, go straight to `ai/subsystem_map.md`.
-4. If the task mentions a BYOND type path, use `ai/type_tree.md` to find the correct inheritance root before searching files.
+1. Start with `ai/entrypoints.md` to route common tasks without opening the larger maps.
+2. Open `ai/system_dependencies.md` if the task crosses more than one gameplay/infrastructure system.
+3. Open `ai/runtime_flow.md` if the task is about lifecycle, order, or runtime ownership.
+4. Open `ai/architecture.md` if you need layer boundaries or wider runtime context.
+5. Open `ai/system_map.md` if the task still is not localized.
+6. If the task mentions an `SS*` global or a processing loop, go straight to `ai/subsystem_map.md`.
+7. If the task mentions a BYOND type path, use `ai/type_tree.md` to find the correct inheritance root before searching files.
 
 ## Fast Routing Rules
 
+- If a keyword in `ai/entrypoints.md` already matches the task, use that route before opening the larger maps.
+- If you know the systems but not their handoff, use `ai/system_dependencies.md` before opening more source files.
+- If you know the symptom is timing/order related, use `ai/runtime_flow.md` before doing a broad search.
 - Unknown type path: search the exact path in `ai/type_tree.md`; once you know the root (`/datum`, `/obj`, `/mob`, etc.), search the corresponding directory family first.
 - `SS*` subsystem mention: find the global in `ai/subsystem_map.md`; open the mapped file in `code/controllers/subsystem/**` and then inspect any type roots it schedules.
 - Jobs, classes, spawn roles: inspect `code/modules/jobs/**`, `code/datums/migrants/**`, then `modular_rmh/code/modules/jobs/**` for RMH-specific roles and subclasses.
