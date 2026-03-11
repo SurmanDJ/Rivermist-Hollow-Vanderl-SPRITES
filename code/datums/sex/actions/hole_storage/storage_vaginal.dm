@@ -3,7 +3,7 @@
 	name = "Store items in vagina"
 	hole_id = ORGAN_SLOT_VAGINA
 
-/datum/sex_action/hole_storage/vagina_store/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/hole_storage/vagina_store/shows_on_menu(mob/living/user, mob/living/target)
 	if(!target.getorganslot(ORGAN_SLOT_VAGINA))
 		return FALSE
 	if(check_sex_lock(target, ORGAN_SLOT_VAGINA))
@@ -12,7 +12,7 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/hole_storage/vagina_store/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/hole_storage/vagina_store/can_perform(mob/living/user, mob/living/target)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -22,7 +22,7 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/hole_storage/vagina_store/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/hole_storage/vagina_store/on_start(mob/living/user, mob/living/target)
 	. = ..()
 	var/datum/sex_session/sex_session = get_sex_session(user, target)
 	var/obj/item/dildo = user.get_active_held_item()
@@ -37,7 +37,7 @@
 	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, ignore_walls = FALSE)
 
 
-/datum/sex_action/hole_storage/vagina_store/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/hole_storage/vagina_store/on_perform(mob/living/user, mob/living/target)
 	var/pain_amt = 2 //base pain amt to use
 	var/self = (user == target)
 	if(!target_organ)
@@ -121,7 +121,7 @@
 	name = "Remove items from vagina"
 	hole_id = ORGAN_SLOT_VAGINA
 
-/datum/sex_action/hole_storage/vagina_remove/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/hole_storage/vagina_remove/shows_on_menu(mob/living/user, mob/living/target)
 	if(!target.getorganslot(ORGAN_SLOT_VAGINA))
 		return FALSE
 	if(check_sex_lock(target, ORGAN_SLOT_VAGINA))
@@ -136,7 +136,7 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/hole_storage/vagina_remove/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/hole_storage/vagina_remove/can_perform(mob/living/user, mob/living/target)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -146,7 +146,7 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/hole_storage/vagina_remove/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/hole_storage/vagina_remove/on_start(mob/living/user, mob/living/target)
 	. = ..()
 
 	if(user == target)
@@ -159,7 +159,7 @@
 	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, ignore_walls = FALSE)
 
 
-/datum/sex_action/hole_storage/vagina_remove/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/hole_storage/vagina_remove/on_perform(mob/living/user, mob/living/target)
 	var/pain_amt = 1 //base pain amt to use
 
 	var/datum/sex_session/sex_session = get_sex_session(user, target)
@@ -198,7 +198,7 @@
 	var/fail_counter = 0
 	var/list/stored_items_layer
 
-/datum/sex_action/hole_storage/vagina_remove_deep/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/hole_storage/vagina_remove_deep/shows_on_menu(mob/living/user, mob/living/target)
 	if(!target.getorganslot(hole_id))
 		return FALSE
 	if(check_sex_lock(target, hole_id))
@@ -213,7 +213,7 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/hole_storage/vagina_remove_deep/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/hole_storage/vagina_remove_deep/can_perform(mob/living/user, mob/living/target)
 	. = ..()
 	if(!.)
 		return FALSE
@@ -225,7 +225,7 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_action/hole_storage/vagina_remove_deep/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/hole_storage/vagina_remove_deep/on_start(mob/living/user, mob/living/target)
 	. = ..()
 	target_organ = user.getorganslot(hole_id)
 	var/list/stored_items = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_GET_LISTS)
@@ -236,7 +236,7 @@
 	playsound(target, list('sound/misc/mat/insert (1).ogg','sound/misc/mat/insert (2).ogg'), 20, TRUE, ignore_walls = FALSE)
 
 
-/datum/sex_action/hole_storage/vagina_remove_deep/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/hole_storage/vagina_remove_deep/on_perform(mob/living/user, mob/living/target)
 	var/pain_amt = 1 //base pain amt to use
 
 	if(!target_organ)

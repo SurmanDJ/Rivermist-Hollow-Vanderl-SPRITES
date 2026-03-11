@@ -61,6 +61,9 @@
 	RegisterSignal(parent, COMSIG_SEX_SET_ORGASM_PROG, PROC_REF(set_orgasm_prog))
 	RegisterSignal(parent, COMSIG_SEX_EDGED_BY_OTHER_STATE, PROC_REF(set_edging_state))
 	RegisterSignal(parent, COMSIG_SEX_ORGASM, PROC_REF(manual_orgasm))
+	if(isliving(parent) && !ishuman(parent))
+		var/mob/living/living_parent = parent
+		living_parent.give_genitals()
 
 /datum/component/arousal/UnregisterFromParent()
 	. = ..()
@@ -175,7 +178,7 @@
 		last_arousal_increase_time = world.time
 	arousal = clamp(amount, 0, MAX_AROUSAL)
 	update_arousal_effects()
-	if(iscarbon(parent))
+	if(isliving(parent))
 		SEND_SIGNAL(parent, COMSIG_SEX_AROUSAL_CHANGED)
 	return arousal
 
@@ -212,7 +215,7 @@
 /datum/component/arousal/proc/set_edging(datum/source, amount)
 	edging_charge = clamp(amount, 0, MAX_EDGING)
 
-/datum/component/arousal/proc/receive_generic_sex_action(datum/source, mob/living/carbon/human/action_target, arousal_amt, pain_amt, orgasm_prog_amt, action_initiator)
+/datum/component/arousal/proc/receive_generic_sex_action(datum/source, mob/living/action_target, arousal_amt, pain_amt, orgasm_prog_amt, action_initiator)
 	var/mob/living/user = parent
 	var/giving = action_target != action_initiator
 	var/datum/sex_action/generic/s_action = new()
@@ -307,7 +310,7 @@
 	try_do_moan(arousal_amt, pain_amt, applied_force, giving)
 	try_do_pain_effect(pain_amt, giving)
 
-/datum/component/arousal/proc/receive_sex_action(datum/source, datum/sex_action/s_action, mob/living/carbon/human/action_initiator, mob/living/carbon/human/action_target, arousal_amt, pain_amt, orgasm_prog_amt, giving, applied_force, applied_speed, applied_resist)
+/datum/component/arousal/proc/receive_sex_action(datum/source, datum/sex_action/s_action, mob/living/action_initiator, mob/living/action_target, arousal_amt, pain_amt, orgasm_prog_amt, giving, applied_force, applied_speed, applied_resist)
 	var/mob/living/user = parent
 
 	// Apply multipliers
@@ -448,7 +451,7 @@
 	handle_statuses()
 	//update_erect_state()
 
-/datum/component/arousal/proc/try_ejaculate(datum/sex_action/s_action, mob/living/carbon/human/action_initiator, mob/living/carbon/human/action_target, giving = FALSE)
+/datum/component/arousal/proc/try_ejaculate(datum/sex_action/s_action, mob/living/action_initiator, mob/living/action_target, giving = FALSE)
 	if(orgasm_progress < PASSIVE_EJAC_THRESHOLD)
 		return
 	if(!can_climax())
@@ -458,7 +461,7 @@
 /datum/component/arousal/proc/manual_orgasm(datum/source)
 	ejaculate()
 
-/datum/component/arousal/proc/ejaculate(datum/sex_action/s_action, mob/living/carbon/human/action_initiator, mob/living/carbon/human/action_target, giving = FALSE)
+/datum/component/arousal/proc/ejaculate(datum/sex_action/s_action, mob/living/action_initiator, mob/living/action_target, giving = FALSE)
 
 	var/mob/living/mob = parent
 	var/list/parent_sessions = return_sessions_with_user(parent)
@@ -527,7 +530,7 @@
 			action.try_knot_on_climax(mob, target)
 
 
-/datum/component/arousal/proc/handle_climax(datum/sex_action/action, climax_type, mob/living/carbon/human/user, mob/living/carbon/human/target, giving)
+/datum/component/arousal/proc/handle_climax(datum/sex_action/action, climax_type, mob/living/user, mob/living/target, giving)
 	var/obj/item/organ/genitals/filling_organ/testicles/testes
 	var/obj/item/organ/genitals/filling_organ/vagina/vag
 	if(user.getorganslot(ORGAN_SLOT_TESTICLES) && user.getorganslot(ORGAN_SLOT_PENIS))
@@ -568,7 +571,7 @@
 
 		if(ORGASM_LOCATION_INTO)
 			log_combat(user, target, "Came inside the target")
-			var/mob/living/carbon/human/played_on = target ? target : user
+			var/mob/living/played_on = target ? target : user
 			playsound(played_on, 'sound/misc/mat/endin.ogg', 50, TRUE, ignore_walls = FALSE)
 			if(testes && testes.reagents)
 				var/obj/item/organ/genitals/filling_organ/cameloc
@@ -589,7 +592,7 @@
 
 		if(ORGASM_LOCATION_ORAL)
 			log_combat(user, target, "Came inside the mouth of the target")
-			var/mob/living/carbon/human/played_on = target ? target : user
+			var/mob/living/played_on = target ? target : user
 			playsound(played_on, 'sound/misc/mat/endin.ogg', 50, TRUE, ignore_walls = FALSE)
 			if(target && action)
 				if(user.getorganslot(ORGAN_SLOT_PENIS) && action.check_sex_lock(user, ORGAN_SLOT_PENIS))
@@ -625,7 +628,7 @@
 				to_chat(user, span_info("Damn, my [pick(testes.altnames)] are pretty dry now."))
 	after_ejaculation(climax_type == ORGASM_LOCATION_INTO || climax_type == ORGASM_LOCATION_ORAL, user, target)
 
-/datum/component/arousal/proc/apply_facial_effect(mob/living/carbon/human/recipient)
+/datum/component/arousal/proc/apply_facial_effect(mob/living/recipient)
 	if(!recipient)
 		return
 	var/datum/status_effect/facial/facial_effect = recipient.has_status_effect(/datum/status_effect/facial)
@@ -634,7 +637,7 @@
 	else
 		recipient.apply_status_effect(/datum/status_effect/facial)
 
-/datum/component/arousal/proc/apply_creampie_effect(mob/living/carbon/human/recipient)
+/datum/component/arousal/proc/apply_creampie_effect(mob/living/recipient)
 	if(!recipient)
 		return
 	var/datum/status_effect/facial/internal/creampie_effect = recipient.has_status_effect(/datum/status_effect/facial/internal)
@@ -643,7 +646,7 @@
 	else
 		recipient.apply_status_effect(/datum/status_effect/facial/internal)
 
-/datum/component/arousal/proc/after_ejaculation(intimate = FALSE, mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/component/arousal/proc/after_ejaculation(intimate = FALSE, mob/living/user, mob/living/target)
 	switch(edging_charge)
 		if(10 to 20)
 			to_chat(user, span_love("Feels good to finally cum!"))
@@ -688,7 +691,7 @@
 		if(target)
 			after_intimate_climax(user, target)
 
-/datum/component/arousal/proc/after_intimate_climax(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/component/arousal/proc/after_intimate_climax(mob/living/user, mob/living/target)
 	if(user == target)
 		return
 	if(HAS_TRAIT(target, TRAIT_GOODLOVER))

@@ -25,18 +25,17 @@
 	visible_organ = FALSE
 	accessory_type = /datum/sprite_accessory/none
 
-/obj/item/organ/genitals/filling_organ/testicles/Insert(mob/living/carbon/M, special, drop_if_replaced)
+/obj/item/organ/genitals/filling_organ/testicles/Insert(mob/living/M, special, drop_if_replaced)
 	. = ..()
-	if(iscarbon(M))
-		if(M.cum)
-			reagent_to_make = M.cum
-		if(!virility)
-			reagent_to_make = /datum/reagent/consumable/cum/sterile
-			reagents.clear_reagents()
-			reagents.add_reagent(reagent_to_make, reagents.maximum_volume)
+	if(M.cum)
+		reagent_to_make = M.cum
+	if(!virility)
+		reagent_to_make = /datum/reagent/consumable/cum/sterile
+		reagents.clear_reagents()
+		reagents.add_reagent(reagent_to_make, reagents.maximum_volume)
 	add_bodystorage(M, null, /datum/component/body_storage/testicles)
 
-/obj/item/organ/genitals/filling_organ/testicles/Remove(mob/living/carbon/M, special, drop_if_replaced)
+/obj/item/organ/genitals/filling_organ/testicles/Remove(mob/living/M, special, drop_if_replaced)
 	. = ..()
 	var/datum/component/body_storage/testicles/comp = GetComponent(/datum/component/body_storage/testicles)
 	comp?.RemoveComponent()

@@ -4,7 +4,7 @@
 	user_priority = 0
 	flipped = TRUE
 
-/datum/sex_action/sex/other/try_knot_on_climax(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/sex/other/try_knot_on_climax(mob/living/user, mob/living/target)
 	if(!knot_on_finish)
 		return FALSE
 	if(!can_knot)
@@ -15,11 +15,11 @@
 		return FALSE
 	return SEND_SIGNAL(target, COMSIG_SEX_TRY_KNOT, user, session.force)
 
-/datum/sex_action/sex/other/lock_sex_object(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/sex/other/lock_sex_object(mob/living/user, mob/living/target)
 	sex_locks |= new /datum/sex_session_lock(target, ORGAN_SLOT_PENIS)
 
 
-/datum/sex_action/sex/other/check_hole_storage_available(mob/living/carbon/human/target, mob/living/carbon/human/user)
+/datum/sex_action/sex/other/check_hole_storage_available(mob/living/target, mob/living/user)
 	if(!hole_id || !stored_item_type)
 		return TRUE // No storage requirements
 
