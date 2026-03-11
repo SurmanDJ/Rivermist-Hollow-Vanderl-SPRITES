@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  DmIcon,
   Icon,
   Image,
   LabeledList,
@@ -42,6 +43,8 @@ type PreviewEntry = {
   spawn_weight: number;
   group_min: number;
   group_max: number;
+  icon?: string;
+  icon_state?: string;
   image?: string;
 };
 
@@ -173,12 +176,27 @@ const getDraftDescription = (
 
 const TargetPreviewIcon = (props: { entry: PreviewEntry }) => {
   const { entry } = props;
+  const fallback = (
+    <Icon name="question" size={2.5} color="gray" />
+  );
 
   if (entry.image) {
     return <Image src={entry.image} width={4} height={4} fixErrors />;
   }
 
-  return <Icon name="question" size={2.5} color="gray" />;
+  if (entry.icon && entry.icon_state) {
+    return (
+      <DmIcon
+        icon={entry.icon}
+        icon_state={entry.icon_state}
+        width={64}
+        height={64}
+        fallback={fallback}
+      />
+    );
+  }
+
+  return fallback;
 };
 
 const TargetPreviewCard = (props: {

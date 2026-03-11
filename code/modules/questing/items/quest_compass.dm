@@ -1,6 +1,6 @@
 /obj/item/quest_compass
 	name = "quest compass"
-	desc = "A small enchanted compass. Use it on a quest scroll to attune it to that contract."
+	desc = "A small enchanted compass."
 	icon = 'icons/obj/quest_compass.dmi'
 	icon_state = "icon"
 	w_class = WEIGHT_CLASS_SMALL
@@ -27,6 +27,9 @@
 	. = ..()
 	if(linked_scroll_ref)
 		. += span_notice("The compass is attuned to a quest signal.")
+		. += span_notice("It keeps tracking its linked contract on its own. Use the scroll for map context, and read the compass for the live signal.")
+	else
+		. += span_notice("Use the compass on a quest scroll to attune it. The scroll reveals the map, while the compass follows the live signal.")
 	. += span_info(last_signal_text)
 
 /obj/item/quest_compass/attack_self(mob/user)

@@ -8,11 +8,13 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 0
+	obj_flags = CAN_BE_HIT | USES_TGUI
 	layer = ABOVE_MOB_LAYER
 	layer = GAME_PLANE_UPPER
 	var/input_point
 	var/list/ui_sessions
 	var/static/list/quest_target_preview_icon_cache = list()
+	var/static/list/quest_target_preview_icon_states_cache = list()
 
 /obj/structure/fake_machine/contractledger/Initialize()
 	. = ..()
@@ -28,18 +30,23 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		return
 	return
 
+/obj/structure/fake_machine/contractledger/attack_hand(mob/user, list/modifiers)
+	if(!ishuman(user))
+		return TRUE
+
+	add_fingerprint(user)
+	if(!can_interact(user))
+		return TRUE
+
+	return ui_interact(user)
+
 /obj/structure/fake_machine/contractledger/Topic(href, href_list)
 	. = ..()
 	var/action_id = href_list["ledger_action"]
 	if(action_id)
 		handle_ledger_action(usr, action_id)
 		return ui_interact(usr)
-	return ui_interact(usr)
-
-/obj/structure/fake_machine/contractledger/attack_hand(mob/living/carbon/human/user)
-	if(!ishuman(user))
-		return
-	ui_interact(user)
+	return .
 
 /obj/structure/fake_machine/contractledger/ui_state(mob/user)
 	return GLOB.physical_state
@@ -48,16 +55,9 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	if(!ishuman(user))
 		return FALSE
 
-	var/interface_name = get_ledger_interface_name(user)
-	var/window_title = get_ledger_window_title(user)
-	var/datum/tgui/open_ui = SStgui.get_open_ui(user, src)
-	if(open_ui && open_ui.interface != interface_name)
-		open_ui.close()
-		ui = null
-
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, interface_name, window_title, 1040, 700)
+		ui = new(user, src, get_ledger_interface_name(user), get_ledger_window_title(user), 1040, 700)
 		ui.open()
 	return TRUE
 
@@ -622,6 +622,8 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 			"spawn_weight" = kill_template.get_mob_spawn_weight(mob_type),
 			"group_min" = group_min,
 			"group_max" = group_max,
+			"icon" = icon_data["icon"],
+			"icon_state" = icon_data["icon_state"],
 			"image" = icon_data["image"],
 		)
 		insert_preview_entry(entries, entry)
@@ -632,8 +634,10 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 /obj/structure/fake_machine/contractledger/proc/insert_preview_entry(list/entries, list/new_entry)
 	var/insert_at = length(entries) + 1
 	var/new_name = new_entry["name"] || ""
-	for(var/index in 1 to length(entries))
+	for(var/index = 1, index <= length(entries), index++)
 		var/list/existing_entry = entries[index]
+		if(!islist(existing_entry))
+			continue
 		var/existing_name = existing_entry["name"] || ""
 		if(new_entry["spawn_weight"] > existing_entry["spawn_weight"])
 			insert_at = index
@@ -645,7 +649,10 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 			insert_at = index
 			break
 
-	entries.Insert(insert_at, new_entry)
+	entries.len++
+	for(var/index = entries.len, index > insert_at, index--)
+		entries[index] = entries[index - 1]
+	entries[insert_at] = new_entry
 
 /obj/structure/fake_machine/contractledger/proc/get_target_preview_name(atom/mob_type)
 	if(ispath(mob_type))
@@ -659,39 +666,121 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		return cached_data
 
 	var/list/icon_data = list(
+		"icon" = null,
+		"icon_state" = null,
 		"image" = null,
 	)
 
-	var/icon/preview_icon = build_target_preview_icon(mob_type)
+	var/icon_file = get_target_preview_icon_file(mob_type)
+	var/icon_state = get_target_preview_icon_state(mob_type)
+	if(icon_file)
+		icon_data["icon"] = icon_file
+	if(icon_state && is_valid_preview_icon_state(icon_file, icon_state))
+		icon_data["icon_state"] = icon_state
+
+	var/icon/preview_icon = build_target_preview_icon(mob_type, icon_file, icon_state)
+	if(!preview_icon)
+		var/list/runtime_icon_data = get_runtime_target_preview_icon_data(mob_type)
+		if(runtime_icon_data)
+			if(runtime_icon_data["icon"])
+				icon_data["icon"] = runtime_icon_data["icon"]
+			if(runtime_icon_data["icon_state"])
+				icon_data["icon_state"] = runtime_icon_data["icon_state"]
+			preview_icon = runtime_icon_data["preview_icon"]
 	if(preview_icon)
 		icon_data["image"] = "data:image/png;base64,[icon2base64(preview_icon, cache_key)]"
 
 	quest_target_preview_icon_cache[cache_key] = icon_data
 	return icon_data
 
-/obj/structure/fake_machine/contractledger/proc/build_target_preview_icon(atom/mob_type)
+/obj/structure/fake_machine/contractledger/proc/get_target_preview_icon_file(atom/mob_type)
 	if(!ispath(mob_type))
 		return null
+	return initial(mob_type.icon)
 
-	var/icon_file = initial(mob_type.icon)
+/obj/structure/fake_machine/contractledger/proc/get_target_preview_icon_state(atom/mob_type)
+	if(!ispath(mob_type))
+		return null
+	if(ispath(mob_type, /mob/living/simple_animal))
+		return get_simple_animal_preview_icon_state(mob_type)
+	return initial(mob_type.icon_state)
+
+/obj/structure/fake_machine/contractledger/proc/get_simple_animal_preview_icon_state(mob/living/simple_animal/mob_type)
+	return initial(mob_type.icon_living) || initial(mob_type.icon_state)
+
+/obj/structure/fake_machine/contractledger/proc/get_preview_icon_states(icon_file)
 	if(!icon_file)
 		return null
 
-	var/icon_state = initial(mob_type.icon_state)
-	var/icon/preview_icon = null
-	if(icon_state)
-		var/obj/temp = new
-		temp.icon = icon_file
-		temp.icon_state = icon_state
-		preview_icon = getFlatIcon(temp, SOUTH, no_anim = TRUE)
-		qdel(temp)
+	var/cache_key = "[icon_file]"
+	var/list/cached_states = quest_target_preview_icon_states_cache[cache_key]
+	if(cached_states)
+		return cached_states
 
+	cached_states = icon_states(icon_file)
+	quest_target_preview_icon_states_cache[cache_key] = cached_states
+	return cached_states
+
+/obj/structure/fake_machine/contractledger/proc/is_valid_preview_icon_state(icon_file, icon_state)
+	if(!icon_file || !icon_state)
+		return FALSE
+
+	var/list/available_states = get_preview_icon_states(icon_file)
+	return islist(available_states) && (icon_state in available_states)
+
+/obj/structure/fake_machine/contractledger/proc/build_target_preview_icon(atom/mob_type, icon_file, icon_state)
+	if(!ispath(mob_type) || !icon_file || !icon_state)
+		return null
+
+	if(!is_valid_preview_icon_state(icon_file, icon_state))
+		return null
+
+	var/icon/preview_icon = icon(icon_file, icon_state, SOUTH, 1)
 	if(!preview_icon)
-		preview_icon = icon(icon_file, icon_state, SOUTH, 1)
-	if(!preview_icon)
-		preview_icon = icon(icon_file)
+		return null
+
+	if(ispath(mob_type, /mob/living/carbon/human))
+		var/icon/human_preview_icon = icon()
+		human_preview_icon.Insert(preview_icon, dir = SOUTH)
+		preview_icon = human_preview_icon
 
 	return preview_icon
+
+/obj/structure/fake_machine/contractledger/proc/get_runtime_target_preview_icon_data(atom/mob_type)
+	if(!ispath(mob_type, /mob))
+		return null
+
+	// Using a real turf avoids the nullspace init issues some mobs have.
+	var/turf/preview_turf = locate(1, 1, 1)
+	if(!preview_turf)
+		return null
+
+	var/mob/temp_mob = new mob_type(preview_turf)
+	if(!temp_mob)
+		return null
+
+	temp_mob.alpha = 0
+	temp_mob.invisibility = INVISIBILITY_MAXIMUM
+	temp_mob.setDir(SOUTH)
+
+	var/icon/flattened_icon = getFlatIcon(temp_mob, SOUTH, no_anim = TRUE)
+	var/icon/preview_icon = flattened_icon ? icon(flattened_icon, frame = 1) : null
+	var/icon_file = temp_mob.icon
+	var/icon_state = temp_mob.icon_state
+
+	qdel(temp_mob)
+
+	if(!preview_icon)
+		return null
+
+	if(icon_state && !is_valid_preview_icon_state(icon_file, icon_state))
+		icon_state = null
+
+	return list(
+		"icon" = icon_file,
+		"icon_state" = icon_state,
+		"preview_icon" = preview_icon,
+	)
 
 /obj/structure/fake_machine/contractledger/proc/can_turn_in_any_contract(mob/living/carbon/human/user)
 	if(!user)
