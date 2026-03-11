@@ -248,7 +248,9 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 
 /obj/structure/fake_machine/contractledger/proc/get_ui_language(mob/user)
 	var/client/user_client = user?.client
-	var/stored_language = user_client ? user_client.vars["preferred_ui_language"] : null
+	var/stored_language = null
+	if(user_client && islist(user_client.vars) && ("preferred_ui_language" in user_client.vars))
+		stored_language = user_client.vars["preferred_ui_language"]
 	if(!stored_language)
 		stored_language = "en"
 	var/selected_language = lowertext("[stored_language]")
@@ -660,7 +662,7 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	return "Unknown target"
 
 /obj/structure/fake_machine/contractledger/proc/get_target_preview_icon_data(atom/mob_type)
-	var/cache_key = "[mob_type]"
+	var/cache_key = "preview_v3:[mob_type]"
 	var/list/cached_data = quest_target_preview_icon_cache[cache_key]
 	if(cached_data)
 		return cached_data
@@ -759,8 +761,6 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	if(!temp_mob)
 		return null
 
-	temp_mob.alpha = 0
-	temp_mob.invisibility = INVISIBILITY_MAXIMUM
 	temp_mob.setDir(SOUTH)
 
 	var/icon/flattened_icon = getFlatIcon(temp_mob, SOUTH, no_anim = TRUE)
