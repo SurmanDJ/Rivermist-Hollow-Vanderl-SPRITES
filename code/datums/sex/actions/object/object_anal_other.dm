@@ -16,13 +16,14 @@
 	. = ..()
 	if(!.)
 		return FALSE
+	var/obj/item/dildo = get_sextoy_in_hand(user)
 	if(user == target)
 		return FALSE
-	if(check_sex_lock(target, ORGAN_SLOT_ANUS))
+	if(!dildo)
+		return FALSE
+	if(check_sex_lock(target, ORGAN_SLOT_ANUS, null, dildo))
 		return FALSE
 	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
-		return FALSE
-	if(!get_sextoy_in_hand(user))
 		return FALSE
 	return TRUE
 

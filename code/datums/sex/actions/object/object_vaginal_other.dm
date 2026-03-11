@@ -6,13 +6,14 @@
 	target_priority = 100
 
 /datum/sex_action/object_fuck/object_vaginal_other/shows_on_menu(mob/living/user, mob/living/target)
+	var/obj/item/dildo = get_sextoy_in_hand(user)
 	if(user == target)
 		return FALSE
 	if(!target.getorganslot(ORGAN_SLOT_VAGINA))
 		return FALSE
-	if(check_sex_lock(target, ORGAN_SLOT_VAGINA))
+	if(check_sex_lock(target, ORGAN_SLOT_VAGINA, null, dildo))
 		return FALSE
-	if(!get_sextoy_in_hand(user))
+	if(!dildo)
 		return FALSE
 	return TRUE
 

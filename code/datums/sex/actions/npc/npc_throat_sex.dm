@@ -26,6 +26,12 @@
 		sex_session.perform_sex_action(target, user, 0, 2, 2, src)
 	else
 		sex_session.perform_sex_action(target, user, 0, 7, 2, src)
+		if(sex_session.get_current_force() >= SEX_FORCE_HIGH)
+			var/choker_snap_chance = 5
+			if(sex_session.get_current_force() >= SEX_FORCE_EXTREME)
+				choker_snap_chance = 15
+			if(prob(choker_snap_chance))
+				target.snap_worn_choker(user)
 	sex_session.handle_passive_ejaculation()
 
 /datum/sex_action/npc/npc_throat_sex/handle_climax_message(mob/living/user, mob/living/target, must_flip)

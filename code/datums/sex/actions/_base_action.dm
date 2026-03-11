@@ -65,6 +65,8 @@
 	var/aggro_grab_instead_same_tile = FALSE
 	/// Whether this action requires hole storage integration
 	var/requires_hole_storage = FALSE
+	/// Whether this action needs the initiator's hands to be free
+	var/requires_free_hands = FALSE
 	/// What hole ID this action uses (if any)
 	var/hole_id = null
 	/// What item type this action stores in the hole
@@ -112,7 +114,7 @@
 /datum/sex_action/proc/can_perform(mob/living/user, mob/living/target)
 	SHOULD_CALL_PARENT(TRUE)
 	if(requires_hole_storage)
-		if(!check_hole_storage_available(target, user))
+		if(!check_hole_storage_available(user, target))
 			return FALSE
 	return TRUE
 
@@ -153,14 +155,14 @@
 	if(location in body_parts_covered2organ_names(hidden_slots))
 		return FALSE
 
+	if(location == BODY_ZONE_PRECISE_MOUTH)
+		return target.has_mouth() && target.mouth_is_free()
+
 	if(!bodypart)
 		if(iscarbon(target))
 			return FALSE
-		switch(location)
-			if(BODY_ZONE_PRECISE_MOUTH)
-				return target.has_mouth() && target.mouth_is_free()
-			if(BODY_ZONE_PRECISE_L_FOOT, BODY_ZONE_PRECISE_R_FOOT)
-				return target.foot_is_free()
+		if(location == BODY_ZONE_PRECISE_L_FOOT || location == BODY_ZONE_PRECISE_R_FOOT)
+			return target.foot_is_free()
 		return TRUE
 
 	return TRUE
@@ -170,17 +172,52 @@
 	var/result = get_location_accessible(target, location = location, grabs = grabs, skipundies = skipundies)
 	return result*/
 
-/datum/sex_action/proc/check_hole_storage_available(mob/living/target, mob/living/user)
-	if(!hole_id || !stored_item_type)
-		return TRUE // No storage requirements
+/datum/sex_action/proc/get_storage_receiver(mob/living/user, mob/living/target)
+	return flipped ? user : target
 
-	// Check if target has hole storage components
-	var/obj/item/organ/target_o = target.getorganslot(hole_id)
-	var/datum/component/body_storage/storage_comp = target_o.GetComponent(/datum/component/body_storage)
+/datum/sex_action/proc/get_storage_insertor(mob/living/user, mob/living/target)
+	return flipped ? target : user
+
+/datum/sex_action/proc/get_storage_check_item(mob/living/user, mob/living/target)
+	if(stored_item_type == /obj/item/organ/genitals/penis)
+		var/mob/living/storage_insertor = get_storage_insertor(user, target)
+		return get_users_penis(storage_insertor)
+	return null
+
+/datum/sex_action/proc/get_hole_storage_force(mob/living/user, mob/living/target)
+	var/datum/sex_session/session = get_sex_session(user, target)
+	if(!session)
+		return FALSE
+	return session.get_current_force() >= SEX_FORCE_HIGH
+
+/datum/sex_action/proc/can_fit_item_in_hole(mob/living/storage_owner, hole_slot, obj/item/item_to_check, force = FALSE)
+	if(!storage_owner || !hole_slot || !item_to_check)
+		return FALSE
+
+	var/obj/item/organ/target_organ = storage_owner.getorganslot(hole_slot)
+	if(!target_organ)
+		return FALSE
+
+	var/datum/component/body_storage/storage_comp = target_organ.GetComponent(/datum/component/body_storage)
 	if(!storage_comp)
 		return FALSE
 
-	return TRUE
+	var/fit_result = storage_comp.check_fit(target_organ, item_to_check, STORAGE_LAYER_INNER, force)
+	switch(fit_result)
+		if(INSERT_FEEDBACK_OK, INSERT_FEEDBACK_OK_FORCE, INSERT_FEEDBACK_OK_OVERRIDE, INSERT_FEEDBACK_ALMOST_FULL)
+			return TRUE
+	return FALSE
+
+/datum/sex_action/proc/check_hole_storage_available(mob/living/user, mob/living/target)
+	if(!hole_id || !stored_item_type)
+		return TRUE // No storage requirements
+
+	var/mob/living/storage_owner = get_storage_receiver(user, target)
+	var/obj/item/item_to_check = get_storage_check_item(user, target)
+	if(!item_to_check)
+		return FALSE
+
+	return can_fit_item_in_hole(storage_owner, hole_id, item_to_check, get_hole_storage_force(user, target))
 
 /datum/sex_action/proc/get_users_penis(mob/living/user)
 	if(!user)
@@ -357,14 +394,19 @@
 /datum/sex_action/proc/handle_climax_message(mob/living/user, mob/living/target, must_flip = FALSE) //must_flip is for handling partner's message
 	return
 
-/datum/sex_action/proc/check_sex_lock(mob/locked, organ_slot, obj/item/item)
+/datum/sex_action/proc/check_sex_lock(mob/locked, organ_slot, obj/item/item, obj/item/storage_item)
 	if(!organ_slot && !item)
 		return FALSE
 
 	for(var/datum/sex_session_lock/lock as anything in GLOB.locked_sex_objects)
 		if(lock.locked_host == locked)
-			if(((lock.locked_item == item) && lock.locked_item) || ((lock.locked_organ_slot == organ_slot) && lock.locked_organ_slot))
-				return TRUE
+			var/item_lock = ((lock.locked_item == item) && lock.locked_item)
+			var/organ_lock = ((lock.locked_organ_slot == organ_slot) && lock.locked_organ_slot)
+			if(!item_lock && !organ_lock)
+				continue
+			if(organ_lock && storage_item && can_fit_item_in_hole(locked, organ_slot, storage_item))
+				continue
+			return TRUE
 	return FALSE
 
 

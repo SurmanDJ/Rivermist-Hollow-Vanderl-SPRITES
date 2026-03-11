@@ -4,11 +4,12 @@
 	hole_id = ORGAN_SLOT_BREASTS
 
 /datum/sex_action/hole_storage/boobs_store/shows_on_menu(mob/living/user, mob/living/target)
+	var/obj/item/dildo = user.get_active_held_item()
 	if(!target.getorganslot(ORGAN_SLOT_BREASTS))
 		return FALSE
-	if(check_sex_lock(target, ORGAN_SLOT_BREASTS))
+	if(check_sex_lock(target, ORGAN_SLOT_BREASTS, null, dildo))
 		return FALSE
-	if(!user.get_active_held_item())
+	if(!dildo)
 		return FALSE
 	return TRUE
 
@@ -16,7 +17,12 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!user.get_active_held_item())
+	var/obj/item/dildo = user.get_active_held_item()
+	if(!dildo)
+		return FALSE
+	if(check_sex_lock(target, ORGAN_SLOT_BREASTS, null, dildo))
+		return FALSE
+	if(!can_fit_item_in_hole(target, hole_id, dildo, get_hole_storage_force(user, target)))
 		return FALSE
 	return TRUE
 

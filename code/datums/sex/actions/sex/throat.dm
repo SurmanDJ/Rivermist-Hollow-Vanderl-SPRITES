@@ -48,6 +48,12 @@
 		var/oxyloss = 1.3
 		sex_session.perform_sex_action(target, user, 0.5, 7, 0.5, src)
 		sex_session.perform_deepthroat_oxyloss(target, oxyloss)
+		if(sex_session.get_current_force() >= SEX_FORCE_HIGH)
+			var/choker_snap_chance = 5
+			if(sex_session.get_current_force() >= SEX_FORCE_EXTREME)
+				choker_snap_chance = 15
+			if(prob(choker_snap_chance))
+				target.snap_worn_choker(user)
 	sex_session.handle_passive_ejaculation()
 
 /datum/sex_action/sex/throat/handle_climax_message(mob/living/user, mob/living/target, must_flip)

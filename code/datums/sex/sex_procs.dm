@@ -98,6 +98,9 @@
 /mob/living/proc/has_hands()
 	return TRUE
 
+/mob/living/proc/has_free_sex_hands()
+	return has_hands() && !HAS_TRAIT(src, TRAIT_HANDS_BLOCKED)
+
 /mob/living/proc/has_mouth()
 	return TRUE
 
@@ -143,7 +146,37 @@
 	return getorganslot(ORGAN_SLOT_BREASTS)
 
 /mob/living/proc/mouth_is_free()
-	return !is_mouth_covered()
+	return has_mouth() && !mouth_blocked && !is_muzzled() && !is_mouth_covered()
+
+/mob/living/proc/get_worn_choker()
+	return null
+
+/mob/living/carbon/get_worn_choker()
+	if(istype(choker, /obj/item/clothing/choker))
+		return choker
+	if(istype(wear_neck, /obj/item/clothing/choker))
+		return wear_neck
+	return null
+
+/mob/living/proc/snap_worn_choker(mob/living/puller)
+	var/obj/item/clothing/choker/worn_choker = get_worn_choker()
+	if(!worn_choker)
+		return FALSE
+
+	if(worn_choker.loc == src)
+		dropItemToGround(worn_choker, TRUE, TRUE)
+
+	if(worn_choker.break_sound)
+		playsound(src, 'modular_rmh/sound/effects/snap.ogg', 30, TRUE, -1)
+
+	visible_message(
+		span_warning("[puller ? "[puller] thrusts hard enough to snap [src]'s [worn_choker.name]!" : "[src]'s [worn_choker.name] snaps!"]"),
+		span_warning("[puller ? "[puller] thrusts hard enough to snap my [worn_choker.name]!" : "My [worn_choker.name] snaps!"]")
+	)
+
+	worn_choker.atom_break()
+
+	return TRUE
 
 /mob/living/proc/foot_is_free()
 	return is_barefoot()

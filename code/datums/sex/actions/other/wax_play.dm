@@ -4,6 +4,7 @@
 	continous = FALSE
 	do_time = 2.5 SECONDS
 	stamina_cost = 0.2
+	requires_free_hands = TRUE
 
 /datum/sex_action/wax_play/proc/get_held_lit_candle(mob/living/user)
 	var/obj/item/held_item = user.get_active_held_item()

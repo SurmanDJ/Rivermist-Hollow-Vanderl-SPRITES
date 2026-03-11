@@ -224,7 +224,13 @@
 		return FALSE
 	if(!user.adjacent_or_closet(target) && action.check_distance)
 		return FALSE
-	if(action.check_incapacitated && user.incapacitated())
+	if(action.check_incapacitated)
+		var/incapacitated_flags = IGNORE_GRAB
+		if(!action.requires_free_hands)
+			incapacitated_flags |= IGNORE_RESTRAINTS
+		if(user.incapacitated(incapacitated_flags))
+			return FALSE
+	if(action.requires_free_hands && !user.has_free_sex_hands())
 		return FALSE
 	if(action.check_same_tile && !user.check_closet(target))
 		var/same_tile = (get_turf(user) == get_turf(target))

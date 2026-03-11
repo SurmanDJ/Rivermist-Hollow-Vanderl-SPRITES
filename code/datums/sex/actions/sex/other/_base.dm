@@ -19,14 +19,5 @@
 	sex_locks |= new /datum/sex_session_lock(target, ORGAN_SLOT_PENIS)
 
 
-/datum/sex_action/sex/other/check_hole_storage_available(mob/living/target, mob/living/user)
-	if(!hole_id || !stored_item_type)
-		return TRUE // No storage requirements
-
-	var/obj/item/organ/user_o = user.getorganslot(hole_id)
-	// Check if target has hole storage component
-	var/datum/component/body_storage/storage_comp = user_o.GetComponent(/datum/component/body_storage)
-	if(!storage_comp)
-		return FALSE
-
-	return TRUE
+/datum/sex_action/sex/other/check_hole_storage_available(mob/living/user, mob/living/target)
+	return ..()

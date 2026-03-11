@@ -4,6 +4,7 @@
 	check_same_tile = FALSE
 	do_time = 2.5 SECONDS // Slightly faster than average for repeated action
 	stamina_cost = 0
+	requires_free_hands = TRUE
 
 /datum/sex_action/spanking/shows_on_menu(mob/living/user, mob/living/target)
 	if(user == target)

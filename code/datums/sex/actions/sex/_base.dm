@@ -12,3 +12,6 @@
 	sex_locks |= new /datum/sex_session_lock(user, ORGAN_SLOT_PENIS)
 
 /datum/sex_action/generic
+
+/datum/sex_action/generic/shows_on_menu(mob/living/user, mob/living/target)
+	return FALSE

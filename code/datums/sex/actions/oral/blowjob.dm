@@ -12,7 +12,7 @@
 	target_priority = 100
 	flipped = TRUE
 
-/datum/sex_action/crotch_nuzzle/shows_on_menu(mob/living/user, mob/living/target)
+/datum/sex_action/blowjob/shows_on_menu(mob/living/user, mob/living/target)
 	if(user == target)
 		return FALSE
 	if(!target.getorganslot(ORGAN_SLOT_PENIS))
