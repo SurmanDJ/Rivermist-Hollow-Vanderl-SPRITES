@@ -27,11 +27,25 @@
 	var/visible_through_clothes = FALSE
 
 //we handle all of this here because cant timer another goddamn thing from here correctly.
-/obj/item/organ/genitals/filling_organ/vagina/proc/be_impregnated()
+/obj/item/organ/genitals/filling_organ/vagina/proc/be_impregnated(mob/living/father = null)
 	if(!owner)
-		return
+		return FALSE
 	if(owner.stat == DEAD)
-		return
+		return FALSE
+	if(pregnant)
+		return FALSE
+
+	var/list/womb_eggs = get_womb_oviposition_eggs()
+	if(length(womb_eggs))
+		var/obj/item/oviposition_egg/fertilized_egg = fertilize_oviposition_egg(father)
+		if(fertilized_egg)
+			if(owner.has_quirk(/datum/quirk/peculiarity/selfawaregeni))
+				to_chat(owner, span_love("A warm pulse runs through one of the eggs in my womb."))
+			else
+				to_chat(owner, span_love("Something in my womb has been fertilized."))
+			return TRUE
+		return FALSE
+
 	if(owner.has_quirk(/datum/quirk/peculiarity/selfawaregeni))
 		to_chat(owner, span_love("I feel a surge of warmth in my [src.name], I’m definitely pregnant!"))
 	reagents.maximum_volume *= 0.5 //ick ock, should make the thing recalculate on next life tick.
@@ -45,6 +59,7 @@
 		var/obj/item/organ/genitals/belly/belly = owner.getorganslot(ORGAN_SLOT_BELLY)
 		pre_pregnancy_size = belly.organ_size
 		addtimer(CALLBACK(src, PROC_REF(handle_preggoness)), 3 HOURS, TIMER_STOPPABLE)
+	return TRUE
 
 /obj/item/organ/genitals/filling_organ/vagina/proc/undo_preggoness()
 	if(!pregnant)

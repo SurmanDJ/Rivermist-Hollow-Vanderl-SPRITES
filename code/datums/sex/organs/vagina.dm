@@ -33,6 +33,47 @@
 	var/datum/component/body_storage/vagina/comp = GetComponent(/datum/component/body_storage/vagina)
 	comp?.RemoveComponent()
 
+/obj/item/organ/genitals/filling_organ/vagina/proc/get_womb_storage()
+	return GetComponent(/datum/component/body_storage/vagina)
+
+/obj/item/organ/genitals/filling_organ/vagina/proc/is_womb_egg(obj/item/oviposition_egg/egg)
+	if(!egg)
+		return FALSE
+	var/datum/component/body_storage/vagina/storage = get_womb_storage()
+	if(!storage)
+		return FALSE
+	return storage.check_item_in_layer(src, egg, STORAGE_LAYER_DEEP)
+
+/obj/item/organ/genitals/filling_organ/vagina/proc/get_womb_oviposition_eggs(include_fertilized = null)
+	var/list/eggs = list()
+	var/datum/component/body_storage/vagina/storage = get_womb_storage()
+	if(!storage)
+		return eggs
+
+	for(var/obj/item/oviposition_egg/egg as anything in storage.deep_layer_contents)
+		var/fertilized = egg.is_fertilized()
+		if(isnull(include_fertilized) || include_fertilized == fertilized)
+			eggs += egg
+
+	return eggs
+
+/obj/item/organ/genitals/filling_organ/vagina/proc/fertilize_oviposition_egg(mob/living/father = null, baby_type = /mob/living/carbon/human)
+	if(!owner)
+		return null
+
+	for(var/obj/item/oviposition_egg/egg as anything in get_womb_oviposition_eggs(FALSE))
+		egg.AddComponent(/datum/component/pregnancy, owner, father, baby_type)
+		return egg
+
+	return null
+
+/obj/item/organ/genitals/filling_organ/vagina/proc/has_oviposition_pregnancy()
+	for(var/obj/item/oviposition_egg/egg as anything in get_womb_oviposition_eggs(TRUE))
+		var/datum/component/pregnancy/pregnancy = egg.get_pregnancy_component()
+		if(pregnancy && !pregnancy.laid)
+			return TRUE
+	return FALSE
+
 /obj/item/organ/genitals/filling_organ/vagina/get_availability(datum/species/owner_species, mob/living/C, datum/preferences/pref_load)
 	if(issimple(C))
 		return C.gender == FEMALE

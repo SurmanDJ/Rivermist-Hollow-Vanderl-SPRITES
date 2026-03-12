@@ -1,444 +1,391 @@
+#define OVIPOSITION_PREGNANCY_STAGES 4
+#define OVIPOSITION_STAGE_DURATION 15 MINUTES
+#define OVIPOSITION_LAY_COOLDOWN 1 MINUTES
+
 /datum/component/pregnancy
-
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	//can_transfer = TRUE
 
-	/// type of baby the mother will plop out - needs to be subtype of /mob/living
 	var/baby_type = /mob/living/carbon/human
-
-	var/obj/item/organ/container
+	var/obj/item/oviposition_egg/egg
+	var/obj/item/organ/genitals/filling_organ/vagina/container
 	var/mob/living/carrier
-
-	var/datum/dna/father_dna
-	var/datum/dna/mother_dna
-
+	var/mob/living/mother
+	var/mob/living/father
+	var/mother_name
 	var/list/mother_features
 	var/list/father_features
-
-	var/mother_name
-
 	var/egg_name
-
 	var/stage = 0
-	var/max_stage = PREGNANCY_STAGES
+	var/max_stage = OVIPOSITION_PREGNANCY_STAGES
+	var/revealed = FALSE
+	var/laid = FALSE
+	var/added_belly_size = 0
+	var/added_breast_size = 0
 	COOLDOWN_DECLARE(stage_time)
 	COOLDOWN_DECLARE(hatch_request_cooldown)
+	COOLDOWN_DECLARE(lay_cooldown)
 
-	var/added_size = 0
-	/// this boolean is for identifying whether this preg is in the egg state or not
-	var/oviposition = TRUE
-	/// this boolean is for saving whether or not we should inflate the belly if appropriate
-	var/pregnancy_inflation = TRUE
-	/// breast growth
-	var/pregnancy_breast_growth = TRUE
-	/// whether the pregnancy is revealed or not, scanners will reveal this no matter what
-	var/revealed = FALSE
-
-/datum/component/pregnancy/Initialize(mob/living/_mother, mob/living/_father, _baby_type = /mob/living/carbon/human)
-	if(!isobj(parent))
+/datum/component/pregnancy/Initialize(mob/living/_mother, mob/living/_father = null, _baby_type = /mob/living/carbon/human)
+	if(!istype(parent, /obj/item/oviposition_egg))
 		return COMPONENT_INCOMPATIBLE
 
-	var/obj/item/thing = parent
-
-	if(!isorgan(thing.loc))
-		return COMPONENT_INCOMPATIBLE
-
-	if(ispath(_baby_type, /mob/living))
+	if(_baby_type && ispath(_baby_type, /mob/living))
 		baby_type = _baby_type
-	else
-		stack_trace("Invalid baby_type given to pregnancy component!")
-		return COMPONENT_INCOMPATIBLE
 
-	container = thing.loc
-
-	var/obj/item/organ/nads = thing.loc
-
-	if(nads.owner)
-		carrier = nads.owner
-
-	if(iscarbon(_father))
-		var/mob/living/carbon/cardad = _father
-		father_dna = new
-		cardad.dna.copy_dna(father_dna)
-
-	if(iscarbon(_mother))
-		var/mob/living/carbon/carmom = _mother
-		mother_dna = new
-		carmom.dna.copy_dna(mother_dna)
-
-	mother_name = _mother.real_name
-
-	if(ishuman(_father))
-		var/mob/living/carbon/human/cardad = _father
-		LAZYINITLIST(father_features)
-		father_features["skin_tone"] = cardad.skin_tone
-		father_features["hair_color"] = cardad.hair_color
-		father_features["facial_hair_color"] = cardad.facial_hair_color
-		father_features["left_eye_color"] = cardad.left_eye_color
-		father_features["right_eye_color"] = cardad.right_eye_color
+	egg = parent
+	mother = _mother
+	father = _father
+	mother_name = _mother?.real_name
 
 	if(ishuman(_mother))
-		var/mob/living/carbon/human/carmom = _mother
-		LAZYINITLIST(mother_features)
-		mother_features["skin_tone"] = carmom.skin_tone
-		mother_features["hair_color"] = carmom.hair_color
-		mother_features["facial_hair_color"] = carmom.facial_hair_color
-		mother_features["left_eye_color"] = carmom.left_eye_color
-		mother_features["right_eye_color"] = carmom.right_eye_color
+		var/mob/living/carbon/human/human_mother = _mother
+		var/datum/bodypart_feature/hair/mother_hair = human_mother.get_bodypart_feature_of_slot(BODYPART_FEATURE_HAIR)
+		var/datum/bodypart_feature/hair/mother_facial_hair = human_mother.get_bodypart_feature_of_slot(BODYPART_FEATURE_FACIAL_HAIR)
+		mother_features = list(
+			"skin_tone" = human_mother.skin_tone,
+			"hair_color" = human_mother.get_hair_color(),
+			"hair_style" = mother_hair?.accessory_type,
+			"facial_hair_color" = human_mother.get_facial_hair_color(),
+			"facial_hair_style" = mother_facial_hair?.accessory_type,
+			"eye_color" = human_mother.get_eye_color(),
+			"species" = human_mother.dna?.species?.type,
+		)
 
-	pregnancy_inflation = carrier?.client?.prefs?.pregnancy_inflation
+	if(ishuman(_father))
+		var/mob/living/carbon/human/human_father = _father
+		var/datum/bodypart_feature/hair/father_hair = human_father.get_bodypart_feature_of_slot(BODYPART_FEATURE_HAIR)
+		var/datum/bodypart_feature/hair/father_facial_hair = human_father.get_bodypart_feature_of_slot(BODYPART_FEATURE_FACIAL_HAIR)
+		father_features = list(
+			"skin_tone" = human_father.skin_tone,
+			"hair_color" = human_father.get_hair_color(),
+			"hair_style" = father_hair?.accessory_type,
+			"facial_hair_color" = human_father.get_facial_hair_color(),
+			"facial_hair_style" = father_facial_hair?.accessory_type,
+			"eye_color" = human_father.get_eye_color(),
+		)
 
-	pregnancy_breast_growth = carrier?.client?.prefs?.pregnancy_breast_growth
-
-	if(carrier)
-		generic_pragency_start()
-		ADD_TRAIT(carrier, TRAIT_PREGNANT, PREGNANCY_TRAIT)
+	refresh_container(TRUE)
+	COOLDOWN_START(src, stage_time, OVIPOSITION_STAGE_DURATION)
 
 /datum/component/pregnancy/RegisterWithParent()
-	if(carrier)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_hatch))
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(egg_status))
+	if(container)
+		register_container()
+	if(carrier && !laid)
 		register_carrier()
-	RegisterSignal(parent, COMSIG_ATOM_ENTERING, PROC_REF(on_entering))
-	RegisterSignal(parent, COMSIG_OBJ_BREAK, PROC_REF(on_obj_break))
-	RegisterSignal(parent, COMSIG_OBJ_WRITTEN_ON, PROC_REF(name_egg))
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(handle_hatch))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(eg_status))
 
 /datum/component/pregnancy/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+	if(container)
+		unregister_container()
 	if(carrier)
 		unregister_carrier()
-	UnregisterSignal(parent, COMSIG_ATOM_ENTERING)
-	UnregisterSignal(parent, COMSIG_OBJ_BREAK)
-	UnregisterSignal(parent, COMSIG_OBJ_WRITTEN_ON)
-	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
-	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
-
-/datum/component/pregnancy/proc/register_carrier()
-	RegisterSignal(carrier, COMSIG_MOB_DEATH, PROC_REF(fetus_mortus))
-	RegisterSignal(carrier, COMSIG_LIVING_BIOLOGICAL_LIFE, PROC_REF(handle_life))
-	RegisterSignal(carrier, COMSIG_HEALTH_SCAN, PROC_REF(on_scan))
-	RegisterSignal(carrier, COMSIG_MOB_DEATH, PROC_REF(handle_damage))
-	if(oviposition)
-		RegisterSignal(carrier, COMSIG_MOB_CLIMAX, PROC_REF(on_climax))
-
-/datum/component/pregnancy/proc/unregister_carrier()
-	UnregisterSignal(carrier, COMSIG_MOB_DEATH)
-	UnregisterSignal(carrier, COMSIG_LIVING_BIOLOGICAL_LIFE)
-	UnregisterSignal(carrier, COMSIG_HEALTH_SCAN)
-	UnregisterSignal(carrier, COMSIG_MOB_APPLY_DAMAGE)
-	UnregisterSignal(carrier, COMSIG_MOB_CLIMAX)
 
 /datum/component/pregnancy/Destroy()
 	if(carrier)
-		generic_pragency_end()
+		clear_carrier_state()
 	return ..()
 
-/datum/component/pregnancy/proc/name_egg(datum/source, name)
-	SIGNAL_HANDLER
+/datum/component/pregnancy/proc/register_container()
+	RegisterSignal(container, COMSIG_ORGAN_INSERTED, PROC_REF(on_container_changed))
+	RegisterSignal(container, COMSIG_ORGAN_REMOVED, PROC_REF(on_container_changed))
 
-	egg_name = name
+/datum/component/pregnancy/proc/unregister_container()
+	UnregisterSignal(container, COMSIG_ORGAN_INSERTED)
+	UnregisterSignal(container, COMSIG_ORGAN_REMOVED)
 
-/datum/component/pregnancy/proc/on_climax(datum/source, datum/reagents/senders_cum, atom/target, obj/item/organ/genital/sender, obj/item/organ/genital/receiver, spill)
-	SIGNAL_HANDLER
+/datum/component/pregnancy/proc/register_carrier()
+	RegisterSignal(carrier, COMSIG_LIVING_LIFE, PROC_REF(handle_life))
+	RegisterSignal(carrier, COMSIG_MOB_DEATH, PROC_REF(handle_death))
+	RegisterSignal(carrier, COMSIG_SEX_CLIMAX, PROC_REF(handle_climax))
 
-	if(isgenital(container))
-		var/obj/item/organ/genital/stuff = container
-		if(stuff != sender && stuff.linked_organ != sender)
-			return FALSE
+/datum/component/pregnancy/proc/unregister_carrier()
+	UnregisterSignal(carrier, COMSIG_LIVING_LIFE)
+	UnregisterSignal(carrier, COMSIG_MOB_DEATH)
+	UnregisterSignal(carrier, COMSIG_SEX_CLIMAX)
 
-	if(stage < 2)
-		return FALSE
+/datum/component/pregnancy/proc/refresh_container(setup_only = FALSE)
+	var/obj/item/organ/genitals/filling_organ/vagina/new_container = null
+	if(istype(egg?.loc, /obj/item/organ/genitals/filling_organ/vagina))
+		var/obj/item/organ/genitals/filling_organ/vagina/new_vagina = egg.loc
+		if(new_vagina.is_womb_egg(egg))
+			new_container = new_vagina
 
-	if(receiver && isliving(target))
-		if(CHECK_BITFIELD(receiver.genital_flags, GENITAL_CAN_STUFF))
-			return lay_eg(receiver, senders_cum)
-	return lay_eg(get_turf(carrier), senders_cum)
+	if(container != new_container)
+		if(container && !setup_only)
+			unregister_container()
+		container = new_container
+		if(container && !setup_only)
+			register_container()
 
-/datum/component/pregnancy/proc/on_obj_break(datum/source, damage_flag)
-	SIGNAL_HANDLER
+	var/mob/living/new_carrier = laid ? null : container?.owner
+	if(carrier == new_carrier)
+		return
 
-	qdel(src)
-
-/datum/component/pregnancy/proc/on_entering(datum/source, atom/destination, atom/oldLoc)
-	SIGNAL_HANDLER
-
-	if(istype(destination, /obj/item/organ))
-		var/obj/item/organ/preg_container = destination
-		//severed wombs don't count, boyos
-		if(!preg_container.owner)
-			return
-		carrier = preg_container.owner
-		container = preg_container
-		pregnancy_inflation = carrier.client?.prefs?.pregnancy_inflation
-		pregnancy_breast_growth = carrier.client?.prefs?.pregnancy_breast_growth
-		register_carrier()
-		generic_pragency_start()
-	else if(carrier)
-		generic_pragency_end()
+	if(carrier && !setup_only)
+		clear_carrier_state()
+	if(carrier && !setup_only)
 		unregister_carrier()
-		carrier = null
-		container = null
+
+	carrier = new_carrier
+
+	if(carrier && !setup_only)
+		register_carrier()
+	if(carrier)
+		update_carrier_state()
+
+/datum/component/pregnancy/proc/on_moved(datum/source, atom/oldloc, dir, forced)
+	SIGNAL_HANDLER
+	refresh_container()
+
+/datum/component/pregnancy/proc/on_container_changed(datum/source)
+	SIGNAL_HANDLER
+	refresh_container()
 
 /datum/component/pregnancy/proc/handle_life(seconds)
 	SIGNAL_HANDLER
 
-	if(!HAS_TRAIT(carrier, TRAIT_COMMON_PREGNANCY)) //For normal pregnancy - Gardelin0
-		if(oviposition)
-			handle_ovi_preg()
-		else
-			handle_incubation()
+	if(laid || !carrier)
+		return
 
-	if((stage >= 2) && !revealed && carrier)
-		revealed = TRUE
-		carrier.apply_status_effect(/datum/status_effect/pregnancy)
-		carrier.apply_status_effect(/datum/status_effect/lactation)
-
-	if(!HAS_TRAIT(carrier, TRAIT_COMMON_PREGNANCY)) //For normal pregnancy - Gardelin0
-		if(stage > 3 && ishuman(carrier) && oviposition)
-			SEND_SIGNAL(carrier, COMSIG_ADD_MOOD_EVENT, "pregnancy", /datum/mood_event/pregnant_negative)
-
-	if(COOLDOWN_FINISHED(src, stage_time))
+	if(stage < max_stage && COOLDOWN_FINISHED(src, stage_time))
 		stage += 1
 		stage = min(stage, max_stage)
-		if(ishuman(carrier) && stage >= 2)
-			inflate_organs(carrier)
-		COOLDOWN_START(src, stage_time, PREGNANCY_STAGE_DURATION)
-
-/datum/component/pregnancy/proc/inflate_organs(mob/living/carbon/human/gregnant)
-	//var/obj/item/organ/genital/belly/belly = gregnant.getorganslot(ORGAN_SLOT_BELLY)
-	var/obj/item/organ/genital/breasts/boob = gregnant.getorganslot(ORGAN_SLOT_BREASTS)
-
-	if(added_size < 4)
-		added_size += 1
-	else
-		return
-	parent.AddComponent(/datum/component/organ_inflation, 1)
-	//if(pregnancy_inflation)
-	//	belly?.modify_size(1)
-	if(pregnancy_breast_growth)
-		boob?.modify_size(1)
-
-/datum/component/pregnancy/proc/handle_incubation()
-	if(carrier && (stage < max_stage) && prob(2))
-		to_chat(carrier, span_warning("You feel \The [parent] moving a bit inside you!"))
-	if(carrier && (stage == max_stage) && prob(2))
-		to_chat(carrier, span_warning("\The [parent] moves, it's probably ready to hatch!"))
-
-/datum/component/pregnancy/proc/handle_hatch(datum/source, obj/item/I, mob/user, params)
-	SIGNAL_HANDLER
+		on_stage_advanced()
+		if(stage < max_stage)
+			COOLDOWN_START(src, stage_time, OVIPOSITION_STAGE_DURATION)
 
 	if(stage < max_stage)
 		return
 
-	INVOKE_ASYNC(src, PROC_REF(hatch), source, I, user, params)
+	revealed = TRUE
 
-/datum/component/pregnancy/proc/hatch(datum/source, obj/item/I, mob/user, params)
+	if(COOLDOWN_FINISHED(src, lay_cooldown))
+		COOLDOWN_START(src, lay_cooldown, OVIPOSITION_LAY_COOLDOWN)
+		if(prob(20))
+			to_chat(carrier, span_warning("The egg in my womb feels ready to be laid."))
+		if(prob(10))
+			lay_egg(get_turf(carrier), TRUE)
+
+/datum/component/pregnancy/proc/on_stage_advanced()
+	if(!carrier)
+		return
+
+	switch(stage)
+		if(1)
+			to_chat(carrier, span_love("I feel a warm flutter deep in my womb."))
+		if(2)
+			to_chat(carrier, span_love("One of the eggs in my womb starts to feel heavier."))
+		if(3)
+			to_chat(carrier, span_warning("A ripe pressure builds inside my womb."))
+
+	if(stage == max_stage)
+		to_chat(carrier, span_warning("The egg in my womb is fully developed and wants out."))
+
+	update_carrier_state()
+
+/datum/component/pregnancy/proc/update_carrier_state()
+	if(!ishuman(carrier))
+		return
+
+	var/mob/living/carbon/human/human_carrier = carrier
+	var/update_icons = FALSE
+
+	if(stage >= 2 && !added_belly_size)
+		var/obj/item/organ/genitals/belly/belly = human_carrier.getorganslot(ORGAN_SLOT_BELLY)
+		if(belly && belly.organ_size < BELLY_SIZE_SMALL)
+			belly.organ_size += 1
+			added_belly_size = 1
+			update_icons = TRUE
+
+	if(stage >= 3)
+		var/obj/item/organ/genitals/filling_organ/breasts/breasts = human_carrier.getorganslot(ORGAN_SLOT_BREASTS)
+		if(breasts)
+			breasts.refilling = TRUE
+			if(!added_breast_size && breasts.organ_size < MAX_BREASTS_SIZE)
+				breasts.organ_size += 1
+				added_breast_size = 1
+				update_icons = TRUE
+
+	if(update_icons)
+		human_carrier.update_body_parts()
+
+/datum/component/pregnancy/proc/clear_carrier_state()
+	if(!ishuman(carrier))
+		added_belly_size = 0
+		added_breast_size = 0
+		return
+
+	var/mob/living/carbon/human/human_carrier = carrier
+	var/obj/item/organ/genitals/filling_organ/vagina/vagina = human_carrier.getorganslot(ORGAN_SLOT_VAGINA)
+	var/update_icons = FALSE
+
+	if(added_belly_size)
+		var/obj/item/organ/genitals/belly/belly = human_carrier.getorganslot(ORGAN_SLOT_BELLY)
+		if(belly && (!vagina || (!vagina.pregnant && !vagina.has_oviposition_pregnancy())))
+			belly.organ_size = max(MIN_BELLY_SIZE, belly.organ_size - added_belly_size)
+			update_icons = TRUE
+		added_belly_size = 0
+
+	if(added_breast_size)
+		var/obj/item/organ/genitals/filling_organ/breasts/breasts = human_carrier.getorganslot(ORGAN_SLOT_BREASTS)
+		if(breasts)
+			breasts.organ_size = max(MIN_BREASTS_SIZE, breasts.organ_size - added_breast_size)
+			update_icons = TRUE
+		added_breast_size = 0
+
+	if(update_icons)
+		human_carrier.update_body_parts()
+
+/datum/component/pregnancy/proc/handle_climax(datum/source)
+	SIGNAL_HANDLER
+
+	if(!carrier || laid || stage < max_stage)
+		return
+
+	lay_egg(get_turf(carrier))
+
+/datum/component/pregnancy/proc/remove_from_womb()
+	if(!container)
+		return FALSE
+	return SEND_SIGNAL(container, COMSIG_BODYSTORAGE_TRY_REMOVE, egg, STORAGE_LAYER_DEEP)
+
+/datum/component/pregnancy/proc/lay_egg(atom/location, forced = FALSE)
+	if(laid || !carrier || !container || stage < max_stage)
+		return FALSE
+
+	if(!location)
+		location = get_turf(carrier)
+	if(!location)
+		return FALSE
+	if(!remove_from_womb())
+		return FALSE
+
+	carrier.visible_message(span_notice("[carrier] lays an egg!"), span_love("I lay the ripe egg from my womb!"))
+	playsound(carrier, 'sound/effects/wounds/splatter.ogg', 70, TRUE)
+	carrier.Knockdown(60, TRUE, TRUE)
+	carrier.Stun(60, TRUE, TRUE)
+	carrier.adjust_stamina(forced ? 120 : 80)
+
+	laid = TRUE
+	egg.forceMove(location)
+	refresh_container()
+	return TRUE
+
+/datum/component/pregnancy/proc/handle_death(datum/source)
+	SIGNAL_HANDLER
+
+	if(!egg)
+		return
+
+	var/turf/drop_location = get_turf(carrier)
+	remove_from_womb()
+	if(drop_location)
+		new /obj/effect/decal/cleanable/food/egg_smudge(drop_location)
+	qdel(egg)
+
+/datum/component/pregnancy/proc/egg_status(datum/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(laid && stage >= max_stage)
+		examine_list += span_notice("It is warm, twitching, and ready to hatch if tapped with something.")
+	else if(stage > 0)
+		examine_list += span_notice("The shell feels warm and alive.")
+
+/datum/component/pregnancy/proc/handle_hatch(datum/source, obj/item/attacking_item, mob/user, params)
+	SIGNAL_HANDLER
+
+	if(!laid || stage < max_stage)
+		return
+
+	INVOKE_ASYNC(src, PROC_REF(hatch), user)
+
+/datum/component/pregnancy/proc/hatch(mob/user)
 	if(!COOLDOWN_FINISHED(src, hatch_request_cooldown))
 		return
 
 	COOLDOWN_START(src, hatch_request_cooldown, 30 SECONDS)
 
-	var/poll_message = "Do you want to play as [mother_name]'s offspring?[egg_name ? " Your name will be [egg_name]" : ""]"
-	var/list/mob/candidates = pollGhostCandidates(poll_message, ROLE_RESPAWN, null, FALSE, 30 SECONDS, POLL_IGNORE_EGG, priority_check = FALSE)
+	var/poll_message = "Do you want to play as [mother_name ? "[mother_name]'s" : "someone's"] offspring?[egg_name ? " Their name will be [egg_name]." : ""]"
+	var/list/mob/candidates = pollGhostCandidates(poll_message, null, null, FALSE, 30 SECONDS)
 
 	if(!LAZYLEN(candidates))
-		to_chat(user, span_info("\The [parent] doesn't seems to hatch, try again later?"))
+		if(user)
+			to_chat(user, span_info("The egg stays still. Maybe another soul will answer later."))
 		return
 
 	var/mob/player = pick(candidates)
-
-	playsound(parent, 'sound/effects/splat.ogg', 70, TRUE)
-	var/mob/living/babby = new baby_type(get_turf(parent))
+	var/mob/living/babby = new baby_type(get_turf(egg))
 
 	if(ishuman(babby))
-		determine_baby_features(babby)
-		determine_baby_dna(babby)
+		apply_baby_features(babby)
 
-	player.transfer_ckey(babby, TRUE)
+	babby.mind_initialize()
+	if(player?.mind)
+		player.mind.transfer_to(babby, TRUE)
+	else if(player?.key)
+		babby.key = player.key
+	to_chat(babby, "You are [mother_name ? "[mother_name]'s" : "someone's"] offspring.")
 
-	to_chat(babby, "You are the son (or daughter) of [mother_name ? mother_name : "someone"]!")
-
-	var/name
 	if(egg_name)
-		name = egg_name
-	else if(user)
-		name = input(user, "What will be your baby's name?", "Name the baby") as null|text
+		babby.real_name = egg_name
 	else
-		name = input(babby, "What will be your name?", "Name yourself") as null|text
+		babby.real_name = random_unique_name(babby.gender)
+	babby.update_name()
 
-	if(!name)
-		babby.real_name = random_unique_name(babby.gender, )
-		babby.update_name()
-	else
-		babby.real_name = name
-		babby.update_name()
+	if(babby.mind && mother_name)
+		babby.mind.store_memory("[mother_name] laid your egg.")
 
-	if(mother_name)
-		babby?.mind?.store_memory("[mother_name] is your mother!")
+	playsound(egg, 'sound/effects/wounds/splatter.ogg', 70, TRUE)
+	qdel(egg)
 
-	var/obj/item = parent
-	item.forceMove(get_turf(parent))
-	item.obj_break(MELEE)
-	qdel(src)
-
-/datum/component/pregnancy/proc/eg_status(datum/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
-
-	if(stage >= max_stage)
-		examine_list += span_notice("\The [parent] seems ready to hatch! You can tap it with something to hatch it")
-
-/datum/component/pregnancy/proc/handle_ovi_preg()
-	if(stage <= 2)
-		if(stage == 2 && prob(2))
-			to_chat(carrier, span_notice("You feel something pressing lightly inside"))
-		return
-	if(prob(10))
-		if(prob(50))
-			to_chat(carrier, span_warning("Something presses hard against your anus! It's probably your egg!"))
-		else
-			to_chat(carrier, span_warning("You REALLY need to get this egg out!"))
-		carrier.emote("scream")
-		carrier.adjustStaminaLoss(15)
-
-	lay_eg(get_turf(carrier))
-
-/datum/component/pregnancy/proc/lay_eg(atom/location, datum/reagents/senders_cum)
-	if(HAS_TRAIT(carrier, TRAIT_COMMON_PREGNANCY)) //For normal pregnancy - Gardelin0
+/datum/component/pregnancy/proc/apply_baby_features(mob/living/carbon/human/babby)
+	if(!LAZYLEN(mother_features) && !LAZYLEN(father_features))
 		return
 
-	to_chat(carrier, span_userlove("You feel your egg sliding slowly inside!"))
+	var/species_type = mother_features?["species"]
+	if(species_type)
+		babby.set_species(species_type, icon_update = FALSE)
 
-	if(prob(60))
-		return FALSE
-	if(isorgan(location))
-		var/obj/item/organ/recv = location
+	var/skin_tone = pick_inherited_feature("skin_tone")
+	var/hair_color = pick_inherited_feature("hair_color")
+	var/hair_style = pick_inherited_feature("hair_style")
+	var/facial_hair_color = pick_inherited_feature("facial_hair_color")
+	var/facial_hair_style = pick_inherited_feature("facial_hair_style")
+	var/eye_color = pick_inherited_feature("eye_color")
 
-		if(!recv.owner)
-			return FALSE
-
-	if(container && isgenital(container))
-		var/obj/item/organ/genital/gen = container
-		if(!(gen.is_exposed() || gen.linked_organ?.is_exposed()))
-			return FALSE
-
-	var/obj/item/oviposition_egg/eggo = parent
-
-	eggo.icon_state = carrier.client?.prefs?.egg_shell ? ("egg_" + carrier.client.prefs.egg_shell) : "egg_chicken"
-	eggo.update_appearance()
-
-	if(isorgan(location))
-		var/obj/item/organ/recv = location
-		var/datum/component/genital_equipment/equipment = eggo.GetComponent(/datum/component/genital_equipment)
-		equipment.holder_genital = recv
-		carrier.visible_message(span_userlove("[carrier] laid an egg!"), \
-			span_userlove("You laid an egg inside [recv.owner]'s [recv]"))
+	if(skin_tone)
+		babby.skin_tone = skin_tone
+	if(hair_color)
+		babby.set_hair_color(hair_color, FALSE)
+	if(hair_style)
+		babby.set_hair_style(hair_style, FALSE)
+	if(facial_hair_color)
+		babby.set_facial_hair_color(facial_hair_color, FALSE)
+	if(facial_hair_style)
+		babby.set_facial_hair_style(facial_hair_style, FALSE)
 	else
-		carrier.visible_message(span_notice("[carrier] laid an egg!"), \
-			span_nicegreen("The egg came out!"))
-
-	if(senders_cum?.total_volume > 5)
-		senders_cum.reaction(location, TOUCH, 1, 0)
-
-	playsound(carrier, 'sound/effects/splat.ogg', 70, TRUE)
-	carrier.Knockdown(200, TRUE, TRUE)
-	carrier.Stun(200, TRUE, TRUE)
-	carrier.adjustStaminaLoss(200)
-	SEND_SIGNAL(carrier, COMSIG_ADD_MOOD_EVENT, "pregnancy_end", /datum/mood_event/pregnant_positive)
-
-	oviposition = FALSE
-	eggo.forceMove(location)
-
-	return TRUE
-
-//not how genetics work but okay
-/datum/component/pregnancy/proc/determine_baby_dna(mob/living/carbon/human/babby)
-	if(mother_dna && father_dna)
-		mother_dna.transfer_identity_random(father_dna, babby)
-	else if(mother_dna && !father_dna)
-		mother_dna.transfer_identity_random(babby.dna, babby)
-	else if(!mother_dna && father_dna)
-		father_dna.transfer_identity_random(babby.dna, babby)
-
-/datum/component/pregnancy/proc/determine_baby_features(mob/living/carbon/human/babby)
-
-	var/list/final_features = list()
-
-	transfer_randomized_list(final_features, mother_features, father_features)
-
-	if(final_features["skin_tone"])
-		babby.skin_tone = final_features["skin_tone"]
-	if(final_features["hair_color"])
-		babby.hair_color = final_features["hair_color"]
-	if(final_features["facial_hair_color"])
-		babby.facial_hair_color = final_features["facial_hair_color"]
-	if(final_features["left_eye_color"])
-		babby.left_eye_color = final_features["left_eye_color"]
-	if(final_features["right_eye_color"])
-		babby.right_eye_color = final_features["right_eye_color"]
-
-	babby.hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
-	babby.facial_hair_style = "Shaved"
+		babby.set_facial_hair_style(/datum/sprite_accessory/hair/facial/shaved, FALSE)
+	if(eye_color)
+		babby.set_eye_color(eye_color, null, FALSE)
+	if(!hair_style)
+		var/default_hair_style = pick(/datum/sprite_accessory/hair/head/azur/bedhead, /datum/sprite_accessory/hair/head/azur/bedhead2, /datum/sprite_accessory/hair/head/azur/bedhead3)
+		babby.set_hair_style(default_hair_style, FALSE)
 	babby.underwear = "Nude"
 	babby.undershirt = "Nude"
-	babby.socks = "Nude"
+	babby.update_body()
+	babby.update_body_parts()
 
-	/*
-	babby.saved_underwear = babby.underwear
-	babby.saved_undershirt = babby.undershirt
-	babby.saved_socks = babby.socks
-	*/
+/datum/component/pregnancy/proc/pick_inherited_feature(feature_key)
+	var/mother_value = mother_features?[feature_key]
+	var/father_value = father_features?[feature_key]
 
-/datum/component/pregnancy/proc/generic_pragency_start()
-	if(revealed)
-		carrier.apply_status_effect(/datum/status_effect/pregnancy)
-	if(ishuman(carrier))
-		human_pragency_start(carrier)
-	ADD_TRAIT(carrier, TRAIT_PREGNANT, PREGNANCY_TRAIT)
-
-	// === BLUEMOON ADD ===
-	if(HAS_TRAIT(carrier, TRAIT_ESTROUS_ACTIVE))
-		SEND_SIGNAL(carrier, COMSIG_PREGNANCY_STARTED)
-
-/datum/component/pregnancy/proc/generic_pragency_end()
-	REMOVE_TRAIT(carrier, TRAIT_PREGNANT, PREGNANCY_TRAIT)
-	carrier.remove_status_effect(/datum/status_effect/pregnancy)
-	if(ishuman(carrier))
-		human_pragency_end(carrier)
-
-	// BLUEMOON ADD
-	SEND_SIGNAL(carrier, COMSIG_PREGNANCY_ENDED)
-
-/datum/component/pregnancy/proc/human_pragency_start(mob/living/carbon/human/gregnant)
-	if(pregnancy_breast_growth)
-		var/obj/item/organ/genital/breasts/boob = gregnant.getorganslot(ORGAN_SLOT_BREASTS)
-		if(!boob)
-			boob = gregnant.give_genital(/obj/item/organ/genital/breasts)
-	return TRUE
-
-/datum/component/pregnancy/proc/human_pragency_end(mob/living/carbon/human/gregnant)
-	SEND_SIGNAL(gregnant, COMSIG_CLEAR_MOOD_EVENT, "pregnancy")
-
-/datum/component/pregnancy/proc/fetus_mortus()
-	SIGNAL_HANDLER
-
-	if(!QDELETED(carrier) && get_turf(carrier) && (stage >= 2))
-		if(!oviposition)
-			new /obj/effect/gibspawner/generic(get_turf(carrier))
-		else
-			new /obj/effect/decal/cleanable/egg_smudge(get_turf(carrier))
-	carrier.Knockdown(200, TRUE, TRUE)
-	carrier.Stun(200, TRUE, TRUE)
-	carrier.adjustStaminaLoss(200)
-	carrier.visible_message(span_danger("[carrier] has a miscarriage!"), \
-						span_userdanger("Oh no! My baby is dead!"))
-	qdel(src)
-
-/datum/component/pregnancy/proc/on_scan(datum/source, mob/user)
-	SIGNAL_HANDLER
-	to_chat(user, span_notice("<b>Pregnancy detected!</b>"))
-
-//drop kicked
-/datum/component/pregnancy/proc/handle_damage(datum/source, damage, damagetype, def_zone)
-	SIGNAL_HANDLER
-
-	if(def_zone == BODY_ZONE_CHEST && damage > 5 && prob(40))
-		fetus_mortus()
+	if(mother_value && father_value)
+		return prob(50) ? mother_value : father_value
+	if(mother_value)
+		return mother_value
+	return father_value

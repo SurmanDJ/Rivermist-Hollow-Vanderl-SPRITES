@@ -4,17 +4,15 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
 	var/mob/living/carrier
-
 	var/egg_stage = 0
 	var/eggs_stored = 1
 	COOLDOWN_DECLARE(egg_timer)
 
 /datum/component/ovipositor/Initialize()
-	if(!isgenital(parent))
+	if(!istype(parent, /obj/item/organ/genitals/penis))
 		return COMPONENT_INCOMPATIBLE
 
 	var/obj/item/organ/genitals/penis/genital = parent
-
 	carrier = genital.owner
 
 /datum/component/ovipositor/RegisterWithParent()
@@ -23,37 +21,41 @@
 	if(carrier)
 		register_carrier()
 
-/datum/component/ovipositor/proc/register_carrier()
-	RegisterSignal(carrier, COMSIG_LIVING_BIOLOGICAL_LIFE, PROC_REF(handle_life))
-	RegisterSignal(carrier, COMSIG_MOB_CLIMAX, PROC_REF(on_climax))
-
-/datum/component/ovipositor/Destroy(force, ...)
+/datum/component/ovipositor/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ORGAN_INSERTED)
+	UnregisterSignal(parent, COMSIG_ORGAN_REMOVED)
 	if(carrier)
 		unregister_carrier()
-		carrier = null
+
+/datum/component/ovipositor/Destroy(force, ...)
+	carrier = null
 	return ..()
 
-/datum/component/ovipositor/proc/unregister_carrier()
-	UnregisterSignal(carrier, COMSIG_LIVING_BIOLOGICAL_LIFE)
-	UnregisterSignal(carrier, COMSIG_MOB_CLIMAX)
+/datum/component/ovipositor/proc/register_carrier()
+	RegisterSignal(carrier, COMSIG_LIVING_LIFE, PROC_REF(handle_life))
+	RegisterSignal(carrier, COMSIG_SEX_CLIMAX, PROC_REF(on_climax))
 
-/datum/component/ovipositor/proc/on_inserted(datum/source)
+/datum/component/ovipositor/proc/unregister_carrier()
+	UnregisterSignal(carrier, COMSIG_LIVING_LIFE)
+	UnregisterSignal(carrier, COMSIG_SEX_CLIMAX)
+
+/datum/component/ovipositor/proc/on_inserted(datum/source, mob/living/new_owner)
 	SIGNAL_HANDLER
 
-	var/obj/item/organ/genital/gen = parent
-
-	if(gen.owner)
-		carrier = gen.owner
+	if(carrier == new_owner)
+		return
+	if(carrier)
+		unregister_carrier()
+	carrier = new_owner
+	if(carrier)
 		register_carrier()
 
-/datum/component/ovipositor/proc/on_removed(datum/source)
+/datum/component/ovipositor/proc/on_removed(datum/source, mob/living/old_owner)
 	SIGNAL_HANDLER
 
-	var/obj/item/organ/genital/gen = parent
-
-	if(gen.owner)
+	if(carrier)
 		unregister_carrier()
-		carrier = null
+	carrier = null
 
 /datum/component/ovipositor/proc/handle_life(seconds)
 	SIGNAL_HANDLER
@@ -68,66 +70,100 @@
 		eggs_stored += 1
 		eggs_stored = min(3, eggs_stored)
 
-/datum/component/ovipositor/proc/on_climax(datum/source, datum/reagents/senders_cum, atom/target, obj/item/organ/genital/sender, obj/item/organ/genital/receiver, spill, anonymous)
+/datum/component/ovipositor/proc/on_climax(datum/source)
 	SIGNAL_HANDLER
 
+	if(!carrier || eggs_stored <= 0)
+		return FALSE
 	if(prob(30))
 		return FALSE
 
-	var/obj/item/organ/genital/stuff = parent
-	if(stuff != sender && stuff.linked_organ != sender)
+	var/list/climax_context = get_climax_context()
+	if(climax_context)
+		var/obj/item/organ/genitals/filling_organ/vagina/receiver = climax_context["receiver"]
+		var/force = climax_context["force"]
+		if(lay_egg(receiver, force))
+			return TRUE
+
+	return lay_egg(get_turf(carrier))
+
+/datum/component/ovipositor/proc/get_climax_context()
+	if(!carrier)
+		return null
+
+	var/list/sessions = return_sessions_with_user(carrier)
+	var/datum/sex_session/session = return_highest_priority_action(sessions, carrier)
+	if(!session || !session.current_action)
+		return null
+
+	var/datum/sex_action/action = SEX_ACTION(session.current_action)
+	if(!action || action.hole_id != ORGAN_SLOT_VAGINA)
+		return null
+
+	var/mob/living/insertor = action.flipped ? session.target : session.user
+	if(insertor != carrier)
+		return null
+
+	var/mob/living/receiver_owner = action.flipped ? session.user : session.target
+	if(!receiver_owner)
+		return null
+
+	var/obj/item/organ/genitals/filling_organ/vagina/receiver = receiver_owner.getorganslot(ORGAN_SLOT_VAGINA)
+	if(!receiver)
+		return null
+
+	return list(
+		"receiver" = receiver,
+		"force" = session.get_current_force() >= SEX_FORCE_HIGH,
+	)
+
+/datum/component/ovipositor/proc/create_egg()
+	var/obj/item/oviposition_egg/egg = new
+	var/obj/item/organ/genitals/penis/ovipositor/ovipositor = parent
+	egg.set_egg_type(ovipositor.ovi_egg_type)
+	return egg
+
+/datum/component/ovipositor/proc/try_place_egg_in_womb(obj/item/organ/genitals/filling_organ/vagina/receiver, obj/item/oviposition_egg/egg, force = FALSE)
+	if(!receiver || !egg || !receiver.owner)
 		return FALSE
 
-	if(eggs_stored <= 0)
+	var/fit_result = SEND_SIGNAL(receiver, COMSIG_BODYSTORAGE_TRY_INSERT, egg, STORAGE_LAYER_DEEP, force)
+	switch(fit_result)
+		if(INSERT_FEEDBACK_OK, INSERT_FEEDBACK_OK_FORCE, INSERT_FEEDBACK_OK_OVERRIDE, INSERT_FEEDBACK_ALMOST_FULL)
+			carrier.visible_message(
+				span_love("[carrier] deposits an egg deep inside [receiver.owner]'s womb!"),
+				span_love("I deposit an egg deep inside [receiver.owner]'s womb!")
+			)
+			if(receiver.owner != carrier)
+				to_chat(receiver.owner, span_love("[carrier] deposits an egg deep inside my womb!"))
+			return TRUE
+
+	return FALSE
+
+/datum/component/ovipositor/proc/lay_egg(atom/location, force = FALSE)
+	if(!carrier || eggs_stored <= 0)
 		return FALSE
 
-	if(receiver && isliving(target))
-		if(CHECK_BITFIELD(receiver.genital_flags, GENITAL_CAN_STUFF))
-			return lay_eg(receiver, senders_cum, anonymous)
-	return lay_eg(get_turf(carrier), senders_cum, anonymous)
+	var/obj/item/oviposition_egg/egg = create_egg()
+	if(!egg)
+		return FALSE
 
-/datum/component/ovipositor/proc/lay_eg(atom/location, datum/reagents/senders_cum, anonymous)
-	to_chat(carrier, span_userlove("Вы чувствуете яйцо глубоко внутри и оно начинает скользить всё ниже!"))
+	var/success = FALSE
+	if(istype(location, /obj/item/organ/genitals/filling_organ/vagina))
+		success = try_place_egg_in_womb(location, egg, force)
+		if(!success)
+			to_chat(carrier, span_warning("There is no room to tuck an egg safely into that womb."))
+			location = get_turf(carrier)
 
-	if(isorgan(location))
-		var/obj/item/organ/recv = location
-
-		if(!recv.owner)
+	if(!success)
+		if(!location)
+			location = get_turf(carrier)
+		if(!location)
+			qdel(egg)
 			return FALSE
+		egg.forceMove(location)
+		carrier.visible_message(span_notice("[carrier] lays an egg!"), span_nicegreen("I lay an egg!"))
 
-	var/obj/item/organ/genital/gen = parent
-	if(!(gen.is_exposed() || gen.linked_organ?.is_exposed()))
-		return FALSE
-
-	var/obj/item/oviposition_egg/eggo = new(carrier)
-
-	eggo.AddComponent(/datum/component/organ_inflation, 2)
-
-	eggo.icon_state = carrier.client?.prefs?.egg_shell ? ("egg_" + carrier.client.prefs.egg_shell) : "egg_chicken"
-	eggo.update_appearance()
-
-	if(isorgan(location))
-		var/obj/item/organ/recv = location
-		var/datum/component/genital_equipment/equipment = eggo.GetComponent(/datum/component/genital_equipment)
-		equipment.holder_genital = recv
-		if(anonymous)
-			carrier.visible_message(span_userlove("[carrier] откладывает яйцо!"), \
-				span_userlove("Вы откладываете яйцо в [recv]!"))
-			to_chat(recv, span_userlove("Кто-то откладывает в тебя яйцо!"))
-		else
-			carrier.visible_message(span_userlove("[carrier] откладывает яйцо!"), \
-				span_userlove("Вы откладываете яйцо в [recv] [recv.owner]"))
-			to_chat(recv, span_userlove("[carrier] откладывает в тебя яйцо!"))
-	else
-		carrier.visible_message(span_notice("[carrier] откладывает яйцо!"), \
-			span_nicegreen("Яйцо... отложено!"))
-
-	playsound(carrier, 'sound/effects/splat.ogg', 70, TRUE)
-
-	if(senders_cum?.total_volume > 5)
-		senders_cum.reaction(location, TOUCH, 1, 0)
-
-	eggo.forceMove(location)
+	playsound(carrier, 'sound/effects/wounds/splatter.ogg', 70, TRUE)
 	eggs_stored -= 1
-
 	return TRUE

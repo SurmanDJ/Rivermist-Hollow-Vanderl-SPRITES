@@ -67,6 +67,10 @@
 			captarget = max_reagents
 		if(fertility && pregnant) //preg size reduce
 			captarget *= 0.5
+		else if(istype(src, /obj/item/organ/genitals/filling_organ/vagina))
+			var/obj/item/organ/genitals/filling_organ/vagina/vagina = src
+			if(vagina.has_oviposition_pregnancy())
+				captarget *= 0.5
 		if(length(contents))
 			for(var/obj/item/thing as anything in contents)
 				if(thing.type != /obj/item/dildo/plug) //plugs wont take space as they are especially for this.
