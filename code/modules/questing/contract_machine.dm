@@ -383,6 +383,7 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	var/list/preview_cache = list()
 	var/list/preload_queue = list()
 	var/list/seen_types = list()
+	var/list/queued_preview_sources = list()
 
 	for(var/contract_group in get_available_contract_group_values(user))
 		for(var/contract_type in get_available_contract_type_values(user, contract_group))
@@ -405,7 +406,7 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 				kill_template.requested_tier = tier_value
 				var/preview_key = get_preview_cache_key(contract_type, tier_value)
 				var/list/cache_entry = list(
-					"entries" = list(),
+					"targets" = list(),
 					"message_key" = "preview.no_valid",
 				)
 				preview_cache[preview_key] = cache_entry
@@ -416,14 +417,17 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 
 				cache_entry["message_key"] = null
 				for(var/mob_type in candidate_pool)
-					preload_queue += list(list(
-						"preview_key" = preview_key,
+					cache_entry["targets"] += list(list(
 						"mob_type" = mob_type,
 						"risk" = kill_template.get_mob_risk_value(mob_type),
 						"spawn_weight" = kill_template.get_mob_spawn_weight(mob_type),
 						"group_min" = kill_template.get_mob_group_min(mob_type),
 						"group_max" = kill_template.get_mob_group_max(mob_type),
 					))
+					var/preview_source = get_preview_icon_source_mob_type(mob_type)
+					if(!queued_preview_sources[preview_source])
+						queued_preview_sources[preview_source] = TRUE
+						preload_queue += preview_source
 
 			qdel(kill_template)
 
@@ -441,47 +445,20 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		return
 
 	var/list/preload_queue = session["preview_preload_queue"]
-	var/list/preview_cache = session["preview_state_cache"]
-	if(!islist(preload_queue) || !islist(preview_cache))
+	if(!islist(preload_queue))
 		session["preview_preload_ready"] = TRUE
 		return
 
 	var/steps_to_process = min(step_count, length(preload_queue))
 	for(var/step in 1 to steps_to_process)
-		var/list/task = preload_queue[1]
+		var/mob_type = preload_queue[1]
 		preload_queue.Cut(1, 2)
-		if(!islist(task))
+		if(!mob_type)
 			continue
 
-		var/mob_type = task["mob_type"]
 		var/list/icon_data = get_target_preview_icon_data(mob_type)
-		var/list/cache_entry = preview_cache[task["preview_key"]]
-		if(!islist(cache_entry))
-			cache_entry = list(
-				"entries" = list(),
-				"message_key" = null,
-			)
-			preview_cache[task["preview_key"]] = cache_entry
-
-		var/list/entries = cache_entry["entries"]
-		if(!islist(entries))
-			entries = list()
-			cache_entry["entries"] = entries
-
-		var/list/entry = list(
-			"id" = "[mob_type]",
-			"name" = icon_data["name"] || get_target_preview_name(mob_type),
-			"risk" = task["risk"],
-			"spawn_weight" = task["spawn_weight"],
-			"group_min" = task["group_min"],
-			"group_max" = task["group_max"],
-			"icon" = icon_data["icon"],
-			"icon_state" = icon_data["icon_state"],
-			"image" = icon_data["image"],
-		)
-		insert_preview_entry(entries, entry)
 		session["preview_preload_completed"] = (session["preview_preload_completed"] || 0) + 1
-		session["preview_preload_label"] = entry["name"]
+		session["preview_preload_label"] = icon_data["name"] || get_target_preview_name(mob_type)
 
 	if(!length(preload_queue))
 		session["preview_preload_ready"] = TRUE
@@ -765,12 +742,12 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	var/list/preview_cache = session["preview_state_cache"]
 	var/list/cached_entry = islist(preview_cache) ? preview_cache[get_preview_cache_key(contract_type, selected_tier)] : null
 	if(islist(cached_entry))
-		var/list/cached_entries = cached_entry["entries"]
-		if(!length(cached_entries))
+		var/list/cached_targets = cached_entry["targets"]
+		if(!length(cached_targets))
 			preview_state["message_key"] = cached_entry["message_key"] || "preview.no_valid"
 			return preview_state
 
-		var/list/entries = cached_entries.Copy()
+		var/list/entries = build_cached_preview_entries(cached_targets)
 		var/hidden_count = max(length(entries) - 8, 0)
 		if(hidden_count)
 			entries.Cut(9)
@@ -793,6 +770,33 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	preview_state["message_key"] = null
 	preview_state["hidden_count"] = hidden_count
 	return preview_state
+
+/obj/structure/fake_machine/contractledger/proc/build_cached_preview_entries(list/cached_targets)
+	var/list/entries = list()
+	if(!islist(cached_targets))
+		return entries
+
+	for(var/target_index = 1, target_index <= length(cached_targets), target_index++)
+		var/list/target_data = cached_targets[target_index]
+		if(!islist(target_data))
+			continue
+
+		var/mob_type = target_data["mob_type"]
+		var/list/icon_data = get_target_preview_icon_data(mob_type)
+		var/list/entry = list(
+			"id" = "[mob_type]",
+			"name" = icon_data["name"] || get_target_preview_name(mob_type),
+			"risk" = target_data["risk"],
+			"spawn_weight" = target_data["spawn_weight"],
+			"group_min" = target_data["group_min"],
+			"group_max" = target_data["group_max"],
+			"icon" = icon_data["icon"],
+			"icon_state" = icon_data["icon_state"],
+			"image" = icon_data["image"],
+		)
+		insert_preview_entry(entries, entry)
+
+	return entries
 
 /obj/structure/fake_machine/contractledger/proc/get_target_preview_entries(contract_type, selected_tier)
 	var/list/entries = list()
@@ -856,23 +860,48 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		return initial(mob_type.name) || "Unknown target"
 	return "Unknown target"
 
+/obj/structure/fake_machine/contractledger/proc/uses_monster_model_preview(atom/mob_type)
+	return ispath(mob_type, /mob/living/carbon/human/species/goblin) || \
+		ispath(mob_type, /mob/living/carbon/human/species/kobold) || \
+		ispath(mob_type, /mob/living/carbon/human/species/zizombie) || \
+		ispath(mob_type, /mob/living/carbon/human/species/skeleton) || \
+		ispath(mob_type, /mob/living/carbon/human/species/orc)
+
 /obj/structure/fake_machine/contractledger/proc/uses_outlaw_preview(atom/mob_type)
-	if(!ispath(mob_type, /mob/living/carbon/human/species/human/northern))
+	if(!ispath(mob_type, /mob/living/carbon/human))
 		return FALSE
 
-	return ispath(mob_type, /mob/living/carbon/human/species/human/northern/thief) || \
-		ispath(mob_type, /mob/living/carbon/human/species/human/northern/highwayman) || \
-		ispath(mob_type, /mob/living/carbon/human/species/human/northern/searaider) || \
-		ispath(mob_type, /mob/living/carbon/human/species/human/northern/bog_deserters) || \
-		ispath(mob_type, /mob/living/carbon/human/species/human/northern/mad_touched_treasure_hunter) || \
-		ispath(mob_type, /mob/living/carbon/human/species/human/northern/base/skilled) || \
-		ispath(mob_type, /mob/living/carbon/human/species/human/northern/base/very_skilled)
+	return !uses_monster_model_preview(mob_type)
+
+/obj/structure/fake_machine/contractledger/proc/get_preview_icon_source_mob_type(atom/mob_type)
+	if(uses_outlaw_preview(mob_type))
+		return /mob/living/carbon/human/species/human/northern/highwayman
+	if(ispath(mob_type, /mob/living/carbon/human/species/goblin))
+		return /mob/living/carbon/human/species/goblin/npc
+	if(ispath(mob_type, /mob/living/carbon/human/species/kobold))
+		return /mob/living/carbon/human/species/kobold/base/unskilled/light_gear
+	if(ispath(mob_type, /mob/living/carbon/human/species/zizombie))
+		return /mob/living/carbon/human/species/zizombie/npc/peasant
+	if(ispath(mob_type, /mob/living/carbon/human/species/skeleton))
+		return /mob/living/simple_animal/hostile/skeleton
+	if(ispath(mob_type, /mob/living/carbon/human/species/orc))
+		return /mob/living/simple_animal/hostile/orc/orc2
+	if(ispath(mob_type, /mob/living/simple_animal/hostile/orc))
+		return /mob/living/simple_animal/hostile/orc/orc2
+	if(ispath(mob_type, /mob/living/simple_animal/hostile/skeleton))
+		return /mob/living/simple_animal/hostile/skeleton
+	if(ispath(mob_type, /mob/living/simple_animal/hostile/deepone))
+		return /mob/living/simple_animal/hostile/deepone
+	return mob_type
 
 /obj/structure/fake_machine/contractledger/proc/get_target_preview_icon_data(atom/mob_type)
-	var/cache_key = "preview_v8:[mob_type]"
+	var/source_mob_type = get_preview_icon_source_mob_type(mob_type)
+	var/cache_key = "preview_v10:[source_mob_type]"
 	var/list/cached_data = quest_target_preview_icon_cache[cache_key]
 	if(cached_data)
-		return cached_data
+		var/list/icon_data = cached_data.Copy()
+		icon_data["name"] = get_target_preview_name(mob_type)
+		return icon_data
 
 	var/list/icon_data = list(
 		"name" = get_target_preview_name(mob_type),
@@ -880,62 +909,54 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		"icon_state" = null,
 		"image" = null,
 	)
+	var/list/visual_data = list(
+		"icon" = null,
+		"icon_state" = null,
+		"image" = null,
+	)
 
 	var/icon/preview_icon
 	var/list/runtime_icon_data
-	var/use_outlaw_preview = uses_outlaw_preview(mob_type)
-	var/icon_file = get_target_preview_icon_file(mob_type)
-	var/icon_state = get_target_preview_icon_state(mob_type)
-	if(ispath(mob_type, /mob/living/carbon/human))
-		runtime_icon_data = get_runtime_target_preview_icon_data(mob_type)
-		if(use_outlaw_preview)
-			icon_data["name"] = "OUTLAW"
-			if(runtime_icon_data && runtime_icon_data["icon"])
-				icon_data["icon"] = runtime_icon_data["icon"]
-			if(runtime_icon_data && runtime_icon_data["icon_state"])
-				icon_data["icon_state"] = runtime_icon_data["icon_state"]
-			var/icon/runtime_preview_icon = runtime_icon_data ? runtime_icon_data["preview_icon"] : null
-			if(runtime_preview_icon)
-				preview_icon = crop_outlaw_preview_icon(runtime_preview_icon)
-			if(!preview_icon)
-				preview_icon = build_outlaw_preview_icon(icon_file, icon_state)
-		else if(runtime_icon_data)
-			if(runtime_icon_data["name"])
-				icon_data["name"] = runtime_icon_data["name"]
-			if(runtime_icon_data["icon"])
-				icon_data["icon"] = runtime_icon_data["icon"]
-			if(runtime_icon_data["icon_state"])
-				icon_data["icon_state"] = runtime_icon_data["icon_state"]
-			preview_icon = runtime_icon_data["preview_icon"]
-		else
-			if(icon_file)
-				icon_data["icon"] = icon_file
-			if(icon_state && is_valid_preview_icon_state(icon_file, icon_state))
-				icon_data["icon_state"] = icon_state
-			preview_icon = build_target_preview_icon(mob_type, icon_file, icon_state)
+	var/use_outlaw_preview = uses_outlaw_preview(source_mob_type)
+	var/icon_file = get_target_preview_icon_file(source_mob_type)
+	var/icon_state = get_target_preview_icon_state(source_mob_type)
+	if(use_outlaw_preview)
+		runtime_icon_data = get_runtime_target_preview_icon_data(source_mob_type)
+		visual_data["icon"] = runtime_icon_data ? runtime_icon_data["icon"] : null
+		visual_data["icon_state"] = runtime_icon_data ? runtime_icon_data["icon_state"] : null
+		if(runtime_icon_data && runtime_icon_data["icon"])
+			visual_data["icon"] = runtime_icon_data["icon"]
+		if(runtime_icon_data && runtime_icon_data["icon_state"])
+			visual_data["icon_state"] = runtime_icon_data["icon_state"]
+		var/icon/runtime_preview_icon = runtime_icon_data ? runtime_icon_data["preview_icon"] : null
+		if(runtime_preview_icon)
+			preview_icon = crop_outlaw_preview_icon(runtime_preview_icon)
+		if(!preview_icon)
+			preview_icon = build_outlaw_preview_icon(icon_file, icon_state)
 	else
 		if(icon_file)
-			icon_data["icon"] = icon_file
+			visual_data["icon"] = icon_file
 		if(icon_state && is_valid_preview_icon_state(icon_file, icon_state))
-			icon_data["icon_state"] = icon_state
+			visual_data["icon_state"] = icon_state
 
-		preview_icon = build_target_preview_icon(mob_type, icon_file, icon_state)
-		if(!preview_icon)
-			runtime_icon_data = get_runtime_target_preview_icon_data(mob_type)
+		preview_icon = build_target_preview_icon(source_mob_type, icon_file, icon_state)
+		if(!preview_icon && ispath(source_mob_type, /mob))
+			runtime_icon_data = get_runtime_target_preview_icon_data(source_mob_type)
 
-	if(runtime_icon_data && !ispath(mob_type, /mob/living/carbon/human))
-		if(runtime_icon_data["name"])
-			icon_data["name"] = runtime_icon_data["name"]
+	if(runtime_icon_data && !use_outlaw_preview)
 		if(runtime_icon_data["icon"])
-			icon_data["icon"] = runtime_icon_data["icon"]
+			visual_data["icon"] = runtime_icon_data["icon"]
 		if(runtime_icon_data["icon_state"])
-			icon_data["icon_state"] = runtime_icon_data["icon_state"]
+			visual_data["icon_state"] = runtime_icon_data["icon_state"]
 		preview_icon = runtime_icon_data["preview_icon"]
 
 	if(preview_icon)
-		icon_data["image"] = "data:image/png;base64,[icon2base64(preview_icon, cache_key)]"
+		visual_data["image"] = "data:image/png;base64,[icon2base64(preview_icon, cache_key)]"
 
-	quest_target_preview_icon_cache[cache_key] = icon_data
+	icon_data["icon"] = visual_data["icon"]
+	icon_data["icon_state"] = visual_data["icon_state"]
+	icon_data["image"] = visual_data["image"]
+	quest_target_preview_icon_cache[cache_key] = visual_data
 	return icon_data
 
 /obj/structure/fake_machine/contractledger/proc/get_target_preview_icon_file(atom/mob_type)
@@ -1068,6 +1089,9 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	var/icon/preview_icon
 	if(istype(temp_mob, /mob/living/carbon/human))
 		preview_icon = build_preview_proxy_icon(temp_mob)
+		if(!preview_icon)
+			var/icon/flattened_icon = getFlatIcon(temp_mob, SOUTH, no_anim = TRUE)
+			preview_icon = flattened_icon ? icon(flattened_icon, frame = 1) : null
 	else
 		var/icon/flattened_icon = getFlatIcon(temp_mob, SOUTH, no_anim = TRUE)
 		preview_icon = flattened_icon ? icon(flattened_icon, frame = 1) : null

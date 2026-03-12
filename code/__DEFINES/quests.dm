@@ -124,25 +124,8 @@
 	/mob/living/carbon/human/species/human/northern/bog_deserters = QUEST_MOB_PACK(3, 9, 2, 4),\
 )
 #define QUEST_BOSS_KILL_LIST list(\
-	/mob/living/simple_animal/hostile/werewolf = QUEST_MOB_SOLO(4, 8),\
-	/mob/living/simple_animal/hostile/retaliate/lamia = QUEST_MOB_SOLO(4, 8),\
-	/mob/living/simple_animal/hostile/retaliate/troll/bog = QUEST_MOB_SOLO(4, 9),\
-	/mob/living/simple_animal/hostile/deepone/boss = QUEST_MOB_SOLO(4, 8),\
-	/mob/living/simple_animal/hostile/deepone/arm/boss = QUEST_MOB_SOLO(3, 9),\
-	/mob/living/simple_animal/hostile/deepone/spit/boss = QUEST_MOB_SOLO(3, 9),\
-	/mob/living/simple_animal/hostile/deepone/wiz/boss = QUEST_MOB_SOLO(3, 9),\
-	/mob/living/simple_animal/hostile/deepone/elite/boss = QUEST_MOB_SOLO(2, 11),\
-	/mob/living/simple_animal/hostile/retaliate/headless = QUEST_MOB_SOLO(3, 10),\
-	/mob/living/simple_animal/hostile/retaliate/direbear = QUEST_MOB_SOLO(3, 10),\
-	/mob/living/simple_animal/hostile/retaliate/troll/cave = QUEST_MOB_SOLO(3, 10),\
-	/mob/living/simple_animal/hostile/retaliate/troll/axe = QUEST_MOB_SOLO(2, 11),\
-	/mob/living/simple_animal/hostile/retaliate/minotaur = QUEST_MOB_SOLO(2, 11),\
-	/mob/living/simple_animal/hostile/retaliate/minotaur/axe = QUEST_MOB_SOLO(1, 12),\
-	/mob/living/simple_animal/hostile/retaliate/blood = QUEST_MOB_SOLO(1, 12),\
-	/mob/living/carbon/human/species/orc/warlord = QUEST_MOB_SOLO(3, 9),\
-	/mob/living/carbon/human/species/human/northern/mad_touched_treasure_hunter = QUEST_MOB_SOLO(4, 8),\
-	/mob/living/carbon/human/species/human/northern/searaider = QUEST_MOB_SOLO(4, 8),\
-	/mob/living/carbon/human/species/human/northern/bog_deserters = QUEST_MOB_SOLO(3, 9),\
-	/mob/living/carbon/human/species/human/northern/bog_deserters/better_gear = QUEST_MOB_SOLO(2, 10),\
-	/mob/living/carbon/human/species/human/northern/deranged_knight = QUEST_MOB_SOLO(1, 12),\
+	/mob/living/simple_animal/hostile/retaliate/voiddragon = QUEST_MOB_SOLO(3, 13),\
+	/mob/living/simple_animal/hostile/retaliate/voiddragon/red = QUEST_MOB_SOLO(2, 13),\
+	/mob/living/simple_animal/hostile/boss/fishboss = QUEST_MOB_SOLO(2, 14),\
+	/mob/living/simple_animal/hostile/retaliate/voiddragon/red/tsere = QUEST_MOB_SOLO(1, 16),\
 )
