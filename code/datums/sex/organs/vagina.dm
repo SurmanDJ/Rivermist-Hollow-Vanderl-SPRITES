@@ -44,26 +44,40 @@
 		return FALSE
 	return storage.check_item_in_layer(src, egg, STORAGE_LAYER_DEEP)
 
-/obj/item/organ/genitals/filling_organ/vagina/proc/get_womb_oviposition_eggs(include_fertilized = null)
+/obj/item/organ/genitals/filling_organ/vagina/proc/get_womb_oviposition_eggs(include_growing = null)
 	var/list/eggs = list()
 	var/datum/component/body_storage/vagina/storage = get_womb_storage()
 	if(!storage)
 		return eggs
 
 	for(var/obj/item/oviposition_egg/egg as anything in storage.deep_layer_contents)
-		var/fertilized = egg.is_fertilized()
-		if(isnull(include_fertilized) || include_fertilized == fertilized)
+		var/growing = egg.has_pregnancy()
+		if(isnull(include_growing) || include_growing == growing)
 			eggs += egg
 
 	return eggs
 
-/obj/item/organ/genitals/filling_organ/vagina/proc/fertilize_oviposition_egg(mob/living/father = null, baby_type = /mob/living/carbon/human)
+/obj/item/organ/genitals/filling_organ/vagina/proc/start_oviposition_egg_growth(obj/item/oviposition_egg/egg, mob/living/father = null, hatch_result_type = null)
+	if(!owner)
+		return FALSE
+	if(!egg || !is_womb_egg(egg) || egg.has_pregnancy())
+		return FALSE
+	if(egg.requires_fertilization() && !father)
+		return FALSE
+	if(!hatch_result_type)
+		hatch_result_type = egg.get_hatch_result_type()
+	egg.AddComponent(/datum/component/pregnancy, owner, father, hatch_result_type)
+	return TRUE
+
+/obj/item/organ/genitals/filling_organ/vagina/proc/fertilize_oviposition_egg(mob/living/father = null, hatch_result_type = null)
 	if(!owner)
 		return null
 
 	for(var/obj/item/oviposition_egg/egg as anything in get_womb_oviposition_eggs(FALSE))
-		egg.AddComponent(/datum/component/pregnancy, owner, father, baby_type)
-		return egg
+		if(!egg.requires_fertilization())
+			continue
+		if(start_oviposition_egg_growth(egg, father, hatch_result_type))
+			return egg
 
 	return null
 

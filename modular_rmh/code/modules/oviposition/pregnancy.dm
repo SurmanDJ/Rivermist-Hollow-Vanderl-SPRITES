@@ -5,7 +5,7 @@
 /datum/component/pregnancy
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
-	var/baby_type = /mob/living/carbon/human
+	var/hatch_result_type = /mob/living/carbon/human
 	var/obj/item/oviposition_egg/egg
 	var/obj/item/organ/genitals/filling_organ/vagina/container
 	var/mob/living/carrier
@@ -21,18 +21,27 @@
 	var/laid = FALSE
 	var/added_belly_size = 0
 	var/added_breast_size = 0
+	var/poll_for_ghost = TRUE
+	var/require_ghost_to_hatch = TRUE
 	COOLDOWN_DECLARE(stage_time)
 	COOLDOWN_DECLARE(hatch_request_cooldown)
 	COOLDOWN_DECLARE(lay_cooldown)
 
-/datum/component/pregnancy/Initialize(mob/living/_mother, mob/living/_father = null, _baby_type = /mob/living/carbon/human)
+/datum/component/pregnancy/Initialize(mob/living/_mother, mob/living/_father = null, _hatch_result_type = null)
 	if(!istype(parent, /obj/item/oviposition_egg))
 		return COMPONENT_INCOMPATIBLE
 
-	if(_baby_type && ispath(_baby_type, /mob/living))
-		baby_type = _baby_type
-
 	egg = parent
+	var/datum/oviposition_egg_profile/egg_profile = egg.get_egg_profile()
+
+	if(_hatch_result_type && ispath(_hatch_result_type, /atom/movable))
+		hatch_result_type = _hatch_result_type
+	else if(egg_profile?.hatch_result_type && ispath(egg_profile.hatch_result_type, /atom/movable))
+		hatch_result_type = egg_profile.hatch_result_type
+
+	poll_for_ghost = egg.should_poll_for_ghost() && ispath(hatch_result_type, /mob/living)
+	require_ghost_to_hatch = egg.requires_ghost_to_hatch() && poll_for_ghost
+
 	mother = _mother
 	father = _father
 	mother_name = _mother?.real_name
@@ -310,38 +319,62 @@
 
 	COOLDOWN_START(src, hatch_request_cooldown, 30 SECONDS)
 
+	var/mob/player = null
+	if(poll_for_ghost)
+		player = poll_hatch_candidate(user)
+		if(require_ghost_to_hatch && !player)
+			return
+
+	var/atom/movable/hatch_result = create_hatch_result()
+	if(!hatch_result)
+		return
+
+	egg.visible_message(span_notice("[egg] cracks open!"))
+	if(isliving(hatch_result))
+		var/mob/living/hatchling = hatch_result
+		finalize_living_hatch(player, hatchling)
+
+	playsound(egg, 'sound/effects/wounds/splatter.ogg', 70, TRUE)
+	qdel(egg)
+
+/datum/component/pregnancy/proc/poll_hatch_candidate(mob/user)
 	var/poll_message = "Do you want to play as [mother_name ? "[mother_name]'s" : "someone's"] offspring?[egg_name ? " Their name will be [egg_name]." : ""]"
 	var/list/mob/candidates = pollGhostCandidates(poll_message, null, null, FALSE, 30 SECONDS)
 
 	if(!LAZYLEN(candidates))
-		if(user)
+		if(user && require_ghost_to_hatch)
 			to_chat(user, span_info("The egg stays still. Maybe another soul will answer later."))
-		return
+		return null
 
-	var/mob/player = pick(candidates)
-	var/mob/living/babby = new baby_type(get_turf(egg))
+	return pick(candidates)
 
-	if(ishuman(babby))
-		apply_baby_features(babby)
+/datum/component/pregnancy/proc/create_hatch_result()
+	if(!egg || !hatch_result_type || !ispath(hatch_result_type, /atom/movable))
+		return null
+	return new hatch_result_type(get_turf(egg))
 
-	babby.mind_initialize()
-	if(player?.mind)
-		player.mind.transfer_to(babby, TRUE)
-	else if(player?.key)
-		babby.key = player.key
-	to_chat(babby, "You are [mother_name ? "[mother_name]'s" : "someone's"] offspring.")
+/datum/component/pregnancy/proc/finalize_living_hatch(mob/player, mob/living/hatchling)
+	if(ishuman(hatchling))
+		var/mob/living/carbon/human/human_hatchling = hatchling
+		apply_baby_features(human_hatchling)
+
+	if(player)
+		hatchling.mind_initialize()
+		if(player.mind)
+			player.mind.transfer_to(hatchling, TRUE)
+		else if(player.key)
+			hatchling.key = player.key
+
+	to_chat(hatchling, "You are [mother_name ? "[mother_name]'s" : "someone's"] offspring.")
 
 	if(egg_name)
-		babby.real_name = egg_name
-	else
-		babby.real_name = random_unique_name(babby.gender)
-	babby.update_name()
+		hatchling.real_name = egg_name
+	else if(ishuman(hatchling))
+		hatchling.real_name = random_unique_name(hatchling.gender)
+	hatchling.update_name()
 
-	if(babby.mind && mother_name)
-		babby.mind.store_memory("[mother_name] laid your egg.")
-
-	playsound(egg, 'sound/effects/wounds/splatter.ogg', 70, TRUE)
-	qdel(egg)
+	if(hatchling.mind && mother_name)
+		hatchling.mind.store_memory("[mother_name] laid your egg.")
 
 /datum/component/pregnancy/proc/apply_baby_features(mob/living/carbon/human/babby)
 	if(!LAZYLEN(mother_features) && !LAZYLEN(father_features))

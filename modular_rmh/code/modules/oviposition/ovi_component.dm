@@ -130,12 +130,15 @@
 	var/fit_result = SEND_SIGNAL(receiver, COMSIG_BODYSTORAGE_TRY_INSERT, egg, STORAGE_LAYER_DEEP, force)
 	switch(fit_result)
 		if(INSERT_FEEDBACK_OK, INSERT_FEEDBACK_OK_FORCE, INSERT_FEEDBACK_OK_OVERRIDE, INSERT_FEEDBACK_ALMOST_FULL)
+			var/started_growing = receiver.start_oviposition_egg_growth(egg)
 			carrier.visible_message(
 				span_love("[carrier] deposits an egg deep inside [receiver.owner]'s womb!"),
 				span_love("I deposit an egg deep inside [receiver.owner]'s womb!")
 			)
 			if(receiver.owner != carrier)
 				to_chat(receiver.owner, span_love("[carrier] deposits an egg deep inside my womb!"))
+			if(started_growing)
+				to_chat(receiver.owner, span_love("One of the eggs in my womb immediately begins to grow."))
 			return TRUE
 
 	return FALSE

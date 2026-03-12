@@ -44,6 +44,11 @@
 			else
 				to_chat(owner, span_love("Something in my womb has been fertilized."))
 			return TRUE
+		for(var/obj/item/oviposition_egg/egg as anything in womb_eggs)
+			if(!egg.requires_fertilization() && start_oviposition_egg_growth(egg))
+				return TRUE
+			if(egg.has_pregnancy())
+				return TRUE
 		return FALSE
 
 	if(owner.has_quirk(/datum/quirk/peculiarity/selfawaregeni))
