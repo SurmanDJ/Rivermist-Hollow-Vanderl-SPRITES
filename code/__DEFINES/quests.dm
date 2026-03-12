@@ -124,8 +124,13 @@
 	/mob/living/carbon/human/species/human/northern/bog_deserters = QUEST_MOB_PACK(3, 9, 2, 4),\
 )
 #define QUEST_BOSS_KILL_LIST list(\
+	/mob/living/simple_animal/hostile/retaliate/troll/cave = QUEST_MOB_SOLO(4, 8),\
+	/mob/living/simple_animal/hostile/retaliate/troll/axe = QUEST_MOB_SOLO(3, 8),\
+	/mob/living/simple_animal/hostile/retaliate/troll/broodmother = QUEST_MOB_SOLO(2, 8),\
+	/mob/living/simple_animal/hostile/retaliate/elemental/behemoth = QUEST_MOB_SOLO(3, 8),\
+	/mob/living/simple_animal/hostile/retaliate/elemental/collossus = QUEST_MOB_SOLO(2, 8),\
 	/mob/living/simple_animal/hostile/retaliate/voiddragon = QUEST_MOB_SOLO(3, 13),\
-	/mob/living/simple_animal/hostile/retaliate/voiddragon/red = QUEST_MOB_SOLO(2, 13),\
-	/mob/living/simple_animal/hostile/boss/fishboss = QUEST_MOB_SOLO(2, 14),\
-	/mob/living/simple_animal/hostile/retaliate/voiddragon/red/tsere = QUEST_MOB_SOLO(1, 16),\
+	/mob/living/simple_animal/hostile/retaliate/voiddragon/red = QUEST_MOB_SOLO(2, 14),\
+	/mob/living/simple_animal/hostile/boss/fishboss = QUEST_MOB_SOLO(2, 15),\
+	/mob/living/simple_animal/hostile/retaliate/voiddragon/red/tsere = QUEST_MOB_SOLO(1, 17),\
 )
