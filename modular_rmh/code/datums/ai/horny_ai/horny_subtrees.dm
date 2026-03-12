@@ -21,9 +21,15 @@
 		return
 	if(horny_ai_should_yield_to_aggro(controller))
 		return
-	controller.queue_behavior(/datum/ai_behavior/horny, BB_BASIC_MOB_CURRENT_HORNY_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+	controller.queue_behavior(get_horny_behavior_type(controller), BB_BASIC_MOB_CURRENT_HORNY_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 	if(target)
 		return SUBTREE_RETURN_FINISH_PLANNING //we are going into +battle+...no distractions.
+
+/datum/ai_planning_subtree/horny/proc/get_horny_behavior_type(datum/ai_controller/controller)
+	if(ishuman(controller.pawn))
+		return /datum/ai_behavior/horny/human
+
+	return /datum/ai_behavior/horny/simple_mob
 
 /datum/ai_planning_subtree/proc/horny_ai_should_yield_to_aggro(datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn

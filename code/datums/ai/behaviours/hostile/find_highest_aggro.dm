@@ -149,8 +149,6 @@
 		return FALSE
 	if(!ismob(checking) && !is_type_in_typecache(checking, GLOB.target_interested_atoms))
 		return FALSE
-	if(strategy.should_prioritize_horny_targets(pawn) && strategy.can_horny(pawn, checking))
-		return TRUE
 	if(!strategy.can_attack(pawn, checking))
 		return FALSE
 	// Additional aggro-specific checks for living mobs
@@ -200,12 +198,6 @@
 			aggro_comp.add_threat_to_mob(target, 3)
 
 	var/mob/highest_threat = controller.blackboard[BB_HIGHEST_THREAT_MOB]
-
-	if(strategy.should_prioritize_horny_targets(controller.pawn) && strategy.can_horny(controller.pawn, highest_threat))
-		var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]
-		qdel(field)
-		controller.CancelActions()
-		finish_action(controller, succeeded = FALSE)
 	if(highest_threat)
 		controller.set_blackboard_key(target_key, highest_threat)
 
