@@ -448,11 +448,19 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	if(!islist(preload_queue))
 		session["preview_preload_ready"] = TRUE
 		return
+	if(!length(preload_queue))
+		session["preview_preload_ready"] = TRUE
+		session["preview_preload_label"] = null
+		return
 
-	var/steps_to_process = min(step_count, length(preload_queue))
-	for(var/step in 1 to steps_to_process)
+	var/steps_to_process = min(max(step_count || 0, 0), length(preload_queue))
+	while(steps_to_process > 0)
+		if(!length(preload_queue))
+			break
+
 		var/mob_type = preload_queue[1]
 		preload_queue.Cut(1, 2)
+		steps_to_process--
 		if(!mob_type)
 			continue
 
@@ -896,7 +904,7 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 
 /obj/structure/fake_machine/contractledger/proc/get_target_preview_icon_data(atom/mob_type)
 	var/source_mob_type = get_preview_icon_source_mob_type(mob_type)
-	var/cache_key = "preview_v12:[source_mob_type]"
+	var/cache_key = "preview_v10:[source_mob_type]"
 	var/list/cached_data = quest_target_preview_icon_cache[cache_key]
 	if(cached_data)
 		var/list/icon_data = cached_data.Copy()
@@ -1005,9 +1013,6 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	if(!preview_icon)
 		return null
 
-	if(needs_preview_first_tile_crop(mob_type))
-		preview_icon = crop_preview_icon_first_tile(preview_icon)
-
 	if(ispath(mob_type, /mob/living/carbon/human))
 		var/icon/human_preview_icon = icon()
 		human_preview_icon.Insert(preview_icon, dir = SOUTH)
@@ -1015,36 +1020,37 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 
 	return preview_icon
 
-/obj/structure/fake_machine/contractledger/proc/needs_preview_first_tile_crop(atom/mob_type)
-	return ispath(mob_type, /mob/living/simple_animal/hostile/retaliate/frog)
-
-/obj/structure/fake_machine/contractledger/proc/crop_preview_icon_first_tile(icon/preview_icon)
+/obj/structure/fake_machine/contractledger/proc/fit_preview_icon_to_square(icon/preview_icon, canvas_size = 64)
 	if(!preview_icon)
 		return null
 
-	var/icon/cropped_icon = icon(preview_icon)
-	var/icon_width = max(cropped_icon.Width(), 1)
-	var/icon_height = max(cropped_icon.Height(), 1)
-	if(icon_width <= icon_height)
-		return cropped_icon
+	var/icon/fitted_icon = icon(preview_icon)
+	var/icon_width = max(fitted_icon.Width(), 1)
+	var/icon_height = max(fitted_icon.Height(), 1)
+	var/scale_ratio = min(canvas_size / icon_width, canvas_size / icon_height)
+	var/scaled_width = max(round(icon_width * scale_ratio), 1)
+	var/scaled_height = max(round(icon_height * scale_ratio), 1)
+	if(scaled_width != icon_width || scaled_height != icon_height)
+		fitted_icon.Scale(scaled_width, scaled_height)
 
-	cropped_icon.Crop(1, 1, icon_height, icon_height)
-	return cropped_icon
+	var/icon/canvas_icon = icon(fitted_icon)
+	canvas_icon.Scale(canvas_size, canvas_size)
+	canvas_icon.ChangeOpacity(0)
+	var/x_offset = round((canvas_size - scaled_width) / 2) + 1
+	var/y_offset = round((canvas_size - scaled_height) / 2) + 1
+	canvas_icon.Blend(fitted_icon, ICON_OVERLAY, x_offset, y_offset)
+	return canvas_icon
 
 /obj/structure/fake_machine/contractledger/proc/crop_outlaw_preview_icon(icon/preview_icon)
 	if(!preview_icon)
 		return null
 
 	var/icon/outlaw_icon = icon(preview_icon)
-	outlaw_icon.Scale(64, 64)
-	var/icon/final_outlaw_icon = icon(outlaw_icon)
 	var/icon_width = max(outlaw_icon.Width(), 1)
 	var/icon_height = max(outlaw_icon.Height(), 1)
 	var/crop_bottom = max(round(icon_height * 0.45), 1)
 	outlaw_icon.Crop(1, crop_bottom, icon_width, icon_height)
-	final_outlaw_icon.ChangeOpacity(0)
-	final_outlaw_icon.Blend(outlaw_icon, ICON_OVERLAY, 1, crop_bottom)
-	return final_outlaw_icon
+	return fit_preview_icon_to_square(outlaw_icon, 64)
 
 /obj/structure/fake_machine/contractledger/proc/build_outlaw_preview_icon(icon_file, icon_state)
 	if(!icon_file || !icon_state)
@@ -1112,12 +1118,7 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	if(!preview_icon)
 		return null
 
-	preview_icon.Scale(64, 64)
-	var/icon/final_preview_icon = icon(preview_icon)
-	preview_icon.Crop(1, 33, 64, 64)
-	final_preview_icon.ChangeOpacity(0)
-	final_preview_icon.Blend(preview_icon, ICON_OVERLAY, 1, 33)
-	return final_preview_icon
+	return crop_outlaw_preview_icon(preview_icon)
 
 /obj/structure/fake_machine/contractledger/proc/build_preview_proxy_icon(mob/temp_mob)
 	var/turf/preview_turf = get_turf(temp_mob)

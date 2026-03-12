@@ -52,7 +52,6 @@
 
 #define QUEST_KILL_MOBS_LIST list(\
 	/mob/living/simple_animal/hostile/retaliate/smallrat = QUEST_MOB_PACK(10, 1, 2, 5),\
-	/mob/living/simple_animal/hostile/retaliate/frog = QUEST_MOB_SOLO(7, 1),\
 	/mob/living/simple_animal/hostile/retaliate/bat = QUEST_MOB_PACK(8, 2, 2, 4),\
 	/mob/living/simple_animal/hostile/retaliate/bigrat = QUEST_MOB_PACK(8, 2, 2, 4),\
 	/mob/living/simple_animal/hostile/retaliate/fox = QUEST_MOB_SOLO(6, 2),\
