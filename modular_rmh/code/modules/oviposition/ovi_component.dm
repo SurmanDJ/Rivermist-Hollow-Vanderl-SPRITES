@@ -1,4 +1,4 @@
-#define EGG_STAGE_TIME 15 MINUTES
+#define EGG_STAGE_TIME 1 MINUTES
 
 /datum/component/ovipositor
 	dupe_mode = COMPONENT_DUPE_UNIQUE
@@ -6,6 +6,7 @@
 	var/mob/living/carrier
 	var/egg_stage = 0
 	var/eggs_stored = 1
+	var/eggs_clutch_size = 1
 	COOLDOWN_DECLARE(egg_timer)
 
 /datum/component/ovipositor/Initialize()
@@ -14,6 +15,7 @@
 
 	var/obj/item/organ/genitals/penis/genital = parent
 	carrier = genital.owner
+	eggs_clutch_size = genital.egg_clutch_size
 
 /datum/component/ovipositor/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ORGAN_INSERTED, PROC_REF(on_inserted))
@@ -69,6 +71,11 @@
 		egg_stage = 0
 		eggs_stored += 1
 		eggs_stored = min(3, eggs_stored)
+
+/datum/component/ovipositor/proc/set_clutch_size(new_size)
+	if(!new_size)
+		return
+	eggs_clutch_size = new_size
 
 /datum/component/ovipositor/proc/on_climax(datum/source)
 	SIGNAL_HANDLER

@@ -10,11 +10,11 @@
 	var/display_desc = "A soft, warm egg that feels alive even before it starts to twitch."
 	var/display_icon_state = "egg"
 	var/display_color = null
-	var/hatch_result_type = /mob/living/carbon/human
+	var/hatch_result_type = /obj/item/reagent_containers/food/snacks/oviposition_egg/color/green //placeholder because we don't want human hatching
 	var/requires_fertilization = TRUE
 	var/poll_for_ghost = TRUE
 	var/require_ghost_to_hatch = TRUE
-	var/incubation_stage_duration = 15 MINUTES
+	var/incubation_stage_duration = 5 MINUTES
 	var/list/stage_messages = null
 	var/ready_message = null
 	var/hatch_message = null
@@ -39,7 +39,7 @@
 	hatch_result_type = /mob/living/simple_animal/hostile/retaliate/spider
 	poll_for_ghost = FALSE
 	require_ghost_to_hatch = FALSE
-	incubation_stage_duration = 10 MINUTES
+	incubation_stage_duration = 4 MINUTES
 	ready_message = "The spider egg in my %CONTAINER% twitches with hungry little movements."
 	hatch_message = "%EGG% splits open in a spray of web and skittering legs!"
 
@@ -52,7 +52,7 @@
 	hatch_result_type = /mob/living/simple_animal/hostile/retaliate/bogbug
 	poll_for_ghost = FALSE
 	require_ghost_to_hatch = FALSE
-	incubation_stage_duration = 20 MINUTES
+	incubation_stage_duration = 7 MINUTES
 	ready_message = "The bog bug egg in my %CONTAINER% churns like a swamp creature is kicking to get free."
 	hatch_message = "%EGG% bursts with a wet pop, spilling out a ravenous bog bug!"
 

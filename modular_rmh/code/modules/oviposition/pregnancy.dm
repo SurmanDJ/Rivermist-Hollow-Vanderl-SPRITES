@@ -5,7 +5,7 @@
 /datum/component/pregnancy
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
-	var/hatch_result_type = /mob/living/carbon/human
+	var/hatch_result_type = /obj/item/reagent_containers/food/snacks/oviposition_egg/color/green //placeholder because we don't want human hatching
 	var/obj/item/oviposition_egg/egg
 	var/obj/item/organ/container
 	var/mob/living/carrier
@@ -112,12 +112,10 @@
 /datum/component/pregnancy/proc/register_carrier()
 	RegisterSignal(carrier, COMSIG_LIVING_LIFE, PROC_REF(handle_life))
 	RegisterSignal(carrier, COMSIG_MOB_DEATH, PROC_REF(handle_death))
-	RegisterSignal(carrier, COMSIG_SEX_CLIMAX, PROC_REF(handle_climax))
 
 /datum/component/pregnancy/proc/unregister_carrier()
 	UnregisterSignal(carrier, COMSIG_LIVING_LIFE)
 	UnregisterSignal(carrier, COMSIG_MOB_DEATH)
-	UnregisterSignal(carrier, COMSIG_SEX_CLIMAX)
 
 /datum/component/pregnancy/proc/refresh_container(setup_only = FALSE)
 	var/obj/item/organ/new_container = null
@@ -269,14 +267,6 @@
 
 	if(update_icons)
 		human_carrier.update_body_parts()
-
-/datum/component/pregnancy/proc/handle_climax(datum/source)
-	SIGNAL_HANDLER
-
-	if(!carrier || laid || stage < max_stage)
-		return
-
-	lay_egg(get_turf(carrier))
 
 /datum/component/pregnancy/proc/remove_from_host()
 	if(!container)

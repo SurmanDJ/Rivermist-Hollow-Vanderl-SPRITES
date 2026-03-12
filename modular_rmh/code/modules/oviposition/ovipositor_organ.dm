@@ -3,7 +3,8 @@
 	name = "ovipositor"
 	penis_type = PENIS_TYPE_OVIPOSITOR
 	sheath_type = SHEATH_TYPE_NORMAL
-	var/ovi_egg_type = OVI_EGG_NORMAL
+	ovi_egg_type = OVI_EGG_NORMAL
+	egg_clutch_size = 1
 
 /obj/item/organ/genitals/penis/ovipositor/Insert(mob/living/M, special, drop_if_replaced)
 	. = ..()
@@ -23,7 +24,7 @@
 
 // Keep the organ type and the oviposition behavior separate so character prefs can pick
 // the anatomy while quirks or mob setup decide whether it is actually functional.
-/proc/set_ovipositor_functionality(obj/item/organ/genitals/penis/ovipositor/ovipositor, enabled = TRUE)
+/proc/set_ovipositor_functionality(obj/item/organ/genitals/penis/ovipositor, enabled = TRUE)
 	if(!ovipositor)
 		return FALSE
 
@@ -87,12 +88,12 @@
 	if(!penis_entry || penis_entry.disabled)
 		return FALSE
 
-	return penis_entry.customizer_choice_type == /datum/customizer_choice/organ/genitals/penis/ovipositor
+	return TRUE
 
 /datum/quirk/peculiarity/ovipositor/on_spawn()
-	var/obj/item/organ/genitals/penis/ovipositor/ovipositor = owner?.getorganslot(ORGAN_SLOT_PENIS)
+	var/obj/item/organ/genitals/penis/ovipositor = owner?.getorganslot(ORGAN_SLOT_PENIS)
 	set_ovipositor_functionality(ovipositor, TRUE)
 
 /datum/quirk/peculiarity/ovipositor/on_remove()
-	var/obj/item/organ/genitals/penis/ovipositor/ovipositor = owner?.getorganslot(ORGAN_SLOT_PENIS)
+	var/obj/item/organ/genitals/penis/ovipositor = owner?.getorganslot(ORGAN_SLOT_PENIS)
 	set_ovipositor_functionality(ovipositor, FALSE)
