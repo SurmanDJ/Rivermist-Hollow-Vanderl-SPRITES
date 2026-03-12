@@ -14,6 +14,13 @@
 	var/requires_fertilization = TRUE
 	var/poll_for_ghost = TRUE
 	var/require_ghost_to_hatch = TRUE
+	var/incubation_stage_duration = 15 MINUTES
+	var/list/stage_messages = null
+	var/ready_message = null
+	var/hatch_message = null
+
+/datum/oviposition_egg_profile/proc/get_stage_message(stage)
+	return stage_messages?[stage]
 
 /datum/oviposition_egg_profile/proc/apply_to_egg(obj/item/oviposition_egg/egg)
 	if(!egg)
@@ -32,6 +39,9 @@
 	hatch_result_type = /mob/living/simple_animal/hostile/retaliate/spider
 	poll_for_ghost = FALSE
 	require_ghost_to_hatch = FALSE
+	incubation_stage_duration = 10 MINUTES
+	ready_message = "The spider egg in my %CONTAINER% twitches with hungry little movements."
+	hatch_message = "%EGG% splits open in a spray of web and skittering legs!"
 
 /datum/oviposition_egg_profile/bog_bug
 	egg_type = OVI_EGG_BOG_BUG
@@ -42,6 +52,9 @@
 	hatch_result_type = /mob/living/simple_animal/hostile/retaliate/bogbug
 	poll_for_ghost = FALSE
 	require_ghost_to_hatch = FALSE
+	incubation_stage_duration = 20 MINUTES
+	ready_message = "The bog bug egg in my %CONTAINER% churns like a swamp creature is kicking to get free."
+	hatch_message = "%EGG% bursts with a wet pop, spilling out a ravenous bog bug!"
 
 /proc/get_oviposition_egg_profile(egg_type)
 	var/profile_type = /datum/oviposition_egg_profile
@@ -86,6 +99,22 @@
 /obj/item/oviposition_egg/proc/get_hatch_result_type()
 	var/datum/oviposition_egg_profile/profile = get_egg_profile()
 	return profile?.hatch_result_type
+
+/obj/item/oviposition_egg/proc/get_incubation_stage_duration()
+	var/datum/oviposition_egg_profile/profile = get_egg_profile()
+	return profile?.incubation_stage_duration || 15 MINUTES
+
+/obj/item/oviposition_egg/proc/get_stage_message(stage)
+	var/datum/oviposition_egg_profile/profile = get_egg_profile()
+	return profile?.get_stage_message(stage)
+
+/obj/item/oviposition_egg/proc/get_ready_message()
+	var/datum/oviposition_egg_profile/profile = get_egg_profile()
+	return profile?.ready_message
+
+/obj/item/oviposition_egg/proc/get_hatch_message()
+	var/datum/oviposition_egg_profile/profile = get_egg_profile()
+	return profile?.hatch_message
 
 /obj/item/oviposition_egg/proc/should_poll_for_ghost()
 	var/datum/oviposition_egg_profile/profile = get_egg_profile()

@@ -26,73 +26,6 @@
 /obj/item/organ/genitals
 	var/visible_through_clothes = FALSE
 
-//we handle all of this here because cant timer another goddamn thing from here correctly.
-/obj/item/organ/genitals/filling_organ/vagina/proc/be_impregnated(mob/living/father = null)
-	if(!owner)
-		return FALSE
-	if(owner.stat == DEAD)
-		return FALSE
-	if(pregnant)
-		return FALSE
-
-	var/list/womb_eggs = get_womb_oviposition_eggs()
-	if(length(womb_eggs))
-		var/obj/item/oviposition_egg/fertilized_egg = fertilize_oviposition_egg(father)
-		if(fertilized_egg)
-			if(owner.has_quirk(/datum/quirk/peculiarity/selfawaregeni))
-				to_chat(owner, span_love("A warm pulse runs through one of the eggs in my womb."))
-			else
-				to_chat(owner, span_love("Something in my womb has been fertilized."))
-			return TRUE
-		for(var/obj/item/oviposition_egg/egg as anything in womb_eggs)
-			if(!egg.requires_fertilization() && start_oviposition_egg_growth(egg))
-				return TRUE
-			if(egg.has_pregnancy())
-				return TRUE
-		return FALSE
-
-	if(owner.has_quirk(/datum/quirk/peculiarity/selfawaregeni))
-		to_chat(owner, span_love("I feel a surge of warmth in my [src.name], I’m definitely pregnant!"))
-	reagents.maximum_volume *= 0.5 //ick ock, should make the thing recalculate on next life tick.
-	pregnant = TRUE
-	if(owner.getorganslot(ORGAN_SLOT_BREASTS)) //shitty default behavior i guess, i aint gonna customiza-ble this fuck that.
-		var/obj/item/organ/genitals/filling_organ/breasts/breasties = owner.getorganslot(ORGAN_SLOT_BREASTS)
-		if(!breasties.refilling)
-			breasties.refilling = TRUE
-			to_chat(owner, span_love("I feel damp warmness on my nipples, I'm definitely leaking milk..."))
-	if(owner.getorganslot(ORGAN_SLOT_BELLY)) //shitty default behavior i guess, i aint gonna customiza-ble this fuck that.
-		var/obj/item/organ/genitals/belly/belly = owner.getorganslot(ORGAN_SLOT_BELLY)
-		pre_pregnancy_size = belly.organ_size
-		addtimer(CALLBACK(src, PROC_REF(handle_preggoness)), 3 HOURS, TIMER_STOPPABLE)
-	return TRUE
-
-/obj/item/organ/genitals/filling_organ/vagina/proc/undo_preggoness()
-	if(!pregnant)
-		return
-	deltimer(preggotimer)
-	pregnant = FALSE
-	to_chat(owner, span_love("I feel my [src] shrink to how it was before. Pregnancy is no more."))
-	if(owner.getorganslot(ORGAN_SLOT_BELLY))
-		var/obj/item/organ/genitals/belly/bellyussy = owner.getorganslot(ORGAN_SLOT_BELLY)
-		bellyussy.organ_size = pre_pregnancy_size
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.update_body_parts()
-
-/obj/item/organ/genitals/filling_organ/vagina/proc/handle_preggoness()
-	if(owner.getorganslot(ORGAN_SLOT_BELLY))
-		var/obj/item/organ/genitals/belly/bellyussy = owner.getorganslot(ORGAN_SLOT_BELLY)
-		if(bellyussy.organ_size < BELLY_SIZE_SMALL) //yes it only grows one size, maybe change later
-			if(prob(30))
-				to_chat(owner, span_love("I notice my belly has grown due to pregnancy...")) //dont need to repeat this probably if size cant grow anyway.
-				bellyussy.organ_size = bellyussy.organ_size + 1
-				if(iscarbon(owner))
-					var/mob/living/carbon/carbon_owner = owner
-					carbon_owner.update_body_parts()
-			preggotimer = addtimer(CALLBACK(src, PROC_REF(handle_preggoness)), 3 HOURS, TIMER_STOPPABLE)
-		else
-			deltimer(preggotimer)
-
 /mob/living/carbon/verb/toggle_genitals()
 	set category = "IC"
 	set name = "Expose/Hide genitals"
@@ -148,4 +81,3 @@
 			visible_through_clothes = FALSE
 	if(owner)
 		owner.regenerate_icons()
-

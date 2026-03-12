@@ -80,7 +80,7 @@
 
 	var/list/climax_context = get_climax_context()
 	if(climax_context)
-		var/obj/item/organ/genitals/filling_organ/vagina/receiver = climax_context["receiver"]
+		var/obj/item/organ/receiver = climax_context["receiver"]
 		var/force = climax_context["force"]
 		if(lay_egg(receiver, force))
 			return TRUE
@@ -97,7 +97,7 @@
 		return null
 
 	var/datum/sex_action/action = SEX_ACTION(session.current_action)
-	if(!action || action.hole_id != ORGAN_SLOT_VAGINA)
+	if(!action)
 		return null
 
 	var/mob/living/insertor = action.flipped ? session.target : session.user
@@ -108,7 +108,7 @@
 	if(!receiver_owner)
 		return null
 
-	var/obj/item/organ/genitals/filling_organ/vagina/receiver = receiver_owner.getorganslot(ORGAN_SLOT_VAGINA)
+	var/obj/item/organ/receiver = get_receiver_for_hole(receiver_owner, action.hole_id)
 	if(!receiver)
 		return null
 
@@ -117,28 +117,46 @@
 		"force" = session.get_current_force() >= SEX_FORCE_HIGH,
 	)
 
+/datum/component/ovipositor/proc/get_receiver_for_hole(mob/living/receiver_owner, hole_id)
+	if(!receiver_owner)
+		return null
+
+	var/obj/item/organ/receiver = null
+	switch(hole_id)
+		if(ORGAN_SLOT_VAGINA, ORGAN_SLOT_ANUS)
+			receiver = receiver_owner.getorganslot(hole_id)
+		if(BODY_ZONE_PRECISE_MOUTH)
+			// Oral deep-storage is attached to guts/stomach internals rather than a visible hole organ.
+			receiver = receiver_owner.getorganslot(ORGAN_SLOT_GUTS)
+			if(!receiver)
+				receiver = receiver_owner.getorganslot(ORGAN_SLOT_STOMACH)
+
+	if(receiver?.supports_oviposition_pregnancy())
+		return receiver
+	return null
+
 /datum/component/ovipositor/proc/create_egg()
 	var/obj/item/oviposition_egg/egg = new
 	var/obj/item/organ/genitals/penis/ovipositor/ovipositor = parent
 	egg.set_egg_type(ovipositor.ovi_egg_type)
 	return egg
 
-/datum/component/ovipositor/proc/try_place_egg_in_womb(obj/item/organ/genitals/filling_organ/vagina/receiver, obj/item/oviposition_egg/egg, force = FALSE)
+/datum/component/ovipositor/proc/try_place_egg_in_host(obj/item/organ/receiver, obj/item/oviposition_egg/egg, force = FALSE)
 	if(!receiver || !egg || !receiver.owner)
 		return FALSE
 
 	var/fit_result = SEND_SIGNAL(receiver, COMSIG_BODYSTORAGE_TRY_INSERT, egg, STORAGE_LAYER_DEEP, force)
 	switch(fit_result)
 		if(INSERT_FEEDBACK_OK, INSERT_FEEDBACK_OK_FORCE, INSERT_FEEDBACK_OK_OVERRIDE, INSERT_FEEDBACK_ALMOST_FULL)
-			var/started_growing = receiver.start_oviposition_egg_growth(egg)
+			var/started_growing = receiver.start_oviposition_egg_growth(egg, carrier)
 			carrier.visible_message(
-				span_love("[carrier] deposits an egg deep inside [receiver.owner]'s womb!"),
-				span_love("I deposit an egg deep inside [receiver.owner]'s womb!")
+				span_love("[carrier] deposits an egg into [receiver.owner]'s [receiver.get_oviposition_location_name()]!"),
+				span_love("I deposit an egg into [receiver.owner]'s [receiver.get_oviposition_location_name()]!")
 			)
 			if(receiver.owner != carrier)
-				to_chat(receiver.owner, span_love("[carrier] deposits an egg deep inside my womb!"))
+				to_chat(receiver.owner, span_love("[carrier] deposits an egg into my [receiver.get_oviposition_location_name()]!"))
 			if(started_growing)
-				to_chat(receiver.owner, span_love("One of the eggs in my womb immediately begins to grow."))
+				to_chat(receiver.owner, span_love("One of the eggs in my [receiver.get_oviposition_location_name()] immediately begins to grow."))
 			return TRUE
 
 	return FALSE
@@ -152,10 +170,12 @@
 		return FALSE
 
 	var/success = FALSE
-	if(istype(location, /obj/item/organ/genitals/filling_organ/vagina))
-		success = try_place_egg_in_womb(location, egg, force)
+	if(istype(location, /obj/item/organ))
+		var/obj/item/organ/receiver = location
+		if(receiver.supports_oviposition_pregnancy())
+			success = try_place_egg_in_host(receiver, egg, force)
 		if(!success)
-			to_chat(carrier, span_warning("There is no room to tuck an egg safely into that womb."))
+			to_chat(carrier, span_warning("There is no room to tuck an egg safely into that [receiver.get_oviposition_location_name()]."))
 			location = get_turf(carrier)
 
 	if(!success)

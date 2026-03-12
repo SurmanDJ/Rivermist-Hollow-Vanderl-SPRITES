@@ -33,12 +33,30 @@
 	//pregnancy vars
 	var/fertility = FALSE //can it be impregnated
 	var/pregnant = FALSE // is it pregnant
+	var/preggotimer
+	var/pre_pregnancy_size = 0
+	var/allows_conventional_impregnation = FALSE
 
 	//misc
 	var/last_size_alert = 0
 	var/last_damagespill_alert = 0
 
 	COOLDOWN_DECLARE(liquidcd)
+
+/obj/item/organ
+	var/allows_oviposition_pregnancy = FALSE
+	var/oviposition_storage_component_type = null
+	var/oviposition_location_name = null
+	var/oviposition_lay_verb = "lays"
+	var/oviposition_lay_action = "lay"
+
+/obj/item/organ/guts
+	// Oral storage lives on guts, but oviposition messaging should read as stomach-based.
+	allows_oviposition_pregnancy = TRUE
+	oviposition_storage_component_type = /datum/component/body_storage/mouth
+	oviposition_location_name = "stomach"
+	oviposition_lay_verb = "coughs up"
+	oviposition_lay_action = "cough up"
 
 /obj/item/organ/genitals/filling_organ/Insert(mob/living/carbon/M, special, drop_if_replaced) //update size cap n shit on insert
 	. = ..()
@@ -67,10 +85,8 @@
 			captarget = max_reagents
 		if(fertility && pregnant) //preg size reduce
 			captarget *= 0.5
-		else if(istype(src, /obj/item/organ/genitals/filling_organ/vagina))
-			var/obj/item/organ/genitals/filling_organ/vagina/vagina = src
-			if(vagina.has_oviposition_pregnancy())
-				captarget *= 0.5
+		else if(has_oviposition_pregnancy())
+			captarget *= 0.5
 		if(length(contents))
 			for(var/obj/item/thing as anything in contents)
 				if(thing.type != /obj/item/dildo/plug) //plugs wont take space as they are especially for this.
@@ -257,6 +273,162 @@
 						to_chat(H, span_blue("I easily maintain my [pick(altnames)]'s grip on it's contents."))
 					else
 						to_chat(H, span_info("Phew, I maintain my [pick(altnames)]'s grip on it's contents."))
+
+/obj/item/organ/proc/supports_oviposition_pregnancy()
+	return allows_oviposition_pregnancy && oviposition_storage_component_type
+
+/obj/item/organ/proc/get_oviposition_storage()
+	if(!supports_oviposition_pregnancy())
+		return null
+	return GetComponent(oviposition_storage_component_type)
+
+/obj/item/organ/proc/get_oviposition_location_name()
+	if(oviposition_location_name)
+		return oviposition_location_name
+	return name
+
+/obj/item/organ/proc/get_oviposition_lay_verb()
+	return oviposition_lay_verb
+
+/obj/item/organ/proc/get_oviposition_lay_self_message()
+	return "I [oviposition_lay_action] the ripe egg from my [get_oviposition_location_name()]!"
+
+/obj/item/organ/proc/is_oviposition_egg(obj/item/oviposition_egg/egg)
+	if(!egg)
+		return FALSE
+
+	var/datum/component/body_storage/storage = get_oviposition_storage()
+	if(!storage)
+		return FALSE
+
+	return storage.check_item_in_layer(src, egg, STORAGE_LAYER_DEEP)
+
+/obj/item/organ/proc/get_oviposition_eggs(include_growing = null)
+	var/list/eggs = list()
+	var/datum/component/body_storage/storage = get_oviposition_storage()
+	if(!storage)
+		return eggs
+
+	for(var/obj/item/oviposition_egg/egg as anything in storage.deep_layer_contents)
+		var/growing = egg.has_pregnancy()
+		if(isnull(include_growing) || include_growing == growing)
+			eggs += egg
+
+	return eggs
+
+/obj/item/organ/proc/start_oviposition_egg_growth(obj/item/oviposition_egg/egg, mob/living/father = null, hatch_result_type = null)
+	if(!owner)
+		return FALSE
+	if(!egg || !is_oviposition_egg(egg) || egg.has_pregnancy())
+		return FALSE
+	if(egg.requires_fertilization() && !father)
+		return FALSE
+	if(!hatch_result_type)
+		hatch_result_type = egg.get_hatch_result_type()
+
+	egg.AddComponent(/datum/component/pregnancy, owner, father, hatch_result_type)
+	return TRUE
+
+/obj/item/organ/proc/fertilize_oviposition_egg(mob/living/father = null, hatch_result_type = null)
+	if(!owner)
+		return null
+
+	for(var/obj/item/oviposition_egg/egg as anything in get_oviposition_eggs(FALSE))
+		if(!egg.requires_fertilization())
+			continue
+		if(start_oviposition_egg_growth(egg, father, hatch_result_type))
+			return egg
+
+	return null
+
+/obj/item/organ/proc/has_oviposition_pregnancy()
+	for(var/obj/item/oviposition_egg/egg as anything in get_oviposition_eggs(TRUE))
+		var/datum/component/pregnancy/pregnancy = egg.get_pregnancy_component()
+		if(pregnancy && !pregnancy.laid)
+			return TRUE
+	return FALSE
+
+/obj/item/organ/proc/has_conventional_pregnancy()
+	return FALSE
+
+/obj/item/organ/proc/be_impregnated(mob/living/father = null)
+	return FALSE
+
+/obj/item/organ/genitals/filling_organ/has_conventional_pregnancy()
+	return allows_conventional_impregnation && pregnant
+
+/obj/item/organ/genitals/filling_organ/be_impregnated(mob/living/father = null)
+	if(!owner || owner.stat == DEAD)
+		return FALSE
+
+	var/list/hosted_eggs = get_oviposition_eggs()
+	if(length(hosted_eggs))
+		var/obj/item/oviposition_egg/fertilized_egg = fertilize_oviposition_egg(father)
+		if(fertilized_egg)
+			if(owner.has_quirk(/datum/quirk/peculiarity/selfawaregeni))
+				to_chat(owner, span_love("A warm pulse runs through one of the eggs in my [get_oviposition_location_name()]."))
+			else
+				to_chat(owner, span_love("Something in my [get_oviposition_location_name()] has been fertilized."))
+			return TRUE
+
+		for(var/obj/item/oviposition_egg/egg as anything in hosted_eggs)
+			if(!egg.requires_fertilization() && start_oviposition_egg_growth(egg, father))
+				return TRUE
+			if(egg.has_pregnancy())
+				return TRUE
+
+	if(!allows_conventional_impregnation || pregnant)
+		return FALSE
+
+	if(owner.has_quirk(/datum/quirk/peculiarity/selfawaregeni))
+		to_chat(owner, span_love("I feel a surge of warmth in my [src.name], I'm definitely pregnant!"))
+	reagents.maximum_volume *= 0.5
+	pregnant = TRUE
+	if(owner.getorganslot(ORGAN_SLOT_BREASTS))
+		var/obj/item/organ/genitals/filling_organ/breasts/breasties = owner.getorganslot(ORGAN_SLOT_BREASTS)
+		if(!breasties.refilling)
+			breasties.refilling = TRUE
+			to_chat(owner, span_love("I feel damp warmness on my nipples, I'm definitely leaking milk..."))
+	if(owner.getorganslot(ORGAN_SLOT_BELLY))
+		var/obj/item/organ/genitals/belly/belly = owner.getorganslot(ORGAN_SLOT_BELLY)
+		pre_pregnancy_size = belly.organ_size
+		preggotimer = addtimer(CALLBACK(src, PROC_REF(handle_preggoness)), 3 HOURS, TIMER_STOPPABLE)
+	return TRUE
+
+/obj/item/organ/genitals/filling_organ/proc/undo_preggoness()
+	if(!pregnant)
+		return
+	deltimer(preggotimer)
+	pregnant = FALSE
+	to_chat(owner, span_love("I feel my [src] shrink to how it was before. Pregnancy is no more."))
+	if(owner.getorganslot(ORGAN_SLOT_BELLY))
+		var/obj/item/organ/genitals/belly/bellyussy = owner.getorganslot(ORGAN_SLOT_BELLY)
+		bellyussy.organ_size = pre_pregnancy_size
+	if(iscarbon(owner))
+		var/mob/living/carbon/carbon_owner = owner
+		carbon_owner.update_body_parts()
+
+/obj/item/organ/genitals/filling_organ/proc/handle_preggoness()
+	if(owner.getorganslot(ORGAN_SLOT_BELLY))
+		var/obj/item/organ/genitals/belly/bellyussy = owner.getorganslot(ORGAN_SLOT_BELLY)
+		if(bellyussy.organ_size < BELLY_SIZE_SMALL)
+			if(prob(30))
+				to_chat(owner, span_love("I notice my belly has grown due to pregnancy..."))
+				bellyussy.organ_size += 1
+				if(iscarbon(owner))
+					var/mob/living/carbon/carbon_owner = owner
+					carbon_owner.update_body_parts()
+			preggotimer = addtimer(CALLBACK(src, PROC_REF(handle_preggoness)), 3 HOURS, TIMER_STOPPABLE)
+		else
+			deltimer(preggotimer)
+
+/mob/living/proc/has_internal_pregnancy(excluded_organ = null)
+	for(var/obj/item/organ/organ as anything in internal_organs)
+		if(organ == excluded_organ)
+			continue
+		if(organ.has_oviposition_pregnancy() || organ.has_conventional_pregnancy())
+			return TRUE
+	return FALSE
 
 //had to make this ghetto ass shit, fucks sake
 /mob/living/carbon/proc/mob_slot_wearing(zone)

@@ -7,7 +7,7 @@
 
 	var/hatch_result_type = /mob/living/carbon/human
 	var/obj/item/oviposition_egg/egg
-	var/obj/item/organ/genitals/filling_organ/vagina/container
+	var/obj/item/organ/container
 	var/mob/living/carrier
 	var/mob/living/mother
 	var/mob/living/father
@@ -23,6 +23,7 @@
 	var/added_breast_size = 0
 	var/poll_for_ghost = TRUE
 	var/require_ghost_to_hatch = TRUE
+	var/stage_duration = OVIPOSITION_STAGE_DURATION
 	COOLDOWN_DECLARE(stage_time)
 	COOLDOWN_DECLARE(hatch_request_cooldown)
 	COOLDOWN_DECLARE(lay_cooldown)
@@ -41,6 +42,7 @@
 
 	poll_for_ghost = egg.should_poll_for_ghost() && ispath(hatch_result_type, /mob/living)
 	require_ghost_to_hatch = egg.requires_ghost_to_hatch() && poll_for_ghost
+	stage_duration = egg.get_incubation_stage_duration()
 
 	mother = _mother
 	father = _father
@@ -74,7 +76,7 @@
 		)
 
 	refresh_container(TRUE)
-	COOLDOWN_START(src, stage_time, OVIPOSITION_STAGE_DURATION)
+	COOLDOWN_START(src, stage_time, stage_duration)
 
 /datum/component/pregnancy/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
@@ -118,11 +120,11 @@
 	UnregisterSignal(carrier, COMSIG_SEX_CLIMAX)
 
 /datum/component/pregnancy/proc/refresh_container(setup_only = FALSE)
-	var/obj/item/organ/genitals/filling_organ/vagina/new_container = null
-	if(istype(egg?.loc, /obj/item/organ/genitals/filling_organ/vagina))
-		var/obj/item/organ/genitals/filling_organ/vagina/new_vagina = egg.loc
-		if(new_vagina.is_womb_egg(egg))
-			new_container = new_vagina
+	var/obj/item/organ/new_container = null
+	if(istype(egg?.loc, /obj/item/organ))
+		var/obj/item/organ/new_organ = egg.loc
+		if(new_organ.is_oviposition_egg(egg))
+			new_container = new_organ
 
 	if(container != new_container)
 		if(container && !setup_only)
@@ -166,7 +168,7 @@
 		stage = min(stage, max_stage)
 		on_stage_advanced()
 		if(stage < max_stage)
-			COOLDOWN_START(src, stage_time, OVIPOSITION_STAGE_DURATION)
+			COOLDOWN_START(src, stage_time, stage_duration)
 
 	if(stage < max_stage)
 		return
@@ -176,7 +178,7 @@
 	if(COOLDOWN_FINISHED(src, lay_cooldown))
 		COOLDOWN_START(src, lay_cooldown, OVIPOSITION_LAY_COOLDOWN)
 		if(prob(20))
-			to_chat(carrier, span_warning("The egg in my womb feels ready to be laid."))
+			to_chat(carrier, span_warning("The egg in my [get_container_location_name()] feels ready to come out."))
 		if(prob(10))
 			lay_egg(get_turf(carrier), TRUE)
 
@@ -184,18 +186,37 @@
 	if(!carrier)
 		return
 
-	switch(stage)
-		if(1)
-			to_chat(carrier, span_love("I feel a warm flutter deep in my womb."))
-		if(2)
-			to_chat(carrier, span_love("One of the eggs in my womb starts to feel heavier."))
-		if(3)
-			to_chat(carrier, span_warning("A ripe pressure builds inside my womb."))
+	var/message = egg.get_stage_message(stage)
+	if(!message)
+		switch(stage)
+			if(1)
+				message = "I feel a warm flutter deep in my %CONTAINER%."
+			if(2)
+				message = "One of the eggs in my %CONTAINER% starts to feel heavier."
+			if(3)
+				message = "A ripe pressure builds inside my %CONTAINER%."
+
+	if(message)
+		to_chat(carrier, stage >= 3 ? span_warning(format_container_message(message)) : span_love(format_container_message(message)))
 
 	if(stage == max_stage)
-		to_chat(carrier, span_warning("The egg in my womb is fully developed and wants out."))
+		var/ready_message = egg.get_ready_message()
+		if(!ready_message)
+			ready_message = "The egg in my %CONTAINER% is fully developed and wants out."
+		to_chat(carrier, span_warning(format_container_message(ready_message)))
 
 	update_carrier_state()
+
+/datum/component/pregnancy/proc/get_container_location_name()
+	return container?.get_oviposition_location_name() || "body"
+
+/datum/component/pregnancy/proc/format_container_message(message)
+	if(!message)
+		return null
+
+	var/formatted_message = replacetext(message, "%CONTAINER%", get_container_location_name())
+	formatted_message = replacetext(formatted_message, "%EGG%", "[egg]")
+	return formatted_message
 
 /datum/component/pregnancy/proc/update_carrier_state()
 	if(!ishuman(carrier))
@@ -230,12 +251,11 @@
 		return
 
 	var/mob/living/carbon/human/human_carrier = carrier
-	var/obj/item/organ/genitals/filling_organ/vagina/vagina = human_carrier.getorganslot(ORGAN_SLOT_VAGINA)
 	var/update_icons = FALSE
 
 	if(added_belly_size)
 		var/obj/item/organ/genitals/belly/belly = human_carrier.getorganslot(ORGAN_SLOT_BELLY)
-		if(belly && (!vagina || (!vagina.pregnant && !vagina.has_oviposition_pregnancy())))
+		if(belly && !human_carrier.has_internal_pregnancy(container))
 			belly.organ_size = max(MIN_BELLY_SIZE, belly.organ_size - added_belly_size)
 			update_icons = TRUE
 		added_belly_size = 0
@@ -258,7 +278,7 @@
 
 	lay_egg(get_turf(carrier))
 
-/datum/component/pregnancy/proc/remove_from_womb()
+/datum/component/pregnancy/proc/remove_from_host()
 	if(!container)
 		return FALSE
 	return SEND_SIGNAL(container, COMSIG_BODYSTORAGE_TRY_REMOVE, egg, STORAGE_LAYER_DEEP)
@@ -271,10 +291,13 @@
 		location = get_turf(carrier)
 	if(!location)
 		return FALSE
-	if(!remove_from_womb())
+	if(!remove_from_host())
 		return FALSE
 
-	carrier.visible_message(span_notice("[carrier] lays an egg!"), span_love("I lay the ripe egg from my womb!"))
+	carrier.visible_message(
+		span_notice("[carrier] [container.get_oviposition_lay_verb()] an egg!"),
+		span_love(container.get_oviposition_lay_self_message())
+	)
 	playsound(carrier, 'sound/effects/wounds/splatter.ogg', 70, TRUE)
 	carrier.Knockdown(60, TRUE, TRUE)
 	carrier.Stun(60, TRUE, TRUE)
@@ -292,7 +315,7 @@
 		return
 
 	var/turf/drop_location = get_turf(carrier)
-	remove_from_womb()
+	remove_from_host()
 	if(drop_location)
 		new /obj/effect/decal/cleanable/food/egg_smudge(drop_location)
 	qdel(egg)
@@ -329,7 +352,8 @@
 	if(!hatch_result)
 		return
 
-	egg.visible_message(span_notice("[egg] cracks open!"))
+	var/hatch_message = format_container_message(egg.get_hatch_message())
+	egg.visible_message(span_notice(hatch_message || "[egg] cracks open!"))
 	if(isliving(hatch_result))
 		var/mob/living/hatchling = hatch_result
 		finalize_living_hatch(player, hatchling)
