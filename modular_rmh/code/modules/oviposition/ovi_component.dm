@@ -99,6 +99,8 @@
 	var/datum/sex_action/action = SEX_ACTION(session.current_action)
 	if(!action)
 		return null
+	if(!action_allows_internal_oviposition(action))
+		return null
 
 	var/mob/living/insertor = action.flipped ? session.target : session.user
 	if(insertor != carrier)
@@ -116,6 +118,22 @@
 		"receiver" = receiver,
 		"force" = session.get_current_force() >= SEX_FORCE_HIGH,
 	)
+
+/datum/component/ovipositor/proc/action_allows_internal_oviposition(datum/sex_action/action)
+	if(!action)
+		return FALSE
+
+	// Only direct penetrative sex acts should deposit eggs automatically.
+	return istype(action, /datum/sex_action/sex/vaginal) \
+		|| istype(action, /datum/sex_action/sex/anal) \
+		|| istype(action, /datum/sex_action/sex/throat) \
+		|| istype(action, /datum/sex_action/sex/other/vagina) \
+		|| istype(action, /datum/sex_action/sex/other/anal) \
+		|| istype(action, /datum/sex_action/npc/npc_vaginal_sex) \
+		|| istype(action, /datum/sex_action/npc/npc_vaginal_ride_sex) \
+		|| istype(action, /datum/sex_action/npc/npc_anal_sex) \
+		|| istype(action, /datum/sex_action/npc/npc_anal_ride_sex) \
+		|| istype(action, /datum/sex_action/npc/npc_throat_sex)
 
 /datum/component/ovipositor/proc/get_receiver_for_hole(mob/living/receiver_owner, hole_id)
 	if(!receiver_owner)
