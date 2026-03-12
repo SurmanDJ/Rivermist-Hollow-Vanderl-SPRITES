@@ -121,7 +121,8 @@
 		var/gap = rating < min_rating ? min_rating - rating : rating - max_rating
 		if(gap < best_gap)
 			best_gap = gap
-			closest_candidates = list(mob_type = spawn_weight)
+			closest_candidates = list()
+			closest_candidates[mob_type] = spawn_weight
 		else if(gap == best_gap)
 			closest_candidates[mob_type] = spawn_weight
 
