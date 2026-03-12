@@ -160,9 +160,9 @@
 				qdel(stale_ref)
 			return A
 
-		var/dist = get_dist(origin_turf, A_turf)
-		if(dist < min_dist)
-			min_dist = dist
+		var/score = get_map_distance_score(origin_turf, A_turf)
+		if(score < min_dist)
+			min_dist = score
 			closest = A
 
 	for(var/datum/weakref/stale_ref in stale_refs)
@@ -212,16 +212,20 @@
 		return null
 
 	var/turf/origin_turf = reference_turf ? get_turf(reference_turf) : null
-	if(origin_turf)
-		var/list/same_z_turfs = target_area.get_turfs_by_zlevel(origin_turf.z)
-		if(length(same_z_turfs))
-			return same_z_turfs[1]
+	var/origin_map_file = get_map_file_for_turf(origin_turf)
+	var/turf/fallback_turf = null
 
 	for(var/list/zlevel_turfs as anything in target_area.get_zlevel_turf_lists())
-		if(length(zlevel_turfs))
-			return zlevel_turfs[1]
+		if(!length(zlevel_turfs))
+			continue
 
-	return null
+		var/turf/first_turf = zlevel_turfs[1]
+		if(!fallback_turf)
+			fallback_turf = first_turf
+		if(origin_map_file && get_map_file_for_turf(first_turf) == origin_map_file)
+			return first_turf
+
+	return fallback_turf
 
 /datum/quest/proc/get_turn_in_target_turf(turf/reference_turf)
 	var/turf/origin_turf = reference_turf ? get_turf(reference_turf) : (quest_scroll ? get_turf(quest_scroll) : null)
@@ -236,12 +240,24 @@
 		if(!origin_turf)
 			return marker_turf
 
-		var/score = marker_turf.z == origin_turf.z ? get_dist(origin_turf, marker_turf) : 1000 + abs(marker_turf.z - origin_turf.z)
+		var/score = get_map_distance_score(origin_turf, marker_turf)
 		if(score < best_score)
 			best_score = score
 			best_turf = marker_turf
 
 	return best_turf
+
+/datum/quest/proc/get_map_distance_score(turf/origin_turf, turf/target_turf)
+	if(!origin_turf || !target_turf)
+		return INFINITY
+
+	var/origin_map_file = get_map_file_for_turf(origin_turf)
+	var/target_map_file = get_map_file_for_turf(target_turf)
+	var/distance = get_dist(origin_turf, target_turf)
+	if(origin_map_file && target_map_file && origin_map_file != target_map_file)
+		return 1000 + distance
+
+	return distance
 
 /datum/quest/proc/should_use_live_target_location(turf/live_target_turf)
 	if(!live_target_turf)
@@ -285,6 +301,23 @@
 
 	return supported_map_names[lowertext("[map_file]")]
 
+/datum/quest/proc/is_supported_map_file(map_file)
+	return get_supported_map_name(map_file) ? TRUE : FALSE
+
+/datum/quest/proc/is_supported_map_turf(turf/target_turf)
+	return is_supported_map_file(get_map_file_for_turf(target_turf))
+
+/datum/quest/proc/is_supported_area_target(target_area_or_type, turf/reference_turf = null)
+	return is_supported_map_turf(get_area_target_turf(target_area_or_type, reference_turf))
+
+/datum/quest/proc/has_supported_spawn_landmark(contract_type = quest_type)
+	for(var/obj/effect/landmark/quest_spawner/landmark in GLOB.quest_landmarks_list)
+		if(!landmark.supports_contract_type(contract_type))
+			continue
+		if(is_supported_map_turf(get_turf(landmark)))
+			return TRUE
+	return FALSE
+
 /datum/quest/proc/get_target_map_text(turf/reference_turf)
 	var/turf/map_anchor = get_target_map_anchor(reference_turf)
 	if(!map_anchor)
@@ -306,10 +339,13 @@
 
 	var/obj/structure/fluff/traveltile/best
 	var/best_dist = INFINITY
+	var/source_map_file = get_map_file_for_turf(from_turf)
 
 	for(var/obj/structure/fluff/traveltile/tile in GLOB.traveltiles)
 		var/turf/tile_turf = get_turf(tile)
-		if(!tile_turf || !is_in_zweb(tile_turf.z, from_turf.z))
+		if(!tile_turf)
+			continue
+		if(source_map_file && get_map_file_for_turf(tile_turf) != source_map_file)
 			continue
 		if(tile.cached_destination_area != target_area)
 			continue
@@ -338,6 +374,8 @@
 	var/turf/resolved_target = get_target_location(reference_turf, preferred_target)
 	var/using_live_target = resolved_target && live_target_turf && resolved_target == live_target_turf
 	var/signal_label = get_compass_signal_label(reference_turf, using_live_target)
+	var/reference_map_file = get_map_file_for_turf(reference_turf)
+	var/resolved_map_file = get_map_file_for_turf(resolved_target)
 
 	if(!resolved_target)
 		signal_data["status_text"] = "[signal_label] unavailable."
@@ -346,21 +384,16 @@
 	signal_data["resolved_target"] = resolved_target
 	signal_data["compass_target"] = resolved_target
 
-	if(resolved_target.z != reference_turf.z)
-		if(!is_in_zweb(resolved_target.z, reference_turf.z))
-			var/area/target_area = get_area(resolved_target)
-			var/obj/structure/fluff/traveltile/portal = find_portal_to_area(target_area, reference_turf)
-			if(portal)
-				signal_data["compass_target"] = get_turf(portal)
-				signal_data["status_text"] = "[signal_label] routed through a local gate."
-				return signal_data
-
-			signal_data["compass_target"] = null
-			signal_data["status_text"] = "[signal_label] is on another map."
+	if(reference_map_file && resolved_map_file && resolved_map_file != reference_map_file)
+		var/area/target_area = get_area(resolved_target)
+		var/obj/structure/fluff/traveltile/portal = find_portal_to_area(target_area, reference_turf)
+		if(portal)
+			signal_data["compass_target"] = get_turf(portal)
+			signal_data["status_text"] = "[signal_label] routed through a local gate."
 			return signal_data
 
 		signal_data["compass_target"] = null
-		signal_data["status_text"] = resolved_target.z > reference_turf.z ? "[signal_label] is above you." : "[signal_label] is below you."
+		signal_data["status_text"] = "[signal_label] is on another map."
 		return signal_data
 
 	if(get_dist(reference_turf, resolved_target) <= 1)

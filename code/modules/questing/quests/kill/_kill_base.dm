@@ -164,7 +164,8 @@
 		addtimer(TRAIT_CALLBACK_REMOVE(new_mob, TRAIT_FRESHSPAWN, "[type]"), 60 SECONDS)
 		addtimer(CALLBACK(new_mob, TYPE_PROC_REF(/mob/living, setup_quest_spawn_lockdown)), 3 SECONDS)
 		add_tracked_atom(new_mob)
-		landmark.add_quest_faction_to_nearby_mobs(spawn_turf)
+		if(quest_type != QUEST_BOSS)
+			landmark.add_quest_faction_to_nearby_mobs(spawn_turf)
 		spawned_targets++
 		sleep(1)
 
@@ -176,3 +177,18 @@
 
 /datum/quest/kill/get_workload_reward(target_turf)
 	return progress_required * QUEST_KILL_COUNT_REWARD
+
+/datum/quest/kill/proc/get_reward_multiplier()
+	switch(quest_type)
+		if(QUEST_RAID)
+			return QUEST_RAID_REWARD_MULTIPLIER
+		if(QUEST_CLEAR_OUT)
+			return QUEST_CLEAR_OUT_REWARD_MULTIPLIER
+	return QUEST_HUNT_REWARD_MULTIPLIER
+
+/datum/quest/kill/calculate_reward(turf/target_turf)
+	var/risk_score = max(1, ROUND_UP(get_risk_score(target_turf)))
+	threat_tier = get_tier_from_risk_score(risk_score)
+
+	var/total_target_risk = max(1, target_risk_value) * max(1, progress_required)
+	return max(0, ROUND_UP(total_target_risk * get_reward_multiplier()))

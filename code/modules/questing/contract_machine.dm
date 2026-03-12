@@ -706,16 +706,19 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		istype(job_type, /datum/job/councilor) || \
 		istype(job_type, /datum/job/advclass/councilor)
 
+/obj/structure/fake_machine/contractledger/proc/is_banker_contract_role(datum/job/job_type)
+	return is_banker_job(job_type)
+
 /obj/structure/fake_machine/contractledger/proc/is_boss_raid_issuer(mob/user)
 	if(!user)
 		return FALSE
 
 	var/datum/job/assigned_job = get_assigned_job(user)
-	if(is_adventurers_guild_role(assigned_job) || is_townhall_contract_role(assigned_job))
+	if(is_adventurers_guild_role(assigned_job) || is_townhall_contract_role(assigned_job) || is_banker_contract_role(assigned_job))
 		return TRUE
 
 	var/datum/job/visible_job = get_visible_job(user)
-	if(is_adventurers_guild_role(visible_job) || is_townhall_contract_role(visible_job))
+	if(is_adventurers_guild_role(visible_job) || is_townhall_contract_role(visible_job) || is_banker_contract_role(visible_job))
 		return TRUE
 
 	return FALSE
@@ -1311,11 +1314,20 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 
 /obj/structure/fake_machine/contractledger/proc/find_quest_landmark(contract_tier, contract_type)
 	var/list/exact_landmarks = list()
+	var/list/exact_clean_landmarks = list()
 	var/list/closest_landmarks = list()
+	var/list/closest_clean_landmarks = list()
 	var/best_gap = INFINITY
+	var/prefer_clean_landmarks = contract_type == QUEST_BOSS
+	var/datum/quest/template = null
+	if(contract_type in list(QUEST_RETRIEVAL, QUEST_COURIER))
+		template = create_quest_for_type(contract_type)
+
 	GLOB.quest_landmarks_list = shuffle(GLOB.quest_landmarks_list)
 	for(var/obj/effect/landmark/quest_spawner/landmark in GLOB.quest_landmarks_list)
 		if(!landmark.supports_contract_type(contract_type))
+			continue
+		if(template && !template.is_supported_map_turf(get_turf(landmark)))
 			continue
 
 		var/has_clients_around = FALSE
@@ -1328,24 +1340,53 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		if(has_clients_around)
 			continue
 
+		var/is_clean_landmark = !prefer_clean_landmarks || !landmark_has_nearby_ambient_mobs(landmark)
+
 		if(landmark.supports_contract_tier(contract_tier))
 			exact_landmarks += landmark
+			if(is_clean_landmark)
+				exact_clean_landmarks += landmark
 			continue
 
 		var/tier_gap = landmark.get_tier_gap(contract_tier)
 		if(tier_gap < best_gap)
 			best_gap = tier_gap
 			closest_landmarks = list(landmark)
+			closest_clean_landmarks = is_clean_landmark ? list(landmark) : list()
 		else if(tier_gap == best_gap)
 			closest_landmarks += landmark
+			if(is_clean_landmark)
+				closest_clean_landmarks += landmark
+
+	if(template)
+		qdel(template)
+
+	if(length(exact_clean_landmarks))
+		return pick(exact_clean_landmarks)
 
 	if(length(exact_landmarks))
 		return pick(exact_landmarks)
+
+	if(length(closest_clean_landmarks))
+		return pick(closest_clean_landmarks)
 
 	if(length(closest_landmarks))
 		return pick(closest_landmarks)
 
 	return null
+
+/obj/structure/fake_machine/contractledger/proc/landmark_has_nearby_ambient_mobs(obj/effect/landmark/quest_spawner/landmark)
+	if(!landmark)
+		return FALSE
+
+	for(var/mob/living/nearby_mob in view(7, landmark))
+		if(QDELETED(nearby_mob) || nearby_mob.stat == DEAD || nearby_mob.client)
+			continue
+		if("quest" in nearby_mob.faction)
+			continue
+		return TRUE
+
+	return FALSE
 
 /obj/structure/fake_machine/contractledger/proc/turn_in_contract(mob/user, obj/item/paper/scroll/quest/scroll_in_hand)
 	if(scroll_in_hand)

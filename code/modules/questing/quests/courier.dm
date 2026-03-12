@@ -36,11 +36,13 @@
 			continue
 		if(!length(resolved_area.get_zlevel_turf_lists()))
 			continue
+		if(!is_supported_area_target(resolved_area))
+			continue
 		available_locations += area_type
 	return available_locations
 
 /datum/quest/courier/can_generate_for_world()
-	return length(get_available_delivery_locations()) > 0
+	return has_supported_spawn_landmark() && length(get_available_delivery_locations()) > 0
 
 /datum/quest/courier/get_compass_signal_label(turf/reference_turf, using_live_target)
 	if(has_tracked_item_in_inventory())
@@ -157,6 +159,8 @@
 /datum/quest/courier/generate(obj/effect/landmark/quest_spawner/landmark)
 	..()
 	if(!landmark)
+		return FALSE
+	if(!is_supported_map_turf(get_turf(landmark)))
 		return FALSE
 
 	// Select delivery location

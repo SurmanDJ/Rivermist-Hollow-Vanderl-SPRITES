@@ -21,6 +21,15 @@
 /datum/quest/kill/boss/get_objective_text()
 	return "Slay [target_display_name ? target_display_name : initial(target_mob_type.name)]."
 
+/datum/quest/kill/boss/calculate_reward(turf/target_turf)
+	var/risk_score = max(1, ROUND_UP(get_risk_score(target_turf)))
+	threat_tier = get_tier_from_risk_score(risk_score)
+
+	var/base_risk = max(1, target_risk_value)
+	var/reward = (base_risk * base_risk * QUEST_BOSS_REWARD_RISK_SQUARE_MULTIPLIER) + \
+		(max(base_risk - QUEST_BOSS_REWARD_RISK_OVERFLOW_START, 0) * QUEST_BOSS_REWARD_RISK_OVERFLOW_BONUS)
+	return max(0, ROUND_UP(reward))
+
 /datum/quest/kill/boss/generate(obj/effect/landmark/quest_spawner/landmark)
 	..()
 	if(!landmark)

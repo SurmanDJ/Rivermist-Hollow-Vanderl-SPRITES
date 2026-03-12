@@ -129,6 +129,7 @@
 	var/source_key
 	var/stat_key = STATKEY_STR
 	var/target_value = 16
+	var/applied_bonus_amount = 0
 
 /datum/component/boss_ring_stat_boost/Initialize(source_key, stat_key, target_value = 16)
 	if(!istype(parent, /mob/living) || !source_key || !(stat_key in MOBSTATS))
@@ -149,7 +150,8 @@
 		return
 
 	var/current_stat = living_parent.get_stat_level(stat_key)
-	living_parent.set_stat_modifier(source_key, stat_key, max(0, target_value - current_stat))
+	applied_bonus_amount = max(0, target_value - current_stat)
+	living_parent.set_stat_modifier(source_key, stat_key, applied_bonus_amount)
 
 /datum/component/boss_ring_stat_boost/proc/remove_bonus()
 	var/mob/living/living_parent = parent
@@ -157,6 +159,7 @@
 		return
 
 	living_parent.remove_stat_modifier(source_key)
+	applied_bonus_amount = 0
 
 /obj/item/clothing/ring/gold/boss_prize
 	name = "Ring of Strength"
@@ -179,6 +182,12 @@
 		return
 
 	apply_stat_bonus(user)
+
+/obj/item/clothing/ring/gold/boss_prize/proc/item_removed(mob/living/carbon/wearer, obj/item/removed_item)
+	SIGNAL_HANDLER
+	if(removed_item != src)
+		return
+	remove_stat_bonus()
 
 /obj/item/clothing/ring/gold/boss_prize/dropped(mob/user, silent)
 	. = ..()
@@ -205,9 +214,14 @@
 /obj/item/clothing/ring/gold/boss_prize/proc/apply_stat_bonus(mob/living/user)
 	remove_stat_bonus()
 	bonus_owner_ref = WEAKREF(user)
+	RegisterSignal(user, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(item_removed))
 	equipped_stat_bonus = user.AddComponent(/datum/component/boss_ring_stat_boost, "boss_ring_[REF(src)]", boosted_stat, boost_target_value)
 
 /obj/item/clothing/ring/gold/boss_prize/proc/remove_stat_bonus()
+	var/mob/living/bonus_owner = bonus_owner_ref?.resolve()
+	if(bonus_owner)
+		UnregisterSignal(bonus_owner, COMSIG_MOB_UNEQUIPPED_ITEM)
+
 	if(equipped_stat_bonus)
 		equipped_stat_bonus.RemoveComponent()
 		equipped_stat_bonus = null
@@ -482,28 +496,48 @@
 	desc = "Carrying the likeness of a dragon, this glorious ring hums with a subtle energy."
 	sellprice = 666
 	var/active_item
+	var/datum/weakref/dragon_ring_owner_ref
 
 /obj/item/clothing/ring/dragon_ring/equipped(mob/living/user, slot)
 	. = ..()
-	if(active_item)
+	if(!(slot & ITEM_SLOT_RING))
+		remove_dragon_ring_bonus()
 		return
-	else if(slot & ITEM_SLOT_RING)
-		active_item = TRUE
-		to_chat(user, span_notice("Here be dragons."))
-		user.change_stat(STATKEY_STR, 2)
-		user.change_stat(STATKEY_CON, 2)
-		user.change_stat(STATKEY_END, 2)
-	return
+
+	apply_dragon_ring_bonus(user)
 
 /obj/item/clothing/ring/dragon_ring/dropped(mob/living/user)
 	..()
-	if(active_item)
-		to_chat(user, span_notice("Gone is thy hoard."))
-		user.change_stat(STATKEY_STR, -2)
-		user.change_stat(STATKEY_CON, -2)
-		user.change_stat(STATKEY_END, -2)
-		active_item = FALSE
+	remove_dragon_ring_bonus()
 	return
+
+/obj/item/clothing/ring/dragon_ring/proc/item_removed(mob/living/carbon/wearer, obj/item/removed_item)
+	SIGNAL_HANDLER
+	if(removed_item != src)
+		return
+	remove_dragon_ring_bonus()
+
+/obj/item/clothing/ring/dragon_ring/proc/apply_dragon_ring_bonus(mob/living/user)
+	remove_dragon_ring_bonus(FALSE)
+	dragon_ring_owner_ref = WEAKREF(user)
+	RegisterSignal(user, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(item_removed))
+	user.set_stat_modifier("dragon_ring_[REF(src)]", STATKEY_STR, 2)
+	user.set_stat_modifier("dragon_ring_[REF(src)]", STATKEY_CON, 2)
+	user.set_stat_modifier("dragon_ring_[REF(src)]", STATKEY_END, 2)
+	if(!active_item)
+		to_chat(user, span_notice("Here be dragons."))
+	active_item = TRUE
+
+/obj/item/clothing/ring/dragon_ring/proc/remove_dragon_ring_bonus(show_message = TRUE)
+	var/mob/living/dragon_ring_owner = dragon_ring_owner_ref?.resolve()
+	if(dragon_ring_owner)
+		UnregisterSignal(dragon_ring_owner, COMSIG_MOB_UNEQUIPPED_ITEM)
+		dragon_ring_owner.remove_stat_modifier("dragon_ring_[REF(src)]")
+		if(show_message && active_item)
+			to_chat(dragon_ring_owner, span_notice("Gone is thy hoard."))
+
+	active_item = FALSE
+	dragon_ring_owner_ref = null
 
 /obj/item/clothing/ring/signet
 	name = "Signet Ring"

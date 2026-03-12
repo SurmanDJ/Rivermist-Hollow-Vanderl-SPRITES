@@ -41,9 +41,14 @@
 
 	return ROUND_UP(distance_reward + item_bonus)
 
+/datum/quest/retrieval/can_generate_for_world()
+	return has_supported_spawn_landmark()
+
 /datum/quest/retrieval/generate(obj/effect/landmark/quest_spawner/landmark)
 	..()
 	if(!landmark)
+		return FALSE
+	if(!is_supported_map_turf(get_turf(landmark)))
 		return FALSE
 
 	// Select random item type from landmark's list

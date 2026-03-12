@@ -46,6 +46,12 @@
 #define QUEST_DELIVERY_DISTANCE_BONUS 1 // Adds a bonus for longer distances
 #define QUEST_COURIER_BONUS_FLAT 8 // Flat bonus for courier quests, since you gotta wait for a person to open a package
 #define QUEST_DELIVERY_PER_ITEM_BONUS 5 // Bonus per item delivered
+#define QUEST_HUNT_REWARD_MULTIPLIER 1
+#define QUEST_CLEAR_OUT_REWARD_MULTIPLIER 1
+#define QUEST_RAID_REWARD_MULTIPLIER 1.25
+#define QUEST_BOSS_REWARD_RISK_SQUARE_MULTIPLIER 2
+#define QUEST_BOSS_REWARD_RISK_OVERFLOW_START 8
+#define QUEST_BOSS_REWARD_RISK_OVERFLOW_BONUS 15
 
 
 // ==>>> NEW LIST
