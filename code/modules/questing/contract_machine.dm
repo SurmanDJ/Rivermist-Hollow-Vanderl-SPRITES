@@ -9,6 +9,7 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	desc = "A massive ledger book with gilded edges, sitting atop a pedestal with the Mercenary's Guild banner. Its myriad enchanted pages are filled with various contracts and bounties issued by Mercenary's Guild, with arcane scripts that appears and fades as contracts are issued and completed."
 	icon = 'icons/obj/questing.dmi'
 	icon_state = "contractledger"
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 	density = TRUE
 	anchored = TRUE
 	max_integrity = 0
@@ -33,16 +34,6 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		turn_in_contract(user, P)
 		return
 	return
-
-/obj/structure/fake_machine/contractledger/attack_hand(mob/user, list/modifiers)
-	if(!ishuman(user))
-		return TRUE
-
-	add_fingerprint(user)
-	if(!can_interact(user))
-		return TRUE
-
-	return ui_interact(user)
 
 /obj/structure/fake_machine/contractledger/Topic(href, href_list)
 	. = ..()
@@ -73,8 +64,7 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	var/consult_block_reason = get_consult_block_reason(user)
 	var/can_consult_contracts = !consult_block_reason
 	if(can_consult_contracts)
-		ensure_preview_preload_state(user, session)
-		if(!is_preview_preload_ready(session))
+		if(!session["preview_preload_bootstrapped"] || !is_preview_preload_ready(session))
 			return get_preload_ui_data(user, session)
 
 	var/selected_group = session["selected_group"]
@@ -138,10 +128,11 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	switch(action)
 		if("preload")
 			var/list/session = get_ui_session(user)
-			ensure_preview_preload_state(user, session)
+			if(!session["preview_preload_bootstrapped"])
+				ensure_preview_preload_state(user, session)
 			if(!session["preview_preload_started"])
 				session["preview_preload_started"] = TRUE
-			advance_preview_preload(session)
+			advance_preview_preload(session, 8)
 			return TRUE
 		if("consultcontracts")
 			prepare_contract_draft(user)
@@ -860,11 +851,25 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 
 /obj/structure/fake_machine/contractledger/proc/get_target_preview_name(atom/mob_type)
 	if(ispath(mob_type))
+		if(uses_outlaw_preview(mob_type))
+			return "OUTLAW"
 		return initial(mob_type.name) || "Unknown target"
 	return "Unknown target"
 
+/obj/structure/fake_machine/contractledger/proc/uses_outlaw_preview(atom/mob_type)
+	if(!ispath(mob_type, /mob/living/carbon/human/species/human/northern))
+		return FALSE
+
+	return ispath(mob_type, /mob/living/carbon/human/species/human/northern/thief) || \
+		ispath(mob_type, /mob/living/carbon/human/species/human/northern/highwayman) || \
+		ispath(mob_type, /mob/living/carbon/human/species/human/northern/searaider) || \
+		ispath(mob_type, /mob/living/carbon/human/species/human/northern/bog_deserters) || \
+		ispath(mob_type, /mob/living/carbon/human/species/human/northern/mad_touched_treasure_hunter) || \
+		ispath(mob_type, /mob/living/carbon/human/species/human/northern/base/skilled) || \
+		ispath(mob_type, /mob/living/carbon/human/species/human/northern/base/very_skilled)
+
 /obj/structure/fake_machine/contractledger/proc/get_target_preview_icon_data(atom/mob_type)
-	var/cache_key = "preview_v5:[mob_type]"
+	var/cache_key = "preview_v8:[mob_type]"
 	var/list/cached_data = quest_target_preview_icon_cache[cache_key]
 	if(cached_data)
 		return cached_data
@@ -878,11 +883,37 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 
 	var/icon/preview_icon
 	var/list/runtime_icon_data
+	var/use_outlaw_preview = uses_outlaw_preview(mob_type)
+	var/icon_file = get_target_preview_icon_file(mob_type)
+	var/icon_state = get_target_preview_icon_state(mob_type)
 	if(ispath(mob_type, /mob/living/carbon/human))
 		runtime_icon_data = get_runtime_target_preview_icon_data(mob_type)
+		if(use_outlaw_preview)
+			icon_data["name"] = "OUTLAW"
+			if(runtime_icon_data && runtime_icon_data["icon"])
+				icon_data["icon"] = runtime_icon_data["icon"]
+			if(runtime_icon_data && runtime_icon_data["icon_state"])
+				icon_data["icon_state"] = runtime_icon_data["icon_state"]
+			var/icon/runtime_preview_icon = runtime_icon_data ? runtime_icon_data["preview_icon"] : null
+			if(runtime_preview_icon)
+				preview_icon = crop_outlaw_preview_icon(runtime_preview_icon)
+			if(!preview_icon)
+				preview_icon = build_outlaw_preview_icon(icon_file, icon_state)
+		else if(runtime_icon_data)
+			if(runtime_icon_data["name"])
+				icon_data["name"] = runtime_icon_data["name"]
+			if(runtime_icon_data["icon"])
+				icon_data["icon"] = runtime_icon_data["icon"]
+			if(runtime_icon_data["icon_state"])
+				icon_data["icon_state"] = runtime_icon_data["icon_state"]
+			preview_icon = runtime_icon_data["preview_icon"]
+		else
+			if(icon_file)
+				icon_data["icon"] = icon_file
+			if(icon_state && is_valid_preview_icon_state(icon_file, icon_state))
+				icon_data["icon_state"] = icon_state
+			preview_icon = build_target_preview_icon(mob_type, icon_file, icon_state)
 	else
-		var/icon_file = get_target_preview_icon_file(mob_type)
-		var/icon_state = get_target_preview_icon_state(mob_type)
 		if(icon_file)
 			icon_data["icon"] = icon_file
 		if(icon_state && is_valid_preview_icon_state(icon_file, icon_state))
@@ -892,7 +923,7 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		if(!preview_icon)
 			runtime_icon_data = get_runtime_target_preview_icon_data(mob_type)
 
-	if(runtime_icon_data)
+	if(runtime_icon_data && !ispath(mob_type, /mob/living/carbon/human))
 		if(runtime_icon_data["name"])
 			icon_data["name"] = runtime_icon_data["name"]
 		if(runtime_icon_data["icon"])
@@ -959,6 +990,30 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		preview_icon = human_preview_icon
 
 	return preview_icon
+
+/obj/structure/fake_machine/contractledger/proc/crop_outlaw_preview_icon(icon/preview_icon)
+	if(!preview_icon)
+		return null
+
+	var/icon/outlaw_icon = icon(preview_icon)
+	var/icon_width = max(outlaw_icon.Width(), 1)
+	var/icon_height = max(outlaw_icon.Height(), 1)
+	var/crop_bottom = max(round(icon_height * 0.45), 1)
+	outlaw_icon.Crop(1, crop_bottom, icon_width, icon_height)
+	outlaw_icon.Scale(64, 64)
+	return outlaw_icon
+
+/obj/structure/fake_machine/contractledger/proc/build_outlaw_preview_icon(icon_file, icon_state)
+	if(!icon_file || !icon_state)
+		return null
+	if(!is_valid_preview_icon_state(icon_file, icon_state))
+		return null
+
+	var/icon/preview_icon = icon(icon_file, icon_state, SOUTH, 1)
+	if(!preview_icon)
+		return null
+
+	return crop_outlaw_preview_icon(preview_icon)
 
 /obj/structure/fake_machine/contractledger/proc/finalize_preview_mob(mob/temp_mob)
 	if(!temp_mob)
