@@ -896,7 +896,7 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 
 /obj/structure/fake_machine/contractledger/proc/get_target_preview_icon_data(atom/mob_type)
 	var/source_mob_type = get_preview_icon_source_mob_type(mob_type)
-	var/cache_key = "preview_v10:[source_mob_type]"
+	var/cache_key = "preview_v11:[source_mob_type]"
 	var/list/cached_data = quest_target_preview_icon_cache[cache_key]
 	if(cached_data)
 		var/list/icon_data = cached_data.Copy()
@@ -930,7 +930,7 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 			visual_data["icon_state"] = runtime_icon_data["icon_state"]
 		var/icon/runtime_preview_icon = runtime_icon_data ? runtime_icon_data["preview_icon"] : null
 		if(runtime_preview_icon)
-			preview_icon = crop_outlaw_preview_icon(runtime_preview_icon)
+			preview_icon = runtime_preview_icon
 		if(!preview_icon)
 			preview_icon = build_outlaw_preview_icon(icon_file, icon_state)
 	else
@@ -1045,6 +1045,56 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		var/mob/living/carbon/human/temp_human = temp_mob
 		temp_human.regenerate_icons()
 
+/obj/structure/fake_machine/contractledger/proc/finalize_outlaw_preview_mob(mob/living/carbon/human/temp_human)
+	if(!temp_human)
+		return
+
+	sleep(11)
+	if(QDELETED(temp_human))
+		return
+
+	if(!temp_human.job && !temp_human.head && !temp_human.wear_armor && !temp_human.wear_mask)
+		temp_human.after_creation()
+
+	if(!temp_human.get_item_by_slot(ITEM_SLOT_HEAD))
+		var/obj/item/clothing/head/helmet/leather/fallback_helmet = new(get_turf(temp_human))
+		temp_human.equip_to_slot_if_possible(fallback_helmet, ITEM_SLOT_HEAD, TRUE, TRUE, TRUE, TRUE, TRUE)
+
+	temp_human.update_body()
+	temp_human.regenerate_icons()
+
+/obj/structure/fake_machine/contractledger/proc/build_outlaw_runtime_preview_icon(mob/living/carbon/human/temp_human)
+	if(!temp_human)
+		return null
+
+	temp_human.update_inv_hands(hide_experimental = TRUE)
+	temp_human.update_inv_belt(hide_experimental = TRUE)
+	temp_human.update_inv_back(hide_experimental = TRUE)
+	temp_human.update_inv_head(hide_nonstandard = TRUE)
+	var/was_typing = temp_human.typing
+	if(was_typing)
+		temp_human.set_typing_indicator(FALSE)
+
+	var/image/dummy = image(temp_human.icon, temp_human, temp_human.icon_state, temp_human.layer, temp_human.dir)
+	dummy.appearance = temp_human.appearance
+	dummy.dir = SOUTH
+
+	temp_human.update_inv_hands()
+	temp_human.update_inv_belt()
+	temp_human.update_inv_back()
+	temp_human.update_inv_head()
+	if(was_typing)
+		temp_human.set_typing_indicator(TRUE)
+
+	var/icon/preview_icon = getFlatIcon(dummy, SOUTH, no_anim = TRUE)
+	if(!preview_icon)
+		return null
+
+	preview_icon.Scale(64, 64)
+	preview_icon.Crop(1, 33, 64, 64)
+	preview_icon.Scale(64, 64)
+	return preview_icon
+
 /obj/structure/fake_machine/contractledger/proc/build_preview_proxy_icon(mob/temp_mob)
 	var/turf/preview_turf = get_turf(temp_mob)
 	if(!preview_turf)
@@ -1077,6 +1127,8 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 	// Using a real turf avoids the nullspace init issues some mobs have.
 	var/turf/preview_turf = locate(1, 1, 1)
 	if(!preview_turf)
+		preview_turf = get_turf(src)
+	if(!preview_turf)
 		return null
 
 	var/mob/temp_mob = new mob_type(preview_turf)
@@ -1084,15 +1136,21 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		return null
 
 	temp_mob.setDir(SOUTH)
-	finalize_preview_mob(temp_mob)
 
 	var/icon/preview_icon
 	if(istype(temp_mob, /mob/living/carbon/human))
-		preview_icon = build_preview_proxy_icon(temp_mob)
-		if(!preview_icon)
-			var/icon/flattened_icon = getFlatIcon(temp_mob, SOUTH, no_anim = TRUE)
-			preview_icon = flattened_icon ? icon(flattened_icon, frame = 1) : null
+		var/mob/living/carbon/human/temp_human = temp_mob
+		if(uses_outlaw_preview(mob_type))
+			finalize_outlaw_preview_mob(temp_human)
+			preview_icon = build_outlaw_runtime_preview_icon(temp_human)
+		else
+			finalize_preview_mob(temp_human)
+			preview_icon = build_preview_proxy_icon(temp_human)
+			if(!preview_icon)
+				var/icon/flattened_icon = getFlatIcon(temp_human, SOUTH, no_anim = TRUE)
+				preview_icon = flattened_icon ? icon(flattened_icon, frame = 1) : null
 	else
+		finalize_preview_mob(temp_mob)
 		var/icon/flattened_icon = getFlatIcon(temp_mob, SOUTH, no_anim = TRUE)
 		preview_icon = flattened_icon ? icon(flattened_icon, frame = 1) : null
 	var/icon_file = temp_mob.icon
