@@ -509,6 +509,9 @@
 	return max(0, ROUND_UP(get_base_reward() + (risk_score * QUEST_REWARD_PER_RISK_POINT) + workload_reward))
 
 /datum/quest/proc/calculate_deposit(reward_override)
+	if(get_effective_requested_tier(null) <= QUEST_TIER_ROUTINE)
+		return 0
+
 	var/reward_reference = isnum(reward_override) ? reward_override : reward_amount
 	if(reward_reference <= 0)
 		reward_reference = get_base_reward() + (get_effective_requested_tier(null) * QUEST_REWARD_PER_RISK_POINT)

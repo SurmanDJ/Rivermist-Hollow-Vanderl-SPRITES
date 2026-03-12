@@ -678,7 +678,7 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		return FALSE
 
 	var/job_name = lowertext(mob_job.title ? mob_job.title : user.job)
-	return mob_job.is_quest_giver || findtext(job_name, "merchant") || findtext(job_name, "banker") || findtext(job_name, "steward")
+	return mob_job.is_quest_giver || findtext(job_name, "merchant") || findtext(job_name, "banker") || findtext(job_name, "steward") || findtext(job_name, "innkeep")
 
 /obj/structure/fake_machine/contractledger/proc/get_assigned_job(mob/user)
 	var/datum/job/assigned_job = user?.mind?.assigned_role
@@ -1430,9 +1430,11 @@ GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
 		var/deposit_return = scroll.assigned_quest.deposit_amount || scroll.assigned_quest.calculate_deposit(scroll.assigned_quest.reward_amount)
 		total_deposit_return += deposit_return
 
-		// Apply Steward/Mechant bonus if applicable (only to the base reward)
-		if(is_quest_handler(user))
-			reward += base_reward * QUEST_HANDLER_REWARD_MULTIPLIER
+		// Apply the elevated issuer payout only to roles that can issue high-tier contracts.
+		if(is_boss_raid_issuer(user))
+			reward += ROUND_UP(base_reward * QUEST_HANDLER_REWARD_MULTIPLIER)
+		else if(is_quest_handler(user))
+			reward += ROUND_UP(base_reward * QUEST_MINOR_HANDLER_REWARD_MULTIPLIER)
 		else
 			reward += base_reward
 
