@@ -70,8 +70,6 @@
 	/mob/living/carbon/human/species/goblin/npc = QUEST_MOB_PACK(5, 5, 2, 4),\
 	/mob/living/carbon/human/species/goblin/npc/cave = QUEST_MOB_PACK(4, 5, 2, 4),\
 	/mob/living/carbon/human/species/goblin/npc/sea = QUEST_MOB_PACK(4, 5, 2, 4),\
-	/mob/living/carbon/human/species/kobold/base/unskilled/naked = QUEST_MOB_PACK(4, 4, 2, 5),\
-	/mob/living/carbon/human/species/kobold/base/unskilled/light_gear = QUEST_MOB_PACK(4, 5, 2, 4),\
 	/mob/living/carbon/human/species/zizombie/npc/peasant = QUEST_MOB_PACK(4, 5, 2, 4),\
 	/mob/living/carbon/human/species/human/northern/thief = QUEST_MOB_PACK(4, 5, 1, 2),\
 	/mob/living/carbon/human/species/human/northern/highwayman = QUEST_MOB_PACK(3, 6, 1, 2),\
@@ -79,9 +77,6 @@
 #define QUEST_KILL_MEDIUM_LIST list(\
 	/mob/living/carbon/human/species/goblin/npc/cave = QUEST_MOB_PACK(6, 5, 3, 6),\
 	/mob/living/carbon/human/species/goblin/npc/sea = QUEST_MOB_PACK(5, 5, 3, 6),\
-	/mob/living/carbon/human/species/kobold/base/unskilled/light_gear = QUEST_MOB_PACK(5, 5, 3, 6),\
-	/mob/living/carbon/human/species/kobold/base/skilled/light_gear = QUEST_MOB_PACK(4, 6, 3, 5),\
-	/mob/living/carbon/human/species/kobold/base/unskilled/medium_gear = QUEST_MOB_PACK(3, 6, 3, 5),\
 	/mob/living/carbon/human/species/zizombie/npc/peasant = QUEST_MOB_PACK(5, 5, 3, 6),\
 	/mob/living/carbon/human/species/zizombie/npc/warrior = QUEST_MOB_PACK(3, 7, 3, 5),\
 	/mob/living/carbon/human/species/skeleton/npc/easy = QUEST_MOB_PACK(5, 5, 3, 6),\
