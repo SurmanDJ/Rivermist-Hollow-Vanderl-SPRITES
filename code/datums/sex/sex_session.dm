@@ -124,6 +124,8 @@
 	return TRUE
 
 /datum/sex_session/proc/get_active_action(action_ref)
+	if(istext(action_ref))
+		action_ref = text2path(action_ref)
 	if(istype(action_ref, /datum/sex_action))
 		var/datum/sex_action/action = action_ref
 		if(action in active_actions)
@@ -161,6 +163,8 @@
 	current_action = get_highest_priority_action_for(user)
 
 /datum/sex_session/proc/try_start_action(action_type)
+	if(istext(action_type))
+		action_type = text2path(action_type)
 	if(is_action_active(action_type))
 		try_stop_current_action(action_type)
 		return
@@ -179,14 +183,15 @@
 /datum/sex_session/proc/try_stop_current_action(action_ref)
 	if(!length(active_actions))
 		return
+	if(istext(action_ref))
+		action_ref = text2path(action_ref)
 	if(!action_ref)
-		for(var/datum/sex_action/action as anything in active_actions)
-			action.stop_requested = TRUE
+		stop_current_action()
 		return
 
 	var/datum/sex_action/action = get_active_action(action_ref)
 	if(action)
-		action.stop_requested = TRUE
+		stop_current_action(action)
 
 /datum/sex_session/proc/considered_limp(mob/limper)
 	if(QDELETED(limper))
@@ -215,7 +220,8 @@
 
 		var/do_time = action.do_time / get_speed_multiplier()
 		var/do_after_flags = IGNORE_USER_DIR_CHANGE | IGNORE_HELD_ITEM | IGNORE_SLOWDOWNS | IGNORE_SLOWDOWNS | IGNORE_USER_DOING
-		if(!do_after(user, do_time, target = target, timed_action_flags = do_after_flags))
+		var/interaction_key = "sex_action_[REF(action)]"
+		if(!do_after(user, do_time, target = target, timed_action_flags = do_after_flags, interaction_key = interaction_key))
 			break
 
 		if(QDELETED(action) || !(action in active_actions))
@@ -544,7 +550,7 @@
 	dat += ".action-button.blue:hover { background-color: #4a5a6a; }"
 	dat += ".action-button.active { background-color: #8b6914 !important; color: #ffffff !important; border-color: #a07a1a !important; box-shadow: 0 0 5px rgba(139, 105, 20, 0.5) !important; }"
 	dat += ".action-icons { display: flex; margin-left: 5px; }"
-	dat += ".icon-btn { width: 25px; height: 25px; margin-left: 2px; background-color: #4a2c20; border: 1px solid #2a1a15; color: #d4af8c; text-align: center; line-height: 23px; cursor: pointer; font-size: 11px; text-decoration: none; }"
+	dat += ".icon-btn { display: inline-block; width: 25px; height: 25px; margin-left: 2px; background-color: #4a2c20; border: 1px solid #2a1a15; color: #d4af8c; text-align: center; line-height: 23px; cursor: pointer; font-size: 11px; text-decoration: none; }"
 	dat += ".icon-btn:hover { background-color: #5a3525; }"
 	dat += ".icon-btn.star { background-color: #8b6914; }"
 	dat += ".icon-btn.stop { background-color: #cc4444; }"
@@ -699,7 +705,7 @@
 
 		dat += "<div class='action-icons'>"
 		if(is_current)
-			dat += "<a href='?src=[REF(src)];task=stop;action_type=[action_type];tab=[selected_tab]' class='icon-btn stop'></a>"
+			dat += "<a href='?src=[REF(src)];task=stop;action_type=[action_type];tab=[selected_tab]' class='icon-btn stop' title='Stop action'>X</a>"
 		dat += "</div>"
 		dat += "</div>"
 	dat += "</div>"
