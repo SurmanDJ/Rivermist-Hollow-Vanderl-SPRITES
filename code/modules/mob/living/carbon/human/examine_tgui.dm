@@ -50,7 +50,7 @@
 
 	if(ishuman(holder))
 		var/mob/living/carbon/human/holder_human = holder
-		if(!(holder.wear_armor && holder.wear_armor.flags_inv) && !(holder.wear_shirt && holder.wear_shirt.flags_inv) && !(holder_human.underwear))
+		if(!(holder.wear_armor && holder.wear_armor.flags_inv) && !(holder.wear_shirt && holder.wear_shirt.flags_inv) && !(holder_human.underwear) || holder_human.get_erp_pref(/datum/erp_preference/boolean/always_show_nsfw_flavor))
 			is_naked = TRUE
 		obscured = ((!isobserver(user))) && ((holder_human.wear_mask && (holder_human.wear_mask.flags_inv & HIDEFACE)) || (holder_human.head && (holder_human.head.flags_inv & HIDEFACE))) // ((!isobserver(user)) && !holder_human.client?.prefs?.masked_examine)
 		flavor_text = obscured ? "Obscured" : holder.flavortext

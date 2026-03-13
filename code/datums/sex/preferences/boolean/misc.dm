@@ -21,3 +21,9 @@
 	description = "If your breasts can be forced to lactate through potions or other means"
 	default_value = TRUE
 	category = "General"
+
+/datum/erp_preference/boolean/always_show_nsfw_flavor
+	name = "Always show nsfw flavor"
+	description = "If you want your nsfw flavor to be shown even when clothed"
+	default_value = FALSE
+	category = "General"
