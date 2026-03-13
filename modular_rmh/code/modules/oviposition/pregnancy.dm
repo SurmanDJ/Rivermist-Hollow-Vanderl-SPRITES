@@ -42,36 +42,13 @@
 	require_ghost_to_hatch = egg.requires_ghost_to_hatch() && poll_for_ghost
 	stage_duration = egg.get_incubation_stage_duration()
 
-	mother = _mother
+	mother = egg.get_oviposition_mother(_mother)
 	father = _father
-	mother_name = _mother?.real_name
-
-	if(ishuman(_mother))
-		var/mob/living/carbon/human/human_mother = _mother
-		var/datum/bodypart_feature/hair/mother_hair = human_mother.get_bodypart_feature_of_slot(BODYPART_FEATURE_HAIR)
-		var/datum/bodypart_feature/hair/mother_facial_hair = human_mother.get_bodypart_feature_of_slot(BODYPART_FEATURE_FACIAL_HAIR)
-		mother_features = list(
-			"skin_tone" = human_mother.skin_tone,
-			"hair_color" = human_mother.get_hair_color(),
-			"hair_style" = mother_hair?.accessory_type,
-			"facial_hair_color" = human_mother.get_facial_hair_color(),
-			"facial_hair_style" = mother_facial_hair?.accessory_type,
-			"eye_color" = human_mother.get_eye_color(),
-			"species" = human_mother.dna?.species?.type,
-		)
-
-	if(ishuman(_father))
-		var/mob/living/carbon/human/human_father = _father
-		var/datum/bodypart_feature/hair/father_hair = human_father.get_bodypart_feature_of_slot(BODYPART_FEATURE_HAIR)
-		var/datum/bodypart_feature/hair/father_facial_hair = human_father.get_bodypart_feature_of_slot(BODYPART_FEATURE_FACIAL_HAIR)
-		father_features = list(
-			"skin_tone" = human_father.skin_tone,
-			"hair_color" = human_father.get_hair_color(),
-			"hair_style" = father_hair?.accessory_type,
-			"facial_hair_color" = human_father.get_facial_hair_color(),
-			"facial_hair_style" = father_facial_hair?.accessory_type,
-			"eye_color" = human_father.get_eye_color(),
-		)
+	mother_name = egg.oviposition_mother_name || mother?.real_name
+	mother_features = egg.oviposition_mother_features?.Copy()
+	if(!LAZYLEN(mother_features))
+		mother_features = get_oviposition_parent_features(mother)
+	father_features = get_oviposition_parent_features(father)
 
 	refresh_container(TRUE)
 	COOLDOWN_START(src, stage_time, stage_duration)

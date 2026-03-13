@@ -174,6 +174,7 @@
 	var/obj/item/oviposition_egg/egg = new
 	var/obj/item/organ/genitals/penis/ovipositor/ovipositor = parent
 	egg.set_egg_type(ovipositor.ovi_egg_type)
+	egg.set_oviposition_mother(carrier)
 	return egg
 
 /datum/component/ovipositor/proc/try_place_egg_in_host(obj/item/organ/receiver, obj/item/oviposition_egg/egg, force = FALSE)

@@ -85,6 +85,7 @@
 	var/egg_type = get_generated_oviposition_egg_type()
 	if(egg_type)
 		egg.set_egg_type(egg_type)
+	egg.set_oviposition_mother(owner)
 
 	var/fit_result = SEND_SIGNAL(src, COMSIG_BODYSTORAGE_TRY_INSERT, egg, STORAGE_LAYER_DEEP)
 	switch(fit_result)

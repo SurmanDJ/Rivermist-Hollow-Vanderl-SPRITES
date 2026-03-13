@@ -65,6 +65,23 @@
 			profile_type = /datum/oviposition_egg_profile/bog_bug
 	return new profile_type
 
+/proc/get_oviposition_parent_features(mob/living/parent)
+	if(!ishuman(parent))
+		return null
+
+	var/mob/living/carbon/human/human_parent = parent
+	var/datum/bodypart_feature/hair/parent_hair = human_parent.get_bodypart_feature_of_slot(BODYPART_FEATURE_HAIR)
+	var/datum/bodypart_feature/hair/parent_facial_hair = human_parent.get_bodypart_feature_of_slot(BODYPART_FEATURE_FACIAL_HAIR)
+	return list(
+		"skin_tone" = human_parent.skin_tone,
+		"hair_color" = human_parent.get_hair_color(),
+		"hair_style" = parent_hair?.accessory_type,
+		"facial_hair_color" = human_parent.get_facial_hair_color(),
+		"facial_hair_style" = parent_facial_hair?.accessory_type,
+		"eye_color" = human_parent.get_eye_color(),
+		"species" = human_parent.dna?.species?.type,
+	)
+
 /obj/item/oviposition_egg
 	parent_type = /obj/item/reagent_containers/food/snacks/oviposition_egg
 	name = "oviposition egg"
@@ -72,6 +89,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	body_storage_bulk = 1
 	var/egg_type = OVI_EGG_NORMAL
+	var/mob/living/oviposition_mother
+	var/oviposition_mother_name
+	var/list/oviposition_mother_features
 
 /obj/item/oviposition_egg/Initialize(mapload)
 	. = ..()
@@ -82,6 +102,15 @@
 		egg_type = new_egg_type
 	update_egg_appearance()
 	return egg_type
+
+/obj/item/oviposition_egg/proc/set_oviposition_mother(mob/living/new_mother)
+	oviposition_mother = new_mother
+	oviposition_mother_name = new_mother?.real_name
+	oviposition_mother_features = get_oviposition_parent_features(new_mother)
+	return oviposition_mother
+
+/obj/item/oviposition_egg/proc/get_oviposition_mother(mob/living/default_mother = null)
+	return oviposition_mother || default_mother
 
 /obj/item/oviposition_egg/proc/get_egg_profile()
 	return get_oviposition_egg_profile(egg_type)

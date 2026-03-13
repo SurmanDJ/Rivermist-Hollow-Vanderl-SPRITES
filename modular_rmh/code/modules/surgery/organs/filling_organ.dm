@@ -328,7 +328,8 @@
 	if(!hatch_result_type)
 		hatch_result_type = egg.get_hatch_result_type()
 
-	egg.AddComponent(/datum/component/pregnancy, owner, father, hatch_result_type)
+	var/mob/living/egg_mother = egg.get_oviposition_mother(owner)
+	egg.AddComponent(/datum/component/pregnancy, egg_mother, father, hatch_result_type)
 	return TRUE
 
 /obj/item/organ/proc/fertilize_oviposition_egg(mob/living/father = null, hatch_result_type = null)
