@@ -118,6 +118,7 @@
 		/obj/item/weapon/knife/dagger/silver/arcyne = 1,
 		/obj/item/storage/belt/pouch/coins/mid,
 		/obj/item/reagent_containers/glass/bottle/beer/emberwine,
+		/obj/item/key/outsider/witch = 1,
 	)
 
 /datum/outfit/swamp_witch/alchemist/pre_equip(mob/living/carbon/human/equipped_human, visuals_only)
@@ -201,6 +202,7 @@
 		/obj/item/book/granter/spellbook/adept = 1,
 		/obj/item/weapon/knife/dagger/silver/arcyne = 1,
 		/obj/item/storage/belt/pouch/coins/mid,
+		/obj/item/key/outsider/witch = 1,
 	)
 
 /datum/outfit/swamp_witch/cinder/pre_equip(mob/living/carbon/human/equipped_human, visuals_only)
@@ -286,6 +288,7 @@
 		/obj/item/book/granter/spellbook/adept = 1,
 		/obj/item/weapon/knife/dagger/silver/arcyne = 1,
 		/obj/item/storage/belt/pouch/coins/mid,
+		/obj/item/key/outsider/witch = 1,
 	)
 
 /datum/outfit/swamp_witch/hex/pre_equip(mob/living/carbon/human/equipped_human, visuals_only)
@@ -364,6 +367,7 @@
 		/obj/item/book/granter/spellbook/adept = 1,
 		/obj/item/weapon/knife/dagger/silver/arcyne = 1,
 		/obj/item/storage/belt/pouch/coins/mid,
+		/obj/item/key/outsider/witch = 1,
 	)
 
 /datum/outfit/swamp_witch/wild/pre_equip(mob/living/carbon/human/equipped_human, visuals_only)

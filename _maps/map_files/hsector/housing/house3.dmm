@@ -35,41 +35,10 @@
 "h" = (
 /turf/closed/wall/mineral/wooddark/vertical,
 /area/indoors/town/rmh)
-"i" = (
-/obj/structure/giantfur/small{
-	layer = 2;
-	plane = -9;
-	pixel_x = -6
-	},
-/turf/open/floor/ruinedwood/spiral,
-/area/indoors/town/rmh)
-"k" = (
-/obj/structure/rack/shelf/biggest,
-/obj/item/reagent_containers/glass/bucket/wooden/alter,
-/obj/item/broom,
-/turf/open/floor/ruinedwood/spiral,
-/area/indoors/town/rmh)
-"l" = (
-/turf/open/floor/carpet/royalblack,
-/area/indoors/town/rmh)
 "m" = (
 /turf/closed/wall/mineral/roofwall/middle{
 	dir = 1
 	},
-/area/indoors/town/rmh)
-"o" = (
-/obj/structure/fluff/railing/wood/east,
-/obj/structure/closet/crate/chest/old_crate,
-/obj/item/plate/clay,
-/obj/item/plate/clay,
-/obj/item/kitchen/fork,
-/obj/item/kitchen/fork,
-/obj/item/kitchen/spoon,
-/obj/item/kitchen/spoon,
-/obj/item/reagent_containers/glass/cup/wooden{
-	pixel_x = 6
-	},
-/turf/open/floor/twig,
 /area/indoors/town/rmh)
 "p" = (
 /obj/effect/decal/edge_corner{
@@ -81,39 +50,11 @@
 	dir = 4;
 	color = "#522f26"
 	},
-/obj/item/reagent_containers/glass/bucket/wooden/alter{
-	pixel_x = -9;
-	pixel_y = 4
-	},
 /turf/open/floor/tile/brick,
-/area/indoors/town/rmh)
-"q" = (
-/obj/structure/closet/crate/drawer,
-/obj/item/flint,
-/turf/open/floor/carpet/royalblack,
-/area/indoors/town/rmh)
-"r" = (
-/obj/structure/fluff/railing/wood/east,
-/turf/open/floor/carpet/royalblack,
 /area/indoors/town/rmh)
 "s" = (
 /turf/closed/wall/mineral/craftstone,
 /area/outdoors/rmh_air)
-"t" = (
-/obj/structure/table/wood/plain/alto,
-/obj/item/reagent_containers/glass/bowl{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/glass/bowl{
-	pixel_y = -4;
-	pixel_x = 11
-	},
-/obj/item/candle/tin/lit{
-	pixel_y = 10
-	},
-/turf/open/floor/ruinedwood/spiral,
-/area/indoors/town/rmh)
 "u" = (
 /turf/closed/wall/mineral/roofwall/middle{
 	dir = 4
@@ -147,7 +88,6 @@
 /turf/closed/wall/mineral/wooddark/vertical,
 /area/indoors/town/rmh)
 "B" = (
-/obj/structure/fermentation_keg/random/water,
 /obj/machinery/light/fueled/wallfire/candle/r{
 	pixel_y = -32
 	},
@@ -182,22 +122,6 @@
 	dir = 1
 	},
 /area/outdoors/rmh_air)
-"I" = (
-/obj/structure/closet/crate/chest/wicker,
-/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
-/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
-/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
-/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
-/obj/item/reagent_containers/food/snacks/meat/steak,
-/obj/item/reagent_containers/food/snacks/meat/steak,
-/obj/item/reagent_containers/food/snacks/produce/vegetable/cabbage,
-/obj/item/reagent_containers/food/snacks/produce/vegetable/potato,
-/obj/item/reagent_containers/food/snacks/produce/vegetable/potato,
-/obj/item/reagent_containers/food/snacks/produce/vegetable/potato,
-/obj/item/reagent_containers/food/snacks/produce/vegetable/onion,
-/obj/item/reagent_containers/food/snacks/produce/vegetable/onion,
-/turf/open/floor/twig,
-/area/indoors/town/rmh)
 "J" = (
 /obj/effect/decal/edge_corner{
 	dir = 4;
@@ -219,17 +143,8 @@
 	dir = 8;
 	color = "#522f26"
 	},
-/obj/structure/table/wood/reinforced_alter,
-/obj/structure/fluff/millstone{
-	pixel_y = 18;
-	pixel_x = 8
-	},
-/obj/item/weapon/knife/villager,
 /obj/machinery/light/fueled/wallfire/candle/r{
 	pixel_y = 32
-	},
-/obj/item/reagent_containers/glass/cup/wooden{
-	pixel_x = 6
 	},
 /turf/open/floor/tile/brick,
 /area/indoors/town/rmh)
@@ -243,10 +158,6 @@
 /area/indoors/town/rmh)
 "O" = (
 /obj/machinery/light/fueled/wallfire/candle/l,
-/turf/open/floor/ruinedwood/spiral,
-/area/indoors/town/rmh)
-"P" = (
-/obj/structure/chair/stool/bar,
 /turf/open/floor/ruinedwood/spiral,
 /area/indoors/town/rmh)
 "Q" = (
@@ -283,17 +194,14 @@
 /area/indoors/town/rmh)
 "V" = (
 /obj/machinery/light/fueled/hearth,
-/obj/item/reagent_containers/glass/bucket/pot,
 /obj/machinery/light/fueled/oven/south,
 /turf/open/floor/cobblerock,
 /area/indoors/town/rmh)
 "W" = (
-/obj/structure/bed/wool/double,
-/obj/item/bedsheet/double_pelt,
 /obj/machinery/light/fueled/wallfire/candle/l{
 	pixel_y = 32
 	},
-/turf/open/floor/carpet/royalblack,
+/turf/open/floor/ruinedwood/spiral,
 /area/indoors/town/rmh)
 "X" = (
 /turf/open/floor/twig,
@@ -319,7 +227,7 @@ F
 (2,1,1) = {"
 a
 W
-q
+R
 h
 e
 c
@@ -327,11 +235,11 @@ a
 "}
 (3,1,1) = {"
 U
-r
-l
+R
+R
 F
 R
-P
+R
 G
 "}
 (4,1,1) = {"
@@ -339,8 +247,8 @@ y
 p
 z
 O
-i
-t
+R
+R
 a
 "}
 (5,1,1) = {"
@@ -349,7 +257,7 @@ V
 T
 R
 R
-P
+R
 G
 "}
 (6,1,1) = {"
@@ -357,7 +265,7 @@ y
 K
 J
 R
-k
+R
 B
 a
 "}
@@ -383,7 +291,7 @@ Y
 (2,1,2) = {"
 H
 m
-I
+X
 X
 D
 f
@@ -402,7 +310,7 @@ Y
 H
 x
 d
-o
+d
 d
 g
 Y
