@@ -141,6 +141,8 @@
 			var/max_restore = reagent_generate_rate * 2
 			var/restore_amount = min(max_restore, reagents.maximum_volume - max_femcum)
 			reagents.add_reagent(reagent_to_make, restore_amount)
+		var/obj/item/organ/genitals/filling_organ/vagina/vagina_organ = src
+		vagina_organ.try_generate_oviposition_egg()
 	else
 		if(!damage) //cant regen or consume while damaged.
 			if(!HAS_TRAIT(src, TRAIT_NOHUNGER)) //if not nohunger

@@ -73,9 +73,14 @@
 /proc/ensure_bog_bug_ovipositor(mob/living/owner)
 	return ensure_typed_ovipositor(owner, OVI_EGG_BOG_BUG)
 
+/proc/get_oviposition_egg_type_option_name(option)
+	switch(option)
+		if(OVI_EGG_NORMAL)
+			return "Safe (Normal)"
+	return "[option]"
+
 /datum/sprite_accessory/genitals/penis/ovipositor
 	name = "Ovipositor"
-	// Reuse the closest existing preview art until a dedicated ovipositor overlay is added.
 	icon_state = "tapered"
 	color_key_defaults = list(KEY_CHEST_COLOR, KEY_CHEST_COLOR)
 
@@ -117,7 +122,33 @@
 	set_ovipositor_functionality(ovipositor_organ, FALSE)
 
 /datum/quirk/peculiarity/ovipositor/get_option_name(option)
-	switch(option)
-		if(OVI_EGG_NORMAL)
-			return "Safe (Normal)"
-	return ..()
+	return get_oviposition_egg_type_option_name(option)
+
+/datum/quirk/peculiarity/egg_layer
+	name = "Egg Layer"
+	desc = "My womb slowly forms eggs on its own."
+	customization_label = "Choose Egg Type"
+	customization_options = list(
+		OVI_EGG_NORMAL,
+	)
+
+/datum/quirk/peculiarity/egg_layer/is_available(datum/preferences/prefs)
+	if(!..())
+		return FALSE
+	if(!prefs)
+		return TRUE
+
+	var/datum/customizer_entry/organ/genitals/vagina/vagina_entry = prefs.get_customizer_entry_of_type(/datum/customizer_entry/organ/genitals/vagina)
+	return vagina_entry && !vagina_entry.disabled
+
+/datum/quirk/peculiarity/egg_layer/on_spawn()
+	if(!customization_value || !(customization_value in customization_options))
+		customization_value = OVI_EGG_NORMAL
+
+	ADD_TRAIT(owner, TRAIT_EGG_LAYER, "[type]")
+
+/datum/quirk/peculiarity/egg_layer/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_EGG_LAYER, "[type]")
+
+/datum/quirk/peculiarity/egg_layer/get_option_name(option)
+	return get_oviposition_egg_type_option_name(option)

@@ -218,8 +218,7 @@
 	if(!storage || !max_stage)
 		return
 
-	var/deep_capacity = max(1, storage.layer_storage_max_bulk[STORAGE_LAYER_DEEP] || 0)
-	var/new_bulk = max(1, round(deep_capacity * (stage / max_stage)))
+	var/new_bulk = max(1, stage)
 	if(egg.body_storage_bulk == new_bulk)
 		return
 
