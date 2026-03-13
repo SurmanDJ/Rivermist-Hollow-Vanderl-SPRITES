@@ -33,8 +33,8 @@
 	//pregnancy vars
 	var/fertility = FALSE //can it be impregnated
 	var/pregnant = FALSE // is it pregnant
-	var/preggotimer
-	var/pre_pregnancy_size = 0
+	var/conventional_pregnancy_stage = 0
+	var/conventional_pregnancy_timer
 	var/allows_conventional_impregnation = FALSE
 
 	//misc
@@ -384,51 +384,43 @@
 		to_chat(owner, span_love("I feel a surge of warmth in my [src.name], I'm definitely pregnant!"))
 	reagents.maximum_volume *= 0.5
 	pregnant = TRUE
+	conventional_pregnancy_stage = 0
 	if(owner.getorganslot(ORGAN_SLOT_BREASTS))
 		var/obj/item/organ/genitals/filling_organ/breasts/breasties = owner.getorganslot(ORGAN_SLOT_BREASTS)
 		if(!breasties.refilling)
 			breasties.refilling = TRUE
 			to_chat(owner, span_love("I feel damp warmness on my nipples, I'm definitely leaking milk..."))
-	if(owner.getorganslot(ORGAN_SLOT_BELLY))
-		var/obj/item/organ/genitals/belly/belly = owner.getorganslot(ORGAN_SLOT_BELLY)
-		pre_pregnancy_size = belly.organ_size
-		preggotimer = addtimer(CALLBACK(src, PROC_REF(handle_preggoness)), 3 HOURS, TIMER_STOPPABLE)
+	conventional_pregnancy_timer = addtimer(CALLBACK(src, PROC_REF(advance_conventional_pregnancy)), 3 HOURS, TIMER_STOPPABLE)
+	SEND_SIGNAL(src, COMSIG_BODYSTORAGE_CHANGED)
 	return TRUE
 
-/obj/item/organ/genitals/filling_organ/proc/undo_preggoness()
+/obj/item/organ/genitals/filling_organ/proc/clear_conventional_pregnancy()
 	if(!pregnant)
 		return
-	deltimer(preggotimer)
+
+	if(conventional_pregnancy_timer)
+		deltimer(conventional_pregnancy_timer)
+		conventional_pregnancy_timer = null
+
 	pregnant = FALSE
+	conventional_pregnancy_stage = 0
 	to_chat(owner, span_love("I feel my [src] shrink to how it was before. Pregnancy is no more."))
-	if(owner.getorganslot(ORGAN_SLOT_BELLY))
-		var/obj/item/organ/genitals/belly/bellyussy = owner.getorganslot(ORGAN_SLOT_BELLY)
-		bellyussy.organ_size = pre_pregnancy_size
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.update_body_parts()
+	SEND_SIGNAL(src, COMSIG_BODYSTORAGE_CHANGED)
 
-/obj/item/organ/genitals/filling_organ/proc/handle_preggoness()
-	if(owner.getorganslot(ORGAN_SLOT_BELLY))
-		var/obj/item/organ/genitals/belly/bellyussy = owner.getorganslot(ORGAN_SLOT_BELLY)
-		if(bellyussy.organ_size < BELLY_SIZE_SMALL)
-			if(prob(30))
-				to_chat(owner, span_love("I notice my belly has grown due to pregnancy..."))
-				bellyussy.organ_size += 1
-				if(iscarbon(owner))
-					var/mob/living/carbon/carbon_owner = owner
-					carbon_owner.update_body_parts()
-			preggotimer = addtimer(CALLBACK(src, PROC_REF(handle_preggoness)), 3 HOURS, TIMER_STOPPABLE)
-		else
-			deltimer(preggotimer)
+/obj/item/organ/genitals/filling_organ/proc/advance_conventional_pregnancy()
+	if(!pregnant || !owner)
+		conventional_pregnancy_timer = null
+		return
 
-/mob/living/proc/has_internal_pregnancy(excluded_organ = null)
-	for(var/obj/item/organ/organ as anything in internal_organs)
-		if(organ == excluded_organ)
-			continue
-		if(organ.has_oviposition_pregnancy() || organ.has_conventional_pregnancy())
-			return TRUE
-	return FALSE
+	if(conventional_pregnancy_stage < 3 && prob(30))
+		conventional_pregnancy_stage += 1
+		to_chat(owner, span_love("I notice my belly has grown due to pregnancy..."))
+		SEND_SIGNAL(src, COMSIG_BODYSTORAGE_CHANGED)
+
+	if(conventional_pregnancy_stage < 3)
+		conventional_pregnancy_timer = addtimer(CALLBACK(src, PROC_REF(advance_conventional_pregnancy)), 3 HOURS, TIMER_STOPPABLE)
+	else
+		conventional_pregnancy_timer = null
 
 //had to make this ghetto ass shit, fucks sake
 /mob/living/carbon/proc/mob_slot_wearing(zone)

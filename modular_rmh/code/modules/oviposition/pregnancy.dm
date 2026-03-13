@@ -19,8 +19,6 @@
 	var/max_stage = OVIPOSITION_PREGNANCY_STAGES
 	var/revealed = FALSE
 	var/laid = FALSE
-	var/added_belly_size = 0
-	var/added_breast_size = 0
 	var/poll_for_ghost = TRUE
 	var/require_ghost_to_hatch = TRUE
 	var/stage_duration = OVIPOSITION_STAGE_DURATION
@@ -97,8 +95,6 @@
 		unregister_carrier()
 
 /datum/component/pregnancy/Destroy()
-	if(carrier)
-		clear_carrier_state()
 	return ..()
 
 /datum/component/pregnancy/proc/register_container()
@@ -133,10 +129,9 @@
 
 	var/mob/living/new_carrier = laid ? null : container?.owner
 	if(carrier == new_carrier)
+		update_egg_storage_bulk()
 		return
 
-	if(carrier && !setup_only)
-		clear_carrier_state()
 	if(carrier && !setup_only)
 		unregister_carrier()
 
@@ -144,8 +139,7 @@
 
 	if(carrier && !setup_only)
 		register_carrier()
-	if(carrier)
-		update_carrier_state()
+	update_egg_storage_bulk()
 
 /datum/component/pregnancy/proc/on_moved(datum/source, atom/oldloc, dir, forced)
 	SIGNAL_HANDLER
@@ -203,7 +197,7 @@
 			ready_message = "The egg in my %CONTAINER% is fully developed and wants out."
 		to_chat(carrier, span_warning(format_container_message(ready_message)))
 
-	update_carrier_state()
+	update_egg_storage_bulk()
 
 /datum/component/pregnancy/proc/get_container_location_name()
 	return container?.get_oviposition_location_name() || "body"
@@ -216,57 +210,21 @@
 	formatted_message = replacetext(formatted_message, "%EGG%", "[egg]")
 	return formatted_message
 
-/datum/component/pregnancy/proc/update_carrier_state()
-	if(!ishuman(carrier))
+/datum/component/pregnancy/proc/update_egg_storage_bulk()
+	if(!egg || laid)
 		return
 
-	var/mob/living/carbon/human/human_carrier = carrier
-	var/update_icons = FALSE
-
-	if(stage >= 2 && !added_belly_size)
-		var/obj/item/organ/genitals/belly/belly = human_carrier.getorganslot(ORGAN_SLOT_BELLY)
-		if(belly && belly.organ_size < BELLY_SIZE_SMALL)
-			belly.organ_size += 1
-			added_belly_size = 1
-			update_icons = TRUE
-
-	if(stage >= 3)
-		var/obj/item/organ/genitals/filling_organ/breasts/breasts = human_carrier.getorganslot(ORGAN_SLOT_BREASTS)
-		if(breasts)
-			breasts.refilling = TRUE
-			if(!added_breast_size && breasts.organ_size < MAX_BREASTS_SIZE)
-				breasts.organ_size += 1
-				added_breast_size = 1
-				update_icons = TRUE
-
-	if(update_icons)
-		human_carrier.update_body_parts()
-
-/datum/component/pregnancy/proc/clear_carrier_state()
-	if(!ishuman(carrier))
-		added_belly_size = 0
-		added_breast_size = 0
+	var/datum/component/body_storage/storage = container?.GetComponent(/datum/component/body_storage)
+	if(!storage || !max_stage)
 		return
 
-	var/mob/living/carbon/human/human_carrier = carrier
-	var/update_icons = FALSE
+	var/deep_capacity = max(1, storage.layer_storage_max_bulk[STORAGE_LAYER_DEEP] || 0)
+	var/new_bulk = max(1, round(deep_capacity * (stage / max_stage)))
+	if(egg.body_storage_bulk == new_bulk)
+		return
 
-	if(added_belly_size)
-		var/obj/item/organ/genitals/belly/belly = human_carrier.getorganslot(ORGAN_SLOT_BELLY)
-		if(belly && !human_carrier.has_internal_pregnancy(container))
-			belly.organ_size = max(MIN_BELLY_SIZE, belly.organ_size - added_belly_size)
-			update_icons = TRUE
-		added_belly_size = 0
-
-	if(added_breast_size)
-		var/obj/item/organ/genitals/filling_organ/breasts/breasts = human_carrier.getorganslot(ORGAN_SLOT_BREASTS)
-		if(breasts)
-			breasts.organ_size = max(MIN_BREASTS_SIZE, breasts.organ_size - added_breast_size)
-			update_icons = TRUE
-		added_breast_size = 0
-
-	if(update_icons)
-		human_carrier.update_body_parts()
+	egg.body_storage_bulk = new_bulk
+	storage.recalculate_current_bulk(container)
 
 /datum/component/pregnancy/proc/remove_from_host()
 	if(!container)

@@ -54,3 +54,4 @@
 	..()
 	var/obj/item/organ/genitals/belly/belly_organ = organ
 	belly_organ.organ_size = belly_size
+	belly_organ.resting_size = belly_size

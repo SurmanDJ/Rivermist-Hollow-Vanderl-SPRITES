@@ -22,6 +22,16 @@
 		ovi_egg_type = new_egg_type
 	return ovi_egg_type
 
+/obj/item/organ/genitals/penis/ovipositor/proc/set_clutch_size(new_size)
+	if(isnull(new_size))
+		return egg_clutch_size
+
+	egg_clutch_size = max(1, round(new_size))
+
+	var/datum/component/ovipositor/ovipositor_component = GetComponent(/datum/component/ovipositor)
+	ovipositor_component?.set_clutch_size(egg_clutch_size)
+	return egg_clutch_size
+
 // Keep the organ type and the oviposition behavior separate so character prefs can pick
 // the anatomy while quirks or mob setup decide whether it is actually functional.
 /proc/set_ovipositor_functionality(obj/item/organ/genitals/penis/ovipositor, enabled = TRUE)
@@ -77,6 +87,10 @@
 /datum/quirk/peculiarity/ovipositor
 	name = "Oviposition"
 	desc = "My 'penis' is a functional ovipositor and can be used to lay eggs."
+	customization_label = "Choose Egg Type"
+	customization_options = list(
+		OVI_EGG_NORMAL,
+	)
 
 /datum/quirk/peculiarity/ovipositor/is_available(datum/preferences/prefs)
 	if(!..())
@@ -88,12 +102,22 @@
 	if(!penis_entry || penis_entry.disabled)
 		return FALSE
 
-	return TRUE
+	return penis_entry.customizer_choice_type == /datum/customizer_choice/organ/genitals/penis/ovipositor
 
 /datum/quirk/peculiarity/ovipositor/on_spawn()
-	var/obj/item/organ/genitals/penis/ovipositor = owner?.getorganslot(ORGAN_SLOT_PENIS)
-	set_ovipositor_functionality(ovipositor, TRUE)
+	if(!customization_value || !(customization_value in customization_options))
+		customization_value = OVI_EGG_NORMAL
+
+	var/obj/item/organ/genitals/penis/ovipositor/ovipositor_organ = owner?.getorganslot(ORGAN_SLOT_PENIS)
+	ovipositor_organ?.set_egg_type(customization_value)
+	set_ovipositor_functionality(ovipositor_organ, TRUE)
 
 /datum/quirk/peculiarity/ovipositor/on_remove()
-	var/obj/item/organ/genitals/penis/ovipositor = owner?.getorganslot(ORGAN_SLOT_PENIS)
-	set_ovipositor_functionality(ovipositor, FALSE)
+	var/obj/item/organ/genitals/penis/ovipositor/ovipositor_organ = owner?.getorganslot(ORGAN_SLOT_PENIS)
+	set_ovipositor_functionality(ovipositor_organ, FALSE)
+
+/datum/quirk/peculiarity/ovipositor/get_option_name(option)
+	switch(option)
+		if(OVI_EGG_NORMAL)
+			return "Safe (Normal)"
+	return ..()
