@@ -1,6 +1,6 @@
 # Update And Migration Policy
 
-Generated on 2026-03-11. Use this file when refreshing the `ai_navigation/` navigation layer, rebuilding it after heavy code drift, or migrating this repository-orientation system to another codebase.
+Generated on 2026-03-11. This is the `Maintenance Start` entrypoint for refreshing the `ai_navigation/` navigation layer, rebuilding it after heavy code drift, or migrating this repository-orientation system to another codebase.
 
 ## Terminology
 
@@ -19,6 +19,8 @@ In this file:
   keep the navigation layer cheap to rebuild and cheap to use
 
 Do not treat the old navigation docs as authoritative during a refresh. Use them only as hints.
+
+For ordinary feature work, do not start here. Use `ai_navigation/router.md` instead.
 
 ## Minimal Refresh Contract
 

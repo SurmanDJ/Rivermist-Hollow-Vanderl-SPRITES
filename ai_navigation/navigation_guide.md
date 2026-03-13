@@ -9,12 +9,24 @@ Terminology note:
 
 If you are framing a new task for an agent, use `ai_navigation/task_templates.md` together with this guide.
 
-## Read Order
+## Start Modes
 
-1. Start with `ai_navigation/router.md`.
-2. Open exactly one helper file.
-3. Open up to 2 source files for that route.
-4. Escalate only if the route is still ambiguous:
+Choose one mode first:
+
+- `Fast Start`:
+  `ai_navigation/router.md` -> 1 helper -> up to 2 source files
+- `Guided Start`:
+  `ai_navigation/AGENTS.md` -> `ai_navigation/router.md` -> 1 helper -> up to 2 source files
+- `Maintenance Start`:
+  `ai_navigation/update_policy.md`
+
+Default to `Fast Start` unless there is a clear reason to use a heavier mode.
+
+## Escalation
+
+After the first route, escalate only if it is still ambiguous:
+   - `ai_navigation/start_modes.md`
+   - `ai_navigation/start_matrix.md`
    - `ai_navigation/human_checking.md`
    - `ai_navigation/update_policy.md`
    - `ai_navigation/content_creation.md`
@@ -34,13 +46,16 @@ If you are framing a new task for an agent, use `ai_navigation/task_templates.md
 
 ## Read Budget
 
-- Stage 1: `ai_navigation/router.md` + one small helper file + up to 2 source files.
+- Stage 1: `Fast Start` by default: `ai_navigation/router.md` + one small helper file + up to 2 source files.
 - Stage 2: one more helper file or one `SS*` file + up to 2 more source files.
 - Stage 3: only then open the larger navigation docs or do broader searches.
 
 ## Fast Routing Rules
 
 - If a keyword in `ai_navigation/entrypoints.md` already matches the task, use that route before opening the larger navigation docs.
+- If you know the task shape but not the best entrypoint, use `ai_navigation/start_matrix.md`.
+- If the task is ordinary and localized, prefer `Fast Start` over `Guided Start`.
+- If the task is broad, risky, or explicitly human-guided, switch to `ai_navigation/AGENTS.md`.
 - If the task begins with a symptom, use `ai_navigation/debug_routes.md` before anything else.
 - If the planned change may touch a shared branch or hot path, use `ai_navigation/human_checking.md` before editing.
 - If the task is to refresh `ai_navigation/` or migrate this mapping to another codebase, use `ai_navigation/update_policy.md` before scanning broadly.
@@ -84,6 +99,7 @@ If you are framing a new task for an agent, use `ai_navigation/task_templates.md
 ## Heuristics That Save Time
 
 - Prefer one helper file plus source files over multiple helper files in a row.
+- Prefer `Fast Start` unless a heavier startup mode is justified.
 - Prefer directory families over whole-repo scans: `code/datums` for logic/state, `code/modules` for feature slices, `code/game` for concrete world objects.
 - If a system is content-heavy, inspect `modular_rmh` early; if it is scheduler/runtime-heavy, inspect `code/controllers` first.
 - Before editing anything broad, classify risk and ask for approval if the scope is medium, high, or ambiguous.

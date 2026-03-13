@@ -7,14 +7,21 @@ Terminology note:
 - `AI mapping` or `navigation layer` means the repository-orientation docs in `ai_navigation/` plus this file.
 - It does not mean in-game map files, `_maps/**`, `code/modules/mapping/**`, or `SSmapping`.
 
+This file is the `Guided Start` entrypoint, not the cheapest default bootstrap.
+
+For ordinary work, `ai_navigation/router.md` is cheaper.
+For refreshes and migrations, `ai_navigation/update_policy.md` is the correct entrypoint.
+
 The `ai_navigation/` navigation layer is a routing aid, not a source of truth. It may lag behind the codebase by up to one monthly manual refresh cycle. Use it to localize work quickly, then verify against source files before making conclusions or edits. If the navigation layer and code disagree, trust the code and report the mismatch.
 
-Recommended handoff pattern:
+Recommended guided handoff pattern:
 
 1. First message: the goal.
 2. Second message: this repository and its guidance.
 
 ## Bootstrap
+
+Use this file only when `Guided Start` is actually needed.
 
 1. Open `ai_navigation/router.md`.
 2. Choose exactly 1 helper file.
@@ -32,6 +39,8 @@ If the task is to refresh the navigation layer or migrate it to another codebase
 
 ## If You Need More
 
+- startup mode selection: `ai_navigation/start_modes.md`
+- task-shape to startup routing matrix: `ai_navigation/start_matrix.md`
 - human developer onboarding: `ai_navigation/DEVELOPER_GUIDE.md`
 - task framing: `ai_navigation/task_templates.md`
 - navigation-layer refresh and migration rules: `ai_navigation/update_policy.md`

@@ -124,7 +124,7 @@ export const FlavorTextPage = (props) => {
                   </Button>
                   <Button
                     selected={flavorTextIndex === 'NSFW'}
-                    disabled={!flavor_text_nsfw}
+                    disabled={!is_naked || !flavor_text_nsfw}
                     bold={flavorTextIndex === 'NSFW'}
                     onClick={() => {
                       setFlavorTextIndex('NSFW');
@@ -187,7 +187,7 @@ export const ImageGalleryPage = () => {
           </Button>
           <Button
             selected={galleryMode === 'NSFW'}
-            disabled={!nsfw_img_gallery}
+            disabled={!is_naked || !nsfw_img_gallery}
             bold={galleryMode === 'NSFW'}
             onClick={() => setGalleryMode('NSFW')}
             textAlign="center"

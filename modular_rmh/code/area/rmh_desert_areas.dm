@@ -25,7 +25,10 @@
 	icon = 'modular_rmh/icons/turf/areas.dmi'
 	icon_state = "lowdesert"
 	soundenv = 19
-	ambush_mobs = null
+	ambush_times = list("night","dawn","dusk","day")
+	ambush_types = list(/turf/open/floor/sand/dunes)
+	ambush_mobs = list(
+				/mob/living/simple_animal/hostile/retaliate/spider/mutated = 5)
 	first_time_text = "DESERT VALLEY"
 	ambientsounds = DRONING_MOUNTAIN
 	ambientnight = DRONING_MOUNTAIN
