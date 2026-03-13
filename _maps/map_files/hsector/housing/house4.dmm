@@ -3,55 +3,11 @@
 /obj/machinery/light/fueled/wallfire/candle/r,
 /turf/open/floor/ruinedwood/spiralfade,
 /area/indoors/town/rmh)
-"b" = (
-/obj/effect/decal/edge{
-	dir = 10;
-	color = "#522f26"
-	},
-/turf/open/floor/blocks/stonered/tiny,
-/area/indoors/town/rmh)
-"c" = (
-/obj/structure/door/weak/bolt{
-	dir = 8
-	},
-/turf/open/floor/ruinedwood,
-/area/indoors/town/rmh)
 "g" = (
-/obj/structure/closet/crate/chest/crate,
-/obj/item/reagent_containers/glass/bowl{
-	pixel_x = -5
-	},
-/obj/item/kitchen/spoon,
-/obj/item/kitchen/spoon,
-/obj/item/reagent_containers/glass/bowl{
-	pixel_x = -5
-	},
-/obj/effect/decal/edge_corner{
-	dir = 1;
-	color = "#522f26";
-	pixel_y = 0
-	},
-/obj/item/reagent_containers/glass/cup/wooden{
-	pixel_x = 6
-	},
 /obj/machinery/light/fueled/wallfire/candle/r{
 	pixel_y = 32
 	},
-/turf/open/floor/blocks/stonered,
-/area/indoors/town/rmh)
-"k" = (
-/obj/structure/bed/wool/double,
-/obj/item/bedsheet/double_pelt,
-/turf/open/floor/ruinedwood/herringbone,
-/area/indoors/town/rmh)
-"l" = (
-/obj/effect/decal/edge_corner{
-	dir = 2;
-	color = "#522f26";
-	pixel_y = 0
-	},
-/obj/structure/chair/stool/bar,
-/turf/open/floor/blocks/stonered,
+/turf/open/floor/ruinedwood/spiralfade,
 /area/indoors/town/rmh)
 "m" = (
 /obj/machinery/light/fueled/hearth,
@@ -59,74 +15,19 @@
 /obj/machinery/light/fueled/oven/south,
 /turf/open/floor/cobblerock,
 /area/indoors/town/rmh)
-"n" = (
-/obj/structure/table/wood/reinf_long{
-	dir = 8
-	},
-/obj/structure/fluff/millstone{
-	pixel_y = 12;
-	pixel_x = -5
-	},
-/obj/effect/decal/edge_corner{
-	dir = 8;
-	color = "#522f26";
-	pixel_y = 0
-	},
-/obj/item/reagent_containers/glass/cup/wooden{
-	pixel_x = 6
-	},
-/obj/machinery/light/fueled/wallfire/candle/l{
-	pixel_y = 32
-	},
-/turf/open/floor/blocks/stonered,
-/area/indoors/town/rmh)
 "p" = (
-/obj/structure/closet/crate/drawer,
 /obj/machinery/light/fueled/wallfire/candle/l{
-	pixel_y = -32
-	},
-/obj/item/flint,
-/turf/open/floor/ruinedwood/chevron,
-/area/indoors/town/rmh)
-"r" = (
-/obj/structure/closet/crate/chest/wicker,
-/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
-/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
-/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
-/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
-/obj/item/reagent_containers/food/snacks/meat/steak,
-/obj/item/reagent_containers/food/snacks/meat/steak,
-/obj/item/reagent_containers/food/snacks/produce/vegetable/cabbage,
-/obj/item/reagent_containers/food/snacks/produce/vegetable/potato,
-/obj/item/reagent_containers/food/snacks/produce/vegetable/potato,
-/obj/item/reagent_containers/food/snacks/produce/vegetable/potato,
-/obj/item/reagent_containers/food/snacks/produce/vegetable/onion,
-/obj/item/reagent_containers/food/snacks/produce/vegetable/onion,
-/obj/effect/decal/edge{
-	dir = 1;
-	color = "#522f26"
-	},
-/turf/open/floor/blocks/stonered/tiny,
-/area/indoors/town/rmh)
-"s" = (
-/turf/closed/wall/mineral/wooddark/vertical,
-/area/indoors/town/rmh)
-"t" = (
-/turf/open/floor/blocks/stonered/tiny,
-/area/indoors/town/rmh)
-"u" = (
-/obj/structure/rack/shelf/biggest,
-/obj/item/storage/sack,
-/obj/item/broom,
-/obj/machinery/light/fueled/wallfire/candle/r{
 	pixel_y = -32
 	},
 /turf/open/floor/ruinedwood/spiralfade,
 /area/indoors/town/rmh)
-"w" = (
-/obj/structure/closet/crate/crafted_closet,
-/obj/item/storage/sack,
-/obj/item/storage/sack,
+"s" = (
+/turf/closed/wall/mineral/wooddark/vertical,
+/area/indoors/town/rmh)
+"u" = (
+/obj/machinery/light/fueled/wallfire/candle/r{
+	pixel_y = -32
+	},
 /turf/open/floor/ruinedwood/spiralfade,
 /area/indoors/town/rmh)
 "y" = (
@@ -146,43 +47,23 @@
 "C" = (
 /turf/closed/wall/mineral/craftstone,
 /area/indoors/town/rmh)
-"D" = (
-/turf/open/floor/ruinedwood/chevron,
-/area/indoors/town/rmh)
 "E" = (
 /obj/structure/sign/property_sign/claim,
 /turf/closed/wall/mineral/stone,
 /area/indoors/town/rmh)
 "G" = (
-/obj/structure/table/wood/reinf_long{
-	dir = 4
+/obj/effect/decal/edge_corner{
+	dir = 2;
+	color = "#522f26";
+	pixel_y = 0
 	},
-/obj/item/weapon/knife/villager,
-/obj/effect/decal/edge{
-	dir = 1;
-	color = "#522f26"
-	},
-/turf/open/floor/blocks/stonered/tiny,
+/turf/open/floor/blocks/stonered,
 /area/indoors/town/rmh)
 "H" = (
 /turf/closed/wall/mineral/wooddark/horizontal,
 /area/indoors/town/rmh)
-"J" = (
-/obj/effect/decal/edge{
-	dir = 8;
-	color = "#522f26"
-	},
-/turf/open/floor/blocks/stonered,
-/area/indoors/town/rmh)
 "L" = (
 /turf/closed/wall/mineral/stone,
-/area/indoors/town/rmh)
-"M" = (
-/obj/effect/decal/edge{
-	dir = 1;
-	color = "#522f26"
-	},
-/turf/open/floor/blocks/stonered/tiny,
 /area/indoors/town/rmh)
 "N" = (
 /obj/effect/decal/edge{
@@ -201,59 +82,17 @@
 	},
 /turf/open/floor/woodturned,
 /area/indoors/town/rmh)
-"P" = (
-/obj/machinery/light/fueled/wallfire/candle/l,
-/obj/item/reagent_containers/glass/bucket/wooden/alter{
-	pixel_x = -9;
-	pixel_y = 4
-	},
-/turf/open/floor/ruinedwood/spiralfade,
-/area/indoors/town/rmh)
-"R" = (
-/obj/structure/chair/stool/bar,
-/obj/effect/decal/edge{
-	dir = 2;
-	color = "#522f26"
-	},
-/turf/open/floor/blocks/stonered,
-/area/indoors/town/rmh)
-"T" = (
-/obj/effect/decal/edge{
-	dir = 4;
-	color = "#522f26"
-	},
-/obj/structure/fluff/wallclock/r,
-/turf/open/floor/blocks/stonered,
-/area/indoors/town/rmh)
 "U" = (
 /turf/closed/wall/mineral/wooddark,
 /area/indoors/town/rmh)
 "X" = (
 /turf/open/floor/ruinedwood/spiralfade,
 /area/indoors/town/rmh)
-"Y" = (
-/obj/effect/decal/edge{
-	dir = 2;
-	color = "#522f26"
-	},
-/obj/structure/table/wood/plain/alto,
-/obj/item/candle/tin/lit{
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/glass/cup/wooden{
-	pixel_x = 6
-	},
-/turf/open/floor/blocks/stonered,
-/area/indoors/town/rmh)
 "Z" = (
 /obj/machinery/light/fueled/wallfire/candle/l{
 	pixel_y = 32
 	},
-/obj/effect/decal/carpet/square{
-	pixel_x = 16;
-	pixel_y = -8
-	},
-/turf/open/floor/ruinedwood/chevron,
+/turf/open/floor/ruinedwood/spiralfade,
 /area/indoors/town/rmh)
 
 (1,1,1) = {"
@@ -268,10 +107,10 @@ U
 "}
 (2,1,1) = {"
 L
-n
-J
-l
-s
+Z
+X
+X
+X
 Z
 p
 s
@@ -279,38 +118,38 @@ s
 (3,1,1) = {"
 C
 G
-t
-Y
-s
-D
-k
+X
+X
+X
+X
+X
 s
 "}
 (4,1,1) = {"
 m
-M
-b
-R
-U
-c
-H
+N
+X
+X
+X
+X
+X
 U
 "}
 (5,1,1) = {"
 C
-r
-t
-N
-P
+y
 X
-w
+X
+X
+X
+X
 L
 "}
 (6,1,1) = {"
 L
 g
-T
-y
+X
+X
 a
 X
 u
