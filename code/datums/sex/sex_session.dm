@@ -1057,7 +1057,6 @@
 				show_ui(selected_tab)
 				return
 			try_start_action(action_path)
-			return // Don't refresh main UI immediately
 		if("stop")
 			try_stop_current_action(text2path(href_list["action_type"]))
 		if("set_speed")

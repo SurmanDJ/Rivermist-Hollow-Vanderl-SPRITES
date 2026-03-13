@@ -100,6 +100,8 @@
 	var/next_message_time = 0
 	/// Whether this running action should stop on its next loop check
 	var/stop_requested = FALSE
+	/// Which hand this action reserved, if any
+	var/selected_hand = null
 
 /datum/sex_action/Destroy()
 	// Clean up any tracked storage entries
@@ -393,6 +395,27 @@
 
 /datum/sex_action/proc/add_sex_lock(mob/living/locked_host, locked_organ_slot, obj/item/locked_item, hard_lock = TRUE)
 	sex_locks |= new /datum/sex_session_lock(locked_host, locked_organ_slot, locked_item, hard_lock)
+
+/datum/sex_action/proc/find_available_hand(mob/living/user)
+	if(!user || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		return null
+
+	var/list/hand_order = list(user.get_active_precise_hand(), user.get_inactive_precise_hand())
+	for(var/hand_slot in hand_order)
+		if(!hand_slot)
+			continue
+		if(!user.get_bodypart(hand_slot))
+			continue
+		if(check_sex_lock(user, hand_slot))
+			continue
+		return hand_slot
+	return null
+
+/datum/sex_action/proc/get_hand_lock_slot(mob/living/user)
+	if(selected_hand)
+		return selected_hand
+	selected_hand = find_available_hand(user)
+	return selected_hand
 
 /datum/sex_action/proc/unlock_sex_object(mob/living/user, mob/living/target)
 	for(var/datum/sex_session_lock/lock as anything in sex_locks)

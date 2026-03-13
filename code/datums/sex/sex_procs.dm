@@ -211,6 +211,11 @@
 		active_hand = BODY_ZONE_PRECISE_R_HAND
 	return active_hand
 
+/mob/living/proc/get_inactive_precise_hand()
+	if(get_active_precise_hand() == BODY_ZONE_PRECISE_L_HAND)
+		return BODY_ZONE_PRECISE_R_HAND
+	return BODY_ZONE_PRECISE_L_HAND
+
 /mob/proc/check_handholding()
 	return
 

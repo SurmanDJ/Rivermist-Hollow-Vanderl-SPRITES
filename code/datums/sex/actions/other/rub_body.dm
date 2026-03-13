@@ -12,8 +12,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/locked = user.get_active_precise_hand()
-	if(check_sex_lock(user, locked))
+	if(!find_available_hand(user))
 		return FALSE
 	return TRUE
 
@@ -35,5 +34,6 @@
 	user.visible_message(span_warning("[user] stops rubbing [target]'s body ..."))
 
 /datum/sex_action/rub_body/lock_sex_object(mob/living/user, mob/living/target)
-	var/locked = user.get_active_precise_hand()
-	add_sex_lock(user, locked)
+	var/locked = get_hand_lock_slot(user)
+	if(locked)
+		add_sex_lock(user, locked)
