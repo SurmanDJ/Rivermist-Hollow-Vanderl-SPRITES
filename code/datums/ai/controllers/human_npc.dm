@@ -8,7 +8,6 @@
 		BB_ARMOR_CLASS = 2,
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
 		BB_PET_TARGETING_DATUM = new /datum/targetting_datum/basic/not_friends(),
-		BB_HORNY_TARGETTING_DATUM = new /datum/horny_targetting_datum/basic(),
 
 		BB_HUMAN_NPC_ATTACK_ZONE_COUNTER = 0,  // how many times we've hit the same zone
 		BB_HUMAN_NPC_LAST_ATTACK_ZONE = null,  // last zone we attacked
