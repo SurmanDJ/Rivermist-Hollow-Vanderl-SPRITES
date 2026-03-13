@@ -6,6 +6,7 @@
 		return
 	var/mob/living/carbon/human/pawn = controller.pawn
 	var/atom/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[BB_TARGETTING_DATUM]
 	if(!target || !isliving(target))
 		var/obj/item/stashed = controller.blackboard[BB_ARCHER_NPC_STASHED_WEAPON]
 		if(stashed && !QDELETED(stashed))
@@ -16,6 +17,9 @@
 				pawn.dropItemToGround(stashed, TRUE, TRUE)
 				pawn.put_in_inactive_hand(stashed)
 			controller.clear_blackboard_key(BB_ARCHER_NPC_STASHED_WEAPON)
+		return
+	if(targetting_datum && !targetting_datum.can_attack(pawn, target))
+		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
 		return
 
 	var/obj/item/ammo_holder/quiver/Q = controller.blackboard[BB_ARCHER_NPC_QUIVER]
@@ -34,7 +38,7 @@
 			controller.clear_blackboard_key(BB_ARCHER_NPC_STASHED_WEAPON)
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/ranged_attack_bow, BB_BASIC_MOB_CURRENT_TARGET)
+	controller.queue_behavior(/datum/ai_behavior/ranged_attack_bow, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM)
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /datum/ai_behavior/ranged_attack_bow
@@ -42,13 +46,16 @@
 	action_cooldown = 0.2 SECONDS
 	required_distance = ARCHER_NPC_MIN_RANGE + 4
 
-/datum/ai_behavior/ranged_attack_bow/setup(datum/ai_controller/controller, target_key)
+/datum/ai_behavior/ranged_attack_bow/setup(datum/ai_controller/controller, target_key, targetting_datum_key)
 	. = ..()
 	if(!.)
 		return FALSE
 	var/mob/living/carbon/human/pawn = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 	if(!target)
+		return FALSE
+	if(targetting_datum && !targetting_datum.can_attack(pawn, target))
 		return FALSE
 
 	// Stash held melee weapon if needed so both hands are free for the bow
@@ -110,12 +117,16 @@
 	SEND_SIGNAL(controller.pawn, COMSIG_COMBAT_TARGET_SET, TRUE)
 	return TRUE
 
-/datum/ai_behavior/ranged_attack_bow/perform(delta_time, datum/ai_controller/controller, target_key)
+/datum/ai_behavior/ranged_attack_bow/perform(delta_time, datum/ai_controller/controller, target_key, targetting_datum_key)
 	var/mob/living/carbon/human/pawn = controller.pawn
 	var/atom/target = controller.blackboard[target_key]
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 
 
 	if(!target || (ismob(target) && target:stat == DEAD))
+		finish_action(controller, FALSE, target_key)
+		return
+	if(targetting_datum && !targetting_datum.can_attack(pawn, target))
 		finish_action(controller, FALSE, target_key)
 		return
 
@@ -142,6 +153,9 @@
 		chargetime = pawn.used_intent.get_chargetime()
 
 	if(!do_after(pawn, min(chargetime, 1 SECONDS), pawn))
+		finish_action(controller, FALSE, target_key)
+		return
+	if(targetting_datum && !targetting_datum.can_attack(pawn, target))
 		finish_action(controller, FALSE, target_key)
 		return
 
