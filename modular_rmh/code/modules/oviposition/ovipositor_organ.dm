@@ -145,10 +145,12 @@
 	if(!customization_value || !(customization_value in customization_options))
 		customization_value = OVI_EGG_NORMAL
 
-	ADD_TRAIT(owner, TRAIT_EGG_LAYER, "[type]")
+	if(owner)
+		ADD_TRAIT(owner, TRAIT_EGG_LAYER, "[type]")
 
 /datum/quirk/peculiarity/egg_layer/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_EGG_LAYER, "[type]")
+	if(owner)
+		REMOVE_TRAIT(owner, TRAIT_EGG_LAYER, "[type]")
 
 /datum/quirk/peculiarity/egg_layer/get_option_name(option)
 	return get_oviposition_egg_type_option_name(option)

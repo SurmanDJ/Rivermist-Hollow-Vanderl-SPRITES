@@ -140,7 +140,8 @@
 	if(iscarbon(incoming_item.loc))
 		var/mob/living/carbon/M = incoming_item.loc
 		M.dropItemToGround(incoming_item, FALSE, TRUE)
-	organ_storing.contents |= incoming_item
+	if(!(organ_storing.contains(incoming_item)))
+		organ_storing.contents += incoming_item
 	incoming_item.forceMove(organ_storing)
 	var/list/t_layer = all_layers[target_layer]
 	t_layer.Add(incoming_item)
