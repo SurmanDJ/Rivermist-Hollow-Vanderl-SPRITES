@@ -173,7 +173,10 @@
 /datum/component/ovipositor/proc/create_egg()
 	var/obj/item/oviposition_egg/egg = new
 	var/obj/item/organ/genitals/penis/ovipositor/ovipositor = parent
-	egg.set_egg_type(ovipositor.ovi_egg_type)
+	var/egg_type = ovipositor.ovi_egg_type
+	if(egg_type == initial(ovipositor.ovi_egg_type))
+		egg_type = get_species_oviposition_egg_type(carrier) || egg_type
+	egg.set_egg_type(egg_type)
 	egg.set_oviposition_mother(carrier)
 	return egg
 

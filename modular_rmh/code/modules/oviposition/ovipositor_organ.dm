@@ -77,6 +77,8 @@
 	switch(option)
 		if(OVI_EGG_NORMAL)
 			return "Safe (Normal)"
+		if(OVI_EGG_HARPY)
+			return "Harpy"
 	return "[option]"
 
 /datum/sprite_accessory/genitals/penis/ovipositor

@@ -1,6 +1,7 @@
 #define OVI_EGG_NORMAL "normal_ovi"
 #define OVI_EGG_SPIDER "spider_ovi"
 #define OVI_EGG_BOG_BUG "bog_bug_ovi"
+#define OVI_EGG_HARPY "harpy_ovi"
 
 // Egg profiles keep appearance and hatch behavior together so new egg types only
 // need one local subtype instead of special cases spread across the system.
@@ -9,6 +10,7 @@
 	var/display_name = "oviposition egg"
 	var/display_desc = "A soft, warm egg that feels alive even before it starts to twitch."
 	var/display_icon_state = "egg"
+	var/display_icon = null
 	var/display_color = null
 	var/hatch_result_type = /obj/item/reagent_containers/food/snacks/oviposition_egg/color/green //placeholder because we don't want human hatching
 	var/requires_fertilization = TRUE
@@ -29,6 +31,8 @@
 	egg.desc = display_desc
 	egg.icon_state = display_icon_state
 	egg.color = display_color
+	if(display_icon)
+		egg.icon = display_icon
 
 /datum/oviposition_egg_profile/spider
 	egg_type = OVI_EGG_SPIDER
@@ -56,6 +60,14 @@
 	ready_message = "The bog bug egg in my %CONTAINER% churns like a swamp creature is kicking to get free."
 	hatch_message = "%EGG% bursts with a wet pop, spilling out a ravenous bog bug!"
 
+/datum/oviposition_egg_profile/harpy
+	egg_type = OVI_EGG_HARPY
+	display_name = "hardshell egg"
+	display_desc = "A smooth, birdlike egg with a sturdy shell and a gentle, nest-warm weight."
+	display_icon_state = "egg_chicken"
+	display_color = "#eee3c7"
+	ready_message = "The harpy egg in my %CONTAINER% feels full and heavy, like a ripe nesting egg ready to be laid."
+
 /proc/get_oviposition_egg_profile(egg_type)
 	var/profile_type = /datum/oviposition_egg_profile
 	switch(egg_type)
@@ -63,7 +75,14 @@
 			profile_type = /datum/oviposition_egg_profile/spider
 		if(OVI_EGG_BOG_BUG)
 			profile_type = /datum/oviposition_egg_profile/bog_bug
+		if(OVI_EGG_HARPY)
+			profile_type = /datum/oviposition_egg_profile/harpy
 	return new profile_type
+
+/proc/get_species_oviposition_egg_type(mob/living/owner)
+	if(isharpy(owner))
+		return OVI_EGG_HARPY
+	return null
 
 /proc/get_oviposition_parent_features(mob/living/parent)
 	if(!ishuman(parent))

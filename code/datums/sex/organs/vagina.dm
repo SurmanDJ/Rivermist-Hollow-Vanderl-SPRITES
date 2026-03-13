@@ -54,6 +54,10 @@
 	if(oviposition_egg_production_type)
 		return oviposition_egg_production_type
 
+	var/species_egg_type = get_species_oviposition_egg_type(owner)
+	if(species_egg_type)
+		return species_egg_type
+
 	var/datum/quirk/peculiarity/egg_layer/egg_layer_quirk = owner?.get_quirk(/datum/quirk/peculiarity/egg_layer)
 	if(!egg_layer_quirk)
 		return null
