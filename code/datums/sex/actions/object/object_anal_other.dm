@@ -29,12 +29,10 @@
 
 /datum/sex_action/object_fuck/object_anal_other/on_start(mob/living/user, mob/living/target)
 	. = ..()
-	var/datum/sex_session/sex_session = get_sex_session(user, target)
 	var/obj/item/dildo = user.get_active_held_item()
 	if(istype(user.get_active_held_item(), /obj/item/weapon) || istype(user.get_active_held_item(), /obj/item/ammo_casing))
 		to_chat(user, span_userdanger("\the [dildo] will hurt [target]!"))
-		sex_session.desire_stop = TRUE
-		return
+		return FALSE
 
 	if(istype(user.get_active_held_item(), /obj/item/reagent_containers/glass))
 		var/obj/item/reagent_containers/glass/contdildo = dildo

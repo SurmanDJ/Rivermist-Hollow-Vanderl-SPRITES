@@ -15,4 +15,18 @@
 	. = ..()
 	if(!.)
 		return FALSE
+	var/hand_lock = user.get_active_precise_hand()
+	if(check_sex_lock(user, hand_lock))
+		return FALSE
+	var/obj/item/active_item = user.get_active_held_item()
+	if(active_item && check_sex_lock(user, null, active_item))
+		return FALSE
 	return TRUE
+
+/datum/sex_action/hole_storage/lock_sex_object(mob/living/user, mob/living/target)
+	add_sex_lock(user, user.get_active_precise_hand())
+	var/obj/item/active_item = user.get_active_held_item()
+	if(active_item)
+		add_sex_lock(user, null, active_item)
+	if(hole_id)
+		add_sex_lock(target, hole_id, null, FALSE)

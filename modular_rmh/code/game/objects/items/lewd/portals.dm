@@ -435,7 +435,7 @@
 	var/obj/item/dildo = user.get_inactive_held_item()
 	if(istype(dildo, /obj/item/portallight))
 		to_chat(user, span_warning("You can't stick a portal into another one!"))
-		sex_session.stop_current_action()
+		sex_session.stop_current_action(src)
 		return
 
 	if(user == target)
@@ -461,7 +461,7 @@
 
 	var/obj/item/dildo = user.get_inactive_held_item()
 	if(!dildo)
-		sex_session.stop_current_action()
+		sex_session.stop_current_action(src)
 		return
 	var/force = FALSE
 	if(sex_session.get_current_force() >= SEX_FORCE_HIGH)
@@ -514,7 +514,7 @@
 				else
 					to_chat(user, sex_session.spanify_force("The portal pussy is too full to stuff even \the [dildo] in."))
 					to_chat(target, sex_session.spanify_force("You feel someting probing the portal entrance, but you are too full!"))
-				sex_session.stop_current_action()
+				sex_session.stop_current_action(src)
 				return
 		if(INSERT_FEEDBACK_TRY_FORCE)
 			pain_amt += 3
@@ -529,7 +529,7 @@
 			else
 				to_chat(user, sex_session.spanify_force("I fail to stuff \the [dildo] in the portal."))
 				to_chat(target, sex_session.spanify_force("You feel someting probing the portal entrance..."))
-			sex_session.stop_current_action()
+			sex_session.stop_current_action(src)
 			return
 
 	user.update_inv_hands()
@@ -592,7 +592,7 @@
 	removed_item = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_REMOVE_RAND_ITEM, STORAGE_LAYER_INNER)
 	if(!removed_item)
 		to_chat(user, sex_session.spanify_force("I couldn't find anything inside..."))
-		sex_session.stop_current_action()
+		sex_session.stop_current_action(src)
 		return
 	if(user.get_active_held_item())
 		user.visible_message(sex_session.spanify_force("\The [removed_item] falls down on the floor..."))
@@ -645,8 +645,7 @@
 	var/obj/item/dildo = user.get_active_held_item()
 	if(istype(user.get_active_held_item(), /obj/item/weapon) || istype(user.get_active_held_item(), /obj/item/ammo_casing))
 		to_chat(user, span_userdanger("\the [dildo] will hurt your target!"))
-		sex_session.desire_stop = TRUE
-		return
+		return FALSE
 
 	if(istype(user.get_active_held_item(), /obj/item/reagent_containers/glass))
 		var/obj/item/reagent_containers/glass/contdildo = dildo

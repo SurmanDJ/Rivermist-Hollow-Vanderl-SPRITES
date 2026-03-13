@@ -39,7 +39,7 @@
 
 
 /datum/sex_action/npc/npc_cunnilingus/lock_sex_object(mob/living/user, mob/living/target)
-	sex_locks |= new /datum/sex_session_lock(target, ORGAN_SLOT_VAGINA)
-	sex_locks |= new /datum/sex_session_lock(user, BODY_ZONE_PRECISE_MOUTH)
+	add_sex_lock(target, ORGAN_SLOT_VAGINA, null, FALSE)
+	add_sex_lock(user, BODY_ZONE_PRECISE_MOUTH)
 
 

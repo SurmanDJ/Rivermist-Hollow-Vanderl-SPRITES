@@ -236,17 +236,19 @@
 /proc/return_highest_priority_action(list/sessions = list(), mob/living/user)
 	var/datum/sex_session/highest_session
 	for(var/datum/sex_session/session in sessions)
-		if(!session.current_action)
+		var/datum/sex_action/session_action = session.get_highest_priority_action_for(user)
+		if(!session_action)
 			continue
 		if(!highest_session)
 			highest_session = session
 			continue
+		var/datum/sex_action/highest_action = highest_session.get_highest_priority_action_for(user)
 		if(user == session.target)
-			if(session.current_action.target_priority > highest_session.current_action.target_priority)
+			if(session_action.target_priority > highest_action.target_priority)
 				highest_session = session
 				continue
 		if(user == session.user)
-			if(session.current_action.user_priority > highest_session.current_action.user_priority)
+			if(session_action.user_priority > highest_action.user_priority)
 				highest_session = session
 				continue
 	return highest_session

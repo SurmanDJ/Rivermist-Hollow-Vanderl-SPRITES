@@ -52,5 +52,5 @@
 	user.visible_message(span_warning("[user] gets off [target]'s face."))
 
 /datum/sex_action/facesitting/lock_sex_object(mob/living/user, mob/living/target)
-	sex_locks |= new /datum/sex_session_lock(target, BODY_ZONE_PRECISE_MOUTH)
-	sex_locks |= new /datum/sex_session_lock(user, ORGAN_SLOT_ANUS)
+	add_sex_lock(target, BODY_ZONE_PRECISE_MOUTH, null, FALSE)
+	add_sex_lock(user, ORGAN_SLOT_ANUS, null, FALSE)

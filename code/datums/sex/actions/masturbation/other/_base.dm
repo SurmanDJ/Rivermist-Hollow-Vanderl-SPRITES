@@ -13,7 +13,7 @@
 
 /datum/sex_action/masturbate/other/lock_sex_object(mob/living/user, mob/living/target)
 	var/locked = user.get_active_precise_hand()
-	sex_locks |= new /datum/sex_session_lock(user, locked)
+	add_sex_lock(user, locked)
 
 /datum/sex_action/masturbate/other/is_finished(mob/living/user, mob/living/target)
 	var/datum/sex_session/sex_session = get_sex_session(user, target)

@@ -2,12 +2,14 @@
 	var/mob/living/locked_host
 	var/locked_organ_slot
 	var/obj/item/locked_item
+	var/hard_lock = TRUE
 
-/datum/sex_session_lock/New(mob/_host, _locked_slot, obj/item/_locked_item)
+/datum/sex_session_lock/New(mob/_host, _locked_slot, obj/item/_locked_item, _hard_lock = TRUE)
 	. = ..()
 	locked_host = _host
 	locked_organ_slot = _locked_slot
 	locked_item = _locked_item
+	hard_lock = _hard_lock
 	LAZYADD(GLOB.locked_sex_objects, src)
 
 /datum/sex_session_lock/Destroy(force, ...)
@@ -15,6 +17,7 @@
 	LAZYREMOVE(GLOB.locked_sex_objects, src)
 	locked_host = null
 	locked_item = null
+	hard_lock = null
 
 /datum/storage_tracking_entry
 	var/obj/item/stored_item = null
@@ -95,6 +98,8 @@
 	var/action_volume = 50
 	/// So that we don't spam messages with every thrust for example
 	var/next_message_time = 0
+	/// Whether this running action should stop on its next loop check
+	var/stop_requested = FALSE
 
 /datum/sex_action/Destroy()
 	// Clean up any tracked storage entries
@@ -386,6 +391,9 @@
 /datum/sex_action/proc/lock_sex_object(mob/living/user, mob/living/target)
 	return FALSE
 
+/datum/sex_action/proc/add_sex_lock(mob/living/locked_host, locked_organ_slot, obj/item/locked_item, hard_lock = TRUE)
+	sex_locks |= new /datum/sex_session_lock(locked_host, locked_organ_slot, locked_item, hard_lock)
+
 /datum/sex_action/proc/unlock_sex_object(mob/living/user, mob/living/target)
 	for(var/datum/sex_session_lock/lock as anything in sex_locks)
 		qdel(lock)
@@ -400,6 +408,8 @@
 
 	for(var/datum/sex_session_lock/lock as anything in GLOB.locked_sex_objects)
 		if(lock.locked_host == locked)
+			if(!lock.hard_lock)
+				continue
 			var/item_lock = ((lock.locked_item == item) && lock.locked_item)
 			var/organ_lock = ((lock.locked_organ_slot == organ_slot) && lock.locked_organ_slot)
 			if(!item_lock && !organ_lock)

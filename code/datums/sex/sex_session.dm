@@ -3,9 +3,9 @@
 	var/mob/living/user
 	/// Target of our actions
 	var/mob/living/target
-	/// Whether the user desires to stop current action
-	var/desire_stop = FALSE
-	/// What is the current performed action
+	/// Active actions currently running in this session
+	var/list/datum/sex_action/active_actions = list()
+	/// Compatibility pointer for older callers that still expect one current action
 	var/datum/sex_action/current_action = null
 	/// Enum of desired speed
 	var/speed = SEX_SPEED_MID
@@ -46,6 +46,7 @@
 
 /datum/sex_session/Destroy(force, ...)
 	UnregisterSignal(user, list(COMSIG_SEX_CLIMAX, COMSIG_SEX_AROUSAL_CHANGED))
+	stop_current_action()
 	// Remove from collective
 	if(session_updater)
 		qdel(session_updater)
@@ -76,7 +77,7 @@
 	collective = new_collective
 
 /datum/sex_session/proc/check_sex()
-	if(current_action)
+	if(length(active_actions))
 		inactivity--
 		inactivity = CLAMP(inactivity, 0 , 11)
 		return
@@ -122,29 +123,70 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_session/proc/get_active_action(action_ref)
+	if(istype(action_ref, /datum/sex_action))
+		var/datum/sex_action/action = action_ref
+		if(action in active_actions)
+			return action
+		return null
+
+	for(var/datum/sex_action/action as anything in active_actions)
+		if(action.type == action_ref)
+			return action
+	return null
+
+/datum/sex_session/proc/is_action_active(action_type)
+	return !isnull(get_active_action(action_type))
+
+/datum/sex_session/proc/get_action_priority(datum/sex_action/action, mob/living/viewer)
+	if(!action || !viewer)
+		return -1000000
+	if(viewer == target)
+		return action.target_priority
+	if(viewer == user)
+		return action.user_priority
+	return -1000000
+
+/datum/sex_session/proc/get_highest_priority_action_for(mob/living/viewer)
+	var/datum/sex_action/highest_action
+	for(var/datum/sex_action/action as anything in active_actions)
+		if(!highest_action)
+			highest_action = action
+			continue
+		if(get_action_priority(action, viewer) > get_action_priority(highest_action, viewer))
+			highest_action = action
+	return highest_action
+
+/datum/sex_session/proc/update_current_action()
+	current_action = get_highest_priority_action_for(user)
+
 /datum/sex_session/proc/try_start_action(action_type)
-	if(action_type == current_action)
-		try_stop_current_action()
-		return
-	if(current_action != null)
-		try_stop_current_action()
+	if(is_action_active(action_type))
+		try_stop_current_action(action_type)
 		return
 	if(!action_type)
 		return
 	if(!can_perform_action(action_type))
 		return
 
-	desire_stop = FALSE
-	current_action = action_type
+	var/datum/sex_action/action = new action_type()
+	active_actions += action
+	update_current_action()
 	inactivity = 0
-	var/datum/sex_action/action = SEX_ACTION(current_action)
 	log_combat(user, target, "Started sex action: [action.name] with [target.name].")
-	INVOKE_ASYNC(src, PROC_REF(sex_action_loop))
+	INVOKE_ASYNC(src, PROC_REF(sex_action_loop), action)
 
-/datum/sex_session/proc/try_stop_current_action()
-	if(!current_action)
+/datum/sex_session/proc/try_stop_current_action(action_ref)
+	if(!length(active_actions))
 		return
-	desire_stop = TRUE
+	if(!action_ref)
+		for(var/datum/sex_action/action as anything in active_actions)
+			action.stop_requested = TRUE
+		return
+
+	var/datum/sex_action/action = get_active_action(action_ref)
+	if(action)
+		action.stop_requested = TRUE
 
 /datum/sex_session/proc/considered_limp(mob/limper)
 	if(QDELETED(limper))
@@ -156,12 +198,14 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_session/proc/sex_action_loop()
-	var/performed_action_type = current_action
-	var/datum/sex_action/action = SEX_ACTION(current_action)
-	action.on_start(user, target)
+/datum/sex_session/proc/sex_action_loop(datum/sex_action/action)
+	if(!action || !(action in active_actions))
+		return
+	if(action.on_start(user, target) == FALSE)
+		stop_current_action(action)
+		return
 
-	while(TRUE)
+	while(action in active_actions)
 		//if(isnull(target.client))
 		//	break
 
@@ -174,16 +218,18 @@
 		if(!do_after(user, do_time, target = target, timed_action_flags = do_after_flags))
 			break
 
-		if(current_action == null || performed_action_type != current_action)
+		if(QDELETED(action) || !(action in active_actions))
 			break
-		if(!can_perform_action(current_action, TRUE))
+		if(!can_perform_action(action.type, TRUE))
 			break
 		if(action.is_finished(user, target))
 			break
-		if(desire_stop)
+		if(action.stop_requested)
 			break
 
 		action.on_perform(user, target)
+		if(QDELETED(action) || !(action in active_actions))
+			break
 		if(istype(user.loc, /obj/structure/closet))
 			var/obj/structure/closet/sex_shack = user.loc
 			sex_shack.Shake(1, 3, 15)
@@ -196,15 +242,25 @@
 		if(!action.continous)
 			break
 
-	stop_current_action()
+	stop_current_action(action)
 
-/datum/sex_session/proc/stop_current_action()
-	if(!current_action)
+/datum/sex_session/proc/stop_current_action(action_ref)
+	if(!length(active_actions))
 		return
-	var/datum/sex_action/action = SEX_ACTION(current_action)
+	if(!action_ref)
+		var/list/actions_to_stop = active_actions.Copy()
+		for(var/datum/sex_action/action as anything in actions_to_stop)
+			stop_current_action(action)
+		return
+
+	var/datum/sex_action/action = get_active_action(action_ref)
+	if(!action)
+		return
+
+	active_actions -= action
 	action.on_finish(user, target)
-	desire_stop = FALSE
-	current_action = null
+	update_current_action()
+	qdel(action)
 
 /datum/sex_session/proc/can_perform_action(action_type, performing = FALSE)
 	if(!action_type)
@@ -377,6 +433,7 @@
 	if(!do_until_finished)
 		return
 	just_climaxed = TRUE
+	try_stop_current_action()
 
 
 /datum/sex_session/proc/get_force_string()
@@ -628,8 +685,8 @@
 
 		dat += "<div class='action-item'>"
 		var/button_class = "action-button"
-		var/is_current = (current_action == action_type)
-		var/can_perform = can_perform_action(action_type)
+		var/is_current = is_action_active(action_type)
+		var/can_perform = is_current || can_perform_action(action_type)
 
 		if(action.name == "Salute")
 			button_class += " blue"
@@ -642,7 +699,7 @@
 
 		dat += "<div class='action-icons'>"
 		if(is_current)
-			dat += "<a href='?src=[REF(src)];task=stop;tab=[selected_tab]' class='icon-btn stop'></a>"
+			dat += "<a href='?src=[REF(src)];task=stop;action_type=[action_type];tab=[selected_tab]' class='icon-btn stop'></a>"
 		dat += "</div>"
 		dat += "</div>"
 	dat += "</div>"
@@ -1002,7 +1059,7 @@
 			try_start_action(action_path)
 			return // Don't refresh main UI immediately
 		if("stop")
-			try_stop_current_action()
+			try_stop_current_action(text2path(href_list["action_type"]))
 		if("set_speed")
 			var/new_speed = text2num(href_list["value"])
 			if(new_speed >= SEX_SPEED_MIN && new_speed <= SEX_SPEED_MAX)

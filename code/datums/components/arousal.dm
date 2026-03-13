@@ -472,7 +472,7 @@
 		action = s_action
 
 	else if(highest_priority)
-		action = highest_priority.current_action
+		action = highest_priority.get_highest_priority_action_for(parent)
 
 	if(!action_initiator)
 		action_initiator = parent
