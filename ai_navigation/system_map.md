@@ -1,13 +1,30 @@
 # System Map
 
-Generated on 2026-03-11. Use this file as the fast index of gameplay and infrastructure systems before opening source files.
+Generated on 2026-03-11. Last validated 2026-03-14. Use this file as the fast index of gameplay and infrastructure systems before opening source files.
 
 ## Repository Hotspots
 
 - `code/modules` largest slices by DM file count: `mob (342)`, `spells (196)`, `crafting (169)`, `antagonists (107)`, `clothing (95)`, `mapping (82)`, `admin (79)`, `client (66)`.
 - `code/datums` largest slices by DM file count: `ai (217)`, `components (186)`, `sex (96)`, `rts (87)`, `runeword (43)`, `chimeric_organs (42)`, `elements (32)`, `status_effects (23)`.
-- `modular_rmh/code/modules` largest slices: `jobs (157)`, `clothing (49)`, `spells (33)`, `mob (22)`, then smaller `homestead`, `sprite_accesory`, `mapping`, `food`.
-- `modular_rmh/code/datums` focuses on `religion`, `ai`, `status_effects`, `stress`, plus a few standalone support datums.
+- `modular_rmh/code/modules` largest slices: `jobs (157 DM files)`, `mob (22)`, `spells (33)`, `clothing (49)`.
+- `modular_rmh/code/datums` focuses on `religion (6)`, `status_effects (3)`, `stress (2)`, `ai (4)`, plus `character_flaw`, `reflection`, and standalone `sexcon` and `components`.
+
+**Type path counts as of 2026-03-14 (grep-measured, includes subtypes and proc overrides on same root):**
+
+| Type root | Count |
+|---|---|
+| `/mob` | ~2278 |
+| `/datum/action` | ~1115 |
+| `/datum/ai_behavior` | ~555 |
+| `/datum/component` | ~658 |
+| `/datum/status_effect` | ~830 |
+| `/datum/ai_controller` | ~91 |
+| `/datum/antagonist` | ~119 |
+| `/datum/element` | ~100 |
+| `/datum/quirk` | ~282 |
+| `/datum/wound` | ~142 |
+
+Note: original system_map counts (634 mob, 355 status_effect, 222 component, etc.) were measured with a different method and are ~3× lower than the grep-based counts above. Trust the grep-based values for ordering and scope decisions.
 - `modular_rmh/modular` standalone packs include `piercing`, `selectable_moanpacks`, `resurrection_rune`, `fluids`, `comfy`, `ceramics`, `loot`, and helpers.
 
 ## Major Systems
@@ -23,15 +40,15 @@ Generated on 2026-03-11. Use this file as the fast index of gameplay and infrast
 ### DCS Components and Elements
 
 - Main type root(s): `/datum/component`, `/datum/element`
-- Approximate path count under the root(s): `222` components, `33` elements
-- Primary directories: `code/datums/components/**`, `code/datums/elements/**`, `code/__DEFINES/dcs/**`
+- Approximate path count under the root(s): ~`658` component paths, ~`100` element paths
+- Primary directories: `code/datums/components/**`, `code/datums/elements/**`, `code/__DEFINES/dcs/**`, `code/__DEFINES/components.dm`
 - Main controllers/subsystems: `SSdcs`
-- Notes: Main composition/event system. `RegisterSignal` and `SEND_SIGNAL` appear at `2195` call sites, so many interactions are routed through DCS contracts instead of direct proc chains.
+- Notes: Main composition/event system. `RegisterSignal(` appears at ~`1209` call sites, `SEND_SIGNAL(` at `991`, `UnregisterSignal(` at `668`. Many combat and item signals live in `code/__DEFINES/components.dm`, not the DCS subfolder.
 
 ### Antagonists and Hostile Role Systems
 
 - Main type root(s): `/datum/antagonist`
-- Approximate path count under the root(s): `27`
+- Approximate path count under the root(s): ~`119`
 - Primary directories: `code/modules/antagonists/**`, `code/modules/events/antagonist/**`, `code/datums/migrants/waves/antagonist/**`
 - Main controllers/subsystems: `SSgamemode`, `SSevents`
 - Notes: Direct antagonist datums coexist with storyteller-driven antagonist events and antag migrant waves.
@@ -47,7 +64,7 @@ Generated on 2026-03-11. Use this file as the fast index of gameplay and infrast
 ### Status Effects, Actions, and Spell Trees
 
 - Main type root(s): `/datum/status_effect`, `/datum/action`
-- Approximate path count under the root(s): `355` status-effect paths, `420` action paths
+- Approximate path count under the root(s): ~`830` status-effect paths, ~`1115` action paths
 - Primary directories: `code/datums/status_effects/**`, `code/modules/spells/**`, `modular_rmh/code/modules/spells/**`, `modular_rmh/code/datums/status_effects/**`
 - Main controllers/subsystems: `SSstatusprocess`, `SSmagic`, `SSskills`
 - Notes: `apply_status_effect(...)` appears at `345` call sites across combat, spells, liquids, quirks, wounds, and modular packs.
@@ -55,15 +72,15 @@ Generated on 2026-03-11. Use this file as the fast index of gameplay and infrast
 ### AI Controllers and Behavior Trees
 
 - Main type root(s): `/datum/ai_controller`, `/datum/ai_behavior`
-- Approximate path count under the root(s): `75` AI controller paths, `201` AI behavior paths
-- Primary directories: `code/datums/ai/**`, `modular_rmh/code/datums/ai/**`, `modular_rmh/code/modules/mob/**`
-- Main controllers/subsystems: `SSai_controllers`, `SSai_idle_controllers`, `SSai_behaviors`, `SSai_movement`, `SSidle_ai_behaviors`
+- Approximate path count under the root(s): ~`91` AI controller paths, ~`555` AI behavior paths
+- Primary directories: `code/datums/ai/**`, `modular_rmh/code/datums/ai/**` (4 files), `modular_rmh/code/modules/mob/**`
+- Main controllers/subsystems: `SSai_controllers`, `SSai_idle_controllers`, `SSai_behaviors`, `SSai_movement`, `SSidle_ai_behaviors`, `SSbasic_avoidance`, `SSaggro`
 - Notes: AI is split into controllers, behaviors, planning subtrees, movement datums, and dedicated processing loops.
 
 ### Mobs, Jobs, Migrants, and Character Lifecycle
 
 - Main type root(s): `/mob`, `/datum/migrant_wave`, `/datum/migrant_role`
-- Approximate path count under the root(s): `/mob` has `634` explicit paths; migrant wave types are centered in `code/datums/migrants/**`
+- Approximate path count under the root(s): `/mob` has ~`2278` grep-visible paths (includes all subtype levels); migrant wave types are centered in `code/datums/migrants/**`
 - Primary directories: `code/modules/mob/**`, `code/modules/jobs/**`, `code/datums/migrants/**`, `modular_rmh/code/modules/jobs/**`, `modular_rmh/code/modules/mob/**`
 - Main controllers/subsystems: `SSjob`, `SSmobs`, `SSmigrants`, `SSrole_class_handler`
 - Notes: Core player/NPC logic lives in `mob/`; jobs and migrant waves define spawn-time role structure; RMH adds a large parallel job layer.
@@ -95,7 +112,7 @@ Generated on 2026-03-11. Use this file as the fast index of gameplay and infrast
 ### Faith, Gods, Mana, Quirks, Wounds
 
 - Main type root(s): `/datum/faith`, `/datum/mana`, `/datum/quirk`, `/datum/wound`
-- Approximate path count under the root(s): `quirk` has `118` paths and `wound` has `63`; faith/gods/mana are smaller but central
+- Approximate path count under the root(s): `quirk` has ~`282` paths and `wound` has ~`142`; faith/gods/mana are smaller but central
 - Primary directories: `code/datums/faith/**`, `code/datums/gods/**`, `code/datums/mana/**`, `code/datums/quirks/**`, `code/datums/wounds/**`
 - Main controllers/subsystems: `SSskills`, `SSstatusprocess`, `SSmood`
 - Notes: Character state is distributed across faith/devotion, mana, quirks, wounds, stress, rage, and organ systems.
@@ -134,9 +151,10 @@ Generated on 2026-03-11. Use this file as the fast index of gameplay and infrast
 
 ## High-Level Dependency Awareness
 
-- Components/elements are the main cross-cutting composition mechanism: `AddComponent(...)` appears at `416` call sites, and most signal-driven wiring routes through `SSdcs` and `code/__DEFINES/dcs/**`.
-- Status effects are a core gameplay contract: `apply_status_effect(...)` appears at `345` call sites across combat, spells, liquids, quirks, wounds, and modular packs.
-- Event-driven communication is pervasive: `RegisterSignal`/`SEND_SIGNAL` appear at `2195` call sites, so many systems are decoupled by signals instead of direct proc calls.
+- Components/elements are the main cross-cutting composition mechanism: `AddComponent(...)` appears at ~`424` call sites, and most signal-driven wiring routes through `SSdcs`, `code/__DEFINES/dcs/**`, and `code/__DEFINES/components.dm`.
+- Status effects are a core gameplay contract: `apply_status_effect(...)` appears at ~`346` call sites across combat, spells, liquids, quirks, wounds, and modular packs.
+- Event-driven communication is pervasive: `RegisterSignal` appears at ~`1209` call sites, `SEND_SIGNAL` at ~`991`, so many systems are decoupled by signals instead of direct proc calls.
+- Important: combat and item signals (`COMSIG_ITEM_*`, `COMSIG_HUMAN_*`, `COMSIG_PROJECTILE_*`, `COMSIG_COMBAT_*`) live in `code/__DEFINES/components.dm`, not the DCS subfolder.
 - Mob creation is relatively centralized: only `52` direct `new /mob` call sites were detected, while round setup, migrants, event controllers, and spawners handle most mob lifecycle orchestration.
 - Map and worldgen systems are layered: static `_maps` templates feed mapping helpers, while `SSmapping`, `SSminor_mapping`, `SSdungeon_generator`, and `SSterrain_generation` own runtime placement/generation passes.
 - The modular RMH layer does not introduce a second runtime architecture; it extends existing roots and reuses the same `SS*` infrastructure, so always check `modular_rmh` after locating the core path in `code/`.

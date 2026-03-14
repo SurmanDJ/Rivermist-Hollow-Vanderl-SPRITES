@@ -1,6 +1,6 @@
 # Router
 
-Fast Start entrypoint. Navigation layer may lag ~1 month behind code — use for routing, verify in source.
+Generated on 2026-03-11. Last validated 2026-03-14. This is the primary Fast Start entrypoint for normal tasks.
 
 ## Always
 
@@ -12,23 +12,19 @@ Fast Start entrypoint. Navigation layer may lag ~1 month behind code — use for
 
 | Task | Helper |
 |---|---|
-| broad, risky, or needs approval before edits | `ai_navigation/human_checking.md` |
-| refresh or migrate the navigation layer | `ai_navigation/update_policy.md` |
-| new mechanic, content, or feature extension | `ai_navigation/content_creation.md` |
-| vague content — needs decomposition | `ai_navigation/content_breakdown.md` |
-| content goal clear, implementation form undecided | `ai_navigation/content_patterns.md` |
-| signals, components, indirect event routing | `ai_navigation/signal_map.md` |
-| adding or debugging a component or element | `ai_navigation/content_patterns.md` (Shared Mechanic row) → `ai_navigation/signal_map.md` |
-| spell, miracle, cooldown action | `ai_navigation/spell_signal_map.md` |
-| melee, projectile, hit, disarm, combat chain | `ai_navigation/combat_signal_map.md` |
-| movement, collision, buckle, pull, throw, moveloop | `ai_navigation/movement_signal_map.md` |
-| proc entrypoints before searching source | `ai_navigation/core_procs.md` |
-| subsystem/loop freezes, hangs, no runtimes | `ai_navigation/processing_hazards.md` |
-| performance, tick budget, CPU, server lag | `ai_navigation/engine_limits.md` → `ai_navigation/performance_gotchas.md` |
-| overlays, underlays, Appearance objects, per-tick visuals | `ai_navigation/visuals_guide.md` + `ai_navigation/performance_gotchas.md` §7 |
-| planes, filters, particles, lighting, animate(), GAGS, render relays, multiz | `ai_navigation/visuals_guide.md` |
-| code style, signal pattern, GC, harddel, CI, walk procs, delta-time | `ai_navigation/coding_standards.md` |
-| failure-mode analysis, owner already known | `ai_navigation/failure_modes.md` |
+| planned change may be broad, risky, or needs approval before edits | `ai_navigation/human_checking.md` |
+| refresh the navigation layer, rebuild its docs, or migrate this repository-orientation stack to another codebase | `ai_navigation/update_policy.md` |
+| new mechanic, gameplay content, or extension to an existing feature — and the implementation shape is already known | `ai_navigation/content_creation.md` |
+| content request is vague and needs delivery/base/delta/effect decomposition | `ai_navigation/content_breakdown.md` |
+| content goal is known but the implementation form (override? component? element? signal listener?) is undecided | `ai_navigation/content_patterns.md` |
+| existing behavior seems indirect, DCS-driven, or routed through signal listeners rather than obvious proc calls — and you are **debugging** not implementing | `ai_navigation/signal_map.md` |
+| implementing a new component, element, or signal listener as part of new content — choose this **before** signal_map.md | `ai_navigation/content_patterns.md` → then `ai_navigation/signal_map.md` for the signal contract |
+| spell, miracle, or cooldown action behavior depends on both core procs and signals | `ai_navigation/spell_signal_map.md` |
+| melee, projectile, hit, disarm, or combat chains depend on both core procs and signals | `ai_navigation/combat_signal_map.md` |
+| client movement, collisions, buckle, pull, throw, or moveloop behavior depends on both core procs and signals | `ai_navigation/movement_signal_map.md` |
+| you need the main proc entrypoints before searching source | `ai_navigation/core_procs.md` |
+| whole subsystem or process loop freezes, hangs, or stops without runtimes | `ai_navigation/processing_hazards.md` |
+| explicit failure-mode analysis after the owner is already known | `ai_navigation/failure_modes.md` |
 | symptom-first bug report | `ai_navigation/debug_routes.md` |
 | runtime error to diagnose or fix | `ai_navigation/runtime_errors.md` |
 | qdel, del, Destroy(), ref leak | `ai_navigation/runtime_errors.md` §qdel → `ai_navigation/coding_standards.md` §GC |
