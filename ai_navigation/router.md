@@ -2,6 +2,12 @@
 
 Fast Start entrypoint. Navigation layer may lag ~1 month behind code — use for routing, verify in source.
 
+## Always
+
+| When | Action |
+|---|---|
+| before any medium / high / unclear-scope edit | open `ai_navigation/human_checking.md` first |
+
 ## Dispatch
 
 | Task | Helper |

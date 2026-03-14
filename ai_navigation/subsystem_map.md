@@ -18,6 +18,22 @@ Generated on 2026-03-11 from subsystem macro declarations in `code/controllers/s
 | UI, comms & admin | 10 | `SSchat`, `SScommunications`, `SSdiscord`, `SSinput`, `SSradio` |
 | World generation & map state | 14 | `SSdungeon_generator`, `SSfire_burning`, `SSfire_spread`, `SSlighting`, `SSliquids` |
 
+## Quick Lookup
+
+If you already know the `SS*` name, search this file for it directly (`Ctrl+F` or `rg`). The table below is sorted alphabetically within each category.
+
+Category anchors — jump to the relevant block in the Complete Subsystem Index:
+
+| Category | First entry in table |
+|---|---|
+| AI & movement | `SSconveyors` |
+| Boot, assets & infrastructure | `SSasset_loading` |
+| Gameplay simulation | `SSachievements` |
+| Processing loops | `SSaction_charge` |
+| Round flow & player lifecycle | `SSgamemode` |
+| UI, comms & admin | `SSchat` |
+| World generation & map state | `SSdungeon_generator` |
+
 ## Complete Subsystem Index
 
 | SS global | Kind | Category | Type path | Role | File |
