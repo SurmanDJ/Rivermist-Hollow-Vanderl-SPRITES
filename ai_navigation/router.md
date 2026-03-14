@@ -18,6 +18,7 @@ Fast Start entrypoint. Navigation layer may lag ~1 month behind code — use for
 | vague content — needs decomposition | `ai_navigation/content_breakdown.md` |
 | content goal clear, implementation form undecided | `ai_navigation/content_patterns.md` |
 | signals, components, indirect event routing | `ai_navigation/signal_map.md` |
+| adding or debugging a component or element | `ai_navigation/content_patterns.md` (Shared Mechanic row) → `ai_navigation/signal_map.md` |
 | spell, miracle, cooldown action | `ai_navigation/spell_signal_map.md` |
 | melee, projectile, hit, disarm, combat chain | `ai_navigation/combat_signal_map.md` |
 | movement, collision, buckle, pull, throw, moveloop | `ai_navigation/movement_signal_map.md` |
@@ -38,5 +39,6 @@ Fast Start entrypoint. Navigation layer may lag ~1 month behind code — use for
 | cross-system handoff or dependency | `ai_navigation/system_dependencies.md` |
 | explicit `SS*` subsystem | `ai_navigation/subsystem_map.md` |
 | unknown architecture or location | `ai_navigation/system_map.md` or `ai_navigation/architecture.md` |
+| modular_rmh layer, where RMH code lives, overlay rules | `ai_navigation/modular_guide.md` |
 | deep inheritance | `ai_navigation/type_tree.md` — search specific path, do not read whole file |
 | budget rules, engine constraints detail | `ai_navigation/router_deep.md` |

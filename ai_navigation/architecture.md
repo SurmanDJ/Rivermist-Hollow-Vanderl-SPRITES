@@ -61,3 +61,24 @@ Generated on 2026-03-11. This file explains how the repository is put together a
 - Runtime configuration and policies live under `config/**`; SQL/schema files live under `SQL/**`; CI/build helpers are under `bin/**`, `tools/**`, and shell/cmd scripts at repo root.
 
 > **Engine constraint bridge — network output:** UI updates sent via `world <<` or large resource files pushed to many clients create bandwidth spikes that register as network lag (distinct from CPU/server lag). Use `world.cpu` to tell the two apart: low CPU + sluggish client = network lag. Prefer targeted `mob <<` sends over `world <<` broadcasts. See `ai_navigation/engine_limits.md` §Network.
+
+## Runtime Ownership Quick Reference
+
+Use this table to identify the runtime owner before opening `ai_navigation/subsystem_map.md`.
+
+| Domain | Primary owner | Key files |
+|---|---|---|
+| Combat, hit chain, signals | `SSdcs` | `code/_onclick/item_attack.dm`, `code/_onclick/other_mobs.dm` |
+| Movement, moveloops, collisions | `SSmovement`, `SSdcs` | `code/modules/mob/mob_movement.dm`, `code/controllers/subsystem/movement/**` |
+| Spells, actions, cooldowns | `SSmagic`, `SSstatusprocess` | `code/modules/spells/**` |
+| Status effects, wounds, mood | `SSstatusprocess`, `SSmood` | `code/datums/status_effects/**`, `code/datums/wounds/**` |
+| AI controllers, NPC behavior | `SSai_controllers`, `SSai_behaviors` | `code/datums/ai/**` |
+| Jobs, roles, latejoins | `SSjob`, `SSmigrants`, `SSrole_class_handler` | `code/modules/jobs/**`, `code/datums/migrants/**` |
+| Antagonists, events | `SSgamemode`, `SSevents` | `code/modules/antagonists/**`, `code/modules/events/**` |
+| Economy, housing, factions | `SSeconomy`, `SShousing`, `SStreasury` | `code/modules/economy/**`, `code/datums/world_factions/**` |
+| Mapping, worldgen, dungeons | `SSmapping`, `SSdungeon_generator` | `_maps/**`, `code/modules/mapping/**`, `code/modules/procedural_mapping/**` |
+| Overlays, visual state | `SSoverlays` | `code/controllers/subsystem/overlays.dm` |
+| Lighting | `SSlighting` | `code/controllers/subsystem/lighting/**` |
+| UI, browser, TGUI | `SStgui`, `SSvisual_ui` | `code/modules/tgui/**`, `tgui/packages/**` |
+| GC, harddel, ref cleanup | `SSgarbage` | `code/controllers/subsystem/garbage.dm` |
+| Round bootstrap, tick loop | `Master` | `code/controllers/master.dm`, `code/world.dm` |
