@@ -128,14 +128,14 @@
 			to_chat(usr, span_warning("Unlatch it first!"))
 			return FALSE
 	else
-		return ..()
 		torture_active = FALSE
 		icon_state = lever_icon_state
 		STOP_PROCESSING(SSobj, src)
-	return ..()
+		return ..()
 	torture_active = FALSE
 	icon_state = lever_icon_state
 	STOP_PROCESSING(SSobj, src)
+	return ..()
 
 /obj/structure/bondage/torture_table/lever/process(delta_time)
 	if(!torture_active)

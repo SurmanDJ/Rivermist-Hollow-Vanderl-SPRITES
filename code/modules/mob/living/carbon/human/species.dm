@@ -1998,7 +1998,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 		I.add_mob_blood(H)
 		user.update_inv_hands()
 
-	if(((I.damtype == BRUTE) && I.force && prob(25 + (I.force * 2))))
+	if(((I.damtype == BRUTE) && I.force && (actual_damage > 4) && prob(25 + (I.force * 2))))
 		if(affecting.status == BODYPART_ORGANIC)
 			I.add_mob_blood(H)	//Make the weapon bloody, not the person.
 			user.update_inv_hands()
