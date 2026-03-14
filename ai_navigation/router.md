@@ -1,6 +1,6 @@
 # Router
 
-Generated on 2026-03-11. This is the primary Fast Start entrypoint for normal tasks.
+Generated on 2026-03-11. Last validated 2026-03-14. This is the primary Fast Start entrypoint for normal tasks.
 
 Terminology note:
 
@@ -23,10 +23,11 @@ If the start mode is still unclear, open `ai_navigation/start_matrix.md`.
 |---|---|
 | planned change may be broad, risky, or needs approval before edits | `ai_navigation/human_checking.md` |
 | refresh the navigation layer, rebuild its docs, or migrate this repository-orientation stack to another codebase | `ai_navigation/update_policy.md` |
-| new mechanic, gameplay content, or extension to an existing feature | `ai_navigation/content_creation.md` |
+| new mechanic, gameplay content, or extension to an existing feature — and the implementation shape is already known | `ai_navigation/content_creation.md` |
 | content request is vague and needs delivery/base/delta/effect decomposition | `ai_navigation/content_breakdown.md` |
-| content goal is clear but the implementation form is undecided | `ai_navigation/content_patterns.md` |
-| signals, components, or indirect event routing seem involved | `ai_navigation/signal_map.md` |
+| content goal is known but the implementation form (override? component? element? signal listener?) is undecided | `ai_navigation/content_patterns.md` |
+| existing behavior seems indirect, DCS-driven, or routed through signal listeners rather than obvious proc calls — and you are **debugging** not implementing | `ai_navigation/signal_map.md` |
+| implementing a new component, element, or signal listener as part of new content — choose this **before** signal_map.md | `ai_navigation/content_patterns.md` → then `ai_navigation/signal_map.md` for the signal contract |
 | spell, miracle, or cooldown action behavior depends on both core procs and signals | `ai_navigation/spell_signal_map.md` |
 | melee, projectile, hit, disarm, or combat chains depend on both core procs and signals | `ai_navigation/combat_signal_map.md` |
 | client movement, collisions, buckle, pull, throw, or moveloop behavior depends on both core procs and signals | `ai_navigation/movement_signal_map.md` |
