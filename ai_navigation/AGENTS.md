@@ -50,6 +50,8 @@ If the task is to refresh the navigation layer or migrate it to another codebase
 - content implementation archetypes: `ai_navigation/content_patterns.md`
 - coding standards, style rules, signal patterns, GC/harddel, CI, walk procs, delta-time: `ai_navigation/coding_standards.md`
 - visual systems (planes, overlays, filters, lighting, particles, GAGS, render relays, multiz): `ai_navigation/visuals_guide.md`
+- runtime error diagnosis, null refs, type mismatches, qdel vs del theory: `ai_navigation/runtime_errors.md`
+- TGUI interfaces (ui_interact/ui_data/ui_act, React frontend, build workflow): `ai_navigation/tgui_guide.md`
 - signal routing and DCS hotspots: `ai_navigation/signal_map.md`
 - spell signal contract and lifecycle: `ai_navigation/spell_signal_map.md`
 - combat signal contract and hit routing: `ai_navigation/combat_signal_map.md`

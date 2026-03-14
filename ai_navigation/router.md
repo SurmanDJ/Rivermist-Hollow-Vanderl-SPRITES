@@ -38,6 +38,9 @@ If the start mode is still unclear, open `ai_navigation/start_matrix.md`.
 | code quality question, style rule, signal pattern, GC / harddel, CI failure, walk procs, delta-time | `ai_navigation/coding_standards.md` |
 | explicit failure-mode analysis after the owner is already known | `ai_navigation/failure_modes.md` |
 | symptom-first bug report | `ai_navigation/debug_routes.md` |
+| runtime error message to diagnose or fix | `ai_navigation/runtime_errors.md` |
+| hard delete, `qdel`, `del`, `Destroy()`, ref leak | `ai_navigation/runtime_errors.md` §qdel then `ai_navigation/coding_standards.md` §GC |
+| new or existing TGUI interface, `ui_interact`, `ui_data`, `ui_act`, React component | `ai_navigation/tgui_guide.md` |
 | keyword or feature-name routing | `ai_navigation/entrypoints.md` |
 | BYOND type path like `/datum/...`, `/mob/...`, `/obj/...` | `ai_navigation/type_index.md` |
 | lifecycle, order, timing, scheduler, round flow | `ai_navigation/runtime_flow.md` |
