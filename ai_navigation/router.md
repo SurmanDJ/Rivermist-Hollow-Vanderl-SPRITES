@@ -30,6 +30,8 @@ Generated on 2026-03-11. Last validated 2026-03-14. This is the primary Fast Sta
 | qdel, del, Destroy(), ref leak | `ai_navigation/runtime_errors.md` §qdel → `ai_navigation/coding_standards.md` §GC |
 | overlays, underlays, Appearance objects, per-tick visuals, planes, filters, particles, lighting, animate(), render relays, multiz | `ai_navigation/visuals_guide.md` |
 | GAGS, greyscale sprites, recolorable item or mob, greyscale_config, greyscale_colors | `ai_navigation/visuals_guide.md` §GAGS |
+| icon smoothing, smooth_icon, smoothing_flags, smoothing_groups, bitmask smoothing | `ai_navigation/icon_rendering.md` §Part1 |
+| iconstate2appearance, icon2appearance, appearance cache, build_appearance_list, vis_contents cache | `ai_navigation/icon_rendering.md` §Part2 |
 | performance, tick budget, CPU, server lag | `ai_navigation/engine_limits.md` → `ai_navigation/performance_gotchas.md` |
 | code style, signal pattern, GC, harddel, CI, walk procs, delta-time | `ai_navigation/coding_standards.md` |
 | reagents, chemistry, holder, reagent container, splash | `code/modules/reagents/**` — start with `chemistry/holder.dm` and `chemistry/readme.md` |
