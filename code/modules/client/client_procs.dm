@@ -585,8 +585,6 @@ GLOBAL_LIST_EMPTY(respawncounts)
 			alert(mob, dupe_login_message) //players get banned if they don't see this message, do not convert to tgui_alert (or even tg_alert) please.
 			to_chat_immediate(mob, span_danger(dupe_login_message))
 
-	tgui_panel.initialize()
-
 	connection_time = world.time
 	connection_realtime = world.realtime
 	connection_timeofday = world.timeofday

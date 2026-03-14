@@ -116,7 +116,7 @@
 	// Update the aggro table
 	victim.ai_controller.blackboard[BB_MOB_AGGRO_TABLE] = aggro_table
 
-	if(!victim.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET])
+	if(!victim.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] && is_valid_threat_target(victim, attacker))
 		victim.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, attacker)
 
 	// Update highest threat mob
@@ -165,12 +165,21 @@
 
 	var/highest_threat = 0
 	var/mob/highest_threat_mob = null
+	var/list/invalid_threats = list()
 
 	// Find the mob with the highest threat
 	for(var/mob/threat_mob as anything in aggro_table)
+		if(!is_valid_threat_target(source, threat_mob))
+			invalid_threats += threat_mob
+			continue
 		if(aggro_table[threat_mob] > highest_threat)
 			highest_threat = aggro_table[threat_mob]
 			highest_threat_mob = threat_mob
+
+	if(length(invalid_threats))
+		for(var/mob/threat_mob as anything in invalid_threats)
+			aggro_table -= threat_mob
+		source.ai_controller.blackboard[BB_MOB_AGGRO_TABLE] = aggro_table
 
 	// Update highest threat mob if it meets threshold
 	var/threat_threshold = source.ai_controller.blackboard[BB_THREAT_THRESHOLD] || default_threat_threshold
@@ -179,3 +188,13 @@
 		SEND_SIGNAL(source, COMSIG_AI_GENERAL_CHANGE, "Threat Changed: [highest_threat_mob]")
 	else
 		source.ai_controller.clear_blackboard_key(BB_HIGHEST_THREAT_MOB)
+
+/datum/component/ai_aggro_system/proc/is_valid_threat_target(mob/living/source, mob/threat_mob)
+	if(!source?.ai_controller || !threat_mob || QDELETED(threat_mob))
+		return FALSE
+
+	var/datum/targetting_datum/targetting_datum = source.ai_controller.blackboard[BB_TARGETTING_DATUM]
+	if(!targetting_datum)
+		return TRUE
+
+	return targetting_datum.can_attack(source, threat_mob) || targetting_datum.should_disarm(source, threat_mob)
