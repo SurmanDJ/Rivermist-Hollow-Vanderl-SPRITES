@@ -33,6 +33,30 @@
 		return null
 	return copytext("[action_key]", findtext("[action_key]", SEX_CUSTOM_ACTION_PREFIX) + length(SEX_CUSTOM_ACTION_PREFIX))
 
+/datum/sex_session/proc/resolve_custom_action_id(action_id, list/custom_actions = null)
+	if(!length("[action_id]"))
+		return null
+	if(!islist(custom_actions))
+		custom_actions = get_saved_custom_action_data()
+
+	var/raw_id = "[action_id]"
+	if(raw_id in custom_actions)
+		return raw_id
+
+	var/decoded_id = url_decode(raw_id)
+	if(decoded_id in custom_actions)
+		return decoded_id
+
+	var/plus_id = replacetext(raw_id, " ", "+")
+	if(plus_id in custom_actions)
+		return plus_id
+
+	var/space_id = replacetext(raw_id, "+", " ")
+	if(space_id in custom_actions)
+		return space_id
+
+	return null
+
 /datum/sex_session/proc/get_action_key(action_ref)
 	if(istype(action_ref, /datum/sex_action))
 		var/datum/sex_action/action = action_ref
@@ -40,14 +64,15 @@
 	if(ispath(action_ref, /datum/sex_action))
 		return "[action_ref]"
 	if(istext(action_ref))
-		var/action_key = trim(url_decode("[action_ref]"))
+		var/action_key = trim("[action_ref]")
 		if(!length(action_key))
 			return null
 		if(is_custom_action_key(action_key))
 			return action_key
 		var/list/custom_actions = get_saved_custom_action_data()
-		if(action_key in custom_actions)
-			return "[SEX_CUSTOM_ACTION_PREFIX][action_key]"
+		var/resolved_custom_action_id = resolve_custom_action_id(action_key, custom_actions)
+		if(resolved_custom_action_id)
+			return "[SEX_CUSTOM_ACTION_PREFIX][resolved_custom_action_id]"
 		return action_key
 	return null
 
@@ -61,14 +86,15 @@
 
 	var/list/custom_actions = get_saved_custom_action_data()
 	if(is_custom_action_key(action_key))
-		var/custom_action_id = extract_custom_action_id(action_key)
+		var/custom_action_id = resolve_custom_action_id(extract_custom_action_id(action_key), custom_actions)
 		var/datum/sex_custom_action_data/action_data = custom_actions[custom_action_id]
 		if(!action_data)
 			return null
 		return new /datum/sex_action/custom(action_data)
 
-	if(action_key in custom_actions)
-		var/datum/sex_custom_action_data/action_data = custom_actions[action_key]
+	var/resolved_custom_action_id = resolve_custom_action_id(action_key, custom_actions)
+	if(resolved_custom_action_id)
+		var/datum/sex_custom_action_data/action_data = custom_actions[resolved_custom_action_id]
 		if(action_data)
 			return new /datum/sex_action/custom(action_data)
 
@@ -109,6 +135,7 @@
 
 /datum/sex_session/proc/load_custom_action_draft_from_saved(action_id)
 	var/list/custom_actions = get_saved_custom_action_data()
+	action_id = resolve_custom_action_id(action_id, custom_actions)
 	var/datum/sex_custom_action_data/action_data = custom_actions[action_id]
 	if(!action_data)
 		return FALSE
@@ -160,6 +187,7 @@
 	if(!action_id)
 		return FALSE
 	var/list/custom_actions = get_saved_custom_action_data()
+	action_id = resolve_custom_action_id(action_id, custom_actions)
 	if(!(action_id in custom_actions))
 		return FALSE
 	var/datum/sex_custom_action_data/deleted_action = custom_actions[action_id]
@@ -454,7 +482,7 @@
 		if("custom_select_template")
 			return load_custom_action_draft_from_template(url_decode(href_list["value"]))
 		if("custom_select_saved")
-			return load_custom_action_draft_from_saved(url_decode(href_list["value"]))
+			return load_custom_action_draft_from_saved(href_list["value"])
 		if("custom_edit_field")
 			return edit_custom_action_field(href_list["field"])
 		if("custom_save")
@@ -462,7 +490,7 @@
 				to_chat(user, span_warning("Failed to save the custom action."))
 			return TRUE
 		if("custom_delete")
-			if(!delete_custom_action(url_decode(href_list["value"])))
+			if(!delete_custom_action(href_list["value"]))
 				to_chat(user, span_warning("Failed to delete that custom action."))
 			return TRUE
 		if("custom_reset")

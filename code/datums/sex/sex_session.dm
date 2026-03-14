@@ -1169,13 +1169,13 @@
 		if("set_target_zone_filter")
 			target_zone_filter = sanitize_ui_zone_filter(href_list["value"])
 		if("action")
-			var/action_ref = url_decode(href_list["action_type"])
+			var/action_ref = href_list["action_type"]
 			if(!get_action_template(action_ref))
 				show_ui(selected_tab)
 				return
 			try_start_action(action_ref)
 		if("stop")
-			try_stop_current_action(url_decode(href_list["action_type"]))
+			try_stop_current_action(href_list["action_type"])
 		if("set_speed")
 			var/new_speed = text2num(href_list["value"])
 			if(new_speed >= SEX_SPEED_MIN && new_speed <= SEX_SPEED_MAX)
