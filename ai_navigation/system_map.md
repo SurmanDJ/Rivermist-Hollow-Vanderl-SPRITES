@@ -109,6 +109,54 @@ Note: original system_map counts (634 mob, 355 status_effect, 222 component, etc
 - Main controllers/subsystems: `SSskills`, `SSfishing`, `SSanvil`, `SSenchantment`
 - Notes: Progression logic concentrates in crafting/material datums plus module-sliced recipes and minigames.
 
+### Skills, Dreams, and Experience
+
+- Main type root(s): `/datum/skill`
+- Approximate path count under the root(s): split across `combat`, `craft`, `labor`, `magic`, `misc` skill families
+- Primary directories: `code/datums/skills/**`
+- Main controllers/subsystems: `SSskills`
+- Notes: Skills are character-level progression datums with XP thresholds, dream unlock costs, and level-gated effects. `skill_holder` lives on the mob. Job skill grants are in `modular_rmh/code/modules/jobs/**`. No per-tick processing — XP changes are event-driven via signal hooks.
+
+### Questing and Contracts
+
+- Main type root(s): `/datum/quest`, `/datum/component/quest_object`
+- Approximate path count under the root(s): small tree — courier, retrieval, kill quest subtypes plus contract ledger structure
+- Primary directories: `code/modules/questing/**`
+- Main controllers/subsystems: `SSdcs` (quest_object is a component; signal-driven)
+- Notes: Quests are `/datum/quest` instances issued via the contract ledger (`/obj/structure/fake_machine/contractledger`). Quest targets get a `quest_object` component attached which hooks `COMSIG_MOB_DEATH` and examine signals. No dedicated subsystem — lifecycle is player-driven.
+
+### Combat Intents and Clash System
+
+- Main type root(s): `/datum/special_intent`
+- Approximate path count under the root(s): multiple AOE intent patterns plus clash status effects in `code/modules/combat/clash/**`
+- Primary directories: `code/modules/combat/**`
+- Main controllers/subsystems: `SSdcs`, combat chain (`code/_onclick/item_attack.dm`)
+- Notes: `special_intent` provides AOE weapon abilities with tile coordinate patterns, pre/post sounds, and stamina costs. The clash system (`process_clash`) lives on `/mob/living` and resolves guard/riposte/disarm outcomes. Integrates into the standard hit chain — see `ai_navigation/combat_signal_map.md` for signal hooks.
+
+### Culture and Character Background
+
+- Main type root(s): `/datum/culture`
+- Approximate path count under the root(s): small tree — `universal` and `species`-gated subtypes
+- Primary directories: `code/datums/culture/**`
+- Main controllers/subsystems: none — loaded at spawn via `job/after_spawn()`
+- Notes: Cultural background is a character-pref datum that contributes examine strings and spawn-time effects. Species-gated cultures check `pref_species` at selection. No runtime processing after spawn.
+
+### Cooking and Food
+
+- Main type root(s): `/obj/item/reagent_containers/food`
+- Approximate path count under the root(s): concentrated in `code/modules/cooking/**` and `code/modules/food_and_drinks/**`
+- Primary directories: `code/modules/cooking/**`, `code/modules/food_and_drinks/**`, `code/datums/brewing_recipes/**`
+- Main controllers/subsystems: `SSskills`, `SSanvil` (slapcrafting chain)
+- Notes: Cooking uses slapcrafting rather than menu-based recipes. Raw food base (`foodbase`) applies a debuff status effect when eaten uncooked. Teas and brews are in `Teas_and_Brews.dm`. Reagent interactions route through `code/modules/reagents/**`.
+
+### Rage System
+
+- Main type root(s): `/datum/rage`
+- Approximate path count under the root(s): base datum plus `werewolf_rage` antag subtype
+- Primary directories: `code/datums/rage/**`
+- Main controllers/subsystems: `SSdcs` (signal-driven via `COMSIG_HUMAN_LIFE`; no dedicated SS*)
+- Notes: Rage is a holder datum attached to a mob via `grant_to_holder()`. Ticks on `COMSIG_HUMAN_LIFE`, sends `COMSIG_RAGE_CHANGED`, `COMSIG_RAGE_BOTTOMED`, `COMSIG_RAGE_OVERRAGE`. Supports threshold-based ability tiers. HUD uses a bloodpool element. Werewolf antag is the primary real user — see `code/datums/rage/werewolf_rage.dm`.
+
 ### Faith, Gods, Mana, Quirks, Wounds
 
 - Main type root(s): `/datum/faith`, `/datum/mana`, `/datum/quirk`, `/datum/wound`
@@ -116,6 +164,48 @@ Note: original system_map counts (634 mob, 355 status_effect, 222 component, etc
 - Primary directories: `code/datums/faith/**`, `code/datums/gods/**`, `code/datums/mana/**`, `code/datums/quirks/**`, `code/datums/wounds/**`
 - Main controllers/subsystems: `SSskills`, `SSstatusprocess`, `SSmood`
 - Notes: Character state is distributed across faith/devotion, mana, quirks, wounds, stress, rage, and organ systems.
+
+### Skills
+
+- Main type root(s): `/datum/skill`
+- Primary directories: `code/datums/skills/**`
+- Main controllers/subsystems: `SSskills`
+- Notes: Skills are split into combat, misc, craft, labor, and magic families. Each skill has leveled `int_reqs`, a `dream_cost` curve, and optional `dreams` list for XP advancement. Skill grants happen at spawn via job files; RMH jobs extend skill loadouts in `modular_rmh/code/modules/jobs/**`.
+
+### Questing and Contracts
+
+- Main type root(s): `/datum/quest`, `/datum/component/quest_object`
+- Primary directories: `code/modules/questing/**`
+- Main controllers/subsystems: `SSdcs` (no dedicated SS* — component-driven)
+- Notes: Quests are `/datum/quest` instances. `quest_object` is a component attached to items or mobs that marks them as quest targets with a visual outline filter. The `contractledger` structure (`/obj/structure/fake_machine/contractledger`) is the world-facing UI. Quest types: kill, retrieval, courier.
+
+### Combat — Special Intents and Clash
+
+- Main type root(s): `/datum/special_intent`, `/datum/status_effect/buff/clash`
+- Primary directories: `code/modules/combat/**`
+- Main controllers/subsystems: `SSdcs`, combat chain
+- Notes: `special_intent` defines AOE weapon abilities with tile coordinate patterns, pre/post sounds and icon states, and stamina costs. The clash system (`code/modules/combat/clash/`) handles parry/riposte resolution via `process_clash()` on `/mob/living`. Integrates into the main hit chain via `ai_navigation/combat_signal_map.md`.
+
+### Culture
+
+- Main type root(s): `/datum/culture`
+- Primary directories: `code/datums/culture/**`
+- Main controllers/subsystems: none — applied at spawn
+- Notes: Character background datum linked to species or universal pools. `is_selectable()` gates availability based on prefs/species. `on_after_spawn()` fires from `job/after_spawn()`. Two abstract subtrees: `/datum/culture/universal` and `/datum/culture/species`.
+
+### Cooking and Food
+
+- Main type root(s): `/obj/item/reagent_containers/food`
+- Primary directories: `code/modules/cooking/**`, `code/modules/food_and_drinks/**`
+- Main controllers/subsystems: `SSanvil`, `SSskills`
+- Notes: NeuFood system (`NeuFood.dm`) is slapcrafting-based; raw food items apply `debuff/uncookedfood` status effect when eaten uncooked. Teas and brews in `Teas_and_Brews.dm`. Cooked and raw subtrees in `cooked/**` and `raw/**`. Reagent interactions via `code/modules/reagents/**`.
+
+### Rage
+
+- Main type root(s): `/datum/rage`
+- Primary directories: `code/datums/rage/**`
+- Main controllers/subsystems: none — signal-driven on mob life tick
+- Notes: Rage meter datum attached to a mob via `rage_datum` var. Ticks on `COMSIG_HUMAN_LIFE`. Rage thresholds unlock ability tiers dynamically. Key signals: `COMSIG_RAGE_CHANGED`, `COMSIG_RAGE_BOTTOMED`, `COMSIG_RAGE_OVERRAGE`. Supports a secondary mob reference for transformed states (e.g. werewolf). Subtype: `werewolf_rage.dm`.
 
 ### Mapping, Dungeons, Voyage, and Procedural Generation
 

@@ -28,6 +28,7 @@ Generated on 2026-03-11. Last validated 2026-03-14. This is the primary Fast Sta
 | symptom-first bug report | `ai_navigation/debug_routes.md` |
 | runtime error to diagnose or fix | `ai_navigation/runtime_errors.md` |
 | qdel, del, Destroy(), ref leak | `ai_navigation/runtime_errors.md` §qdel → `ai_navigation/coding_standards.md` §GC |
+| reagents, chemistry, holder, reagent container, splash | `code/modules/reagents/**` — start with `chemistry/holder.dm` and `chemistry/readme.md` |
 | TGUI interface, ui_interact, ui_data, ui_act, React component | `ai_navigation/tgui_guide.md` |
 | keyword or feature-name routing | `ai_navigation/entrypoints.md` |
 | BYOND type path `/datum/...` `/mob/...` `/obj/...` | `ai_navigation/type_index.md` |
