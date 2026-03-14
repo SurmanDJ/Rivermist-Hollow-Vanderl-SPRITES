@@ -122,6 +122,12 @@
 /datum/sex_action/proc/shows_on_menu(mob/living/user, mob/living/target)
 	return TRUE
 
+/datum/sex_action/proc/get_menu_action_key()
+	return "[type]"
+
+/datum/sex_action/proc/build_runtime_instance()
+	return new type
+
 /datum/sex_action/proc/can_perform(mob/living/user, mob/living/target)
 	SHOULD_CALL_PARENT(TRUE)
 	if(requires_hole_storage)

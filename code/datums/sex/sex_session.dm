@@ -137,16 +137,17 @@
 	return TRUE
 
 /datum/sex_session/proc/get_active_action(action_ref)
-	if(istext(action_ref))
-		action_ref = text2path(action_ref)
 	if(istype(action_ref, /datum/sex_action))
 		var/datum/sex_action/action = action_ref
 		if(action in active_actions)
 			return action
-		return null
+		action_ref = action.get_menu_action_key()
 
+	var/action_key = get_action_key(action_ref)
 	for(var/datum/sex_action/action as anything in active_actions)
-		if(action.type == action_ref)
+		if(action_key && action.get_menu_action_key() == action_key)
+			return action
+		if(ispath(action_ref, /datum/sex_action) && action.type == action_ref)
 			return action
 	return null
 
@@ -176,17 +177,15 @@
 	current_action = get_highest_priority_action_for(user)
 
 /datum/sex_session/proc/try_start_action(action_type)
-	if(istext(action_type))
-		action_type = text2path(action_type)
 	if(is_action_active(action_type))
 		try_stop_current_action(action_type)
 		return
-	if(!action_type)
+	var/datum/sex_action/action = instantiate_action(action_type)
+	if(!action)
 		return
-	if(!can_perform_action(action_type))
+	if(!can_perform_action(action))
 		return
 
-	var/datum/sex_action/action = new action_type()
 	active_actions += action
 	update_current_action()
 	inactivity = 0
@@ -196,8 +195,6 @@
 /datum/sex_session/proc/try_stop_current_action(action_ref)
 	if(!length(active_actions))
 		return
-	if(istext(action_ref))
-		action_ref = text2path(action_ref)
 	if(!action_ref)
 		stop_current_action()
 		return
@@ -239,7 +236,7 @@
 
 		if(QDELETED(action) || !(action in active_actions))
 			break
-		if(!can_perform_action(action.type, TRUE))
+		if(!can_perform_action(action, TRUE))
 			break
 		if(action.is_finished(user, target))
 			break
@@ -282,17 +279,19 @@
 	qdel(action)
 
 /datum/sex_session/proc/can_perform_action(action_type, performing = FALSE)
-	if(!action_type)
+	var/datum/sex_action/action = get_action_template(action_type)
+	if(!action)
 		return FALSE
-	var/datum/sex_action/action = SEX_ACTION(action_type)
-	if(!inherent_perform_check(action_type))
+	if(!inherent_perform_check(action))
 		return FALSE
 	if(!action.can_perform(user, target) && !performing)
 		return FALSE
 	return TRUE
 
 /datum/sex_session/proc/inherent_perform_check(action_type)
-	var/datum/sex_action/action = SEX_ACTION(action_type)
+	var/datum/sex_action/action = get_action_template(action_type)
+	if(!action)
+		return FALSE
 	if(!target)
 		return FALSE
 	if(user.stat != CONSCIOUS)
@@ -678,6 +677,24 @@
 	dat += ".note-item.expanded { background-color: #2a1a15; border-color: #8b6914; box-shadow: 0 2px 8px rgba(139, 105, 20, 0.3); }"
 	dat += ".note-content { color: #b09070; line-height: 1.4; margin-bottom: 8px; max-height: 60px; overflow: hidden; transition: max-height 0.3s ease; }"
 	dat += ".note-content.expanded { max-height: none; overflow: visible; }"
+	dat += ".custom-actions-layout { display: flex; gap: 10px; margin: 10px; align-items: flex-start; }"
+	dat += ".custom-actions-sidebar { width: 260px; flex-shrink: 0; }"
+	dat += ".custom-actions-editor { flex: 1; min-width: 0; background-color: #2a1a15; border: 1px solid #4a2c20; border-radius: 5px; padding: 15px; }"
+	dat += ".custom-sidebar-item { display: block; background-color: #2a1a15; border: 1px solid #4a2c20; color: #d4af8c; text-decoration: none; padding: 10px; margin-bottom: 6px; border-radius: 4px; }"
+	dat += ".custom-sidebar-item:hover { background-color: #3a2318; }"
+	dat += ".custom-sidebar-item.active { background-color: #8b6914; color: #ffffff; border-color: #a07a1a; }"
+	dat += ".custom-sidebar-name { display: block; font-weight: bold; margin-bottom: 4px; }"
+	dat += ".custom-sidebar-summary { display: block; font-size: 11px; color: inherit; opacity: 0.9; }"
+	dat += ".custom-editor-section { margin-top: 15px; }"
+	dat += ".custom-editor-field { display: block; background-color: #1a1010; border: 1px solid #4a2c20; border-radius: 4px; color: #d4af8c; text-decoration: none; padding: 10px; margin-bottom: 8px; }"
+	dat += ".custom-editor-field:hover { background-color: #2f1c14; border-color: #8b6914; }"
+	dat += ".custom-editor-field.info { cursor: default; }"
+	dat += ".custom-editor-field.info:hover { background-color: #1a1010; border-color: #4a2c20; }"
+	dat += ".custom-editor-label { display: block; font-weight: bold; margin-bottom: 4px; }"
+	dat += ".custom-editor-value { display: block; color: #b09070; line-height: 1.4; }"
+	dat += ".custom-editor-detail { display: block; color: #808080; font-size: 10px; margin-top: 4px; }"
+	dat += ".custom-editor-empty { color: #666666; font-style: italic; }"
+	dat += ".custom-editor-buttons { display: flex; gap: 8px; flex-wrap: wrap; }"
 
 	dat += "</style>"
 
@@ -713,6 +730,7 @@
 
 	dat += "<div class='tabs'>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=interactions' class='tab [selected_tab == "interactions" ? "active" : ""]'>Interactions</a>"
+	dat += "<a href='?src=[REF(src)];task=tab;tab=custom_actions' class='tab [selected_tab == "custom_actions" ? "active" : ""]'>Custom Actions</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=genital' class='tab [selected_tab == "genital" ? "active" : ""]'>Controls</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=session' class='tab [selected_tab == "session" ? "active" : ""]'>Session</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=preferences' class='tab [selected_tab == "preferences" ? "active" : ""]'>Preferences</a>"
@@ -722,18 +740,17 @@
 
 	// Interactions Tab
 	dat += "<div class='tab-content [selected_tab == "interactions" ? "active" : ""]' id='interactions-tab'>"
-	var/list/available_action_types = list()
+	var/list/available_actions = list()
 	var/total_available_actions = 0
-	for(var/action_type in GLOB.sex_actions)
-		var/datum/sex_action/candidate_action = SEX_ACTION(action_type)
+	for(var/datum/sex_action/candidate_action as anything in get_all_menu_actions())
 		if(!candidate_action.shows_on_menu(user, target))
 			continue
-		if(is_action_active(action_type))
+		if(is_action_active(candidate_action))
 			continue
 		total_available_actions++
 		if(!candidate_action.matches_ui_filters(user_zone_filter, target_zone_filter))
 			continue
-		available_action_types += action_type
+		available_actions += candidate_action
 
 	var/target_panel_title = (user == target) ? "On yourself" : "On [target.name]"
 
@@ -744,17 +761,18 @@
 	dat += "<span class='search-icon'></span>"
 	dat += "<input type='text' class='search-box' placeholder='Search for an interaction' id='searchBox'>"
 	dat += "</div>"
-	dat += "<div class='action-summary'>Showing [length(available_action_types)] of [total_available_actions] available interactions for the current zone filters.</div>"
+	dat += "<div class='action-summary'>Showing [length(available_actions)] of [total_available_actions] available interactions for the current zone filters.</div>"
 
 	if(length(active_actions))
 		dat += "<div class='action-section'>"
 		dat += "<div class='action-subheader'>Active Actions</div>"
 		dat += "<div class='action-list'>"
 		for(var/datum/sex_action/active_action as anything in active_actions)
+			var/active_action_key = url_encode(active_action.get_menu_action_key())
 			dat += "<div class='action-item active-action-item'>"
-			dat += "<a class='action-button active' href='?src=[REF(src)];task=action;action_type=[active_action.type];tab=[selected_tab]'>[active_action.name]</a>"
+			dat += "<a class='action-button active' href='?src=[REF(src)];task=action;action_type=[active_action_key];tab=[selected_tab]'>[active_action.name]</a>"
 			dat += "<div class='action-icons'>"
-			dat += "<a href='?src=[REF(src)];task=stop;action_type=[active_action.type];tab=[selected_tab]' class='icon-btn stop' title='Stop action'>X</a>"
+			dat += "<a href='?src=[REF(src)];task=stop;action_type=[active_action_key];tab=[selected_tab]' class='icon-btn stop' title='Stop action'>X</a>"
 			dat += "</div>"
 			dat += "</div>"
 		dat += "</div>"
@@ -762,22 +780,22 @@
 
 	dat += "<div class='action-section'>"
 	dat += "<div class='action-subheader'>Available Actions</div>"
-	if(!length(available_action_types))
+	if(!length(available_actions))
 		dat += "<div class='action-empty'>No interactions match these zone filters yet.</div>"
 	else
 		dat += "<div class='action-list'>"
-		for(var/action_type as anything in available_action_types)
-			var/datum/sex_action/menu_action = SEX_ACTION(action_type)
+		for(var/datum/sex_action/menu_action as anything in available_actions)
 			dat += "<div class='action-item searchable-action-item'>"
 			var/button_class = "action-button"
-			var/can_perform = can_perform_action(action_type)
+			var/can_perform = can_perform_action(menu_action)
+			var/action_key = url_encode(menu_action.get_menu_action_key())
 
 			if(menu_action.name == "Salute")
 				button_class += " blue"
 			if(!can_perform)
 				button_class += " linkOff"
 
-			dat += "<a class='[button_class]' href='?src=[REF(src)];task=action;action_type=[action_type];tab=[selected_tab]'>[menu_action.name]</a>"
+			dat += "<a class='[button_class]' href='?src=[REF(src)];task=action;action_type=[action_key];tab=[selected_tab]'>[menu_action.name]</a>"
 			dat += "<div class='action-icons'></div>"
 			dat += "</div>"
 		dat += "</div>"
@@ -785,6 +803,11 @@
 	dat += "</div>"
 	dat += render_zone_filter_panel(target_panel_title, "set_target_zone_filter", target_zone_filter, selected_tab)
 	dat += "</div>"
+	dat += "</div>"
+
+	// Custom Actions Tab
+	dat += "<div class='tab-content [selected_tab == "custom_actions" ? "active" : ""]' id='custom-actions-tab'>"
+	dat += get_custom_actions_tab_content(selected_tab)
 	dat += "</div>"
 
 	// Controls Tab
@@ -997,7 +1020,7 @@
 
 	dat += "</div>"
 
-	var/datum/browser/popup = new(user, "sexcon[our_sex_id]", "<center>Sate Desire</center>", 920, 700)
+	var/datum/browser/popup = new(user, "sexcon[our_sex_id]", "<center>Sate Desire</center>", 1120, 760)
 	popup.set_content(dat.Join())
 	popup.open()
 	return
@@ -1126,6 +1149,9 @@
 	var/list/arousal_data = list()
 	SEND_SIGNAL(user, COMSIG_SEX_GET_AROUSAL, arousal_data)
 	var/selected_tab = href_list["tab"] || "interactions"
+	if(handle_custom_action_topic(href_list))
+		show_ui(selected_tab)
+		return
 
 	switch(href_list["task"])
 		if("tab")
@@ -1137,14 +1163,13 @@
 		if("set_target_zone_filter")
 			target_zone_filter = sanitize_ui_zone_filter(href_list["value"])
 		if("action")
-			var/action_path = text2path(href_list["action_type"])
-			var/datum/sex_action/action = SEX_ACTION(action_path)
-			if(!action)
+			var/action_ref = url_decode(href_list["action_type"])
+			if(!get_action_template(action_ref))
 				show_ui(selected_tab)
 				return
-			try_start_action(action_path)
+			try_start_action(action_ref)
 		if("stop")
-			try_stop_current_action(text2path(href_list["action_type"]))
+			try_stop_current_action(url_decode(href_list["action_type"]))
 		if("set_speed")
 			var/new_speed = text2num(href_list["value"])
 			if(new_speed >= SEX_SPEED_MIN && new_speed <= SEX_SPEED_MAX)
