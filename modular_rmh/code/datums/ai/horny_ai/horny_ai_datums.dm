@@ -7,10 +7,16 @@
 	var/wrong_action = FALSE
 	var/knockdown_need = TRUE
 
+/datum/ai_behavior/horny/simple_mob
+	// Simple mobs currently only use the shared horny flow as-is.
+
+/datum/ai_behavior/horny/human
+	// Human-type mobs add prep work before the shared action flow.
+
 
 /datum/ai_behavior/horny/setup(datum/ai_controller/controller, target_key, targetting_datum_key)
 	. = ..()
-	var/datum/horny_targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 	if(isnull(targetting_datum))
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
 
@@ -56,6 +62,8 @@
 		return FALSE
 	set_movement_target(controller, target)
 
+	RegisterSignal(basic_mob, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+
 	controller.set_blackboard_key(BB_HORNY_STUN_COOLDOWN, world.time)
 	SEND_SIGNAL(controller.pawn, COMSIG_HORNY_TARGET_SET, TRUE)
 
@@ -67,13 +75,16 @@
 		controller.modify_cooldown(controller, world.time)
 		return FALSE
 
-	var/datum/horny_targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 
 	if(!targetting_datum)
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
 
 	var/atom/current_target = controller.blackboard[target_key]
 	var/mob/living/basic_mob = controller.pawn
+
+	if(basic_mob.stat > SOFT_CRIT)
+		return
 
 	if(!targetting_datum.can_horny(basic_mob, current_target))
 		finish_action(controller, FALSE, target_key)
@@ -164,104 +175,205 @@
 		else
 			knockdown_need = TRUE
 
-	//do grab here
-	if(iscarbon(basic_mob))
-		var/mob/living/carbon/carbon_mob = controller.pawn
-		if(!carbon_mob.pulling)
-			carbon_mob.drop_all_held_items()
-			var/sel_zone
-			if(prob(30)) // chance to gag
-				sel_zone = BODY_ZONE_PRECISE_MOUTH
-			else
-				sel_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_PRECISE_NECK, BODY_ZONE_PRECISE_GROIN)
-			if(!length(target_living.grabbedby))
-				target_living.grabbedby(carbon_mob, FALSE, sel_zone)
+	if(handle_target_prep(controller, basic_mob, target_living, session))
+		return
 
+	start_horny_action(controller, basic_mob, target_living, session, target_key)
 
-	if(ishuman(target_living))
-		var/mob/living/carbon/human/human_target = target_living
+/datum/ai_behavior/horny/proc/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
+	// Override this in mob-specific subclasses when they need setup work before the sex action starts.
+	return FALSE
 
-		//disarm
-		if(human_target.get_active_held_item() && human_target.Adjacent(basic_mob))
-			for(var/obj/item/I in human_target.held_items)
-				human_target.dropItemToGround(I, force = FALSE, silent = FALSE)
-			human_target.Stun(30)
-			human_target.visible_message(span_danger("[basic_mob] disarms [human_target]!"), \
-					span_userdanger("[basic_mob] disarms me!"), span_hear("I hear someone getting punished!"), COMBAT_MESSAGE_RANGE)
-			return
+/datum/ai_behavior/horny/proc/start_horny_action(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session, target_key)
+	if(!session)
+		return
 
-		//do undress here
-		var/pririty_list = list(human_target.wear_pants, human_target.wear_armor, human_target.wear_shirt)
-		for(var/obj/item/clothing/priority_cloth in pririty_list)
-			if(priority_cloth)
-				if(priority_cloth.flags_inv & HIDECROTCH && !priority_cloth.genital_access)
-					if(!do_after(basic_mob, 1 SECONDS, human_target))
-						basic_mob.visible_message(span_danger("[basic_mob] manages to rip [human_target]'s [priority_cloth.name] off!"))
-						var/obj/item/clothing/thepants = priority_cloth
-						human_target.dropItemToGround(thepants)
-						thepants.throw_at(pick(orange(2, get_turf(human_target))), 2, 1, basic_mob, TRUE)
-		if(prob(10))
-			var/obj/item/item = pick(human_target.get_equipped_items(FALSE))
-			if(istype(item, /obj/item/clothing) || istype(item, /obj/item/storage/belt))
-				if(!do_after(basic_mob, 1 SECONDS, human_target))
-					if(!istype(item, /obj/item/storage) && !istype(item, /obj/item/clothing/ring))
-						item.take_damage(damage_amount = item.max_integrity * 0.2, sound_effect = FALSE)
-					basic_mob.visible_message(span_danger("[basic_mob] manages to rip [human_target]'s [item] off!"))
-					human_target.dropItemToGround(item)
-					item.throw_at(pick(orange(2, get_turf(human_target))), 2, 1, basic_mob, TRUE)
-
-
-
-		//do tie up here
-		if(iscarbon(basic_mob) && human_target.body_position == LYING_DOWN && !human_target.get_active_held_item())
-			var/mob/living/carbon/c_mob = controller.pawn
-			if(basic_mob.Adjacent(human_target) && human_target.get_num_arms(TRUE) > 1 && !human_target.handcuffed)
-				c_mob.visible_message(span_danger("[c_mob] begins to tie up [human_target]'s hands!"))
-				//session.stop_current_action()
-				if(do_after(c_mob, 1 SECONDS, human_target))
-					// Create and use rope cuffs
-					var/obj/item/rope/rope_item = new /obj/item/rope
-					if(rope_item.apply_cuffs(human_target, c_mob))
-						return
-					else
-						qdel(rope_item)
-
-			/*if(basic_mob.Adjacent(human_target) && !human_target.legcuffed)
-				c_mob.visible_message(span_danger("[c_mob] begins to tie up [human_target]'s legs!"))
-				//session.stop_current_action()
-				if(do_after(c_mob, 1 SECONDS, human_target))
-					// Create and use rope cuffs
-					var/obj/item/rope/leg_rope = new /obj/item/rope
-					if(leg_rope.apply_cuffs(human_target, c_mob, TRUE))  // TRUE for legcuffs
-						c_mob.stop_pulling()
-						return
-					else
-						qdel(leg_rope)*/
-
-
-	//starting the action
-
-	if(session)
-		//make it depend on anger or smth
-		var/action_type = basic_mob.select_horny_ai_act(target_living)
+	var/action_type = basic_mob.select_horny_ai_act(target_living)
+	if(isnull(session.current_action))
+		session.try_start_action(action_type)
+		basic_mob.face_atom(target_living)
+		var/force = rand(SEX_FORCE_MID, SEX_FORCE_MAX)
+		var/speed = rand(SEX_SPEED_MID, SEX_SPEED_MAX)
+		session.set_current_force(force)
+		session.set_current_speed(speed)
+		target_living.apply_status_effect(/datum/status_effect/debuff/mob_fucked)
 		if(isnull(session.current_action))
-			session.try_start_action(action_type)
-			basic_mob.face_atom(target_living)
-			var/force = rand(SEX_FORCE_MID, SEX_FORCE_MAX)
-			var/speed = rand(SEX_SPEED_MID, SEX_SPEED_MAX)
-			session.set_current_force(force)
-			session.set_current_speed(speed)
-			target_living.apply_status_effect(/datum/status_effect/debuff/mob_fucked)
-			if(isnull(session.current_action))
-				wrong_action = TRUE
-				finish_action(controller, FALSE, target_key)
+			wrong_action = TRUE
+			finish_action(controller, FALSE, target_key)
 
+/datum/ai_behavior/horny/simple_mob/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
+	if(!ishuman(target_living) || !basic_mob.Adjacent(target_living))
+		return FALSE
+
+	if(!prob(15))
+		return FALSE
+
+	var/mob/living/carbon/human/human_target = target_living
+	return strip_human_target(basic_mob, human_target)
+
+/datum/ai_behavior/horny/simple_mob/proc/strip_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
+	var/list/possible_items = list()
+
+	var/obj/item/clothing/pants = human_target.wear_pants
+	if(pants && (pants.flags_inv & HIDECROTCH) && !pants.genital_access)
+		possible_items += pants
+
+	if(prob(40))
+		var/obj/item/clothing/armor = human_target.wear_armor
+		if(armor)
+			possible_items += armor
+
+	if(prob(40))
+		var/obj/item/clothing/shirt = human_target.wear_shirt
+		if(shirt)
+			possible_items += shirt
+
+	if(prob(35))
+		var/obj/item/random_item = pick(human_target.get_equipped_items(FALSE))
+		if(istype(random_item, /obj/item/clothing) || istype(random_item, /obj/item/storage/belt))
+			possible_items += random_item
+
+	if(!length(possible_items))
+		return FALSE
+
+	var/obj/item/stripped_item = pick(possible_items)
+	if(!stripped_item)
+		return FALSE
+
+	basic_mob.visible_message(span_danger("[basic_mob] starts tugging at [human_target]'s [stripped_item]!"))
+	if(!do_after(basic_mob, rand(12, 20) DECISECONDS, human_target))
+		return FALSE
+	if(QDELETED(stripped_item) || stripped_item.loc != human_target)
+		return FALSE
+
+	if(prob(35) && !istype(stripped_item, /obj/item/storage) && !istype(stripped_item, /obj/item/clothing/ring))
+		stripped_item.take_damage(damage_amount = stripped_item.max_integrity * 0.15, sound_effect = FALSE)
+
+	basic_mob.visible_message(span_danger("[basic_mob] tears [human_target]'s [stripped_item] loose!"))
+	human_target.dropItemToGround(stripped_item)
+	stripped_item.throw_at(pick(orange(2, get_turf(human_target))), 2, 1, basic_mob, TRUE)
+	return TRUE
+
+/datum/ai_behavior/horny/human/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
+	if(!iscarbon(basic_mob))
+		return FALSE
+
+	var/mob/living/carbon/carbon_mob = basic_mob
+	ensure_target_grab(carbon_mob, target_living)
+
+	if(!ishuman(target_living))
+		return FALSE
+
+	var/mob/living/carbon/human/human_target = target_living
+	if(disarm_human_target(basic_mob, human_target))
+		return TRUE
+
+	strip_human_target(basic_mob, human_target)
+
+	if(tie_human_target(carbon_mob, human_target))
+		return TRUE
+
+	return FALSE
+
+/datum/ai_behavior/horny/human/proc/ensure_target_grab(mob/living/carbon/carbon_mob, mob/living/target_living)
+	if(carbon_mob.pulling)
+		return
+
+	carbon_mob.drop_all_held_items()
+	var/sel_zone
+	if(prob(30)) // chance to gag
+		sel_zone = BODY_ZONE_PRECISE_MOUTH
+	else
+		sel_zone = pick(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG, BODY_ZONE_PRECISE_NECK, BODY_ZONE_PRECISE_GROIN)
+
+	if(!length(target_living.grabbedby))
+		target_living.grabbedby(carbon_mob, FALSE, sel_zone)
+
+/datum/ai_behavior/horny/human/proc/disarm_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
+	if(!human_target.get_active_held_item() || !human_target.Adjacent(basic_mob))
+		return FALSE
+
+	for(var/obj/item/I in human_target.held_items)
+		human_target.dropItemToGround(I, force = FALSE, silent = FALSE)
+	human_target.Stun(30)
+	human_target.visible_message(span_danger("[basic_mob] disarms [human_target]!"), \
+			span_userdanger("[basic_mob] disarms me!"), span_hear("I hear someone getting punished!"), COMBAT_MESSAGE_RANGE)
+	return TRUE
+
+/datum/ai_behavior/horny/human/proc/strip_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
+	var/pririty_list = list(human_target.wear_pants, human_target.wear_armor, human_target.wear_shirt)
+	for(var/obj/item/clothing/priority_cloth in pririty_list)
+		if(priority_cloth && (priority_cloth.flags_inv & HIDECROTCH) && !priority_cloth.genital_access)
+			if(!do_after(basic_mob, 1 SECONDS, human_target))
+				basic_mob.visible_message(span_danger("[basic_mob] manages to rip [human_target]'s [priority_cloth.name] off!"))
+				var/obj/item/clothing/thepants = priority_cloth
+				human_target.dropItemToGround(thepants)
+				thepants.throw_at(pick(orange(2, get_turf(human_target))), 2, 1, basic_mob, TRUE)
+
+	if(!prob(10))
+		return
+
+	var/obj/item/item = pick(human_target.get_equipped_items(FALSE))
+	if(!istype(item, /obj/item/clothing) && !istype(item, /obj/item/storage/belt))
+		return
+	if(!do_after(basic_mob, 1 SECONDS, human_target))
+		if(!istype(item, /obj/item/storage) && !istype(item, /obj/item/clothing/ring))
+			item.take_damage(damage_amount = item.max_integrity * 0.2, sound_effect = FALSE)
+		basic_mob.visible_message(span_danger("[basic_mob] manages to rip [human_target]'s [item] off!"))
+		human_target.dropItemToGround(item)
+		item.throw_at(pick(orange(2, get_turf(human_target))), 2, 1, basic_mob, TRUE)
+
+/datum/ai_behavior/horny/human/proc/tie_human_target(mob/living/carbon/carbon_mob, mob/living/carbon/human/human_target)
+	if(human_target.body_position != LYING_DOWN || human_target.get_active_held_item())
+		return FALSE
+	if(!carbon_mob.Adjacent(human_target) || human_target.get_num_arms(TRUE) <= 1 || human_target.handcuffed)
+		return FALSE
+
+	carbon_mob.visible_message(span_danger("[carbon_mob] begins to tie up [human_target]'s hands!"))
+	if(!do_after(carbon_mob, 1 SECONDS, human_target))
+		return FALSE
+
+	var/obj/item/rope/rope_item = new /obj/item/rope
+	if(rope_item.apply_cuffs(human_target, carbon_mob))
+		return TRUE
+
+	qdel(rope_item)
+	return FALSE
+
+/datum/ai_behavior/horny/proc/on_attacked(mob/living/source, atom/attacker, damage)
+	SIGNAL_HANDLER
+	if(!damage || !source?.ai_controller || !attacker)
+		return
+	if(attacker == source || QDELETED(attacker) || isturf(attacker))
+		return
+	if(ismob(attacker))
+		var/mob/M = attacker
+		if(M.status_flags & GODMODE || M.stat == DEAD)
+			return
+	if(source.see_invisible < attacker.invisibility)
+		return
+
+	var/datum/ai_controller/controller = source.ai_controller
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[BB_TARGETTING_DATUM]
+
+	controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, attacker)
+
+	var/atom/potential_hiding_location = targetting_datum?.find_hidden_mobs(source, attacker)
+	if(potential_hiding_location)
+		controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION, potential_hiding_location)
+	else
+		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+
+	controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_HORNY_TARGET)
+	controller.CancelActions()
 
 
 
 /datum/ai_behavior/horny/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	var/mob/living/basic_mob = controller.pawn
+
+	UnregisterSignal(basic_mob, COMSIG_ATOM_WAS_ATTACKED)
 
 	SEND_SIGNAL(basic_mob, COMSIG_SET_ERECT_STATE, 0)
 
@@ -281,6 +393,8 @@
 	basic_mob.stop_pulling()
 	controller.clear_blackboard_key(target_key)
 	controller.clear_blackboard_key(BB_HORNY_TIME_START)
+	if(basic_mob.is_dead())
+		return
 	if(!succeeded)
 		//if ran away - be angry
 		controller.set_blackboard_key(BB_HORNY_SEEK_COOLDOWN, world.time + 30 SECONDS)

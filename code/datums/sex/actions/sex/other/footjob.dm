@@ -2,6 +2,8 @@
 	name = "Jerk them off with feet"
 	check_same_tile = FALSE
 	requires_hole_storage = FALSE
+	knot_on_finish = FALSE
+	can_knot = FALSE
 
 /datum/sex_action/sex/other/footjob/shows_on_menu(mob/living/user, mob/living/target)
 	if(user == target)

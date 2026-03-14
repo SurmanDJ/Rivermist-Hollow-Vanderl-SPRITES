@@ -9,7 +9,6 @@
 		BB_MINOTAUR_SUMMON_COOLDOWN = 0,
 		BB_MINOTAUR_SLAM_COOLDOWN = 0,
 		BB_MINOTAUR_LAST_SPECIAL_ATTACK = null,
-		BB_HORNY_TARGETTING_DATUM = new /datum/horny_targetting_datum/basic(),
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_horny,

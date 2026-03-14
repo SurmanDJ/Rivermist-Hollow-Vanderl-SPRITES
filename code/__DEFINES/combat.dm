@@ -236,6 +236,10 @@
 #define WHIP_LASH			/datum/intent/whip/lash
 #define WHIP_MTLLASH		/datum/intent/whip/lash/metal
 #define CANE_LASH			/datum/intent/whip/lash/cane
+//PUNISH INTENTS
+#define WHIP_PUNISH			/datum/intent/whip/punish
+#define CANE_PUNISH			/datum/intent/whip/punish/cane
+#define BELT_PUNISH			/datum/intent/belt/punish
 
 #define DAGGER_CUT			/datum/intent/dagger/cut
 #define DAGGER_THRUST		/datum/intent/dagger/thrust

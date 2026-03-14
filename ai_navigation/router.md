@@ -2,24 +2,15 @@
 
 Generated on 2026-03-11. Last validated 2026-03-14. This is the primary Fast Start entrypoint for normal tasks.
 
-Terminology note:
+## Always
 
-- `navigation layer` means the repository-orientation docs in `ai_navigation/`.
-- It does not mean game maps, `_maps/**`, `code/modules/mapping/**`, or mapping subsystems.
-
-The `ai_navigation/` navigation layer may lag behind the codebase by up to one monthly manual refresh cycle. Use it for routing, then verify in source. If the navigation layer and code disagree, trust the code.
-
-## Start Mode
-
-This file is for `Fast Start`.
-
-Use `ai_navigation/AGENTS.md` only for `Guided Start`.
-Use `ai_navigation/update_policy.md` for `Maintenance Start`.
-If the start mode is still unclear, open `ai_navigation/start_matrix.md`.
+| When | Action |
+|---|---|
+| before any medium / high / unclear-scope edit | open `ai_navigation/human_checking.md` first |
 
 ## Dispatch
 
-| If the task looks like | Open this helper |
+| Task | Helper |
 |---|---|
 | planned change may be broad, risky, or needs approval before edits | `ai_navigation/human_checking.md` |
 | refresh the navigation layer, rebuild its docs, or migrate this repository-orientation stack to another codebase | `ai_navigation/update_policy.md` |
@@ -35,20 +26,15 @@ If the start mode is still unclear, open `ai_navigation/start_matrix.md`.
 | whole subsystem or process loop freezes, hangs, or stops without runtimes | `ai_navigation/processing_hazards.md` |
 | explicit failure-mode analysis after the owner is already known | `ai_navigation/failure_modes.md` |
 | symptom-first bug report | `ai_navigation/debug_routes.md` |
+| runtime error to diagnose or fix | `ai_navigation/runtime_errors.md` |
+| qdel, del, Destroy(), ref leak | `ai_navigation/runtime_errors.md` §qdel → `ai_navigation/coding_standards.md` §GC |
+| TGUI interface, ui_interact, ui_data, ui_act, React component | `ai_navigation/tgui_guide.md` |
 | keyword or feature-name routing | `ai_navigation/entrypoints.md` |
-| BYOND type path like `/datum/...`, `/mob/...`, `/obj/...` | `ai_navigation/type_index.md` |
-| lifecycle, order, timing, scheduler, round flow | `ai_navigation/runtime_flow.md` |
-| cross-system handoff or dependency question | `ai_navigation/system_dependencies.md` |
-| explicit `SS*` subsystem question | `ai_navigation/subsystem_map.md` |
-| unknown architecture/location question after the above | `ai_navigation/system_map.md` or `ai_navigation/architecture.md` |
-| deep inheritance problem | `ai_navigation/type_tree.md` |
-
-## Budget
-
-- Open exactly 1 helper first.
-- Then open up to 2 source files.
-- Check `modular_rmh` on the same branch.
-- Before editing medium/high/unknown-risk work, stop and get human approval.
-- For whole-loop stalls with no runtimes, do a blocking-call sweep before blaming load.
-- Escalate only if unresolved.
-- For normal tasks, this file is cheaper than opening `ai_navigation/AGENTS.md` first.
+| BYOND type path `/datum/...` `/mob/...` `/obj/...` | `ai_navigation/type_index.md` |
+| lifecycle, timing, scheduler, round flow | `ai_navigation/runtime_flow.md` |
+| cross-system handoff or dependency | `ai_navigation/system_dependencies.md` |
+| explicit `SS*` subsystem | `ai_navigation/subsystem_map.md` |
+| unknown architecture or location | `ai_navigation/system_map.md` or `ai_navigation/architecture.md` |
+| modular_rmh layer, where RMH code lives, overlay rules | `ai_navigation/modular_guide.md` |
+| deep inheritance | `ai_navigation/type_tree.md` — search specific path, do not read whole file |
+| budget rules, engine constraints detail | `ai_navigation/router_deep.md` |

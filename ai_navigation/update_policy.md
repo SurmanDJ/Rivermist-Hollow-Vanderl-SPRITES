@@ -71,7 +71,6 @@ Use this order to keep the refresh cheap and deterministic.
      - `ai_navigation/content_patterns.md`
      - `ai_navigation/task_templates.md`
      - `ai_navigation/AGENTS.md`
-     - `ai_navigation/navigation_guide.md`
 
 If time is limited, refresh stages `2`, `4`, and `6` first. Those give the best routing value per effort.
 

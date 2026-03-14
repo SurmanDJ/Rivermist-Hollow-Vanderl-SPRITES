@@ -11,6 +11,8 @@
 	var/client/client
 	var/datum/tgui_window/window
 	var/broken = FALSE
+	var/initializing = FALSE
+	var/initialize_generation = 0
 	var/initialized_at
 	/// Each client notifies on protected playback, so this prevents spamming admins.
 	var/static/admins_warned = FALSE
@@ -40,9 +42,21 @@
  */
 /datum/tgui_panel/proc/initialize(force = FALSE)
 	set waitfor = FALSE
+	if(!client || !window)
+		return
+	if(initializing)
+		return
+	if(!force && window.status != TGUI_WINDOW_CLOSED)
+		return
+	initializing = TRUE
+	var/current_generation = ++initialize_generation
 	// Minimal sleep to defer initialization to after client constructor
 	sleep(1 TICKS)
+	if(!client || !window || current_generation != initialize_generation)
+		initializing = FALSE
+		return
 	initialized_at = world.time
+	broken = FALSE
 	// Perform a clean initialization
 	window.initialize(
 		strict_mode = TRUE,
@@ -57,15 +71,19 @@
 
 	// Other setup
 	request_telemetry()
-	addtimer(CALLBACK(src, PROC_REF(on_initialize_timed_out)), 5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(on_initialize_timed_out), current_generation), 5 SECONDS)
 	window.send_message("testTelemetryCommand")
+	initializing = FALSE
 
 /**
  * private
  *
  * Called when initialization has timed out.
  */
-/datum/tgui_panel/proc/on_initialize_timed_out()
+/datum/tgui_panel/proc/on_initialize_timed_out(current_generation)
+	if(current_generation != initialize_generation || window?.is_ready())
+		return
+	broken = TRUE
 	// Currently does nothing but sending a message to old chat.
 	SEND_TEXT(client, span_userdanger("Failed to load fancy chat, click <a href='byond://?src=[REF(src)];reload_tguipanel=1'>HERE</a> to attempt to reload it."))
 
@@ -76,6 +94,7 @@
  */
 /datum/tgui_panel/proc/on_message(type, payload)
 	if(type == "ready")
+		initializing = FALSE
 		broken = FALSE
 		window.send_message("update", list(
 			"config" = list(

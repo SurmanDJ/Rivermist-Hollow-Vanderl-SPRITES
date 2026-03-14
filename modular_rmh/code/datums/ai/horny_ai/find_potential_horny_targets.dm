@@ -25,7 +25,7 @@
 	if(living_mob.pet_passive)
 		finish_action(controller, succeeded = FALSE)
 		return
-	var/datum/horny_targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
 
 	if(!targetting_datum)
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
@@ -69,7 +69,7 @@
 	var/atom/target = pick_final_target(controller, filtered_targets)
 	controller.set_blackboard_key(target_key, target)
 
-	var/atom/potential_hiding_location = targetting_datum.find_hidden_mobs_horny(living_mob, target)
+	var/atom/potential_hiding_location = targetting_datum.find_hidden_mobs(living_mob, target)
 
 	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
 		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)
@@ -97,7 +97,7 @@
 	// We're gonna store this field in our blackboard, so we can clear it away if we end up finishing successsfully
 	controller.set_blackboard_key(BB_FIND_HORNY_TARGETS_FIELD(type), horny_detection_field)*/
 
-/datum/ai_behavior/find_potential_horny_targets/proc/new_turf_found(turf/found, datum/ai_controller/controller, datum/horny_targetting_datum/strategy)
+/datum/ai_behavior/find_potential_horny_targets/proc/new_turf_found(turf/found, datum/ai_controller/controller, datum/targetting_datum/strategy)
 	var/valid_found = FALSE
 	var/mob/pawn = controller.pawn
 	for(var/maybe_target as anything in found)
@@ -117,7 +117,7 @@
 	// Fire instantly, you should find something I hope
 	controller.modify_cooldown(src, world.time)
 
-/datum/ai_behavior/find_potential_horny_targets/proc/atom_allowed(atom/movable/checking, datum/horny_targetting_datum/strategy, mob/pawn)
+/datum/ai_behavior/find_potential_horny_targets/proc/atom_allowed(atom/movable/checking, datum/targetting_datum/strategy, mob/pawn)
 	if(checking == pawn)
 		return FALSE
 	if(!ismob(checking) && !is_type_in_typecache(checking, GLOB.target_interested_atoms))
@@ -126,7 +126,7 @@
 		return FALSE
 	return TRUE
 
-/datum/ai_behavior/find_potential_horny_targets/proc/new_atoms_found(list/atom/movable/found, datum/ai_controller/controller, target_key, datum/horny_targetting_datum/strategy, hiding_location_key)
+/datum/ai_behavior/find_potential_horny_targets/proc/new_atoms_found(list/atom/movable/found, datum/ai_controller/controller, target_key, datum/targetting_datum/strategy, hiding_location_key)
 	var/mob/pawn = controller.pawn
 	var/list/accepted_targets = list()
 	for(var/maybe_target as anything in found)
@@ -143,7 +143,7 @@
 	var/atom/target = pick_final_target(controller, accepted_targets)
 	controller.set_blackboard_key(target_key, target)
 
-	var/atom/potential_hiding_location = strategy.find_hidden_mobs_horny(pawn, target)
+	var/atom/potential_hiding_location = strategy.find_hidden_mobs(pawn, target)
 
 	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
 		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)

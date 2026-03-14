@@ -59,7 +59,7 @@ If scope is unclear, treat it as at least `medium` until the user clarifies the 
 - `no risk`: proceed
 - `low risk`: state the local scope and proceed
 - `medium risk`: ask for approval before editing
-- `high risk`: ask for approval before editing and state the likely blast radius and server-cost risks
+- `high risk`: ask for approval before editing and state the likely blast radius and server-cost risks; if the change creates or destroys objects, verify `ai_navigation/coding_standards.md` §GC contract before writing code
 - `unknown risk`: ask for clarification before editing
 
 ## Questions To Ask The Human
