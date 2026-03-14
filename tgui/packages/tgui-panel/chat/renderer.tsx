@@ -56,7 +56,7 @@ function createHighlightNode(text, color) {
 function createMessageNode(messageOdd) {
   const node = document.createElement('div');
   let className = 'ChatMessage';
-  if(messageOdd) {
+  if (messageOdd) {
     className = 'ChatMessage--zebra';
   }
   node.className = className;
@@ -371,7 +371,7 @@ class ChatRenderer {
     for (const payload of batch) {
       const message = createMessage(payload);
       // Combine messages
-      if(!this.disableCombine) {
+      if (!this.disableCombine) {
         const combinable = this.getCombinableMessage(message);
         if (combinable) {
           combinable.times = (combinable.times || 1) + 1;
@@ -390,8 +390,8 @@ class ChatRenderer {
       // Create message node
       else {
         let oddMessage: boolean = false;
-        if(this.zebraHighlight) {
-          oddMessage = (this.visibleMessages.length % 2) === 0;
+        if (this.zebraHighlight) {
+          oddMessage = this.visibleMessages.length % 2 === 0;
         }
         node = createMessageNode(oddMessage);
         // Payload is plain text
@@ -409,6 +409,17 @@ class ChatRenderer {
         for (let i = 0; i < nodes.length; i++) {
           const childNode = nodes[i];
           const targetName = childNode.getAttribute('data-component');
+          const Element = targetName
+            ? TGUI_CHAT_COMPONENTS[targetName]
+            : undefined;
+          if (!Element) {
+            logger.error(
+              'Error: unsupported embedded chat component',
+              targetName,
+              childNode.outerHTML,
+            );
+            continue;
+          }
           // Let's pull out the attibute info we need
           const outputProps = {};
           for (let j = 0; j < childNode.attributes.length; j++) {
@@ -437,8 +448,6 @@ class ChatRenderer {
           while (childNode.firstChild) {
             childNode.removeChild(childNode.firstChild);
           }
-          const Element = TGUI_CHAT_COMPONENTS[targetName];
-
           const reactRoot = createRoot(childNode);
 
           reactRoot.render(

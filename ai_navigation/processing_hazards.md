@@ -20,6 +20,7 @@ If these appear inside `process()`, `tick()`, `fire()`, or procs called directly
 - `sleep(`
 - `waitfor = TRUE` or implicit waiting behavior
 - sync UI or user-interaction calls from subsystem-owned code
+- `walk(`, `walk_to(`, `walk_towards(`, `walk_rand(`, `walk_away(` — all of these sleep internally between steps; calling them without `spawn` from a subsystem proc will block the owning fire() chain
 
 Safe-looking async escape hatches to check for:
 
@@ -40,6 +41,8 @@ Safe-looking async escape hatches to check for:
 
 - blocking calls in process-heavy code:
   `rg -n "\binput\(|\balert\(|browse\(|do_after\(|sleep\(|waitfor = TRUE|set waitfor = TRUE" code modular_rmh -g "*.dm"`
+- walk instructions used without spawn (sleeps internally):
+  `rg -n "\bwalk\b|\bwalk_to\b|\bwalk_towards\b|\bwalk_rand\b|\bwalk_away\b" code modular_rmh -g "*.dm"`
 - async handoff:
   `rg -n "\bINVOKE_ASYNC\b|set waitfor = FALSE|set waitfor = 0|addtimer\(" code modular_rmh -g "*.dm"`
 - optional history check:

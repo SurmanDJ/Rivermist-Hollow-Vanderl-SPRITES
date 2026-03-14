@@ -10,7 +10,6 @@
 		BB_LEYLINE_ENERGY = 100,
 		BB_MAX_LEYLINE_ENERGY = 100,
 		BB_ENERGY_REGEN_RATE = 0.5,
-		BB_HORNY_TARGETTING_DATUM = new /datum/horny_targetting_datum/basic(),
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_horny,

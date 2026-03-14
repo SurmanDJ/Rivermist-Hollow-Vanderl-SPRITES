@@ -2100,11 +2100,7 @@
 /turf/closed/wall/mineral/wooddark/slitted,
 /area/indoors/shelter/basin)
 "ny" = (
-/obj/item/flashlight/flare/torch/lantern{
-	anchored = 1;
-	alpha = 100;
-	on = 1
-	},
+/obj/item/flashlight/flare/torch/lantern,
 /obj/structure/closet/crate/chest/wicker,
 /turf/open/floor/cobblerock,
 /area/under/cave/rmh/goblindungeon)

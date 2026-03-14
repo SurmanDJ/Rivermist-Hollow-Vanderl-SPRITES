@@ -1,6 +1,8 @@
 /datum/sex_action/sex/thighjob
 	name = "Use their thighs to get off"
 	requires_hole_storage = FALSE
+	knot_on_finish = FALSE
+	can_knot = FALSE
 
 /datum/sex_action/sex/thighjob/shows_on_menu(mob/living/user, mob/living/target)
 	if(user == target)

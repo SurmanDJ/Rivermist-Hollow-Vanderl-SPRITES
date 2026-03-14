@@ -1,6 +1,8 @@
 /datum/sex_action/sex/boobjob
 	name = "Use their tits to get off"
 	hole_id = ORGAN_SLOT_BREASTS
+	knot_on_finish = FALSE
+	can_knot = FALSE
 
 /datum/sex_action/sex/boobjob/shows_on_menu(mob/living/user, mob/living/target)
 	if(user == target)

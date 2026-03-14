@@ -2,7 +2,10 @@
 
 These are copy-paste templates for giving agents better task briefs in this repository.
 
-Use them when you want the agent to start cleanly, avoid broad scans, and route itself through the `ai_navigation/` navigation layer.
+> **This file is for humans writing task prompts — not for agents reading during a task.**
+> Agents: if you opened this file looking for routing guidance, go to `ai_navigation/router.md`.
+
+Use these templates when you want the agent to start cleanly, avoid broad scans, and route itself through the `ai_navigation/` navigation layer.
 
 Default routing rule for all templates:
 
@@ -13,7 +16,7 @@ Use exactly one small helper first.
 Escalate to larger navigation docs only if still ambiguous.
 ```
 
-If startup choice itself is unclear, open `ai_navigation/start_matrix.md`.
+If startup mode choice is unclear, see the Start Mode Selection table in `ai_navigation/AGENTS.md`.
 
 ## 1. Minimal Fast Task
 
