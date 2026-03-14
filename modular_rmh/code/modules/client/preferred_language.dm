@@ -2,7 +2,7 @@
 	var/preferred_ui_language = "en"
 
 /client/verb/change_prefered_language()
-	set name = "Change Prefered Language"
+	set name = "Change Preferred Language"
 	set category = "OOC"
 	set desc = "Change your preferred UI language for multilingual interfaces."
 
