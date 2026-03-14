@@ -31,7 +31,7 @@
 /datum/sex_session/proc/extract_custom_action_id(action_key)
 	if(!is_custom_action_key(action_key))
 		return null
-	return copytext("[action_key]", length(SEX_CUSTOM_ACTION_PREFIX) + 1)
+	return copytext("[action_key]", findtext("[action_key]", SEX_CUSTOM_ACTION_PREFIX) + length(SEX_CUSTOM_ACTION_PREFIX))
 
 /datum/sex_session/proc/get_action_key(action_ref)
 	if(istype(action_ref, /datum/sex_action))
@@ -40,7 +40,15 @@
 	if(ispath(action_ref, /datum/sex_action))
 		return "[action_ref]"
 	if(istext(action_ref))
-		return url_decode("[action_ref]")
+		var/action_key = trim(url_decode("[action_ref]"))
+		if(!length(action_key))
+			return null
+		if(is_custom_action_key(action_key))
+			return action_key
+		var/list/custom_actions = get_saved_custom_action_data()
+		if(action_key in custom_actions)
+			return "[SEX_CUSTOM_ACTION_PREFIX][action_key]"
+		return action_key
 	return null
 
 /datum/sex_session/proc/get_action_template(action_ref)
@@ -51,13 +59,18 @@
 	if(!action_key)
 		return null
 
+	var/list/custom_actions = get_saved_custom_action_data()
 	if(is_custom_action_key(action_key))
 		var/custom_action_id = extract_custom_action_id(action_key)
-		var/list/custom_actions = get_saved_custom_action_data()
 		var/datum/sex_custom_action_data/action_data = custom_actions[custom_action_id]
 		if(!action_data)
 			return null
 		return new /datum/sex_action/custom(action_data)
+
+	if(action_key in custom_actions)
+		var/datum/sex_custom_action_data/action_data = custom_actions[action_key]
+		if(action_data)
+			return new /datum/sex_action/custom(action_data)
 
 	var/resolved_action_type = text2path(action_key)
 	if(!resolved_action_type || !ispath(resolved_action_type, /datum/sex_action))

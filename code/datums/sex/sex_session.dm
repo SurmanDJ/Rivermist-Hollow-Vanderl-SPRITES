@@ -90,9 +90,10 @@
 	collective = new_collective
 
 /datum/sex_session/proc/check_sex()
-	if(length(active_actions))
+	if(length(active_actions) || is_ui_open())
 		inactivity--
-		inactivity = CLAMP(inactivity, 0 , 11)
+		inactivity = CLAMP(inactivity, 0, 11)
+		addtimer(CALLBACK(src, PROC_REF(check_sex)), 30 SECONDS)
 		return
 
 	inactivity++
@@ -101,6 +102,11 @@
 		addtimer(CALLBACK(src, PROC_REF(check_sex)), 30 SECONDS)
 		return
 	qdel(src)
+
+/datum/sex_session/proc/is_ui_open()
+	if(!user?.client)
+		return FALSE
+	return winexists(user.client, "sexcon[our_sex_id]")
 
 /datum/sex_session/proc/add_ui_tracking(window_id)
 	session_updater = new /datum/ui_updater(user, window_id, src, FALSE)
