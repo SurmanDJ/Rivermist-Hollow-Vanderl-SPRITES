@@ -83,6 +83,9 @@
 	var/atom/current_target = controller.blackboard[target_key]
 	var/mob/living/basic_mob = controller.pawn
 
+	if(basic_mob.stat > SOFT_CRIT)
+		return
+
 	if(!targetting_datum.can_horny(basic_mob, current_target))
 		finish_action(controller, FALSE, target_key)
 		return
@@ -390,6 +393,8 @@
 	basic_mob.stop_pulling()
 	controller.clear_blackboard_key(target_key)
 	controller.clear_blackboard_key(BB_HORNY_TIME_START)
+	if(basic_mob.is_dead())
+		return
 	if(!succeeded)
 		//if ran away - be angry
 		controller.set_blackboard_key(BB_HORNY_SEEK_COOLDOWN, world.time + 30 SECONDS)
