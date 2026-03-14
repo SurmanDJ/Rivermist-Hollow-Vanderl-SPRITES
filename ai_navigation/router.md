@@ -28,6 +28,10 @@ Generated on 2026-03-11. Last validated 2026-03-14. This is the primary Fast Sta
 | symptom-first bug report | `ai_navigation/debug_routes.md` |
 | runtime error to diagnose or fix | `ai_navigation/runtime_errors.md` |
 | qdel, del, Destroy(), ref leak | `ai_navigation/runtime_errors.md` §qdel → `ai_navigation/coding_standards.md` §GC |
+| overlays, underlays, Appearance objects, per-tick visuals, planes, filters, particles, lighting, animate(), render relays, multiz | `ai_navigation/visuals_guide.md` |
+| GAGS, greyscale sprites, recolorable item or mob, greyscale_config, greyscale_colors | `ai_navigation/visuals_guide.md` §GAGS |
+| performance, tick budget, CPU, server lag | `ai_navigation/engine_limits.md` → `ai_navigation/performance_gotchas.md` |
+| code style, signal pattern, GC, harddel, CI, walk procs, delta-time | `ai_navigation/coding_standards.md` |
 | reagents, chemistry, holder, reagent container, splash | `code/modules/reagents/**` — start with `chemistry/holder.dm` and `chemistry/readme.md` |
 | TGUI interface, ui_interact, ui_data, ui_act, React component | `ai_navigation/tgui_guide.md` |
 | keyword or feature-name routing | `ai_navigation/entrypoints.md` |

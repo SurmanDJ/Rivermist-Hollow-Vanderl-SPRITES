@@ -271,11 +271,117 @@ Avoid the old `vis_contents`-based multiz pattern — it destroys plane effects 
 
 ---
 
-## GAGS
+## GAGS (Greyscale Auto-Generated Sprites)
 
-Runtime icon composition system for recolorable, component-split sprites. Recoloring and combining/splitting sprite components is trivial within this system.
+Runtime icon composition system. Generates colored sprites at runtime by combining greyscale layer sprites with color arguments. Use when an item or mob needs recolorable sprites without pre-baking every color variant.
 
-External guide: `https://hackmd.io/@tgstation/GAGS-Walkthrough`
+### How It Works
+
+Three parts must exist for GAGS to function:
+
+1. **DMI file** — contains the layer sprites (greyscale icon states, one per visual layer)
+2. **JSON config** (`code/datums/greyscale/json_configs/`) — defines how layers are combined and which color IDs apply to each
+3. **Config type** (`/datum/greyscale_config`) — DM datum that ties the DMI and JSON together
+
+The atom then sets `greyscale_config` and `greyscale_colors` vars. `SSgreyscale` owns the runtime generation.
+
+### JSON Config Structure
+
+```json
+{
+    "icon_state_name": [
+        {
+            "type": "icon_state",
+            "icon_state": "cloth",
+            "blend_mode": "overlay",
+            "color_ids": [ 1 ]
+        },
+        {
+            "type": "icon_state",
+            "icon_state": "ornamentation",
+            "blend_mode": "overlay",
+            "color_ids": [ 2 ]
+        },
+        {
+            "type": "icon_state",
+            "icon_state": "plate",
+            "blend_mode": "overlay"
+        }
+    ]
+}
+```
+
+- `type` — required. `"icon_state"` loads from the DMI. `"reference"` loads from another `/datum/greyscale_config` subtype.
+- `icon_state` — icon state name inside the DMI file.
+- `blend_mode` — how this layer merges with the result so far. Common values: `"overlay"` (standard), `"add"`, `"multiply"`.
+- `color_ids` — which color argument slot to use (1-indexed). Omit for uncolored layers (e.g. transparent overlay plates).
+- Inner lists `[ [...], [...] ]` — process as a sub-group before merging; useful for complex blend pipelines.
+- `MAX_SANE_LAYERS = 50` — hard limit.
+
+### Config Type (DM)
+
+```dm
+/datum/greyscale_config/my_item
+    name = "My Item"
+    icon_file = 'icons/obj/clothing/head/my_item.dmi'
+    json_config = 'code/datums/greyscale/json_configs/my_item.json'
+
+// Subtype for worn icon — reuses icon_file from parent
+/datum/greyscale_config/my_item/worn
+    json_config = 'code/datums/greyscale/json_configs/my_item_worn.json'
+```
+
+### Atom Vars
+
+```dm
+/obj/item/clothing/head/my_item
+    greyscale_config             = /datum/greyscale_config/my_item
+    greyscale_colors             = "#ff0000"           // one hex per color_id, space-separated
+    greyscale_config_worn        = /datum/greyscale_config/my_item/worn
+    greyscale_config_inhand_left  = /datum/greyscale_config/my_item/lefthand
+    greyscale_config_inhand_right = /datum/greyscale_config/my_item/righthand
+```
+
+`greyscale_colors` is a space-separated string of hex colors, one per `color_id` slot: `"#ff0000 #00ff00"` for two color IDs.
+
+### Greyscale Sprite Authoring Rules
+
+- **Pure white** in the greyscale layer = full color from `greyscale_colors`.
+- **Darker grey** = progressively darker tint of the color.
+- **Pure black** = always black regardless of color.
+- Layers without `color_ids` are applied as-is (useful for semi-transparent overlays, detail plates, etc.).
+- Only the layers that actually differ by direction need multi-directional sprites — if ornamentation is the same from all sides, sprite only one direction.
+
+### Debug Workflow (no recompile needed)
+
+1. Spawn the item in-game.
+2. VV the item → top-right dropdown → **Greyscale Debugging**.
+3. The debug menu shows:
+   - **Config selector** — switch between greyscale configs live.
+   - **Color pickers** — one per color_id slot; blue button opens color picker.
+   - **Apply** — pushes current colors to the in-world object.
+   - **Refresh** — reloads DMI and JSON from disk without restarting the server.
+   - **Preview** — shows each generation step: left column = layer input, right column = cumulative result.
+4. Iterate: edit JSON or DMI → Refresh → Apply → inspect in preview.
+5. Only recompile when adding new DM code (new config type, new atom vars).
+
+### File Locations
+
+| What | Where |
+|---|---|
+| JSON configs | `code/datums/greyscale/json_configs/` |
+| Config type definitions | `code/datums/greyscale/` (add to existing file or new file) |
+| Base config datum | `code/datums/greyscale/_greyscale_config.dm` |
+| Layer datum | `code/datums/greyscale/layer.dm` |
+| Existing configs (reference) | `code/datums/greyscale/greyscale_configs.dm` |
+| Runtime owner | `SSgreyscale` (`code/controllers/subsystem/greyscale.dm`) |
+
+### Common Mistakes
+
+- **Forgetting to include new DM files in the `.dme`** — GAGS config types are not auto-included.
+- **color_ids out of range** — if `greyscale_colors` has 1 color but a layer references `color_ids: [2]`, generation silently fails.
+- **Leaving gaps in the sprite** — layers without full coverage leave transparent holes; fill with a nearby color or use a base layer.
+- **Using GAGS for non-recolorable sprites** — unnecessary overhead; use normal icon_states if no recoloring is needed.
 
 ---
 
