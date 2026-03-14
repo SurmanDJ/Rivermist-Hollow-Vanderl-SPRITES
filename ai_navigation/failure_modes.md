@@ -39,12 +39,31 @@ Larger scope usually means shared ownership or shared execution failure.
 - refresh/replace semantics hide the real active instance
 - the visual or trait cleanup path differs from the lifecycle path
 
+### Proc aborted silently by the engine
+
+**Symptom:** a proc stops executing mid-way with no runtime in `world.log`, or `world.log` shows `"execution terminated"` / `"too many iterations"`. The owning datum is alive, the subsystem is still firing, but the specific proc never completes.
+
+**Cause:** BYOND's VM auto-kills any proc that runs for too long without yielding (no `sleep()`, `spawn()`, or other yielding instruction inside a loop). This is the engine's last-resort guard against infinite loops. It is not a crash — the rest of the world continues running.
+
+**Distinguishers vs. blocking call:**
+- Blocking call → the *entire subsystem* stalls until the blocking op returns.
+- Engine abort → only the *specific proc instance* dies; the subsystem keeps firing other datums.
+
+**Fix:** Add `sleep(0)` or `spawn()` inside any long-running loop, or move the work into a subsystem `fire()` budget. Never rely on the engine abort as a safety net.
+
+**Search pattern:**
+```
+rg -n "for\(|while\(" code modular_rmh -g "*.dm" | rg -v "sleep\|spawn\|INVOKE_ASYNC"
+```
+Cross-reference `ai_navigation/engine_limits.md` §Threading Model and `ai_navigation/performance_gotchas.md` §1.
+
 ## Cheap Distinguishers
 
 - `everything froze at once` points to shared execution, not local logic
 - `no runtimes` makes blocking or silent scheduler issues more likely
 - `effect exists but never clears` points to expiry or cleanup
 - `effect vanishes too early` points to replace/refresh or bad `qdel`
+- `one proc stopped mid-way, subsystem still firing` → likely engine abort (loop without sleep); check `world.log` for `"execution terminated"`
 
 ## Cheap Search Patterns
 
@@ -60,4 +79,4 @@ Larger scope usually means shared ownership or shared execution failure.
 - First identify the owner.
 - Then classify the scale of the failure.
 - Then test failure modes in this order:
-  blocking -> not firing -> dropped from list -> wrong cleanup -> starvation.
+  blocking → engine abort (loop without sleep) → not firing → dropped from list → wrong cleanup → starvation.

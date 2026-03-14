@@ -48,6 +48,8 @@ If the task is to refresh the navigation layer or migrate it to another codebase
 - content-first implementation rules: `ai_navigation/content_creation.md`
 - content feature decomposition: `ai_navigation/content_breakdown.md`
 - content implementation archetypes: `ai_navigation/content_patterns.md`
+- coding standards, style rules, signal patterns, GC/harddel, CI, walk procs, delta-time: `ai_navigation/coding_standards.md`
+- visual systems (planes, overlays, filters, lighting, particles, GAGS, render relays, multiz): `ai_navigation/visuals_guide.md`
 - signal routing and DCS hotspots: `ai_navigation/signal_map.md`
 - spell signal contract and lifecycle: `ai_navigation/spell_signal_map.md`
 - combat signal contract and hit routing: `ai_navigation/combat_signal_map.md`

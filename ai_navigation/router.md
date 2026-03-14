@@ -32,6 +32,10 @@ If the start mode is still unclear, open `ai_navigation/start_matrix.md`.
 | client movement, collisions, buckle, pull, throw, or moveloop behavior depends on both core procs and signals | `ai_navigation/movement_signal_map.md` |
 | you need the main proc entrypoints before searching source | `ai_navigation/core_procs.md` |
 | whole subsystem or process loop freezes, hangs, or stops without runtimes | `ai_navigation/processing_hazards.md` |
+| task involves performance optimisation, tick budget, CPU load, or server lag | `ai_navigation/engine_limits.md` then `ai_navigation/performance_gotchas.md` |
+| code touches overlays, underlays, Appearance objects, or per-tick visual updates | `ai_navigation/performance_gotchas.md` §7 + `ai_navigation/engine_limits.md` §Overlays + `ai_navigation/visuals_guide.md` |
+| visual systems: planes, filters, particles, lighting, animate(), GAGS, render relays, multiz | `ai_navigation/visuals_guide.md` |
+| code quality question, style rule, signal pattern, GC / harddel, CI failure, walk procs, delta-time | `ai_navigation/coding_standards.md` |
 | explicit failure-mode analysis after the owner is already known | `ai_navigation/failure_modes.md` |
 | symptom-first bug report | `ai_navigation/debug_routes.md` |
 | keyword or feature-name routing | `ai_navigation/entrypoints.md` |
@@ -51,3 +55,19 @@ If the start mode is still unclear, open `ai_navigation/start_matrix.md`.
 - For whole-loop stalls with no runtimes, do a blocking-call sweep before blaming load.
 - Escalate only if unresolved.
 - For normal tasks, this file is cheaper than opening `ai_navigation/AGENTS.md` first.
+
+## Engine Constraints Quick Reference
+
+When a task touches performance, timing, or visual systems, apply this chain before writing code:
+
+1. **What is the engine limit?** → `ai_navigation/engine_limits.md`
+2. **Does my pattern trigger a known hazard?** → `ai_navigation/performance_gotchas.md`
+3. **Which subsystem owns the budget?** → `ai_navigation/subsystem_map.md` or `ai_navigation/runtime_flow.md`
+
+Key constraints to keep in mind without opening files:
+- `world.cpu ≥ 100` = server overtime; any new per-tick work makes this worse.
+- Clients send **1 command/tick** max; `tick_lag` controls the tradeoff between precision and CPU cost.
+- Infinite loops without `sleep()` are auto-aborted by the engine — do not rely on this.
+- `overlays +=` / `overlays -=` on many atoms per tick → Appearance object accumulation + network flood.
+- After any `sleep()`, all object references must be null-checked before use.
+- Do **not** iterate `world.contents` while creating or destroying objects.

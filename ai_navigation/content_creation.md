@@ -75,6 +75,23 @@ The broader the audience and the higher the frequency, the more the design must 
 - Do not generalize across branches until at least two real users need the same abstraction.
 - If shared usage is plausible but not confirmed, ask the human instead of speculating.
 
+## Variable Declarations: `var/tmp`
+
+When adding new variables to a datum or atom type, mark runtime-computed references with `var/tmp`:
+
+- `var/tmp` variables are **not written to savefiles**. The engine's `Write()` proc skips them automatically.
+- Use `tmp` for: references to external objects (`loc`, links to other mobs/turfs/datums), cached lists that are rebuilt at runtime, and any value that is meaningless outside the current world session.
+- Forgetting `tmp` on a reference variable causes the engine to serialize the *entire referenced object* into the savefile — not just the reference. This inflates save file size and can corrupt restore logic.
+- Built-in transient variables (`loc`, `x`, `y`, `z`) are already handled by the engine. Only custom variables need the `tmp` flag.
+
+```dm
+// Correct — external refs marked tmp so they don't serialize into the savefile
+mob
+    var/tmp
+        mob/leader        // reference to another mob
+        list/followers    // rebuilt at runtime
+```
+
 ## Quick Decision Table
 
 | If the feature is | Prefer |
