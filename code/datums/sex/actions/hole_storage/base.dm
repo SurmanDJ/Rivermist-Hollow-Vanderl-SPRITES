@@ -3,6 +3,8 @@
 	name = "hole_storage"
 	requires_hole_storage = FALSE //ironic
 	requires_free_hands = TRUE
+	user_menu_zone_mask = SEX_UI_ZONE_ARMS
+	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 	hole_id = ORGAN_SLOT_VAGINA
 	stored_item_type = /obj/item
 	continous = TRUE

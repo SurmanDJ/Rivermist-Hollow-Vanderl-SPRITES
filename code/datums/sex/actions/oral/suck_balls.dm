@@ -1,5 +1,7 @@
 /datum/sex_action/suck_balls
 	name = "Suck their balls"
+	user_menu_zone_mask = SEX_UI_ZONE_MOUTH
+	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 	gags_user = TRUE
 
 /datum/sex_action/suck_balls/shows_on_menu(mob/living/user, mob/living/target)

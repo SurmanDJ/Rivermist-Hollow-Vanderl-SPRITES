@@ -102,6 +102,10 @@
 	var/stop_requested = FALSE
 	/// Which hand this action reserved, if any
 	var/selected_hand = null
+	/// Which zone the local user is using for interaction-menu filtering
+	var/user_menu_zone_mask = SEX_UI_ZONE_ANY
+	/// Which zone on the other side this action focuses on for interaction-menu filtering
+	var/target_menu_zone_mask = SEX_UI_ZONE_ANY
 
 /datum/sex_action/Destroy()
 	// Clean up any tracked storage entries
@@ -463,3 +467,10 @@
 		next_message_time = world.time + speed_time
 		return TRUE
 	return FALSE
+
+/datum/sex_action/proc/matches_ui_filters(user_filter, target_filter)
+	if(user_filter != SEX_UI_ZONE_ANY && !(user_menu_zone_mask & user_filter))
+		return FALSE
+	if(target_filter != SEX_UI_ZONE_ANY && !(target_menu_zone_mask & target_filter))
+		return FALSE
+	return TRUE

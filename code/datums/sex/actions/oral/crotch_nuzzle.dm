@@ -1,5 +1,7 @@
 /datum/sex_action/crotch_nuzzle
 	name = "Nuzzle their crotch"
+	user_menu_zone_mask = SEX_UI_ZONE_MOUTH
+	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 
 /datum/sex_action/crotch_nuzzle/shows_on_menu(mob/living/user, mob/living/target)
 	if(user == target)

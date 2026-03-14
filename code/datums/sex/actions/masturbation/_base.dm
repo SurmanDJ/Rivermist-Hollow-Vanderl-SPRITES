@@ -1,6 +1,8 @@
 /datum/sex_action/masturbate
 	abstract_type = /datum/sex_action/masturbate
 	requires_free_hands = TRUE
+	user_menu_zone_mask = SEX_UI_ZONE_ARMS
+	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 
 /datum/sex_action/masturbate/can_perform(mob/living/user, mob/living/target)
 	. = ..()

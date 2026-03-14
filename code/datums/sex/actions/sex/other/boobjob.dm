@@ -1,5 +1,7 @@
 /datum/sex_action/sex/other/boobjob
 	name = "Give them a boob job"
+	user_menu_zone_mask = SEX_UI_ZONE_BODY
+	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 	hole_id = ORGAN_SLOT_BREASTS
 
 /datum/sex_action/sex/other/boobjob/shows_on_menu(mob/living/user, mob/living/target)

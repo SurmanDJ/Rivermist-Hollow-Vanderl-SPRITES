@@ -42,6 +42,14 @@ GLOBAL_LIST_EMPTY(locked_sex_objects)
 /// Checks if user is considered limp. Return: TRUE/FALSE
 #define COMSIG_SEX_CONSIDERED_LIMP "sex_considered_limp"
 
+#define SEX_UI_ZONE_ANY 0
+#define SEX_UI_ZONE_MOUTH (1 << 0)
+#define SEX_UI_ZONE_GENITALS (1 << 1)
+#define SEX_UI_ZONE_ARMS (1 << 2)
+#define SEX_UI_ZONE_LEGS (1 << 3)
+#define SEX_UI_ZONE_BODY (1 << 4)
+#define SEX_UI_ZONE_MISC (1 << 5)
+
 
 #define COMSIG_BODYSTORAGE_TRY_INSERT "hole_try_fit"			// (incoming_item, target_layer, force, override)
 #define COMSIG_BODYSTORAGE_FORCE_INSERT "hole_force_insert"		// (incoming_item, target_layer)

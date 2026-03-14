@@ -1,5 +1,7 @@
 /datum/sex_action/armpit_nuzzle
 	name = "Nuzzle their armpit"
+	user_menu_zone_mask = SEX_UI_ZONE_MOUTH
+	target_menu_zone_mask = SEX_UI_ZONE_ARMS
 
 /datum/sex_action/armpit_nuzzle/shows_on_menu(mob/living/user, mob/living/target)
 	if(user == target)

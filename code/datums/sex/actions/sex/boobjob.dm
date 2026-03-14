@@ -1,5 +1,6 @@
 /datum/sex_action/sex/boobjob
 	name = "Use their tits to get off"
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 	hole_id = ORGAN_SLOT_BREASTS
 
 /datum/sex_action/sex/boobjob/shows_on_menu(mob/living/user, mob/living/target)

@@ -1,5 +1,7 @@
 /datum/sex_action/scissoring
 	name = "Scissor them"
+	user_menu_zone_mask = SEX_UI_ZONE_GENITALS
+	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 	requires_hole_storage = FALSE
 
 /datum/sex_action/scissoring/shows_on_menu(mob/living/user, mob/living/target)

@@ -1,5 +1,7 @@
 /datum/sex_action/sex/other/vagina
 	name = "Ride them"
+	user_menu_zone_mask = SEX_UI_ZONE_GENITALS
+	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 	hole_id = ORGAN_SLOT_VAGINA
 	stamina_cost = 1.0
 	aggro_grab_instead_same_tile = FALSE

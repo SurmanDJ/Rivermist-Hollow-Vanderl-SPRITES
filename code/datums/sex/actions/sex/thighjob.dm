@@ -1,5 +1,6 @@
 /datum/sex_action/sex/thighjob
 	name = "Use their thighs to get off"
+	target_menu_zone_mask = SEX_UI_ZONE_LEGS
 	requires_hole_storage = FALSE
 
 /datum/sex_action/sex/thighjob/shows_on_menu(mob/living/user, mob/living/target)

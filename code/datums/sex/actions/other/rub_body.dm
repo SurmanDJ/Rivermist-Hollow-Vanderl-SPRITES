@@ -1,5 +1,7 @@
 /datum/sex_action/rub_body
 	name = "Rub their body"
+	user_menu_zone_mask = SEX_UI_ZONE_ARMS
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 	check_same_tile = FALSE
 	requires_free_hands = TRUE
 

@@ -3,6 +3,10 @@
 	var/mob/living/user
 	/// Target of our actions
 	var/mob/living/target
+	/// Which zone on our side the interaction list is filtered by
+	var/user_zone_filter = SEX_UI_ZONE_ANY
+	/// Which zone on the target side the interaction list is filtered by
+	var/target_zone_filter = SEX_UI_ZONE_ANY
 	/// Active actions currently running in this session
 	var/list/datum/sex_action/active_actions = list()
 	/// Compatibility pointer for older callers that still expect one current action
@@ -30,6 +34,15 @@
 	var/edging_other = FALSE
 
 	var/datum/ui_updater/session_updater
+	var/static/list/action_zone_filter_options = list(
+		"Any" = SEX_UI_ZONE_ANY,
+		"Mouth" = SEX_UI_ZONE_MOUTH,
+		"Genitals" = SEX_UI_ZONE_GENITALS,
+		"Arms" = SEX_UI_ZONE_ARMS,
+		"Legs" = SEX_UI_ZONE_LEGS,
+		"Body" = SEX_UI_ZONE_BODY,
+		"Misc" = SEX_UI_ZONE_MISC,
+	)
 
 /datum/sex_session/New(mob/living/session_user, mob/living/session_target)
 	user = session_user
@@ -514,6 +527,26 @@
 		if(SEX_FORCE_HIGH, SEX_FORCE_EXTREME)
 			return pick(SEX_SOUNDS_HARD)
 
+/datum/sex_session/proc/sanitize_ui_zone_filter(filter_value)
+	var/zone_filter = text2num(filter_value)
+	switch(zone_filter)
+		if(SEX_UI_ZONE_ANY, SEX_UI_ZONE_MOUTH, SEX_UI_ZONE_GENITALS, SEX_UI_ZONE_ARMS, SEX_UI_ZONE_LEGS, SEX_UI_ZONE_BODY, SEX_UI_ZONE_MISC)
+			return zone_filter
+	return SEX_UI_ZONE_ANY
+
+/datum/sex_session/proc/render_zone_filter_panel(panel_title, task_name, current_filter, selected_tab)
+	var/list/content = list()
+	content += "<div class='zone-filter-panel'>"
+	content += "<div class='zone-filter-title'>[panel_title]</div>"
+	for(var/filter_label in action_zone_filter_options)
+		var/filter_value = action_zone_filter_options[filter_label]
+		var/filter_class = "zone-filter-option"
+		if(filter_value == current_filter)
+			filter_class += " active"
+		content += "<a class='[filter_class]' href='?src=[REF(src)];task=[task_name];value=[filter_value];tab=[selected_tab]'>[filter_label]</a>"
+	content += "</div>"
+	return content.Join("")
+
 /datum/sex_session/proc/show_ui(selected_tab = "interactions")
 	var/list/dat = list()
 	var/list/arousal_data = list()
@@ -536,7 +569,7 @@
 	dat += ".tab { padding: 12px 20px; background-color: #2a1a15; border-right: 1px solid #4a2c20; color: #d4af8c; cursor: pointer; text-decoration: none; }"
 	dat += ".tab:hover { background-color: #3a2318; }"
 	dat += ".tab.active { background-color: #4a2c20; color: #d4af8c; border-bottom: 2px solid #8b6914; }"
-	dat += ".search-container { margin: 10px; display: flex; align-items: center; }"
+	dat += ".search-container { margin: 0 0 10px 0; display: flex; align-items: center; }"
 	dat += ".search-icon { margin-right: 8px; font-size: 14px; }"
 	dat += ".search-box { flex-grow: 1; padding: 8px; background-color: #2a1a15; border: 1px solid #4a2c20; color: #d4af8c; border-radius: 3px; margin-right: 5px; }"
 	dat += ".search-btn { padding: 8px 12px; background-color: #8b6914; border: none; color: #d4af8c; cursor: pointer; border-radius: 3px; }"
@@ -544,6 +577,17 @@
 	dat += ".section-header { background-color: #8b6914; color: #d4af8c; padding: 8px 15px; margin: 10px; font-weight: bold; }"
 	dat += ".action-list { margin: 0 10px; }"
 	dat += ".action-item { display: flex; align-items: center; margin: 2px 0; }"
+	dat += ".interaction-layout { display: flex; gap: 10px; margin: 10px; align-items: flex-start; }"
+	dat += ".interaction-column { flex: 1; min-width: 0; }"
+	dat += ".zone-filter-panel { width: 120px; background-color: #2a1a15; border: 1px solid #4a2c20; border-radius: 5px; overflow: hidden; flex-shrink: 0; }"
+	dat += ".zone-filter-title { background-color: #4a2c20; padding: 8px 10px; font-weight: bold; text-align: center; color: #d4af8c; }"
+	dat += ".zone-filter-option { display: block; padding: 8px 10px; border-top: 1px solid #1a1010; color: #d4af8c; text-decoration: none; text-align: center; }"
+	dat += ".zone-filter-option:hover { background-color: #3a2318; }"
+	dat += ".zone-filter-option.active { background-color: #8b6914; color: #ffffff; }"
+	dat += ".action-section { margin-bottom: 12px; }"
+	dat += ".action-subheader { background-color: #4a2c20; color: #d4af8c; padding: 8px 12px; font-weight: bold; margin-bottom: 6px; border-radius: 3px; }"
+	dat += ".action-summary { margin: 0 0 10px 0; color: #b09070; font-size: 11px; }"
+	dat += ".action-empty { background-color: #2a1a15; border: 1px dashed #4a2c20; color: #666666; padding: 12px; text-align: center; font-style: italic; border-radius: 4px; }"
 	dat += ".action-button { flex-grow: 1; padding: 10px 15px; background-color: #4a2c20; color: #d4af8c; text-decoration: none; display: block; font-weight: bold; border: 1px solid #2a1a15; }"
 	dat += ".action-button:hover { background-color: #5a3525; }"
 	dat += ".action-button.blue { background-color: #3a4a5a; border-color: #5a6a7a; }"
@@ -678,36 +722,68 @@
 
 	// Interactions Tab
 	dat += "<div class='tab-content [selected_tab == "interactions" ? "active" : ""]' id='interactions-tab'>"
+	var/list/available_action_types = list()
+	var/total_available_actions = 0
+	for(var/action_type in GLOB.sex_actions)
+		var/datum/sex_action/candidate_action = SEX_ACTION(action_type)
+		if(!candidate_action.shows_on_menu(user, target))
+			continue
+		if(is_action_active(action_type))
+			continue
+		total_available_actions++
+		if(!candidate_action.matches_ui_filters(user_zone_filter, target_zone_filter))
+			continue
+		available_action_types += action_type
+
+	var/target_panel_title = (user == target) ? "On yourself" : "On [target.name]"
+
+	dat += "<div class='interaction-layout'>"
+	dat += render_zone_filter_panel("You use", "set_user_zone_filter", user_zone_filter, selected_tab)
+	dat += "<div class='interaction-column'>"
 	dat += "<div class='search-container'>"
 	dat += "<span class='search-icon'></span>"
 	dat += "<input type='text' class='search-box' placeholder='Search for an interaction' id='searchBox'>"
 	dat += "</div>"
+	dat += "<div class='action-summary'>Showing [length(available_action_types)] of [total_available_actions] available interactions for the current zone filters.</div>"
 
-	dat += "<div class='action-list'>"
-	for(var/action_type in GLOB.sex_actions)
-		var/datum/sex_action/action = SEX_ACTION(action_type)
-		if(!action.shows_on_menu(user, target))
-			continue
-
-		dat += "<div class='action-item'>"
-		var/button_class = "action-button"
-		var/is_current = is_action_active(action_type)
-		var/can_perform = is_current || can_perform_action(action_type)
-
-		if(action.name == "Salute")
-			button_class += " blue"
-		if(!can_perform)
-			button_class += " linkOff"
-		if(is_current)
-			button_class += " active"
-
-		dat += "<a class='[button_class]' href='?src=[REF(src)];task=action;action_type=[action_type];tab=[selected_tab]'>[action.name]</a>"
-
-		dat += "<div class='action-icons'>"
-		if(is_current)
-			dat += "<a href='?src=[REF(src)];task=stop;action_type=[action_type];tab=[selected_tab]' class='icon-btn stop' title='Stop action'>X</a>"
+	if(length(active_actions))
+		dat += "<div class='action-section'>"
+		dat += "<div class='action-subheader'>Active Actions</div>"
+		dat += "<div class='action-list'>"
+		for(var/datum/sex_action/active_action as anything in active_actions)
+			dat += "<div class='action-item active-action-item'>"
+			dat += "<a class='action-button active' href='?src=[REF(src)];task=action;action_type=[active_action.type];tab=[selected_tab]'>[active_action.name]</a>"
+			dat += "<div class='action-icons'>"
+			dat += "<a href='?src=[REF(src)];task=stop;action_type=[active_action.type];tab=[selected_tab]' class='icon-btn stop' title='Stop action'>X</a>"
+			dat += "</div>"
+			dat += "</div>"
 		dat += "</div>"
 		dat += "</div>"
+
+	dat += "<div class='action-section'>"
+	dat += "<div class='action-subheader'>Available Actions</div>"
+	if(!length(available_action_types))
+		dat += "<div class='action-empty'>No interactions match these zone filters yet.</div>"
+	else
+		dat += "<div class='action-list'>"
+		for(var/action_type as anything in available_action_types)
+			var/datum/sex_action/menu_action = SEX_ACTION(action_type)
+			dat += "<div class='action-item searchable-action-item'>"
+			var/button_class = "action-button"
+			var/can_perform = can_perform_action(action_type)
+
+			if(menu_action.name == "Salute")
+				button_class += " blue"
+			if(!can_perform)
+				button_class += " linkOff"
+
+			dat += "<a class='[button_class]' href='?src=[REF(src)];task=action;action_type=[action_type];tab=[selected_tab]'>[menu_action.name]</a>"
+			dat += "<div class='action-icons'></div>"
+			dat += "</div>"
+		dat += "</div>"
+	dat += "</div>"
+	dat += "</div>"
+	dat += render_zone_filter_panel(target_panel_title, "set_target_zone_filter", target_zone_filter, selected_tab)
 	dat += "</div>"
 	dat += "</div>"
 
@@ -871,7 +947,7 @@
 	dat += "  if(searchBox) {"
 	dat += "    searchBox.addEventListener('input', function() {"
 	dat += "      var filter = this.value.toLowerCase();"
-	dat += "      var items = document.querySelectorAll('.action-item');"
+	dat += "      var items = document.querySelectorAll('.searchable-action-item');"
 	dat += "      items.forEach(function(item) {"
 	dat += "        var text = item.textContent.toLowerCase();"
 	dat += "        item.style.display = text.includes(filter) ? 'flex' : 'none';"
@@ -921,7 +997,7 @@
 
 	dat += "</div>"
 
-	var/datum/browser/popup = new(user, "sexcon[our_sex_id]", "<center>Sate Desire</center>", 750, 650)
+	var/datum/browser/popup = new(user, "sexcon[our_sex_id]", "<center>Sate Desire</center>", 920, 700)
 	popup.set_content(dat.Join())
 	popup.open()
 	return
@@ -1056,6 +1132,10 @@
 			selected_tab = href_list["tab"] || "interactions"
 			show_ui(selected_tab)
 			return
+		if("set_user_zone_filter")
+			user_zone_filter = sanitize_ui_zone_filter(href_list["value"])
+		if("set_target_zone_filter")
+			target_zone_filter = sanitize_ui_zone_filter(href_list["value"])
 		if("action")
 			var/action_path = text2path(href_list["action_type"])
 			var/datum/sex_action/action = SEX_ACTION(action_path)

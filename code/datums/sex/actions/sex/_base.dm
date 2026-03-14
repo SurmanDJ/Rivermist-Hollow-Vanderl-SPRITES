@@ -3,6 +3,8 @@
 	stored_item_name = "penetrating member"
 	requires_hole_storage = TRUE
 	abstract_type = /datum/sex_action/sex
+	user_menu_zone_mask = SEX_UI_ZONE_GENITALS
+	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 	knot_on_finish = TRUE
 	can_knot = TRUE
 	user_priority = 100

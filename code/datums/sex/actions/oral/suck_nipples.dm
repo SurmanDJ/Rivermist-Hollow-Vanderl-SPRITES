@@ -1,5 +1,7 @@
 /datum/sex_action/suck_nipples
 	name = "Suck their nipples"
+	user_menu_zone_mask = SEX_UI_ZONE_MOUTH
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 	check_same_tile = FALSE
 
 /datum/sex_action/suck_nipples/shows_on_menu(mob/living/user, mob/living/target)

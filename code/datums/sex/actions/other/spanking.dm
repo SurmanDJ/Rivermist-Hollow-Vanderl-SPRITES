@@ -1,5 +1,7 @@
 /datum/sex_action/spanking
 	name = "Spank their butt"
+	user_menu_zone_mask = SEX_UI_ZONE_ARMS
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 	// Allow through all clothes, so no body zone accessibility check for clothing
 	check_same_tile = FALSE
 	do_time = 2.5 SECONDS // Slightly faster than average for repeated action

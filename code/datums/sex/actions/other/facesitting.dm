@@ -1,5 +1,7 @@
 /datum/sex_action/facesitting
 	name = "Sit on their face"
+	user_menu_zone_mask = SEX_UI_ZONE_GENITALS | SEX_UI_ZONE_MISC
+	target_menu_zone_mask = SEX_UI_ZONE_MOUTH
 	gags_target = TRUE
 
 /datum/sex_action/facesitting/shows_on_menu(mob/living/user, mob/living/target)

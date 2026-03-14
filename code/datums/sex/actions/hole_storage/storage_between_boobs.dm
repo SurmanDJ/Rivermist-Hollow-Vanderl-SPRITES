@@ -1,6 +1,7 @@
 
 /datum/sex_action/hole_storage/boobs_store
 	name = "Store items between boobs"
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 	hole_id = ORGAN_SLOT_BREASTS
 
 /datum/sex_action/hole_storage/boobs_store/shows_on_menu(mob/living/user, mob/living/target)
@@ -90,6 +91,7 @@
 
 /datum/sex_action/hole_storage/boobs_remove //do_time
 	name = "Remove items from between boobs"
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 	hole_id = ORGAN_SLOT_BREASTS
 
 /datum/sex_action/hole_storage/boobs_remove/shows_on_menu(mob/living/user, mob/living/target)

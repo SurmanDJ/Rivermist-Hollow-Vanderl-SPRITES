@@ -2,6 +2,7 @@
 	name = "Jerk over them"
 	check_same_tile = FALSE
 	user_priority = 20
+	target_menu_zone_mask = SEX_UI_ZONE_MISC
 
 /datum/sex_action/masturbate/penis_over/shows_on_menu(mob/living/user, mob/living/target)
 	if(user == target)

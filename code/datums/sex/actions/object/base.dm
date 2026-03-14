@@ -4,6 +4,8 @@
 	name = "object_fuck"
 	requires_hole_storage = TRUE
 	requires_free_hands = TRUE
+	user_menu_zone_mask = SEX_UI_ZONE_ARMS
+	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 	hole_id = ORGAN_SLOT_VAGINA
 	stored_item_type = /obj/item
 

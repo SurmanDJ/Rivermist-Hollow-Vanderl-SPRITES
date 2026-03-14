@@ -1,5 +1,7 @@
 /datum/sex_action/sex/other/thighjob
 	name = "Jerk them off with thighs"
+	user_menu_zone_mask = SEX_UI_ZONE_LEGS
+	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 	requires_hole_storage = FALSE
 
 /datum/sex_action/sex/other/thighjob/shows_on_menu(mob/living/user, mob/living/target)

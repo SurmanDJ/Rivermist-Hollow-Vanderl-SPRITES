@@ -70,6 +70,8 @@
 
 /datum/sex_action/wax_play/breasts
 	name = "Pour wax on breasts"
+	user_menu_zone_mask = SEX_UI_ZONE_ARMS
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 
 /datum/sex_action/wax_play/breasts/can_perform(mob/living/user, mob/living/target)
 	. = ..()
@@ -102,6 +104,8 @@
 
 /datum/sex_action/wax_play/butt
 	name = "Pour wax on butt"
+	user_menu_zone_mask = SEX_UI_ZONE_ARMS
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 
 /datum/sex_action/wax_play/butt/can_perform(mob/living/user, mob/living/target)
 	. = ..()

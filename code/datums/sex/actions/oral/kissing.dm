@@ -1,5 +1,7 @@
 /datum/sex_action/kissing
 	name = "Make out with them"
+	user_menu_zone_mask = SEX_UI_ZONE_MOUTH
+	target_menu_zone_mask = SEX_UI_ZONE_MOUTH
 	check_same_tile = FALSE
 
 /datum/sex_action/kissing/shows_on_menu(mob/living/user, mob/living/target)
