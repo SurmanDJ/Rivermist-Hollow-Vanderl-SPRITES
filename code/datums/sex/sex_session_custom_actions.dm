@@ -179,7 +179,8 @@
 
 	custom_action_editor_mode = "custom"
 	custom_action_editor_key = custom_action_editor_draft.id
-	custom_action_editor_draft = custom_actions[custom_action_editor_draft.id].copy()
+	var/datum/sex_custom_action_data/ca = custom_actions[custom_action_editor_draft.id]
+	custom_action_editor_draft = ca.copy()
 	to_chat(user, span_notice("[is_new_action ? "Saved" : "Updated"] custom action '[custom_action_editor_draft.name]'."))
 	return TRUE
 
