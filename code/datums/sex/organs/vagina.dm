@@ -94,8 +94,7 @@
 	var/fit_result = SEND_SIGNAL(src, COMSIG_BODYSTORAGE_TRY_INSERT, egg, STORAGE_LAYER_DEEP)
 	switch(fit_result)
 		if(INSERT_FEEDBACK_OK, INSERT_FEEDBACK_OK_FORCE, INSERT_FEEDBACK_OK_OVERRIDE, INSERT_FEEDBACK_ALMOST_FULL)
-			if(owner.has_quirk(/datum/quirk/peculiarity/selfawaregeni))
-				to_chat(owner, span_love("A new egg forms in my [get_oviposition_location_name()]."))
+			to_chat(owner, span_love("I feel a new egg form in my [get_oviposition_location_name()]."))
 			return TRUE
 
 	qdel(egg)
