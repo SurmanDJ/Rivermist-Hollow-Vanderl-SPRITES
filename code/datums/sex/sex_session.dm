@@ -575,9 +575,9 @@
 	var/list/content = list()
 	var/list/available_actions = list()
 	var/total_available_actions = 0
-	var/current_speed_name = get_speed_string()
-	var/current_force_name = get_force_string()
-	var/current_resist_name = get_resist_string()
+	var/current_speed_name = plain_quick_control_text(get_speed_string())
+	var/current_force_name = plain_quick_control_text(get_force_string())
+	var/current_resist_name = plain_quick_control_text(get_resist_string())
 	var/lying_direction_name = user.get_lying_direction_name()
 
 	for(var/datum/sex_action/candidate_action as anything in get_all_menu_actions())
@@ -635,11 +635,10 @@
 
 			content += "<a class='[button_class]' href='?src=[REF(src)];task=action;action_type=[action_key];tab=[selected_tab]'>[format_ui_text(menu_action.name)]</a>"
 			content += "<div class='action-icons'></div>"
-			content += "</div>"
+		content += "</div>"
 		content += "</div>"
 	content += "</div>"
 	content += "<div class='interaction-quick-bar'>"
-	content += "<div class='interaction-quick-label'>Quick controls</div>"
 	content += render_interaction_quick_stepper("Speed", current_speed_name, "speed_down", "speed_up", selected_tab)
 	content += render_interaction_quick_stepper("Force", current_force_name, "force_down", "force_up", selected_tab)
 	content += render_interaction_quick_stepper("Hold", current_resist_name, "resist_down", "resist_up", selected_tab)
@@ -655,6 +654,13 @@
 	content += "</div>"
 
 	return content.Join("")
+
+/datum/sex_session/proc/plain_quick_control_text(value_text)
+	var/open_tag_end = findtext(value_text, ">")
+	if(open_tag_end)
+		value_text = copytext(value_text, open_tag_end + 1)
+
+	return replacetext(value_text, "</font>", "")
 
 /datum/sex_session/proc/render_interaction_quick_stepper(label, value_text, decrease_task, increase_task, selected_tab)
 	var/list/content = list()
@@ -788,18 +794,17 @@
 	dat += ".action-subheader { background-color: #4a2c20; color: #d4af8c; padding: 8px 12px; font-weight: bold; margin-bottom: 6px; border-radius: 3px; }"
 	dat += ".action-summary { margin: 0 0 10px 0; color: #b09070; font-size: 11px; }"
 	dat += ".action-empty { background-color: #2a1a15; border: 1px dashed #4a2c20; color: #666666; padding: 12px; text-align: center; font-style: italic; border-radius: 4px; }"
-	dat += ".interaction-quick-bar { position: sticky; bottom: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; padding: 8px; background-color: rgba(26, 16, 16, 0.96); border: 1px solid #4a2c20; border-radius: 6px; box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.35); }"
-	dat += ".interaction-quick-label { color: #b09070; font-size: 10px; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase; margin-right: 2px; }"
-	dat += ".quick-stepper { display: inline-flex; align-items: center; min-height: 28px; background-color: #2a1a15; border: 1px solid #4a2c20; border-radius: 999px; overflow: hidden; }"
-	dat += ".quick-stepper-label { padding: 0 8px; color: #b09070; font-size: 10px; font-weight: bold; text-transform: uppercase; }"
-	dat += ".quick-stepper-btn { min-width: 22px; padding: 6px 0; background-color: #4a2c20; color: #d4af8c; text-align: center; text-decoration: none; font-weight: bold; }"
-	dat += ".quick-stepper-btn:hover { background-color: #5a3525; }"
-	dat += ".quick-stepper-value { min-width: 64px; padding: 0 8px; color: #f4d6b6; text-align: center; font-size: 11px; }"
-	dat += ".quick-toggle { display: inline-block; min-height: 28px; padding: 6px 10px; background-color: #4a2c20; border: 1px solid #2a1a15; border-radius: 999px; color: #d4af8c; text-decoration: none; font-size: 11px; line-height: 16px; }"
-	dat += ".quick-toggle:hover { background-color: #5a3525; }"
-	dat += ".quick-toggle.active { background-color: #8b6914; color: #ffffff; border-color: #a07a1a; }"
-	dat += ".quick-toggle.disabled { background-color: #2a1a15; color: #777777; border-color: #3a2318; cursor: default; }"
-	dat += ".quick-direction-info { color: #b09070; font-size: 11px; padding: 0 2px; }"
+	dat += ".interaction-quick-bar { position: sticky; bottom: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; margin-top: 10px; padding: 10px 12px; background-color: rgba(32, 18, 16, 0.96); border: 1px solid #5b3426; border-radius: 8px; box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.28); }"
+	dat += ".quick-stepper { display: inline-flex; align-items: stretch; min-height: 32px; background-color: #251714; border: 1px solid #5b3426; border-radius: 999px; overflow: hidden; }"
+	dat += ".quick-stepper-label { display: flex; align-items: center; justify-content: center; min-width: 58px; padding: 0 10px; background-color: #3a2318; color: #cfab84; font-size: 10px; font-weight: bold; letter-spacing: 0.05em; text-transform: uppercase; }"
+	dat += ".quick-stepper-btn { display: flex; align-items: center; justify-content: center; width: 28px; padding: 0; background-color: #140d0c; color: #f4d6b6; text-align: center; text-decoration: none; font-weight: bold; }"
+	dat += ".quick-stepper-btn:hover { background-color: #261714; }"
+	dat += ".quick-stepper-value { display: flex; align-items: center; justify-content: center; min-width: 92px; padding: 0 12px; color: #f4d6b6; text-align: center; font-size: 11px; font-weight: bold; white-space: nowrap; }"
+	dat += ".quick-toggle { display: flex; align-items: center; justify-content: center; min-height: 32px; padding: 0 14px; background-color: #241614; border: 1px solid #5b3426; border-radius: 999px; color: #d4af8c; text-decoration: none; font-size: 11px; font-weight: bold; white-space: nowrap; }"
+	dat += ".quick-toggle:hover { background-color: #34201b; }"
+	dat += ".quick-toggle.active { background-color: #6a4223; color: #fff2df; border-color: #8b6914; }"
+	dat += ".quick-toggle.disabled { background-color: #2a1a15; color: #8f7661; border-color: #4a2c20; cursor: default; }"
+	dat += ".quick-direction-info { color: #b09070; font-size: 11px; font-weight: bold; padding: 0 2px; white-space: nowrap; }"
 	dat += ".action-button { flex-grow: 1; padding: 10px 15px; background-color: #4a2c20; color: #d4af8c; text-decoration: none; display: block; font-weight: bold; border: 1px solid #2a1a15; }"
 	dat += ".action-button:hover { background-color: #5a3525; }"
 	dat += ".action-button.blue { background-color: #3a4a5a; border-color: #5a6a7a; }"
