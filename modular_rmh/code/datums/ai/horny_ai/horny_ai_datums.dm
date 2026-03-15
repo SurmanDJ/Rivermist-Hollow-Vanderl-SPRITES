@@ -204,7 +204,6 @@
 		controller.set_blackboard_key(BB_HORNY_STUN_COOLDOWN, world.time + 5 SECONDS)
 		basic_mob.visible_message(span_danger("[basic_mob] tries to pull [target_living] to the ground, exhausting them!"))
 
-	knockdown_need = FALSE
 	return TRUE
 
 /datum/ai_behavior/horny/proc/start_horny_action(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session, target_key)
