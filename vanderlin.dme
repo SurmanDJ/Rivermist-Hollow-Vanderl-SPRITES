@@ -3381,6 +3381,8 @@
 #include "code\modules\projectiles\projectile\reusable\_reusable.dm"
 #include "code\modules\questing\contract_machine.dm"
 #include "code\modules\questing\landmarks.dm"
+#include "code\modules\questing\quest_ambush_payload.dm"
+#include "code\modules\questing\quest_map_config.dm"
 #include "code\modules\questing\quest_object.dm"
 #include "code\modules\questing\items\parcel.dm"
 #include "code\modules\questing\items\quest_compass.dm"
