@@ -13,6 +13,7 @@
 	reagent_generate_rate = 6
 	storage_per_size = 75
 	startsfilled = TRUE
+	allows_oviposition_pregnancy = FALSE
 	blocker = ITEM_SLOT_PANTS
 	organ_sizeable  = TRUE
 	refilling = TRUE

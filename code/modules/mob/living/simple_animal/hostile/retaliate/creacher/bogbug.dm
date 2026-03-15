@@ -66,6 +66,7 @@
 	. = ..()
 	AddComponent(/datum/component/ai_aggro_system)
 	gender = MALE
+	ensure_bog_bug_ovipositor(src)
 
 /mob/living/simple_animal/hostile/retaliate/bogbug/get_sound(input)
 	switch(input)

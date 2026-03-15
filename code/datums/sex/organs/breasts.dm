@@ -10,6 +10,7 @@
 	hungerhelp = TRUE
 	absorbing = FALSE //funny liquid tanks
 	startsfilled = TRUE
+	allows_oviposition_pregnancy = FALSE
 	altnames = list("breasts", "tits", "milkers", "tiddies", "badonkas", "boobas") //used in thought messages.
 	blocker = ITEM_SLOT_SHIRT
 	additional_blocker = "bra"

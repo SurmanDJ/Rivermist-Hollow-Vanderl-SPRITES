@@ -15,9 +15,10 @@
 
 /datum/reagent/consumable/cum/on_transfer(atom/A, method, trans_volume)
 	. = ..()
-	if(istype(A, /obj/item/organ/genitals/filling_organ/vagina) && virile)
-		var/obj/item/organ/genitals/filling_organ/vagina/forgan = A
-		if(forgan.fertility && !forgan.pregnant)
+	if(istype(A, /obj/item/organ/genitals/filling_organ) && virile)
+		var/obj/item/organ/genitals/filling_organ/forgan = A
+		var/can_fertilize_ovi_eggs = forgan.supports_oviposition_pregnancy() && LAZYLEN(forgan.get_oviposition_eggs(FALSE))
+		if(can_fertilize_ovi_eggs || (forgan.fertility && !forgan.pregnant))
 			if(prob(20))
 				forgan.be_impregnated() //boom
 
