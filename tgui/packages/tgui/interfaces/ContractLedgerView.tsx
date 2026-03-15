@@ -385,14 +385,14 @@ export const ContractLedgerView = (props: {
     if (!is_preloading) {
       return;
     }
-
+    // Fire once immediately so the first preload tick happens without waiting 500ms
     act('preload');
     const intervalId = window.setInterval(() => {
       act('preload');
-    }, 250);
+    }, 500);
 
     return () => window.clearInterval(intervalId);
-  }, [act, is_preloading]);
+  }, [is_preloading]); // act intentionally omitted — it changes every render and would cause an infinite loop
 
   return (
     <Window

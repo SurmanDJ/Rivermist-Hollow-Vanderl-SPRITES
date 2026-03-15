@@ -11,6 +11,20 @@ Generated on 2026-03-11. Use this file when the question is about order of execu
 - Open first: `code/world.dm`, `code/controllers/master.dm`, `code/controllers/subsystem.dm`
 - Use when: startup, init order, tick budgeting, scheduler, or "who owns this process?"
 
+### 1a. Atom Initialization Lifecycle (Initialize / LateInitialize)
+
+- Typical chain: `SSatoms.Initialize()` → iterates all atoms → calls `atom.Initialize(mapload)` on each → atoms returning `INITIALIZE_HINT_LATELOAD` go into `late_loaders` list → after all atoms done, `LateInitialize()` called on every entry in `late_loaders`
+- Runtime owner(s): `SSatoms`
+- Open first: `code/controllers/subsystem/atoms.dm` — **always read this before any world-start timing question**
+- Key facts:
+  - `INITIALIZE_HINT_NORMAL` (default `..()`) = `LateInitialize` is **never called**
+  - `INITIALIZE_HINT_LATELOAD` = `LateInitialize` called after all map atoms exist
+  - `INITIALIZE_HINT_QDEL` = atom is deleted after `Initialize`
+  - Parent `Initialize()` returning `..()` propagates the parent's hint — many parents (`fake_machine`, generic `obj/structure`) return `INITIALIZE_HINT_NORMAL`
+  - **To use `LateInitialize` in a subclass whose parent doesn't opt in:** override `Initialize()` and `return INITIALIZE_HINT_LATELOAD` explicitly
+  - Atoms spawned mid-round via `new()` outside mapload get `LateInitialize()` called immediately (inline), not deferred
+- Use when: "my `LateInitialize` isn't firing", "I need other map objects to exist at init time", "when is it safe to use `GLOB.quest_landmarks_list`", world-start preload patterns, anything depending on SSatoms load order
+
 ### 2. Round Flow to Antagonist Assignment
 
 - Typical chain: storyteller / ticker state -> `round_event_control` selection -> `round_event` setup -> `add_antag_datum(...)` -> antagonist `on_gain()`

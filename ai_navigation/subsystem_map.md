@@ -34,6 +34,30 @@ Category anchors — jump to the relevant block in the Complete Subsystem Index:
 | UI, comms & admin | `SSchat` |
 | World generation & map state | `SSdungeon_generator` |
 
+## Atom Lifecycle (SSatoms)
+
+This is one of the most important patterns in SS13. When in doubt about `Initialize`, `LateInitialize`, or world-start timing — read `code/controllers/subsystem/atoms.dm` first.
+
+### Initialize() return hints
+
+| Hint constant | Effect |
+|---|---|
+| `INITIALIZE_HINT_NORMAL` | Default. `LateInitialize()` is **never called**. |
+| `INITIALIZE_HINT_LATELOAD` | Atom is added to `late_loaders`. `LateInitialize()` is called after **all** map atoms finish `Initialize()`. Use this when you need other map objects (landmarks, spawners, datums) to already exist. |
+| `INITIALIZE_HINT_QDEL` | Atom is deleted after `Initialize()`. |
+
+### Rules
+- `..()` in `Initialize()` returns `INITIALIZE_HINT_NORMAL` unless the parent explicitly returns something else.
+- **Always check what the parent type returns.** Many parents (`fake_machine`, `obj/structure`, etc.) return `INITIALIZE_HINT_NORMAL` — subclasses that need `LateInitialize` must override `Initialize()` and explicitly `return INITIALIZE_HINT_LATELOAD`.
+- `LateInitialize()` is only called during mapload. Atoms spawned mid-round via `new()` get `LateInitialize()` called immediately (not deferred) if `SSatoms.initialized != INITIALIZATION_INNEW_MAPLOAD`.
+- If you need cross-object setup at world start, always use `LateInitialize()`, never `sleep()` hacks in `Initialize()`.
+
+### How to check if a parent returns LATELOAD
+```
+grep -n "INITIALIZE_HINT_LATELOAD\|return INITIALIZE_HINT" code/game/objects/structures/fake_machines/_fake_machine.dm
+```
+If nothing found → parent returns NORMAL → you must override.
+
 ## Complete Subsystem Index
 
 | SS global | Kind | Category | Type path | Role | File |
@@ -44,7 +68,7 @@ Category anchors — jump to the relevant block in the Complete Subsystem Index:
 | `SSmovement` | standard | AI & movement | `/datum/controller/subsystem/movement` | Handles movement. | `code\\controllers\\subsystem\movement\movement_loop.dm` |
 | `SSasset_loading` | standard | Boot, assets & infrastructure | `/datum/controller/subsystem/asset_loading` | Handles asset loading. | `code\\controllers\\subsystem\assets\asset_loading.dm` |
 | `SSassets` | standard | Boot, assets & infrastructure | `/datum/controller/subsystem/assets` | Handles assets. | `code\\controllers\\subsystem\assets\assets.dm` |
-| `SSatoms` | standard | Boot, assets & infrastructure | `/datum/controller/subsystem/atoms` | Handles atoms. | `code\\controllers\\subsystem\atoms.dm` |
+| `SSatoms` | standard | Boot, assets & infrastructure | `/datum/controller/subsystem/atoms` | **Core atom lifecycle — read this file before any Initialize/LateInitialize question.** Calls `Initialize()` on every atom at world start. Atoms returning `INITIALIZE_HINT_LATELOAD` are queued into `late_loaders` and get `LateInitialize()` called after ALL atoms on the map finish initializing — the only safe moment to reference other map objects (landmarks, spawners, etc.). Atoms returning `INITIALIZE_HINT_NORMAL` (the default `..()`) never receive `LateInitialize()`. **Critical gotcha:** parent types like `fake_machine` return `INITIALIZE_HINT_NORMAL` by default — subclasses that need `LateInitialize` must explicitly override `Initialize()` and `return INITIALIZE_HINT_LATELOAD`. | `code\\controllers\\subsystem\atoms.dm` |
 | `SSban_cache` | standard | Boot, assets & infrastructure | `/datum/controller/subsystem/ban_cache` | Handles ban cache. | `code\\controllers\\subsystem\ban_cache.dm` |
 | `SSblackbox` | standard | Boot, assets & infrastructure | `/datum/controller/subsystem/blackbox` | Handles blackbox. | `code\\controllers\\subsystem\blackbox.dm` |
 | `SSdbcore` | standard | Boot, assets & infrastructure | `/datum/controller/subsystem/dbcore` | Handles dbcore. | `code\\controllers\\subsystem\dbcore.dm` |
