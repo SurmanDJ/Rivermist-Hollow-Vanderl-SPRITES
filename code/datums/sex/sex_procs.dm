@@ -197,12 +197,112 @@
 /mob/living/carbon/human/has_hands() // technically should be an and but i'll replicate original behavior
 	return get_bodypart(BODY_ZONE_L_ARM) || get_bodypart(BODY_ZONE_R_ARM)
 
+/mob/living/proc/get_character_information_line(summary_text)
+	if(!length("[summary_text]"))
+		return null
+	summary_text = "[summary_text]"
+	var/last_character = copytext(summary_text, length(summary_text), length(summary_text) + 1)
+	if(!(last_character in list(".", "!", "?")))
+		summary_text += "."
+	return "<div>...[html_encode("[summary_text]")]</div>"
+
+/mob/living/proc/get_general_sex_state_summary()
+	var/datum/component/arousal/arousal_component = GetComponent(/datum/component/arousal)
+	if(!arousal_component)
+		return null
+
+	var/list/arousal_data = list()
+	SEND_SIGNAL(src, COMSIG_SEX_GET_AROUSAL, arousal_data)
+
+	var/current_arousal = arousal_data["arousal"] || 0
+	var/current_orgasm_progress = arousal_data["orgasm_progress"] || 0
+	var/state_summary = "feel calm"
+
+	switch(current_arousal)
+		if(1 to 19)
+			state_summary = "feel a little worked up"
+		if(20 to 49)
+			state_summary = "feel lightly aroused"
+		if(50 to 79)
+			state_summary = "feel hot and needy"
+		if(80 to INFINITY)
+			state_summary = "feel desperately aroused"
+
+	if(arousal_component.is_spent())
+		state_summary += ", but spent from recent release"
+
+	if(current_orgasm_progress >= PASSIVE_EJAC_THRESHOLD)
+		state_summary += " and right on the brink"
+	else if(current_orgasm_progress >= PASSIVE_EJAC_THRESHOLD * 0.7)
+		state_summary += " and close to climax"
+
+	return "[state_summary]."
+
 /mob/living/proc/return_character_information()
 	var/list/data = list()
 	if(has_hands())
-		data += "<div>...have hands.</div>"
+		data += get_character_information_line("have hands, which are [has_free_sex_hands() ? "free" : "blocked"]")
 	if(has_mouth())
-		data += "<div>...have a mouth, which is [mouth_is_free() ? "uncovered" : "covered"].</div>"
+		data += get_character_information_line("have a mouth, which is [mouth_is_free() ? "uncovered" : "covered"]")
+	var/general_state_summary = get_general_sex_state_summary()
+	if(general_state_summary)
+		data += get_character_information_line(general_state_summary)
+	return data
+
+/mob/living/carbon/human/proc/get_visible_groin_summary_description(descriptor_type)
+	if(!get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = FALSE))
+		return null
+	var/datum/mob_descriptor/descriptor = new descriptor_type()
+	return descriptor.get_description(src)
+
+/mob/living/carbon/human/proc/get_visible_chest_summary_description(descriptor_type)
+	if(!get_location_accessible(src, BODY_ZONE_CHEST))
+		return null
+	if(underwear?.covers_breasts)
+		return null
+	var/datum/mob_descriptor/descriptor = new descriptor_type()
+	return descriptor.get_description(src)
+
+/mob/living/carbon/human/proc/get_visible_anus_summary()
+	var/obj/item/organ/genitals/filling_organ/anus/anus = getorganslot(ORGAN_SLOT_ANUS)
+	if(!anus)
+		return null
+	if(!get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = FALSE))
+		return null
+	return "have an exposed anus."
+
+/mob/living/carbon/human/return_character_information()
+	var/list/data = ..()
+	if(!data)
+		data = list()
+
+	var/breasts_summary = get_visible_chest_summary_description(/datum/mob_descriptor/breasts)
+	if(breasts_summary)
+		data += get_character_information_line("have [breasts_summary]")
+
+	var/penis_summary = get_visible_groin_summary_description(/datum/mob_descriptor/penis)
+	if(penis_summary)
+		data += get_character_information_line("have [penis_summary]")
+
+	var/obj/item/organ/genitals/penis/penis = getorganslot(ORGAN_SLOT_PENIS)
+	var/testicles_summary = null
+	if(!penis || penis.sheath_type != SHEATH_TYPE_SLIT)
+		testicles_summary = get_visible_groin_summary_description(/datum/mob_descriptor/testicles)
+	if(testicles_summary)
+		data += get_character_information_line("have [testicles_summary]")
+
+	var/vagina_summary = get_visible_groin_summary_description(/datum/mob_descriptor/vagina)
+	if(vagina_summary)
+		data += get_character_information_line("have [vagina_summary]")
+
+	var/butt_summary = get_visible_groin_summary_description(/datum/mob_descriptor/butt)
+	if(butt_summary)
+		data += get_character_information_line("have [butt_summary]")
+
+	var/anus_summary = get_visible_anus_summary()
+	if(anus_summary)
+		data += get_character_information_line(anus_summary)
+
 	return data
 
 /mob/living/proc/get_active_precise_hand()

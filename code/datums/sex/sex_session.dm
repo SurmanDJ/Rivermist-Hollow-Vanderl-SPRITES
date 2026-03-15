@@ -575,6 +575,10 @@
 	var/list/content = list()
 	var/list/available_actions = list()
 	var/total_available_actions = 0
+	var/current_speed_name = get_speed_string()
+	var/current_force_name = get_force_string()
+	var/current_resist_name = get_resist_string()
+	var/lying_direction_name = user.get_lying_direction_name()
 
 	for(var/datum/sex_action/candidate_action as anything in get_all_menu_actions())
 		if(!candidate_action.shows_on_menu(user, target))
@@ -634,8 +638,32 @@
 			content += "</div>"
 		content += "</div>"
 	content += "</div>"
+	content += "<div class='interaction-quick-bar'>"
+	content += "<div class='interaction-quick-label'>Quick controls</div>"
+	content += render_interaction_quick_stepper("Speed", current_speed_name, "speed_down", "speed_up", selected_tab)
+	content += render_interaction_quick_stepper("Force", current_force_name, "force_down", "force_up", selected_tab)
+	content += render_interaction_quick_stepper("Hold", current_resist_name, "resist_down", "resist_up", selected_tab)
+	content += "<a class='quick-toggle[edging_other ? " active" : ""]' href='?src=[REF(src)];task=toggle_edging_other;tab=[selected_tab]'>Edge [edging_other ? "On" : "Off"]</a>"
+	if(lying_direction_name)
+		content += "<span class='quick-direction-info'>Head [format_ui_text(capitalize(lying_direction_name))]</span>"
+		content += "<a class='quick-toggle' href='?src=[REF(src)];task=swap_lying_direction;tab=[selected_tab]'>Swap Side</a>"
+	else
+		content += "<span class='quick-toggle disabled'>Lie down to swap</span>"
+	content += "</div>"
 	content += "</div>"
 	content += render_zone_filter_panel(target_panel_title, "set_target_zone_filter", target_zone_filter, selected_tab)
+	content += "</div>"
+
+	return content.Join("")
+
+/datum/sex_session/proc/render_interaction_quick_stepper(label, value_text, decrease_task, increase_task, selected_tab)
+	var/list/content = list()
+
+	content += "<div class='quick-stepper'>"
+	content += "<span class='quick-stepper-label'>[label]</span>"
+	content += "<a class='quick-stepper-btn' href='?src=[REF(src)];task=[decrease_task];tab=[selected_tab]'>-</a>"
+	content += "<span class='quick-stepper-value'>[format_ui_text(value_text)]</span>"
+	content += "<a class='quick-stepper-btn' href='?src=[REF(src)];task=[increase_task];tab=[selected_tab]'>+</a>"
 	content += "</div>"
 
 	return content.Join("")
@@ -760,6 +788,18 @@
 	dat += ".action-subheader { background-color: #4a2c20; color: #d4af8c; padding: 8px 12px; font-weight: bold; margin-bottom: 6px; border-radius: 3px; }"
 	dat += ".action-summary { margin: 0 0 10px 0; color: #b09070; font-size: 11px; }"
 	dat += ".action-empty { background-color: #2a1a15; border: 1px dashed #4a2c20; color: #666666; padding: 12px; text-align: center; font-style: italic; border-radius: 4px; }"
+	dat += ".interaction-quick-bar { position: sticky; bottom: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 10px; padding: 8px; background-color: rgba(26, 16, 16, 0.96); border: 1px solid #4a2c20; border-radius: 6px; box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.35); }"
+	dat += ".interaction-quick-label { color: #b09070; font-size: 10px; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase; margin-right: 2px; }"
+	dat += ".quick-stepper { display: inline-flex; align-items: center; min-height: 28px; background-color: #2a1a15; border: 1px solid #4a2c20; border-radius: 999px; overflow: hidden; }"
+	dat += ".quick-stepper-label { padding: 0 8px; color: #b09070; font-size: 10px; font-weight: bold; text-transform: uppercase; }"
+	dat += ".quick-stepper-btn { min-width: 22px; padding: 6px 0; background-color: #4a2c20; color: #d4af8c; text-align: center; text-decoration: none; font-weight: bold; }"
+	dat += ".quick-stepper-btn:hover { background-color: #5a3525; }"
+	dat += ".quick-stepper-value { min-width: 64px; padding: 0 8px; color: #f4d6b6; text-align: center; font-size: 11px; }"
+	dat += ".quick-toggle { display: inline-block; min-height: 28px; padding: 6px 10px; background-color: #4a2c20; border: 1px solid #2a1a15; border-radius: 999px; color: #d4af8c; text-decoration: none; font-size: 11px; line-height: 16px; }"
+	dat += ".quick-toggle:hover { background-color: #5a3525; }"
+	dat += ".quick-toggle.active { background-color: #8b6914; color: #ffffff; border-color: #a07a1a; }"
+	dat += ".quick-toggle.disabled { background-color: #2a1a15; color: #777777; border-color: #3a2318; cursor: default; }"
+	dat += ".quick-direction-info { color: #b09070; font-size: 11px; padding: 0 2px; }"
 	dat += ".action-button { flex-grow: 1; padding: 10px 15px; background-color: #4a2c20; color: #d4af8c; text-decoration: none; display: block; font-weight: bold; border: 1px solid #2a1a15; }"
 	dat += ".action-button:hover { background-color: #5a3525; }"
 	dat += ".action-button.blue { background-color: #3a4a5a; border-color: #5a6a7a; }"
@@ -1212,6 +1252,8 @@
 			SEND_SIGNAL(user, COMSIG_SEX_FREEZE_AROUSAL)
 		if("toggle_edging_other")
 			edging_other = !edging_other
+		if("swap_lying_direction")
+			user.swap_lying_direction()
 
 		if("update_session_name")
 			var/new_name = url_decode(href_list["name"])
