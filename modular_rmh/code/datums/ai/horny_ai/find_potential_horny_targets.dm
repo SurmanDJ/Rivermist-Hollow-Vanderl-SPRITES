@@ -156,7 +156,7 @@
 		//var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_HORNY_TARGETS_FIELD(type)]
 		//qdel(field) // autoclears so it's fine
 		controller.CancelActions() // On retarget cancel any further queued actions so that they will setup again with new target
-		controller.modify_cooldown(controller, get_cooldown(controller))
+		controller.modify_cooldown(src, world.time + get_cooldown(controller))
 
 /// Returns the desired final target from the filtered list of targets
 /datum/ai_behavior/find_potential_horny_targets/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)

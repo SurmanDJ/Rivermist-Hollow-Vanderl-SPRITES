@@ -507,7 +507,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 		if(LAZYACCESS(planned_behaviors, current_behavior))
 			continue
 		var/list/arguments = list(src, FALSE)
-		var/list/stored_arguments = behavior_args[type]
+		var/list/stored_arguments = behavior_args[current_behavior.type]
 		if(stored_arguments)
 			arguments += stored_arguments
 		current_behavior.finish_action(arglist(arguments))
@@ -543,7 +543,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	paused_until = world.time + time
 
 /datum/ai_controller/proc/modify_cooldown(datum/ai_behavior/behavior, new_cooldown)
-	behavior_cooldowns[behavior.type] = new_cooldown
+	behavior_cooldowns[behavior] = new_cooldown
 
 ///Call this to add a behavior to the stack.
 /datum/ai_controller/proc/queue_behavior(behavior_type, ...)
