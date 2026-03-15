@@ -35,6 +35,13 @@
 	var/target_anchor_y = 0
 	var/target_anchor_z = 0
 
+	/// Distance bonus multiplier (0.0 to QUEST_DISTANCE_BONUS_MAX_MULT), calculated once at quest creation
+	var/distance_bonus_mult = 0
+	/// Map reward modifier from quest_map_config, set once at generation
+	var/map_reward_modifier = 1.0
+	/// Map difficulty modifier from quest_map_config, set once at generation
+	var/map_difficulty_modifier = 1.0
+
 	/// Scroll icon state
 	var/quest_icon = "scroll_quest"
 
@@ -448,6 +455,62 @@
 		set_target_anchor(landmark)
 		requested_tier = get_effective_requested_tier(landmark)
 		threat_tier = requested_tier
+		apply_map_modifiers(get_turf(landmark))
+	return TRUE
+
+/// Apply map-specific difficulty and reward modifiers from quest_map_config
+/datum/quest/proc/apply_map_modifiers(turf/landmark_turf)
+	var/datum/quest_map_config/config = get_quest_map_config_for_turf(landmark_turf)
+	if(!config)
+		return
+	map_reward_modifier = config.reward_modifier
+	map_difficulty_modifier = config.difficulty_modifier
+
+/// Calculate distance bonus multiplier based on distance from ledger to spawn point.
+/// Measured once at quest creation. Independent of map modifiers.
+/// distance_from_ledger: raw tile distance between contract ledger and quest landmark.
+/datum/quest/proc/calculate_distance_bonus(distance_from_ledger)
+	if(!distance_from_ledger || distance_from_ledger <= 0)
+		distance_bonus_mult = 0
+		return
+	var/clamped = clamp(distance_from_ledger, 0, QUEST_DISTANCE_BONUS_MAX_RANGE)
+	distance_bonus_mult = (clamped / QUEST_DISTANCE_BONUS_MAX_RANGE) * QUEST_DISTANCE_BONUS_MAX_MULT
+
+/// Try to set up a quest ambush on one of the tracked quest mobs.
+/// Chance scales with map difficulty: clamp(QUEST_AMBUSH_BASE_CHANCE * difficulty, MIN, MAX)
+/// At difficulty 1.0 = 8%, 2.0 = 16%, 2.5 = 20%, 3.0 = 24% (capped at 25%).
+/// One random quest mob gets a hidden ambush_config; on death it spawns ambush mobs.
+/// Returns TRUE if an ambush was set up.
+/datum/quest/proc/try_setup_quest_ambush(obj/effect/landmark/quest_spawner/landmark)
+	var/turf/landmark_turf = get_turf(landmark)
+	if(!landmark_turf)
+		return FALSE
+
+	var/datum/quest_map_config/config = get_quest_map_config_for_turf(landmark_turf)
+	if(!config || !length(config.ambush_pools))
+		return FALSE
+
+	var/ambush_chance = clamp(ROUND_UP(QUEST_AMBUSH_BASE_CHANCE * config.difficulty_modifier), QUEST_AMBUSH_MIN_CHANCE, QUEST_AMBUSH_MAX_CHANCE)
+
+	if(!prob(ambush_chance))
+		return FALSE
+
+	// Pick a random living tracked mob to carry the ambush
+	var/list/candidate_mobs = list()
+	for(var/datum/weakref/ref in tracked_atoms)
+		var/mob/living/tracked_mob = ref.resolve()
+		if(!tracked_mob || QDELETED(tracked_mob) || !ismob(tracked_mob))
+			continue
+		if(tracked_mob.stat == DEAD)
+			continue
+		candidate_mobs += tracked_mob
+
+	if(!length(candidate_mobs))
+		return FALSE
+
+	var/mob/living/ambush_carrier = pick(candidate_mobs)
+	var/ambush_config_type = pick(config.ambush_pools)
+	ambush_carrier.AddComponent(/datum/component/quest_ambush_payload, ambush_config_type)
 	return TRUE
 
 /// Get the quest title - override in subtypes for dynamic titles
@@ -502,20 +565,38 @@
 	return QUEST_TIER_MYTHIC
 
 /// Calculate reward from base type value + concrete risk score + workload done.
+/// Applies map reward modifier and distance bonus on top of base calculation.
 /datum/quest/proc/calculate_reward(turf/target_turf)
 	var/risk_score = max(1, ROUND_UP(get_risk_score(target_turf)))
 	var/workload_reward = max(0, ROUND_UP(get_workload_reward(target_turf)))
 	threat_tier = get_tier_from_risk_score(risk_score)
-	return max(0, ROUND_UP(get_base_reward() + (risk_score * QUEST_REWARD_PER_RISK_POINT) + workload_reward))
+	var/base_total = get_base_reward() + (risk_score * QUEST_REWARD_PER_RISK_POINT) + workload_reward
+	// Apply map reward modifier
+	base_total *= map_reward_modifier
+	// Apply distance bonus (up to QUEST_DISTANCE_BONUS_MAX_MULT extra)
+	base_total *= (1 + distance_bonus_mult)
+	return max(0, ROUND_UP(base_total))
 
 /datum/quest/proc/calculate_deposit(reward_override)
-	if(get_effective_requested_tier(null) <= QUEST_TIER_ROUTINE)
+	var/effective_tier = get_effective_requested_tier(null)
+	// Lowest tier (Routine) quests are free
+	if(effective_tier <= QUEST_TIER_ROUTINE)
+		return 0
+	// Deadly tier has a fixed deposit
+	if(effective_tier == QUEST_TIER_DEADLY)
+		return 50
+	// Highest tiers (Lethal, Mythic) are free — issued by limited roles only
+	if(effective_tier >= QUEST_TIER_LETHAL)
 		return 0
 
 	var/reward_reference = isnum(reward_override) ? reward_override : reward_amount
 	if(reward_reference <= 0)
-		reward_reference = get_base_reward() + (get_effective_requested_tier(null) * QUEST_REWARD_PER_RISK_POINT)
-	return clamp(ROUND_UP(max(QUEST_MIN_DEPOSIT, reward_reference * QUEST_DEPOSIT_RATE)), QUEST_MIN_DEPOSIT, QUEST_MAX_DEPOSIT)
+		reward_reference = get_base_reward() + (effective_tier * QUEST_REWARD_PER_RISK_POINT)
+	var/deposit = clamp(ROUND_UP(max(QUEST_MIN_DEPOSIT, reward_reference * QUEST_DEPOSIT_RATE)), QUEST_MIN_DEPOSIT, QUEST_MAX_DEPOSIT)
+	// Guarantee that low and mid tier quests always pay more than their deposit
+	if(reward_reference > 0 && deposit >= reward_reference)
+		deposit = max(QUEST_MIN_DEPOSIT, ROUND_UP(reward_reference * 0.5))
+	return deposit
 
 /// Get icon for scroll based on actual threat tier.
 /datum/quest/proc/get_scroll_icon()

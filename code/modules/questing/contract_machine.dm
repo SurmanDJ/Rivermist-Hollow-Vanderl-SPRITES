@@ -1260,6 +1260,16 @@ GLOBAL_VAR(quest_preview_preload_label)
 		qdel(attached_quest)
 		return FALSE
 
+	// Calculate distance bonus: distance from this ledger to the quest spawn point
+	var/turf/ledger_turf = get_turf(src)
+	var/turf/landmark_turf = get_turf(chosen_landmark)
+	if(ledger_turf && landmark_turf)
+		var/raw_distance = get_dist(ledger_turf, landmark_turf)
+		attached_quest.calculate_distance_bonus(raw_distance)
+
+	// Try to set up a quest ambush on one of the spawned mobs (no extra reward)
+	attached_quest.try_setup_quest_ambush(chosen_landmark)
+
 	var/obj/item/paper/scroll/quest/spawned_scroll = new(get_turf(src))
 	spawned_scroll.assigned_quest = attached_quest
 	attached_quest.quest_scroll = spawned_scroll
@@ -1323,23 +1333,45 @@ GLOBAL_VAR(quest_preview_preload_label)
 		if(has_clients_around)
 			continue
 
+		// Apply map-based quest weight: starter maps get more easy quests, fewer hard ones
+		var/datum/quest_map_config/landmark_config = get_quest_map_config_for_turf(get_turf(landmark))
+		var/landmark_weight = 1.0
+		if(landmark_config)
+			if(contract_tier <= QUEST_TIER_RISKY)
+				landmark_weight = landmark_config.easy_quest_weight
+			else if(contract_tier <= QUEST_TIER_DEADLY)
+				landmark_weight = landmark_config.medium_quest_weight
+			else
+				landmark_weight = landmark_config.hard_quest_weight
+		// Weight < 1.0: probabilistic skip (e.g. 0.5 = 50% chance to skip)
+		if(landmark_weight < 1.0 && !prob(landmark_weight * 100))
+			continue
+
 		var/is_clean_landmark = !prefer_clean_landmarks || !landmark_has_nearby_ambient_mobs(landmark)
+		// Weight > 1.0: add landmark multiple times to increase pick chance
+		var/add_count = landmark_weight > 1.0 ? round(landmark_weight) : 1
 
 		if(landmark.supports_contract_tier(contract_tier))
-			exact_landmarks += landmark
-			if(is_clean_landmark)
-				exact_clean_landmarks += landmark
+			for(var/i in 1 to add_count)
+				exact_landmarks += landmark
+				if(is_clean_landmark)
+					exact_clean_landmarks += landmark
 			continue
 
 		var/tier_gap = landmark.get_tier_gap(contract_tier)
 		if(tier_gap < best_gap)
 			best_gap = tier_gap
-			closest_landmarks = list(landmark)
-			closest_clean_landmarks = is_clean_landmark ? list(landmark) : list()
+			closest_landmarks = list()
+			closest_clean_landmarks = list()
+			for(var/i in 1 to add_count)
+				closest_landmarks += landmark
+				if(is_clean_landmark)
+					closest_clean_landmarks += landmark
 		else if(tier_gap == best_gap)
-			closest_landmarks += landmark
-			if(is_clean_landmark)
-				closest_clean_landmarks += landmark
+			for(var/i in 1 to add_count)
+				closest_landmarks += landmark
+				if(is_clean_landmark)
+					closest_clean_landmarks += landmark
 
 	if(template)
 		qdel(template)
@@ -1403,6 +1435,12 @@ GLOBAL_VAR(quest_preview_preload_label)
 	if(scroll.assigned_quest?.complete)
 		var/base_reward = scroll.assigned_quest.reward_amount
 		original_reward += base_reward
+
+		// 5% chance to drop a stat ring for Deadly-tier kill quests
+		if(scroll.assigned_quest.threat_tier == QUEST_TIER_DEADLY && prob(5))
+			var/obj/item/clothing/ring/gold/quest_deadly_prize/deadly_ring = new(get_turf(user))
+			user.put_in_hands(deadly_ring)
+			to_chat(user, span_boldnotice("Among the contract spoils, you find [deadly_ring]!"))
 
 		var/deposit_return = scroll.assigned_quest.deposit_amount || scroll.assigned_quest.calculate_deposit(scroll.assigned_quest.reward_amount)
 

@@ -54,6 +54,51 @@
 #define QUEST_BOSS_REWARD_RISK_OVERFLOW_START 8
 #define QUEST_BOSS_REWARD_RISK_OVERFLOW_BONUS 15
 
+// ===== Map difficulty and reward modifiers =====
+// Map flag bitfields for mob availability per map
+#define QUEST_MAP_FLAG_TOWN (1<<0)
+#define QUEST_MAP_FLAG_BOG (1<<1)
+#define QUEST_MAP_FLAG_DESERT (1<<2)
+#define QUEST_MAP_FLAG_FROZEN (1<<3)
+#define QUEST_MAP_FLAG_UNDERDARK (1<<4)
+#define QUEST_MAP_FLAG_ALL (QUEST_MAP_FLAG_TOWN | QUEST_MAP_FLAG_BOG | QUEST_MAP_FLAG_DESERT | QUEST_MAP_FLAG_FROZEN | QUEST_MAP_FLAG_UNDERDARK)
+
+// Per-map difficulty multipliers (drives ambush frequency and mob scaling).
+// 1.0x = baseline (~8% ambush), 2.0x = ~15% ambush, 3.0x = ~20% ambush.
+#define QUEST_MAP_DIFFICULTY_TOWN 0.9
+#define QUEST_MAP_DIFFICULTY_TOWN_SNOW 1.0
+#define QUEST_MAP_DIFFICULTY_BOG 1.5
+#define QUEST_MAP_DIFFICULTY_DESERT 1.3
+#define QUEST_MAP_DIFFICULTY_FROZEN 2.0
+#define QUEST_MAP_DIFFICULTY_UNDERDARK 3.0
+
+// Per-map reward multipliers (globally scales all quest reward on that map).
+#define QUEST_MAP_REWARD_TOWN 0.9
+#define QUEST_MAP_REWARD_TOWN_SNOW 1.0
+#define QUEST_MAP_REWARD_BOG 1.4
+#define QUEST_MAP_REWARD_DESERT 1.3
+#define QUEST_MAP_REWARD_FROZEN 1.8
+#define QUEST_MAP_REWARD_UNDERDARK 2.5
+
+// Distance bonus config: up to 25% extra reward based on distance from ledger to spawn point.
+#define QUEST_DISTANCE_BONUS_MAX_MULT 0.25
+#define QUEST_DISTANCE_BONUS_MAX_RANGE 150
+
+// Quest ambush chance config.
+// Ambush chance (%) = clamp(QUEST_AMBUSH_BASE_CHANCE * difficulty_modifier, MIN, MAX).
+// At 1.0x difficulty -> 8%, at 2.0x -> 15%, at 3.0x -> 20%.
+#define QUEST_AMBUSH_BASE_CHANCE 8
+#define QUEST_AMBUSH_MIN_CHANCE 3
+#define QUEST_AMBUSH_MAX_CHANCE 25
+
+// ===== Mob map_flags field key =====
+#define QUEST_MOB_MAP_FLAGS "map_flags"
+
+// Extended mob data macro with map_flags support
+#define QUEST_MOB_DATA_EX(SPAWN_WEIGHT, RISK_VALUE, GROUP_MIN, GROUP_MAX, MAP_FLAGS) list(QUEST_MOB_SPAWN_WEIGHT = SPAWN_WEIGHT, QUEST_MOB_RISK_VALUE = RISK_VALUE, QUEST_MOB_GROUP_MIN = GROUP_MIN, QUEST_MOB_GROUP_MAX = GROUP_MAX, QUEST_MOB_MAP_FLAGS = MAP_FLAGS)
+#define QUEST_MOB_SOLO_EX(SPAWN_WEIGHT, RISK_VALUE, MAP_FLAGS) QUEST_MOB_DATA_EX(SPAWN_WEIGHT, RISK_VALUE, 1, 1, MAP_FLAGS)
+#define QUEST_MOB_PACK_EX(SPAWN_WEIGHT, RISK_VALUE, GROUP_MIN, GROUP_MAX, MAP_FLAGS) QUEST_MOB_DATA_EX(SPAWN_WEIGHT, RISK_VALUE, GROUP_MIN, GROUP_MAX, MAP_FLAGS)
+
 
 // ==>>> NEW LIST
 
@@ -123,6 +168,7 @@
 	/mob/living/carbon/human/species/human/northern/base/very_skilled/heavy_gear = QUEST_MOB_PACK(2, 9, 2, 3),\
 	/mob/living/carbon/human/species/human/northern/searaider = QUEST_MOB_PACK(3, 9, 2, 4),\
 	/mob/living/carbon/human/species/human/northern/bog_deserters = QUEST_MOB_PACK(3, 9, 2, 4),\
+	/mob/living/simple_animal/hostile/retaliate/troll/bog = QUEST_MOB_SOLO(3, 8),\
 )
 #define QUEST_BOSS_KILL_LIST list(\
 	/mob/living/simple_animal/hostile/retaliate/troll/cave = QUEST_MOB_SOLO(4, 8),\
@@ -134,4 +180,6 @@
 	/mob/living/simple_animal/hostile/retaliate/voiddragon/red = QUEST_MOB_SOLO(2, 14),\
 	/mob/living/simple_animal/hostile/boss/fishboss = QUEST_MOB_SOLO(2, 15),\
 	/mob/living/simple_animal/hostile/retaliate/voiddragon/red/tsere = QUEST_MOB_SOLO(1, 17),\
+	/mob/living/simple_animal/hostile/retaliate/minotaur = QUEST_MOB_SOLO(3, 10),\
+	/mob/living/simple_animal/hostile/retaliate/minotaur/axe = QUEST_MOB_SOLO(2, 12),\
 )

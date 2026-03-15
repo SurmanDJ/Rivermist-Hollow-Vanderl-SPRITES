@@ -28,6 +28,9 @@
 	if(linked_scroll_ref)
 		. += span_notice("The compass is attuned to a quest signal.")
 		. += span_notice("It keeps tracking its linked contract on its own. Use the scroll for map context, and read the compass for the live signal.")
+		var/z_hint = get_z_level_hint(user)
+		if(z_hint)
+			. += z_hint
 	else
 		. += span_notice("Use the compass on a quest scroll to attune it. The scroll reveals the map, while the compass follows the live signal.")
 	. += span_info(last_signal_text)
@@ -36,6 +39,9 @@
 	refresh_tracking(user)
 	if(linked_scroll_ref)
 		to_chat(user, span_info(last_signal_text))
+		var/z_hint = get_z_level_hint(user)
+		if(z_hint)
+			to_chat(user, z_hint)
 	else
 		to_chat(user, span_notice("Use the compass on a quest scroll to attune it."))
 	return ..()
@@ -163,8 +169,6 @@
 		return "dist_ind_3"
 	return "dist_ind_4"
 
-	return null
-
 /obj/item/quest_compass/proc/get_arrow_state(direction)
 	switch(direction)
 		if(NORTHWEST)
@@ -184,3 +188,26 @@
 		if(EAST)
 			return "8"
 	return null
+
+/// Returns a z-level hint string for examine, or null if same z-level or no target.
+/obj/item/quest_compass/proc/get_z_level_hint(mob/user)
+	var/obj/item/paper/scroll/quest/quest_scroll = get_linked_scroll()
+	if(!quest_scroll?.assigned_quest)
+		return null
+
+	var/turf/user_turf = get_turf(user)
+	if(!user_turf)
+		return null
+
+	var/atom/movable/focused = get_focused_target()
+	var/turf/target_turf = quest_scroll.assigned_quest.get_target_location(user_turf, focused)
+	if(!target_turf)
+		return null
+
+	if(target_turf.z == user_turf.z)
+		return null
+
+	if(target_turf.z > user_turf.z)
+		return span_notice("The needle tilts upward — the target is <b>above</b> you.")
+	else
+		return span_notice("The needle tilts downward — the target is <b>below</b> you.")

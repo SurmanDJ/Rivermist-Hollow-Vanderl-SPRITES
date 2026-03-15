@@ -161,6 +161,71 @@
 	living_parent.remove_stat_modifier(source_key)
 	applied_bonus_amount = 0
 
+/// Deadly-tier quest reward ring. Raises a random stat to 12.
+/obj/item/clothing/ring/gold/quest_deadly_prize
+	name = "Ring of Strength"
+	desc = "An enchanted ring found on a dangerous quest. When worn, it raises one attribute to 12."
+	icon_state = "ring_protection"
+	sellprice = 200
+	var/boosted_stat = STATKEY_STR
+	var/boost_target_value = 12
+	var/datum/component/boss_ring_stat_boost/equipped_stat_bonus
+	var/datum/weakref/bonus_owner_ref
+
+/obj/item/clothing/ring/gold/quest_deadly_prize/Initialize(mapload)
+	. = ..()
+	assign_random_bonus()
+
+/obj/item/clothing/ring/gold/quest_deadly_prize/equipped(mob/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_RING) || !istype(user, /mob/living))
+		remove_stat_bonus()
+		return
+	apply_stat_bonus(user)
+
+/obj/item/clothing/ring/gold/quest_deadly_prize/proc/item_removed(mob/living/carbon/wearer, obj/item/removed_item)
+	SIGNAL_HANDLER
+	if(removed_item != src)
+		return
+	remove_stat_bonus()
+
+/obj/item/clothing/ring/gold/quest_deadly_prize/dropped(mob/user, silent)
+	. = ..()
+	remove_stat_bonus()
+
+/obj/item/clothing/ring/gold/quest_deadly_prize/Destroy()
+	remove_stat_bonus()
+	return ..()
+
+/obj/item/clothing/ring/gold/quest_deadly_prize/proc/assign_random_bonus()
+	var/static/list/stat_names = list(
+		STATKEY_STR = "Strength",
+		STATKEY_PER = "Perception",
+		STATKEY_END = "Endurance",
+		STATKEY_CON = "Constitution",
+		STATKEY_INT = "Intelligence",
+		STATKEY_SPD = "Speed",
+		STATKEY_LCK = "Fortune",
+	)
+	boosted_stat = pick(MOBSTATS)
+	name = "Ring of [stat_names[boosted_stat]]"
+
+/obj/item/clothing/ring/gold/quest_deadly_prize/proc/apply_stat_bonus(mob/living/user)
+	remove_stat_bonus()
+	bonus_owner_ref = WEAKREF(user)
+	RegisterSignal(user, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(item_removed))
+	equipped_stat_bonus = user.AddComponent(/datum/component/boss_ring_stat_boost, "deadly_ring_[REF(src)]", boosted_stat, boost_target_value)
+
+/obj/item/clothing/ring/gold/quest_deadly_prize/proc/remove_stat_bonus()
+	var/mob/living/bonus_owner = bonus_owner_ref?.resolve()
+	if(bonus_owner)
+		UnregisterSignal(bonus_owner, COMSIG_MOB_UNEQUIPPED_ITEM)
+	if(equipped_stat_bonus)
+		equipped_stat_bonus.RemoveComponent()
+		equipped_stat_bonus = null
+	bonus_owner_ref = null
+
+/// Boss-tier quest reward ring. Raises a random stat to 16.
 /obj/item/clothing/ring/gold/boss_prize
 	name = "Ring of Strength"
 	desc = "An enchanted ring taken from a defeated boss. When worn, it raises one attribute to 16."

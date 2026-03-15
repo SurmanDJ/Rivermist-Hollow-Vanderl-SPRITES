@@ -28,6 +28,10 @@
 	var/base_risk = max(1, target_risk_value)
 	var/reward = (base_risk * base_risk * QUEST_BOSS_REWARD_RISK_SQUARE_MULTIPLIER) + \
 		(max(base_risk - QUEST_BOSS_REWARD_RISK_OVERFLOW_START, 0) * QUEST_BOSS_REWARD_RISK_OVERFLOW_BONUS)
+	// Apply map reward modifier
+	reward *= map_reward_modifier
+	// Apply distance bonus
+	reward *= (1 + distance_bonus_mult)
 	return max(0, ROUND_UP(reward))
 
 /datum/quest/kill/boss/generate(obj/effect/landmark/quest_spawner/landmark)

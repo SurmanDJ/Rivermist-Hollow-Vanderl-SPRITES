@@ -93,6 +93,10 @@
 /datum/component/quest_object/proc/on_target_death(mob/living/dead_mob, gibbed)
 	SIGNAL_HANDLER
 
+	handle_target_death(dead_mob)
+
+/// Virtual handler for target death. Override in subtypes for custom behavior.
+/datum/component/quest_object/proc/handle_target_death(mob/living/dead_mob)
 	var/datum/quest/Q = quest_ref.resolve()
 	if(!Q || Q.complete || !istype(dead_mob, Q.target_mob_type))
 		return
@@ -154,9 +158,7 @@
 	qdel(src)
 	return TRUE
 
-/datum/component/quest_object/kill/on_target_death(mob/living/dead_mob, gibbed)
-	SIGNAL_HANDLER
-
+/datum/component/quest_object/kill/handle_target_death(mob/living/dead_mob)
 	complete_target(dead_mob)
 
 /datum/component/quest_object/kill/proc/on_target_qdeleting(datum/source)

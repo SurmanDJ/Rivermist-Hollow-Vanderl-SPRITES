@@ -101,7 +101,15 @@
 			return 20
 	return 20
 
-/datum/quest/kill/proc/get_candidate_target_pool()
+/datum/quest/kill/proc/get_mob_map_flags(mob_type)
+	var/list/mob_descriptor = get_mob_spawn_descriptor(mob_type)
+	if(!mob_descriptor)
+		return QUEST_MAP_FLAG_ALL
+	if(!(QUEST_MOB_MAP_FLAGS in mob_descriptor))
+		return QUEST_MAP_FLAG_ALL
+	return mob_descriptor[QUEST_MOB_MAP_FLAGS] || QUEST_MAP_FLAG_ALL
+
+/datum/quest/kill/proc/get_candidate_target_pool(map_flag_filter)
 	var/list/candidates = list()
 	var/list/closest_candidates = list()
 	var/best_gap = INFINITY
@@ -113,6 +121,12 @@
 		var/spawn_weight = get_mob_spawn_weight(mob_type)
 		if(rating <= 0 || spawn_weight <= 0)
 			continue
+
+		// Filter by map flags if a filter is provided
+		if(map_flag_filter)
+			var/mob_flags = get_mob_map_flags(mob_type)
+			if(!(mob_flags & map_flag_filter))
+				continue
 
 		if(rating >= min_rating && rating <= max_rating)
 			candidates[mob_type] = spawn_weight
@@ -140,7 +154,8 @@
 	return rand(effective_min, effective_max)
 
 /datum/quest/kill/proc/spawn_kill_mobs(obj/effect/landmark/quest_spawner/landmark)
-	var/list/candidate_pool = get_candidate_target_pool()
+	var/map_flag = get_quest_map_flag_for_turf(get_turf(landmark))
+	var/list/candidate_pool = get_candidate_target_pool(map_flag)
 	if(!length(candidate_pool))
 		return FALSE
 
@@ -191,4 +206,9 @@
 	threat_tier = get_tier_from_risk_score(risk_score)
 
 	var/total_target_risk = max(1, target_risk_value) * max(1, progress_required)
-	return max(0, ROUND_UP(total_target_risk * get_reward_multiplier()))
+	var/base_total = total_target_risk * get_reward_multiplier()
+	// Apply map reward modifier
+	base_total *= map_reward_modifier
+	// Apply distance bonus
+	base_total *= (1 + distance_bonus_mult)
+	return max(0, ROUND_UP(base_total))
