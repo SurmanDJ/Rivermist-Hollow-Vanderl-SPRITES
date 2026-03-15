@@ -55,6 +55,7 @@ GLOBAL_LIST_EMPTY(locked_sex_objects)
 #define COMSIG_BODYSTORAGE_IS_ITEM_TYPE_IN "hole_check_item_type"	// (type, target_layer)
 #define COMSIG_BODYSTORAGE_GET_2D_ITEM_LIST "hole_2d_list"		// ()
 #define COMSIG_BODYSTORAGE_UPDATE_SIZE "hole_update_size"	// ()
+#define COMSIG_BODYSTORAGE_CHANGED "hole_changed"			// (storage_component)
 #define COMSIG_BODYSTORAGE_FIND_ITEM_LAYER "hole_find_item_layer"	// ()
 #define COMSIG_BODYSTORAGE_SWAP_LAYERS_RAND "hole_swap_layers"	// (target_layer, force)
 
@@ -165,6 +166,7 @@ GLOBAL_LIST_EMPTY(locked_sex_objects)
 #define PENIS_TYPE_BARBED 7
 #define PENIS_TYPE_BARBED_KNOTTED 8
 #define PENIS_TYPE_TENTACLE 9
+#define PENIS_TYPE_OVIPOSITOR 10
 
 #define SHEATH_TYPE_NONE 0
 #define SHEATH_TYPE_NORMAL 1

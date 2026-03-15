@@ -65,6 +65,7 @@
 		/datum/customizer_choice/organ/genitals/penis/barbed,
 		/datum/customizer_choice/organ/genitals/penis/barbed_knotted,
 		/datum/customizer_choice/organ/genitals/penis/tentacle,
+		/datum/customizer_choice/organ/genitals/penis/ovipositor,
 		)
 
 /datum/customizer/organ/genitals/penis/canine

@@ -21,7 +21,7 @@
 	default_color = "FFFFFF"
 
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, STUBBLE, OLDGREY)
-	inherent_traits = list(TRAIT_NOMOBSWAP)
+
 	inherent_skills = list(
 		/datum/skill/misc/music = 1,
 	)
@@ -79,7 +79,7 @@
 		OFFSET_UNDIES = list(0,-1),\
 	)
 
-	inherent_traits = list(TRAIT_HOLLOWBONES, TRAIT_AMAZING_BACK, TRAIT_DODGEEXPERT)
+	inherent_traits = list(TRAIT_HOLLOWBONES, TRAIT_AMAZING_BACK, TRAIT_DODGEEXPERT, TRAIT_EGG_LAYER)
 
 	specstats_m = list(STATKEY_STR = -4, STATKEY_PER = 2, STATKEY_INT = 1, STATKEY_CON = -4, STATKEY_END = 0, STATKEY_SPD = 3, STATKEY_LCK = 0)
 	specstats_f = list(STATKEY_STR = -4, STATKEY_PER = 2, STATKEY_INT = 1, STATKEY_CON = -4, STATKEY_END = 0, STATKEY_SPD = 3, STATKEY_LCK = 0)

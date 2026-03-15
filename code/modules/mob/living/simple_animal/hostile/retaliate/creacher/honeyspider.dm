@@ -89,6 +89,7 @@
 	gender = MALE
 	if(prob(33))
 		gender = FEMALE
+	ensure_spider_ovipositor(src)
 
 	update_appearance(UPDATE_OVERLAYS)
 
