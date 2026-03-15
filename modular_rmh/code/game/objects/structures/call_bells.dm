@@ -123,6 +123,7 @@
 		/datum/job/advclass/councilor/advisor,
 		/datum/job/advclass/councilor/spymaster
 	)
+	specific_location = "Town Hall"
 
 /obj/structure/call_bell/townhall_servant
 	name = "town hall servants bell"
@@ -132,6 +133,7 @@
 		/datum/job/advclass/servant/maid,
 		/datum/job/advclass/servant/concubine
 	)
+	specific_location = "Town Hall's quarters"
 
 //TOWN WATCH BELLS
 
@@ -147,6 +149,7 @@
 		/datum/job/advclass/watch_guard/halberdier,
 		/datum/job/advclass/watch_guard/sentinel
 	)
+	specific_location = "Watch"
 
 //CHAPEL BELLS
 
@@ -163,6 +166,7 @@
 		/datum/job/advclass/acolyte/warrior_priest,
 		/datum/job/advclass/acolyte/love
 	)
+	specific_location = "Temple"
 
 //SCHOLARS BELLS
 
@@ -175,6 +179,7 @@
 		/datum/job/advclass/guild_wizard/adept,
 		/datum/job/guild_wizard_apprentice
 	)
+	specific_location = "Academy"
 
 /obj/structure/call_bell/archive
 	name = "archive bell"
@@ -182,6 +187,7 @@
 		/datum/job/advclass/town_scholar/archivist,
 		/datum/job/advclass/town_scholar_apprentice/librarian
 	)
+	specific_location = "Archives"
 
 /obj/structure/call_bell/artificer
 	name = "artificer's bell"
@@ -189,6 +195,7 @@
 		/datum/job/advclass/town_scholar/artificer,
 		/datum/job/advclass/town_scholar_apprentice/artificer
 	)
+	specific_location = "Workshop"
 
 /obj/structure/call_bell/physician
 	name = "physician's bell"
@@ -196,6 +203,7 @@
 		/datum/job/advclass/town_scholar/town_physician,
 		/datum/job/advclass/town_scholar_apprentice/physician_apprentice
 	)
+	specific_location = "Clinic"
 
 //WATERDEEP GUILD BELLS
 
@@ -204,6 +212,7 @@
 	notify_titles = list(
 		/datum/job/waterdeep_guild_guard
 	)
+	specific_location = "Guild Guard"
 
 /obj/structure/call_bell/bank
 	name = "bank bell"
@@ -211,6 +220,7 @@
 		/datum/job/waterdeep_banker,
 		/datum/job/advclass/waterdeep_guild_assistant/banker_assistant
 	)
+	specific_location = "Bank"
 
 /obj/structure/call_bell/merchant
 	name = "merchant bell"
@@ -218,6 +228,7 @@
 		/datum/job/waterdeep_merchant,
 		/datum/job/advclass/waterdeep_guild_assistant/shophand
 	)
+	specific_location = "Shop Front"
 
 //TAVERN BELLS
 
@@ -229,6 +240,7 @@
 		/datum/job/advclass/adventurers_guildmaster/eldritch_knight,
 		/datum/job/adventurers_assistant
 	)
+	specific_location = "Guild Desk"
 
 /obj/structure/call_bell/tavern
 	name = "tavern bell"
@@ -241,6 +253,7 @@
 		/datum/job/advclass/tavern_wench/courtesan,
 		/datum/job/advclass/tavern_wench/bath_wench
 	)
+	specific_location = "Tavern Front"
 
 /obj/structure/call_bell/baths
 	name = "baths bell"
@@ -251,6 +264,7 @@
 		/datum/job/advclass/tavern_wench/courtesan,
 		/datum/job/advclass/tavern_wench/bath_wench
 	)
+	specific_location = "Baths"
 
 //ARTISANS BELLS
 /obj/structure/call_bell/blacksmith
@@ -259,6 +273,7 @@
 		/datum/job/advclass/artisan/blacksmith,
 		/datum/job/advclass/artisan_apprentice/blacksmith
 	)
+	specific_location = "Smithy"
 
 /obj/structure/call_bell/tailor
 	name = "tailor bell"
@@ -266,6 +281,7 @@
 		/datum/job/advclass/artisan/tailor,
 		/datum/job/advclass/artisan_apprentice/tailor
 	)
+	specific_location = "Tailor's Shop"
 
 /obj/structure/call_bell/mason
 	name = "mason bell"
@@ -273,6 +289,7 @@
 		/datum/job/advclass/artisan/mason,
 		/datum/job/advclass/artisan_apprentice/mason
 	)
+	specific_location = "Mason's Shop"
 
 /obj/structure/call_bell/carpenter
 	name = "carpenter bell"
@@ -280,6 +297,7 @@
 		/datum/job/advclass/artisan/carpenter,
 		/datum/job/advclass/artisan_apprentice/carpenter
 	)
+	specific_location = "Carpenter's Shop"
 
 // OUTSIDERS BELLS
 /obj/structure/call_bell/forest_ranger
@@ -291,12 +309,14 @@
 		/datum/job/advclass/forest_ranger/scout,
 		/datum/job/advclass/forest_ranger/vanguard
 	)
+	specific_location = "Rangers' Post"
 
 /obj/structure/call_bell/grove_druid
 	name = "grove druid bell"
 	notify_titles = list(
 		/datum/job/grove_druid
 	)
+	specific_location = "Grove"
 
 /obj/structure/call_bell/swamp_witch
 	name = "swamp witch bell"
@@ -307,6 +327,7 @@
 		/datum/job/advclass/swamp_witch/hex,
 		/datum/job/advclass/swamp_witch/wild
 	)
+	specific_location = "my home"
 
 // SMALL VARIANTS
 
