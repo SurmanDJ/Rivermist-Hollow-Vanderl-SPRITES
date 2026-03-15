@@ -269,9 +269,6 @@
 /datum/sex_session/proc/stop_current_action(action_ref)
 	if(!length(active_actions))
 		return
-	if(user && target)
-		var/key = "sex_action_[action_ref]"
-		user.stop_doing(key)
 	if(!action_ref)
 		var/list/actions_to_stop = active_actions.Copy()
 		for(var/datum/sex_action/action as anything in actions_to_stop)
@@ -279,6 +276,9 @@
 		return
 
 	var/datum/sex_action/action = get_active_action(action_ref)
+	if(user && target)
+		var/key = "sex_action_[REF(action)]"
+		user.stop_doing(key)
 	if(!action)
 		return
 
