@@ -201,6 +201,8 @@
 /datum/sex_session/proc/stop_current_action()
 	if(!current_action)
 		return
+	if(user && target)
+		user.stop_doing(target)
 	var/datum/sex_action/action = SEX_ACTION(current_action)
 	action.on_finish(user, target)
 	desire_stop = FALSE
