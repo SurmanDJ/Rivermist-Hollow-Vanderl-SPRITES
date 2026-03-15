@@ -1071,7 +1071,7 @@
 
 	dat += "</div>"
 
-	var/datum/browser/popup = new(user, "sexcon[our_sex_id]", "<center>Sate Desire</center>", 980, 760)
+	var/datum/browser/popup = new(user, "sexcon[our_sex_id]", "<center>Sate Desire</center>", 950, 760)
 	popup.set_content(dat.Join())
 	popup.open()
 	return
