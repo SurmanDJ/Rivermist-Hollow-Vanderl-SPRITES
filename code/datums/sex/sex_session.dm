@@ -545,13 +545,13 @@
 /datum/sex_session/proc/render_zone_filter_panel(panel_title, task_name, current_filter, selected_tab)
 	var/list/content = list()
 	content += "<div class='zone-filter-panel'>"
-	content += "<div class='zone-filter-title'>[panel_title]</div>"
+	content += "<div class='zone-filter-title'>[format_ui_text(panel_title)]</div>"
 	for(var/filter_label in action_zone_filter_options)
 		var/filter_value = action_zone_filter_options[filter_label]
 		var/filter_class = "zone-filter-option"
 		if(filter_value == current_filter)
 			filter_class += " active"
-		content += "<a class='[filter_class]' href='?src=[REF(src)];task=[task_name];value=[filter_value];tab=[selected_tab]'>[filter_label]</a>"
+		content += "<a class='[filter_class]' href='?src=[REF(src)];task=[task_name];value=[filter_value];tab=[selected_tab]'>[html_encode(filter_label)]</a>"
 	content += "</div>"
 	return content.Join("")
 
@@ -779,7 +779,7 @@
 		for(var/datum/sex_action/active_action as anything in active_actions)
 			var/active_action_key = url_encode(active_action.get_menu_action_key())
 			dat += "<div class='action-item active-action-item'>"
-			dat += "<a class='action-button active' href='?src=[REF(src)];task=action;action_type=[active_action_key];tab=[selected_tab]'>[active_action.name]</a>"
+			dat += "<a class='action-button active' href='?src=[REF(src)];task=action;action_type=[active_action_key];tab=[selected_tab]'>[format_ui_text(active_action.name)]</a>"
 			dat += "<div class='action-icons'>"
 			dat += "<a href='?src=[REF(src)];task=stop;action_type=[active_action_key];tab=[selected_tab]' class='icon-btn stop' title='Stop action'>X</a>"
 			dat += "</div>"
@@ -804,7 +804,7 @@
 			if(!can_perform)
 				button_class += " linkOff"
 
-			dat += "<a class='[button_class]' href='?src=[REF(src)];task=action;action_type=[action_key];tab=[selected_tab]'>[menu_action.name]</a>"
+			dat += "<a class='[button_class]' href='?src=[REF(src)];task=action;action_type=[action_key];tab=[selected_tab]'>[format_ui_text(menu_action.name)]</a>"
 			dat += "<div class='action-icons'></div>"
 			dat += "</div>"
 		dat += "</div>"
@@ -889,9 +889,9 @@
 
 	if(user.getorganslot(ORGAN_SLOT_PENIS))
 		dat += "<div class='control-row'>"
-		dat += "<a href='?src=[REF(src)];task=manual_arousal_down;tab=[selected_tab]' class='control-btn'><</a>"
+		dat += "<a href='?src=[REF(src)];task=manual_arousal_down;tab=[selected_tab]' class='control-btn'>&lt;</a>"
 		dat += " [manual_arousal_name] "
-		dat += "<a href='?src=[REF(src)];task=manual_arousal_up;tab=[selected_tab]' class='control-btn'>></a>"
+		dat += "<a href='?src=[REF(src)];task=manual_arousal_up;tab=[selected_tab]' class='control-btn'>&gt;</a>"
 		dat += "</div>"
 
 	dat += "<div class='control-row'>"
@@ -1050,7 +1050,7 @@
 	var/session_name = collective?.collective_display_name || "Private Session"
 	content += "<div style='margin: 10px 0;'>"
 	content += "<label style='color: #d4af8c; font-weight: bold;'>Session Name:</label><br>"
-	content += "<input type='text' id='sessionNameInput' class='session-name-input' value='[format_ui_text(session_name)]' placeholder='Enter session name...'>"
+	content += "<input type='text' id='sessionNameInput' class='session-name-input' value='[escape_html_attribute(session_name)]' placeholder='Enter session name...'>"
 	content += "<button onclick='updateSessionName()' class='control-btn' style='margin-left: 5px;'>Update</button>"
 	content += "</div>"
 

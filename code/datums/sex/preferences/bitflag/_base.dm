@@ -27,7 +27,7 @@
 		var/status_text = is_enabled ? "On" : "Off"
 		var/link_class = is_enabled ? "linkOn" : "linkOff"
 		var/description = flag_descriptions[flag_name] || ""
-		var/title_attr = description ? " title='[html_encode(description)]'" : ""
+		var/title_attr = description ? " title='[escape_html_attribute(description)]'" : ""
 
 		output += "<div class='bitflag-option'>"
 		output += "<span[title_attr]>[html_encode(flag_name)]</span>: "
@@ -62,7 +62,7 @@
 		var/toggle_class = "pref-toggle bitflag-toggle"
 		var/toggle_text = is_enabled ? "ON" : "OFF"
 		var/description = flag_descriptions[flag_name] || ""
-		var/title_attr = description ? " title='[html_encode(description)]'" : ""
+		var/title_attr = description ? " title='[escape_html_attribute(description)]'" : ""
 
 		if(is_enabled)
 			toggle_class += " enabled"
