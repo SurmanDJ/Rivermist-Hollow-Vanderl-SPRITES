@@ -1034,6 +1034,13 @@
 	popup.open()
 	return
 
+/datum/sex_session/proc/format_ui_text(value)
+	return html_encode("[value]")
+
+/datum/sex_session/proc/format_ui_multiline_text(value)
+	var/formatted_text = html_encode("[value]")
+	return replacetext(formatted_text, "\n", "<br>")
+
 /datum/sex_session/proc/get_session_tab_content()
 	var/list/content = list()
 
@@ -1043,7 +1050,7 @@
 	var/session_name = collective?.collective_display_name || "Private Session"
 	content += "<div style='margin: 10px 0;'>"
 	content += "<label style='color: #d4af8c; font-weight: bold;'>Session Name:</label><br>"
-	content += "<input type='text' id='sessionNameInput' class='session-name-input' value='[session_name]' placeholder='Enter session name...'>"
+	content += "<input type='text' id='sessionNameInput' class='session-name-input' value='[format_ui_text(session_name)]' placeholder='Enter session name...'>"
 	content += "<button onclick='updateSessionName()' class='control-btn' style='margin-left: 5px;'>Update</button>"
 	content += "</div>"
 
@@ -1061,7 +1068,7 @@
 			var/mob/living/carbon/human/human_participant = participant
 			display_name = human_participant.get_face_name() || participant.name
 		var/is_you = (participant == user) ? " (You)" : ""
-		content += "<div class='participant-item'>[display_name][is_you]</div>"
+		content += "<div class='participant-item'>[format_ui_text(display_name)][is_you]</div>"
 
 	content += "</div>"
 
@@ -1095,7 +1102,7 @@
 
 	// Right side - Target's preferences (read-only)
 	content += "<div class='prefs-right'>"
-	content += "<div class='prefs-header'>[target.name]'s Preferences</div>"
+	content += "<div class='prefs-header'>[format_ui_text(target.name)]'s Preferences</div>"
 	content += get_erp_preferences_display(target, FALSE)
 	content += "</div>"
 
@@ -1131,16 +1138,16 @@
 	// Display preferences by category
 	for(var/category in prefs_by_category)
 		content += "<div class='pref-category'>"
-		content += "<div class='pref-category-title'>[category]</div>"
+		content += "<div class='pref-category-title'>[format_ui_text(category)]</div>"
 
 		for(var/pref_type in prefs_by_category[category])
 			var/datum/erp_preference/pref = prefs_by_category[category][pref_type]
 
 			content += "<div class='pref-item'>"
-			content += "<div class='pref-name'>[pref.name]</div>"
+			content += "<div class='pref-name'>[format_ui_text(pref.name)]</div>"
 
 			if(pref.description)
-				content += "<div class='pref-description'>[pref.description]</div>"
+				content += "<div class='pref-description'>[format_ui_text(pref.description)]</div>"
 
 			// Let the preference datum handle its own UI
 			content += pref.show_session_ui(prefs, editable, src)
@@ -1302,6 +1309,9 @@
 				var/save_name = "character_[character_slot]_notes"
 				var/list/all_notes = SM.get_data(save_name, "partner_notes", list())
 				if(all_notes[ckey(user.ckey)] && all_notes[ckey(user.ckey)][note_title])
+					if(alert(user, "Remove note '[note_title]'?", "Remove Note", "Remove", "Cancel") != "Remove")
+						show_ui(selected_tab)
+						return
 					all_notes[ckey(user.ckey)] -= note_title
 					SM.set_data(save_name, "partner_notes", all_notes)
 					to_chat(user, "<span class='notice'>Self-note '[note_title]' removed.</span>")
@@ -1314,7 +1324,7 @@
 	if(user == target)
 		return "<div class='header'>Interacting with yourself...</div>"
 	else
-		return "<div class='header'>Interacting with [target.name]...</div>"
+		return "<div class='header'>Interacting with [format_ui_text(target.name)]...</div>"
 
 /datum/sex_session/proc/get_sex_session_body()
 	var/list/data = list()
@@ -1351,7 +1361,7 @@
 
 	for(var/category in kinks_by_category)
 		content += "<div class='kink-category'>"
-		content += "<div class='kink-category-title'>[category]</div>"
+		content += "<div class='kink-category-title'>[format_ui_text(category)]</div>"
 		for(var/kink_name in kinks_by_category[category])
 			var/list/kink_data = kinks_by_category[category][kink_name]
 			var/datum/kink/base_kink = GLOB.available_kinks[kink_name]
@@ -1359,12 +1369,12 @@
 			if(!kink_data["enabled"])
 				kink_class += " kink-disabled"
 			content += "<div class='[kink_class]'>"
-			content += "<div class='kink-name'>[kink_name]</div>"
-			content += "<div class='kink-description'>[base_kink.description]</div>"
+			content += "<div class='kink-name'>[format_ui_text(kink_name)]</div>"
+			content += "<div class='kink-description'>[format_ui_text(base_kink.description)]</div>"
 			var/intensity_text = get_kink_intensity_text(kink_data["intensity"])
 			content += "<div class='kink-intensity'>Intensity: [intensity_text]</div>"
 			if(kink_data["notes"])
-				content += "<div class='kink-notes'>Notes: [kink_data["notes"]]</div>"
+				content += "<div class='kink-notes'>Notes: [format_ui_text(kink_data["notes"])]</div>"
 			content += "</div>"
 		content += "</div>"
 	return content.Join("")
@@ -1390,13 +1400,13 @@
 	// Sub-tabs for notes
 	content += "<div class='notes-sub-tabs'>"
 	content += "<a href='javascript:void(0)' class='notes-sub-tab active' onclick='switchNotesTab(\"self\")' id='selfTab'>Your Notes (Shared)</a>"
-	content += "<a href='javascript:void(0)' class='notes-sub-tab' onclick='switchNotesTab(\"target\")' id='targetTab'>[target.name]'s Notes</a>"
+	content += "<a href='javascript:void(0)' class='notes-sub-tab' onclick='switchNotesTab(\"target\")' id='targetTab'>[format_ui_text(target.name)]'s Notes</a>"
 	content += "</div>"
 
 	// Self notes content (initially visible)
 	content += "<div class='notes-tab-content active' id='selfNotesContent'>"
 	content += "<div class='panel-header'>"
-	content += "<h3>Your Notes (Shared with [target.name])</h3>"
+	content += "<h3>Your Notes (Shared with [format_ui_text(target.name)])</h3>"
 	content += "<button onclick='toggleSelfNoteForm()' class='control-btn' id='addSelfNoteBtn'>Add Note About Yourself</button>"
 	content += "</div>"
 
@@ -1421,19 +1431,19 @@
 			var/list/note_data = self_notes[note_title]
 			content += "<div class='note-item'>"
 			content += "<div class='note-header'>"
-			content += "<div class='note-title'>[note_title]</div>"
+			content += "<div class='note-title'>[format_ui_text(note_title)]</div>"
 			content += "<div class='note-buttons'>"
 			content += "<a href='?src=[REF(src)];task=edit_self_note;note_title=[url_encode(note_title)];tab=notes' class='note-btn' onclick='event.stopPropagation()'>Edit</a>"
-			content += "<a href='?src=[REF(src)];task=remove_self_note;note_title=[url_encode(note_title)];tab=notes' class='note-btn remove-btn' onclick='event.stopPropagation(); return confirm(\"Remove note: [note_title]?\")'>Remove</a>"
+			content += "<a href='?src=[REF(src)];task=remove_self_note;note_title=[url_encode(note_title)];tab=notes' class='note-btn remove-btn' onclick='event.stopPropagation()'>Remove</a>"
 			content += "</div>"
 			content += "</div>"
-			content += "<div class='note-content'>[note_data["content"]]</div>"
+			content += "<div class='note-content'>[format_ui_multiline_text(note_data["content"])]</div>"
 			var/created_time = note_data["created"]
 			var/modified_time = note_data["last_modified"]
 			var/time_text = "Created: [time2text(created_time, "MM/DD/YY hh:mm")]"
 			if(modified_time != created_time)
 				time_text += " | Modified: [time2text(modified_time, "MM/DD/YY hh:mm")]"
-			content += "<div class='note-meta'>[time_text]</div>"
+			content += "<div class='note-meta'>[format_ui_text(time_text)]</div>"
 			content += "</div>"
 
 	content += "</div>" // End self notes content
@@ -1441,28 +1451,28 @@
 	// Target's self-notes content (initially hidden)
 	content += "<div class='notes-tab-content' id='targetNotesContent'>"
 	content += "<div class='panel-header'>"
-	content += "<h3>[target.name]'s Notes (About Themselves)</h3>"
+	content += "<h3>[format_ui_text(target.name)]'s Notes (About Themselves)</h3>"
 	content += "</div>"
 
 	// Display target's self-notes (read-only)
 	if(!length(target_self_notes))
 		content += "<div class='no-data'>"
-		content += "[target.name] hasn't shared any notes about themselves yet."
+		content += "[format_ui_text(target.name)] hasn't shared any notes about themselves yet."
 		content += "</div>"
 	else
 		for(var/note_title in target_self_notes)
 			var/list/note_data = target_self_notes[note_title]
-			content += "<div class='note-item''>"
+			content += "<div class='note-item'>"
 			content += "<div class='note-header'>"
-			content += "<div class='note-title'>[note_title]</div>"
+			content += "<div class='note-title'>[format_ui_text(note_title)]</div>"
 			content += "</div>"
-			content += "<div class='note-content'>[note_data["content"]]</div>"
+			content += "<div class='note-content'>[format_ui_multiline_text(note_data["content"])]</div>"
 			var/created_time = note_data["created"]
 			var/modified_time = note_data["last_modified"]
 			var/time_text = "Created: [time2text(created_time, "MM/DD/YY hh:mm")]"
 			if(modified_time != created_time)
 				time_text += " | Modified: [time2text(modified_time, "MM/DD/YY hh:mm")]"
-			content += "<div class='note-meta'>[time_text]</div>"
+			content += "<div class='note-meta'>[format_ui_text(time_text)]</div>"
 			content += "</div>"
 
 	content += "</div>" // End target notes content

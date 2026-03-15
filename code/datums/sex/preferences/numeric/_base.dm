@@ -24,7 +24,7 @@
 	var/current_value = get_value(prefs)
 	var/dec_link = "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=decrease'><</a>"
 	var/inc_link = "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=increase'>></a>"
-	var/value_link = "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=set'>[current_value]</a>"
+	var/value_link = "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=set'>[html_encode("[current_value]")]</a>"
 
 	return "[dec_link][value_link][inc_link]"
 
@@ -49,12 +49,12 @@
 	if(editable)
 		var/dec_link = "<a href='?src=[REF(session)];task=handle_pref;pref_type=[type];action=decrease;tab=preferences' class='control-btn'><</a>"
 		var/inc_link = "<a href='?src=[REF(session)];task=handle_pref;pref_type=[type];action=increase;tab=preferences' class='control-btn'>></a>"
-		var/value_link = "<a href='?src=[REF(session)];task=handle_pref;pref_type=[type];action=set;tab=preferences' class='pref-toggle enabled' style='margin: 0 5px; min-width: 60px; text-align: center;'>[current_value]</a>"
+		var/value_link = "<a href='?src=[REF(session)];task=handle_pref;pref_type=[type];action=set;tab=preferences' class='pref-toggle enabled' style='margin: 0 5px; min-width: 60px; text-align: center;'>[html_encode("[current_value]")]</a>"
 		var/controls = "<div style='display: flex; align-items: center; justify-content: center; margin-top: 5px;'>[dec_link][value_link][inc_link]</div>"
 		var/range_info = "<div style='text-align: center; font-size: 10px; color: #808080; margin-top: 2px;'>Range: [min_value] - [max_value]</div>"
 		return "[controls][range_info]"
 	else
-		var/value_display = "<div class='pref-toggle disabled' style='margin-top: 5px;'>[current_value]</div>"
+		var/value_display = "<div class='pref-toggle disabled' style='margin-top: 5px;'>[html_encode("[current_value]")]</div>"
 		var/range_info = "<div style='text-align: center; font-size: 10px; color: #808080; margin-top: 2px;'>Range: [min_value] - [max_value]</div>"
 		return "[value_display][range_info]"
 

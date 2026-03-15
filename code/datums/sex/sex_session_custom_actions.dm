@@ -417,7 +417,7 @@
 		content += "<a class='control-btn' href='?src=[REF(src)];task=custom_save;tab=[selected_tab]'>[is_saved_action ? "Save Changes" : "Create Action"]</a>"
 		content += "<a class='control-btn' href='?src=[REF(src)];task=custom_reset;tab=[selected_tab]'>Reset Draft</a>"
 		if(is_saved_action)
-			content += "<a class='control-btn remove-btn' href='?src=[REF(src)];task=custom_delete;value=[url_encode(custom_action_editor_draft.id)];tab=[selected_tab]' onclick='return confirm(\"Delete [html_encode(custom_action_editor_draft.name)]?\")'>Delete</a>"
+			content += "<a class='control-btn remove-btn' href='?src=[REF(src)];task=custom_delete;value=[url_encode(custom_action_editor_draft.id)];tab=[selected_tab]'>Delete</a>"
 		content += "</div>"
 		content += "</div>"
 
@@ -491,7 +491,15 @@
 				to_chat(user, span_warning("Failed to save the custom action."))
 			return TRUE
 		if("custom_delete")
-			if(!delete_custom_action(href_list["value"]))
+			var/list/custom_actions = get_saved_custom_action_data()
+			var/action_id = resolve_custom_action_id(href_list["value"], custom_actions)
+			var/datum/sex_custom_action_data/action_data = action_id ? custom_actions[action_id] : null
+			if(!action_data)
+				to_chat(user, span_warning("Failed to find that custom action."))
+				return TRUE
+			if(alert(user, "Delete custom action '[action_data.name]'?", "Delete Custom Action", "Delete", "Cancel") != "Delete")
+				return TRUE
+			if(!delete_custom_action(action_id))
 				to_chat(user, span_warning("Failed to delete that custom action."))
 			return TRUE
 		if("custom_reset")

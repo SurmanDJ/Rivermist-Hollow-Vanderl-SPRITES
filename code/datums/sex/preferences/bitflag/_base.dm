@@ -19,7 +19,7 @@
 	var/list/output = list()
 
 	output += "<div class='bitflag-pref'>"
-	output += "<b>[name]:</b><br>"
+	output += "<b>[html_encode(name)]:</b><br>"
 
 	for(var/flag_name in flags)
 		var/flag_bit = flags[flag_name]
@@ -27,10 +27,10 @@
 		var/status_text = is_enabled ? "On" : "Off"
 		var/link_class = is_enabled ? "linkOn" : "linkOff"
 		var/description = flag_descriptions[flag_name] || ""
-		var/title_attr = description ? " title='[description]'" : ""
+		var/title_attr = description ? " title='[html_encode(description)]'" : ""
 
 		output += "<div class='bitflag-option'>"
-		output += "<span[title_attr]>[flag_name]</span>: "
+		output += "<span[title_attr]>[html_encode(flag_name)]</span>: "
 		output += "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=toggle_flag;flag=[flag_bit]' class='[link_class]'>[status_text]</a>"
 		output += "</div>"
 
@@ -54,7 +54,7 @@
 	var/list/output = list()
 
 	output += "<div class='bitflag-session-pref'>"
-	output += "<b>[name]:</b><br>"
+	output += "<b>[html_encode(name)]:</b><br>"
 
 	for(var/flag_name in flags)
 		var/flag_bit = flags[flag_name]
@@ -62,13 +62,13 @@
 		var/toggle_class = "pref-toggle bitflag-toggle"
 		var/toggle_text = is_enabled ? "ON" : "OFF"
 		var/description = flag_descriptions[flag_name] || ""
-		var/title_attr = description ? " title='[description]'" : ""
+		var/title_attr = description ? " title='[html_encode(description)]'" : ""
 
 		if(is_enabled)
 			toggle_class += " enabled"
 
 		output += "<div class='bitflag-session-option'>"
-		output += "<span class='bitflag-label'[title_attr]>[flag_name]:</span> "
+		output += "<span class='bitflag-label'[title_attr]>[html_encode(flag_name)]:</span> "
 
 		if(editable)
 			output += "<button class='[toggle_class]' onclick=\"window.location.href='?src=[REF(session)];task=handle_pref;pref_type=[type];action=toggle_flag;flag=[flag_bit];tab=preferences'\">[toggle_text]</button>"
