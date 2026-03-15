@@ -9,6 +9,19 @@
 /datum/targetting_datum/proc/can_horny(mob/living/living_mob, atom/target)
 	return FALSE
 
+/datum/targetting_datum/proc/is_horny_target_now_hostile(mob/living/living_mob, atom/target)
+	var/datum/ai_controller/controller = living_mob?.ai_controller
+	if(!controller || controller.blackboard[BB_HORNY_AGGRO_TARGET] != target)
+		return FALSE
+
+	var/list/retaliate_list = controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
+	var/retaliate_time = retaliate_list ? retaliate_list[target] : null
+	if(QDELETED(target) || isnull(retaliate_time) || retaliate_time + 2 MINUTES < world.time)
+		controller.clear_blackboard_key(BB_HORNY_AGGRO_TARGET)
+		return FALSE
+
+	return TRUE
+
 /// Returns true if this targetting datum should let horny AI pre-empt combat targeting.
 /datum/targetting_datum/proc/should_prioritize_horny_targets(mob/living/living_mob)
 	return FALSE
@@ -54,6 +67,8 @@
 			mobs_flags = 0
 		if(faction_check(living_mob, L) || L.stat >= DEAD) //basic targetting doesn't target dead people
 			return FALSE
+		if(is_horny_target_now_hostile(living_mob, L))
+			return TRUE
 		var/list/retaliate_list = living_mob.ai_controller?.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
 		if(should_prioritize_horny_targets(living_mob) && retaliate_list && !isnull(retaliate_list[L]))
 			if(retaliate_list[L] + 2 MINUTES >= world.time)
@@ -92,6 +107,8 @@
 
 	if(ishuman(the_target))
 		var/mob/living/carbon/human/th = the_target
+		if(is_horny_target_now_hostile(living_mob, th))
+			return FALSE
 
 		var/mobs_flags = th.client?.prefs?.erp_preferences[/datum/erp_preference/bitflag/horny_mobs]
 		if(!mobs_flags)
