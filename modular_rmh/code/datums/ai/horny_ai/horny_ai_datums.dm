@@ -22,6 +22,8 @@
 
 	if(isnull(controller.blackboard[BB_HORNY_TIME_START]))
 		controller.set_blackboard_key(BB_HORNY_TIME_START, world.time)
+	controller.set_blackboard_key(BB_HORNY_TARGET_ATTACK_COUNT, 0)
+	controller.clear_blackboard_key(BB_HORNY_AGGRO_TARGET)
 
 	var/atom/target = controller.blackboard[target_key]
 
@@ -354,6 +356,18 @@
 		return
 
 	var/datum/ai_controller/controller = source.ai_controller
+	var/atom/current_horny_target = controller.blackboard[BB_BASIC_MOB_CURRENT_HORNY_TARGET]
+
+	if(attacker == current_horny_target)
+		var/hit_count = (controller.blackboard[BB_HORNY_TARGET_ATTACK_COUNT] || 0) + 1
+		controller.set_blackboard_key(BB_HORNY_TARGET_ATTACK_COUNT, hit_count)
+		var/should_retaliate = hit_count >= 4 || (hit_count >= 2 && source.health <= source.maxHealth * 0.75)
+		if(!should_retaliate)
+			return
+
+		controller.set_blackboard_key(BB_HORNY_AGGRO_TARGET, attacker)
+		controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker, world.time)
+
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[BB_TARGETTING_DATUM]
 
 	controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, attacker)
@@ -396,6 +410,7 @@
 	knockdown_need = TRUE
 	wrong_action = FALSE
 	basic_mob.stop_pulling()
+	controller.clear_blackboard_key(BB_HORNY_TARGET_ATTACK_COUNT)
 	controller.clear_blackboard_key(target_key)
 	controller.clear_blackboard_key(BB_HORNY_TIME_START)
 	if(basic_mob.is_dead())
