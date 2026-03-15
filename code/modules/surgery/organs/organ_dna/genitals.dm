@@ -1,6 +1,8 @@
 /datum/organ_dna/penis
 	var/penis_size = DEFAULT_PENIS_SIZE
 	var/functional = TRUE
+	var/is_ovipositor = FALSE
+	var/egg_type = null
 
 /datum/organ_dna/penis/imprint_organ(obj/item/organ/organ, datum/species/species)
 	..()
@@ -52,3 +54,4 @@
 	..()
 	var/obj/item/organ/genitals/belly/belly_organ = organ
 	belly_organ.organ_size = belly_size
+	belly_organ.resting_size = belly_size

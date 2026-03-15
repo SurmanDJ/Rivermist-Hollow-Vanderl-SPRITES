@@ -13,6 +13,8 @@
 	var/functional = TRUE
 	var/always_hard = FALSE
 	var/strapon = FALSE
+	var/ovi_egg_type = null
+	var/egg_clutch_size = 0
 
 /obj/item/organ/genitals/penis/Initialize()
 	. = ..()
