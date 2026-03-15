@@ -115,6 +115,8 @@
 
 	if(target_living.body_position != LYING_DOWN)
 		knockdown_need = TRUE
+	else
+		knockdown_need = FALSE
 
 	var/list/arousal_data = list()
 	SEND_SIGNAL(basic_mob, COMSIG_SEX_GET_AROUSAL, arousal_data)
@@ -140,42 +142,12 @@
 		stand_up_counter = 0
 		return
 
-	//do stun here
+	if(try_pre_knockdown_disarm(controller, basic_mob, target_living))
+		return
+
 	if(world.time > controller.blackboard[BB_HORNY_STUN_COOLDOWN] && knockdown_need)
-		if(basic_mob.Adjacent(target_living))
-			var/prob2defend
-			var/obj/item/mainhand = target_living.get_active_held_item()
-			var/obj/item/offhand = target_living.get_inactive_held_item()
-			var/parry_data = target_living.calculate_parry_values(mainhand, offhand)
-			prob2defend += CLAMP(parry_data["defense_bonus"]/80, 0, 40)
-			prob2defend += CLAMP(target_living.STASPD / 20 * 50, 0, 50)
-			if(target_living.body_position == LYING_DOWN)
-				prob2defend *= 0.1
-			if(target_living.cmode)
-				prob2defend *= 1.2
-			if(target_living.surrendering)
-				prob2defend *= 0.1
-			prob2defend = CLAMP(prob2defend, 0, 85)
-
-			if(prob(100-prob2defend))
-				if(iscarbon(basic_mob))
-					target_living.SetStun(40)
-					target_living.SetKnockdown(50)
-				else
-					target_living.SetStun(100)
-					target_living.SetKnockdown(200)
-				if(target_living.body_position != LYING_DOWN)
-					target_living.emote("gasp")
-				controller.set_blackboard_key(BB_HORNY_STUN_COOLDOWN, world.time + 10 SECONDS)
-				basic_mob.visible_message(span_danger("[basic_mob] tackles [target_living] down to the ground, dazing them!"))
-			else
-				controller.set_blackboard_key(BB_HORNY_STUN_COOLDOWN, world.time + 5 SECONDS)
-				basic_mob.visible_message(span_danger("[basic_mob] fails to tackle [target_living] down!"))
-
-			knockdown_need = FALSE
+		if(attempt_stamina_knockdown(controller, basic_mob, target_living))
 			return
-		else
-			knockdown_need = TRUE
 
 	if(handle_target_prep(controller, basic_mob, target_living, session))
 		return
@@ -184,13 +156,65 @@
 
 /datum/ai_behavior/horny/proc/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
 	// Override this in mob-specific subclasses when they need setup work before the sex action starts.
-	return FALSE
+	return TRUE
+
+/datum/ai_behavior/horny/proc/try_pre_knockdown_disarm(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
+	return TRUE
+
+/datum/ai_behavior/horny/proc/attempt_stamina_knockdown(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
+	if(!basic_mob.Adjacent(target_living))
+		knockdown_need = TRUE
+		return FALSE
+	if(target_living.body_position == LYING_DOWN)
+		knockdown_need = FALSE
+		return FALSE
+
+	var/prob2defend
+	var/obj/item/mainhand = target_living.get_active_held_item()
+	var/obj/item/offhand = target_living.get_inactive_held_item()
+	var/list/parry_data = target_living.calculate_parry_values(mainhand, offhand)
+	prob2defend += CLAMP(parry_data["defense_bonus"] / 80, 0, 40)
+	prob2defend += CLAMP(target_living.STASPD / 20 * 50, 0, 50)
+	if(target_living.cmode)
+		prob2defend *= 1.2
+	if(target_living.surrendering)
+		prob2defend *= 0.1
+	prob2defend = CLAMP(prob2defend, 0, 85)
+
+	var/base_stamina_drain = iscarbon(basic_mob) ? target_living.maximum_stamina * 0.18 : target_living.maximum_stamina * 0.24
+	var/stamina_drain = max(round(base_stamina_drain * (1 - (prob2defend / 125))), 5)
+	target_living.adjust_stamina(stamina_drain, null, FALSE, FALSE)
+
+	// Once only 20% stamina remains, the takedown becomes guaranteed
+	var/stamina_exhaustion = target_living.maximum_stamina ? (target_living.stamina / target_living.maximum_stamina) : 0
+	var/down_chance = CLAMP(round((stamina_exhaustion / 0.8) * 100), 0, 100)
+
+	if(prob(down_chance))
+		if(iscarbon(basic_mob))
+			target_living.SetStun(30)
+			target_living.SetKnockdown(50)
+		else
+			target_living.SetStun(80)
+			target_living.SetKnockdown(200)
+		if(target_living.body_position != LYING_DOWN)
+			target_living.emote("gasp")
+		controller.set_blackboard_key(BB_HORNY_STUN_COOLDOWN, world.time + 10 SECONDS)
+		basic_mob.visible_message(span_danger("[basic_mob] batters [target_living]'s guard down and drags them to the ground!"))
+	else
+		controller.set_blackboard_key(BB_HORNY_STUN_COOLDOWN, world.time + 5 SECONDS)
+		basic_mob.visible_message(span_danger("[basic_mob] tries to pull [target_living] to the ground, exhausting them!"))
+
+	knockdown_need = FALSE
+	return TRUE
 
 /datum/ai_behavior/horny/proc/start_horny_action(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session, target_key)
 	if(!session)
 		return
 
-	var/action_type = basic_mob.select_horny_ai_act(target_living)
+	var/action_type = select_horny_ai_act(basic_mob, target_living, session)
+	if(isnull(action_type))
+		return
+
 	if(isnull(session.current_action))
 		session.try_start_action(action_type)
 		basic_mob.face_atom(target_living)
@@ -203,6 +227,44 @@
 			wrong_action = TRUE
 			finish_action(controller, FALSE, target_key)
 
+/datum/ai_behavior/horny/proc/select_horny_ai_act(mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
+	var/list/weighted_actions = list()
+	var/has_penis = !!basic_mob.getorganslot(ORGAN_SLOT_PENIS)
+	var/has_vagina = !!basic_mob.getorganslot(ORGAN_SLOT_VAGINA)
+	var/target_has_penis = !!target_living.getorganslot(ORGAN_SLOT_PENIS)
+	var/target_has_vagina = !!target_living.getorganslot(ORGAN_SLOT_VAGINA)
+
+	if(has_penis)
+		weighted_actions += /datum/sex_action/npc/npc_throat_sex
+		weighted_actions += /datum/sex_action/npc/npc_throat_sex
+		weighted_actions += /datum/sex_action/npc/npc_anal_sex
+		if(target_has_vagina)
+			weighted_actions += /datum/sex_action/npc/npc_vaginal_sex
+			weighted_actions += /datum/sex_action/npc/npc_vaginal_sex
+			weighted_actions += /datum/sex_action/npc/npc_vaginal_sex
+
+	if(has_vagina)
+		weighted_actions += /datum/sex_action/npc/npc_facesitting
+		weighted_actions += /datum/sex_action/npc/npc_facesitting
+		if(target_has_penis)
+			weighted_actions += /datum/sex_action/npc/npc_vaginal_ride_sex
+			weighted_actions += /datum/sex_action/npc/npc_vaginal_ride_sex
+			weighted_actions += /datum/sex_action/npc/npc_vaginal_ride_sex
+			weighted_actions += /datum/sex_action/npc/npc_anal_ride_sex
+
+	if(!length(weighted_actions))
+		return null
+
+	var/list/valid_actions = list()
+	for(var/datum/sex_action/action_type as anything in weighted_actions)
+		if(session.can_perform_action(action_type))
+			valid_actions += action_type
+
+	if(!length(valid_actions))
+		return null
+
+	return pick(valid_actions)
+
 /datum/ai_behavior/horny/simple_mob/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
 	if(!ishuman(target_living) || !basic_mob.Adjacent(target_living))
 		return FALSE
@@ -212,6 +274,33 @@
 
 	var/mob/living/carbon/human/human_target = target_living
 	return strip_human_target(basic_mob, human_target)
+
+/datum/ai_behavior/horny/simple_mob/try_pre_knockdown_disarm(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
+	if(!ishuman(target_living) || !basic_mob.Adjacent(target_living))
+		return FALSE
+
+	var/mob/living/carbon/human/human_target = target_living
+	return disarm_human_target(basic_mob, human_target)
+
+/datum/ai_behavior/horny/simple_mob/disarm_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
+	if(!human_target.Adjacent(basic_mob))
+		return FALSE
+	if(!human_target.get_active_held_item() && !human_target.get_inactive_held_item())
+		return FALSE
+	if(!prob(50))
+		human_target.visible_message(span_danger("[basic_mob] swats at [human_target]'s hands, but fails to disarm them!"), \
+				span_userdanger("[basic_mob] swats at my hands, but I keep hold of my weapon!"), span_hear("I hear a rough struggle over a weapon!"), COMBAT_MESSAGE_RANGE)
+		return TRUE
+
+	for(var/obj/item/I in human_target.held_items)
+		human_target.dropItemToGround(I, force = FALSE, silent = FALSE)
+	human_target.Stun(5)
+	human_target.visible_message(span_danger("[basic_mob] bats at [human_target]'s hands and disarms them!"), \
+			span_userdanger("[basic_mob] bats at my hands and disarms me!"), span_hear("I hear someone getting disarmed!"), COMBAT_MESSAGE_RANGE)
+	return TRUE
+
+/datum/ai_behavior/horny/proc/disarm_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
+	return TRUE
 
 /datum/ai_behavior/horny/simple_mob/proc/strip_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
 	var/list/possible_items = list()
@@ -267,15 +356,19 @@
 		return FALSE
 
 	var/mob/living/carbon/human/human_target = target_living
-	if(disarm_human_target(basic_mob, human_target))
-		return TRUE
-
 	strip_human_target(basic_mob, human_target)
 
 	if(tie_human_target(carbon_mob, human_target))
 		return TRUE
 
 	return FALSE
+
+/datum/ai_behavior/horny/human/try_pre_knockdown_disarm(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
+	if(!ishuman(target_living))
+		return FALSE
+
+	var/mob/living/carbon/human/human_target = target_living
+	return disarm_human_target(basic_mob, human_target)
 
 /datum/ai_behavior/horny/human/proc/ensure_target_grab(mob/living/carbon/carbon_mob, mob/living/target_living)
 	if(carbon_mob.pulling)
@@ -291,13 +384,19 @@
 	if(!length(target_living.grabbedby))
 		target_living.grabbedby(carbon_mob, FALSE, sel_zone)
 
-/datum/ai_behavior/horny/human/proc/disarm_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
-	if(!human_target.get_active_held_item() || !human_target.Adjacent(basic_mob))
+/datum/ai_behavior/horny/human/disarm_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
+	if(!human_target.Adjacent(basic_mob))
 		return FALSE
+	if(!human_target.get_active_held_item() && !human_target.get_inactive_held_item())
+		return FALSE
+	if(!prob(50))
+		human_target.visible_message(span_danger("[basic_mob] lunges for [human_target]'s weapon, but can't wrench it free!"), \
+				span_userdanger("[basic_mob] lunges for my weapon, but I keep hold of it!"), span_hear("I hear a struggle over a weapon!"), COMBAT_MESSAGE_RANGE)
+		return TRUE
 
 	for(var/obj/item/I in human_target.held_items)
 		human_target.dropItemToGround(I, force = FALSE, silent = FALSE)
-	human_target.Stun(30)
+	human_target.Stun(5)
 	human_target.visible_message(span_danger("[basic_mob] disarms [human_target]!"), \
 			span_userdanger("[basic_mob] disarms me!"), span_hear("I hear someone getting punished!"), COMBAT_MESSAGE_RANGE)
 	return TRUE
@@ -431,35 +530,3 @@
 	controller.modify_cooldown(src, world.time)
 	//controller.CancelActions()
 
-/mob/living/proc/select_horny_ai_act(mob/living/target)
-	var/current_action = /datum/sex_action/rub_body
-	var/mob/living/target_mob = target
-	if(gender == FEMALE && target_mob.gender == MALE)
-		switch(rand(1,2))
-			if(1) //anal
-				current_action = /datum/sex_action/npc/npc_anal_ride_sex
-			if(2) //vaginal
-				current_action = /datum/sex_action/npc/npc_vaginal_ride_sex
-	if(gender == MALE && target_mob.gender == MALE)
-		switch(rand(1,2))
-			if(1) //oral
-				current_action = /datum/sex_action/npc/npc_throat_sex
-			if(2) //anal
-				current_action = /datum/sex_action/npc/npc_anal_sex
-	if(gender == MALE && target_mob.gender == FEMALE)
-		switch(rand(1,3))
-			if(1) //oral
-				current_action = /datum/sex_action/npc/npc_throat_sex
-			if(2) //anal
-				current_action = /datum/sex_action/npc/npc_anal_sex
-			if(3) //vaginal
-				current_action = /datum/sex_action/npc/npc_vaginal_sex
-	if(gender == FEMALE && target_mob.gender == FEMALE)
-		switch(rand(1,3))
-			if(1) //oral
-				current_action = /datum/sex_action/npc/npc_facesitting
-			if(2) //anal
-				current_action = /datum/sex_action/npc/npc_rimming
-			if(3) //vaginal
-				current_action = /datum/sex_action/npc/npc_cunnilingus
-	return current_action

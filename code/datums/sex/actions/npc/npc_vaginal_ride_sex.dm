@@ -7,6 +7,24 @@
 /datum/sex_action/npc/npc_vaginal_ride_sex/shows_on_menu(mob/living/user, mob/living/target)
 	return FALSE
 
+/datum/sex_action/npc/npc_vaginal_ride_sex/can_perform(mob/living/user, mob/living/target)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(user == target)
+		return FALSE
+	if(!check_location_accessible(user, user, BODY_ZONE_PRECISE_GROIN, TRUE))
+		return FALSE
+	if(!check_location_accessible(user, target, BODY_ZONE_PRECISE_GROIN, TRUE))
+		return FALSE
+	if(!user.getorganslot(ORGAN_SLOT_VAGINA))
+		return FALSE
+	if(!target.getorganslot(ORGAN_SLOT_PENIS))
+		return FALSE
+	if(check_sex_lock(target, ORGAN_SLOT_PENIS))
+		return FALSE
+	return TRUE
+
 /datum/sex_action/npc/npc_vaginal_ride_sex/on_start(mob/living/user, mob/living/target)
 	. = ..()
 	user.visible_message(span_warning("[user] gets on top of [target] and begins riding [target.p_them()] with [user.p_their()] cunt!"))
@@ -28,7 +46,7 @@
 		sex_session.perform_sex_action(target, user, 2.4, 7, 2.4, src)
 	sex_session.handle_passive_ejaculation(target)
 
-	sex_session.perform_sex_action(target, user, 2, 4, FALSE)
+	sex_session.perform_sex_action(user, target, 2, 4, 3, src)
 
 /datum/sex_action/npc/npc_vaginal_ride_sex/handle_climax_message(mob/living/user, mob/living/target, must_flip)
 	if(must_flip)

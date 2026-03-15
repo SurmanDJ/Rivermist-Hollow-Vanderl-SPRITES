@@ -1475,7 +1475,6 @@
 #include "code\datums\sex\actions\masturbation\other\vagina.dm"
 #include "code\datums\sex\actions\npc\npc_anal_ride_sex.dm"
 #include "code\datums\sex\actions\npc\npc_anal_sex.dm"
-#include "code\datums\sex\actions\npc\npc_cunnilingus.dm"
 #include "code\datums\sex\actions\npc\npc_facesitting.dm"
 #include "code\datums\sex\actions\npc\npc_rimming.dm"
 #include "code\datums\sex\actions\npc\npc_throat_sex.dm"
