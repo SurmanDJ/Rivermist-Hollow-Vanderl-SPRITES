@@ -58,7 +58,7 @@
 	shirt = null
 	wrists = null
 	gloves = null
-	pants = /obj/item/clothing/pants/tights/colored/random
+	pants = null
 	shoes = /obj/item/clothing/shoes/shortboots
 	backr = null
 	backl = null
