@@ -635,12 +635,19 @@
 
 			content += "<a class='[button_class]' href='?src=[REF(src)];task=action;action_type=[action_key];tab=[selected_tab]'>[format_ui_text(menu_action.name)]</a>"
 			content += "<div class='action-icons'></div>"
-		content += "</div>"
+			content += "</div>"
 		content += "</div>"
 	content += "</div>"
+	content += "</div>"
+	content += render_zone_filter_panel(target_panel_title, "set_target_zone_filter", target_zone_filter, selected_tab)
+	content += "</div>"
+	content += "<div class='interaction-quick-bar-wrap'>"
 	content += "<div class='interaction-quick-bar'>"
+	content += "<div class='quick-row'>"
 	content += render_interaction_quick_stepper("Speed", current_speed_name, "speed_down", "speed_up", selected_tab)
 	content += render_interaction_quick_stepper("Force", current_force_name, "force_down", "force_up", selected_tab)
+	content += "</div>"
+	content += "<div class='quick-row'>"
 	content += render_interaction_quick_stepper("Hold", current_resist_name, "resist_down", "resist_up", selected_tab)
 	content += "<a class='quick-toggle[edging_other ? " active" : ""]' href='?src=[REF(src)];task=toggle_edging_other;tab=[selected_tab]'>Edge [edging_other ? "On" : "Off"]</a>"
 	if(lying_direction_name)
@@ -650,7 +657,6 @@
 		content += "<span class='quick-toggle disabled'>Lie down to swap</span>"
 	content += "</div>"
 	content += "</div>"
-	content += render_zone_filter_panel(target_panel_title, "set_target_zone_filter", target_zone_filter, selected_tab)
 	content += "</div>"
 
 	return content.Join("")
@@ -794,17 +800,20 @@
 	dat += ".action-subheader { background-color: #4a2c20; color: #d4af8c; padding: 8px 12px; font-weight: bold; margin-bottom: 6px; border-radius: 3px; }"
 	dat += ".action-summary { margin: 0 0 10px 0; color: #b09070; font-size: 11px; }"
 	dat += ".action-empty { background-color: #2a1a15; border: 1px dashed #4a2c20; color: #666666; padding: 12px; text-align: center; font-style: italic; border-radius: 4px; }"
-	dat += ".interaction-quick-bar { position: sticky; bottom: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; margin-top: 10px; padding: 10px 12px; background-color: rgba(32, 18, 16, 0.96); border: 1px solid #5b3426; border-radius: 8px; box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.28); }"
-	dat += ".quick-stepper { display: inline-flex; align-items: stretch; min-height: 32px; background-color: #251714; border: 1px solid #5b3426; border-radius: 999px; overflow: hidden; }"
-	dat += ".quick-stepper-label { display: flex; align-items: center; justify-content: center; min-width: 58px; padding: 0 10px; background-color: #3a2318; color: #cfab84; font-size: 10px; font-weight: bold; letter-spacing: 0.05em; text-transform: uppercase; }"
-	dat += ".quick-stepper-btn { display: flex; align-items: center; justify-content: center; width: 28px; padding: 0; background-color: #140d0c; color: #f4d6b6; text-align: center; text-decoration: none; font-weight: bold; }"
+	dat += ".interaction-quick-bar-wrap { margin: 10px 130px 0 130px; text-align: center; clear: both; }"
+	dat += ".interaction-quick-bar { display: inline-block; padding: 10px 12px; background-color: rgba(32, 18, 16, 0.96); border: 1px solid #5b3426; border-radius: 8px; box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.28); }"
+	dat += ".quick-row { text-align: center; white-space: nowrap; }"
+	dat += ".quick-row + .quick-row { margin-top: 8px; }"
+	dat += ".quick-stepper { display: inline-block; margin: 0 4px; background-color: #251714; border: 1px solid #5b3426; border-radius: 999px; overflow: hidden; white-space: nowrap; vertical-align: middle; }"
+	dat += ".quick-stepper-label { display: inline-block; min-width: 58px; padding: 8px 10px 7px; background-color: #3a2318; color: #cfab84; font-size: 10px; font-weight: bold; letter-spacing: 0.05em; text-transform: uppercase; vertical-align: middle; }"
+	dat += ".quick-stepper-btn { display: inline-block; width: 28px; padding: 8px 0 7px; background-color: #140d0c; color: #f4d6b6; text-align: center; text-decoration: none; font-weight: bold; vertical-align: middle; }"
 	dat += ".quick-stepper-btn:hover { background-color: #261714; }"
-	dat += ".quick-stepper-value { display: flex; align-items: center; justify-content: center; min-width: 92px; padding: 0 12px; color: #f4d6b6; text-align: center; font-size: 11px; font-weight: bold; white-space: nowrap; }"
-	dat += ".quick-toggle { display: flex; align-items: center; justify-content: center; min-height: 32px; padding: 0 14px; background-color: #241614; border: 1px solid #5b3426; border-radius: 999px; color: #d4af8c; text-decoration: none; font-size: 11px; font-weight: bold; white-space: nowrap; }"
+	dat += ".quick-stepper-value { display: inline-block; min-width: 92px; padding: 8px 12px 7px; color: #f4d6b6; text-align: center; font-size: 11px; font-weight: bold; white-space: nowrap; vertical-align: middle; }"
+	dat += ".quick-toggle { display: inline-block; margin: 0 4px; padding: 8px 14px 7px; background-color: #241614; border: 1px solid #5b3426; border-radius: 999px; color: #d4af8c; text-decoration: none; font-size: 11px; font-weight: bold; white-space: nowrap; vertical-align: middle; }"
 	dat += ".quick-toggle:hover { background-color: #34201b; }"
 	dat += ".quick-toggle.active { background-color: #6a4223; color: #fff2df; border-color: #8b6914; }"
 	dat += ".quick-toggle.disabled { background-color: #2a1a15; color: #8f7661; border-color: #4a2c20; cursor: default; }"
-	dat += ".quick-direction-info { color: #b09070; font-size: 11px; font-weight: bold; padding: 0 2px; white-space: nowrap; }"
+	dat += ".quick-direction-info { display: inline-block; margin: 0 4px; color: #b09070; font-size: 11px; font-weight: bold; padding: 8px 4px 7px; white-space: nowrap; vertical-align: middle; }"
 	dat += ".action-button { flex-grow: 1; padding: 10px 15px; background-color: #4a2c20; color: #d4af8c; text-decoration: none; display: block; font-weight: bold; border: 1px solid #2a1a15; }"
 	dat += ".action-button:hover { background-color: #5a3525; }"
 	dat += ".action-button.blue { background-color: #3a4a5a; border-color: #5a6a7a; }"
