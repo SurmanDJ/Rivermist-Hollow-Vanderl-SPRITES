@@ -1472,6 +1472,7 @@
 #include "code\datums\sex\actions\masturbation\vagina.dm"
 #include "code\datums\sex\actions\masturbation\other\_base.dm"
 #include "code\datums\sex\actions\masturbation\other\anus.dm"
+#include "code\datums\sex\actions\masturbation\other\breasts.dm"
 #include "code\datums\sex\actions\masturbation\other\clit.dm"
 #include "code\datums\sex\actions\masturbation\other\penis.dm"
 #include "code\datums\sex\actions\masturbation\other\vagina.dm"

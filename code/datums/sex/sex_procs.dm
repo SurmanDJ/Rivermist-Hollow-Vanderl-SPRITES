@@ -280,11 +280,11 @@
 	if(breasts_summary)
 		data += get_character_information_line("have [breasts_summary]")
 
+	var/obj/item/organ/genitals/penis/penis = getorganslot(ORGAN_SLOT_PENIS)
 	var/penis_summary = get_visible_groin_summary_description(/datum/mob_descriptor/penis)
 	if(penis_summary)
 		data += get_character_information_line("have [penis_summary]")
 
-	var/obj/item/organ/genitals/penis/penis = getorganslot(ORGAN_SLOT_PENIS)
 	var/testicles_summary = null
 	if(!penis || penis.sheath_type != SHEATH_TYPE_SLIT)
 		testicles_summary = get_visible_groin_summary_description(/datum/mob_descriptor/testicles)
