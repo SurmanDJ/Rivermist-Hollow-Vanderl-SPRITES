@@ -34,17 +34,17 @@
 
 /datum/examine_panel/ui_data(mob/user)
 
-	var/flavor_text
-	var/flavor_text_nsfw
-	var/obscured
+	var/flavor_text = ""
+	var/flavor_text_nsfw = ""
+	var/obscured = FALSE
 	var/ooc_notes = ""
-	var/ooc_notes_nsfw
+	var/ooc_notes_nsfw = ""
 	var/headshot = ""
 	var/nsfw_headshot = ""
 	var/list/img_gallery = list()
 	var/list/nsfw_img_gallery = list()
-	var/char_name
-	var/song_url
+	var/char_name = ""
+	var/song_url = ""
 	var/has_song = FALSE
 	var/is_naked = FALSE
 
@@ -53,17 +53,17 @@
 		if(!(holder.wear_armor && holder.wear_armor.flags_inv) && !(holder.wear_shirt && holder.wear_shirt.flags_inv) && !(holder_human.underwear) || holder_human.get_erp_pref(/datum/erp_preference/boolean/always_show_nsfw_flavor))
 			is_naked = TRUE
 		obscured = ((!isobserver(user))) && ((holder_human.wear_mask && (holder_human.wear_mask.flags_inv & HIDEFACE)) || (holder_human.head && (holder_human.head.flags_inv & HIDEFACE))) // ((!isobserver(user)) && !holder_human.client?.prefs?.masked_examine)
-		flavor_text = obscured ? "Obscured" : holder.flavortext
-		flavor_text_nsfw = obscured ? "Obscured" : holder.nsfwflavortext
-		ooc_notes += holder.ooc_notes
-		ooc_notes_nsfw += holder.erpprefs_flavor
-		char_name = holder.name
-		song_url = holder.song_link
+		flavor_text = obscured ? "Obscured" : (holder.flavortext || "")
+		flavor_text_nsfw = obscured ? "Obscured" : (holder.nsfwflavortext || "")
+		ooc_notes = holder.ooc_notes || ""
+		ooc_notes_nsfw = holder.erpprefs_flavor || ""
+		char_name = holder.name || ""
+		song_url = holder.song_link || ""
 		if(!obscured)
-			headshot += holder.headshot_link
-			nsfw_headshot += holder.nsfw_headshot_link
-			img_gallery = holder.img_gallery
-			nsfw_img_gallery = holder.nsfw_img_gallery
+			headshot = holder.headshot_link || ""
+			nsfw_headshot = holder.nsfw_headshot_link || ""
+			img_gallery = holder.img_gallery ? holder.img_gallery.Copy() : list()
+			nsfw_img_gallery = holder.nsfw_img_gallery ? holder.nsfw_img_gallery.Copy() : list()
 		if(!holder.headshot_link)
 			headshot = "headshot_red.png"
 		if(!holder.nsfw_headshot_link)
@@ -72,16 +72,16 @@
 	else if(pref)
 		is_naked = TRUE
 		obscured = FALSE
-		flavor_text = pref.flavortext
-		flavor_text_nsfw = pref.nsfwflavortext
-		ooc_notes = pref.ooc_notes
-		ooc_notes_nsfw = pref.erpprefs_flavor
-		headshot = pref.headshot_link
-		nsfw_headshot = pref.nsfw_headshot_link
-		img_gallery = pref.img_gallery
-		nsfw_img_gallery = pref.nsfw_img_gallery
-		char_name = pref.real_name
-		song_url = pref.song_link
+		flavor_text = pref.flavortext || ""
+		flavor_text_nsfw = pref.nsfwflavortext || ""
+		ooc_notes = pref.ooc_notes || ""
+		ooc_notes_nsfw = pref.erpprefs_flavor || ""
+		headshot = pref.headshot_link || ""
+		nsfw_headshot = pref.nsfw_headshot_link || ""
+		img_gallery = pref.img_gallery ? pref.img_gallery.Copy() : list()
+		nsfw_img_gallery = pref.nsfw_img_gallery ? pref.nsfw_img_gallery.Copy() : list()
+		char_name = pref.real_name || ""
+		song_url = pref.song_link || ""
 		if(!headshot)
 			headshot = "headshot_red.png"
 		if(!nsfw_headshot)

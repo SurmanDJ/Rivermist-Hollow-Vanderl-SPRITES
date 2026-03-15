@@ -37,25 +37,18 @@ If a whole process loop or effect family freezes without runtimes, sweep for blo
 If the owner is known but the cause is still unclear, use `ai_navigation/failure_modes.md` to classify the break mode before guessing.
 If the task is to refresh the navigation layer or migrate it to another codebase, use `ai_navigation/update_policy.md` before planning the rebuild.
 
+## Start Mode Selection
+
+| Situation | Mode | Entrypoint |
+|---|---|---|
+| ordinary task with a known keyword, type path, or symptom | Fast Start | `ai_navigation/router.md` |
+| broad, risky, multi-system, or explicitly human-guided | Guided Start | this file → `ai_navigation/router.md` |
+| refresh or migration of the navigation layer | Maintenance Start | `ai_navigation/update_policy.md` |
+
+When in doubt, use Fast Start and escalate only if unresolved.
+
 ## If You Need More
 
-- startup mode selection: `ai_navigation/start_modes.md`
-- task-shape to startup routing matrix: `ai_navigation/start_matrix.md`
-- human developer onboarding: `ai_navigation/DEVELOPER_GUIDE.md`
-- task framing: `ai_navigation/task_templates.md`
-- navigation-layer refresh and migration rules: `ai_navigation/update_policy.md`
-- human approval and risk gates: `ai_navigation/human_checking.md`
-- content-first implementation rules: `ai_navigation/content_creation.md`
-- content feature decomposition: `ai_navigation/content_breakdown.md`
-- content implementation archetypes: `ai_navigation/content_patterns.md`
-- signal routing and DCS hotspots: `ai_navigation/signal_map.md`
-- spell signal contract and lifecycle: `ai_navigation/spell_signal_map.md`
-- combat signal contract and hit routing: `ai_navigation/combat_signal_map.md`
-- doll movement signal contract and moveloops: `ai_navigation/movement_signal_map.md`
-- core proc families and entry hooks: `ai_navigation/core_procs.md`
-- process-chain hazards: `ai_navigation/processing_hazards.md`
-- subsystem/process failure classification: `ai_navigation/failure_modes.md`
-- larger system map: `ai_navigation/system_map.md`
-- runtime ownership: `ai_navigation/subsystem_map.md`
-- architecture/layers: `ai_navigation/architecture.md`
-- deep inheritance: `ai_navigation/type_tree.md`
+For specific routing use `ai_navigation/router.md` dispatch table.
+For human onboarding use `ai_navigation/DEVELOPER_GUIDE.md`.
+For task framing use `ai_navigation/task_templates.md`.

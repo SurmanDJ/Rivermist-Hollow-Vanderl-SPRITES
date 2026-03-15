@@ -3,6 +3,8 @@
 	user_menu_zone_mask = SEX_UI_ZONE_BODY
 	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 	hole_id = ORGAN_SLOT_BREASTS
+	knot_on_finish = FALSE
+	can_knot = FALSE
 
 /datum/sex_action/sex/other/boobjob/shows_on_menu(mob/living/user, mob/living/target)
 	if(user == target)

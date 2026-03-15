@@ -3,6 +3,8 @@
 	user_menu_zone_mask = SEX_UI_ZONE_LEGS
 	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 	requires_hole_storage = FALSE
+	knot_on_finish = FALSE
+	can_knot = FALSE
 
 /datum/sex_action/sex/other/thighjob/shows_on_menu(mob/living/user, mob/living/target)
 	if(user == target)

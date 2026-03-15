@@ -1,5 +1,7 @@
 ﻿# Type Tree
 
+> **Do not read this file top-to-bottom.** It is 436 KB. Use `rg` or Ctrl+F to search for the specific type path you need. Open this file only if inheritance depth is the actual question — for a single type location use `ai_navigation/type_index.md` first.
+
 Generated on 2026-03-11 from static analysis of `.dm` files plus subsystem macro expansions.
 
 - Explicit type paths detected: **20521**
