@@ -555,6 +555,170 @@
 	content += "</div>"
 	return content.Join("")
 
+/datum/sex_session/proc/get_selected_tab_content(selected_tab)
+	switch(selected_tab)
+		if("custom_actions")
+			return get_custom_actions_tab_content(selected_tab)
+		if("genital")
+			return get_controls_tab_content(selected_tab)
+		if("session")
+			return get_session_tab_content()
+		if("preferences")
+			return get_preferences_tab_content()
+		if("kinks")
+			return get_kinks_tab_content()
+		if("notes")
+			return get_notes_tab_content()
+	return get_interactions_tab_content(selected_tab)
+
+/datum/sex_session/proc/get_interactions_tab_content(selected_tab)
+	var/list/content = list()
+	var/list/available_actions = list()
+	var/total_available_actions = 0
+
+	for(var/datum/sex_action/candidate_action as anything in get_all_menu_actions())
+		if(!candidate_action.shows_on_menu(user, target))
+			continue
+		if(is_action_active(candidate_action))
+			continue
+		total_available_actions++
+		if(!candidate_action.matches_ui_filters(user_zone_filter, target_zone_filter))
+			continue
+		available_actions += candidate_action
+
+	var/target_panel_title = (user == target) ? "On yourself" : "On [target.name]"
+
+	content += "<div class='interaction-layout'>"
+	content += render_zone_filter_panel("You use", "set_user_zone_filter", user_zone_filter, selected_tab)
+	content += "<div class='interaction-column'>"
+	content += "<div class='search-container'>"
+	content += "<span class='search-icon'></span>"
+	content += "<input type='text' class='search-box' placeholder='Search for an interaction' id='searchBox'>"
+	content += "</div>"
+	content += "<div class='action-summary'>Showing [length(available_actions)] of [total_available_actions] available interactions for the current zone filters.</div>"
+
+	if(length(active_actions))
+		content += "<div class='action-section'>"
+		content += "<div class='action-subheader'>Active Actions</div>"
+		content += "<div class='action-list'>"
+		for(var/datum/sex_action/active_action as anything in active_actions)
+			var/active_action_key = url_encode(active_action.get_menu_action_key())
+			content += "<div class='action-item active-action-item'>"
+			content += "<a class='action-button active' href='?src=[REF(src)];task=action;action_type=[active_action_key];tab=[selected_tab]'>[format_ui_text(active_action.name)]</a>"
+			content += "<div class='action-icons'>"
+			content += "<a href='?src=[REF(src)];task=stop;action_type=[active_action_key];tab=[selected_tab]' class='icon-btn stop' title='Stop action'>X</a>"
+			content += "</div>"
+			content += "</div>"
+		content += "</div>"
+		content += "</div>"
+
+	content += "<div class='action-section'>"
+	content += "<div class='action-subheader'>Available Actions</div>"
+	if(!length(available_actions))
+		content += "<div class='action-empty'>No interactions match these zone filters yet.</div>"
+	else
+		content += "<div class='action-list'>"
+		for(var/datum/sex_action/menu_action as anything in available_actions)
+			content += "<div class='action-item searchable-action-item'>"
+			var/button_class = "action-button"
+			var/can_perform = can_perform_action(menu_action)
+			var/action_key = url_encode(menu_action.get_menu_action_key())
+
+			if(menu_action.name == "Salute")
+				button_class += " blue"
+			if(!can_perform)
+				button_class += " linkOff"
+
+			content += "<a class='[button_class]' href='?src=[REF(src)];task=action;action_type=[action_key];tab=[selected_tab]'>[format_ui_text(menu_action.name)]</a>"
+			content += "<div class='action-icons'></div>"
+			content += "</div>"
+		content += "</div>"
+	content += "</div>"
+	content += "</div>"
+	content += render_zone_filter_panel(target_panel_title, "set_target_zone_filter", target_zone_filter, selected_tab)
+	content += "</div>"
+
+	return content.Join("")
+
+/datum/sex_session/proc/get_controls_tab_content(selected_tab)
+	var/list/content = list()
+	var/current_speed = get_current_speed()
+	var/current_force = get_current_force()
+	var/current_resist = get_current_resist()
+	var/speed_name = get_speed_string()
+	var/force_name = get_force_string()
+	var/resist_name = get_resist_string()
+	var/manual_arousal_name = get_manual_arousal_string()
+
+	content += "<div class='control-section'>"
+	content += "<h3>Speed & Force Controls</h3>"
+
+	content += "<div class='slider-container'>"
+	content += "<div class='slider-label'>Speed:</div>"
+	content += "<div class='slider-wrapper'>"
+	content += "<div class='slider-track'>"
+	content += "<div class='slider-fill' style='width: [((current_speed - SEX_SPEED_MIN) / (SEX_SPEED_MAX - SEX_SPEED_MIN)) * 100]%;'></div>"
+	content += "</div>"
+	content += "<div class='slider-notches'>"
+	for(var/i = SEX_SPEED_MIN; i <= SEX_SPEED_MAX; i++)
+		var/notch_position = ((i - SEX_SPEED_MIN) / (SEX_SPEED_MAX - SEX_SPEED_MIN)) * 100
+		var/notch_class = (i <= current_speed) ? "slider-notch active" : "slider-notch"
+		content += "<a href='?src=[REF(src)];task=set_speed;value=[i];tab=[selected_tab]' class='[notch_class]' style='left: [notch_position]%;'></a>"
+	content += "</div>"
+	content += "</div>"
+	content += "<div class='slider-value'>[speed_name]</div>"
+	content += "</div>"
+
+	content += "<div class='slider-container'>"
+	content += "<div class='slider-label'>Force:</div>"
+	content += "<div class='slider-wrapper'>"
+	content += "<div class='slider-track'>"
+	content += "<div class='slider-fill' style='width: [((current_force - SEX_FORCE_MIN) / (SEX_FORCE_MAX - SEX_FORCE_MIN)) * 100]%;'></div>"
+	content += "</div>"
+	content += "<div class='slider-notches'>"
+	for(var/i = SEX_FORCE_MIN; i <= SEX_FORCE_MAX; i++)
+		var/notch_position = ((i - SEX_FORCE_MIN) / (SEX_FORCE_MAX - SEX_FORCE_MIN)) * 100
+		var/notch_class = (i <= current_force) ? "slider-notch active" : "slider-notch"
+		content += "<a href='?src=[REF(src)];task=set_force;value=[i];tab=[selected_tab]' class='[notch_class]' style='left: [notch_position]%;'></a>"
+	content += "</div>"
+	content += "</div>"
+	content += "<div class='slider-value'>[force_name]</div>"
+	content += "</div>"
+
+	content += "<div class='slider-container'>"
+	content += "<div class='slider-label'>Holding pleasure:</div>"
+	content += "<div class='slider-wrapper'>"
+	content += "<div class='slider-track'>"
+	content += "<div class='slider-fill' style='width: [((current_resist - RESIST_NONE) / (RESIST_HIGH - RESIST_NONE)) * 100]%;'></div>"
+	content += "</div>"
+	content += "<div class='slider-notches'>"
+	for(var/i = RESIST_NONE; i <= RESIST_HIGH; i++)
+		var/notch_position = ((i - RESIST_NONE) / (RESIST_HIGH - RESIST_NONE)) * 100
+		var/notch_class = (i <= current_resist) ? "slider-notch active" : "slider-notch"
+		content += "<a href='?src=[REF(src)];task=set_resist;value=[i];tab=[selected_tab]' class='[notch_class]' style='left: [notch_position]%;'></a>"
+	content += "</div>"
+	content += "</div>"
+	content += "<div class='slider-value'>[resist_name]</div>"
+	content += "</div>"
+
+	content += "<div class='control-row'>"
+	content += "<a href='?src=[REF(src)];task=toggle_edging_other;tab=[selected_tab]' class='toggle-btn'>[edging_other ? "EDGE THEM" : "DON'T EDGE THEM"]</a>"
+	content += "</div>"
+
+	if(user.getorganslot(ORGAN_SLOT_PENIS))
+		content += "<div class='control-row'>"
+		content += "<a href='?src=[REF(src)];task=manual_arousal_down;tab=[selected_tab]' class='control-btn'>&lt;</a>"
+		content += " [manual_arousal_name] "
+		content += "<a href='?src=[REF(src)];task=manual_arousal_up;tab=[selected_tab]' class='control-btn'>&gt;</a>"
+		content += "</div>"
+
+	content += "<div class='control-row'>"
+	content += "<a href='?src=[REF(src)];task=toggle_finished;tab=[selected_tab]' class='toggle-btn'>[do_until_finished ? "UNTIL IM FINISHED" : "UNTIL I STOP"]</a>"
+	content += "</div>"
+	content += "</div>"
+
+	return content.Join("")
+
 /datum/sex_session/proc/show_ui(selected_tab = "interactions")
 	var/list/dat = list()
 	var/list/arousal_data = list()
@@ -747,183 +911,8 @@
 	dat += "<a href='?src=[REF(src)];task=tab;tab=notes' class='tab [selected_tab == "notes" ? "active" : ""]'>Notes</a>"
 	dat += "</div>"
 
-	// Interactions Tab
-	dat += "<div class='tab-content [selected_tab == "interactions" ? "active" : ""]' id='interactions-tab'>"
-	var/list/available_actions = list()
-	var/total_available_actions = 0
-	for(var/datum/sex_action/candidate_action as anything in get_all_menu_actions())
-		if(!candidate_action.shows_on_menu(user, target))
-			continue
-		if(is_action_active(candidate_action))
-			continue
-		total_available_actions++
-		if(!candidate_action.matches_ui_filters(user_zone_filter, target_zone_filter))
-			continue
-		available_actions += candidate_action
-
-	var/target_panel_title = (user == target) ? "On yourself" : "On [target.name]"
-
-	dat += "<div class='interaction-layout'>"
-	dat += render_zone_filter_panel("You use", "set_user_zone_filter", user_zone_filter, selected_tab)
-	dat += "<div class='interaction-column'>"
-	dat += "<div class='search-container'>"
-	dat += "<span class='search-icon'></span>"
-	dat += "<input type='text' class='search-box' placeholder='Search for an interaction' id='searchBox'>"
-	dat += "</div>"
-	dat += "<div class='action-summary'>Showing [length(available_actions)] of [total_available_actions] available interactions for the current zone filters.</div>"
-
-	if(length(active_actions))
-		dat += "<div class='action-section'>"
-		dat += "<div class='action-subheader'>Active Actions</div>"
-		dat += "<div class='action-list'>"
-		for(var/datum/sex_action/active_action as anything in active_actions)
-			var/active_action_key = url_encode(active_action.get_menu_action_key())
-			dat += "<div class='action-item active-action-item'>"
-			dat += "<a class='action-button active' href='?src=[REF(src)];task=action;action_type=[active_action_key];tab=[selected_tab]'>[format_ui_text(active_action.name)]</a>"
-			dat += "<div class='action-icons'>"
-			dat += "<a href='?src=[REF(src)];task=stop;action_type=[active_action_key];tab=[selected_tab]' class='icon-btn stop' title='Stop action'>X</a>"
-			dat += "</div>"
-			dat += "</div>"
-		dat += "</div>"
-		dat += "</div>"
-
-	dat += "<div class='action-section'>"
-	dat += "<div class='action-subheader'>Available Actions</div>"
-	if(!length(available_actions))
-		dat += "<div class='action-empty'>No interactions match these zone filters yet.</div>"
-	else
-		dat += "<div class='action-list'>"
-		for(var/datum/sex_action/menu_action as anything in available_actions)
-			dat += "<div class='action-item searchable-action-item'>"
-			var/button_class = "action-button"
-			var/can_perform = can_perform_action(menu_action)
-			var/action_key = url_encode(menu_action.get_menu_action_key())
-
-			if(menu_action.name == "Salute")
-				button_class += " blue"
-			if(!can_perform)
-				button_class += " linkOff"
-
-			dat += "<a class='[button_class]' href='?src=[REF(src)];task=action;action_type=[action_key];tab=[selected_tab]'>[format_ui_text(menu_action.name)]</a>"
-			dat += "<div class='action-icons'></div>"
-			dat += "</div>"
-		dat += "</div>"
-	dat += "</div>"
-	dat += "</div>"
-	dat += render_zone_filter_panel(target_panel_title, "set_target_zone_filter", target_zone_filter, selected_tab)
-	dat += "</div>"
-	dat += "</div>"
-
-	// Custom Actions Tab
-	dat += "<div class='tab-content [selected_tab == "custom_actions" ? "active" : ""]' id='custom-actions-tab'>"
-	dat += get_custom_actions_tab_content(selected_tab)
-	dat += "</div>"
-
-	// Controls Tab
-	dat += "<div class='tab-content [selected_tab == "genital" ? "active" : ""]' id='genital-tab'>"
-	dat += "<div class='control-section'>"
-	dat += "<h3>Speed & Force Controls</h3>"
-
-	var/current_speed = get_current_speed()
-	var/current_force = get_current_force()
-	var/current_resist = get_current_resist()
-	var/speed_name = get_speed_string()
-	var/force_name = get_force_string()
-	var/resist_name = get_resist_string()
-	var/manual_arousal_name = get_manual_arousal_string()
-
-	// Speed slider
-	dat += "<div class='slider-container'>"
-	dat += "<div class='slider-label'>Speed:</div>"
-	dat += "<div class='slider-wrapper'>"
-	dat += "<div class='slider-track'>"
-	dat += "<div class='slider-fill' style='width: [((current_speed - SEX_SPEED_MIN) / (SEX_SPEED_MAX - SEX_SPEED_MIN)) * 100]%;'></div>"
-	dat += "</div>"
-	dat += "<div class='slider-notches'>"
-	for(var/i = SEX_SPEED_MIN; i <= SEX_SPEED_MAX; i++)
-		var/notch_position = ((i - SEX_SPEED_MIN) / (SEX_SPEED_MAX - SEX_SPEED_MIN)) * 100
-		var/notch_class = (i <= current_speed) ? "slider-notch active" : "slider-notch"
-		dat += "<a href='?src=[REF(src)];task=set_speed;value=[i];tab=[selected_tab]' class='[notch_class]' style='left: [notch_position]%;'></a>"
-	dat += "</div>"
-	dat += "</div>"
-	dat += "<div class='slider-value'>[speed_name]</div>"
-	dat += "</div>"
-
-	// Force slider
-	dat += "<div class='slider-container'>"
-	dat += "<div class='slider-label'>Force:</div>"
-	dat += "<div class='slider-wrapper'>"
-	dat += "<div class='slider-track'>"
-	dat += "<div class='slider-fill' style='width: [((current_force - SEX_FORCE_MIN) / (SEX_FORCE_MAX - SEX_FORCE_MIN)) * 100]%;'></div>"
-	dat += "</div>"
-	dat += "<div class='slider-notches'>"
-	for(var/i = SEX_FORCE_MIN; i <= SEX_FORCE_MAX; i++)
-		var/notch_position = ((i - SEX_FORCE_MIN) / (SEX_FORCE_MAX - SEX_FORCE_MIN)) * 100
-		var/notch_class = (i <= current_force) ? "slider-notch active" : "slider-notch"
-		dat += "<a href='?src=[REF(src)];task=set_force;value=[i];tab=[selected_tab]' class='[notch_class]' style='left: [notch_position]%;'></a>"
-	dat += "</div>"
-	dat += "</div>"
-	dat += "<div class='slider-value'>[force_name]</div>"
-	dat += "</div>"
-
-	// Holding slider
-	dat += "<div class='slider-container'>"
-	dat += "<div class='slider-label'>Holding pleasure:</div>"
-	dat += "<div class='slider-wrapper'>"
-	dat += "<div class='slider-track'>"
-	dat += "<div class='slider-fill' style='width: [((current_resist - RESIST_NONE) / (RESIST_HIGH - RESIST_NONE)) * 100]%;'></div>"
-	dat += "</div>"
-	dat += "<div class='slider-notches'>"
-	for(var/i = RESIST_NONE; i <= RESIST_HIGH; i++)
-		var/notch_position = ((i - RESIST_NONE) / (RESIST_HIGH - RESIST_NONE)) * 100
-		var/notch_class = (i <= current_resist) ? "slider-notch active" : "slider-notch"
-		dat += "<a href='?src=[REF(src)];task=set_resist;value=[i];tab=[selected_tab]' class='[notch_class]' style='left: [notch_position]%;'></a>"
-	dat += "</div>"
-	dat += "</div>"
-	dat += "<div class='slider-value'>[resist_name]</div>"
-	dat += "</div>"
-
-	dat += "<div class='control-row'>"
-	dat += "<a href='?src=[REF(src)];task=toggle_edging_other;tab=[selected_tab]' class='toggle-btn'>[edging_other ? "EDGE THEM" : "DON'T EDGE THEM"]</a>"
-	dat += "</div>"
-
-	if(user.getorganslot(ORGAN_SLOT_PENIS))
-		dat += "<div class='control-row'>"
-		dat += "<a href='?src=[REF(src)];task=manual_arousal_down;tab=[selected_tab]' class='control-btn'>&lt;</a>"
-		dat += " [manual_arousal_name] "
-		dat += "<a href='?src=[REF(src)];task=manual_arousal_up;tab=[selected_tab]' class='control-btn'>&gt;</a>"
-		dat += "</div>"
-
-	dat += "<div class='control-row'>"
-	dat += "<a href='?src=[REF(src)];task=toggle_finished;tab=[selected_tab]' class='toggle-btn'>[do_until_finished ? "UNTIL IM FINISHED" : "UNTIL I STOP"]</a>"
-	dat += "</div>"
-
-	/*dat += "<div class='control-row'>"
-	dat += "<a href='?src=[REF(src)];task=set_arousal;tab=[selected_tab]' class='toggle-btn'>SET AROUSAL</a>"
-	dat += "<a href='?src=[REF(src)];task=freeze_arousal;tab=[selected_tab]' class='toggle-btn'>[arousal_data["frozen"] ? "UNFREEZE AROUSAL" : "FREEZE AROUSAL"]</a>"
-	dat += "</div>"*/
-
-	dat += "</div>"
-	dat += "</div>"
-
-	// Session Tab
-	dat += "<div class='tab-content [selected_tab == "session" ? "active" : ""]' id='session-tab'>"
-	dat += get_session_tab_content()
-	dat += "</div>"
-
-	// Preferences Tab
-	dat += "<div class='tab-content [selected_tab == "preferences" ? "active" : ""]' id='preferences-tab'>"
-	dat += get_preferences_tab_content()
-	dat += "</div>"
-
-	// Kinks Tab
-	dat += "<div class='tab-content [selected_tab == "kinks" ? "active" : ""]' id='kinks-tab'>"
-	dat += get_kinks_tab_content()
-	dat += "</div>"
-
-	// Notes Tab
-	dat += "<div class='tab-content [selected_tab == "notes" ? "active" : ""]' id='notes-tab'>"
-	dat += get_notes_tab_content()
+	dat += "<div class='tab-content active' id='active-tab'>"
+	dat += get_selected_tab_content(selected_tab)
 	dat += "</div>"
 
 	// JavaScript for search functionality and tab management
