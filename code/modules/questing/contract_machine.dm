@@ -63,6 +63,8 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	if(!ishuman(user))
 		return FALSE
 	var/datum/asset/spritesheet/quest_previews/spritesheet = get_asset_datum(/datum/asset/spritesheet/quest_previews)
+	if(!spritesheet.sprites_generated)
+		to_chat(user, span_notice("Loading quest assets..."))
 	spritesheet.send(user)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
