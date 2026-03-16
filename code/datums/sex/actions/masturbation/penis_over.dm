@@ -2,6 +2,7 @@
 	name = "Jerk over them"
 	check_same_tile = FALSE
 	user_priority = 20
+	target_menu_zone_mask = SEX_UI_ZONE_MISC
 
 /datum/sex_action/masturbate/penis_over/shows_on_menu(mob/living/user, mob/living/target)
 	if(user == target)
@@ -49,4 +50,4 @@
 
 /datum/sex_action/masturbate/penis_over/lock_sex_object(mob/living/user, mob/living/target)
 	. = ..()
-	sex_locks |= new /datum/sex_session_lock(user, ORGAN_SLOT_PENIS)
+	add_sex_lock(user, ORGAN_SLOT_PENIS, null, FALSE)

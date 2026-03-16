@@ -19,6 +19,21 @@
 			return candle
 	return null
 
+/datum/sex_action/wax_play/proc/get_candle_hand_lock(mob/living/user)
+	var/obj/item/held_item = user.get_active_held_item()
+	if(istype(held_item, /obj/item/candle))
+		var/obj/item/candle/candle = held_item
+		if(candle.lit)
+			return user.get_active_precise_hand()
+	held_item = user.get_inactive_held_item()
+	if(istype(held_item, /obj/item/candle))
+		var/obj/item/candle/candle = held_item
+		if(candle.lit)
+			if(user.get_active_precise_hand() == BODY_ZONE_PRECISE_L_HAND)
+				return BODY_ZONE_PRECISE_R_HAND
+			return BODY_ZONE_PRECISE_L_HAND
+	return null
+
 /datum/sex_action/wax_play/shows_on_menu(mob/living/user, mob/living/target)
 	if(!get_held_lit_candle(user))
 		return FALSE
@@ -30,6 +45,9 @@
 		return FALSE
 	var/obj/item/candle/candle = get_held_lit_candle(user)
 	if(!candle)
+		return FALSE
+	var/candle_hand = get_candle_hand_lock(user)
+	if(candle_hand && check_sex_lock(user, candle_hand))
 		return FALSE
 	if(check_sex_lock(user, null, candle))
 		return FALSE
@@ -52,6 +70,8 @@
 
 /datum/sex_action/wax_play/breasts
 	name = "Pour wax on breasts"
+	user_menu_zone_mask = SEX_UI_ZONE_ARMS
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 
 /datum/sex_action/wax_play/breasts/can_perform(mob/living/user, mob/living/target)
 	. = ..()
@@ -76,11 +96,16 @@
 
 /datum/sex_action/wax_play/breasts/lock_sex_object(mob/living/user, mob/living/target)
 	var/obj/item/candle/candle = get_held_lit_candle(user)
+	var/candle_hand = get_candle_hand_lock(user)
+	if(candle_hand)
+		add_sex_lock(user, candle_hand)
 	if(candle)
-		sex_locks |= new /datum/sex_session_lock(user, null, candle)
+		add_sex_lock(user, null, candle)
 
 /datum/sex_action/wax_play/butt
 	name = "Pour wax on butt"
+	user_menu_zone_mask = SEX_UI_ZONE_ARMS
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 
 /datum/sex_action/wax_play/butt/can_perform(mob/living/user, mob/living/target)
 	. = ..()
@@ -103,5 +128,8 @@
 
 /datum/sex_action/wax_play/butt/lock_sex_object(mob/living/user, mob/living/target)
 	var/obj/item/candle/candle = get_held_lit_candle(user)
+	var/candle_hand = get_candle_hand_lock(user)
+	if(candle_hand)
+		add_sex_lock(user, candle_hand)
 	if(candle)
-		sex_locks |= new /datum/sex_session_lock(user, null, candle)
+		add_sex_lock(user, null, candle)

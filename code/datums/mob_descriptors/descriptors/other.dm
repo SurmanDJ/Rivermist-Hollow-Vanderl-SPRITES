@@ -40,6 +40,8 @@
 /datum/mob_descriptor/penis/get_description(mob/living/described)
 	var/mob/living/carbon/human/H = described
 	var/obj/item/organ/genitals/penis/penis = H.getorganslot(ORGAN_SLOT_PENIS)
+	if(!penis)
+		return
 	var/adjective
 	var/arousal_modifier
 	switch(penis.organ_size)
@@ -97,6 +99,8 @@
 /datum/mob_descriptor/testicles/get_description(mob/living/described)
 	var/mob/living/carbon/human/H = described
 	var/obj/item/organ/genitals/filling_organ/testicles/testes = H.getorganslot(ORGAN_SLOT_TESTICLES)
+	if(!testes)
+		return
 	var/adjective
 	switch(testes.organ_size)
 		if(1)
@@ -127,6 +131,8 @@
 /datum/mob_descriptor/butt/get_description(mob/living/described)
 	var/mob/living/carbon/human/H = described
 	var/obj/item/organ/genitals/butt/buttie = H.getorganslot(ORGAN_SLOT_BUTT)
+	if(!buttie)
+		return
 	var/adjective
 	switch(buttie.organ_size)
 		if(1)
@@ -161,6 +167,8 @@
 /datum/mob_descriptor/vagina/get_description(mob/living/described)
 	var/mob/living/carbon/human/H = described
 	var/obj/item/organ/genitals/filling_organ/vagina/vagina = H.getorganslot(ORGAN_SLOT_VAGINA)
+	if(!vagina)
+		return
 	var/vagina_type
 	var/arousal_modifier
 	switch(vagina.accessory_type)
@@ -213,6 +221,8 @@
 /datum/mob_descriptor/breasts/get_description(mob/living/described)
 	var/mob/living/carbon/human/H = described
 	var/obj/item/organ/genitals/filling_organ/breasts/breasts = H.getorganslot(ORGAN_SLOT_BREASTS)
+	if(!breasts)
+		return
 	var/adjective
 	switch(breasts.organ_size)
 		if(0)

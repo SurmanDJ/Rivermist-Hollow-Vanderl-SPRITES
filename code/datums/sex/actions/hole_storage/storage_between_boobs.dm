@@ -1,6 +1,7 @@
 
 /datum/sex_action/hole_storage/boobs_store
 	name = "Store items between boobs"
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 	hole_id = ORGAN_SLOT_BREASTS
 
 /datum/sex_action/hole_storage/boobs_store/shows_on_menu(mob/living/user, mob/living/target)
@@ -54,7 +55,7 @@
 
 	var/obj/item/dildo = user.get_active_held_item()
 	if(!dildo)
-		sex_session.stop_current_action()
+		sex_session.stop_current_action(src)
 		return
 	var/success = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_TRY_INSERT, dildo, STORAGE_LAYER_INNER, FALSE)
 	switch(success)
@@ -73,14 +74,14 @@
 				to_chat(user, sex_session.spanify_force("My boobs have too much between them to stuff \the [dildo] in."))
 			else
 				user.visible_message(sex_session.spanify_force("[target]'s boobs have too much between them to stuff \the [dildo] in."))
-			sex_session.stop_current_action()
+			sex_session.stop_current_action(src)
 			return
 		if(FALSE)
 			if(self)
 				to_chat(user, sex_session.spanify_force("I fail to stuff \the [dildo] between my boobs."))
 			else
 				user.visible_message(sex_session.spanify_force("I fail to stuff \the [dildo] between [target]'s boobs."))
-			sex_session.stop_current_action()
+			sex_session.stop_current_action(src)
 			return
 
 	user.update_inv_hands()
@@ -90,6 +91,7 @@
 
 /datum/sex_action/hole_storage/boobs_remove //do_time
 	name = "Remove items from between boobs"
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 	hole_id = ORGAN_SLOT_BREASTS
 
 /datum/sex_action/hole_storage/boobs_remove/shows_on_menu(mob/living/user, mob/living/target)
@@ -145,7 +147,7 @@
 	removed_item = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_REMOVE_RAND_ITEM, STORAGE_LAYER_INNER)
 	if(!removed_item)
 		to_chat(user, sex_session.spanify_force("I couldn't find anything inside..."))
-		sex_session.stop_current_action()
+		sex_session.stop_current_action(src)
 		return
 	if(user.get_active_held_item())
 		user.visible_message(sex_session.spanify_force("The [removed_item] falls down on the floor..."))

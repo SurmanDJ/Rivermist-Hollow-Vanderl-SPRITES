@@ -1,5 +1,6 @@
 /datum/sex_action/masturbate/breasts
 	name = "Rub breasts"
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 
 /datum/sex_action/masturbate/breasts/shows_on_menu(mob/living/user, mob/living/target)
 	if(user != target)

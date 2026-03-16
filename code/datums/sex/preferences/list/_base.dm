@@ -24,17 +24,17 @@
 	var/next_link = ""
 
 	if(length(choices) > 1)
-		prev_link = "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=prev'><</a>"
-		next_link = "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=next'>></a>"
+		prev_link = "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=prev'>&lt;</a>"
+		next_link = "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=next'>&gt;</a>"
 	else
-		prev_link = "<a class='linkOff'><</a>"
-		next_link = "<a class='linkOff'>></a>"
+		prev_link = "<a class='linkOff'>&lt;</a>"
+		next_link = "<a class='linkOff'>&gt;</a>"
 
 	var/choice_link = ""
 	if(length(choices) > 1)
-		choice_link = "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=choose'>[current_value]</a>"
+		choice_link = "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=choose'>[html_encode("[current_value]")]</a>"
 	else
-		choice_link = "<a class='linkOff'>[current_value]</a>"
+		choice_link = "<a class='linkOff'>[html_encode("[current_value]")]</a>"
 
 	return "[prev_link][choice_link][next_link]"
 
@@ -65,12 +65,12 @@
 	var/current_value = get_value(prefs)
 
 	if(editable)
-		var/prev_link = "<a href='?src=[REF(session)];task=handle_pref;pref_type=[type];action=prev;tab=preferences' class='control-btn'><</a>"
-		var/next_link = "<a href='?src=[REF(session)];task=handle_pref;pref_type=[type];action=next;tab=preferences' class='control-btn'>></a>"
-		var/choose_link = "<a href='?src=[REF(session)];task=handle_pref;pref_type=[type];action=choose;tab=preferences' class='pref-toggle enabled' style='margin: 0 5px; min-width: 100px; text-align: center;'>[current_value]</a>"
+		var/prev_link = "<a href='?src=[REF(session)];task=handle_pref;pref_type=[type];action=prev;tab=preferences' class='control-btn'>&lt;</a>"
+		var/next_link = "<a href='?src=[REF(session)];task=handle_pref;pref_type=[type];action=next;tab=preferences' class='control-btn'>&gt;</a>"
+		var/choose_link = "<a href='?src=[REF(session)];task=handle_pref;pref_type=[type];action=choose;tab=preferences' class='pref-toggle enabled' style='margin: 0 5px; min-width: 100px; text-align: center;'>[html_encode("[current_value]")]</a>"
 		return "<div style='display: flex; align-items: center; justify-content: center; margin-top: 5px;'>[prev_link][choose_link][next_link]</div>"
 	else
-		return "<div class='pref-toggle disabled' style='margin-top: 5px;'>[current_value]</div>"
+		return "<div class='pref-toggle disabled' style='margin-top: 5px;'>[html_encode("[current_value]")]</div>"
 
 /datum/erp_preference/list_choice/handle_session_topic(mob/user, list/href_list, datum/preferences/prefs, datum/sex_session/session)
 	switch(href_list["action"])

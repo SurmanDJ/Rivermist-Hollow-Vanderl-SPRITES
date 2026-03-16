@@ -1,5 +1,7 @@
 /datum/sex_action/rub_body
 	name = "Rub their body"
+	user_menu_zone_mask = SEX_UI_ZONE_ARMS
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 	check_same_tile = FALSE
 	requires_free_hands = TRUE
 
@@ -11,6 +13,8 @@
 /datum/sex_action/rub_body/can_perform(mob/living/user, mob/living/target)
 	. = ..()
 	if(!.)
+		return FALSE
+	if(!find_available_hand(user))
 		return FALSE
 	return TRUE
 
@@ -32,5 +36,6 @@
 	user.visible_message(span_warning("[user] stops rubbing [target]'s body ..."))
 
 /datum/sex_action/rub_body/lock_sex_object(mob/living/user, mob/living/target)
-	var/locked = user.get_active_precise_hand()
-	sex_locks |= new /datum/sex_session_lock(user, locked)
+	var/locked = get_hand_lock_slot(user)
+	if(locked)
+		add_sex_lock(user, locked)

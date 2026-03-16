@@ -3,9 +3,13 @@
 	var/mob/living/user
 	/// Target of our actions
 	var/mob/living/target
-	/// Whether the user desires to stop current action
-	var/desire_stop = FALSE
-	/// What is the current performed action
+	/// Which zone on our side the interaction list is filtered by
+	var/user_zone_filter = SEX_UI_ZONE_ANY
+	/// Which zone on the target side the interaction list is filtered by
+	var/target_zone_filter = SEX_UI_ZONE_ANY
+	/// Active actions currently running in this session
+	var/list/datum/sex_action/active_actions = list()
+	/// Compatibility pointer for older callers that still expect one current action
 	var/datum/sex_action/current_action = null
 	/// Enum of desired speed
 	var/speed = SEX_SPEED_MID
@@ -30,6 +34,15 @@
 	var/edging_other = FALSE
 
 	var/datum/ui_updater/session_updater
+	var/static/list/action_zone_filter_options = list(
+		"Any" = SEX_UI_ZONE_ANY,
+		"Mouth" = SEX_UI_ZONE_MOUTH,
+		"Genitals" = SEX_UI_ZONE_GENITALS,
+		"Arms" = SEX_UI_ZONE_ARMS,
+		"Legs" = SEX_UI_ZONE_LEGS,
+		"Body" = SEX_UI_ZONE_BODY,
+		"Misc" = SEX_UI_ZONE_MISC,
+	)
 
 /datum/sex_session/New(mob/living/session_user, mob/living/session_target)
 	user = session_user
@@ -46,6 +59,7 @@
 
 /datum/sex_session/Destroy(force, ...)
 	UnregisterSignal(user, list(COMSIG_SEX_CLIMAX, COMSIG_SEX_AROUSAL_CHANGED))
+	stop_current_action()
 	// Remove from collective
 	if(session_updater)
 		qdel(session_updater)
@@ -76,9 +90,10 @@
 	collective = new_collective
 
 /datum/sex_session/proc/check_sex()
-	if(current_action)
+	if(length(active_actions) || is_ui_open())
 		inactivity--
-		inactivity = CLAMP(inactivity, 0 , 11)
+		inactivity = CLAMP(inactivity, 0, 11)
+		addtimer(CALLBACK(src, PROC_REF(check_sex)), 30 SECONDS)
 		return
 
 	inactivity++
@@ -87,6 +102,11 @@
 		addtimer(CALLBACK(src, PROC_REF(check_sex)), 30 SECONDS)
 		return
 	qdel(src)
+
+/datum/sex_session/proc/is_ui_open()
+	if(!user?.client)
+		return FALSE
+	return winexists(user.client, "sexcon[our_sex_id]")
 
 /datum/sex_session/proc/add_ui_tracking(window_id)
 	session_updater = new /datum/ui_updater(user, window_id, src, FALSE)
@@ -122,29 +142,72 @@
 		return FALSE
 	return TRUE
 
+/datum/sex_session/proc/get_active_action(action_ref)
+	if(istype(action_ref, /datum/sex_action))
+		var/datum/sex_action/action = action_ref
+		if(action in active_actions)
+			return action
+		action_ref = action.get_menu_action_key()
+
+	var/action_key = get_action_key(action_ref)
+	for(var/datum/sex_action/action as anything in active_actions)
+		if(action_key && action.get_menu_action_key() == action_key)
+			return action
+		if(ispath(action_ref, /datum/sex_action) && action.type == action_ref)
+			return action
+	return null
+
+/datum/sex_session/proc/is_action_active(action_type)
+	return !isnull(get_active_action(action_type))
+
+/datum/sex_session/proc/get_action_priority(datum/sex_action/action, mob/living/viewer)
+	if(!action || !viewer)
+		return -1000000
+	if(viewer == target)
+		return action.target_priority
+	if(viewer == user)
+		return action.user_priority
+	return -1000000
+
+/datum/sex_session/proc/get_highest_priority_action_for(mob/living/viewer)
+	var/datum/sex_action/highest_action
+	for(var/datum/sex_action/action as anything in active_actions)
+		if(!highest_action)
+			highest_action = action
+			continue
+		if(get_action_priority(action, viewer) > get_action_priority(highest_action, viewer))
+			highest_action = action
+	return highest_action
+
+/datum/sex_session/proc/update_current_action()
+	current_action = get_highest_priority_action_for(user)
+
 /datum/sex_session/proc/try_start_action(action_type)
-	if(action_type == current_action)
-		try_stop_current_action()
+	if(is_action_active(action_type))
+		try_stop_current_action(action_type)
 		return
-	if(current_action != null)
-		try_stop_current_action()
+	var/datum/sex_action/action = instantiate_action(action_type)
+	if(!action)
 		return
-	if(!action_type)
-		return
-	if(!can_perform_action(action_type))
+	if(!can_perform_action(action))
 		return
 
-	desire_stop = FALSE
-	current_action = action_type
+	active_actions += action
+	update_current_action()
 	inactivity = 0
-	var/datum/sex_action/action = SEX_ACTION(current_action)
 	log_combat(user, target, "Started sex action: [action.name] with [target.name].")
-	INVOKE_ASYNC(src, PROC_REF(sex_action_loop))
+	INVOKE_ASYNC(src, PROC_REF(sex_action_loop), action)
 
-/datum/sex_session/proc/try_stop_current_action()
-	if(!current_action)
+/datum/sex_session/proc/try_stop_current_action(action_ref)
+	if(!length(active_actions))
 		return
-	desire_stop = TRUE
+	if(!action_ref)
+		stop_current_action()
+		return
+
+	var/datum/sex_action/action = get_active_action(action_ref)
+	if(action)
+		stop_current_action(action)
 
 /datum/sex_session/proc/considered_limp(mob/limper)
 	if(QDELETED(limper))
@@ -156,12 +219,14 @@
 		return FALSE
 	return TRUE
 
-/datum/sex_session/proc/sex_action_loop()
-	var/performed_action_type = current_action
-	var/datum/sex_action/action = SEX_ACTION(current_action)
-	action.on_start(user, target)
+/datum/sex_session/proc/sex_action_loop(datum/sex_action/action)
+	if(!action || !(action in active_actions))
+		return
+	if(action.on_start(user, target) == FALSE)
+		stop_current_action(action)
+		return
 
-	while(TRUE)
+	while(action in active_actions)
 		//if(isnull(target.client))
 		//	break
 
@@ -171,19 +236,22 @@
 
 		var/do_time = action.do_time / get_speed_multiplier()
 		var/do_after_flags = IGNORE_USER_DIR_CHANGE | IGNORE_HELD_ITEM | IGNORE_SLOWDOWNS | IGNORE_SLOWDOWNS | IGNORE_USER_DOING
-		if(!do_after(user, do_time, target = target, timed_action_flags = do_after_flags))
+		var/interaction_key = "sex_action_[REF(action)]"
+		if(!do_after(user, do_time, target = target, timed_action_flags = do_after_flags, interaction_key = interaction_key))
 			break
 
-		if(current_action == null || performed_action_type != current_action)
+		if(QDELETED(action) || !(action in active_actions))
 			break
-		if(!can_perform_action(current_action, TRUE))
+		if(!can_perform_action(action, TRUE))
 			break
 		if(action.is_finished(user, target))
 			break
-		if(desire_stop)
+		if(action.stop_requested)
 			break
 
 		action.on_perform(user, target)
+		if(QDELETED(action) || !(action in active_actions))
+			break
 		if(istype(user.loc, /obj/structure/closet))
 			var/obj/structure/closet/sex_shack = user.loc
 			sex_shack.Shake(1, 3, 15)
@@ -196,30 +264,43 @@
 		if(!action.continous)
 			break
 
-	stop_current_action()
+	stop_current_action(action)
 
-/datum/sex_session/proc/stop_current_action()
-	if(!current_action)
+/datum/sex_session/proc/stop_current_action(action_ref)
+	if(!length(active_actions))
 		return
+	if(!action_ref)
+		var/list/actions_to_stop = active_actions.Copy()
+		for(var/datum/sex_action/action as anything in actions_to_stop)
+			stop_current_action(action)
+		return
+
+	var/datum/sex_action/action = get_active_action(action_ref)
 	if(user && target)
-		user.stop_doing(target)
-	var/datum/sex_action/action = SEX_ACTION(current_action)
+		var/key = "sex_action_[REF(action)]"
+		user.stop_doing(key)
+	if(!action)
+		return
+
+	active_actions -= action
 	action.on_finish(user, target)
-	desire_stop = FALSE
-	current_action = null
+	update_current_action()
+	qdel(action)
 
 /datum/sex_session/proc/can_perform_action(action_type, performing = FALSE)
-	if(!action_type)
+	var/datum/sex_action/action = get_action_template(action_type)
+	if(!action)
 		return FALSE
-	var/datum/sex_action/action = SEX_ACTION(action_type)
-	if(!inherent_perform_check(action_type))
+	if(!inherent_perform_check(action))
 		return FALSE
 	if(!action.can_perform(user, target) && !performing)
 		return FALSE
 	return TRUE
 
 /datum/sex_session/proc/inherent_perform_check(action_type)
-	var/datum/sex_action/action = SEX_ACTION(action_type)
+	var/datum/sex_action/action = get_action_template(action_type)
+	if(!action)
+		return FALSE
 	if(!target)
 		return FALSE
 	if(user.stat != CONSCIOUS)
@@ -379,6 +460,7 @@
 	if(!do_until_finished)
 		return
 	just_climaxed = TRUE
+	try_stop_current_action()
 
 
 /datum/sex_session/proc/get_force_string()
@@ -453,6 +535,230 @@
 		if(SEX_FORCE_HIGH, SEX_FORCE_EXTREME)
 			return pick(SEX_SOUNDS_HARD)
 
+/datum/sex_session/proc/sanitize_ui_zone_filter(filter_value)
+	var/zone_filter = text2num(filter_value)
+	switch(zone_filter)
+		if(SEX_UI_ZONE_ANY, SEX_UI_ZONE_MOUTH, SEX_UI_ZONE_GENITALS, SEX_UI_ZONE_ARMS, SEX_UI_ZONE_LEGS, SEX_UI_ZONE_BODY, SEX_UI_ZONE_MISC)
+			return zone_filter
+	return SEX_UI_ZONE_ANY
+
+/datum/sex_session/proc/render_zone_filter_panel(panel_title, task_name, current_filter, selected_tab)
+	var/list/content = list()
+	content += "<div class='zone-filter-panel'>"
+	content += "<div class='zone-filter-title'>[format_ui_text(panel_title)]</div>"
+	for(var/filter_label in action_zone_filter_options)
+		var/filter_value = action_zone_filter_options[filter_label]
+		var/filter_class = "zone-filter-option"
+		if(filter_value == current_filter)
+			filter_class += " active"
+		content += "<a class='[filter_class]' href='?src=[REF(src)];task=[task_name];value=[filter_value];tab=[selected_tab]'>[html_encode(filter_label)]</a>"
+	content += "</div>"
+	return content.Join("")
+
+/datum/sex_session/proc/get_selected_tab_content(selected_tab)
+	switch(selected_tab)
+		if("custom_actions")
+			return get_custom_actions_tab_content(selected_tab)
+		if("genital")
+			return get_controls_tab_content(selected_tab)
+		if("session")
+			return get_session_tab_content()
+		if("preferences")
+			return get_preferences_tab_content()
+		if("kinks")
+			return get_kinks_tab_content()
+		if("notes")
+			return get_notes_tab_content()
+	return get_interactions_tab_content(selected_tab)
+
+/datum/sex_session/proc/get_interactions_tab_content(selected_tab)
+	var/list/content = list()
+	var/list/available_actions = list()
+	var/total_available_actions = 0
+	var/current_speed_name = plain_quick_control_text(get_speed_string())
+	var/current_force_name = plain_quick_control_text(get_force_string())
+	var/current_resist_name = plain_quick_control_text(get_resist_string())
+	var/lying_direction_name = user.get_lying_direction_name()
+
+	for(var/datum/sex_action/candidate_action as anything in get_all_menu_actions())
+		if(!candidate_action.shows_on_menu(user, target))
+			continue
+		if(is_action_active(candidate_action))
+			continue
+		total_available_actions++
+		if(!candidate_action.matches_ui_filters(user_zone_filter, target_zone_filter))
+			continue
+		available_actions += candidate_action
+
+	var/target_panel_title = (user == target) ? "On yourself" : "On [target.name]"
+
+	content += "<div class='interaction-layout'>"
+	content += render_zone_filter_panel("You use", "set_user_zone_filter", user_zone_filter, selected_tab)
+	content += "<div class='interaction-column'>"
+	content += "<div class='search-container'>"
+	content += "<span class='search-icon'></span>"
+	content += "<input type='text' class='search-box' placeholder='Search for an interaction' id='searchBox'>"
+	content += "</div>"
+	content += "<div class='action-summary'>Showing [length(available_actions)] of [total_available_actions] available interactions for the current zone filters.</div>"
+
+	if(length(active_actions))
+		content += "<div class='action-section'>"
+		content += "<div class='action-subheader'>Active Actions</div>"
+		content += "<div class='action-list'>"
+		for(var/datum/sex_action/active_action as anything in active_actions)
+			var/active_action_key = url_encode(active_action.get_menu_action_key())
+			content += "<div class='action-item active-action-item'>"
+			content += "<a class='action-button active' href='?src=[REF(src)];task=action;action_type=[active_action_key];tab=[selected_tab]'>[format_ui_text(active_action.name)]</a>"
+			content += "<div class='action-icons'>"
+			content += "<a href='?src=[REF(src)];task=stop;action_type=[active_action_key];tab=[selected_tab]' class='icon-btn stop' title='Stop action'>X</a>"
+			content += "</div>"
+			content += "</div>"
+		content += "</div>"
+		content += "</div>"
+
+	content += "<div class='action-section'>"
+	content += "<div class='action-subheader'>Available Actions</div>"
+	if(!length(available_actions))
+		content += "<div class='action-empty'>No interactions match these zone filters yet.</div>"
+	else
+		content += "<div class='action-list'>"
+		for(var/datum/sex_action/menu_action as anything in available_actions)
+			content += "<div class='action-item searchable-action-item'>"
+			var/button_class = "action-button"
+			var/can_perform = can_perform_action(menu_action)
+			var/action_key = url_encode(menu_action.get_menu_action_key())
+
+			if(menu_action.name == "Salute")
+				button_class += " blue"
+			if(!can_perform)
+				button_class += " linkOff"
+
+			content += "<a class='[button_class]' href='?src=[REF(src)];task=action;action_type=[action_key];tab=[selected_tab]'>[format_ui_text(menu_action.name)]</a>"
+			content += "<div class='action-icons'></div>"
+			content += "</div>"
+		content += "</div>"
+	content += "</div>"
+	content += "</div>"
+	content += render_zone_filter_panel(target_panel_title, "set_target_zone_filter", target_zone_filter, selected_tab)
+	content += "</div>"
+	content += "<div class='interaction-quick-bar-wrap'>"
+	content += "<div class='interaction-quick-bar'>"
+	content += "<div class='quick-row'>"
+	content += render_interaction_quick_stepper("Speed", current_speed_name, "speed_down", "speed_up", selected_tab)
+	content += render_interaction_quick_stepper("Force", current_force_name, "force_down", "force_up", selected_tab)
+	content += render_interaction_quick_stepper("Hold", current_resist_name, "resist_down", "resist_up", selected_tab)
+	content += "</div>"
+	content += "<div class='quick-row'>"
+	content += "<a class='quick-toggle[do_until_finished ? " active" : ""]' href='?src=[REF(src)];task=toggle_finished;tab=[selected_tab]'>[do_until_finished ? "Until I'm Finished" : "Until I Stop"]</a>"
+	content += "<a class='quick-toggle[edging_other ? " active" : ""]' href='?src=[REF(src)];task=toggle_edging_other;tab=[selected_tab]'>Edge [edging_other ? "On" : "Off"]</a>"
+	if(lying_direction_name)
+		content += "<a class='quick-toggle' href='?src=[REF(src)];task=swap_lying_direction;tab=[selected_tab]'>Swap Side ([format_ui_text(capitalize(lying_direction_name))])</a>"
+	else
+		content += "<span class='quick-toggle disabled'>Swap Side</span>"
+	content += "</div>"
+	content += "</div>"
+	content += "</div>"
+
+	return content.Join("")
+
+/datum/sex_session/proc/plain_quick_control_text(value_text)
+	var/open_tag_end = findtext(value_text, ">")
+	if(open_tag_end)
+		value_text = copytext(value_text, open_tag_end + 1)
+
+	return replacetext(value_text, "</font>", "")
+
+/datum/sex_session/proc/render_interaction_quick_stepper(label, value_text, decrease_task, increase_task, selected_tab)
+	var/list/content = list()
+
+	content += "<div class='quick-stepper'>"
+	content += "<span class='quick-stepper-label'>[label]</span>"
+	content += "<a class='quick-stepper-btn' href='?src=[REF(src)];task=[decrease_task];tab=[selected_tab]'>-</a>"
+	content += "<span class='quick-stepper-value'>[format_ui_text(value_text)]</span>"
+	content += "<a class='quick-stepper-btn' href='?src=[REF(src)];task=[increase_task];tab=[selected_tab]'>+</a>"
+	content += "</div>"
+
+	return content.Join("")
+
+/datum/sex_session/proc/get_controls_tab_content(selected_tab)
+	var/list/content = list()
+	var/current_speed = get_current_speed()
+	var/current_force = get_current_force()
+	var/current_resist = get_current_resist()
+	var/speed_name = get_speed_string()
+	var/force_name = get_force_string()
+	var/resist_name = get_resist_string()
+	var/manual_arousal_name = get_manual_arousal_string()
+
+	content += "<div class='control-section'>"
+	content += "<h3>Speed & Force Controls</h3>"
+
+	content += "<div class='slider-container'>"
+	content += "<div class='slider-label'>Speed:</div>"
+	content += "<div class='slider-wrapper'>"
+	content += "<div class='slider-track'>"
+	content += "<div class='slider-fill' style='width: [((current_speed - SEX_SPEED_MIN) / (SEX_SPEED_MAX - SEX_SPEED_MIN)) * 100]%;'></div>"
+	content += "</div>"
+	content += "<div class='slider-notches'>"
+	for(var/i = SEX_SPEED_MIN; i <= SEX_SPEED_MAX; i++)
+		var/notch_position = ((i - SEX_SPEED_MIN) / (SEX_SPEED_MAX - SEX_SPEED_MIN)) * 100
+		var/notch_class = (i <= current_speed) ? "slider-notch active" : "slider-notch"
+		content += "<a href='?src=[REF(src)];task=set_speed;value=[i];tab=[selected_tab]' class='[notch_class]' style='left: [notch_position]%;'></a>"
+	content += "</div>"
+	content += "</div>"
+	content += "<div class='slider-value'>[speed_name]</div>"
+	content += "</div>"
+
+	content += "<div class='slider-container'>"
+	content += "<div class='slider-label'>Force:</div>"
+	content += "<div class='slider-wrapper'>"
+	content += "<div class='slider-track'>"
+	content += "<div class='slider-fill' style='width: [((current_force - SEX_FORCE_MIN) / (SEX_FORCE_MAX - SEX_FORCE_MIN)) * 100]%;'></div>"
+	content += "</div>"
+	content += "<div class='slider-notches'>"
+	for(var/i = SEX_FORCE_MIN; i <= SEX_FORCE_MAX; i++)
+		var/notch_position = ((i - SEX_FORCE_MIN) / (SEX_FORCE_MAX - SEX_FORCE_MIN)) * 100
+		var/notch_class = (i <= current_force) ? "slider-notch active" : "slider-notch"
+		content += "<a href='?src=[REF(src)];task=set_force;value=[i];tab=[selected_tab]' class='[notch_class]' style='left: [notch_position]%;'></a>"
+	content += "</div>"
+	content += "</div>"
+	content += "<div class='slider-value'>[force_name]</div>"
+	content += "</div>"
+
+	content += "<div class='slider-container'>"
+	content += "<div class='slider-label'>Holding pleasure:</div>"
+	content += "<div class='slider-wrapper'>"
+	content += "<div class='slider-track'>"
+	content += "<div class='slider-fill' style='width: [((current_resist - RESIST_NONE) / (RESIST_HIGH - RESIST_NONE)) * 100]%;'></div>"
+	content += "</div>"
+	content += "<div class='slider-notches'>"
+	for(var/i = RESIST_NONE; i <= RESIST_HIGH; i++)
+		var/notch_position = ((i - RESIST_NONE) / (RESIST_HIGH - RESIST_NONE)) * 100
+		var/notch_class = (i <= current_resist) ? "slider-notch active" : "slider-notch"
+		content += "<a href='?src=[REF(src)];task=set_resist;value=[i];tab=[selected_tab]' class='[notch_class]' style='left: [notch_position]%;'></a>"
+	content += "</div>"
+	content += "</div>"
+	content += "<div class='slider-value'>[resist_name]</div>"
+	content += "</div>"
+
+	content += "<div class='control-row'>"
+	content += "<a href='?src=[REF(src)];task=toggle_edging_other;tab=[selected_tab]' class='toggle-btn'>[edging_other ? "EDGE THEM" : "DON'T EDGE THEM"]</a>"
+	content += "</div>"
+
+	if(user.getorganslot(ORGAN_SLOT_PENIS))
+		content += "<div class='control-row'>"
+		content += "<a href='?src=[REF(src)];task=manual_arousal_down;tab=[selected_tab]' class='control-btn'>&lt;</a>"
+		content += " [manual_arousal_name] "
+		content += "<a href='?src=[REF(src)];task=manual_arousal_up;tab=[selected_tab]' class='control-btn'>&gt;</a>"
+		content += "</div>"
+
+	content += "<div class='control-row'>"
+	content += "<a href='?src=[REF(src)];task=toggle_finished;tab=[selected_tab]' class='toggle-btn'>[do_until_finished ? "UNTIL IM FINISHED" : "UNTIL I STOP"]</a>"
+	content += "</div>"
+	content += "</div>"
+
+	return content.Join("")
+
 /datum/sex_session/proc/show_ui(selected_tab = "interactions")
 	var/list/dat = list()
 	var/list/arousal_data = list()
@@ -475,7 +781,7 @@
 	dat += ".tab { padding: 12px 20px; background-color: #2a1a15; border-right: 1px solid #4a2c20; color: #d4af8c; cursor: pointer; text-decoration: none; }"
 	dat += ".tab:hover { background-color: #3a2318; }"
 	dat += ".tab.active { background-color: #4a2c20; color: #d4af8c; border-bottom: 2px solid #8b6914; }"
-	dat += ".search-container { margin: 10px; display: flex; align-items: center; }"
+	dat += ".search-container { margin: 0 0 10px 0; display: flex; align-items: center; }"
 	dat += ".search-icon { margin-right: 8px; font-size: 14px; }"
 	dat += ".search-box { flex-grow: 1; padding: 8px; background-color: #2a1a15; border: 1px solid #4a2c20; color: #d4af8c; border-radius: 3px; margin-right: 5px; }"
 	dat += ".search-btn { padding: 8px 12px; background-color: #8b6914; border: none; color: #d4af8c; cursor: pointer; border-radius: 3px; }"
@@ -483,13 +789,37 @@
 	dat += ".section-header { background-color: #8b6914; color: #d4af8c; padding: 8px 15px; margin: 10px; font-weight: bold; }"
 	dat += ".action-list { margin: 0 10px; }"
 	dat += ".action-item { display: flex; align-items: center; margin: 2px 0; }"
+	dat += ".interaction-layout { display: flex; gap: 10px; margin: 10px; align-items: flex-start; }"
+	dat += ".interaction-column { flex: 1; min-width: 0; }"
+	dat += ".zone-filter-panel { width: 120px; background-color: #2a1a15; border: 1px solid #4a2c20; border-radius: 5px; overflow: hidden; flex-shrink: 0; }"
+	dat += ".zone-filter-title { background-color: #4a2c20; padding: 8px 10px; font-weight: bold; text-align: center; color: #d4af8c; }"
+	dat += ".zone-filter-option { display: block; padding: 8px 10px; border-top: 1px solid #1a1010; color: #d4af8c; text-decoration: none; text-align: center; }"
+	dat += ".zone-filter-option:hover { background-color: #3a2318; }"
+	dat += ".zone-filter-option.active { background-color: #8b6914; color: #ffffff; }"
+	dat += ".action-section { margin-bottom: 12px; }"
+	dat += ".action-subheader { background-color: #4a2c20; color: #d4af8c; padding: 8px 12px; font-weight: bold; margin-bottom: 6px; border-radius: 3px; }"
+	dat += ".action-summary { margin: 0 0 10px 0; color: #b09070; font-size: 11px; }"
+	dat += ".action-empty { background-color: #2a1a15; border: 1px dashed #4a2c20; color: #666666; padding: 12px; text-align: center; font-style: italic; border-radius: 4px; }"
+	dat += ".interaction-quick-bar-wrap { margin: 10px 110px 0 110px; text-align: center; clear: both; }"
+	dat += ".interaction-quick-bar { display: inline-block; padding: 8px 10px; background-color: rgba(32, 18, 16, 0.96); border: 1px solid #5b3426; border-radius: 8px; box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.28); }"
+	dat += ".quick-row { text-align: center; white-space: nowrap; }"
+	dat += ".quick-row + .quick-row { margin-top: 6px; }"
+	dat += ".quick-stepper { display: inline-block; margin: 0 3px; background-color: #251714; border: 1px solid #5b3426; border-radius: 999px; overflow: hidden; white-space: nowrap; vertical-align: middle; }"
+	dat += ".quick-stepper-label { display: inline-block; min-width: 48px; padding: 7px 8px 6px; background-color: #3a2318; color: #cfab84; font-size: 10px; font-weight: bold; letter-spacing: 0.05em; text-transform: uppercase; vertical-align: middle; }"
+	dat += ".quick-stepper-btn { display: inline-block; width: 24px; padding: 7px 0 6px; background-color: #140d0c; color: #f4d6b6; text-align: center; text-decoration: none; font-weight: bold; vertical-align: middle; }"
+	dat += ".quick-stepper-btn:hover { background-color: #261714; }"
+	dat += ".quick-stepper-value { display: inline-block; min-width: 74px; padding: 7px 10px 6px; color: #f4d6b6; text-align: center; font-size: 11px; font-weight: bold; white-space: nowrap; vertical-align: middle; }"
+	dat += ".quick-toggle { display: inline-block; margin: 0 3px; padding: 7px 7px 6px; background-color: #241614; border: 1px solid #5b3426; border-radius: 500px; color: #d4af8c; text-decoration: none; font-size: 11px; font-weight: bold; white-space: nowrap; vertical-align: middle; }"
+	dat += ".quick-toggle:hover { background-color: #34201b; }"
+	dat += ".quick-toggle.active { background-color: #6a4223; color: #fff2df; border-color: #8b6914; }"
+	dat += ".quick-toggle.disabled { background-color: #2a1a15; color: #8f7661; border-color: #4a2c20; cursor: default; }"
 	dat += ".action-button { flex-grow: 1; padding: 10px 15px; background-color: #4a2c20; color: #d4af8c; text-decoration: none; display: block; font-weight: bold; border: 1px solid #2a1a15; }"
 	dat += ".action-button:hover { background-color: #5a3525; }"
 	dat += ".action-button.blue { background-color: #3a4a5a; border-color: #5a6a7a; }"
 	dat += ".action-button.blue:hover { background-color: #4a5a6a; }"
 	dat += ".action-button.active { background-color: #8b6914 !important; color: #ffffff !important; border-color: #a07a1a !important; box-shadow: 0 0 5px rgba(139, 105, 20, 0.5) !important; }"
 	dat += ".action-icons { display: flex; margin-left: 5px; }"
-	dat += ".icon-btn { width: 25px; height: 25px; margin-left: 2px; background-color: #4a2c20; border: 1px solid #2a1a15; color: #d4af8c; text-align: center; line-height: 23px; cursor: pointer; font-size: 11px; text-decoration: none; }"
+	dat += ".icon-btn { display: inline-block; width: 25px; height: 25px; margin-left: 2px; background-color: #4a2c20; border: 1px solid #2a1a15; color: #d4af8c; text-align: center; line-height: 23px; cursor: pointer; font-size: 11px; text-decoration: none; }"
 	dat += ".icon-btn:hover { background-color: #5a3525; }"
 	dat += ".icon-btn.star { background-color: #8b6914; }"
 	dat += ".icon-btn.stop { background-color: #cc4444; }"
@@ -573,6 +903,24 @@
 	dat += ".note-item.expanded { background-color: #2a1a15; border-color: #8b6914; box-shadow: 0 2px 8px rgba(139, 105, 20, 0.3); }"
 	dat += ".note-content { color: #b09070; line-height: 1.4; margin-bottom: 8px; max-height: 60px; overflow: hidden; transition: max-height 0.3s ease; }"
 	dat += ".note-content.expanded { max-height: none; overflow: visible; }"
+	dat += ".custom-actions-layout { display: flex; gap: 10px; margin: 10px; align-items: flex-start; }"
+	dat += ".custom-actions-sidebar { width: 260px; flex-shrink: 0; }"
+	dat += ".custom-actions-editor { flex: 1; min-width: 0; background-color: #2a1a15; border: 1px solid #4a2c20; border-radius: 5px; padding: 15px; }"
+	dat += ".custom-sidebar-item { display: block; background-color: #2a1a15; border: 1px solid #4a2c20; color: #d4af8c; text-decoration: none; padding: 10px; margin-bottom: 6px; border-radius: 4px; }"
+	dat += ".custom-sidebar-item:hover { background-color: #3a2318; }"
+	dat += ".custom-sidebar-item.active { background-color: #8b6914; color: #ffffff; border-color: #a07a1a; }"
+	dat += ".custom-sidebar-name { display: block; font-weight: bold; margin-bottom: 4px; }"
+	dat += ".custom-sidebar-summary { display: block; font-size: 11px; color: inherit; opacity: 0.9; }"
+	dat += ".custom-editor-section { margin-top: 15px; }"
+	dat += ".custom-editor-field { display: block; background-color: #1a1010; border: 1px solid #4a2c20; border-radius: 4px; color: #d4af8c; text-decoration: none; padding: 10px; margin-bottom: 8px; }"
+	dat += ".custom-editor-field:hover { background-color: #2f1c14; border-color: #8b6914; }"
+	dat += ".custom-editor-field.info { cursor: default; }"
+	dat += ".custom-editor-field.info:hover { background-color: #1a1010; border-color: #4a2c20; }"
+	dat += ".custom-editor-label { display: block; font-weight: bold; margin-bottom: 4px; }"
+	dat += ".custom-editor-value { display: block; color: #b09070; line-height: 1.4; }"
+	dat += ".custom-editor-detail { display: block; color: #808080; font-size: 10px; margin-top: 4px; }"
+	dat += ".custom-editor-empty { color: #666666; font-style: italic; }"
+	dat += ".custom-editor-buttons { display: flex; gap: 8px; flex-wrap: wrap; }"
 
 	dat += "</style>"
 
@@ -608,6 +956,7 @@
 
 	dat += "<div class='tabs'>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=interactions' class='tab [selected_tab == "interactions" ? "active" : ""]'>Interactions</a>"
+	dat += "<a href='?src=[REF(src)];task=tab;tab=custom_actions' class='tab [selected_tab == "custom_actions" ? "active" : ""]'>Custom Actions</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=genital' class='tab [selected_tab == "genital" ? "active" : ""]'>Controls</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=session' class='tab [selected_tab == "session" ? "active" : ""]'>Session</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=preferences' class='tab [selected_tab == "preferences" ? "active" : ""]'>Preferences</a>"
@@ -615,146 +964,8 @@
 	dat += "<a href='?src=[REF(src)];task=tab;tab=notes' class='tab [selected_tab == "notes" ? "active" : ""]'>Notes</a>"
 	dat += "</div>"
 
-	// Interactions Tab
-	dat += "<div class='tab-content [selected_tab == "interactions" ? "active" : ""]' id='interactions-tab'>"
-	dat += "<div class='search-container'>"
-	dat += "<span class='search-icon'></span>"
-	dat += "<input type='text' class='search-box' placeholder='Search for an interaction' id='searchBox'>"
-	dat += "</div>"
-
-	dat += "<div class='action-list'>"
-	for(var/action_type in GLOB.sex_actions)
-		var/datum/sex_action/action = SEX_ACTION(action_type)
-		if(!action.shows_on_menu(user, target))
-			continue
-
-		dat += "<div class='action-item'>"
-		var/button_class = "action-button"
-		var/is_current = (current_action == action_type)
-		var/can_perform = can_perform_action(action_type)
-
-		if(action.name == "Salute")
-			button_class += " blue"
-		if(!can_perform)
-			button_class += " linkOff"
-		if(is_current)
-			button_class += " active"
-
-		dat += "<a class='[button_class]' href='?src=[REF(src)];task=action;action_type=[action_type];tab=[selected_tab]'>[action.name]</a>"
-
-		dat += "<div class='action-icons'>"
-		if(is_current)
-			dat += "<a href='?src=[REF(src)];task=stop;tab=[selected_tab]' class='icon-btn stop'></a>"
-		dat += "</div>"
-		dat += "</div>"
-	dat += "</div>"
-	dat += "</div>"
-
-	// Controls Tab
-	dat += "<div class='tab-content [selected_tab == "genital" ? "active" : ""]' id='genital-tab'>"
-	dat += "<div class='control-section'>"
-	dat += "<h3>Speed & Force Controls</h3>"
-
-	var/current_speed = get_current_speed()
-	var/current_force = get_current_force()
-	var/current_resist = get_current_resist()
-	var/speed_name = get_speed_string()
-	var/force_name = get_force_string()
-	var/resist_name = get_resist_string()
-	var/manual_arousal_name = get_manual_arousal_string()
-
-	// Speed slider
-	dat += "<div class='slider-container'>"
-	dat += "<div class='slider-label'>Speed:</div>"
-	dat += "<div class='slider-wrapper'>"
-	dat += "<div class='slider-track'>"
-	dat += "<div class='slider-fill' style='width: [((current_speed - SEX_SPEED_MIN) / (SEX_SPEED_MAX - SEX_SPEED_MIN)) * 100]%;'></div>"
-	dat += "</div>"
-	dat += "<div class='slider-notches'>"
-	for(var/i = SEX_SPEED_MIN; i <= SEX_SPEED_MAX; i++)
-		var/notch_position = ((i - SEX_SPEED_MIN) / (SEX_SPEED_MAX - SEX_SPEED_MIN)) * 100
-		var/notch_class = (i <= current_speed) ? "slider-notch active" : "slider-notch"
-		dat += "<a href='?src=[REF(src)];task=set_speed;value=[i];tab=[selected_tab]' class='[notch_class]' style='left: [notch_position]%;'></a>"
-	dat += "</div>"
-	dat += "</div>"
-	dat += "<div class='slider-value'>[speed_name]</div>"
-	dat += "</div>"
-
-	// Force slider
-	dat += "<div class='slider-container'>"
-	dat += "<div class='slider-label'>Force:</div>"
-	dat += "<div class='slider-wrapper'>"
-	dat += "<div class='slider-track'>"
-	dat += "<div class='slider-fill' style='width: [((current_force - SEX_FORCE_MIN) / (SEX_FORCE_MAX - SEX_FORCE_MIN)) * 100]%;'></div>"
-	dat += "</div>"
-	dat += "<div class='slider-notches'>"
-	for(var/i = SEX_FORCE_MIN; i <= SEX_FORCE_MAX; i++)
-		var/notch_position = ((i - SEX_FORCE_MIN) / (SEX_FORCE_MAX - SEX_FORCE_MIN)) * 100
-		var/notch_class = (i <= current_force) ? "slider-notch active" : "slider-notch"
-		dat += "<a href='?src=[REF(src)];task=set_force;value=[i];tab=[selected_tab]' class='[notch_class]' style='left: [notch_position]%;'></a>"
-	dat += "</div>"
-	dat += "</div>"
-	dat += "<div class='slider-value'>[force_name]</div>"
-	dat += "</div>"
-
-	// Holding slider
-	dat += "<div class='slider-container'>"
-	dat += "<div class='slider-label'>Holding pleasure:</div>"
-	dat += "<div class='slider-wrapper'>"
-	dat += "<div class='slider-track'>"
-	dat += "<div class='slider-fill' style='width: [((current_resist - RESIST_NONE) / (RESIST_HIGH - RESIST_NONE)) * 100]%;'></div>"
-	dat += "</div>"
-	dat += "<div class='slider-notches'>"
-	for(var/i = RESIST_NONE; i <= RESIST_HIGH; i++)
-		var/notch_position = ((i - RESIST_NONE) / (RESIST_HIGH - RESIST_NONE)) * 100
-		var/notch_class = (i <= current_resist) ? "slider-notch active" : "slider-notch"
-		dat += "<a href='?src=[REF(src)];task=set_resist;value=[i];tab=[selected_tab]' class='[notch_class]' style='left: [notch_position]%;'></a>"
-	dat += "</div>"
-	dat += "</div>"
-	dat += "<div class='slider-value'>[resist_name]</div>"
-	dat += "</div>"
-
-	dat += "<div class='control-row'>"
-	dat += "<a href='?src=[REF(src)];task=toggle_edging_other;tab=[selected_tab]' class='toggle-btn'>[edging_other ? "EDGE THEM" : "DON'T EDGE THEM"]</a>"
-	dat += "</div>"
-
-	if(user.getorganslot(ORGAN_SLOT_PENIS))
-		dat += "<div class='control-row'>"
-		dat += "<a href='?src=[REF(src)];task=manual_arousal_down;tab=[selected_tab]' class='control-btn'><</a>"
-		dat += " [manual_arousal_name] "
-		dat += "<a href='?src=[REF(src)];task=manual_arousal_up;tab=[selected_tab]' class='control-btn'>></a>"
-		dat += "</div>"
-
-	dat += "<div class='control-row'>"
-	dat += "<a href='?src=[REF(src)];task=toggle_finished;tab=[selected_tab]' class='toggle-btn'>[do_until_finished ? "UNTIL IM FINISHED" : "UNTIL I STOP"]</a>"
-	dat += "</div>"
-
-	/*dat += "<div class='control-row'>"
-	dat += "<a href='?src=[REF(src)];task=set_arousal;tab=[selected_tab]' class='toggle-btn'>SET AROUSAL</a>"
-	dat += "<a href='?src=[REF(src)];task=freeze_arousal;tab=[selected_tab]' class='toggle-btn'>[arousal_data["frozen"] ? "UNFREEZE AROUSAL" : "FREEZE AROUSAL"]</a>"
-	dat += "</div>"*/
-
-	dat += "</div>"
-	dat += "</div>"
-
-	// Session Tab
-	dat += "<div class='tab-content [selected_tab == "session" ? "active" : ""]' id='session-tab'>"
-	dat += get_session_tab_content()
-	dat += "</div>"
-
-	// Preferences Tab
-	dat += "<div class='tab-content [selected_tab == "preferences" ? "active" : ""]' id='preferences-tab'>"
-	dat += get_preferences_tab_content()
-	dat += "</div>"
-
-	// Kinks Tab
-	dat += "<div class='tab-content [selected_tab == "kinks" ? "active" : ""]' id='kinks-tab'>"
-	dat += get_kinks_tab_content()
-	dat += "</div>"
-
-	// Notes Tab
-	dat += "<div class='tab-content [selected_tab == "notes" ? "active" : ""]' id='notes-tab'>"
-	dat += get_notes_tab_content()
+	dat += "<div class='tab-content active' id='active-tab'>"
+	dat += get_selected_tab_content(selected_tab)
 	dat += "</div>"
 
 	// JavaScript for search functionality and tab management
@@ -810,7 +1021,7 @@
 	dat += "  if(searchBox) {"
 	dat += "    searchBox.addEventListener('input', function() {"
 	dat += "      var filter = this.value.toLowerCase();"
-	dat += "      var items = document.querySelectorAll('.action-item');"
+	dat += "      var items = document.querySelectorAll('.searchable-action-item');"
 	dat += "      items.forEach(function(item) {"
 	dat += "        var text = item.textContent.toLowerCase();"
 	dat += "        item.style.display = text.includes(filter) ? 'flex' : 'none';"
@@ -860,10 +1071,17 @@
 
 	dat += "</div>"
 
-	var/datum/browser/popup = new(user, "sexcon[our_sex_id]", "<center>Sate Desire</center>", 750, 650)
+	var/datum/browser/popup = new(user, "sexcon[our_sex_id]", "<center>Sate Desire</center>", 950, 760)
 	popup.set_content(dat.Join())
 	popup.open()
 	return
+
+/datum/sex_session/proc/format_ui_text(value)
+	return html_encode("[value]")
+
+/datum/sex_session/proc/format_ui_multiline_text(value)
+	var/formatted_text = html_encode("[value]")
+	return replacetext(formatted_text, "\n", "<br>")
 
 /datum/sex_session/proc/get_session_tab_content()
 	var/list/content = list()
@@ -874,7 +1092,7 @@
 	var/session_name = collective?.collective_display_name || "Private Session"
 	content += "<div style='margin: 10px 0;'>"
 	content += "<label style='color: #d4af8c; font-weight: bold;'>Session Name:</label><br>"
-	content += "<input type='text' id='sessionNameInput' class='session-name-input' value='[session_name]' placeholder='Enter session name...'>"
+	content += "<input type='text' id='sessionNameInput' class='session-name-input' value='[escape_html_attribute(session_name)]' placeholder='Enter session name...'>"
 	content += "<button onclick='updateSessionName()' class='control-btn' style='margin-left: 5px;'>Update</button>"
 	content += "</div>"
 
@@ -892,7 +1110,7 @@
 			var/mob/living/carbon/human/human_participant = participant
 			display_name = human_participant.get_face_name() || participant.name
 		var/is_you = (participant == user) ? " (You)" : ""
-		content += "<div class='participant-item'>[display_name][is_you]</div>"
+		content += "<div class='participant-item'>[format_ui_text(display_name)][is_you]</div>"
 
 	content += "</div>"
 
@@ -926,7 +1144,7 @@
 
 	// Right side - Target's preferences (read-only)
 	content += "<div class='prefs-right'>"
-	content += "<div class='prefs-header'>[target.name]'s Preferences</div>"
+	content += "<div class='prefs-header'>[format_ui_text(target.name)]'s Preferences</div>"
 	content += get_erp_preferences_display(target, FALSE)
 	content += "</div>"
 
@@ -962,16 +1180,16 @@
 	// Display preferences by category
 	for(var/category in prefs_by_category)
 		content += "<div class='pref-category'>"
-		content += "<div class='pref-category-title'>[category]</div>"
+		content += "<div class='pref-category-title'>[format_ui_text(category)]</div>"
 
 		for(var/pref_type in prefs_by_category[category])
 			var/datum/erp_preference/pref = prefs_by_category[category][pref_type]
 
 			content += "<div class='pref-item'>"
-			content += "<div class='pref-name'>[pref.name]</div>"
+			content += "<div class='pref-name'>[format_ui_text(pref.name)]</div>"
 
 			if(pref.description)
-				content += "<div class='pref-description'>[pref.description]</div>"
+				content += "<div class='pref-description'>[format_ui_text(pref.description)]</div>"
 
 			// Let the preference datum handle its own UI
 			content += pref.show_session_ui(prefs, editable, src)
@@ -989,22 +1207,27 @@
 	var/list/arousal_data = list()
 	SEND_SIGNAL(user, COMSIG_SEX_GET_AROUSAL, arousal_data)
 	var/selected_tab = href_list["tab"] || "interactions"
+	if(handle_custom_action_topic(href_list))
+		show_ui(selected_tab)
+		return
 
 	switch(href_list["task"])
 		if("tab")
 			selected_tab = href_list["tab"] || "interactions"
 			show_ui(selected_tab)
 			return
+		if("set_user_zone_filter")
+			user_zone_filter = sanitize_ui_zone_filter(href_list["value"])
+		if("set_target_zone_filter")
+			target_zone_filter = sanitize_ui_zone_filter(href_list["value"])
 		if("action")
-			var/action_path = text2path(href_list["action_type"])
-			var/datum/sex_action/action = SEX_ACTION(action_path)
-			if(!action)
+			var/action_ref = href_list["action_type"]
+			if(!get_action_template(action_ref))
 				show_ui(selected_tab)
 				return
-			try_start_action(action_path)
-			return // Don't refresh main UI immediately
+			try_start_action(action_ref)
 		if("stop")
-			try_stop_current_action()
+			try_stop_current_action(href_list["action_type"])
 		if("set_speed")
 			var/new_speed = text2num(href_list["value"])
 			if(new_speed >= SEX_SPEED_MIN && new_speed <= SEX_SPEED_MAX)
@@ -1042,6 +1265,8 @@
 			SEND_SIGNAL(user, COMSIG_SEX_FREEZE_AROUSAL)
 		if("toggle_edging_other")
 			edging_other = !edging_other
+		if("swap_lying_direction")
+			user.swap_lying_direction()
 
 		if("update_session_name")
 			var/new_name = url_decode(href_list["name"])
@@ -1128,6 +1353,9 @@
 				var/save_name = "character_[character_slot]_notes"
 				var/list/all_notes = SM.get_data(save_name, "partner_notes", list())
 				if(all_notes[ckey(user.ckey)] && all_notes[ckey(user.ckey)][note_title])
+					if(alert(user, "Remove note '[note_title]'?", "Remove Note", "Remove", "Cancel") != "Remove")
+						show_ui(selected_tab)
+						return
 					all_notes[ckey(user.ckey)] -= note_title
 					SM.set_data(save_name, "partner_notes", all_notes)
 					to_chat(user, "<span class='notice'>Self-note '[note_title]' removed.</span>")
@@ -1140,7 +1368,7 @@
 	if(user == target)
 		return "<div class='header'>Interacting with yourself...</div>"
 	else
-		return "<div class='header'>Interacting with [target.name]...</div>"
+		return "<div class='header'>Interacting with [format_ui_text(target.name)]...</div>"
 
 /datum/sex_session/proc/get_sex_session_body()
 	var/list/data = list()
@@ -1177,7 +1405,7 @@
 
 	for(var/category in kinks_by_category)
 		content += "<div class='kink-category'>"
-		content += "<div class='kink-category-title'>[category]</div>"
+		content += "<div class='kink-category-title'>[format_ui_text(category)]</div>"
 		for(var/kink_name in kinks_by_category[category])
 			var/list/kink_data = kinks_by_category[category][kink_name]
 			var/datum/kink/base_kink = GLOB.available_kinks[kink_name]
@@ -1185,12 +1413,12 @@
 			if(!kink_data["enabled"])
 				kink_class += " kink-disabled"
 			content += "<div class='[kink_class]'>"
-			content += "<div class='kink-name'>[kink_name]</div>"
-			content += "<div class='kink-description'>[base_kink.description]</div>"
+			content += "<div class='kink-name'>[format_ui_text(kink_name)]</div>"
+			content += "<div class='kink-description'>[format_ui_text(base_kink.description)]</div>"
 			var/intensity_text = get_kink_intensity_text(kink_data["intensity"])
 			content += "<div class='kink-intensity'>Intensity: [intensity_text]</div>"
 			if(kink_data["notes"])
-				content += "<div class='kink-notes'>Notes: [kink_data["notes"]]</div>"
+				content += "<div class='kink-notes'>Notes: [format_ui_text(kink_data["notes"])]</div>"
 			content += "</div>"
 		content += "</div>"
 	return content.Join("")
@@ -1216,13 +1444,13 @@
 	// Sub-tabs for notes
 	content += "<div class='notes-sub-tabs'>"
 	content += "<a href='javascript:void(0)' class='notes-sub-tab active' onclick='switchNotesTab(\"self\")' id='selfTab'>Your Notes (Shared)</a>"
-	content += "<a href='javascript:void(0)' class='notes-sub-tab' onclick='switchNotesTab(\"target\")' id='targetTab'>[target.name]'s Notes</a>"
+	content += "<a href='javascript:void(0)' class='notes-sub-tab' onclick='switchNotesTab(\"target\")' id='targetTab'>[format_ui_text(target.name)]'s Notes</a>"
 	content += "</div>"
 
 	// Self notes content (initially visible)
 	content += "<div class='notes-tab-content active' id='selfNotesContent'>"
 	content += "<div class='panel-header'>"
-	content += "<h3>Your Notes (Shared with [target.name])</h3>"
+	content += "<h3>Your Notes (Shared with [format_ui_text(target.name)])</h3>"
 	content += "<button onclick='toggleSelfNoteForm()' class='control-btn' id='addSelfNoteBtn'>Add Note About Yourself</button>"
 	content += "</div>"
 
@@ -1247,19 +1475,19 @@
 			var/list/note_data = self_notes[note_title]
 			content += "<div class='note-item'>"
 			content += "<div class='note-header'>"
-			content += "<div class='note-title'>[note_title]</div>"
+			content += "<div class='note-title'>[format_ui_text(note_title)]</div>"
 			content += "<div class='note-buttons'>"
 			content += "<a href='?src=[REF(src)];task=edit_self_note;note_title=[url_encode(note_title)];tab=notes' class='note-btn' onclick='event.stopPropagation()'>Edit</a>"
-			content += "<a href='?src=[REF(src)];task=remove_self_note;note_title=[url_encode(note_title)];tab=notes' class='note-btn remove-btn' onclick='event.stopPropagation(); return confirm(\"Remove note: [note_title]?\")'>Remove</a>"
+			content += "<a href='?src=[REF(src)];task=remove_self_note;note_title=[url_encode(note_title)];tab=notes' class='note-btn remove-btn' onclick='event.stopPropagation()'>Remove</a>"
 			content += "</div>"
 			content += "</div>"
-			content += "<div class='note-content'>[note_data["content"]]</div>"
+			content += "<div class='note-content'>[format_ui_multiline_text(note_data["content"])]</div>"
 			var/created_time = note_data["created"]
 			var/modified_time = note_data["last_modified"]
 			var/time_text = "Created: [time2text(created_time, "MM/DD/YY hh:mm")]"
 			if(modified_time != created_time)
 				time_text += " | Modified: [time2text(modified_time, "MM/DD/YY hh:mm")]"
-			content += "<div class='note-meta'>[time_text]</div>"
+			content += "<div class='note-meta'>[format_ui_text(time_text)]</div>"
 			content += "</div>"
 
 	content += "</div>" // End self notes content
@@ -1267,28 +1495,28 @@
 	// Target's self-notes content (initially hidden)
 	content += "<div class='notes-tab-content' id='targetNotesContent'>"
 	content += "<div class='panel-header'>"
-	content += "<h3>[target.name]'s Notes (About Themselves)</h3>"
+	content += "<h3>[format_ui_text(target.name)]'s Notes (About Themselves)</h3>"
 	content += "</div>"
 
 	// Display target's self-notes (read-only)
 	if(!length(target_self_notes))
 		content += "<div class='no-data'>"
-		content += "[target.name] hasn't shared any notes about themselves yet."
+		content += "[format_ui_text(target.name)] hasn't shared any notes about themselves yet."
 		content += "</div>"
 	else
 		for(var/note_title in target_self_notes)
 			var/list/note_data = target_self_notes[note_title]
-			content += "<div class='note-item''>"
+			content += "<div class='note-item'>"
 			content += "<div class='note-header'>"
-			content += "<div class='note-title'>[note_title]</div>"
+			content += "<div class='note-title'>[format_ui_text(note_title)]</div>"
 			content += "</div>"
-			content += "<div class='note-content'>[note_data["content"]]</div>"
+			content += "<div class='note-content'>[format_ui_multiline_text(note_data["content"])]</div>"
 			var/created_time = note_data["created"]
 			var/modified_time = note_data["last_modified"]
 			var/time_text = "Created: [time2text(created_time, "MM/DD/YY hh:mm")]"
 			if(modified_time != created_time)
 				time_text += " | Modified: [time2text(modified_time, "MM/DD/YY hh:mm")]"
-			content += "<div class='note-meta'>[time_text]</div>"
+			content += "<div class='note-meta'>[format_ui_text(time_text)]</div>"
 			content += "</div>"
 
 	content += "</div>" // End target notes content

@@ -1,5 +1,7 @@
 /datum/sex_action/sex/other/anal
 	name = "Ride them anally"
+	user_menu_zone_mask = SEX_UI_ZONE_GENITALS
+	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 	hole_id = ORGAN_SLOT_ANUS
 	stamina_cost = 1.0
 	aggro_grab_instead_same_tile = FALSE

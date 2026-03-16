@@ -1,5 +1,7 @@
 /datum/sex_action/tonguebath
 	name = "Bathe with tongue"
+	user_menu_zone_mask = SEX_UI_ZONE_MOUTH
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 
 /datum/sex_action/tonguebath/shows_on_menu(mob/living/user, mob/living/target)
 	if(user == target)

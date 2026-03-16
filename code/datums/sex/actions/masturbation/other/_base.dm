@@ -6,14 +6,14 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/locked = user.get_active_precise_hand()
-	if(check_sex_lock(user, locked))
+	if(!find_available_hand(user))
 		return FALSE
 	return TRUE
 
 /datum/sex_action/masturbate/other/lock_sex_object(mob/living/user, mob/living/target)
-	var/locked = user.get_active_precise_hand()
-	sex_locks |= new /datum/sex_session_lock(user, locked)
+	var/locked = get_hand_lock_slot(user)
+	if(locked)
+		add_sex_lock(user, locked)
 
 /datum/sex_action/masturbate/other/is_finished(mob/living/user, mob/living/target)
 	var/datum/sex_session/sex_session = get_sex_session(user, target)

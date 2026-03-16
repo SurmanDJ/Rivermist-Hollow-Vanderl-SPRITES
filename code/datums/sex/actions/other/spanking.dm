@@ -1,5 +1,7 @@
 /datum/sex_action/spanking
 	name = "Spank their butt"
+	user_menu_zone_mask = SEX_UI_ZONE_ARMS
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 	// Allow through all clothes, so no body zone accessibility check for clothing
 	check_same_tile = FALSE
 	do_time = 2.5 SECONDS // Slightly faster than average for repeated action
@@ -15,8 +17,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/locked = user.get_active_precise_hand()
-	if(check_sex_lock(user, locked))
+	if(!find_available_hand(user))
 		return FALSE
 	if(user == target)
 		return FALSE
@@ -60,5 +61,6 @@
 	user.visible_message(span_warning("[user] stops spanking [target]."))
 
 /datum/sex_action/spanking/lock_sex_object(mob/living/user, mob/living/target)
-	var/locked = user.get_active_precise_hand()
-	sex_locks |= new /datum/sex_session_lock(user, locked)
+	var/locked = get_hand_lock_slot(user)
+	if(locked)
+		add_sex_lock(user, locked)

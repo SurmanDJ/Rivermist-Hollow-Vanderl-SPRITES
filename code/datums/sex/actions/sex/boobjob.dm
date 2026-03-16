@@ -1,5 +1,6 @@
 /datum/sex_action/sex/boobjob
 	name = "Use their tits to get off"
+	target_menu_zone_mask = SEX_UI_ZONE_BODY
 	hole_id = ORGAN_SLOT_BREASTS
 	knot_on_finish = FALSE
 	can_knot = FALSE

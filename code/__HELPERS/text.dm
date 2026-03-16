@@ -33,6 +33,13 @@
 	var/static/regex/regex = regex(@"[\n\t]", "g")
 	return html_encode(regex.Replace(text, "#"))
 
+/// Encodes text for use inside a quoted HTML attribute value.
+/proc/escape_html_attribute(text)
+	var/encoded_text = html_encode("[text]")
+	encoded_text = replacetext(encoded_text, "'", "&#39;")
+	encoded_text = replacetext(encoded_text, "\"", "&quot;")
+	return encoded_text
+
 /// Runs STRIP_HTML_SIMPLE and sanitize.
 /proc/strip_html(text, limit = MAX_MESSAGE_LEN)
 	return sanitize(STRIP_HTML_SIMPLE(text, limit))

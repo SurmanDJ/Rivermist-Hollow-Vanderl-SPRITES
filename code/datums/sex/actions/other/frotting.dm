@@ -1,5 +1,7 @@
 /datum/sex_action/frotting
 	name = "Frot them"
+	user_menu_zone_mask = SEX_UI_ZONE_GENITALS
+	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 
 /datum/sex_action/frotting/shows_on_menu(mob/living/user, mob/living/target)
 	if(user == target)
