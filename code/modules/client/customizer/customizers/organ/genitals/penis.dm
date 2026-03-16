@@ -2,7 +2,7 @@
 	abstract_type = /datum/customizer/organ/genitals/penis
 	name = "Penis"
 	allows_disabling = TRUE
-	default_disabled = FALSE
+	default_disabled = TRUE
 	gender_enabled = MALE
 
 /datum/customizer/organ/genitals/penis/is_allowed(datum/preferences/prefs)

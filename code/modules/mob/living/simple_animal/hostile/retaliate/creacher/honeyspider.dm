@@ -85,10 +85,10 @@
 
 /mob/living/simple_animal/hostile/retaliate/spider/Initialize()
 	AddComponent(/datum/component/obeys_commands, pet_commands) // here due to signal overridings from pet commands // due to signal overridings from pet commands
-	. = ..()
 	gender = MALE
 	if(prob(33))
 		gender = FEMALE
+	. = ..()
 	ensure_spider_ovipositor(src)
 
 	update_appearance(UPDATE_OVERLAYS)

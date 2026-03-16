@@ -47,7 +47,7 @@
 		return C.gender == MALE
 	else
 		if(pref_load)
-			return pref_load.get_customizer_entry_of_type(/datum/customizer_entry/organ/genitals/testicles)
+			return pref_load.has_enabled_customizer_entry(/datum/customizer_entry/organ/genitals/testicles)
 		else
 			return C.gender == MALE
 

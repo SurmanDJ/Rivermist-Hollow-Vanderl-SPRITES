@@ -222,6 +222,10 @@
 			return entry
 	return null
 
+/datum/preferences/proc/has_enabled_customizer_entry(entry_type)
+	var/datum/customizer_entry/entry = get_customizer_entry_of_type(entry_type)
+	return entry && !entry.disabled
+
 
 /datum/preferences/proc/genderize_customizer_entries()
 	customizer_entries = SANITIZE_LIST(customizer_entries)
