@@ -778,6 +778,14 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 
 /obj/structure/fake_machine/contractledger/proc/get_target_preview_name(atom/mob_type)
 	if(ispath(mob_type))
+		if(ispath(mob_type, /mob/living/carbon/human/species/orc))
+			return "Orc"
+		if(ispath(mob_type, /mob/living/carbon/human/species/zizombie))
+			return "Zombie"
+		if(ispath(mob_type, /mob/living/carbon/human/species/goblin))
+			return "Goblin"
+		if(ispath(mob_type, /mob/living/carbon/human/species/skeleton))
+			return "Skeleton"
 		if(uses_outlaw_preview(mob_type))
 			return "OUTLAW"
 		return initial(mob_type.name) || "Unknown target"
@@ -796,24 +804,6 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	return !uses_monster_model_preview(mob_type)
 
 /obj/structure/fake_machine/contractledger/proc/get_preview_icon_source_mob_type(atom/mob_type)
-	if(uses_outlaw_preview(mob_type))
-		return /mob/living/carbon/human/species/human/northern/highwayman
-	if(ispath(mob_type, /mob/living/carbon/human/species/goblin))
-		return /mob/living/carbon/human/species/goblin/npc
-	if(ispath(mob_type, /mob/living/carbon/human/species/kobold))
-		return /mob/living/carbon/human/species/kobold/base/unskilled/light_gear
-	if(ispath(mob_type, /mob/living/carbon/human/species/zizombie))
-		return /mob/living/carbon/human/species/zizombie/npc/peasant
-	if(ispath(mob_type, /mob/living/carbon/human/species/skeleton))
-		return /mob/living/simple_animal/hostile/skeleton
-	if(ispath(mob_type, /mob/living/carbon/human/species/orc))
-		return /mob/living/simple_animal/hostile/orc/orc2
-	if(ispath(mob_type, /mob/living/simple_animal/hostile/orc))
-		return /mob/living/simple_animal/hostile/orc/orc2
-	if(ispath(mob_type, /mob/living/simple_animal/hostile/skeleton))
-		return /mob/living/simple_animal/hostile/skeleton
-	if(ispath(mob_type, /mob/living/simple_animal/hostile/deepone))
-		return /mob/living/simple_animal/hostile/deepone
 	return mob_type
 
 /obj/structure/fake_machine/contractledger/proc/get_preview_sprite_class(mob_type)
@@ -921,15 +911,9 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 		temp_human.regenerate_icons()
 
 /obj/structure/fake_machine/contractledger/proc/finalize_outlaw_preview_mob(mob/living/carbon/human/temp_human)
-	if(!temp_human)
+	if(!temp_human || QDELETED(temp_human))
 		return
-	if(QDELETED(temp_human))
-		return
-	if(!temp_human.job && !temp_human.head && !temp_human.wear_armor && !temp_human.wear_mask)
-		temp_human.after_creation()
-	if(!temp_human.get_item_by_slot(ITEM_SLOT_HEAD))
-		var/obj/item/clothing/head/helmet/leather/fallback_helmet = new(get_turf(temp_human))
-		temp_human.equip_to_slot_if_possible(fallback_helmet, ITEM_SLOT_HEAD, TRUE, TRUE, TRUE, TRUE, TRUE)
+	temp_human.after_creation()
 	temp_human.update_body()
 	temp_human.regenerate_icons()
 

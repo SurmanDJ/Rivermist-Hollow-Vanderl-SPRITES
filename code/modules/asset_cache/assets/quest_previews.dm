@@ -8,8 +8,8 @@
 ///
 /// Icon sources by mob type:
 ///   simple_animal — static DMI icon; falls back to temp mob + getFlatIcon if state missing.
-///   monster_model (goblin/zombie/orc/kobold) — static DMI directly from initial(icon/icon_state).
-///   outlaw (human) — temp mob + finalize + getFlatIcon with cropped torso.
+///   carbon/human — temp mob + after_creation (equips outfit) + image/appearance + getFlatIcon.
+///     Each mob subtype gets its own sprite with unique equipment (randomized per server restart).
 ///   generic mob — temp mob + getFlatIcon.
 ///
 /// After all inserts, icon cache is refreshed to prevent BYOND FIFO eviction (Division by zero).
@@ -89,7 +89,6 @@
 		generation_in_progress = FALSE
 		return
 
-	// Refresh icon cache to prevent BYOND FIFO eviction → Division by zero
 	for(var/size_id in sizes)
 		var/list/size = sizes[size_id]
 		if(size[2])
@@ -129,12 +128,6 @@
 					preview_icon = flattened ? icon(flattened, frame = 1) : null
 					qdel(temp_mob)
 
-	else if(ispath(mob_type, /mob/living/carbon/human) && ledger_ref.uses_monster_model_preview(mob_type))
-		var/icon_file = initial(mob_type.icon)
-		var/icon_state = initial(mob_type.icon_state)
-		if(icon_file && icon_state)
-			preview_icon = icon(icon_file, icon_state, SOUTH, 1)
-
 	else if(ispath(mob_type, /mob/living/carbon/human))
 		var/turf/preview_turf = locate(1, 1, 1)
 		if(!preview_turf)
@@ -147,6 +140,12 @@
 		temp_mob.setDir(SOUTH)
 		ledger_ref.finalize_outlaw_preview_mob(temp_mob)
 		preview_icon = ledger_ref.build_outlaw_runtime_preview_icon(temp_mob)
+		if(!preview_icon)
+			// Appearance technique failed — try static DMI as fallback
+			var/icon_file = initial(mob_type.icon)
+			var/icon_state = initial(mob_type.icon_state)
+			if(icon_file && icon_state)
+				preview_icon = icon(icon_file, icon_state, SOUTH, 1)
 		qdel(temp_mob)
 
 	else if(ispath(mob_type, /mob))
