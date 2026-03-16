@@ -1473,6 +1473,14 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 ///
 /// If you want a stack trace to be output when the given state/file doesn't exist, use
 /// `/proc/icon_exists_or_scream()`.
+/proc/get_icon_states_for_lookup(file, file_string) // I really really HATE this, but let's try it anyway.
+	if(is_valid_dmi_file(file_string) && fexists(file_string))
+		var/rustg_states = rustg_dmi_icon_states(file_string)
+		if(rustg_json_is_valid(rustg_states))
+			return json_decode(rustg_states)
+
+	return icon_states(file)
+
 /proc/icon_exists(file, state)
 	var/static/list/icon_states_cache = list()
 	if(isnull(file) || isnull(state))
@@ -1481,12 +1489,8 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	if(isnull(icon_states_cache[file]))
 		icon_states_cache[file] = list()
 		var/file_string = "[file]"
-		if(length(file_string)) // ensure that it's actually a file, and not a runtime icon
-			for(var/istate in json_decode(rustg_dmi_icon_states(file_string)))
-				icon_states_cache[file][istate] = TRUE
-		else // Otherwise, we have to use the slower BYOND proc
-			for(var/istate in icon_states(file))
-				icon_states_cache[file][istate] = TRUE
+		for(var/istate in get_icon_states_for_lookup(file, file_string))
+			icon_states_cache[file][istate] = TRUE
 
 	return !isnull(icon_states_cache[file][state])
 

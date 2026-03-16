@@ -6464,7 +6464,7 @@
 /turf/open/floor/tile/tilerg,
 /area/under/rmh_desert/tea/hareml)
 "iDb" = (
-/obj/structure/door/arcyne/bolt,
+/obj/structure/door/arcyne,
 /obj/effect/mapping_helpers/access/keyset/town/tower,
 /obj/effect/mapping_helpers/access/locker,
 /turf/open/floor/concrete,
