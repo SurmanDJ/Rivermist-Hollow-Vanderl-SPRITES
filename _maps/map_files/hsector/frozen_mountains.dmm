@@ -7080,7 +7080,7 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/outdoors/mountains/rmh_mountains/frozen/forsaken_village)
 "Ey" = (
-/obj/structure/door/arcyne,
+/obj/structure/door/arcyne/key,
 /obj/effect/mapping_helpers/access/keyset/town/tower,
 /obj/effect/mapping_helpers/access/locker,
 /turf/open/floor/concrete,

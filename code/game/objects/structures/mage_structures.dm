@@ -29,6 +29,9 @@ GLOBAL_LIST_EMPTY(mana_fountains)
 /obj/structure/door/arcyne/bolt
 	has_bolt = TRUE
 
+/obj/structure/door/arcyne/key
+	lock = /datum/lock/key
+
 /obj/structure/door/arcyne/bolt/caster
 	var/mob/caster
 
