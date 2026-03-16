@@ -57,39 +57,56 @@
 /datum/component/belly_fullness/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ORGAN_INSERTED)
 	UnregisterSignal(parent, COMSIG_ORGAN_REMOVED)
-	unregister_tracked_organs()
+	clear_tracked_organs()
 	if(carrier)
 		unregister_carrier()
 
 /datum/component/belly_fullness/Destroy(force, ...)
-	unregister_tracked_organs()
+	clear_tracked_organs()
 	carrier = null
 	belly = null
 	return ..()
 
 /datum/component/belly_fullness/proc/register_carrier()
 	RegisterSignal(carrier, COMSIG_LIVING_LIFE, PROC_REF(handle_life))
+	RegisterSignal(carrier, COMSIG_PARENT_QDELETING, PROC_REF(on_carrier_qdeleting))
 
 /datum/component/belly_fullness/proc/unregister_carrier()
-	UnregisterSignal(carrier, COMSIG_LIVING_LIFE)
+	UnregisterSignal(carrier, list(COMSIG_LIVING_LIFE, COMSIG_PARENT_QDELETING))
+
+/datum/component/belly_fullness/proc/register_tracked_organ(obj/item/organ/organ)
+	if(!organ)
+		return
+
+	RegisterSignal(organ, COMSIG_BODYSTORAGE_CHANGED, PROC_REF(on_storage_changed))
+	RegisterSignal(organ, COMSIG_ORGAN_INSERTED, PROC_REF(on_tracked_organ_changed))
+	RegisterSignal(organ, COMSIG_ORGAN_REMOVED, PROC_REF(on_tracked_organ_changed))
+	RegisterSignal(organ, COMSIG_PARENT_QDELETING, PROC_REF(on_tracked_organ_qdeleting))
+
+/datum/component/belly_fullness/proc/unregister_tracked_organ(obj/item/organ/organ)
+	if(!organ)
+		return
+
+	UnregisterSignal(organ, list(
+		COMSIG_BODYSTORAGE_CHANGED,
+		COMSIG_ORGAN_INSERTED,
+		COMSIG_ORGAN_REMOVED,
+		COMSIG_PARENT_QDELETING,
+	))
 
 /datum/component/belly_fullness/proc/register_tracked_organs()
 	for(var/key in tracked_organs)
 		var/obj/item/organ/organ = tracked_organs[key]
-		if(!organ)
-			continue
-		RegisterSignal(organ, COMSIG_BODYSTORAGE_CHANGED, PROC_REF(on_storage_changed))
-		RegisterSignal(organ, COMSIG_ORGAN_INSERTED, PROC_REF(on_tracked_organ_changed))
-		RegisterSignal(organ, COMSIG_ORGAN_REMOVED, PROC_REF(on_tracked_organ_changed))
+		register_tracked_organ(organ)
 
 /datum/component/belly_fullness/proc/unregister_tracked_organs()
 	for(var/key in tracked_organs)
 		var/obj/item/organ/organ = tracked_organs[key]
-		if(!organ)
-			continue
-		UnregisterSignal(organ, COMSIG_BODYSTORAGE_CHANGED)
-		UnregisterSignal(organ, COMSIG_ORGAN_INSERTED)
-		UnregisterSignal(organ, COMSIG_ORGAN_REMOVED)
+		unregister_tracked_organ(organ)
+
+/datum/component/belly_fullness/proc/clear_tracked_organs()
+	unregister_tracked_organs()
+	tracked_organs = list()
 
 /datum/component/belly_fullness/proc/on_inserted(datum/source, mob/living/new_owner)
 	SIGNAL_HANDLER
@@ -112,8 +129,15 @@
 	if(carrier)
 		unregister_carrier()
 	carrier = null
-	unregister_tracked_organs()
-	tracked_organs = list()
+	clear_tracked_organs()
+
+/datum/component/belly_fullness/proc/on_carrier_qdeleting(datum/source, force)
+	SIGNAL_HANDLER
+
+	if(carrier)
+		unregister_carrier()
+	carrier = null
+	clear_tracked_organs()
 
 /datum/component/belly_fullness/proc/handle_life(seconds)
 	SIGNAL_HANDLER
@@ -131,6 +155,21 @@
 
 	refresh_tracked_organs(TRUE)
 	recalculate_size()
+
+/datum/component/belly_fullness/proc/on_tracked_organ_qdeleting(obj/item/organ/source, force)
+	SIGNAL_HANDLER
+
+	var/changed = FALSE
+	for(var/key in tracked_organs)
+		if(tracked_organs[key] != source)
+			continue
+
+		tracked_organs[key] = null
+		changed = TRUE
+
+	unregister_tracked_organ(source)
+	if(changed)
+		recalculate_size()
 
 /datum/component/belly_fullness/proc/refresh_tracked_organs(force_rebind = FALSE)
 	var/list/new_tracked = list(
