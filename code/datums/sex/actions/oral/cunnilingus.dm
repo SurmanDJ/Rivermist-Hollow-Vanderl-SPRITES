@@ -1,5 +1,7 @@
 /datum/sex_action/cunnilingus
 	name = "Suck their cunt off"
+	user_menu_zone_mask = SEX_UI_ZONE_MOUTH
+	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 	target_priority = 100
 	gags_user = TRUE
 
@@ -57,5 +59,5 @@
 	user.visible_message(span_warning("[user] stops sucking [target]'s clit ..."))
 
 /datum/sex_action/cunnilingus/lock_sex_object(mob/living/user, mob/living/target)
-	sex_locks |= new /datum/sex_session_lock(target, ORGAN_SLOT_VAGINA)
-	sex_locks |= new /datum/sex_session_lock(user, BODY_ZONE_PRECISE_MOUTH)
+	add_sex_lock(target, ORGAN_SLOT_VAGINA, null, FALSE)
+	add_sex_lock(user, BODY_ZONE_PRECISE_MOUTH)

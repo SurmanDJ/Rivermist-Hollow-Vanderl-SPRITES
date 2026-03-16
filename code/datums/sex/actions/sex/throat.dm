@@ -1,5 +1,6 @@
 /datum/sex_action/sex/throat
 	name = "Fuck their throat"
+	target_menu_zone_mask = SEX_UI_ZONE_MOUTH
 	hole_id = BODY_ZONE_PRECISE_MOUTH
 	stamina_cost = 1.0
 	gags_target = TRUE

@@ -472,7 +472,7 @@
 		action = s_action
 
 	else if(highest_priority)
-		action = highest_priority.current_action
+		action = highest_priority.get_highest_priority_action_for(parent)
 
 	if(!action_initiator)
 		action_initiator = parent
@@ -537,14 +537,14 @@
 		testes = user.getorganslot(ORGAN_SLOT_TESTICLES)
 	if(user.getorganslot(ORGAN_SLOT_VAGINA))
 		vag = user.getorganslot(ORGAN_SLOT_VAGINA)
-	if(issimple(user))
+	/*if(issimple(user))
 		log_combat(user, user, "Ejaculated")
 		user.visible_message(span_love("[user] makes a mess!"))
 		playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
 		var/turf/turf = get_turf(target)
 		turf.add_liquid(/datum/reagent/consumable/cum, 5)
 		after_ejaculation(climax_type == ORGASM_LOCATION_INTO || climax_type == ORGASM_LOCATION_ORAL, user, target)
-		return
+		return*/
 
 	var/is_oral = FALSE
 	if(action)

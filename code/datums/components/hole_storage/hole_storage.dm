@@ -140,7 +140,8 @@
 	if(iscarbon(incoming_item.loc))
 		var/mob/living/carbon/M = incoming_item.loc
 		M.dropItemToGround(incoming_item, FALSE, TRUE)
-	organ_storing.contents |= incoming_item
+	if(!(organ_storing.contains(incoming_item)))
+		organ_storing.contents += incoming_item
 	incoming_item.forceMove(organ_storing)
 	var/list/t_layer = all_layers[target_layer]
 	t_layer.Add(incoming_item)
@@ -151,6 +152,7 @@
 	if(diff > 0)
 		handle_stretch(source, diff)
 	owner.encumbrance_to_speed()
+	notify_storage_changed()
 
 /**
  * Checks if an item fits in the selected layer
@@ -215,6 +217,7 @@
 	if(removed_item.has_body_storage_overlay)
 		remove_outer_overlay(removed_item)
 	owner.encumbrance_to_speed()
+	notify_storage_changed()
 
 /**
  * Swaps a random item between two layers. Layers should be different
@@ -367,6 +370,21 @@
 */
 /datum/component/body_storage/proc/update_size(datum/source)
 	calculate_bulk()
+	notify_storage_changed()
+
+/datum/component/body_storage/proc/recalculate_current_bulk(datum/source)
+	for(var/layer in all_layers)
+		var/current_bulk = 0
+		var/list/layer_contents = all_layers[layer]
+		if(islist(layer_contents))
+			for(var/obj/item/stored_item as anything in layer_contents)
+				current_bulk += stored_item.body_storage_bulk
+		layer_storage_cur_bulk[layer] = current_bulk
+
+	notify_storage_changed()
+
+/datum/component/body_storage/proc/notify_storage_changed()
+	SEND_SIGNAL(parent, COMSIG_BODYSTORAGE_CHANGED, src)
 
 /**
  * Returns the layer list from layer index

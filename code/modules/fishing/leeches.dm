@@ -42,8 +42,9 @@
 	var/trying_to_attach = FALSE
 	var/fluid_sucking = 5
 	var/fluid_storage = 0
-	var/max_storage = 100
+	var/max_storage = 500
 	var/horny = FALSE
+	var/manually_attached = FALSE
 
 
 /obj/item/natural/worms/leech/Initialize()
@@ -130,7 +131,7 @@
 			var/fluid_to_take = min(max_storage - fluid_storage, vagina.reagents.total_volume, fluid_sucking)
 			vagina.reagents.trans_to(reagents, fluid_to_take)
 			fluid_storage += fluid_to_take
-			if(fluid_storage >= max_storage)
+			if(fluid_storage >= max_storage/2)
 				if(prob(30))
 					if(horny_leech_move_deeper(H, target_organ, storage_layer))
 						fluid_storage = 0
@@ -203,69 +204,69 @@
 
 		if(H.get_erp_pref(/datum/erp_preference/boolean/allow_horny_leeches))
 			var/choice = FALSE
-			choice = alert(user, "Are you aiming for more private areas?", "Love Leech", "Yes", "No")
-			if(choice == "Yes")
-				if(!(user.zone_selected in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN)))
-					to_chat(user, "The leech refuses to attach here, it seeks other nutrition.")
-					return
+			if(user.zone_selected in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN))
+				choice = alert(user, "Are you aiming for more private areas?", "Love Leech", "Yes", "No")
+				if(choice == "Yes")
 
-				var/obj/item/organ/selected_organ
-				switch(user.zone_selected)
-					if(BODY_ZONE_CHEST)
-						var/organ_choice = browser_input_list(user, "Select the side:", "Suck", list("Left Nipple", "Right Nipple"))
-						switch(organ_choice)
-							if("Left Nipple")
-								target_organ = H.getorganslot(ORGAN_SLOT_LEFT_NIP)
-								storage_icon_state = target_organ.slot
-								if(!target_organ)
-									to_chat(user, "This spot won't offer much to the leech...")
+					var/obj/item/organ/selected_organ
+					switch(user.zone_selected)
+						if(BODY_ZONE_CHEST)
+							var/organ_choice = browser_input_list(user, "Select the side:", "Suck", list("Left Nipple", "Right Nipple"))
+							switch(organ_choice)
+								if("Left Nipple")
+									target_organ = H.getorganslot(ORGAN_SLOT_LEFT_NIP)
+									storage_icon_state = target_organ.slot
+									if(!target_organ)
+										to_chat(user, "This spot won't offer much to the leech...")
+										return
+									to_chat(user, "The leech begins to crawl towards the area of interest and opens its soft mouth...")
+								if("Right Nipple")
+									target_organ = H.getorganslot(ORGAN_SLOT_RIGHT_NIP)
+									storage_icon_state = target_organ.slot
+									if(!target_organ)
+										to_chat(user, "This spot won't offer much to the leech...")
+										return
+									to_chat(user, "The leech begins to crawl towards the area of interest and opens its soft mouth...")
+								else
 									return
-								to_chat(user, "The leech begins to crawl towards the area of interest and opens its soft mouth...")
-							if("Right Nipple")
-								target_organ = H.getorganslot(ORGAN_SLOT_RIGHT_NIP)
-								storage_icon_state = target_organ.slot
-								if(!target_organ)
-									to_chat(user, "This spot won't offer much to the leech...")
-									return
-								to_chat(user, "The leech begins to crawl towards the area of interest and opens its soft mouth...")
-							else
-								return
 
-					if(BODY_ZONE_PRECISE_GROIN)
-						var/organ_choice = browser_input_list(user, "Select the organ to which you will attach the leech.", "Suck", list("Vagina", "Penis"))
-						switch(organ_choice)
-							if("Vagina")
-								storage_icon_state = ORGAN_SLOT_VAGINA
-								target_organ = H.getorganslot(ORGAN_SLOT_VAGINA)
-								if(!target_organ)
-									to_chat(user, "Seems that your taget doesn't posess the necessary bits...")
+						if(BODY_ZONE_PRECISE_GROIN)
+							var/organ_choice = browser_input_list(user, "Select the organ to which you will attach the leech.", "Suck", list("Vagina", "Penis"))
+							switch(organ_choice)
+								if("Vagina")
+									storage_icon_state = ORGAN_SLOT_VAGINA
+									target_organ = H.getorganslot(ORGAN_SLOT_VAGINA)
+									if(!target_organ)
+										to_chat(user, "Seems that your taget doesn't posess the necessary bits...")
+										return
+									to_chat(user, "The leech begins to crawl towards the vagina and opens its soft mouth...")
+								if("Penis")
+									storage_icon_state = ORGAN_SLOT_PENIS
+									target_organ = H.getorganslot(ORGAN_SLOT_PENIS)
+									if(!target_organ)
+										to_chat(user, "Seems that your taget doesn't posess the necessary bits...")
+										return
+									to_chat(user, "The leech opens its mouth wide and swallows the penis, starting to squeeze it...")
+								else
 									return
-								to_chat(user, "The leech begins to crawl towards the vagina and opens its soft mouth...")
-							if("Penis")
-								storage_icon_state = ORGAN_SLOT_PENIS
-								target_organ = H.getorganslot(ORGAN_SLOT_PENIS)
-								if(!target_organ)
-									to_chat(user, "Seems that your taget doesn't posess the necessary bits...")
-									return
-								to_chat(user, "The leech opens its mouth wide and swallows the penis, starting to squeeze it...")
-							else
-								return
 
-				user.dropItemToGround(src)
-				var/success = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_TRY_INSERT, src, STORAGE_LAYER_OUTER)
-				if(success)
-					if(M == user)
-						user.visible_message("<span class='notice'>[user] places [src] on [user.p_their()] [selected_organ].</span>", "<span class='notice'>I place a leech on my [target_organ.name].</span>")
+					user.dropItemToGround(src)
+					var/success = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_TRY_INSERT, src, STORAGE_LAYER_OUTER)
+					if(success)
+						if(M == user)
+							user.visible_message("<span class='notice'>[user] places [src] on [user.p_their()] [selected_organ].</span>", "<span class='notice'>I place a leech on my [target_organ.name].</span>")
+						else
+							user.visible_message("<span class='notice'>[user] places [src] on [M]'s [selected_organ].</span>", "<span class='notice'>I place a leech on [M]'s [target_organ.name].</span>")
+						START_PROCESSING(SSobj, src)
+						manually_attached = TRUE
 					else
-						user.visible_message("<span class='notice'>[user] places [src] on [M]'s [selected_organ].</span>", "<span class='notice'>I place a leech on [M]'s [target_organ.name].</span>")
-					START_PROCESSING(SSobj, src)
-				else
-					target_organ = null
-					to_chat(user,"<span class='notice'>There's already something in the desired location.</span>")
-				return
+						target_organ = null
+						to_chat(user,"<span class='notice'>There's already something in the desired location.</span>")
+					return
 
 		user.dropItemToGround(src)
 		src.forceMove(H)
+		manually_attached = TRUE
 		affecting.add_embedded_object(src, silent = TRUE, crit_message = FALSE)
 		if(completely_silent)
 			return
@@ -283,7 +284,7 @@
 		return
 
 	var/mob/living/carbon/human/H = user
-	if(H.get_erp_pref(/datum/erp_preference/boolean/allow_horny_leeches))
+	if(H.get_erp_pref(/datum/erp_preference/boolean/allow_horny_leeches) && !manually_attached)
 		var/list/slots_to_check = list(ORGAN_SLOT_PENIS, ORGAN_SLOT_VAGINA, ORGAN_SLOT_LEFT_NIP, ORGAN_SLOT_RIGHT_NIP)
 		var/list/available_organs = list()
 		for(var/i in slots_to_check)
@@ -313,6 +314,7 @@
 				bodypart.remove_embedded_object(src)
 			else
 				user.simple_remove_embedded_object(src)
+			manually_attached = FALSE
 			return TRUE
 	else
 		var/modifier = bodypart.has_wound(/datum/wound/slash/incision) ? 1.5 : 1
@@ -327,6 +329,7 @@
 				bodypart.remove_embedded_object(src)
 			else
 				user.simple_remove_embedded_object(src)
+			manually_attached = FALSE
 			return TRUE
 	return FALSE
 
@@ -348,6 +351,7 @@
 		qdel(src)
 	var/drop_location = user?.drop_location() || drop_location()
 	target_organ = null
+	manually_attached = FALSE
 	if(drop_location)
 		doMove(drop_location)
 	else

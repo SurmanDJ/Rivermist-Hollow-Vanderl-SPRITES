@@ -55,7 +55,7 @@
 
 	var/obj/item/dildo = user.get_active_held_item()
 	if(!dildo)
-		sex_session.stop_current_action()
+		sex_session.stop_current_action(src)
 		return
 	var/force = FALSE
 	if(sex_session.get_current_force() >= SEX_FORCE_HIGH)
@@ -102,7 +102,7 @@
 					to_chat(user, sex_session.spanify_force("My ass is too full to stuff even \the [dildo] in."))
 				else
 					user.visible_message(sex_session.spanify_force("[target]'s ass is too full to stuff even \the [dildo] in."))
-				sex_session.stop_current_action()
+				sex_session.stop_current_action(src)
 				return
 		if(INSERT_FEEDBACK_TRY_FORCE)
 			pain_amt += 3
@@ -115,7 +115,7 @@
 				to_chat(user, sex_session.spanify_force("I fail to stuff \the [dildo] in my ass."))
 			else
 				user.visible_message(sex_session.spanify_force("I fail to stuff \the [dildo] in [target]'s ass."))
-			sex_session.stop_current_action()
+			sex_session.stop_current_action(src)
 			return
 
 	user.update_inv_hands()
@@ -181,7 +181,7 @@
 	removed_item = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_REMOVE_RAND_ITEM, STORAGE_LAYER_INNER)
 	if(!removed_item)
 		to_chat(user, sex_session.spanify_force("I couldn't find anything inside..."))
-		sex_session.stop_current_action()
+		sex_session.stop_current_action(src)
 		return
 	if(user.get_active_held_item())
 		user.visible_message(sex_session.spanify_force("The [removed_item] falls down on the floor..."))
@@ -263,14 +263,14 @@
 			return
 		else
 			to_chat(user, span_love("...But nothing comes out, and I finally feel empty."))
-			sex_session.stop_current_action()
+			sex_session.stop_current_action(src)
 			return
 
 	var/obj/item/removed_item
 	removed_item = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_REMOVE_RAND_ITEM, STORAGE_LAYER_DEEP)
 	if(!removed_item)
 		to_chat(user, sex_session.spanify_force("There was nothing inside."))
-		sex_session.stop_current_action()
+		sex_session.stop_current_action(src)
 		return
 
 	user.visible_message("<span class='love_mid'>[user] tenses up and pushes [removed_item] out of their ass.</span>", "<span class='love_mid'>With some effort, I push out [removed_item].</span>")

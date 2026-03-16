@@ -11,6 +11,9 @@
 	max_reagents = 20 //less size than vagene in turn for more effective absorbtion
 	absorbing = TRUE
 	absorbmult = 1.5 //more effective absorb than others i guess.
+	allows_oviposition_pregnancy = TRUE
+	oviposition_storage_component_type = /datum/component/body_storage/anus
+	oviposition_location_name = "anus"
 	altnames = list("ass", "asshole", "butt", "butthole", "guts") //used in thought messages.
 	spiller = TRUE
 	blocker = ITEM_SLOT_PANTS

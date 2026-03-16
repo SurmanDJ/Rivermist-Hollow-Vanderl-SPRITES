@@ -43,4 +43,4 @@
 
 /datum/sex_action/masturbate/other/penis/lock_sex_object(mob/living/user, mob/living/target)
 	. = ..()
-	sex_locks |= new /datum/sex_session_lock(target, ORGAN_SLOT_PENIS)
+	add_sex_lock(target, ORGAN_SLOT_PENIS, null, FALSE)

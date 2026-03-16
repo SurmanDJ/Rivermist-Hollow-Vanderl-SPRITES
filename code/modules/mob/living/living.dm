@@ -884,6 +884,31 @@
 /mob/living/proc/set_lying_down(new_lying_angle)
 	set_body_position(LYING_DOWN)
 
+/mob/living/proc/get_lying_direction_name()
+	if(body_position != LYING_DOWN)
+		return null
+
+	switch(SIMPLIFY_DEGREES(lying_angle))
+		if(90)
+			return "east"
+		if(180)
+			return "south"
+		if(270)
+			return "west"
+		if(0)
+			return "north"
+
+	return null
+
+/mob/living/proc/swap_lying_direction()
+	if(body_position != LYING_DOWN)
+		to_chat(src, span_warning("I need to be lying down first."))
+		return FALSE
+
+	set_lying_angle(REVERSE_ANGLE(lying_angle))
+	visible_message(span_notice("[src] shifts around and turns the other way."), span_notice("I shift around and turn the other way."))
+	return TRUE
+
 /// Proc to append behavior related to lying down.
 /mob/living/proc/on_lying_down(new_lying_angle)
 	if(layer == initial(layer)) //to avoid things like hiding larvas.
@@ -1301,6 +1326,15 @@
 /mob/living
 	var/had_pacifist = FALSE
 
+/mob/living/Topic(href, href_list)
+	if(href_list["swap_lying_direction"])
+		if(usr != src)
+			return
+		swap_lying_direction()
+		return TRUE
+
+	return ..()
+
 /mob/living/verb/toggle_submit()
 	set name = "Toggle Yield"
 	set category = "IC"
@@ -1338,6 +1372,12 @@
 				REMOVE_TRAIT(src, TRAIT_PACIFISM, TRAIT_GENERIC)
 			had_pacifist = FALSE
 			src.visible_message("<span class='notice'>[src] no longer yields!</span>")
+
+/mob/living/verb/swap_lying_direction_verb()
+	set name = "Swap Lying Direction"
+	set category = "IC"
+
+	swap_lying_direction()
 
 /mob/proc/stop_attack(message = FALSE)
 	if(atkswinging)

@@ -2,12 +2,14 @@
 	var/mob/living/locked_host
 	var/locked_organ_slot
 	var/obj/item/locked_item
+	var/hard_lock = TRUE
 
-/datum/sex_session_lock/New(mob/_host, _locked_slot, obj/item/_locked_item)
+/datum/sex_session_lock/New(mob/_host, _locked_slot, obj/item/_locked_item, _hard_lock = TRUE)
 	. = ..()
 	locked_host = _host
 	locked_organ_slot = _locked_slot
 	locked_item = _locked_item
+	hard_lock = _hard_lock
 	LAZYADD(GLOB.locked_sex_objects, src)
 
 /datum/sex_session_lock/Destroy(force, ...)
@@ -15,6 +17,7 @@
 	LAZYREMOVE(GLOB.locked_sex_objects, src)
 	locked_host = null
 	locked_item = null
+	hard_lock = null
 
 /datum/storage_tracking_entry
 	var/obj/item/stored_item = null
@@ -95,6 +98,14 @@
 	var/action_volume = 50
 	/// So that we don't spam messages with every thrust for example
 	var/next_message_time = 0
+	/// Whether this running action should stop on its next loop check
+	var/stop_requested = FALSE
+	/// Which hand this action reserved, if any
+	var/selected_hand = null
+	/// Which zone the local user is using for interaction-menu filtering
+	var/user_menu_zone_mask = SEX_UI_ZONE_ANY
+	/// Which zone on the other side this action focuses on for interaction-menu filtering
+	var/target_menu_zone_mask = SEX_UI_ZONE_ANY
 
 /datum/sex_action/Destroy()
 	// Clean up any tracked storage entries
@@ -110,6 +121,12 @@
 
 /datum/sex_action/proc/shows_on_menu(mob/living/user, mob/living/target)
 	return TRUE
+
+/datum/sex_action/proc/get_menu_action_key()
+	return "[type]"
+
+/datum/sex_action/proc/build_runtime_instance()
+	return new type
 
 /datum/sex_action/proc/can_perform(mob/living/user, mob/living/target)
 	SHOULD_CALL_PARENT(TRUE)
@@ -386,6 +403,30 @@
 /datum/sex_action/proc/lock_sex_object(mob/living/user, mob/living/target)
 	return FALSE
 
+/datum/sex_action/proc/add_sex_lock(mob/living/locked_host, locked_organ_slot, obj/item/locked_item, hard_lock = TRUE)
+	sex_locks |= new /datum/sex_session_lock(locked_host, locked_organ_slot, locked_item, hard_lock)
+
+/datum/sex_action/proc/find_available_hand(mob/living/user)
+	if(!user || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+		return null
+
+	var/list/hand_order = list(user.get_active_precise_hand(), user.get_inactive_precise_hand())
+	for(var/hand_slot in hand_order)
+		if(!hand_slot)
+			continue
+		if(!user.get_bodypart(hand_slot))
+			continue
+		if(check_sex_lock(user, hand_slot))
+			continue
+		return hand_slot
+	return null
+
+/datum/sex_action/proc/get_hand_lock_slot(mob/living/user)
+	if(selected_hand)
+		return selected_hand
+	selected_hand = find_available_hand(user)
+	return selected_hand
+
 /datum/sex_action/proc/unlock_sex_object(mob/living/user, mob/living/target)
 	for(var/datum/sex_session_lock/lock as anything in sex_locks)
 		qdel(lock)
@@ -400,6 +441,8 @@
 
 	for(var/datum/sex_session_lock/lock as anything in GLOB.locked_sex_objects)
 		if(lock.locked_host == locked)
+			if(!lock.hard_lock)
+				continue
 			var/item_lock = ((lock.locked_item == item) && lock.locked_item)
 			var/organ_lock = ((lock.locked_organ_slot == organ_slot) && lock.locked_organ_slot)
 			if(!item_lock && !organ_lock)
@@ -430,3 +473,10 @@
 		next_message_time = world.time + speed_time
 		return TRUE
 	return FALSE
+
+/datum/sex_action/proc/matches_ui_filters(user_filter, target_filter)
+	if(user_filter != SEX_UI_ZONE_ANY && !(user_menu_zone_mask & user_filter))
+		return FALSE
+	if(target_filter != SEX_UI_ZONE_ANY && !(target_menu_zone_mask & target_filter))
+		return FALSE
+	return TRUE

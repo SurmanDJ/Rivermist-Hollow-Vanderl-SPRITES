@@ -1,6 +1,8 @@
 
 /datum/sex_action/blowjob
 	name = "Suck them off"
+	user_menu_zone_mask = SEX_UI_ZONE_MOUTH
+	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 	requires_hole_storage = TRUE
 	hole_id = BODY_ZONE_PRECISE_MOUTH
 	stored_item_type = /obj/item/organ/genitals/penis
@@ -59,8 +61,8 @@
 	user.visible_message(span_warning("[user] stops sucking [target]'s cock ..."))
 
 /datum/sex_action/blowjob/lock_sex_object(mob/living/user, mob/living/target)
-	sex_locks |= new /datum/sex_session_lock(target, ORGAN_SLOT_PENIS)
-	sex_locks |= new /datum/sex_session_lock(user, BODY_ZONE_PRECISE_MOUTH)
+	add_sex_lock(target, ORGAN_SLOT_PENIS, null, FALSE)
+	add_sex_lock(user, BODY_ZONE_PRECISE_MOUTH)
 
 /datum/sex_action/blowjob/handle_climax_message(mob/living/user, mob/living/target, must_flip)
 	if(must_flip)

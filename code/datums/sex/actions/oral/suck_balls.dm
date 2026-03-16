@@ -1,5 +1,7 @@
 /datum/sex_action/suck_balls
 	name = "Suck their balls"
+	user_menu_zone_mask = SEX_UI_ZONE_MOUTH
+	target_menu_zone_mask = SEX_UI_ZONE_GENITALS
 	gags_user = TRUE
 
 /datum/sex_action/suck_balls/shows_on_menu(mob/living/user, mob/living/target)
@@ -45,5 +47,5 @@
 	user.visible_message(span_warning("[user] stops sucking [target]'s balls ..."))
 
 /datum/sex_action/suck_balls/lock_sex_object(mob/living/user, mob/living/target)
-	sex_locks |= new /datum/sex_session_lock(user, BODY_ZONE_PRECISE_MOUTH)
-	sex_locks |= new /datum/sex_session_lock(target, ORGAN_SLOT_TESTICLES)
+	add_sex_lock(user, BODY_ZONE_PRECISE_MOUTH)
+	add_sex_lock(target, ORGAN_SLOT_TESTICLES, null, FALSE)
