@@ -17,7 +17,9 @@
 	return
 
 /datum/asset/spritesheet/quest_previews/send(client/client)
-	if(!sprites_generated && !generation_in_progress)
+	if(!sprites_generated)
+		// Reset stale lock from a previous failed attempt so we can retry.
+		generation_in_progress = FALSE
 		generate_quest_sprites()
 	if(!sprites_generated)
 		// Generation failed or no sprites — skip parent send() to avoid
@@ -26,7 +28,8 @@
 	return ..()
 
 /datum/asset/spritesheet/quest_previews/ensure_ready()
-	if(!sprites_generated && !generation_in_progress)
+	if(!sprites_generated)
+		generation_in_progress = FALSE
 		generate_quest_sprites()
 	if(!sprites_generated)
 		// Generation failed — don't let parent call realize_spritesheets()
@@ -110,6 +113,8 @@
 	// Mark as complete AFTER everything is finalized, so send() won't
 	// ship an empty CSS if called during generation.
 	sprites_generated = TRUE
+	// Always unlock — even if realize_spritesheets() threw a runtime,
+	// next attempt (e.g. player opens ledger) can retry generation.
 	generation_in_progress = FALSE
 
 /// Inserts a single mob preview sprite. Returns TRUE on success.
@@ -120,37 +125,44 @@
 
 	var/icon/preview_icon
 
-	// Static simple_animal mobs — use icon file directly
+	// Simple_animal mobs — try static icon first, fall back to temp mob.
+	// Some mobs (wolf, etc.) set icon_state dynamically in Initialize(),
+	// so the initial() value may not exist in the DMI file.
 	if(ispath(mob_type, /mob/living/simple_animal))
 		var/icon_file = initial(mob_type.icon)
 		var/icon_state = ledger_ref.get_simple_animal_preview_icon_state(mob_type)
-		if(!icon_file || !icon_state)
-			return FALSE
-		var/list/available_states = ledger_ref.get_preview_icon_states(icon_file)
-		if(!islist(available_states) || !(icon_state in available_states))
-			return FALSE
-		preview_icon = ledger_ref.build_target_preview_icon(mob_type, icon_file, icon_state)
+		if(icon_file && icon_state)
+			var/list/available_states = ledger_ref.get_preview_icon_states(icon_file)
+			if(islist(available_states) && (icon_state in available_states))
+				preview_icon = ledger_ref.build_target_preview_icon(mob_type, icon_file, icon_state)
+				if(!preview_icon)
+					preview_icon = icon(icon_file, icon_state, SOUTH, 1)
+		// Static approach failed — spawn temp mob and getFlatIcon
 		if(!preview_icon)
-			preview_icon = icon(icon_file, icon_state, SOUTH, 1)
+			var/turf/preview_turf = locate(1, 1, 1)
+			if(!preview_turf)
+				preview_turf = get_turf(ledger_ref)
+			if(preview_turf)
+				var/mob/temp_mob = new mob_type(preview_turf)
+				if(temp_mob)
+					temp_mob.setDir(SOUTH)
+					var/icon/flattened = getFlatIcon(temp_mob, SOUTH, no_anim = TRUE)
+					preview_icon = flattened ? icon(flattened, frame = 1) : null
+					qdel(temp_mob)
 
-	// Monster model human mobs (goblin, zombie, skeleton, orc, kobold) —
-	// these have dedicated DMI sprite files with ready-made icon_states,
-	// so use static icon directly instead of spawning a temp mob.
-	// getFlatIcon() on temp mobs produces transparent icons for these types
-	// because regenerate_icons() clears icon_state and builds via overlays.
+	// Monster model human mobs (goblin, zombie, orc, kobold) —
+	// use static icon from DMI directly. These mobs' regenerate_icons()
+	// sets icon_state="" and builds via overlays, which don't render
+	// correctly via getFlatIcon during LateInitialize.
+	// initial(icon) and initial(icon_state) on these mob types point
+	// to the species DMI file with valid states (e.g. "goblin", "zizombie").
 	else if(ispath(mob_type, /mob/living/carbon/human) && ledger_ref.uses_monster_model_preview(mob_type))
 		var/icon_file = initial(mob_type.icon)
 		var/icon_state = initial(mob_type.icon_state)
-		if(!icon_file || !icon_state)
-			return FALSE
-		var/list/available_states = ledger_ref.get_preview_icon_states(icon_file)
-		if(!islist(available_states) || !(icon_state in available_states))
-			return FALSE
-		preview_icon = ledger_ref.build_target_preview_icon(mob_type, icon_file, icon_state)
-		if(!preview_icon)
+		if(icon_file && icon_state)
 			preview_icon = icon(icon_file, icon_state, SOUTH, 1)
 
-	// Human outlaw mobs — need runtime mob creation + getFlatIcon for cropped torso preview
+	// Human outlaw mobs — need runtime mob creation + getFlatIcon for cropped torso
 	else if(ispath(mob_type, /mob/living/carbon/human))
 		var/turf/preview_turf = locate(1, 1, 1)
 		if(!preview_turf)
@@ -196,7 +208,14 @@
 	if(preview_icon.Width() <= 0 || preview_icon.Height() <= 0)
 		return FALSE
 
-	Insert(sprite_name, preview_icon)
+	// Detect actual icon_state name for Insert().
+	// Static icons (simple_animal, monster model) retain their original
+	// state name (e.g. "goblin", "zizombie") through fit_preview_icon_to_square.
+	// queuedInsert does icon(src, icon_state=...) — passing "" when the icon
+	// only has a named state produces an empty icon, silently skipping insertion.
+	var/list/preview_states = icon_states(preview_icon)
+	var/insert_state = length(preview_states) ? preview_states[1] : ""
+	Insert(sprite_name, preview_icon, insert_state)
 	return TRUE
 
 /// Returns a deterministic CSS-safe sprite name for a given mob type path.
