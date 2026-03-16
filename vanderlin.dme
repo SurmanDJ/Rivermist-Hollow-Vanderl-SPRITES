@@ -2344,6 +2344,7 @@
 #include "code\modules\asset_cache\assets\icon_ref_map.dm"
 #include "code\modules\asset_cache\assets\jquery.dm"
 #include "code\modules\asset_cache\assets\permissions.dm"
+#include "code\modules\asset_cache\assets\quest_previews.dm"
 #include "code\modules\asset_cache\assets\rougefont.dm"
 #include "code\modules\asset_cache\assets\stonekeep.dm"
 #include "code\modules\asset_cache\assets\tgfont.dm"

@@ -1,14 +1,7 @@
 GLOBAL_LIST_EMPTY(claimed_quest_compass_users)
-GLOBAL_LIST_EMPTY(quest_preview_icon_cache)
 GLOBAL_LIST_EMPTY(quest_preview_icon_states_cache)
-GLOBAL_VAR_INIT(quest_preview_preload_done, FALSE)
-GLOBAL_LIST_EMPTY(quest_preview_preload_queue)
 GLOBAL_LIST_EMPTY(quest_preview_state_cache)
-GLOBAL_VAR_INIT(quest_preview_preload_in_progress, FALSE)
 GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
-GLOBAL_VAR_INIT(quest_preview_preload_total, 0)
-GLOBAL_VAR_INIT(quest_preview_preload_completed, 0)
-GLOBAL_VAR(quest_preview_preload_label)
 
 /obj/effect/abstract/contract_preview_proxy
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -37,25 +30,16 @@ GLOBAL_VAR(quest_preview_preload_label)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/structure/fake_machine/contractledger/LateInitialize()
-	if(GLOB.quest_preview_preload_bootstrapped || GLOB.quest_preview_preload_done)
+	if(GLOB.quest_preview_preload_bootstrapped)
 		return
 	GLOB.quest_preview_preload_bootstrapped = TRUE
-	GLOB.quest_preview_preload_in_progress = TRUE
-	INVOKE_ASYNC(src, PROC_REF(run_world_start_preload))
-
-/obj/structure/fake_machine/contractledger/proc/run_world_start_preload()
-	ensure_global_preview_preload_state(null)
-	while(length(GLOB.quest_preview_preload_queue))
-		var/mob_type = GLOB.quest_preview_preload_queue[1]
-		GLOB.quest_preview_preload_queue.Cut(1, 2)
-		if(!mob_type)
-			continue
-		var/list/icon_data = get_target_preview_icon_data(mob_type)
-		GLOB.quest_preview_preload_completed++
-		GLOB.quest_preview_preload_label = icon_data["name"] || get_target_preview_name(mob_type)
-	GLOB.quest_preview_preload_done = TRUE
-	GLOB.quest_preview_preload_in_progress = FALSE
-	GLOB.quest_preview_preload_label = null
+	// Metadata cache can populate async — doesn't affect asset delivery
+	INVOKE_ASYNC(src, PROC_REF(ensure_global_preview_preload_state), null)
+	// Spritesheet generated synchronously during world init.
+	// Players can't interact with the ledger during LateInitialize,
+	// so no race between generate_quest_sprites() and send().
+	var/datum/asset/spritesheet/quest_previews/spritesheet = get_asset_datum(/datum/asset/spritesheet/quest_previews)
+	spritesheet.generate_quest_sprites()
 
 /obj/structure/fake_machine/contractledger/attack_hand(mob/living/carbon/human/user)
 	if(!ishuman(user))
@@ -82,6 +66,8 @@ GLOBAL_VAR(quest_preview_preload_label)
 /obj/structure/fake_machine/contractledger/ui_interact(mob/user, datum/tgui/ui)
 	if(!ishuman(user))
 		return FALSE
+	var/datum/asset/spritesheet/quest_previews/spritesheet = get_asset_datum(/datum/asset/spritesheet/quest_previews)
+	spritesheet.send(user)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		if(LAZYACCESS(ui_opening_lock, REF(user)))
@@ -101,10 +87,6 @@ GLOBAL_VAR(quest_preview_preload_label)
 	var/consult_block_reason = get_consult_block_reason(user)
 	var/can_consult_contracts = !consult_block_reason
 
-	if(can_consult_contracts)
-		if(!GLOB.quest_preview_preload_done)
-			return get_preload_ui_data(user)
-
 	var/selected_group = session["selected_group"]
 	var/selected_type = session["selected_type"]
 	var/selected_tier = session["selected_tier"] || 0
@@ -122,9 +104,12 @@ GLOBAL_VAR(quest_preview_preload_label)
 
 	var/list/notice_state = get_session_notice_state_raw(session)
 
+	var/datum/asset/spritesheet/quest_previews/spritesheet = get_asset_datum(/datum/asset/spritesheet/quest_previews)
+	var/spritesheet_css_url = spritesheet.css_filename()
+
 	return list(
-		"is_preloading" = FALSE,
 		"title" = "Grand Contract Ledger",
+		"spritesheet_css" = spritesheet_css_url,
 		"role_label" = get_role_label(user),
 		"is_handler" = is_quest_handler(user),
 		"has_bank_account" = has_bank_account(user),
@@ -164,14 +149,6 @@ GLOBAL_VAR(quest_preview_preload_label)
 		return FALSE
 
 	switch(action)
-		if("preload")
-			if(GLOB.quest_preview_preload_done)
-				return TRUE
-			if(!GLOB.quest_preview_preload_in_progress)
-				GLOB.quest_preview_preload_in_progress = TRUE
-				ensure_global_preview_preload_state(user)
-			advance_global_preview_preload(8)
-			return TRUE
 		if("consultcontracts")
 			prepare_contract_draft(user)
 			return TRUE
@@ -310,34 +287,19 @@ GLOBAL_VAR(quest_preview_preload_label)
 	session["cached_group"] = null
 	session["cached_type_values"] = null
 
-/obj/structure/fake_machine/contractledger/proc/get_preload_ui_data(mob/living/carbon/human/user)
-	var/preload_total = max(GLOB.quest_preview_preload_total, 1)
-	return list(
-		"is_preloading" = TRUE,
-		"title" = "Grand Contract Ledger",
-		"role_label" = get_role_label(user),
-		"active_contract_count" = get_active_contract_count(user),
-		"contract_limit" = get_contract_limit(user),
-		"can_claim_compass" = can_issue_quest_compass(user),
-		"compass_action_key" = get_compass_action_key(user),
-		"preload_current" = GLOB.quest_preview_preload_completed,
-		"preload_total" = preload_total,
-		"preload_label" = GLOB.quest_preview_preload_label,
-	)
-
+/// Populates the global quest_preview_state_cache with metadata (risk, spawn_weight, group sizes)
+/// for all quest types and tiers. Does NOT generate icons — those are handled by the spritesheet.
 /obj/structure/fake_machine/contractledger/proc/ensure_global_preview_preload_state(mob/living/carbon/human/user)
-	if(GLOB.quest_preview_preload_done)
-		return
-	if(length(GLOB.quest_preview_preload_queue))
+	if(length(GLOB.quest_preview_state_cache))
 		return
 
-	var/list/preload_queue = list()
 	var/list/seen_types = list()
-	var/list/queued_preview_sources = list()
 
-	var/list/all_groups = get_available_contract_group_values(user)
-	for(var/contract_group in all_groups)
-		var/list/group_contract_types = get_available_contract_type_values(user, contract_group)
+	// Iterate ALL contract types directly from the global registry,
+	// bypassing user-based permission filters (is_boss_raid_issuer etc.)
+	// so that boss/raid metadata is always cached for preview rendering.
+	for(var/contract_group in GLOB.global_quest_contract_groups)
+		var/list/group_contract_types = GLOB.global_quest_contract_groups[contract_group] || list()
 		for(var/contract_type in group_contract_types)
 			if(contract_type in seen_types)
 				continue
@@ -376,50 +338,8 @@ GLOBAL_VAR(quest_preview_preload_label)
 						"group_min" = kill_template.get_mob_group_min(mob_type),
 						"group_max" = kill_template.get_mob_group_max(mob_type),
 					))
-					var/preview_source = get_preview_icon_source_mob_type(mob_type)
-					if(!queued_preview_sources[preview_source])
-						queued_preview_sources[preview_source] = TRUE
-						preload_queue += preview_source
 
 			qdel(kill_template)
-
-	GLOB.quest_preview_preload_queue = preload_queue
-	GLOB.quest_preview_preload_total = length(preload_queue)
-	GLOB.quest_preview_preload_completed = 0
-	GLOB.quest_preview_preload_label = null
-	if(!length(preload_queue))
-		GLOB.quest_preview_preload_done = TRUE
-		GLOB.quest_preview_preload_in_progress = FALSE
-
-/obj/structure/fake_machine/contractledger/proc/advance_global_preview_preload(step_count = 4)
-	if(GLOB.quest_preview_preload_done)
-		return
-
-	var/list/preload_queue = GLOB.quest_preview_preload_queue
-	if(!islist(preload_queue) || !length(preload_queue))
-		GLOB.quest_preview_preload_done = TRUE
-		GLOB.quest_preview_preload_in_progress = FALSE
-		GLOB.quest_preview_preload_label = null
-		return
-
-	var/steps = min(max(step_count, 0), length(preload_queue))
-	while(steps > 0)
-		if(!length(preload_queue))
-			break
-		var/mob_type = preload_queue[1]
-		preload_queue.Cut(1, 2)
-		steps--
-		if(!mob_type)
-			continue
-
-		var/list/icon_data = get_target_preview_icon_data(mob_type)
-		GLOB.quest_preview_preload_completed++
-		GLOB.quest_preview_preload_label = icon_data["name"] || get_target_preview_name(mob_type)
-
-	if(!length(preload_queue))
-		GLOB.quest_preview_preload_done = TRUE
-		GLOB.quest_preview_preload_in_progress = FALSE
-		GLOB.quest_preview_preload_label = null
 
 /obj/structure/fake_machine/contractledger/proc/get_compass_claimant(mob/living/carbon/human/user)
 	if(!user)
@@ -803,17 +723,14 @@ GLOBAL_VAR(quest_preview_preload_label)
 		if(!islist(target_data))
 			continue
 		var/mob_type = target_data["mob_type"]
-		var/list/icon_data = get_target_preview_icon_data(mob_type)
 		var/list/entry = list(
 			"id" = "[mob_type]",
-			"name" = icon_data["name"] || get_target_preview_name(mob_type),
+			"name" = get_target_preview_name(mob_type),
 			"risk" = target_data["risk"],
 			"spawn_weight" = target_data["spawn_weight"],
 			"group_min" = target_data["group_min"],
 			"group_max" = target_data["group_max"],
-			"icon" = icon_data["icon"],
-			"icon_state" = icon_data["icon_state"],
-			"image" = icon_data["image"],
+			"icon_class" = get_preview_sprite_class(mob_type),
 		)
 		insert_preview_entry(entries, entry)
 	return entries
@@ -831,17 +748,14 @@ GLOBAL_VAR(quest_preview_preload_label)
 	var/list/candidate_pool = kill_template.get_candidate_target_pool()
 
 	for(var/mob_type in candidate_pool)
-		var/list/icon_data = get_target_preview_icon_data(mob_type)
 		var/list/entry = list(
 			"id" = "[mob_type]",
-			"name" = icon_data["name"] || get_target_preview_name(mob_type),
+			"name" = get_target_preview_name(mob_type),
 			"risk" = kill_template.get_mob_risk_value(mob_type),
 			"spawn_weight" = kill_template.get_mob_spawn_weight(mob_type),
 			"group_min" = kill_template.get_mob_group_min(mob_type),
 			"group_max" = kill_template.get_mob_group_max(mob_type),
-			"icon" = icon_data["icon"],
-			"icon_state" = icon_data["icon_state"],
-			"image" = icon_data["image"],
+			"icon_class" = get_preview_sprite_class(mob_type),
 		)
 		insert_preview_entry(entries, entry)
 
@@ -910,64 +824,14 @@ GLOBAL_VAR(quest_preview_preload_label)
 		return /mob/living/simple_animal/hostile/deepone
 	return mob_type
 
-/obj/structure/fake_machine/contractledger/proc/get_target_preview_icon_data(atom/mob_type)
-	var/source_mob_type = get_preview_icon_source_mob_type(mob_type)
-	var/cache_key = "preview_v10:[source_mob_type]"
-	var/list/cached_data = GLOB.quest_preview_icon_cache[cache_key]
-	if(cached_data)
-		var/list/icon_data = cached_data.Copy()
-		icon_data["name"] = get_target_preview_name(mob_type)
-		return icon_data
-
-	var/list/icon_data = list(
-		"name" = get_target_preview_name(mob_type),
-		"icon" = null,
-		"icon_state" = null,
-		"image" = null,
-	)
-	var/list/visual_data = list(
-		"icon" = null,
-		"icon_state" = null,
-		"image" = null,
-	)
-
-	var/icon/preview_icon
-	var/list/runtime_icon_data
-	var/use_outlaw_preview = uses_outlaw_preview(source_mob_type)
-	var/icon_file = get_target_preview_icon_file(source_mob_type)
-	var/icon_state = get_target_preview_icon_state(source_mob_type)
-
-	if(use_outlaw_preview)
-		runtime_icon_data = get_runtime_target_preview_icon_data(source_mob_type)
-		if(runtime_icon_data)
-			visual_data["icon"] = runtime_icon_data["icon"]
-			visual_data["icon_state"] = runtime_icon_data["icon_state"]
-		var/icon/runtime_preview_icon = runtime_icon_data ? runtime_icon_data["preview_icon"] : null
-		preview_icon = runtime_preview_icon || build_outlaw_preview_icon(icon_file, icon_state)
-	else
-		if(icon_file)
-			visual_data["icon"] = icon_file
-		if(icon_state && is_valid_preview_icon_state(icon_file, icon_state))
-			visual_data["icon_state"] = icon_state
-		preview_icon = build_target_preview_icon(source_mob_type, icon_file, icon_state)
-		if(!preview_icon && ispath(source_mob_type, /mob))
-			runtime_icon_data = get_runtime_target_preview_icon_data(source_mob_type)
-
-	if(runtime_icon_data && !use_outlaw_preview)
-		if(runtime_icon_data["icon"])
-			visual_data["icon"] = runtime_icon_data["icon"]
-		if(runtime_icon_data["icon_state"])
-			visual_data["icon_state"] = runtime_icon_data["icon_state"]
-		preview_icon = runtime_icon_data["preview_icon"]
-
-	if(preview_icon)
-		visual_data["image"] = "data:image/png;base64,[icon2base64(preview_icon, cache_key)]"
-
-	icon_data["icon"] = visual_data["icon"]
-	icon_data["icon_state"] = visual_data["icon_state"]
-	icon_data["image"] = visual_data["image"]
-	GLOB.quest_preview_icon_cache[cache_key] = visual_data
-	return icon_data
+/// Returns the CSS class name for a mob type's preview sprite in the quest_previews spritesheet.
+/obj/structure/fake_machine/contractledger/proc/get_preview_sprite_class(mob_type)
+	var/source = get_preview_icon_source_mob_type(mob_type)
+	var/sprite_name = quest_preview_sprite_name(source)
+	if(!sprite_name)
+		return null
+	var/datum/asset/spritesheet/quest_previews/spritesheet = get_asset_datum(/datum/asset/spritesheet/quest_previews)
+	return spritesheet.icon_class_name(sprite_name)
 
 /obj/structure/fake_machine/contractledger/proc/get_target_preview_icon_file(atom/mob_type)
 	if(!ispath(mob_type))

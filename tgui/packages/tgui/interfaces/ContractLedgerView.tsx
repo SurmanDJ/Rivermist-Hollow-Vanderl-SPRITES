@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import {
   Box,
   Button,
-  DmIcon,
   Icon,
-  Image,
   LabeledList,
   NoticeBox,
   Section,
@@ -44,16 +42,11 @@ type PreviewEntry = {
   spawn_weight: number;
   group_min: number;
   group_max: number;
-  icon?: string;
-  icon_state?: string;
-  image?: string;
+  icon_class?: string;
 };
 
 type Data = {
-  is_preloading?: boolean;
-  preload_current?: number;
-  preload_total?: number;
-  preload_label?: string | null;
+  spritesheet_css?: string;
   role_label: string;
   active_contract_count: number;
   contract_limit: number;
@@ -109,50 +102,6 @@ export type ContractLedgerLocale = {
   noContractSelectedTitle: string;
   noContractSelectedDescription: string;
   hiddenTargets: (count: number) => string;
-};
-
-const LedgerLoadBar = (props: {
-  progress: number;
-  width?: string;
-  height?: string;
-}) => {
-  const { progress, width = '18rem', height = '0.7rem' } = props;
-  const [offset, setOffset] = useState(0);
-
-  useEffect(() => {
-    const intervalId = window.setInterval(() => {
-      setOffset((value) => (value + 10) % 40);
-    }, 100);
-    return () => window.clearInterval(intervalId);
-  }, []);
-
-  const clampedProgress = Math.max(0, Math.min(progress, 1));
-  const fillWidth = `${Math.max(clampedProgress * 100, 8)}%`;
-
-  return (
-    <Box
-      style={{
-        width,
-        height,
-        borderRadius: '999px',
-        border: '1px solid rgba(255, 255, 255, 0.16)',
-        background: 'rgba(255, 255, 255, 0.06)',
-        overflow: 'hidden',
-      }}
-    >
-      <Box
-        style={{
-          width: fillWidth,
-          height: '100%',
-          backgroundImage:
-            'repeating-linear-gradient(135deg, rgba(224, 197, 128, 0.98) 0px, rgba(224, 197, 128, 0.98) 10px, rgba(173, 123, 56, 0.98) 10px, rgba(173, 123, 56, 0.98) 20px)',
-          backgroundSize: '40px 100%',
-          backgroundPosition: `${offset}px 0`,
-          boxShadow: '0 0 8px rgba(224, 197, 128, 0.35)',
-        }}
-      />
-    </Box>
-  );
 };
 
 const noticeColor = (type?: string) => {
@@ -225,27 +174,12 @@ const getDraftDescription = (
 
 const TargetPreviewIcon = (props: { entry: PreviewEntry }) => {
   const { entry } = props;
-  const fallback = (
-    <Icon name="question" size={2.5} color="gray" />
-  );
 
-  if (entry.image) {
-    return <Image src={entry.image} width={4} height={4} fixErrors />;
+  if (entry.icon_class) {
+    return <Box className={entry.icon_class} />;
   }
 
-  if (entry.icon && entry.icon_state) {
-    return (
-      <DmIcon
-        icon={entry.icon}
-        icon_state={entry.icon_state}
-        width={64}
-        height={64}
-        fallback={fallback}
-      />
-    );
-  }
-
-  return fallback;
+  return <Icon name="question" size={2.5} color="gray" />;
 };
 
 const TargetPreviewCard = (props: {
@@ -341,10 +275,6 @@ export const ContractLedgerView = (props: {
   const { locale } = props;
   const { act, data } = useBackend<Data>();
   const {
-    is_preloading,
-    preload_current,
-    preload_total,
-    preload_label,
     role_label,
     active_contract_count,
     contract_limit,
@@ -367,86 +297,34 @@ export const ContractLedgerView = (props: {
     notice,
   } = data;
 
+  // Dynamically load spritesheet CSS for preview icons
+  useEffect(() => {
+    const cssUrl = data.spritesheet_css;
+    if (!cssUrl) {
+      return;
+    }
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = cssUrl;
+    document.head.appendChild(link);
+    return () => {
+      document.head.removeChild(link);
+    };
+  }, [data.spritesheet_css]);
+
   const previewTitle = locale.resolveText(preview_title_key);
   const previewMessage = locale.resolveText(preview_message_key);
   const noticeText = notice && locale.resolveText(notice.key, notice.args);
   const consultBlockReason = locale.resolveText(consult_block_reason_key);
   const compassTooltip = locale.resolveText(compass_action_key);
-  const preloadCount = Number(preload_current || 0);
-  const preloadTotalCount = Math.max(Number(preload_total || 0), 1);
-  const preloadProgress = preloadCount / preloadTotalCount;
-  const preloadTitleButtons = is_preloading ? (
-    <Box mr={1}>
-      <LedgerLoadBar progress={preloadProgress} />
-    </Box>
-  ) : null;
-
-  useEffect(() => {
-    if (!is_preloading) {
-      return;
-    }
-    // Fire once immediately so the first preload tick happens without waiting 500ms
-    act('preload');
-    const intervalId = window.setInterval(() => {
-      act('preload');
-    }, 500);
-
-    return () => window.clearInterval(intervalId);
-  }, [is_preloading]); // act intentionally omitted — it changes every render and would cause an infinite loop
 
   return (
     <Window
       title={locale.windowTitle}
       width={1040}
       height={700}
-      buttons={preloadTitleButtons}
     >
-      <Window.Content scrollable={!is_preloading}>
-        {!!is_preloading && (
-          <Section fill>
-            <Box
-              style={{
-                minHeight: '32rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Box width="36rem" textAlign="center">
-                <Box
-                  bold
-                  mb={1}
-                  style={{
-                    fontSize: '1.2rem',
-                  }}
-                >
-                  {locale.resolveText('preload.initializing')}
-                </Box>
-                <Box color="label" mb={1.5}>
-                  {preloadCount} / {preloadTotalCount}
-                </Box>
-                <Box
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <LedgerLoadBar
-                    progress={preloadProgress}
-                    width="30rem"
-                    height="1rem"
-                  />
-                </Box>
-                <Box mt={1.5} color="label">
-                  {preload_label || locale.resolveText('preload.waiting')}
-                </Box>
-              </Box>
-            </Box>
-          </Section>
-        )}
-
-        {!is_preloading && (
-          <>
+      <Window.Content scrollable>
         <Section>
           <Stack align="center">
             <Stack.Item grow>
@@ -621,8 +499,6 @@ export const ContractLedgerView = (props: {
             </Section>
           </Stack.Item>
         </Stack>
-          </>
-        )}
       </Window.Content>
     </Window>
   );
