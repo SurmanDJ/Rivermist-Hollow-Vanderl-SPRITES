@@ -43,6 +43,10 @@
 	. = dat
 	if(!pref_species)
 		return
+
+	// Keep older or partially initialized preference records from opening a broken customizer UI.
+	validate_customizer_entries()
+
 	var/list/customizers = pref_species.customizers
 	if(!customizers)
 		return

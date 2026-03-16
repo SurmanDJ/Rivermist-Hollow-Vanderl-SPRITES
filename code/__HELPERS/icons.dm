@@ -1116,16 +1116,22 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	dummySave = null
 	fdel("tmp/dummySave.sav") //if you get the idea to try and make this more optimized, make sure to still call unlock on the savefile after every write to unlock it.
 
-///given a text string, returns whether it is a valid dmi icons folder path
+/// Given a text string, returns whether it is a compiled DMI path we can safely treat like a source asset.
 /proc/is_valid_dmi_file(icon_path)
 	if(!istext(icon_path) || !length(icon_path))
 		return FALSE
 
-	var/is_in_icon_folder = findtextEx(icon_path, "icons/")
-	var/is_dmi_file = findtextEx(icon_path, ".dmi")
+	if(!findtextEx(icon_path, ".dmi"))
+		return FALSE
 
-	if(is_in_icon_folder && is_dmi_file)
-		return TRUE
+	var/static/list/valid_dmi_roots = list(
+		"icons/",
+		"modular_rmh/icons/",
+	)
+
+	for(var/root in valid_dmi_roots)
+		if(findtextEx(icon_path, root))
+			return TRUE
 	return FALSE
 
 /// given an icon object, dmi file path, or atom/image/mutable_appearance, attempts to find and return an associated dmi file path.
@@ -1135,17 +1141,17 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 /// so if the given object is associated with an icon that was in the rsc when the game was compiled, this returns a path. otherwise it returns ""
 /proc/get_icon_dmi_path(icon/icon)
 	/// the dmi file path we attempt to return if the given object argument is associated with a stringifiable icon
-	/// if successful, this looks like "icons/path/to/dmi_file.dmi"
+	/// if successful, this looks like "icons/path/to/dmi_file.dmi" or "modular_rmh/icons/path/to/dmi_file.dmi"
 	var/icon_path = ""
 
 	if(isatom(icon) || istype(icon, /image) || istype(icon, /mutable_appearance))
 		var/atom/atom_icon = icon
 		icon = atom_icon.icon
-		//atom icons compiled in from 'icons/path/to/dmi_file.dmi' are weird and not really icon objects that you generate with icon().
+		// Atom icons compiled in from a source DMI path are weird and not really icon objects that you generate with icon().
 		//if theyre unchanged dmi's then they're stringifiable to "icons/path/to/dmi_file.dmi"
 
 	if(isicon(icon) && isfile(icon))
-		//icons compiled in from 'icons/path/to/dmi_file.dmi' at compile time are weird and arent really /icon objects,
+		// Icons compiled in from a source DMI path at compile time are weird and arent really /icon objects,
 		///but they pass both isicon() and isfile() checks. theyre the easiest case since stringifying them gives us the path we want
 		var/icon_ref = "\ref[icon]"
 		var/locate_icon_string = "[locate(icon_ref)]"
@@ -1166,7 +1172,8 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 	else if(istext(icon))
 		var/rsc_ref = fcopy_rsc(icon)
-		//if its the text path of an existing dmi file, the rsc reference returned by fcopy_rsc() will be stringifiable to a dmi path
+		// If its the text path of an existing source DMI, the rsc reference returned by fcopy_rsc()
+		// will be stringifiable to a compiled DMI path.
 
 		var/rsc_ref_ref = "\ref[rsc_ref]"
 		var/rsc_ref_string = "[locate(rsc_ref_ref)]"
@@ -1244,8 +1251,8 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 	icon2collapse = icon(icon2collapse, icon_state, dir, frame, moving)
 
-	//check if the given object is associated with a dmi file in the icons folder. if it is then we dont need to do a lot of work
-	//for asset generation to get around byond limitations
+	// Check if the given object is associated with a compiled source DMI path. If it is, we dont need
+	// to do a lot of work for asset generation to get around BYOND limitations.
 	var/icon_path = get_icon_dmi_path(thing)
 
 	var/list/name_and_ref = generate_and_hash_rsc_file(icon2collapse, icon_path)//pretend that tuples exist
