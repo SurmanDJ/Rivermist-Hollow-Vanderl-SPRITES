@@ -33,11 +33,7 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	if(GLOB.quest_preview_preload_bootstrapped)
 		return
 	GLOB.quest_preview_preload_bootstrapped = TRUE
-	// Metadata cache can populate async — doesn't affect asset delivery
 	INVOKE_ASYNC(src, PROC_REF(ensure_global_preview_preload_state), null)
-	// Spritesheet generated synchronously during world init.
-	// Players can't interact with the ledger during LateInitialize,
-	// so no race between generate_quest_sprites() and send().
 	var/datum/asset/spritesheet/quest_previews/spritesheet = get_asset_datum(/datum/asset/spritesheet/quest_previews)
 	spritesheet.generate_quest_sprites()
 
@@ -287,17 +283,13 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	session["cached_group"] = null
 	session["cached_type_values"] = null
 
-/// Populates the global quest_preview_state_cache with metadata (risk, spawn_weight, group sizes)
-/// for all quest types and tiers. Does NOT generate icons — those are handled by the spritesheet.
+/// Populates GLOB.quest_preview_state_cache with metadata for all quest types/tiers.
 /obj/structure/fake_machine/contractledger/proc/ensure_global_preview_preload_state(mob/living/carbon/human/user)
 	if(length(GLOB.quest_preview_state_cache))
 		return
 
 	var/list/seen_types = list()
 
-	// Iterate ALL contract types directly from the global registry,
-	// bypassing user-based permission filters (is_boss_raid_issuer etc.)
-	// so that boss/raid metadata is always cached for preview rendering.
 	for(var/contract_group in GLOB.global_quest_contract_groups)
 		var/list/group_contract_types = GLOB.global_quest_contract_groups[contract_group] || list()
 		for(var/contract_type in group_contract_types)
@@ -824,7 +816,6 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 		return /mob/living/simple_animal/hostile/deepone
 	return mob_type
 
-/// Returns the CSS class name for a mob type's preview sprite in the quest_previews spritesheet.
 /obj/structure/fake_machine/contractledger/proc/get_preview_sprite_class(mob_type)
 	var/source = get_preview_icon_source_mob_type(mob_type)
 	var/sprite_name = quest_preview_sprite_name(source)
@@ -846,6 +837,9 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	return initial(mob_type.icon_state)
 
 /obj/structure/fake_machine/contractledger/proc/get_simple_animal_preview_icon_state(mob/living/simple_animal/mob_type)
+	if(ispath(mob_type, /mob/living/simple_animal/hostile/retaliate/wolf))
+		// Wolf sets icon_state in Initialize() — initial "vv" doesn't exist in DMI
+		return "volf_brown"
 	return initial(mob_type.icon_living) || initial(mob_type.icon_state)
 
 /obj/structure/fake_machine/contractledger/proc/get_preview_icon_states(icon_file)
