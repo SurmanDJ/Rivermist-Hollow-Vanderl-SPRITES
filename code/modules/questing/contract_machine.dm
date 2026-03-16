@@ -435,8 +435,9 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	var/datum/job/mob_job = user.job ? SSjob.GetJob(user.job) : null
 	if(!mob_job)
 		return FALSE
-	var/job_name = lowertext(mob_job.title ? mob_job.title : user.job)
-	return mob_job.is_quest_giver || findtext(job_name, "merchant") || findtext(job_name, "banker") || findtext(job_name, "steward") || findtext(job_name, "innkeep")
+	if(mob_job.is_quest_giver)
+		return TRUE
+	return istype(mob_job, /datum/job/waterdeep_merchant) || istype(mob_job, /datum/job/waterdeep_banker) || istype(mob_job, /datum/job/steward) || istype(mob_job, /datum/job/innkeep)
 
 /obj/structure/fake_machine/contractledger/proc/get_assigned_job(mob/user)
 	var/datum/job/assigned_job = user?.mind?.assigned_role
