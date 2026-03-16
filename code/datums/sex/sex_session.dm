@@ -809,7 +809,7 @@
 	dat += ".quick-stepper-btn { display: inline-block; width: 24px; padding: 7px 0 6px; background-color: #140d0c; color: #f4d6b6; text-align: center; text-decoration: none; font-weight: bold; vertical-align: middle; }"
 	dat += ".quick-stepper-btn:hover { background-color: #261714; }"
 	dat += ".quick-stepper-value { display: inline-block; min-width: 74px; padding: 7px 10px 6px; color: #f4d6b6; text-align: center; font-size: 11px; font-weight: bold; white-space: nowrap; vertical-align: middle; }"
-	dat += ".quick-toggle { display: inline-block; margin: 0 3px; padding: 7px 11px 6px; background-color: #241614; border: 1px solid #5b3426; border-radius: 999px; color: #d4af8c; text-decoration: none; font-size: 11px; font-weight: bold; white-space: nowrap; vertical-align: middle; }"
+	dat += ".quick-toggle { display: inline-block; margin: 0 3px; padding: 7px 7px 6px; background-color: #241614; border: 1px solid #5b3426; border-radius: 500px; color: #d4af8c; text-decoration: none; font-size: 11px; font-weight: bold; white-space: nowrap; vertical-align: middle; }"
 	dat += ".quick-toggle:hover { background-color: #34201b; }"
 	dat += ".quick-toggle.active { background-color: #6a4223; color: #fff2df; border-color: #8b6914; }"
 	dat += ".quick-toggle.disabled { background-color: #2a1a15; color: #8f7661; border-color: #4a2c20; cursor: default; }"

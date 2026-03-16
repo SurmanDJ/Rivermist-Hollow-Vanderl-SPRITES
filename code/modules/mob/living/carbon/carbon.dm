@@ -529,9 +529,6 @@
 	. += "SPD: \Roman[STASPD]"
 	if(patron)
 		. += "PATRON: [uppertext(patron.name)]"
-	var/lying_direction_name = get_lying_direction_name()
-	if(lying_direction_name)
-		.[length(.) + 1] = list("Lying Direction: [capitalize(lying_direction_name)]. ", "Swap side", "src=[REF(src)];swap_lying_direction=1")
 
 /mob/living/carbon/attack_ui(slot)
 	if(!has_hand_for_held_index(active_hand_index))
