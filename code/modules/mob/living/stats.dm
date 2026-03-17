@@ -82,8 +82,6 @@
 				set_stat_modifier(STATMOD_SEX, stat, specstat_list[stat])
 
 		switch(H.age)
-			if(AGE_CHILD)
-			// nothing for adults/immortals,
 			if(AGE_MIDDLEAGED)
 				set_stat_modifier(STATMOD_AGE, STATKEY_END, 1)
 				set_stat_modifier(STATMOD_AGE, STATKEY_SPD, -1)

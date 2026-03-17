@@ -281,33 +281,6 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	///Statkey = bonus stat, - for malice.
 	var/list/specstats_f = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_END = 0,STATKEY_CON = 0, STATKEY_INT = 0, STATKEY_SPD = 0, STATKEY_LCK = 0)
 
-	/// Can we be a youngling?
-	var/can_be_youngling = TRUE
-	/// Icon override for children male and female is the same
-	var/child_icon = 'icons/roguetown/mob/bodies/c/child.dmi'
-	/// Child damage icons
-	var/child_dam_icon = 'icons/roguetown/mob/bodies/dam/dam_child.dmi'
-
-	/// Child feature offset lists
-	var/list/offset_features_child = list(
-		OFFSET_RING = list(0,0),\
-		OFFSET_GLOVES = list(0,0),\
-		OFFSET_WRISTS = list(0,0),\
-		OFFSET_HANDS = list(0,-3),\
-		OFFSET_CLOAK = list(0,-4),\
-		OFFSET_FACEMASK = list(0,-4),\
-		OFFSET_HEAD = list(0,-4),\
-		OFFSET_FACE = list(0,-4),\
-		OFFSET_BELT = list(0,0),\
-		OFFSET_BACK = list(0,0),\
-		OFFSET_NECK = list(0,-4),\
-		OFFSET_MOUTH = list(0,-4),\
-		OFFSET_PANTS = list(0,0),\
-		OFFSET_SHIRT = list(0,0),\
-		OFFSET_ARMOR = list(0,0),\
-		OFFSET_UNDIES = list(0,0),\
-	)
-
 	/// Amount of times we got autocorrected?? why is this a thing?
 	var/amtfail = 0
 
@@ -899,9 +872,9 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 			if(H.gender == FEMALE && !species.swap_female_clothes || H.gender == MALE && species.swap_male_clothes)
 				use_female_sprites = FEMALE_BOOB
 		if(use_female_sprites && !(H.gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 
 	var/list/standing = list()
 
@@ -951,15 +924,6 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 			hide_bottom = H.wear_pants.flags_inv & HIDEUNDIESBOT
 
 		if(H.underwear)
-			if(H.age == AGE_CHILD)
-				hide_top = FALSE
-				hide_bottom = FALSE
-
-				if(H.gender == FEMALE)
-					H.underwear = "FemYoungling"
-				else
-					H.underwear = "Youngling"
-
 			var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[H.underwear]
 
 			if(underwear)

@@ -56,8 +56,6 @@ SUBSYSTEM_DEF(familytree)
 /datum/controller/subsystem/familytree/proc/GetAgeValue(age_string)
 	// Convert age string to numeric value for comparison
 	switch(age_string)
-		if(AGE_CHILD)
-			return 0
 		if(AGE_ADULT)
 			return 1
 		if(AGE_MIDDLEAGED)
@@ -91,10 +89,8 @@ SUBSYSTEM_DEF(familytree)
 
 /datum/controller/subsystem/familytree/proc/CanBeParentOf(parent_age, child_age)
 	// Parent must be at least one age category higher than child
-	// Exception: Adults can have Youngling children
-	if(parent_age == AGE_ADULT && child_age == AGE_CHILD)
-		return TRUE
-	if(parent_age == AGE_MIDDLEAGED && (child_age == AGE_CHILD || child_age == AGE_ADULT))
+
+	if(parent_age == AGE_MIDDLEAGED && child_age == AGE_ADULT)
 		return TRUE
 	if(parent_age == AGE_OLD && child_age != AGE_OLD && child_age != AGE_IMMORTAL)
 		return TRUE
@@ -118,9 +114,6 @@ SUBSYSTEM_DEF(familytree)
 	return FALSE
 
 /datum/controller/subsystem/familytree/proc/DetermineAppropriateRole(datum/heritage/house, mob/living/carbon/human/person, adopted = FALSE)
-	// For children, always make them children
-	if(person.age == AGE_CHILD)
-		return "child"
 
 	// Look for potential parents (older members who could be parents)
 	var/list/potential_parents = list()
@@ -151,17 +144,10 @@ SUBSYSTEM_DEF(familytree)
 			AssignToHouse(H)
 
 		if(FAMILY_NEWLYWED)
-			if(H.age == AGE_CHILD)
-				AssignToHouse(H)
-				return
-			else
-				AssignNewlyWed(H)
+			AssignNewlyWed(H)
 
 		if(FAMILY_FULL)
 			if(H.virginity)
-				return
-			if(H.age == AGE_CHILD)
-				AssignToHouse(H)
 				return
 			AssignToFamily(H)
 
@@ -435,7 +421,7 @@ SUBSYSTEM_DEF(familytree)
 		// Check if there's a potential spouse
 		var/has_single_adult = FALSE
 		for(var/datum/family_member/member in house.members)
-			if(member.person && member.person.age != AGE_CHILD && !member.spouses.len)
+			if(member.person && !member.spouses.len)
 				// Check setspouse compatibility
 				if(H.setspouse && member.person.real_name == H.setspouse)
 					eligible_houses.Insert(1, house) // High priority
@@ -461,7 +447,7 @@ SUBSYSTEM_DEF(familytree)
 	for(var/datum/heritage/house in eligible_houses)
 		// Find a spouse
 		for(var/datum/family_member/member in house.members)
-			if(member.person && member.person.age != AGE_CHILD && !member.spouses.len)
+			if(member.person && !member.spouses.len)
 				// Check compatibility
 				var/compatible = FALSE
 				if(H.setspouse && member.person.real_name == H.setspouse)

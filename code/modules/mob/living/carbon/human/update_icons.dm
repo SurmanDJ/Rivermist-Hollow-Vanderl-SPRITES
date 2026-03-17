@@ -98,13 +98,12 @@ GLOBAL_PROTECT(no_child_icons)
 
 	var/list/offsets
 	var/limb_icon
-	var/is_child = (age == AGE_CHILD)
 	if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-		offsets = is_child ? species.offset_features_child : species.offset_features_f
-		limb_icon = is_child ? species.child_dam_icon : species.dam_icon_f
+		offsets = species.offset_features_f
+		limb_icon = species.dam_icon_f
 	else
-		offsets = is_child ? species.offset_features_child : species.offset_features_m
-		limb_icon = is_child ? species.child_dam_icon : species.dam_icon_m
+		offsets = species.offset_features_m
+		limb_icon = species.dam_icon_m
 
 	var/hidechest = TRUE
 	if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
@@ -386,9 +385,9 @@ GLOBAL_PROTECT(no_child_icons)
 
 			var/list/offsets
 			if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-				offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+				offsets = species.offset_features_f
 			else
-				offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+				offsets = species.offset_features_m
 
 			var/mutable_appearance/neck_overlay = wear_neck.build_worn_icon(age, NECK_LAYER, 'icons/roguetown/clothing/onmob/neck.dmi')
 			if(LAZYACCESS(offsets, OFFSET_NECK))
@@ -421,9 +420,9 @@ GLOBAL_PROTECT(no_child_icons)
 
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 
 		var/mutable_appearance/ring_overlay = wear_ring.build_worn_icon(age, RING_LAYER, 'icons/roguetown/clothing/onmob/rings.dmi')
 		if(LAZYACCESS(offsets, OFFSET_RING))
@@ -470,9 +469,9 @@ GLOBAL_PROTECT(no_child_icons)
 
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 
 		var/racecustom
 		if(species?.custom_clothes)
@@ -528,9 +527,9 @@ GLOBAL_PROTECT(no_child_icons)
 
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 
 		var/racecustom
 		if(species?.custom_clothes)
@@ -591,9 +590,9 @@ GLOBAL_PROTECT(no_child_icons)
 
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 
 		var/racecustom
 		if(species?.custom_clothes)
@@ -646,9 +645,9 @@ GLOBAL_PROTECT(no_child_icons)
 				use_female_sprites = FEMALE_SPRITES
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 
 		overlays_standing[HEAD_LAYER] = head.build_worn_icon(age = age, default_layer = HEAD_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/head.dmi', coom = FALSE)
 		var/mutable_appearance/head_overlay = overlays_standing[HEAD_LAYER]
@@ -684,9 +683,9 @@ GLOBAL_PROTECT(no_child_icons)
 
 	var/list/offsets
 	if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+		offsets = species.offset_features_f
 	else
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+		offsets = species.offset_features_m
 
 	var/racecustom
 	if(species?.custom_clothes)
@@ -819,9 +818,9 @@ GLOBAL_PROTECT(no_child_icons)
 					use_female_sprites = FEMALE_SPRITES
 			var/list/offsets
 			if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-				offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+				offsets = species.offset_features_f
 			else
-				offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+				offsets = species.offset_features_m
 			if(mask_overlay)
 				if(LAZYACCESS(offsets, OFFSET_FACEMASK))
 					mask_overlay.pixel_x += offsets[OFFSET_FACEMASK][1]
@@ -856,9 +855,9 @@ GLOBAL_PROTECT(no_child_icons)
 
 	var/list/offsets
 	if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+		offsets = species.offset_features_f
 	else
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+		offsets = species.offset_features_m
 
 	if(backr)
 		if(backr.alternate_worn_layer == CLOAK_BEHIND_LAYER)
@@ -971,9 +970,9 @@ GLOBAL_PROTECT(no_child_icons)
 
 	var/list/offsets
 	if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+		offsets = species.offset_features_f
 	else
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+		offsets = species.offset_features_m
 
 	var/racecustom
 	if(species?.custom_clothes)
@@ -1079,9 +1078,9 @@ GLOBAL_PROTECT(no_child_icons)
 				use_female_sprites = FEMALE_SPRITES
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 		var/racecustom
 		if(species?.custom_clothes)
 			if(species.custom_id)
@@ -1146,9 +1145,9 @@ GLOBAL_PROTECT(no_child_icons)
 				use_female_sprites = FEMALE_SPRITES
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 		var/racecustom
 		if(species?.custom_clothes)
 			if(species?.custom_id)
@@ -1206,9 +1205,9 @@ GLOBAL_PROTECT(no_child_icons)
 				use_female_sprites = FEMALE_SPRITES
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 		var/racecustom
 		if(species?.custom_clothes)
 			if(species.custom_id)
@@ -1263,9 +1262,9 @@ GLOBAL_PROTECT(no_child_icons)
 					use_female_sprites = FEMALE_SPRITES
 			var/list/offsets
 			if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-				offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+				offsets = species.offset_features_f
 			else
-				offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+				offsets = species.offset_features_m
 			var/mutable_appearance/mouth_overlay = mouth.build_worn_icon(age, MOUTH_LAYER, 'icons/roguetown/clothing/onmob/mouth_items.dmi')
 			if(mouth_overlay)
 				if(LAZYACCESS(offsets, OFFSET_MOUTH))
@@ -1288,9 +1287,9 @@ GLOBAL_PROTECT(no_child_icons)
 				use_female_sprites = FEMALE_SPRITES
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 
 		var/racecustom
 		if(species?.custom_clothes)
@@ -1326,9 +1325,9 @@ GLOBAL_PROTECT(no_child_icons)
 				use_female_sprites = FEMALE_SPRITES
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 		var/racecustom
 		if(species?.custom_clothes)
 			if(species.custom_id)
@@ -1362,9 +1361,9 @@ GLOBAL_PROTECT(no_child_icons)
 				use_female_sprites = FEMALE_SPRITES
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 
 		var/racecustom
 		if(species?.custom_clothes)
@@ -1401,9 +1400,9 @@ GLOBAL_PROTECT(no_child_icons)
 				use_female_sprites = FEMALE_SPRITES
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 
 		var/racecustom
 		if(species?.custom_clothes)
@@ -1450,9 +1449,9 @@ GLOBAL_PROTECT(no_child_icons)
 				use_female_sprites = FEMALE_SPRITES
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 
 		var/armsindex = get_limbloss_index(ARM_RIGHT, ARM_LEFT)
 		var/racecustom
@@ -1504,9 +1503,9 @@ GLOBAL_PROTECT(no_child_icons)
 				use_female_sprites = FEMALE_SPRITES
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 		var/racecustom
 		if(species?.custom_clothes)
 			if(species.custom_id)
@@ -1536,9 +1535,9 @@ GLOBAL_PROTECT(no_child_icons)
 				use_female_sprites = FEMALE_SPRITES
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 
 		var/racecustom
 		if(species?.custom_clothes)
@@ -1572,9 +1571,9 @@ GLOBAL_PROTECT(no_child_icons)
 				use_female_sprites = FEMALE_SPRITES
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 
 		var/racecustom
 		if(species?.custom_clothes)
@@ -1612,9 +1611,9 @@ GLOBAL_PROTECT(no_child_icons)
 
 		var/list/offsets
 		if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 
 		var/racecustom
 		if(species?.custom_clothes)
@@ -1763,8 +1762,6 @@ generate/load female uniform sprites matching all previously decided variables
 /obj/item/proc/build_worn_icon(age = AGE_ADULT, default_layer = 0, default_icon_file = null, isinhands = FALSE, femaleuniform = NO_FEMALE_UNIFORM, override_state = null, coom = FALSE, customi = null, sleeveindex, breast_size = 0, icon/clip_mask = null)
 	var/t_state
 	var/sleevejazz = sleevetype
-	if(age == AGE_CHILD)
-		coom = FALSE
 	if(override_state)
 		t_state = override_state
 	else if(isinhands && item_state)
@@ -1782,8 +1779,6 @@ generate/load female uniform sprites matching all previously decided variables
 		if(sleevejazz)
 			sleevejazz += "_[customi]"
 	var/t_icon = mob_overlay_icon
-	if(age == AGE_CHILD && !is_type_in_list(src, GLOB.no_child_icons))
-		t_state += "_child"
 	if(!t_icon)
 		t_icon = default_icon_file
 
@@ -1893,10 +1888,7 @@ generate/load female uniform sprites matching all previously decided variables
 			sleeveindex -= 2
 
 	var/index = I.icon_state
-	var/mob/living/carbon/human/HM = src
-	if(istype(HM) && HM.age == AGE_CHILD && !is_type_in_list(I, GLOB.no_child_icons))
-		index += "_child"
-	else if(gender == FEMALE ^ dna.species.swap_female_clothes)
+	if(gender == FEMALE ^ dna.species.swap_female_clothes)
 		index += "_f"
 	if(dna.species.custom_clothes)
 		index += "_[dna.species.custom_id ? dna.species.custom_id : dna.species.id]"
@@ -2106,9 +2098,9 @@ generate/load female uniform sprites matching all previously decided variables
 
 	var/list/offsets
 	if(use_female_sprites && !(gender == MALE && species.swap_male_clothes_but_not_offsets))
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+		offsets = species.offset_features_f
 	else
-		offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+		offsets = species.offset_features_m
 
 	HD.update_limb()
 

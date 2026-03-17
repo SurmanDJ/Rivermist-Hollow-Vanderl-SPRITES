@@ -15,8 +15,6 @@
 			return "old"
 		if(AGE_MIDDLEAGED)
 			return "middle-aged"
-		if(AGE_CHILD)
-			return "young"
 	//ADULT and IMMORTAL
 	return "of adult age"
 

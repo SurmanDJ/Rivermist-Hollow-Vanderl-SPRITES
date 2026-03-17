@@ -255,8 +255,6 @@
 	var/mob/living/carbon/human/H = current
 	if(H.age == AGE_OLD)
 		boon -= 0.2
-	else if(H.age == AGE_CHILD)
-		boon += 0.2
 	return boon
 
 /**
