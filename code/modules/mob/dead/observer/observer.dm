@@ -929,12 +929,17 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		mind.ghostname = client.prefs.real_name
 		name = client.prefs.real_name
 
+/mob/dead/observer/proc/apply_admin_ghost_icon_preference()
+	if(type != /mob/dead/observer || !client?.holder || !client?.prefs)
+		return
+
+	icon_state = client.prefs.admin_ghost_icon || initial(icon_state)
+
 /mob/dead/observer/proc/set_ghost_appearance()
 	if(!client?.prefs)
 		return
 
-	if(client?.holder && (type == /mob/dead/observer)) //subtypes begone!
-		icon_state = client?.prefs.admin_ghost_icon
+	apply_admin_ghost_icon_preference()
 
 	client.prefs.apply_character_randomization_prefs()
 
