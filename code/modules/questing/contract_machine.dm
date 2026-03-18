@@ -439,7 +439,7 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 		return FALSE
 	if(mob_job.is_quest_giver)
 		return TRUE
-	return istype(mob_job, /datum/job/waterdeep_merchant) || istype(mob_job, /datum/job/waterdeep_banker) || istype(mob_job, /datum/job/steward) || istype(mob_job, /datum/job/innkeep)
+	return istype(mob_job, /datum/job/waterdeep_merchant) || istype(mob_job, /datum/job/waterdeep_banker) || istype(mob_job, /datum/job/innkeep)
 
 /obj/structure/fake_machine/contractledger/proc/get_assigned_job(mob/user)
 	var/datum/job/assigned_job = user?.mind?.assigned_role
@@ -462,9 +462,7 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 
 /obj/structure/fake_machine/contractledger/proc/is_townhall_contract_role(datum/job/job_type)
 	return istype(job_type, /datum/job/burgmeister) || \
-		istype(job_type, /datum/job/advclass/burgmeister) || \
-		istype(job_type, /datum/job/councilor) || \
-		istype(job_type, /datum/job/advclass/councilor)
+		istype(job_type, /datum/job/councilor)
 
 /obj/structure/fake_machine/contractledger/proc/is_banker_contract_role(datum/job/job_type)
 	return is_banker_job(job_type)
