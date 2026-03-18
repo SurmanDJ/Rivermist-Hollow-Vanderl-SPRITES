@@ -20,6 +20,29 @@ For ordinary feature work, do not start here. Use `ai_navigation/router.md` inst
 - If a navigation doc and code disagree, update the doc to match the code.
 - Do not modify source files during a refresh unless explicitly asked.
 
+## Navigation Miss Protocol (applies during ALL work, not just refreshes)
+
+Navigation docs drift. A missing or wrong entry does not mean the thing doesn't exist.
+
+**When a navigation lookup fails or gives a suspicious result:**
+
+1. **Do not conclude the thing doesn't exist.** Say "navigation may be stale here" and verify directly.
+2. **Grep the source** before making assumptions:
+   ```
+   # SS* subsystem
+   rg -rn "SUBSYSTEM_DEF(atoms)" code/controllers/subsystem
+   # type or proc
+   rg -rn "/obj/structure/fake_machine" code/ -g "*.dm" -l
+   # any keyword
+   rg -rn "LateInitialize" code/ -g "*.dm" -l
+   ```
+3. **If grep confirms it exists** — use the real file, not the navigation entry.
+4. **Tell the user** that navigation was stale and what you found.
+5. **Propose a navigation fix** so the same miss doesn't happen again.
+
+**Example of the failure this prevents:**
+Navigation had `SSatoms` listed as "Handles atoms" with no lifecycle detail. AI assumed `LateInitialize` had no mechanism and invented a workaround instead of reading `code/controllers/subsystem/atoms.dm`. Correct behavior: notice the thin entry, grep for `LateInitialize`, find `atoms.dm`, read it, use `INITIALIZE_HINT_LATELOAD`.
+
 ## What Drifts First
 
 Not all files drift at the same rate. Check in this order:

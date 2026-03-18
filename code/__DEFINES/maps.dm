@@ -54,6 +54,7 @@ require only minor tweaks.
 
 #define ZTRAIT_CELLAR_LIKE "Cellar"
 #define ZTRAIT_LEYLINES "Leylines"
+#define ZTRAIT_MAP_FILE "Map File"
 // enum - how space transitions should affect this level
 #define ZTRAIT_LINKAGE "Linkage"
 	// UNAFFECTED if absent - no space transitions
