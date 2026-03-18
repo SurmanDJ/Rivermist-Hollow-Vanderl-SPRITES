@@ -1491,11 +1491,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 
 		var/armor_block = target.run_armor_check(selzone, "blunt", blade_dulling = user.used_intent.blade_class)
 
-		target.lastattacker = user.real_name
-		if(target.mind)
-			target.mind.attackedme[user.real_name] = world.time
-		target.lastattackerckey = user.ckey
-		target.lastattacker_weakref = WEAKREF(user)
+		target.set_damage_attack_context(user)
 		user.dna.species.spec_unarmedattacked(user, target)
 
 		user.do_attack_animation(target, visual_effect_icon = user.used_intent.animname, used_item = FALSE, atom_bounce = TRUE)
@@ -1503,6 +1499,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 
 		var/nodmg = FALSE
 		var/actual_damage = target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block)
+		target.clear_damage_attack_context()
 		if(!actual_damage)
 			nodmg = TRUE
 			target.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
@@ -1698,11 +1695,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 		stander = FALSE
 	if(user.loc == target.loc)
 		if(!stander)
-			target.lastattacker = user.real_name
-			target.lastattackerckey = user.ckey
-			target.lastattacker_weakref = WEAKREF(user)
-			if(target.mind)
-				target.mind.attackedme[user.real_name] = world.time
+			target.set_damage_attack_context(user)
 			var/selzone = accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
 			var/obj/item/bodypart/affecting = target.get_bodypart(check_zone(selzone))
 			var/damage = user.get_kick_damage(2.5)
@@ -1729,6 +1722,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 						target.visible_message("<span class='danger'>[user] stomps [target]![target.next_attack_msg.Join()]</span>", \
 										"<span class='danger'>I'm stomped by [user]![target.next_attack_msg.Join()]</span>", "<span class='hear'>I hear a sickening kick!</span>", COMBAT_MESSAGE_RANGE, user)
 						to_chat(user, "<span class='danger'>I stomp on [target]![target.next_attack_msg.Join()]</span>")
+			target.clear_damage_attack_context()
 			target.next_attack_msg.Cut()
 			log_combat(user, target, "kicked")
 			user.OffBalance(balance)
@@ -1815,21 +1809,18 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 		var/damage = user.get_kick_damage(1.4)
 		var/damage_blocked = FALSE
 
+		target.set_damage_attack_context(user)
 		if(!target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block))
 			damage_blocked = TRUE
 			target.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
 		else
 			affecting.bodypart_attacked_by(BCLASS_BLUNT, damage, user, selzone)
+		target.clear_damage_attack_context()
 
 		SEND_SIGNAL(user, COMSIG_MOB_KICK, target, selzone, damage_blocked)
 		SEND_SIGNAL(target, COMSIG_MOB_KICKED, user, selzone, damage_blocked)
 
 		playsound(target, 'sound/combat/hits/kick/kick.ogg', 100, TRUE, -1)
-		target.lastattacker = user.real_name
-		target.lastattackerckey = user.ckey
-		target.lastattacker_weakref = WEAKREF(user)
-		if(target.mind)
-			target.mind.attackedme[user.real_name] = world.time
 		user.adjust_stamina(15)
 		user.OffBalance(15)
 		target.forcesay(GLOB.hit_appends)

@@ -105,6 +105,9 @@ GLOBAL_LIST_EMPTY(personal_objective_minds)
 	var/late_joiner = FALSE
 	/// time of the last death of the mob this mind controlled
 	var/last_death = 0
+	/// Cached at death and consumed on the next rune revival.
+	var/pending_resurrection_trauma_type = null
+	var/pending_resurrection_trauma_name = null
 
 	var/force_escaped = FALSE  // Set by Into The Sunset command of the shuttle manipulator
 

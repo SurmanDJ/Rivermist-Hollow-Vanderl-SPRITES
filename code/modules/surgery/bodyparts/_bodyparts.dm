@@ -329,6 +329,10 @@
 			owner.flash_fullscreen("redflash3")
 
 	if(owner)
+		if(brute)
+			owner.record_recent_damage_source(BRUTE, brute)
+		if(burn)
+			owner.record_recent_damage_source(BURN, burn)
 		if(can_be_disabled)
 			update_disabled()
 		if(updating_health)

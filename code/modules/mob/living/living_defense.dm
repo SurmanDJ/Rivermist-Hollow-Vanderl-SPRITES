@@ -64,9 +64,13 @@
 	var/on_hit_state = P.on_hit(src, armor)
 	var/nodmg = FALSE
 	if(!P.nodamage && on_hit_state != BULLET_ACT_BLOCK)
+		if(isliving(P.firer))
+			var/mob/living/living_firer = P.firer
+			set_damage_attack_context(living_firer)
 		if(!apply_damage(P.damage, P.damage_type, def_zone, armor))
 			nodmg = TRUE
 			next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+		clear_damage_attack_context()
 		apply_effects(P.stun, 0, 0, 0,0, 0, 0, 0, armor, P.jitter, P.paralyze, 0)
 		if(!nodmg)
 			if(P.dismemberment)
@@ -127,9 +131,13 @@
 					damagetype = BRUTE
 				if("fire", "acid")
 					damagetype = BURN
+			if(isliving(throwingdatum?.thrower))
+				var/mob/living/thrower = throwingdatum.thrower
+				set_damage_attack_context(thrower)
 			if(!apply_damage(I.throwforce, damagetype, zone, armor))
 				nodmg = TRUE
 				next_attack_msg += span_warning(" Armor stops the damage.")
+			clear_damage_attack_context()
 			if(!nodmg)
 				if(iscarbon(src))
 					var/obj/item/bodypart/affecting = get_bodypart(zone)
@@ -322,6 +330,7 @@
 	if(M.attack_sound)
 		playsound(src, M.a_intent.hitsound, 100, FALSE)
 
+	set_last_attacker(M)
 	log_combat(M, src, "attacked")
 	SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_ANIMAL, M)
 	return TRUE

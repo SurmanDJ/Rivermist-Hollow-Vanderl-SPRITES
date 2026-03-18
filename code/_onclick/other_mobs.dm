@@ -165,7 +165,9 @@
 	dmg *= HAS_TRAIT(user, TRAIT_STRONGBITE) ? 2 : \
 		affecting.has_wound(/datum/wound/bite) ? 1 : 0
 	if(dmg)
+		set_damage_attack_context(user)
 		dmg = apply_damage(dmg, BRUTE, def_zone, run_armor_check(user.zone_selected, "stab", blade_dulling=BCLASS_BITE), user)
+		clear_damage_attack_context()
 		if(dmg)
 			affecting.bodypart_attacked_by(BCLASS_BITE, dmg, user, user.zone_selected, crit_message = TRUE)
 			playsound(src, "smallslash", 100, TRUE, -1)
@@ -192,10 +194,7 @@
 		B.limb_grabbed = BP
 		B.sublimb_grabbed = used_limb
 
-		lastattacker = user.real_name
-		lastattackerckey = user.ckey
-		if(mind)
-			mind.attackedme[user.real_name] = world.time
+		set_last_attacker(user)
 		log_combat(user, src, "bit")
 	return !dmg
 
@@ -673,7 +672,9 @@
 				"<span class='danger'>You avoid [src]'s bite!</span>", "<span class='hear'>You hear jaws snapping shut!</span>", COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, "<span class='danger'>Your bite misses [victim]!</span>")
 			return
+		victim.set_damage_attack_context(src)
 		victim.apply_damage(rand(1, 3), BRUTE, affecting, armor)
+		victim.clear_damage_attack_context()
 		victim.visible_message("<span class='danger'>[name] bites [victim]!</span>",
 			"<span class='userdanger'>[name] bites you!</span>", "<span class='hear'>You hear a chomp!</span>", COMBAT_MESSAGE_RANGE, name)
 		to_chat(name, "<span class='danger'>You bite [victim]!</span>")

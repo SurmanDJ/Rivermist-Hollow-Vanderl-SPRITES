@@ -2,11 +2,15 @@
 #define RUNE_REVIVE_DELAY 1 SECONDS
 #define RUNE_REVIVE_LOCKOUT 10 SECONDS
 #define RUNE_HARD_CRIT_AUTO_DELAY 10 MINUTES
+#define RUNE_REVIVAL_TITHE_MIN 20
+#define RUNE_REVIVAL_TITHE_MAX 50
+#define RUNE_WARDROBE_LOSS_CHANCE 10
 #define RUNE_STAGE_NONE 0
 #define RUNE_STAGE_SOFT_CRIT 1
 #define RUNE_STAGE_HARD_CRIT 2
 #define RUNE_STAGE_IMMEDIATE 3
-
+#define RUNE_THRESHOLD_FULLCRIT 30
+#define RUNE_THRESHOLD_SOFTCRIT 45
 
 /proc/find_resurrection_rune_by_tag(rune_tag)
 	if(!rune_tag || rune_tag == RUNE_LINK_NONE)
@@ -218,8 +222,10 @@
 	replace_linked_body(linked_mind, new_body)
 	resurrecting -= linked_mind
 	apply_revival_debuffs(new_body)
+	apply_revival_side_effects(new_body)
 	playsound(destination_turf, 'sound/misc/vampirespell.ogg', 100, FALSE, -1)
 	to_chat(new_body, span_blue("You are back."))
+	apply_resurrection_trauma(new_body)
 
 /datum/resurrection_rune_controller/proc/add_user(mob/living/carbon/user)
 	if(!user)
@@ -349,9 +355,9 @@
 		return RUNE_STAGE_IMMEDIATE
 	if(target.is_dead())
 		return RUNE_STAGE_IMMEDIATE
-	if(target.InFullCritical())
+	if(target.health <= RUNE_THRESHOLD_FULLCRIT && target.stat == UNCONSCIOUS)
 		return RUNE_STAGE_HARD_CRIT
-	if(target.stat == SOFT_CRIT && target.health <= target.crit_threshold)
+	if(target.health <= RUNE_THRESHOLD_SOFTCRIT || target.get_num_legs(TRUE) < 2)
 		return RUNE_STAGE_SOFT_CRIT
 	return RUNE_STAGE_NONE
 
@@ -495,10 +501,12 @@
 	body.grab_ghost(TRUE)
 	body.flash_act()
 	apply_revival_debuffs(body, voluntary)
+	apply_revival_side_effects(body, voluntary)
 	addtimer(CALLBACK(src, PROC_REF(clear_resurrection_lockout), body), RUNE_REVIVE_LOCKOUT)
 	playsound(destination_turf, 'sound/misc/vampirespell.ogg', 100, FALSE, -1)
 	to_chat(body, span_blue("Despite everything, you are back to life..."))
 	to_chat(body, span_red("...But you remember the gnashing horror of what brought you here in minute detail - and you are terrified of repeating it."))
+	apply_resurrection_trauma(body)
 
 /datum/resurrection_rune_controller/proc/body_has_rot(mob/living/carbon/target)
 	if(!target)
@@ -528,6 +536,7 @@
 	target.visible_message("<span class='notice'>The rot leaves [target]'s body!</span>", "<span class='green'>I feel the rot leave my body!</span>")
 
 /datum/resurrection_rune_controller/proc/apply_revival_debuffs(mob/living/carbon/target, voluntary = FALSE)
+	clear_revival_debuffs(target)
 	if(voluntary)
 		target.apply_status_effect(/datum/status_effect/debuff/revived/rune/light)
 	else if(ishuman(target))
@@ -540,6 +549,111 @@
 		target.apply_status_effect(/datum/status_effect/debuff/revived/rune/rough)
 
 	target.apply_status_effect(/datum/status_effect/debuff/rune_glow)
+
+/datum/resurrection_rune_controller/proc/clear_revival_debuffs(mob/living/carbon/target)
+	if(!target)
+		return
+
+	target.remove_status_effect(/datum/status_effect/debuff/revived/rune)
+	target.remove_status_effect(/datum/status_effect/debuff/revived/rune/rough)
+	target.remove_status_effect(/datum/status_effect/debuff/revived/rune/light)
+
+/datum/resurrection_rune_controller/proc/apply_revival_side_effects(mob/living/carbon/target, voluntary = FALSE)
+	charge_revival_tithe(target)
+	maybe_strip_revival_clothes(target, voluntary)
+
+/datum/resurrection_rune_controller/proc/charge_revival_tithe(mob/living/carbon/target)
+	if(!(target in SStreasury.bank_accounts))
+		return FALSE
+
+	var/deposit = min(SStreasury.bank_accounts[target], rand(RUNE_REVIVAL_TITHE_MIN, RUNE_REVIVAL_TITHE_MAX))
+	if(deposit <= 0)
+		return FALSE
+
+	SStreasury.bank_accounts[target] -= deposit
+	SStreasury.treasury_value += deposit
+	SStreasury.log_entries += "+[deposit] to treasury (resurrection tithe from [target.real_name])"
+	to_chat(target, span_warning("The rune claims [deposit] amna from your account as its due."))
+	return TRUE
+
+/datum/resurrection_rune_controller/proc/maybe_strip_revival_clothes(mob/living/carbon/target, voluntary = FALSE)
+	if(!ishuman(target))
+		return FALSE
+
+	var/strip_chance = RUNE_WARDROBE_LOSS_CHANCE
+	if(voluntary)
+		strip_chance *= 2
+	if(!prob(strip_chance))
+		return FALSE
+
+	var/mob/living/carbon/human/human_target = target
+	var/list/slots_to_strip = list(
+		ITEM_SLOT_HEAD,
+		ITEM_SLOT_MASK,
+		ITEM_SLOT_NECK,
+		ITEM_SLOT_SHIRT,
+		ITEM_SLOT_CLOAK,
+		ITEM_SLOT_ARMOR,
+		ITEM_SLOT_PANTS,
+		ITEM_SLOT_GLOVES,
+		ITEM_SLOT_SHOES,
+		ITEM_SLOT_BELT,
+		ITEM_SLOT_BELT_L,
+		ITEM_SLOT_BELT_R,
+	)
+	var/stripped_any = FALSE
+
+	for(var/slot_id in slots_to_strip)
+		var/obj/item/equipped_item = human_target.get_item_by_slot(slot_id)
+		if(!equipped_item)
+			continue
+		if(istype(equipped_item, /obj/item/storage))
+			continue
+		if(human_target.dropItemToGround(equipped_item, TRUE, FALSE))
+			stripped_any = TRUE
+
+	if(!stripped_any)
+		return FALSE
+
+	human_target.visible_message(
+		span_warning("The rune's violent pull tears loose some of [human_target]'s clothing!"),
+		span_warning("The rune's violent pull tears away your clothing, but leaves your underwear and bags behind!"),
+	)
+	return TRUE
+
+/datum/resurrection_rune_controller/proc/apply_resurrection_trauma(mob/living/carbon/target)
+	var/datum/mind/target_mind = target?.mind
+	if(!target_mind)
+		return FALSE
+
+	var/trauma_type = target_mind.pending_resurrection_trauma_type
+	var/trauma_name = target_mind.pending_resurrection_trauma_name
+
+	if(!ispath(trauma_type, /mob/living))
+		if(target.recent_attacker_damage_time + RESURRECTION_TRAUMA_SOURCE_WINDOW < world.time)
+			return FALSE
+		if(!ispath(target.recent_attacker_damage_mob_type, /mob/living))
+			return FALSE
+		if(target.recent_attacker_damage_is_player_controlled || target.recent_attacker_damage_is_human)
+			return FALSE
+
+		// Voluntary rescues can happen before the victim actually dies, so fall back
+		// to the body's recent attacker record when there is no death-cached trauma.
+		trauma_type = target.recent_attacker_damage_mob_type
+		trauma_name = target.recent_attacker_damage_name
+
+	var/datum/status_effect/debuff/resurrection_trauma/trauma = target.apply_status_effect(/datum/status_effect/debuff/resurrection_trauma, null, trauma_type, trauma_name)
+	if(!trauma)
+		return FALSE
+
+	target_mind.pending_resurrection_trauma_type = null
+	target_mind.pending_resurrection_trauma_name = null
+
+	var/fear_label = trauma.fear_name
+	if(!fear_label)
+		fear_label = "that thing"
+	to_chat(target, span_red("The memory of dying to [fear_label] still clings to you. The sight of it turns your blood to ice."))
+	return TRUE
 
 /datum/resurrection_rune_controller/proc/clear_resurrection_lockout(mob/living/carbon/user)
 	resurrecting -= user
@@ -747,7 +861,7 @@
 	if(is_main)
 		return
 	if(!allows_soul_linking)
-		to_chat(user, span_blue("This rune lies in wait for outlawed souls alone."))
+		to_chat(user, span_blue("This rune lies in wait for damned souls alone."))
 		return
 
 	var/mob/living/carbon/carbon_user = user
@@ -877,6 +991,9 @@
 #undef RUNE_REVIVE_DELAY
 #undef RUNE_REVIVE_LOCKOUT
 #undef RUNE_HARD_CRIT_AUTO_DELAY
+#undef RUNE_REVIVAL_TITHE_MIN
+#undef RUNE_REVIVAL_TITHE_MAX
+#undef RUNE_WARDROBE_LOSS_CHANCE
 #undef RUNE_STAGE_NONE
 #undef RUNE_STAGE_SOFT_CRIT
 #undef RUNE_STAGE_HARD_CRIT
