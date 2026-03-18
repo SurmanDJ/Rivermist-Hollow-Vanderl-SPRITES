@@ -32,6 +32,11 @@ GLOBAL_LIST_EMPTY(global_resurrune_markers)
 	effectedstats = list("strength" = -8, "perception" = -8, "intelligence" = -5, "endurance" = -8, "constitution" = -8, "speed" = -8, "fortune" = -5)
 	duration = 20 MINUTES
 
+/datum/status_effect/debuff/revived/rune/light
+	id = "revived_rune_light"
+	effectedstats = list("strength" = -2, "perception" = -2, "intelligence" = -1, "endurance" = -2, "constitution" = -2, "speed" = -2)
+	duration = 5 MINUTES
+
 /atom/movable/screen/alert/status_effect/debuff/revived/rune/rough
 	name = "Rune Fatigue (rough)"
 	desc = "You felt an alien force course through you, restoring your body and your essance almost against your will. Your body aches, and you can barely lift your arms, let alone fight."

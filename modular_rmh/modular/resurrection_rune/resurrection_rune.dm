@@ -1,9 +1,11 @@
-#define RUNE_DAMAGE_THRESHOLD 90
-#define RUNE_BRUTE_DAMAGE_SCALE 0.13
-#define RUNE_BURN_DAMAGE_SCALE 0.2
 #define RUNE_REBUILD_DELAY 5 SECONDS
 #define RUNE_REVIVE_DELAY 1 SECONDS
 #define RUNE_REVIVE_LOCKOUT 10 SECONDS
+#define RUNE_HARD_CRIT_AUTO_DELAY 10 MINUTES
+#define RUNE_STAGE_NONE 0
+#define RUNE_STAGE_SOFT_CRIT 1
+#define RUNE_STAGE_HARD_CRIT 2
+#define RUNE_STAGE_IMMEDIATE 3
 
 
 /proc/find_resurrection_rune_by_tag(rune_tag)
@@ -69,6 +71,44 @@
 		rune.resrunecontroler.remove_linked_mind(linked_mind)
 
 
+/datum/action/innate/resurrection_rune_call
+	name = "Call the Rune"
+	desc = "Answer the rune's call."
+	button_icon_state = "shieldsparkles"
+	var/datum/resurrection_rune_controller/rune_controller
+
+/datum/action/innate/resurrection_rune_call/New(datum/resurrection_rune_controller/controller)
+	rune_controller = controller
+	. = ..(controller)
+
+/datum/action/innate/resurrection_rune_call/Destroy()
+	rune_controller = null
+	return ..()
+
+/datum/action/innate/resurrection_rune_call/IsAvailable()
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!istype(owner, /mob/living/carbon))
+		return FALSE
+	if(!rune_controller)
+		return FALSE
+
+	var/mob/living/carbon/carbon_owner = owner
+	var/rescue_stage = rune_controller.get_rescue_stage(carbon_owner)
+	return rescue_stage == RUNE_STAGE_SOFT_CRIT || rescue_stage == RUNE_STAGE_HARD_CRIT
+
+/datum/action/innate/resurrection_rune_call/Activate()
+	. = ..()
+	if(!istype(owner, /mob/living/carbon))
+		return
+	if(!rune_controller)
+		return
+
+	var/mob/living/carbon/carbon_owner = owner
+	rune_controller.trigger_voluntary_revival(carbon_owner)
+
+
 /datum/resurrection_rune_controller
 	var/obj/structure/resurrection_rune/control/control_rune
 	var/obj/structure/resurrection_rune/sub_rune
@@ -77,6 +117,8 @@
 	var/list/linked_users_minds = list()
 	var/list/linked_body_by_mind = list()
 	var/list/resurrecting = list()
+	var/list/rescue_actions = list()
+	var/list/hard_crit_deadlines = list()
 	// If the body is completely gone, rebuild this kind of shell at the rune.
 	var/mob_type = /mob/living/carbon/human
 
@@ -88,6 +130,7 @@
 	STOP_PROCESSING(SSobj, src)
 
 	for(var/mob/living/carbon/linked_user as anything in linked_users)
+		clear_linked_user_rescue_state(linked_user)
 		unregister_linked_user_signals(linked_user)
 
 	control_rune = null
@@ -97,6 +140,8 @@
 	linked_users_minds = null
 	linked_body_by_mind = null
 	resurrecting = null
+	rescue_actions = null
+	hard_crit_deadlines = null
 	return ..()
 
 /datum/resurrection_rune_controller/process()
@@ -106,6 +151,7 @@
 		sub_rune.find_master()
 		return
 	if(resurrections_disabled())
+		clear_all_linked_user_rescue_states()
 		return
 	if(!linked_users_minds.len)
 		return
@@ -120,6 +166,8 @@
 		if(linked_mind in resurrecting)
 			continue
 		queue_body_remake(linked_mind)
+
+	process_hard_crit_timeouts()
 
 /datum/resurrection_rune_controller/proc/resurrections_disabled()
 	if(!sub_rune)
@@ -213,11 +261,13 @@
 
 	linked_users_by_name[user.name] = user
 	set_rune_link_tag(user, sub_rune?.rune_tag)
+	update_linked_user_rescue_state(user)
 
 /datum/resurrection_rune_controller/proc/unregister_linked_body(mob/living/carbon/user)
 	if(!user)
 		return
 
+	clear_linked_user_rescue_state(user)
 	linked_users -= user
 	linked_users_by_name.Remove(user.name)
 	resurrecting -= user
@@ -273,58 +323,150 @@
 		if(!sub_rune.find_master())
 			return
 	if(resurrections_disabled())
+		clear_linked_user_rescue_state(target)
 		return
 	if(!(target in linked_users))
 		return
 	if(target in resurrecting)
+		clear_linked_user_rescue_state(target)
 		return
-	if(!should_trigger_revival(target))
+
+	var/rescue_stage = get_rescue_stage(target)
+	update_linked_user_rescue_state(target, rescue_stage)
+	if(rescue_stage != RUNE_STAGE_IMMEDIATE)
 		return
 
 	queue_revival(target)
 
-/datum/resurrection_rune_controller/proc/should_trigger_revival(mob/living/carbon/target)
+/datum/resurrection_rune_controller/proc/get_rescue_stage(mob/living/carbon/target)
 	if(!target)
-		return FALSE
-	if(get_total_rune_damage(target) >= RUNE_DAMAGE_THRESHOLD)
-		return TRUE
-	if(target.is_dead())
-		return TRUE
+		return RUNE_STAGE_NONE
 
 	var/turf/target_turf = get_turf(target)
 	if(istype(target_turf, /turf/open/lava))
-		return TRUE
+		return RUNE_STAGE_IMMEDIATE
 	if(istype(target_turf, /turf/open/lava/acid))
-		return TRUE
-	return FALSE
+		return RUNE_STAGE_IMMEDIATE
+	if(target.is_dead())
+		return RUNE_STAGE_IMMEDIATE
+	if(target.InFullCritical())
+		return RUNE_STAGE_HARD_CRIT
+	if(target.stat == SOFT_CRIT && target.health <= target.crit_threshold)
+		return RUNE_STAGE_SOFT_CRIT
+	return RUNE_STAGE_NONE
 
-/datum/resurrection_rune_controller/proc/get_total_rune_damage(mob/living/carbon/target)
-	if(!target)
-		return 0
+/datum/resurrection_rune_controller/proc/process_hard_crit_timeouts()
+	if(!hard_crit_deadlines.len)
+		return
 
-	// Limb damage is underrepresented in the raw health checks, so brute and burn are weighted here.
-	var/brute_damage = target.getBruteLoss() * RUNE_BRUTE_DAMAGE_SCALE
-	var/burn_damage = target.getFireLoss() * RUNE_BURN_DAMAGE_SCALE
-	var/tox_damage = target.getToxLoss()
-	var/oxy_damage = target.getOxyLoss()
-	return brute_damage + burn_damage + tox_damage + oxy_damage
+	for(var/mob/living/carbon/linked_user as anything in linked_users)
+		var/deadline = hard_crit_deadlines[linked_user]
+		if(!deadline)
+			continue
+		if(linked_user in resurrecting)
+			clear_hard_crit_deadline(linked_user)
+			continue
+		if(get_rescue_stage(linked_user) != RUNE_STAGE_HARD_CRIT)
+			clear_hard_crit_deadline(linked_user)
+			continue
+		if(world.time < deadline)
+			continue
 
-/datum/resurrection_rune_controller/proc/queue_revival(mob/living/carbon/user, is_linked = TRUE)
+		queue_revival(linked_user)
+
+/datum/resurrection_rune_controller/proc/update_linked_user_rescue_state(mob/living/carbon/user, rescue_stage = get_rescue_stage(user))
+	if(!user)
+		return
+
+	switch(rescue_stage)
+		if(RUNE_STAGE_SOFT_CRIT)
+			ensure_rescue_action(user)
+			clear_hard_crit_deadline(user)
+		if(RUNE_STAGE_HARD_CRIT)
+			ensure_rescue_action(user)
+			ensure_hard_crit_deadline(user)
+		else
+			clear_linked_user_rescue_state(user)
+
+/datum/resurrection_rune_controller/proc/clear_all_linked_user_rescue_states()
+	for(var/mob/living/carbon/linked_user as anything in linked_users)
+		clear_linked_user_rescue_state(linked_user)
+
+/datum/resurrection_rune_controller/proc/clear_linked_user_rescue_state(mob/living/carbon/user)
+	clear_rescue_action(user)
+	clear_hard_crit_deadline(user)
+
+/datum/resurrection_rune_controller/proc/ensure_rescue_action(mob/living/carbon/user)
+	if(!user)
+		return
+	if(rescue_actions[user])
+		return
+
+	var/datum/action/innate/resurrection_rune_call/rescue_action = new(src)
+	rescue_action.Grant(user)
+	rescue_actions[user] = rescue_action
+	to_chat(user, span_blue("You feel the rune's pull stengthening towards you. All you need is to answer it."))
+
+/datum/resurrection_rune_controller/proc/clear_rescue_action(mob/living/carbon/user)
+	var/datum/action/innate/resurrection_rune_call/rescue_action = rescue_actions[user]
+	if(!rescue_action)
+		return
+
+	rescue_actions.Remove(user)
+	rescue_action.Remove(user)
+	qdel(rescue_action)
+
+/datum/resurrection_rune_controller/proc/ensure_hard_crit_deadline(mob/living/carbon/user)
+	if(!user)
+		return
+	if(hard_crit_deadlines[user])
+		return
+
+	hard_crit_deadlines[user] = world.time + RUNE_HARD_CRIT_AUTO_DELAY
+	to_chat(user, span_blue("The rune will drag you back in roughly ten minutes if you still cling to life."))
+
+/datum/resurrection_rune_controller/proc/clear_hard_crit_deadline(mob/living/carbon/user)
+	if(!user)
+		return
+
+	hard_crit_deadlines.Remove(user)
+
+/datum/resurrection_rune_controller/proc/trigger_voluntary_revival(mob/living/carbon/user)
+	if(!user)
+		return FALSE
+	if(resurrections_disabled())
+		return FALSE
+	if(!(user in linked_users))
+		return FALSE
+	if(user in resurrecting)
+		return FALSE
+
+	var/rescue_stage = get_rescue_stage(user)
+	if(rescue_stage != RUNE_STAGE_SOFT_CRIT && rescue_stage != RUNE_STAGE_HARD_CRIT)
+		return FALSE
+
+	queue_revival(user, voluntary = TRUE)
+	return TRUE
+
+/datum/resurrection_rune_controller/proc/queue_revival(mob/living/carbon/user, is_linked = TRUE, voluntary = FALSE)
 	if(!user)
 		return
 	if(user in resurrecting)
 		return
 
-	if(is_linked)
+	clear_linked_user_rescue_state(user)
+	if(voluntary)
+		to_chat(user.mind, span_blue("You surrender yourself to the rune's pull."))
+	else if(is_linked)
 		to_chat(user.mind, span_blue("You feel a faint force tuggung you back to life..."))
 	else
 		to_chat(user.mind, span_blue("An alien force suddenly <b>YANKS</b> you back to life!"))
 
 	sub_rune.visible_message(span_blue("The rune begins to grow brighter."))
 	resurrecting |= user
-	addtimer(CALLBACK(src, PROC_REF(complete_revival), user), RUNE_REVIVE_DELAY)
+	addtimer(CALLBACK(src, PROC_REF(complete_revival), user, voluntary), RUNE_REVIVE_DELAY)
 
-/datum/resurrection_rune_controller/proc/complete_revival(mob/living/carbon/user)
+/datum/resurrection_rune_controller/proc/complete_revival(mob/living/carbon/user, voluntary = FALSE)
 	var/mob/living/carbon/body = user
 	var/turf/destination_turf = sub_rune?.get_resurrection_destination(body)
 	if(!body || !destination_turf)
@@ -352,7 +494,7 @@
 
 	body.grab_ghost(TRUE)
 	body.flash_act()
-	apply_revival_debuffs(body)
+	apply_revival_debuffs(body, voluntary)
 	addtimer(CALLBACK(src, PROC_REF(clear_resurrection_lockout), body), RUNE_REVIVE_LOCKOUT)
 	playsound(destination_turf, 'sound/misc/vampirespell.ogg', 100, FALSE, -1)
 	to_chat(body, span_blue("Despite everything, you are back to life..."))
@@ -385,8 +527,10 @@
 	target.update_body()
 	target.visible_message("<span class='notice'>The rot leaves [target]'s body!</span>", "<span class='green'>I feel the rot leave my body!</span>")
 
-/datum/resurrection_rune_controller/proc/apply_revival_debuffs(mob/living/carbon/target)
-	if(ishuman(target))
+/datum/resurrection_rune_controller/proc/apply_revival_debuffs(mob/living/carbon/target, voluntary = FALSE)
+	if(voluntary)
+		target.apply_status_effect(/datum/status_effect/debuff/revived/rune/light)
+	else if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		if(human_target.rune_linked)
 			target.apply_status_effect(/datum/status_effect/debuff/revived/rune)
@@ -729,9 +873,11 @@
 /datum/job/roguetown/vampire
 	rune_linked = RUNE_LINK_VAMPIRE
 
-#undef RUNE_DAMAGE_THRESHOLD
-#undef RUNE_BRUTE_DAMAGE_SCALE
-#undef RUNE_BURN_DAMAGE_SCALE
 #undef RUNE_REBUILD_DELAY
 #undef RUNE_REVIVE_DELAY
 #undef RUNE_REVIVE_LOCKOUT
+#undef RUNE_HARD_CRIT_AUTO_DELAY
+#undef RUNE_STAGE_NONE
+#undef RUNE_STAGE_SOFT_CRIT
+#undef RUNE_STAGE_HARD_CRIT
+#undef RUNE_STAGE_IMMEDIATE
