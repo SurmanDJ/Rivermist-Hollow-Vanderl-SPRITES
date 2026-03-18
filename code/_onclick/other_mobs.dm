@@ -107,7 +107,7 @@
 		var/mob/living/carbon/human/target = src
 		if(length(user.return_apprentices()) >= user.return_max_apprentices())
 			return
-		if(target.age == AGE_CHILD && !target.is_apprentice())
+		if(!target.is_apprentice())
 			to_chat(user, span_notice("You offer apprenticeship to [target]."))
 			user.make_apprentice(target)
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

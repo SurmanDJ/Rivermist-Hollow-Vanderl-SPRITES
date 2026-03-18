@@ -29,7 +29,7 @@
 		if(!self_inspect)
 			if(observer_fish)
 				user.add_stress(/datum/stress_event/fellow_fishface)
-			else if(user.age == AGE_CHILD)
+			else if(user.has_quirk(/datum/quirk/vice/nimrod))
 				user.add_stress(/datum/stress_event/fish_monster)
 		else if(observer_fish)
 			user.add_stress(/datum/stress_event/self_fishface)
@@ -214,7 +214,7 @@
 
 			if(ishuman(user) && HAS_TRAIT(src, TRAIT_FISHFACE) && !HAS_TRAIT(user, TRAIT_FISHFACE))
 				var/mob/living/carbon/human/H = user
-				if(H.age == AGE_CHILD)
+				if(H.has_quirk(/datum/quirk/vice/nimrod))
 					. += span_userdanger("IT'S A HORRIBLE MONSTER!!!")
 					user.emote("scream")
 				else

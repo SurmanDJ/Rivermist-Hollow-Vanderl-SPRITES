@@ -1268,9 +1268,6 @@
 		return FALSE
 
 	// Groom checks
-	if(groom.age == AGE_CHILD)
-		to_chat(user, span_warning("[groom.real_name] is a child!"))
-		return FALSE
 	if(groom.stat == DEAD)
 		to_chat(user, span_warning("[groom.real_name] is dead!"))
 		return FALSE
@@ -1282,9 +1279,6 @@
 		return FALSE
 
 	// Bride checks
-	if(bride.age == AGE_CHILD)
-		to_chat(user, span_warning("[bride.real_name] is a child!"))
-		return FALSE
 	if(bride.stat == DEAD)
 		to_chat(user, span_warning("[bride.real_name] is dead!"))
 		return FALSE

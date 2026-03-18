@@ -9,7 +9,7 @@
 	abstract_type = /datum/customizer/organ/genitals/testicles
 	name = "Testicles"
 	allows_disabling = TRUE
-	default_disabled = FALSE
+	default_disabled = TRUE
 	gender_enabled = MALE
 
 /datum/customizer/organ/genitals/testicles/is_allowed(datum/preferences/prefs)

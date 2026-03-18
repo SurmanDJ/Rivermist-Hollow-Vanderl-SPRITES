@@ -19,7 +19,7 @@
 	var/list/species_adjust
 	/// Jobs that have gender adjustments /datum/job = list(MALE, FEMALE)
 	var/list/sexes_adjust
-	/// Jobs that have age adjustments /datum/job = list(AGE_CHILD, AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
+	/// Jobs that have age adjustments /datum/job = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
 	var/list/ages_adjust
 	/// Migrant waves that are banned from spawning.
 	/// This doesn't handle downgraded waves so if can_roll is true on one, it needs to be added.

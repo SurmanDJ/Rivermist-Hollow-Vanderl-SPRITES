@@ -42,7 +42,7 @@
 		return C.gender == MALE
 	else
 		if(pref_load)
-			return pref_load.get_customizer_entry_of_type(/datum/customizer_entry/organ/genitals/penis)
+			return pref_load.has_enabled_customizer_entry(/datum/customizer_entry/organ/genitals/penis)
 		else
 			return C.gender == MALE
 

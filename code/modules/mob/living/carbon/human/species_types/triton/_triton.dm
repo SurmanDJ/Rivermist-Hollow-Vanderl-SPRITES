@@ -7,28 +7,24 @@
 	native_language = "Deepspeak"
 	changesource_flags = WABBAJACK
 
-	desc = "The Children of Abyssor, also known as Tritons or their colloquial name, \"Deep Folk,\" \
-	are a strange species of people that live under the waves of Psydonia. \
-	Born from creatures of the deep with Abyssor's guidance, \
+	desc = "The Children of The Seas, also known as Tritons or their colloquial name, \"Deep Folk,\" \
+	are a strange species of people that live under the waves of The Seas. \
+	Born from creatures of the deep, \
 	these aquatic wayfarers all share a few common traits. \
 	Similar to other creatures that dwell below the surface, their eyes are dull with disuse. \
-	Tritons feel pain when gazing upon that which direct light of Astrata herself illuminates. \
+	Tritons feel pain when gazing upon that which direct sunlight. \
 	\n\n\
-	Unlike most of the people of Psydonia, their culture is often considered cold and dour; \
-	an apathetic attitude to most negative or positive news. For them, the depths of Psydonias oceans are cold and unforgiving. \
+	Unlike most of the people of Faerun, their culture is often considered cold and dour; \
+	an apathetic attitude to most negative or positive news. For them, the depths of oceans are cold and unforgiving. \
 	Large beasts travel the waters that swallow their kin whole... \
 	but the crushing depths have provided them a hearty disposition and resistance to most threats. \
-	Born of Abyssor, their normally placid emotions can swing into a wild rage when they view injustice done upon their kin at the hands of a sapient being. \
+	Born of The Seas, their normally placid emotions can swing into a wild rage when they view injustice done upon their kin at the hands of a sapient being. \
 	\n\n\
 	Tritons seen on the surface are very important trade partners, mercenaries, and surprising academics. \
 	Merchants often spend vast amounts of coin to have them aboard their trade vessels, fending off pirates or guiding their boats through turbulent weather. \
 	Be it on or within the sea, they excel- on land, however, they struggle. \
-	With their awkward and gangly fins, long, sharp talons, ghastly, lipless teeth, \
-	and milky, foreign eyes, they seem unfit to walk amongst the people. Humen children are often afraid of them due to such appearances. \
-	\n\n\
-	Their species is not without its tribalism, however. Large sections of their kin have broken away form their father, \
-	to consider themselves Noc's chosen. Due to their extreme sexual dimorphism similar to that of the common angler, \
-	males of this species are more likely to pursue magick with their weaker frames compared to their stronger female counterparts."
+	With their awkward and gangly fins, long fingers, sharp talons, ghastly teeth, \
+	and milky, foreign eyes, they seem foreign to the people. Human children are often afraid of them due to such appearances."
 
 	possible_ages = NORMAL_AGES_LIST
 
@@ -37,81 +33,25 @@
 
 	species_traits = list(NO_UNDERWEAR, HAIR, FACEHAIR, OLDGREY)
 	inherent_traits = list(TRAIT_NOMOBSWAP, TRAIT_WATER_BREATHING, TRAIT_GOOD_SWIM)
-	inherent_traits_f = list(TRAIT_STRONGBITE)
+	inherent_traits_m = list(TRAIT_STRONGBITE)
 	inherent_skills = list(
 		/datum/skill/labor/fishing = 3,
 		/datum/skill/misc/swimming = 4,
 	)
 
-	specstats_m = list(STATKEY_STR = -1, STATKEY_PER = -2, STATKEY_CON = -2, STATKEY_SPD = 1, STATKEY_INT = 2)
-	specstats_f = list(STATKEY_STR = 2, STATKEY_PER = -4, STATKEY_CON = 3, STATKEY_SPD = -3)
+	specstats_f = list(STATKEY_STR = -1, STATKEY_PER = -2, STATKEY_CON = -2, STATKEY_SPD = 1, STATKEY_INT = 2)
+	specstats_m = list(STATKEY_STR = 2, STATKEY_PER = -4, STATKEY_CON = 3, STATKEY_SPD = -3)
 	// Поменял местами, так как женские спрайты - это были мужские, и наоборот
 	limbs_icon_m = 'icons/roguetown/mob/bodies/f/triton.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/m/triton.dmi'
 
-	soundpack_m = /datum/voicepack/female
-	soundpack_f = /datum/voicepack/male
+	soundpack_f = /datum/voicepack/female
+	soundpack_m = /datum/voicepack/male
 
 	order_num = 20
 
 	exotic_bloodtype = /datum/blood_type/human/triton
 	enflamed_icon = "widefire"
-
-	// FEMALE from Male Humen
-	offset_features_m = list(
-		OFFSET_RING = list(0,0),\
-		OFFSET_GLOVES = list(0,0),\
-		OFFSET_WRISTS = list(0,0),\
-		OFFSET_HANDS = list(0,0),\
-		OFFSET_CLOAK = list(0,0),\
-		OFFSET_FACEMASK = list(0,0),\
-		OFFSET_HEAD = list(0,0),\
-		OFFSET_FACE = list(0,0),\
-		OFFSET_SNOUT = list(0,0),\
-		OFFSET_BELT = list(0,0),\
-		OFFSET_BACK = list(0,0),\
-		OFFSET_NECK = list(0,0),\
-		OFFSET_MOUTH = list(0,0),\
-		OFFSET_PANTS = list(0,0),\
-		OFFSET_SHIRT = list(0,0),\
-		OFFSET_ARMOR = list(0,0),\
-		OFFSET_UNDIES = list(0,0),\
-	)
-
-	// MALE from Female Humen
-	offset_features_f = list(
-		OFFSET_RING = list(0,-1),\
-		OFFSET_GLOVES = list(0,0),\
-		OFFSET_WRISTS = list(0,0),\
-		OFFSET_HANDS = list(0,0),\
-		OFFSET_CLOAK = list(0,0),\
-		OFFSET_FACEMASK = list(0,-1),\
-		OFFSET_HEAD = list(0,-1),\
-		OFFSET_FACE = list(0,-1),\
-		OFFSET_SNOUT = list(0,-1),\
-		OFFSET_BELT = list(0,0),\
-		OFFSET_BACK = list(0,-1),\
-		OFFSET_NECK = list(0,-1),\
-		OFFSET_MOUTH = list(0,-1),\
-		OFFSET_PANTS = list(0,0),\
-		OFFSET_SHIRT = list(0,0),\
-		OFFSET_ARMOR = list(0,0),\
-		OFFSET_UNDIES = list(0,-1),\
-	)
-
-	offset_genitals_m = list(
-		OFFSET_PENIS = list(0,0),\
-		OFFSET_BREASTS = list(0,0),\
-		OFFSET_TESTICLES = list(0,0),\
-		OFFSET_VAGINA = list(0,-1),\
-	)
-
-	offset_genitals_f = list(
-		OFFSET_PENIS = list(0,0),\
-		OFFSET_BREASTS = list(0,-1),\
-		OFFSET_TESTICLES = list(0,0),\
-		OFFSET_VAGINA = list(0,0),\
-	)
 
 	organs = list(
 		ORGAN_SLOT_BRAIN = /obj/item/organ/brain,

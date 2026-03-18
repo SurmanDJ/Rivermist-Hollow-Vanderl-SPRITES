@@ -22,9 +22,11 @@
 	window = new(client, id)
 	window.subscribe(src, PROC_REF(on_message))
 
-/datum/tgui_panel/Del()
-	window.unsubscribe(src)
-	window.close()
+/datum/tgui_panel/Destroy(force, ...)
+	if(window)
+		window.unsubscribe(src)
+		QDEL_NULL(window)
+	client = null
 	return ..()
 
 /**

@@ -52,6 +52,6 @@
 		return C.gender == FEMALE
 	else
 		if(pref_load)
-			return pref_load.get_customizer_entry_of_type(/datum/customizer_entry/organ/genitals/breasts)
+			return pref_load.has_enabled_customizer_entry(/datum/customizer_entry/organ/genitals/breasts)
 		else
 			return C.gender == FEMALE
