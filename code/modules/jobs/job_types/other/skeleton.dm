@@ -12,7 +12,7 @@
 	outfit = /datum/outfit/skeleton
 	give_bank_account = FALSE
 	languages = list(/datum/language/undead)
-	rune_linked = FALSE
+	rune_linked = RUNE_LINK_NONE
 
 	traits = list(
 		TRAIT_NOMOOD,

@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	can_random = FALSE
 	can_have_apprentices = FALSE
 	job_flags = (JOB_EQUIP_RANK)
-	rune_linked = FALSE
+	rune_linked = RUNE_LINK_NONE
 
 /datum/create_wave
 	var/datum/admins/admin_holder = null
@@ -2090,12 +2090,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 		to_chat(character, span_notice("[CW.greeting_text]"))
 
 		if(assigned_job.rune_linked)
-			for(var/obj/structure/resurrection_rune/rune_l in GLOB.global_resurrunes)
-				if(rune_l.is_main)
-					continue
-				human_character.get_rune_linked(rune_l)
-				break
-			GLOB.rune_roundstart_mobs += character
+			if(human_character.get_rune_linked(assigned_job.rune_linked))
+				GLOB.rune_roundstart_mobs += character
 
 	message_admins("The [CW.name] was deployed successfully with [length(CW.candidates)] participants!")
 

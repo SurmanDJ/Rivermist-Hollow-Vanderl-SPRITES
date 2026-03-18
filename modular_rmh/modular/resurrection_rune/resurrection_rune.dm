@@ -6,6 +6,69 @@
 #define RUNE_REVIVE_LOCKOUT 10 SECONDS
 
 
+/proc/find_resurrection_rune_by_tag(rune_tag)
+	if(!rune_tag || rune_tag == RUNE_LINK_NONE)
+		return
+
+	for(var/obj/structure/resurrection_rune/rune as anything in GLOB.global_resurrunes)
+		if(rune.rune_tag != rune_tag)
+			continue
+		return rune
+
+/proc/find_resurrection_rune_destination_marker_by_tag(rune_tag)
+	if(!rune_tag || rune_tag == RUNE_LINK_NONE)
+		return
+
+	var/list/tagged_markers = GLOB.global_resurrune_markers[rune_tag]
+	if(!tagged_markers || !tagged_markers.len)
+		return
+
+	return pick(tagged_markers)
+
+/proc/is_townhall_job(datum/job/assigned_role)
+	if(!assigned_role)
+		return FALSE
+
+	if(assigned_role.title in GLOB.townhall_positions)
+		return TRUE
+	if(assigned_role.parent_job?.title in GLOB.townhall_positions)
+		return TRUE
+	return FALSE
+
+/proc/should_redirect_outlaw_resurrection(mob/living/carbon/body, datum/mind/linked_mind)
+	var/datum/mind/checked_mind = linked_mind
+	if(body?.mind)
+		checked_mind = body.mind
+
+	if(!checked_mind)
+		return FALSE
+	if(checked_mind.has_antag_datum(/datum/antagonist/vampire))
+		return FALSE
+	if(is_townhall_job(checked_mind.assigned_role))
+		return FALSE
+
+	var/identity_name = body?.real_name
+	if(!identity_name)
+		identity_name = checked_mind.name
+	if(!identity_name)
+		return FALSE
+
+	return identity_name in GLOB.outlawed_players
+
+/proc/unlink_mind_from_other_resurrection_runes(datum/mind/linked_mind, obj/structure/resurrection_rune/current_rune)
+	if(!linked_mind)
+		return
+
+	for(var/obj/structure/resurrection_rune/rune as anything in GLOB.global_resurrunes)
+		if(rune == current_rune)
+			continue
+		if(!rune.resrunecontroler)
+			continue
+		if(!(linked_mind in rune.resrunecontroler.linked_users_minds))
+			continue
+		rune.resrunecontroler.remove_linked_mind(linked_mind)
+
+
 /datum/resurrection_rune_controller
 	var/obj/structure/resurrection_rune/control/control_rune
 	var/obj/structure/resurrection_rune/sub_rune
@@ -14,7 +77,7 @@
 	var/list/linked_users_minds = list()
 	var/list/linked_body_by_mind = list()
 	var/list/resurrecting = list()
-	// If the body is completely gone, rebuild this kind of shell at the rune
+	// If the body is completely gone, rebuild this kind of shell at the rune.
 	var/mob_type = /mob/living/carbon/human
 
 /datum/resurrection_rune_controller/New()
@@ -39,7 +102,7 @@
 /datum/resurrection_rune_controller/process()
 	if(!sub_rune)
 		return
-	if(!sub_rune.main_rune_link)
+	if(!sub_rune.is_main && !sub_rune.main_rune_link)
 		sub_rune.find_master()
 		return
 	if(resurrections_disabled())
@@ -61,9 +124,7 @@
 /datum/resurrection_rune_controller/proc/resurrections_disabled()
 	if(!sub_rune)
 		return TRUE
-	if(sub_rune.is_main)
-		return FALSE
-	return control_rune?.disabled_res
+	return sub_rune.disabled_res
 
 /datum/resurrection_rune_controller/proc/should_remove_linked_mind(datum/mind/linked_mind)
 	if(!linked_mind)
@@ -90,17 +151,17 @@
 		resurrecting -= linked_mind
 		return
 
-	var/turf/rune_turf = get_turf(sub_rune)
-	if(!rune_turf)
+	var/turf/destination_turf = sub_rune.get_resurrection_destination(linked_mind = linked_mind)
+	if(!destination_turf)
 		resurrecting -= linked_mind
 		return
 
-	var/mob/living/carbon/new_body = new mob_type(rune_turf)
+	var/mob/living/carbon/new_body = new mob_type(destination_turf)
 	var/mob/ghostie = linked_mind.get_ghost(TRUE)
 	if(ghostie?.client?.prefs)
 		ghostie.client.prefs.apply_prefs_to(new_body, TRUE)
 
-	// Mind transfer expects the new body to briefly be the current body first
+	// Mind transfer expects the new body to briefly be the current body first.
 	linked_mind.current = new_body
 	linked_mind.transfer_to(new_body)
 	linked_mind.grab_ghost(TRUE)
@@ -109,7 +170,7 @@
 	replace_linked_body(linked_mind, new_body)
 	resurrecting -= linked_mind
 	apply_revival_debuffs(new_body)
-	playsound(rune_turf, 'sound/misc/vampirespell.ogg', 100, FALSE, -1)
+	playsound(destination_turf, 'sound/misc/vampirespell.ogg', 100, FALSE, -1)
 	to_chat(new_body, span_blue("You are back."))
 
 /datum/resurrection_rune_controller/proc/add_user(mob/living/carbon/user)
@@ -117,6 +178,8 @@
 		return FALSE
 	if(!user.mind)
 		return FALSE
+
+	unlink_mind_from_other_resurrection_runes(user.mind, sub_rune)
 	if(user in linked_users)
 		return FALSE
 
@@ -133,7 +196,6 @@
 
 	var/datum/mind/linked_mind = user.mind
 	unregister_linked_body(user)
-	resurrecting -= user
 
 	if(linked_mind)
 		linked_users_minds -= linked_mind
@@ -150,7 +212,7 @@
 		register_linked_user_signals(user)
 
 	linked_users_by_name[user.name] = user
-	set_rune_link_state(user, TRUE)
+	set_rune_link_tag(user, sub_rune?.rune_tag)
 
 /datum/resurrection_rune_controller/proc/unregister_linked_body(mob/living/carbon/user)
 	if(!user)
@@ -160,7 +222,7 @@
 	linked_users_by_name.Remove(user.name)
 	resurrecting -= user
 	unregister_linked_user_signals(user)
-	set_rune_link_state(user, FALSE)
+	set_rune_link_tag(user, RUNE_LINK_NONE)
 
 /datum/resurrection_rune_controller/proc/replace_linked_body(datum/mind/linked_mind, mob/living/carbon/new_body)
 	if(!linked_mind || !new_body)
@@ -193,12 +255,12 @@
 	UnregisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(handle_linked_user_update))
 	UnregisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(handle_linked_user_update))
 
-/datum/resurrection_rune_controller/proc/set_rune_link_state(mob/living/carbon/user, linked)
+/datum/resurrection_rune_controller/proc/set_rune_link_tag(mob/living/carbon/user, rune_tag)
 	if(!ishuman(user))
 		return
 
 	var/mob/living/carbon/human/human_user = user
-	human_user.rune_linked = linked
+	human_user.rune_linked = rune_tag
 
 /datum/resurrection_rune_controller/proc/handle_linked_user_update(mob/living/carbon/target)
 	SIGNAL_HANDLER
@@ -263,9 +325,9 @@
 	addtimer(CALLBACK(src, PROC_REF(complete_revival), user), RUNE_REVIVE_DELAY)
 
 /datum/resurrection_rune_controller/proc/complete_revival(mob/living/carbon/user)
-	var/turf/rune_turf = get_turf(sub_rune)
 	var/mob/living/carbon/body = user
-	if(!body || !rune_turf)
+	var/turf/destination_turf = sub_rune?.get_resurrection_destination(body)
+	if(!body || !destination_turf)
 		if(sub_rune)
 			sub_rune.visible_message(span_blue("The rune flickers, connection to a body suddenly severed."))
 		resurrecting -= user
@@ -277,7 +339,7 @@
 	body.visible_message(span_blue("With a loud pop, [body.name] suddenly disappears!"))
 	playsound(get_turf(body), 'sound/magic/repulse.ogg', 100, FALSE, -1)
 	body.ExtinguishMob()
-	body.forceMove(rune_turf)
+	body.forceMove(destination_turf)
 	body.revive(ADMIN_HEAL_ALL, force_grab_ghost = TRUE)
 	body.clear_fullscreens()
 	body.reload_fullscreen()
@@ -292,7 +354,7 @@
 	body.flash_act()
 	apply_revival_debuffs(body)
 	addtimer(CALLBACK(src, PROC_REF(clear_resurrection_lockout), body), RUNE_REVIVE_LOCKOUT)
-	playsound(rune_turf, 'sound/misc/vampirespell.ogg', 100, FALSE, -1)
+	playsound(destination_turf, 'sound/misc/vampirespell.ogg', 100, FALSE, -1)
 	to_chat(body, span_blue("Despite everything, you are back to life..."))
 	to_chat(body, span_red("...But you remember the gnashing horror of what brought you here in minute detail - and you are terrified of repeating it."))
 
@@ -339,6 +401,39 @@
 	resurrecting -= user
 
 
+// Mapping landmarks can redirect a rune tag to a preferred arrival zone without
+// changing which physical rune owns the resurrection link.
+/obj/effect/landmark/resurrection_rune_destination
+	name = "resurrection rune destination"
+	icon = 'icons/mob/landmarks.dmi'
+	icon_state = "x"
+	var/rune_tag = RUNE_LINK_CITY
+
+/obj/effect/landmark/resurrection_rune_destination/Initialize(mapload)
+	. = ..()
+	LAZYADDASSOCLIST(GLOB.global_resurrune_markers, rune_tag, src)
+
+/obj/effect/landmark/resurrection_rune_destination/Destroy()
+	LAZYREMOVEASSOC(GLOB.global_resurrune_markers, rune_tag, src)
+	return ..()
+
+/obj/effect/landmark/resurrection_rune_destination/city
+	name = "city resurrection destination"
+	rune_tag = RUNE_LINK_CITY
+
+/obj/effect/landmark/resurrection_rune_destination/antag
+	name = "antag resurrection destination"
+	rune_tag = RUNE_LINK_ANTAG
+
+/obj/effect/landmark/resurrection_rune_destination/vampire
+	name = "vampire resurrection destination"
+	rune_tag = RUNE_LINK_VAMPIRE
+
+/obj/effect/landmark/resurrection_rune_destination/outlaw
+	name = "outlaw resurrection destination"
+	rune_tag = RUNE_LINK_OUTLAW
+
+
 /obj/structure/resurrection_rune
 	name = "grand rune"
 	desc = "It emits an otherwordly hum."
@@ -351,6 +446,11 @@
 	var/datum/resurrection_rune_controller/resrunecontroler
 	var/is_main = FALSE
 	var/obj/structure/resurrection_rune/control/main_rune_link
+	var/rune_tag = RUNE_LINK_CITY
+	var/disabled_res = FALSE
+	var/allows_soul_linking = TRUE
+	// Radius 1 means a 3x3 landing footprint around the chosen destination.
+	var/destination_radius = 1
 	pixel_x = -64
 	pixel_y = -64
 
@@ -384,8 +484,98 @@
 		resrunecontroler.control_rune = null
 	return FALSE
 
+/obj/structure/resurrection_rune/proc/get_management_name()
+	var/linked_count = 0
+	if(resrunecontroler)
+		linked_count = resrunecontroler.linked_users.len
+
+	var/rune_status = disabled_res ? "disabled" : "enabled"
+	return "[name] ([rune_tag]) - [x],[y],[z] - [rune_status] - [linked_count] linked"
+
+/obj/structure/resurrection_rune/proc/uses_outlaw_redirect(mob/living/carbon/body = null, datum/mind/linked_mind = null)
+	if(!should_redirect_outlaw_resurrection(body, linked_mind))
+		return FALSE
+
+	// An outlaw-specific rune can be disabled by the master rune. Marker-only setups
+	// still work without one, so mappers can redirect prisoners without another portal.
+	var/obj/structure/resurrection_rune/outlaw_rune = find_resurrection_rune_by_tag(RUNE_LINK_OUTLAW)
+	if(outlaw_rune)
+		return !outlaw_rune.disabled_res
+
+	return !isnull(find_resurrection_rune_destination_marker_by_tag(RUNE_LINK_OUTLAW))
+
+/obj/structure/resurrection_rune/proc/get_outlaw_redirect_rune()
+	var/obj/structure/resurrection_rune/outlaw_rune = find_resurrection_rune_by_tag(RUNE_LINK_OUTLAW)
+	if(outlaw_rune?.disabled_res)
+		return
+	return outlaw_rune
+
+/obj/structure/resurrection_rune/proc/get_resurrection_tag(mob/living/carbon/body = null, datum/mind/linked_mind = null)
+	if(uses_outlaw_redirect(body, linked_mind))
+		return RUNE_LINK_OUTLAW
+	return rune_tag
+
+/obj/structure/resurrection_rune/proc/get_resurrection_anchor_rune(mob/living/carbon/body = null, datum/mind/linked_mind = null)
+	if(uses_outlaw_redirect(body, linked_mind))
+		return get_outlaw_redirect_rune()
+	return src
+
+/obj/structure/resurrection_rune/proc/get_resurrection_anchor(mob/living/carbon/body = null, datum/mind/linked_mind = null)
+	// Outlaws keep their original soul link, but can be rerouted to a prison rune or
+	// prison marker set on resurrection.
+	var/rune_tag_to_use = get_resurrection_tag(body, linked_mind)
+	var/obj/effect/landmark/resurrection_rune_destination/marker = find_resurrection_rune_destination_marker_by_tag(rune_tag_to_use)
+	var/turf/anchor_turf = get_turf(marker)
+	if(anchor_turf)
+		return anchor_turf
+
+	var/obj/structure/resurrection_rune/anchor_rune = get_resurrection_anchor_rune(body, linked_mind)
+	if(anchor_rune)
+		return get_turf(anchor_rune)
+
+	return get_turf(src)
+
+/obj/structure/resurrection_rune/proc/get_resurrection_destination_radius(mob/living/carbon/body = null, datum/mind/linked_mind = null)
+	var/obj/structure/resurrection_rune/anchor_rune = get_resurrection_anchor_rune(body, linked_mind)
+	if(anchor_rune)
+		return max(anchor_rune.destination_radius, 0)
+
+	return max(destination_radius, 0)
+
+/obj/structure/resurrection_rune/proc/get_resurrection_destination_options(turf/anchor_turf, search_radius)
+	var/list/valid_turfs = list()
+	if(!anchor_turf)
+		return valid_turfs
+
+	for(var/turf/candidate_turf as anything in RANGE_TURFS(search_radius, anchor_turf))
+		if(istype(candidate_turf, /turf/open/lava))
+			continue
+		if(istype(candidate_turf, /turf/open/lava/acid))
+			continue
+		if(candidate_turf.is_blocked_turf())
+			continue
+
+		valid_turfs += candidate_turf
+
+	return valid_turfs
+
+/obj/structure/resurrection_rune/proc/get_resurrection_destination(mob/living/carbon/body = null, datum/mind/linked_mind = null)
+	var/turf/anchor_turf = get_resurrection_anchor(body, linked_mind)
+	if(!anchor_turf)
+		return
+
+	var/search_radius = get_resurrection_destination_radius(body, linked_mind)
+	var/list/valid_turfs = get_resurrection_destination_options(anchor_turf, search_radius)
+	if(valid_turfs.len)
+		return pick(valid_turfs)
+
+	return anchor_turf
+
 /obj/structure/resurrection_rune/proc/link_soul(mob/living/carbon/user)
 	if(!resrunecontroler)
+		return FALSE
+	if(!allows_soul_linking)
+		to_chat(user, span_blue("This rune waits only for the condemned."))
 		return FALSE
 	if(user in resrunecontroler.linked_users)
 		to_chat(user, span_blue("Your Soul is already linked."))
@@ -402,15 +592,18 @@
 		return
 	if(!resrunecontroler)
 		return
-	if(!main_rune_link)
+	if(!main_rune_link && !is_main)
 		find_master()
 	if(!main_rune_link && !is_main)
 		to_chat(user, span_blue("Somehow, the main rune is not connected..."))
 		return
-	if(!is_main && main_rune_link.disabled_res)
-		to_chat(user, span_blue("Your masters have disabled the rune!"))
+	if(!is_main && disabled_res)
+		to_chat(user, span_blue("Your masters have disabled this rune!"))
 		return
 	if(is_main)
+		return
+	if(!allows_soul_linking)
+		to_chat(user, span_blue("This rune lies in wait for outlawed souls alone."))
 		return
 
 	var/mob/living/carbon/carbon_user = user
@@ -426,19 +619,78 @@
 /obj/structure/resurrection_rune/attacked_by(obj/item/I, mob/living/user)
 	return FALSE
 
+/obj/structure/resurrection_rune/city
+	rune_tag = RUNE_LINK_CITY
+
+/obj/structure/resurrection_rune/antag
+	rune_tag = RUNE_LINK_ANTAG
+
+/obj/structure/resurrection_rune/outlaw
+	name = "outlaw rune"
+	rune_tag = RUNE_LINK_OUTLAW
+	allows_soul_linking = FALSE
+
 /obj/structure/resurrection_rune/control
 	name = "master rune"
 	is_main = TRUE
-	var/disabled_res = FALSE
+	rune_tag = RUNE_LINK_VAMPIRE
 
 /obj/structure/resurrection_rune/control/Initialize(mapload)
 	. = ..()
 
-/obj/structure/resurrection_rune/control/proc/get_sub_rune()
+/obj/structure/resurrection_rune/control/proc/get_managed_rune_options()
+	var/list/rune_options = list()
+
 	for(var/obj/structure/resurrection_rune/rune as anything in GLOB.global_resurrunes)
 		if(rune.is_main)
 			continue
-		return rune
+		rune_options[rune.get_management_name()] = rune
+
+	return rune_options
+
+/obj/structure/resurrection_rune/control/proc/select_managed_rune(mob/living/carbon/user)
+	var/list/rune_options = get_managed_rune_options()
+	if(!rune_options.len)
+		to_chat(user, span_blue("No sub-runes answer the master rune."))
+		return
+
+	var/selected_rune_name = input(user, "Which rune do you wish to command?", "Master Rune") as null|anything in rune_options
+	if(!selected_rune_name)
+		return
+	return rune_options[selected_rune_name]
+
+/obj/structure/resurrection_rune/control/proc/manage_selected_rune(mob/living/carbon/user, obj/structure/resurrection_rune/selected_rune)
+	if(!selected_rune)
+		return
+	if(!selected_rune.resrunecontroler)
+		return
+
+	var/toggle_label = selected_rune.disabled_res ? "Enable Rune" : "Disable Rune"
+	var/action = input(user, "What do you wish to do with [selected_rune.get_management_name()]?", "Master Rune") as null|anything in list(toggle_label, "Unlink a Soul", "Cancel")
+	switch(action)
+		if("Enable Rune")
+			selected_rune.disabled_res = FALSE
+			to_chat(user, span_blue("[selected_rune.name] may restore them once more."))
+		if("Disable Rune")
+			selected_rune.disabled_res = TRUE
+			to_chat(user, span_blue("[selected_rune.name] will claim no more souls."))
+		if("Unlink a Soul")
+			if(!selected_rune.resrunecontroler.linked_users_by_name.len)
+				to_chat(user, span_blue("No souls are linked to that rune."))
+				return
+
+			var/selected_name = input(user, "Choose.", "Souls") as null|anything in selected_rune.resrunecontroler.linked_users_by_name
+			if(!selected_name)
+				return
+
+			var/mob/living/carbon/linked_target = selected_rune.resrunecontroler.linked_users_by_name[selected_name]
+			if(!linked_target)
+				return
+
+			selected_rune.resrunecontroler.remove_user(linked_target)
+			to_chat(user, span_blue("They are now damned."))
+		else
+			return
 
 /obj/structure/resurrection_rune/control/attack_hand(mob/user)
 	. = ..()
@@ -446,43 +698,36 @@
 		return
 
 	var/mob/living/carbon/carbon_user = user
-	var/choice = input(carbon_user, "What do you wish to do?", "Master Rune") as anything in list("Link Soul", "Unlink a Soul", "Toggle Sub Rune", "Cancel")
+	var/choice = input(carbon_user, "What do you wish to do?", "Master Rune") as anything in list("Link Soul", "Manage a Rune", "Cancel")
 	switch(choice)
 		if("Link Soul")
 			link_soul(carbon_user)
-		if("Unlink a Soul")
-			var/obj/structure/resurrection_rune/sub_rune = get_sub_rune()
-			if(!sub_rune)
+		if("Manage a Rune")
+			var/obj/structure/resurrection_rune/selected_rune = select_managed_rune(carbon_user)
+			if(!selected_rune)
 				return
-
-			var/selected_name = input(carbon_user, "Choose.", "Souls") as null|anything in sub_rune.resrunecontroler.linked_users_by_name
-			if(!selected_name)
-				return
-
-			var/mob/living/carbon/linked_target = sub_rune.resrunecontroler.linked_users_by_name[selected_name]
-			if(!linked_target)
-				return
-
-			sub_rune.resrunecontroler.remove_user(linked_target)
-			to_chat(carbon_user, span_blue("They are now damned."))
-		if("Toggle Sub Rune")
-			disabled_res = !disabled_res
-			if(disabled_res)
-				to_chat(carbon_user, span_blue("Let them perish."))
-			else
-				to_chat(carbon_user, span_blue("Another chance."))
+			manage_selected_rune(carbon_user, selected_rune)
 		else
 			return
 
-/mob/living/carbon/proc/get_rune_linked(obj/structure/resurrection_rune/resrune)
+/mob/living/carbon/proc/get_rune_linked(rune_target)
+	var/obj/structure/resurrection_rune/resrune = rune_target
+	if(istext(rune_target))
+		resrune = find_resurrection_rune_by_tag(rune_target)
+
 	if(!resrune)
-		return
-	if(!resrune.main_rune_link)
+		return FALSE
+	if(!resrune.main_rune_link && !resrune.is_main)
 		resrune.find_master()
 	if(!resrune.resrunecontroler)
-		return
+		return FALSE
 	if(resrune.resrunecontroler.add_user(src))
 		to_chat(src, span_blue("You are protected from Death."))
+		return TRUE
+	return FALSE
+
+/datum/job/roguetown/vampire
+	rune_linked = RUNE_LINK_VAMPIRE
 
 #undef RUNE_DAMAGE_THRESHOLD
 #undef RUNE_BRUTE_DAMAGE_SCALE

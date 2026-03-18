@@ -4,7 +4,7 @@
 	department_flag = TOWN
 	job_flags = (JOB_EQUIP_RANK)
 	faction = FACTION_TOWN
-	rune_linked = FALSE
+	rune_linked = RUNE_LINK_NONE
 	#ifdef TESTSERVER
 	total_positions = 99
 	spawn_positions = 99

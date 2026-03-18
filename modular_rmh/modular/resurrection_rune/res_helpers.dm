@@ -1,4 +1,5 @@
 GLOBAL_LIST_EMPTY(global_resurrunes)
+GLOBAL_LIST_EMPTY(global_resurrune_markers)
 
 //#define IS_RES_ELIGIBLE(source) ((source.InBadHealth() && !source.IsSleeping()) || (source.IsSleeping() && source.health < source.crit_threshold))
 
@@ -65,4 +66,4 @@ GLOBAL_LIST_EMPTY(global_resurrunes)
 #undef REVIVAL_FILTER
 
 /mob/living/carbon/human
-	var/rune_linked = FALSE
+	var/rune_linked = RUNE_LINK_NONE

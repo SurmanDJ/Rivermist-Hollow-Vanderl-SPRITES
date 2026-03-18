@@ -11,7 +11,7 @@
 
 	allowed_races = RACES_PLAYER_ALL
 	allowed_sexes = list(MALE, FEMALE)
-	rune_linked = FALSE
+	rune_linked = RUNE_LINK_NONE
 
 /// For cases where you have an advanced class migrant with no migrant job.
 /datum/job/migrant/generic
