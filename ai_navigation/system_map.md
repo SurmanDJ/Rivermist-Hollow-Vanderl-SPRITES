@@ -101,6 +101,14 @@ Note: original system_map counts (634 mob, 355 status_effect, 222 component, etc
 - Main controllers/subsystems: `SSeconomy`, `SStreasury`, `SShousing`, `SSmerchant`
 - Notes: Money/accounting, estate income, housing, trader flows, and factional world state are split across controllers and datums.
 
+### Questing, Contracts, and Objective Tracking
+
+- Main type root(s): `/datum/quest`, `/obj/item/paper/scroll/quest`, `/obj/item/quest_compass`, `/obj/structure/fake_machine/contractledger`
+- Approximate path count under the root(s): the core questing slice currently spans `15` DM files under `code/modules/questing/**`
+- Primary directories: `code/modules/questing/**`, `tgui/packages/tgui/interfaces/ContractLedger.tsx`, `tgui/packages/tgui/interfaces/ContractLedgerRu.tsx`, `tgui/packages/tgui/interfaces/ContractLedgerView.tsx`, `tgui/packages/tgui/interfaces/ContractLedger.i18n.en.ts`, `tgui/packages/tgui/interfaces/ContractLedger.i18n.ru.ts`, `modular_rmh/code/modules/client/preferred_language.dm`, `code/__DEFINES/quests.dm`, `code/modules/antagonists/villain/harlequinn/bounty.dm`
+- Main controllers/subsystems: `SSprocessing`, `SStreasury`, `SSmapping`
+- Notes: Contracts are issued and turned in through the ledger, objectives live on `/datum/quest` subtypes, the scroll is the player-facing contract record, and the compass is the live tracking surface. The ledger now opens separate EN/RU TGUI interfaces selected from `client.preferred_ui_language`, which is changed through the modular OOC verb in `modular_rmh/code/modules/client/preferred_language.dm`. Merchant/guild job gating lives in the modular RMH jobs branch.
+
 ### Crafting, Materials, Runewords, Farming, Fishing
 
 - Main type root(s): `/datum/material`, `/datum/runeword`

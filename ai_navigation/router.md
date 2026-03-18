@@ -7,6 +7,9 @@ Generated on 2026-03-11. Last validated 2026-03-14. This is the primary Fast Sta
 | When | Action |
 |---|---|
 | before any medium / high / unclear-scope edit | open `ai_navigation/human_checking.md` first |
+| navigation docs say something doesn't exist or give no result | **do not conclude it doesn't exist** — verify with a direct file search or grep before proceeding |
+| navigation lookup returns nothing for an SS\*, proc, type, or system | grep `code/` directly; if found, use it and flag the navigation gap to the user |
+| you used navigation and got an unexpected result (wrong file, missing entry, stale path) | say so explicitly — "navigation may be stale here, verifying directly" — then grep |
 
 ## Dispatch
 
@@ -39,8 +42,9 @@ Generated on 2026-03-11. Last validated 2026-03-14. This is the primary Fast Sta
 | keyword or feature-name routing | `ai_navigation/entrypoints.md` |
 | BYOND type path `/datum/...` `/mob/...` `/obj/...` | `ai_navigation/type_index.md` |
 | lifecycle, timing, scheduler, round flow | `ai_navigation/runtime_flow.md` |
+| `Initialize()`, `LateInitialize()`, `INITIALIZE_HINT_*`, atom init order, "LateInitialize not firing", world-start setup depending on other map objects | `ai_navigation/runtime_flow.md` §1a → `code/controllers/subsystem/atoms.dm` |
+| explicit `SS*` subsystem — **always check `ai_navigation/subsystem_map.md` before assuming a subsystem doesn't exist or guessing its behavior** | `ai_navigation/subsystem_map.md` |
 | cross-system handoff or dependency | `ai_navigation/system_dependencies.md` |
-| explicit `SS*` subsystem | `ai_navigation/subsystem_map.md` |
 | unknown architecture or location | `ai_navigation/system_map.md` or `ai_navigation/architecture.md` |
 | modular_rmh layer, where RMH code lives, overlay rules | `ai_navigation/modular_guide.md` |
 | deep inheritance | `ai_navigation/type_tree.md` — search specific path, do not read whole file |
