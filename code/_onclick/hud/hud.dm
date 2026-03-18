@@ -134,6 +134,7 @@ GLOBAL_LIST_INIT(available_ui_styles, sortList(list(
 		mymob.hud_used = null
 
 	QDEL_NULL(module_store_icon)
+	QDEL_NULL(scannies)
 	QDEL_LIST(static_inventory)
 
 	QDEL_NULL(reads)

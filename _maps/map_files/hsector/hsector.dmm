@@ -4863,7 +4863,7 @@
 /turf/open/floor/ruinedwood/darker,
 /area/indoors/town/rmh/town_hall)
 "bWD" = (
-/obj/structure/door/arcyne/bolt{
+/obj/structure/door/arcyne/key{
 	damage_deflection = 100;
 	name = "Underdark Travel Room"
 	},
@@ -15762,7 +15762,7 @@
 /turf/open/floor/snow/rough,
 /area/outdoors/mountains/rmh_mountains)
 "fTY" = (
-/obj/structure/door/swing,
+/obj/structure/door,
 /obj/effect/mapping_helpers/access/keyset/town/butcher,
 /turf/open/floor/hay,
 /area/indoors/town/rmh)
@@ -29136,7 +29136,7 @@
 /turf/open/floor/cobble,
 /area/indoors/town/rmh/farm)
 "kMX" = (
-/obj/structure/door/arcyne/bolt{
+/obj/structure/door/arcyne/key{
 	damage_deflection = 100;
 	name = "Dark Forest Travel Room"
 	},
@@ -42238,7 +42238,7 @@
 	first_time_text = "THE TOMB OF FORGOTTENS"
 	})
 "ptK" = (
-/obj/structure/door/arcyne/bolt{
+/obj/structure/door/arcyne/key{
 	damage_deflection = 100;
 	name = "Dusk Spikes Travel Room"
 	},
@@ -47638,7 +47638,6 @@
 "rnx" = (
 /obj/structure/closet/crate/crafted_closet/steward,
 /obj/item/coin/silver/pile,
-/obj/effect/mapping_helpers/access/keyset/manor/steward,
 /turf/open/floor/tile/tilerg,
 /area/indoors/town/vault)
 "rnE" = (
@@ -53741,7 +53740,7 @@
 /turf/open/floor/ruinedwood/turned/darker,
 /area/indoors/town/rmh/tavern)
 "tyj" = (
-/obj/structure/door/arcyne/bolt{
+/obj/structure/door/arcyne/key{
 	damage_deflection = 100;
 	name = "Duel Arena"
 	},
@@ -61871,7 +61870,6 @@
 	name = "vegetables crate"
 	},
 /obj/effect/mapping_helpers/access/keyset/town/gaffer,
-/obj/effect/mapping_helpers/access/locker,
 /obj/item/storage/keyring/adventurers_guild,
 /obj/item/storage/keyring/adventurers_guild,
 /obj/item/storage/keyring/innkeep,
@@ -61977,7 +61975,6 @@
 /area/under/town/rmh/sewer)
 "wzT" = (
 /obj/structure/door/window{
-	lockid = "archive";
 	name = "Library"
 	},
 /obj/effect/mapping_helpers/access/keyset/manor/archive,
@@ -64615,7 +64612,7 @@
 /turf/open/floor/dirt/road,
 /area/outdoors/town/rmh)
 "xyc" = (
-/obj/structure/door/arcyne/bolt{
+/obj/structure/door/arcyne/key{
 	damage_deflection = 100;
 	name = "Desert Travel Room"
 	},
@@ -65405,7 +65402,7 @@
 /turf/open/floor/cobble/alt,
 /area/under/town/rmh/basement)
 "xNE" = (
-/obj/structure/door/arcyne/bolt,
+/obj/structure/door/arcyne/key,
 /obj/effect/mapping_helpers/access/keyset/town/tower,
 /turf/open/floor/greenstone,
 /area/indoors/town/rmh/magician)
@@ -66172,8 +66169,7 @@
 "ycB" = (
 /obj/effect/decal/cobblerockedge,
 /obj/structure/closet/crate/chest/old_crate{
-	name = "confiscated goods";
-	lockid = "garrison"
+	name = "confiscated goods"
 	},
 /obj/effect/mapping_helpers/access/keyset/garrison/general,
 /turf/open/floor/cobble,
@@ -66462,7 +66458,6 @@
 /obj/structure/closet/crate/crafted_closet/steward,
 /obj/effect/spawner/map_spawner/loot/coin/absurd,
 /obj/machinery/light/fueled/wallfire/candle/blue/l,
-/obj/effect/mapping_helpers/access/keyset/manor/steward,
 /turf/open/floor/tile/tilerg,
 /area/indoors/town/vault)
 "yhb" = (

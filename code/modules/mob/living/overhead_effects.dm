@@ -54,9 +54,9 @@
 				use_female_sprites = FEMALE_SPRITES
 
 		if(use_female_sprites)
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+			offsets = species.offset_features_f
 		else
-			offsets = (age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+			offsets = species.offset_features_m
 
 	var/mutable_appearance/appearance = mutable_appearance(icon, icon_state, layer, appearance_flags = RESET_COLOR)
 	appearance.pixel_y = y_offset

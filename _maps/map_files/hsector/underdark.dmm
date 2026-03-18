@@ -3284,9 +3284,7 @@
 /turf/open/water/river,
 /area/under/underdark/rmh)
 "PC" = (
-/obj/structure/door/arcyne/bolt,
-/obj/effect/mapping_helpers/access/keyset/manor/mage,
-/obj/effect/mapping_helpers/access/locker,
+/obj/structure/door/arcyne,
 /turf/open/floor/concrete,
 /area/indoors/town/rmh/magician/pass)
 "PF" = (

@@ -1337,8 +1337,8 @@
 		var/modifier = 1
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
-			if(H.age == AGE_CHILD)
-				modifier = 5
+			if(HAS_TRAIT(H, TRAIT_TINY))
+				modifier = 2
 		if(HAS_TRAIT(src, TRAIT_HOLLOWBONES))
 			modifier = 4
 		if(isclothing(worn_item))

@@ -14,8 +14,7 @@
 		preferred_form = client.prefs.ghost_form
 		ghost_orbit = client.prefs.ghost_orbit
 
-	if(client.holder)
-		icon_state = client.prefs.admin_ghost_icon
+	apply_admin_ghost_icon_preference()
 
 	var/turf/T = get_turf(src)
 	if (isturf(T))

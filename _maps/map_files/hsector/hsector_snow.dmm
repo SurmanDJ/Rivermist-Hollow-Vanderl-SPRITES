@@ -53133,7 +53133,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/indoors/town/rmh/library)
 "xNE" = (
-/obj/structure/door/arcyne/bolt,
+/obj/structure/door/arcyne/key,
 /obj/effect/mapping_helpers/access/keyset/town/tower,
 /turf/open/floor/greenstone,
 /area/indoors/town/rmh/magician)

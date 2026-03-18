@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(visual_ui_id_to_type, list())
 /datum/mind/Destroy()
 	. = ..()
 	remove_all_uis()
-	QDEL_NULL(active_uis)
+	QDEL_LIST_ASSOC(active_uis)
 
 /datum/mind/proc/resend_all_uis() // Re-sends all mind uis to client.screen, called on mob/living/Login()
 	for (var/visual_ui in active_uis)

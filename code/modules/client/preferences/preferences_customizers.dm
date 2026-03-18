@@ -43,6 +43,10 @@
 	. = dat
 	if(!pref_species)
 		return
+
+	// Keep older or partially initialized preference records from opening a broken customizer UI.
+	validate_customizer_entries()
+
 	var/list/customizers = pref_species.customizers
 	if(!customizers)
 		return
@@ -221,6 +225,10 @@
 		if(entry.type == entry_type)
 			return entry
 	return null
+
+/datum/preferences/proc/has_enabled_customizer_entry(entry_type)
+	var/datum/customizer_entry/entry = get_customizer_entry_of_type(entry_type)
+	return entry && !entry.disabled
 
 
 /datum/preferences/proc/genderize_customizer_entries()

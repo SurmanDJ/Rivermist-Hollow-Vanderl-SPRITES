@@ -36,7 +36,6 @@
 
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/rakshari.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/rakshari.dmi'
-	child_icon = 'icons/roguetown/mob/bodies/c/child-rakshari.dmi'
 
 	exotic_bloodtype = /datum/blood_type/human/rakshari
 

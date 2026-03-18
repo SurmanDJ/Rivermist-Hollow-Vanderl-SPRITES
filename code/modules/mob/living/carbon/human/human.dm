@@ -190,8 +190,6 @@
 	if(ai_controller && flee_in_pain)
 		AddElement(/datum/element/ai_flee_while_in_pain)
 
-	id_check_in_5()
-
 	if(!GetComponent(/datum/component/arousal))
 		AddComponent(/datum/component/arousal)
 
