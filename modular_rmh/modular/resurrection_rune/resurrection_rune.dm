@@ -222,7 +222,7 @@
 	replace_linked_body(linked_mind, new_body)
 	resurrecting -= linked_mind
 	apply_revival_debuffs(new_body)
-	apply_revival_side_effects(new_body)
+	apply_revival_side_effects(new_body, FALSE, null)
 	playsound(destination_turf, 'sound/misc/vampirespell.ogg', 100, FALSE, -1)
 	to_chat(new_body, span_blue("You are back."))
 	apply_resurrection_trauma(new_body)
@@ -475,6 +475,7 @@
 /datum/resurrection_rune_controller/proc/complete_revival(mob/living/carbon/user, voluntary = FALSE)
 	var/mob/living/carbon/body = user
 	var/turf/destination_turf = sub_rune?.get_resurrection_destination(body)
+	var/turf/return_turf = get_turf(body)
 	if(!body || !destination_turf)
 		if(sub_rune)
 			sub_rune.visible_message(span_blue("The rune flickers, connection to a body suddenly severed."))
@@ -501,7 +502,7 @@
 	body.grab_ghost(TRUE)
 	body.flash_act()
 	apply_revival_debuffs(body, voluntary)
-	apply_revival_side_effects(body, voluntary)
+	apply_revival_side_effects(body, voluntary, return_turf)
 	addtimer(CALLBACK(src, PROC_REF(clear_resurrection_lockout), body), RUNE_REVIVE_LOCKOUT)
 	playsound(destination_turf, 'sound/misc/vampirespell.ogg', 100, FALSE, -1)
 	to_chat(body, span_blue("Despite everything, you are back to life..."))
@@ -558,9 +559,33 @@
 	target.remove_status_effect(/datum/status_effect/debuff/revived/rune/rough)
 	target.remove_status_effect(/datum/status_effect/debuff/revived/rune/light)
 
-/datum/resurrection_rune_controller/proc/apply_revival_side_effects(mob/living/carbon/target, voluntary = FALSE)
+/datum/resurrection_rune_controller/proc/apply_revival_side_effects(mob/living/carbon/target, voluntary = FALSE, turf/return_turf = null)
 	charge_revival_tithe(target)
 	maybe_strip_revival_clothes(target, voluntary)
+	give_revival_compass(target, return_turf)
+
+/datum/resurrection_rune_controller/proc/give_revival_compass(mob/living/carbon/target, turf/return_turf)
+	if(!target)
+		return FALSE
+
+	// Only keep the freshest trail so each resurrection points home once.
+	for(var/obj/item/resurrection_compass/old_compass as anything in target.contents)
+		if(istype(old_compass))
+			qdel(old_compass)
+
+	if(!return_turf)
+		to_chat(target, span_notice("The place of your death remains a mystery..."))
+		return FALSE
+
+	var/obj/item/resurrection_compass/compass = new(get_turf(target))
+	compass.set_target_turf(return_turf)
+
+	if(!target.put_in_hands(compass, FALSE, TRUE, TRUE))
+		compass.forceMove(target.drop_location())
+		return FALSE
+
+	to_chat(target, span_notice("The rune leaves a compass in your hand, its needle straining toward where you were taken from."))
+	return TRUE
 
 /datum/resurrection_rune_controller/proc/charge_revival_tithe(mob/living/carbon/target)
 	if(!(target in SStreasury.bank_accounts))
