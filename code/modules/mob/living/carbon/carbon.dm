@@ -1155,6 +1155,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_MARTIAL_ART, "Give Martial Arts")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_TRAUMA, "Give Brain Trauma")
 	VV_DROPDOWN_OPTION(VV_HK_CURE_TRAUMA, "Cure Brain Traumas")
+	VV_DROPDOWN_OPTION(VV_HK_UNLINK_RUNES, "Unlink From All Runes")
 
 /mob/living/carbon/vv_do_topic(list/href_list)
 	. = ..()
@@ -1243,6 +1244,31 @@
 		cure_all_traumas(TRAUMA_RESILIENCE_ABSOLUTE)
 		log_admin("[key_name(usr)] has cured all traumas from [key_name(src)].")
 		message_admins("<span class='notice'>[key_name_admin(usr)] has cured all traumas from [key_name_admin(src)].</span>")
+	if(href_list[VV_HK_UNLINK_RUNES])
+		if(!check_rights(R_ADMIN))
+			return
+		if(!mind)
+			to_chat(usr, span_warning("[src] has no mind to unlink from resurrection runes."))
+			return
+		if(alert(usr, "Unlink [src] from all resurrection runes?", "Resurrection Runes", "Yes", "No") != "Yes")
+			return
+
+		var/had_rune_link = FALSE
+		for(var/obj/structure/resurrection_rune/rune as anything in GLOB.global_resurrunes)
+			if(!rune.resrunecontroler)
+				continue
+			if(!(mind in rune.resrunecontroler.linked_users_minds))
+				continue
+			had_rune_link = TRUE
+			break
+
+		if(!had_rune_link)
+			to_chat(usr, span_notice("[src] is not linked to any resurrection runes."))
+			return
+
+		unlink_mind_from_other_resurrection_runes(mind, null)
+		log_admin("[key_name(usr)] has unlinked [key_name(src)] from all resurrection runes.")
+		message_admins("<span class='notice'>[key_name_admin(usr)] has unlinked [key_name_admin(src)] from all resurrection runes.</span>")
 
 /mob/living/carbon/can_resist()
 	return bodyparts.len > 2 && ..()

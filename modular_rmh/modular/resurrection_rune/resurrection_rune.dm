@@ -165,7 +165,8 @@
 		if(should_remove_linked_mind(linked_mind))
 			remove_linked_mind(linked_mind)
 			return
-		if(linked_mind.current)
+		prune_deleted_linked_body_state(linked_mind)
+		if(linked_mind.current && !istype(linked_mind.current, /mob/living/brain))
 			continue
 		if(linked_mind in resurrecting)
 			continue
@@ -199,7 +200,7 @@
 	if(!(linked_mind in linked_users_minds))
 		resurrecting -= linked_mind
 		return
-	if(linked_mind.current)
+	if(linked_mind.current && !istype(linked_mind.current, /mob/living/brain))
 		resurrecting -= linked_mind
 		return
 
@@ -306,10 +307,12 @@
 /datum/resurrection_rune_controller/proc/register_linked_user_signals(mob/living/carbon/user)
 	RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(handle_linked_user_update))
 	RegisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(handle_linked_user_update))
+	RegisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(handle_linked_user_deletion))
 
 /datum/resurrection_rune_controller/proc/unregister_linked_user_signals(mob/living/carbon/user)
 	UnregisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(handle_linked_user_update))
 	UnregisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(handle_linked_user_update))
+	UnregisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(handle_linked_user_deletion))
 
 /datum/resurrection_rune_controller/proc/set_rune_link_tag(mob/living/carbon/user, rune_tag)
 	if(!ishuman(user))
@@ -343,6 +346,37 @@
 		return
 
 	queue_revival(target)
+
+/datum/resurrection_rune_controller/proc/handle_linked_user_deletion(mob/living/carbon/target)
+	SIGNAL_HANDLER
+
+	if(!target)
+		return
+
+	var/datum/mind/linked_mind = target.mind
+	clear_linked_user_rescue_state(target)
+	linked_users -= target
+	linked_users_by_name.Remove(target.name)
+	resurrecting -= target
+
+	if(linked_mind && linked_body_by_mind[linked_mind] == target)
+		linked_body_by_mind.Remove(linked_mind)
+	if(linked_mind && (linked_mind?.current == target || QDELETED(linked_mind?.current)))
+		linked_mind.current = null
+
+/datum/resurrection_rune_controller/proc/prune_deleted_linked_body_state(datum/mind/linked_mind)
+	if(!linked_mind)
+		return
+
+	var/mob/living/carbon/linked_body = linked_body_by_mind[linked_mind]
+	if(linked_body && QDELETED(linked_body))
+		linked_users -= linked_body
+		linked_users_by_name.Remove(linked_body.name)
+		resurrecting -= linked_body
+		linked_body_by_mind.Remove(linked_mind)
+
+	if(QDELETED(linked_mind.current))
+		linked_mind.current = null
 
 /datum/resurrection_rune_controller/proc/get_rescue_stage(mob/living/carbon/target)
 	if(!target)
@@ -474,6 +508,8 @@
 
 /datum/resurrection_rune_controller/proc/complete_revival(mob/living/carbon/user, voluntary = FALSE)
 	var/mob/living/carbon/body = user
+	if(QDELETED(body))
+		body = null
 	var/turf/destination_turf = sub_rune?.get_resurrection_destination(body)
 	var/turf/return_turf = get_turf(body)
 	if(!body || !destination_turf)
