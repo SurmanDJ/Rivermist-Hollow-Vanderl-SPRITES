@@ -3,6 +3,7 @@
     var/organ_size = 1
     var/list/altnames = null
     var/can_change_size = FALSE
+    delete_on_drop = TRUE
 
 /obj/item/organ/genitals/Initialize()
 	. = ..()

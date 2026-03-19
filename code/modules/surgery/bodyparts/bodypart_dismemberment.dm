@@ -128,11 +128,10 @@
 		var/org_zone = check_zone(O.zone)
 		if(org_zone != BODY_ZONE_CHEST)
 			continue
-		O.Remove(C)
-		O.forceMove(T)
-		O.add_mob_blood(C)
+		if(O.remove_and_drop(C, T))
+			O.add_mob_blood(C)
+			. += O
 		organ_spilled = 1
-		. += O
 	if(cavity_item)
 		cavity_item.forceMove(T)
 		. += cavity_item

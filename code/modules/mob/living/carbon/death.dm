@@ -61,9 +61,7 @@
 					continue
 				var/org_zone = check_zone(O.zone) //both groin and chest organs.
 				if(org_zone == BODY_ZONE_CHEST)
-					O.Remove(src)
-					O.forceMove(Tsec)
-					O.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
+					O.remove_and_drop(src, Tsec, get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
 	else
 		for(var/obj/item/organ/I as anything in internal_organs)
 			if(no_brain && istype(I, /obj/item/organ/brain))
@@ -72,9 +70,7 @@
 			if(no_organs && !istype(I, /obj/item/organ/brain))
 				qdel(I)
 				continue
-			I.Remove(src)
-			I.forceMove(Tsec)
-			I.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
+			I.remove_and_drop(src, Tsec, get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
 
 /mob/living/carbon/spread_bodyparts()
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)

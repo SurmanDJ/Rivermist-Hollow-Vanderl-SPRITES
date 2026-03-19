@@ -134,8 +134,7 @@
 		*/
 		spilled_organs += organ
 	for(var/obj/item/organ/spilled as anything in spilled_organs)
-		spilled.Remove(owner)
-		spilled.forceMove(drop_location)
+		spilled.remove_and_drop(gutted, drop_location)
 	if(istype(affected, /obj/item/bodypart/chest))
 		var/obj/item/bodypart/chest/cavity = affected
 		if(cavity.cavity_item)

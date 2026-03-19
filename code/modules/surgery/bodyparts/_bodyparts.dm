@@ -258,6 +258,10 @@
 	if(status != BODYPART_ROBOTIC)
 		playsound(T, 'sound/blank.ogg', 50, TRUE, -1)
 	for(var/obj/item/I in src)
+		if(istype(I, /obj/item/organ))
+			var/obj/item/organ/organ = I
+			organ.drop_onto_turf(T)
+			continue
 		I.forceMove(T)
 
 /obj/item/bodypart/proc/skeletonize(lethal = TRUE)

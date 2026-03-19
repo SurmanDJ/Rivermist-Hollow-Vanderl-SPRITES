@@ -36,6 +36,8 @@
 	var/food_type = /obj/item/reagent_containers/food/snacks/meat/organ
 	/// Original owner of the organ, the one who had it inside them last
 	var/mob/living/last_owner = null
+	/// If TRUE, violent spill paths delete this organ instead of dropping it on the turf.
+	var/delete_on_drop = FALSE
 
 	// For stretching of the body storages
 	var/stretchable = FALSE
@@ -147,6 +149,20 @@
 		var/mob/living/carbon/carbon_owner = M
 		carbon_owner.update_body_parts()
 	update_appearance(UPDATE_ICON_STATE)
+
+/obj/item/organ/proc/drop_onto_turf(atom/drop_target, atom/throw_target = null, throw_range = 0, throw_speed = 0)
+	if(delete_on_drop)
+		qdel(src)
+		return FALSE
+
+	forceMove(drop_target)
+	if(throw_target)
+		throw_at(throw_target, throw_range, throw_speed)
+	return TRUE
+
+/obj/item/organ/proc/remove_and_drop(mob/living/M, atom/drop_target, atom/throw_target = null, throw_range = 0, throw_speed = 0)
+	Remove(M)
+	return drop_onto_turf(drop_target, throw_target, throw_range, throw_speed)
 
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
