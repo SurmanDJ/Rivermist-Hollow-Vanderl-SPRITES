@@ -1,5 +1,25 @@
 GLOBAL_LIST_EMPTY(last_words)
 
+/mob/living/proc/update_pending_resurrection_trauma()
+	if(!mind)
+		return
+
+	mind.pending_resurrection_trauma_type = null
+	mind.pending_resurrection_trauma_name = null
+
+	// We intentionally look at the most recent attacker-caused damage in a wider
+	// window so bleeding out or suffocating shortly after a mauling still leaves
+	// the victim with the creature's "residual trauma".
+	if(recent_attacker_damage_time + RESURRECTION_TRAUMA_SOURCE_WINDOW < world.time)
+		return
+	if(!ispath(recent_attacker_damage_mob_type, /mob/living))
+		return
+	if(recent_attacker_damage_is_player_controlled || recent_attacker_damage_is_human)
+		return
+
+	mind.pending_resurrection_trauma_type = recent_attacker_damage_mob_type
+	mind.pending_resurrection_trauma_name = recent_attacker_damage_name
+
 /mob/living/gib(no_brain, no_organs, no_bodyparts)
 	var/prev_lying = lying_angle
 	if(stat != DEAD)
@@ -65,6 +85,8 @@ GLOBAL_LIST_EMPTY(last_words)
 	unset_machine()
 	timeofdeath = world.time
 	tod = station_time_timestamp()
+	if(!was_dead_before)
+		update_pending_resurrection_trauma()
 
 	var/obj/structure/soul/soul = new(get_turf(src))
 	soul.init_mana(WEAKREF(src))

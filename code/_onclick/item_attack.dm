@@ -277,10 +277,6 @@
 		to_chat(user, "<span class='warning'>I don't want to harm other living beings!</span>")
 		return FALSE
 
-	M.lastattacker = user.real_name
-	M.lastattackerckey = user.ckey
-	if(M.mind)
-		M.mind.attackedme[user.real_name] = world.time
 	if(!force)
 		return FALSE
 	if(user.used_intent)
@@ -362,7 +358,10 @@
 							"<span class='boldwarning'>I'm disarmed by [user]!</span>")
 			return
 
-	if(M.attacked_by(src, user))
+	M.set_damage_attack_context(user)
+	var/attack_result = M.attacked_by(src, user)
+	M.clear_damage_attack_context()
+	if(attack_result)
 		if(user.used_intent == cached_intent)
 			var/tempsound = user.used_intent.hitsound
 			if(tempsound)

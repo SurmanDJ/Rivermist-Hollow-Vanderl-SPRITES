@@ -215,11 +215,18 @@
 	///The job's stat UPPER ceilings, clamped after statpacks and job stats are applied.
 	var/list/stat_ceilings
 
-	/// Does this job get revived on the res rune
-	var/rune_linked = TRUE
+	/// Which resurrection rune tag this job should auto-link to. Use RUNE_LINK_NONE to opt out.
+	var/rune_linked = RUNE_LINK_DEFAULT
+
+/datum/job/proc/get_default_rune_link()
+	if(antag_job)
+		return RUNE_LINK_ANTAG
+	return RUNE_LINK_CITY
 
 /datum/job/New()
 	. = ..()
+	if(rune_linked == RUNE_LINK_DEFAULT)
+		rune_linked = get_default_rune_link()
 	if(give_bank_account)
 		for(var/X in GLOB.lords_positions)
 			peopleiknow += X

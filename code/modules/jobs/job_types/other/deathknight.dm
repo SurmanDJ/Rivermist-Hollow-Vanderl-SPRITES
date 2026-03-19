@@ -4,7 +4,7 @@
 	outfit = /datum/outfit/deathknight
 	cmode_music = 'sound/music/cmode/combat_weird.ogg'
 	antag_role = /datum/antagonist/skeleton/knight
-	rune_linked = FALSE
+	rune_linked = RUNE_LINK_NONE
 
 	jobstats = list(
 		STATKEY_STR = 3,

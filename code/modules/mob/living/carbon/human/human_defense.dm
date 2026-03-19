@@ -311,7 +311,9 @@
 			if(check_shields(M, damage, "the [M.name]"))
 				return 0
 			if(stat != DEAD)
+				set_damage_attack_context(M)
 				apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "blunt", damage = damage))
+				clear_damage_attack_context()
 		return 1
 
 
@@ -335,11 +337,13 @@
 		next_attack_msg.Cut()
 
 		var/nodmg = FALSE
+		set_damage_attack_context(M)
 		if(!apply_damage(damage, M.melee_damage_type, affecting, armor))
 			nodmg = TRUE
 			next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
 		else
 			affecting.bodypart_attacked_by(M.a_intent.blade_class, damage - armor, M, dam_zone, crit_message = TRUE)
+		clear_damage_attack_context()
 		visible_message("<span class='danger'>\The [M] [pick(M.a_intent.attack_verb)] [src]![next_attack_msg.Join()]</span>", \
 					"<span class='danger'>\The [M] [pick(M.a_intent.attack_verb)] me![next_attack_msg.Join()]</span>", null, COMBAT_MESSAGE_RANGE)
 		next_attack_msg.Cut()

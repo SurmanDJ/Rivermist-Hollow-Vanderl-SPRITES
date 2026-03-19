@@ -19,6 +19,84 @@
 	damage *= (1 - (elemental_resistance * 0.01))
 	apply_damage(damage)
 
+/mob/living/proc/set_last_attacker(mob/living/attacker)
+	if(!attacker)
+		return
+
+	var/attacker_name = attacker.real_name
+	if(!attacker_name)
+		attacker_name = attacker.name
+
+	lastattacker = attacker_name
+	lastattackerckey = attacker.ckey
+	lastattacker_weakref = WEAKREF(attacker)
+	if(mind && attacker_name)
+		mind.attackedme[attacker_name] = world.time
+
+/mob/living/proc/set_damage_attack_context(mob/living/attacker, window = DAMAGE_ATTACK_CONTEXT_WINDOW)
+	if(!attacker)
+		return
+
+	set_last_attacker(attacker)
+	damage_attack_context_weakref = WEAKREF(attacker)
+	damage_attack_context_expires = world.time + window
+
+/mob/living/proc/clear_damage_attack_context()
+	damage_attack_context_weakref = null
+	damage_attack_context_expires = 0
+
+/mob/living/proc/get_damage_attack_context()
+	if(!damage_attack_context_weakref)
+		return
+	if(damage_attack_context_expires < world.time)
+		clear_damage_attack_context()
+		return
+
+	var/mob/living/attacker = damage_attack_context_weakref.resolve()
+	if(!attacker)
+		clear_damage_attack_context()
+		return
+
+	return attacker
+
+/mob/living/proc/clear_recent_damage_source()
+	recent_damage_source_attacker_weakref = null
+	recent_damage_source_mob_type = null
+	recent_damage_source_name = null
+	recent_damage_source_is_player_controlled = FALSE
+	recent_damage_source_is_human = FALSE
+
+/mob/living/proc/record_recent_attacker_damage(mob/living/attacker)
+	if(!attacker)
+		return
+
+	recent_attacker_damage_time = world.time
+	recent_attacker_damage_mob_type = attacker.type
+	recent_attacker_damage_name = attacker.name
+	recent_attacker_damage_is_player_controlled = !!attacker.ckey
+	recent_attacker_damage_is_human = ishumannorthern(attacker)
+
+/mob/living/proc/record_recent_damage_source(damagetype, amount)
+	if(amount <= 0)
+		return
+
+	recent_damage_source_time = world.time
+	recent_damage_source_damagetype = damagetype
+
+	// Damage is only treated as creature-caused if a live attack context was stamped
+	// immediately before the health change. Environmental damage overwrites stale hits.
+	var/mob/living/attacker = get_damage_attack_context()
+	if(!attacker)
+		clear_recent_damage_source()
+		return
+
+	recent_damage_source_attacker_weakref = WEAKREF(attacker)
+	recent_damage_source_mob_type = attacker.type
+	recent_damage_source_name = attacker.name
+	recent_damage_source_is_player_controlled = !!attacker.ckey
+	recent_damage_source_is_human = ishumannorthern(attacker)
+	record_recent_attacker_damage(attacker)
+
 /*
 	apply_damage(a,b,c)
 	args
@@ -136,7 +214,11 @@
 /mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+	var/old_bruteloss = bruteloss
 	bruteloss = CLAMP((bruteloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	var/applied_damage = bruteloss - old_bruteloss
+	if(applied_damage > 0)
+		record_recent_damage_source(BRUTE, applied_damage)
 	SEND_SIGNAL(src, COMSIG_LIVING_ADJUSTED, (amount * CONFIG_GET(number/damage_multiplier)), BRUTE)
 	if(updating_health)
 		updatehealth(amount)
@@ -156,8 +238,12 @@
 /mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return
-	. = oxyloss
+	var/old_oxyloss = oxyloss
+	. = old_oxyloss
 	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	var/applied_damage = oxyloss - old_oxyloss
+	if(applied_damage > 0)
+		record_recent_damage_source(OXY, applied_damage)
 	SEND_SIGNAL(src, COMSIG_LIVING_ADJUSTED, (amount * CONFIG_GET(number/damage_multiplier)), OXY)
 	if(updating_health)
 		updatehealth(amount)
@@ -176,7 +262,11 @@
 /mob/living/proc/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return
+	var/old_toxloss = toxloss
 	toxloss = clamp((toxloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	var/applied_damage = toxloss - old_toxloss
+	if(applied_damage > 0)
+		record_recent_damage_source(TOX, applied_damage)
 	SEND_SIGNAL(src, COMSIG_LIVING_ADJUSTED, (amount * CONFIG_GET(number/damage_multiplier)), TOX)
 	if(updating_health)
 		updatehealth(amount)
@@ -196,7 +286,11 @@
 /mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+	var/old_fireloss = fireloss
 	fireloss = CLAMP((fireloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	var/applied_damage = fireloss - old_fireloss
+	if(applied_damage > 0)
+		record_recent_damage_source(BURN, applied_damage)
 	SEND_SIGNAL(src, COMSIG_LIVING_ADJUSTED, (amount * CONFIG_GET(number/damage_multiplier)), BURN)
 	if(updating_health)
 		updatehealth(amount)
@@ -216,7 +310,11 @@
 /mob/living/proc/adjustCloneLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
+	var/old_cloneloss = cloneloss
 	cloneloss = CLAMP((cloneloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
+	var/applied_damage = cloneloss - old_cloneloss
+	if(applied_damage > 0)
+		record_recent_damage_source(CLONE, applied_damage)
 	SEND_SIGNAL(src, COMSIG_LIVING_ADJUSTED, (amount * CONFIG_GET(number/damage_multiplier)), CLONE)
 	if(updating_health)
 		updatehealth(amount)

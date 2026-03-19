@@ -185,11 +185,7 @@
 		to_chat(user, "<span class='danger'>I kick [target.name]!</span>")
 		log_combat(user, target, "kicked")
 		playsound(target, 'sound/combat/hits/kick/kick.ogg', 100, TRUE, -1)
-		target.lastattacker = user.real_name
-		target.lastattackerckey = user.ckey
-		target.lastattacker_weakref = WEAKREF(user)
-		if(target.mind)
-			target.mind.attackedme[user.real_name] = world.time
+		target.set_last_attacker(user)
 		user.adjust_stamina(15)
 
 /mob/living/simple_animal/proc/attack_threshold_check(damage, damagetype = BRUTE, armorcheck = "blunt")

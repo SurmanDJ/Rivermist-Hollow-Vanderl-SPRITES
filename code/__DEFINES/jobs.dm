@@ -26,6 +26,14 @@
 /// Whether the job can be displayed on the actors list
 #define JOB_SHOW_IN_ACTOR_LIST (1<<4)
 
+// Resurrection rune auto-link tags.
+#define RUNE_LINK_NONE null
+#define RUNE_LINK_DEFAULT "__rune_link_default__"
+#define RUNE_LINK_CITY "RUNE_CITY"
+#define RUNE_LINK_ANTAG "RUNE_ANTAG"
+#define RUNE_LINK_VAMPIRE "RUNE_VAMPIRE"
+#define RUNE_LINK_OUTLAW "RUNE_OUTLAW"
+
 #define ALL_FACTIONS list( \
 	FACTION_NONE, \
 	FACTION_NEUTRAL, \

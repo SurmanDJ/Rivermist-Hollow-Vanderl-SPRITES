@@ -8,6 +8,23 @@
 	var/lastattacker = null
 	var/lastattackerckey = null
 	var/datum/weakref/lastattacker_weakref = null
+	/// Short-lived combat context used to tag the next bit of real damage with its attacker.
+	var/datum/weakref/damage_attack_context_weakref = null
+	var/damage_attack_context_expires = 0
+	/// The most recent damage source that actually changed our health, used for resurrection trauma.
+	var/recent_damage_source_time = 0
+	var/recent_damage_source_damagetype = null
+	var/datum/weakref/recent_damage_source_attacker_weakref = null
+	var/recent_damage_source_mob_type = null
+	var/recent_damage_source_name = null
+	var/recent_damage_source_is_player_controlled = FALSE
+	var/recent_damage_source_is_human = FALSE
+	/// The last attacker-caused damage we took, even if the final death came later from bleedout or suffocation.
+	var/recent_attacker_damage_time = 0
+	var/recent_attacker_damage_mob_type = null
+	var/recent_attacker_damage_name = null
+	var/recent_attacker_damage_is_player_controlled = FALSE
+	var/recent_attacker_damage_is_human = FALSE
 
 	//Health and life related vars
 	var/maxHealth = 100 //Maximum health that should be possible.

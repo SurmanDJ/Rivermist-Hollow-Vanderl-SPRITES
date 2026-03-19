@@ -15,7 +15,9 @@
 			dismembering_strike(M, affecting.body_zone)
 		if(stat != DEAD)
 			var/dmg = rand(1, 5)
+			set_damage_attack_context(M)
 			apply_damage(dmg, BRUTE, affecting)
+			clear_damage_attack_context()
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
 	if(..())	//To allow surgery to return properly.
@@ -80,7 +82,9 @@
 		var/obj/item/bodypart/affecting = get_bodypart(ran_zone(dam_zone))
 		if(!affecting)
 			affecting = get_bodypart(BODY_ZONE_CHEST)
+		set_damage_attack_context(M)
 		apply_damage(damage, M.melee_damage_type, affecting)
+		clear_damage_attack_context()
 
 /mob/living/carbon/monkey/acid_act(acidpwr, acid_volume, bodyzone_hit)
 	. = 1
