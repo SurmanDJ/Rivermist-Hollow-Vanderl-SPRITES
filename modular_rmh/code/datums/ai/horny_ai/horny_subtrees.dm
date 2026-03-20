@@ -34,18 +34,23 @@
 /datum/ai_planning_subtree/proc/horny_ai_should_yield_to_aggro(datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[BB_TARGETTING_DATUM]
+	var/atom/current_horny_target = controller.blackboard[BB_BASIC_MOB_CURRENT_HORNY_TARGET]
 	if(!living_pawn || !targetting_datum)
 		return FALSE
 
-	if(horny_ai_is_valid_aggro_target(living_pawn, targetting_datum, controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]))
+	var/atom/current_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	if(current_target != current_horny_target && horny_ai_is_valid_aggro_target(living_pawn, targetting_datum, current_target))
 		return TRUE
 
-	if(horny_ai_is_valid_aggro_target(living_pawn, targetting_datum, controller.blackboard[BB_HIGHEST_THREAT_MOB]))
+	var/atom/highest_threat = controller.blackboard[BB_HIGHEST_THREAT_MOB]
+	if(highest_threat != current_horny_target && horny_ai_is_valid_aggro_target(living_pawn, targetting_datum, highest_threat))
 		return TRUE
 
 	var/list/retaliate_list = controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
 	if(length(retaliate_list))
 		for(var/mob/living/retaliator as anything in retaliate_list)
+			if(retaliator == current_horny_target)
+				continue
 			if(retaliate_list[retaliator] + 2 MINUTES < world.time)
 				continue
 			if(!can_see(living_pawn, retaliator, 8))
@@ -54,8 +59,12 @@
 				return TRUE
 
 	if(locate(/datum/ai_planning_subtree/aggro_find_target) in controller.planning_subtrees || locate(/datum/ai_planning_subtree/minotaur_targeting) in controller.planning_subtrees)
-		var/search_range = controller.blackboard[BB_AGGRO_RANGE] || 9
+		var/search_range = controller.blackboard[BB_AGGRO_RANGE]
+		if(isnull(search_range))
+			search_range = 9
 		for(var/mob/living/potential_target in hearers(search_range, living_pawn) - living_pawn)
+			if(potential_target == current_horny_target)
+				continue
 			if(horny_ai_is_valid_aggro_target(living_pawn, targetting_datum, potential_target))
 				return TRUE
 

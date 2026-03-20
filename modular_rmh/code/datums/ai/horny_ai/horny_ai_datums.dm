@@ -1,11 +1,7 @@
 /datum/ai_behavior/horny
 	action_cooldown = 2 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-
-	var/seekboredom = 0
-	var/stand_up_counter = 0
-	var/wrong_action = FALSE
-	var/knockdown_need = TRUE
+	var/seek_timeout = 1.5 MINUTES
 
 /datum/ai_behavior/horny/simple_mob
 	// Simple mobs currently only use the shared horny flow as-is.
@@ -24,6 +20,12 @@
 		controller.set_blackboard_key(BB_HORNY_TIME_START, world.time)
 	controller.set_blackboard_key(BB_HORNY_TARGET_ATTACK_COUNT, 0)
 	controller.clear_blackboard_key(BB_HORNY_AGGRO_TARGET)
+	controller.clear_blackboard_key(BB_HORNY_INITIAL_STRIP_DONE)
+	controller.clear_blackboard_key(BB_HORNY_SEEK_START_TIME)
+	controller.set_blackboard_key(BB_HORNY_STAND_UP_COUNTER, 0)
+	controller.set_blackboard_key(BB_HORNY_ACTIONLESS_TICKS, 0)
+	controller.set_blackboard_key(BB_HORNY_WRONG_ACTION, FALSE)
+	controller.set_blackboard_key(BB_HORNY_KNOCKDOWN_NEED, TRUE)
 
 	var/atom/target = controller.blackboard[target_key]
 
@@ -43,11 +45,13 @@
 	if(world.time < controller.blackboard[BB_HORNY_SEEK_COOLDOWN] || is_spent) // if on cooldown or unhorny - stop
 		return FALSE
 
-	if(targetting_datum.can_horny(basic_mob, target_living))
-		if(basic_mob.gender == MALE)
-			basic_mob.visible_message(span_boldwarning("[basic_mob] has his eyes on [target_living], cock throbbing!"))
-		else
-			basic_mob.visible_message(span_boldwarning("[basic_mob] has her eyes on [target_living], cunt dripping!"))
+	if(!targetting_datum.can_horny(basic_mob, target_living))
+		return FALSE
+
+	if(basic_mob.gender == MALE)
+		basic_mob.visible_message(span_boldwarning("[basic_mob] has his eyes on [target_living], cock throbbing!"))
+	else
+		basic_mob.visible_message(span_boldwarning("[basic_mob] has her eyes on [target_living], cunt dripping!"))
 
 	SEND_SIGNAL(basic_mob, COMSIG_SET_ERECT_STATE, 4)
 
@@ -97,25 +101,33 @@
 			finish_action(controller, FALSE, target_key)
 			return
 
-
 	var/mob/living/target_living = current_target
+	var/seek_start_time = controller.blackboard[BB_HORNY_SEEK_START_TIME]
+	var/stand_up_counter = controller.blackboard[BB_HORNY_STAND_UP_COUNTER]
+	if(isnull(stand_up_counter))
+		stand_up_counter = 0
 
-	//check if they got away during chasing
-	if(seekboredom > 10) //11 cycles of Perform, thus //44 sec
-		seekboredom = 0
-		finish_action(controller, FALSE, target_key)
-		return
+	var/knockdown_need = controller.blackboard[BB_HORNY_KNOCKDOWN_NEED]
+	if(isnull(knockdown_need))
+		knockdown_need = TRUE
 
 	if(!basic_mob.Adjacent(target_living))
-		knockdown_need = TRUE
-		seekboredom += 1
+		controller.set_blackboard_key(BB_HORNY_KNOCKDOWN_NEED, TRUE)
+		if(isnull(seek_start_time))
+			controller.set_blackboard_key(BB_HORNY_SEEK_START_TIME, world.time)
+		else if(world.time >= seek_start_time + seek_timeout)
+			controller.clear_blackboard_key(BB_HORNY_SEEK_START_TIME)
+			finish_action(controller, FALSE, target_key)
+			return
 		return
 	else
-		seekboredom = CLAMP(seekboredom - 1, 0, 10)
+		controller.clear_blackboard_key(BB_HORNY_SEEK_START_TIME)
 
 	if(target_living.body_position != LYING_DOWN)
+		controller.set_blackboard_key(BB_HORNY_KNOCKDOWN_NEED, TRUE)
 		knockdown_need = TRUE
 	else
+		controller.set_blackboard_key(BB_HORNY_KNOCKDOWN_NEED, FALSE)
 		knockdown_need = FALSE
 
 	var/list/arousal_data = list()
@@ -137,36 +149,41 @@
 	if(basic_mob.body_position == LYING_DOWN) //try to stand before doing anything
 		if(!basic_mob.stand_up())
 			stand_up_counter += 1
+			controller.set_blackboard_key(BB_HORNY_STAND_UP_COUNTER, stand_up_counter)
 			if(stand_up_counter >= 5)
 				finish_action(controller, FALSE, target_key)
-		stand_up_counter = 0
+			return
+		controller.set_blackboard_key(BB_HORNY_STAND_UP_COUNTER, 0)
 		return
 
 	if(try_pre_knockdown_disarm(controller, basic_mob, target_living))
+		controller.set_blackboard_key(BB_HORNY_ACTIONLESS_TICKS, 0)
 		return
 
 	if(world.time > controller.blackboard[BB_HORNY_STUN_COOLDOWN] && knockdown_need)
 		if(attempt_stamina_knockdown(controller, basic_mob, target_living))
+			controller.set_blackboard_key(BB_HORNY_ACTIONLESS_TICKS, 0)
 			return
 
 	if(handle_target_prep(controller, basic_mob, target_living, session))
+		controller.set_blackboard_key(BB_HORNY_ACTIONLESS_TICKS, 0)
 		return
 
 	start_horny_action(controller, basic_mob, target_living, session, target_key)
 
 /datum/ai_behavior/horny/proc/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
 	// Override this in mob-specific subclasses when they need setup work before the sex action starts.
-	return TRUE
+	return FALSE
 
 /datum/ai_behavior/horny/proc/try_pre_knockdown_disarm(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
-	return TRUE
+	return FALSE
 
 /datum/ai_behavior/horny/proc/attempt_stamina_knockdown(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
 	if(!basic_mob.Adjacent(target_living))
-		knockdown_need = TRUE
+		controller.set_blackboard_key(BB_HORNY_KNOCKDOWN_NEED, TRUE)
 		return FALSE
 	if(target_living.body_position == LYING_DOWN)
-		knockdown_need = FALSE
+		controller.set_blackboard_key(BB_HORNY_KNOCKDOWN_NEED, FALSE)
 		return FALSE
 
 	var/prob2defend
@@ -212,8 +229,16 @@
 
 	var/action_type = select_horny_ai_act(basic_mob, target_living, session)
 	if(isnull(action_type))
+		var/actionless_ticks = controller.blackboard[BB_HORNY_ACTIONLESS_TICKS]
+		if(isnull(actionless_ticks))
+			actionless_ticks = 0
+		actionless_ticks += 1
+		controller.set_blackboard_key(BB_HORNY_ACTIONLESS_TICKS, actionless_ticks)
+		if(actionless_ticks >= 6)
+			finish_action(controller, FALSE, target_key)
 		return
 
+	controller.set_blackboard_key(BB_HORNY_ACTIONLESS_TICKS, 0)
 	if(isnull(session.current_action))
 		session.try_start_action(action_type)
 		basic_mob.face_atom(target_living)
@@ -223,8 +248,14 @@
 		session.set_current_speed(speed)
 		target_living.apply_status_effect(/datum/status_effect/debuff/mob_fucked)
 		if(isnull(session.current_action))
-			wrong_action = TRUE
-			finish_action(controller, FALSE, target_key)
+			var/actionless_ticks = controller.blackboard[BB_HORNY_ACTIONLESS_TICKS]
+			if(isnull(actionless_ticks))
+				actionless_ticks = 0
+			actionless_ticks += 1
+			controller.set_blackboard_key(BB_HORNY_ACTIONLESS_TICKS, actionless_ticks)
+			if(actionless_ticks >= 3)
+				controller.set_blackboard_key(BB_HORNY_WRONG_ACTION, TRUE)
+				finish_action(controller, FALSE, target_key)
 
 /datum/ai_behavior/horny/proc/select_horny_ai_act(mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
 	var/list/weighted_actions = list()
@@ -268,10 +299,19 @@
 	if(!ishuman(target_living) || !basic_mob.Adjacent(target_living))
 		return FALSE
 
-	if(!prob(15))
+	if(session.current_action)
 		return FALSE
 
 	var/mob/living/carbon/human/human_target = target_living
+	if(!controller.blackboard[BB_HORNY_INITIAL_STRIP_DONE])
+		controller.set_blackboard_key(BB_HORNY_INITIAL_STRIP_DONE, TRUE)
+		if(pick_strip_target(basic_mob, human_target, allow_regular_clothes = TRUE))
+			return strip_human_target(basic_mob, human_target)
+
+	var/has_valid_action = !isnull(select_horny_ai_act(basic_mob, target_living, session))
+	if(has_valid_action && !prob(35))
+		return FALSE
+
 	return strip_human_target(basic_mob, human_target)
 
 /datum/ai_behavior/horny/simple_mob/try_pre_knockdown_disarm(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
@@ -299,50 +339,93 @@
 	return TRUE
 
 /datum/ai_behavior/horny/proc/disarm_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
-	return TRUE
+	return FALSE
 
-/datum/ai_behavior/horny/simple_mob/proc/strip_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
-	var/list/possible_items = list()
+/datum/ai_behavior/horny/proc/add_strip_choice(list/choices, mob/living/basic_mob, mob/living/carbon/human/human_target, obj/item/item, weight)
+	if(!item || weight <= 0)
+		return
+	if(item.loc != human_target || !item.canStrip(basic_mob, human_target))
+		return
+	var/current_weight = choices[item]
+	if(isnull(current_weight))
+		current_weight = 0
+	choices[item] = max(current_weight, weight)
 
-	var/obj/item/clothing/pants = human_target.wear_pants
-	if(pants && (pants.flags_inv & HIDECROTCH) && !pants.genital_access)
-		possible_items += pants
+/datum/ai_behavior/horny/proc/pick_strip_target(mob/living/basic_mob, mob/living/carbon/human/human_target, include_mouth_cover = TRUE, allow_regular_clothes = FALSE)
+	var/list/weighted_blockers = list()
+	var/list/weighted_regular_clothes = list()
 
-	if(prob(40))
-		var/obj/item/clothing/armor = human_target.wear_armor
-		if(armor)
-			possible_items += armor
+	var/list/groin_priority = list(
+		human_target.wear_pants = 12,
+		human_target.underwear = 10,
+		human_target.wear_armor = 6,
+		human_target.cloak = 4,
+		human_target.wear_shirt = 2,
+		human_target.undershirt = 2,
+		human_target.wear_mask = 1,
+		human_target.head = 1,
+		human_target.gloves = 1,
+	)
 
-	if(prob(40))
-		var/obj/item/clothing/shirt = human_target.wear_shirt
-		if(shirt)
-			possible_items += shirt
+	for(var/obj/item/item as anything in groin_priority)
+		var/weight = groin_priority[item]
+		if(!item || item.loc != human_target || !item.canStrip(basic_mob, human_target))
+			continue
 
-	if(prob(35))
-		var/obj/item/random_item = pick(human_target.get_equipped_items(FALSE))
-		if(istype(random_item, /obj/item/clothing) || istype(random_item, /obj/item/storage/belt))
-			possible_items += random_item
+		if(istype(item, /obj/item/clothing))
+			var/obj/item/clothing/clothing_item = item
+			if(clothing_item.armor_class > AC_LIGHT && zone2covered(BODY_ZONE_PRECISE_GROIN, clothing_item.body_parts_covered))
+				add_strip_choice(weighted_blockers, basic_mob, human_target, clothing_item, weight)
+				continue
+			if((clothing_item.flags_inv & HIDECROTCH) && !clothing_item.genital_access)
+				add_strip_choice(weighted_blockers, basic_mob, human_target, clothing_item, weight)
+				continue
 
-	if(!length(possible_items))
-		return FALSE
+		if(allow_regular_clothes)
+			add_strip_choice(weighted_regular_clothes, basic_mob, human_target, item, weight)
 
-	var/obj/item/stripped_item = pick(possible_items)
+	if(include_mouth_cover)
+		var/obj/item/mouth_cover = human_target.is_mouth_covered()
+		if(istype(mouth_cover) && mouth_cover.loc == human_target && mouth_cover.canStrip(basic_mob, human_target))
+			add_strip_choice(weighted_blockers, basic_mob, human_target, mouth_cover, 3)
+
+	if(length(weighted_blockers))
+		return pickweight(weighted_blockers)
+	if(allow_regular_clothes && length(weighted_regular_clothes))
+		return pickweight(weighted_regular_clothes)
+	return null
+
+/datum/ai_behavior/horny/proc/do_strip_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target, strip_delay, damage_chance = 0, damage_ratio = 0, include_mouth_cover = TRUE, allow_regular_clothes = FALSE)
+	var/obj/item/stripped_item = pick_strip_target(basic_mob, human_target, include_mouth_cover, allow_regular_clothes)
 	if(!stripped_item)
 		return FALSE
 
-	basic_mob.visible_message(span_danger("[basic_mob] starts tugging at [human_target]'s [stripped_item]!"))
-	if(!do_after(basic_mob, rand(12, 20) DECISECONDS, human_target))
-		return FALSE
+	if(human_target == basic_mob)
+		basic_mob.visible_message(span_danger("[basic_mob] starts hurriedly pulling off [basic_mob.p_their()] [stripped_item]!"))
+	else
+		basic_mob.visible_message(span_danger("[basic_mob] starts tugging at [human_target]'s [stripped_item]!"))
+
+	if(!do_after(basic_mob, strip_delay, human_target, interaction_key = "horny_strip"))
+		return TRUE
 	if(QDELETED(stripped_item) || stripped_item.loc != human_target)
-		return FALSE
+		return TRUE
+	if(!human_target.dropItemToGround(stripped_item, force = FALSE, silent = FALSE))
+		return TRUE
 
-	if(prob(35) && !istype(stripped_item, /obj/item/storage) && !istype(stripped_item, /obj/item/clothing/ring))
-		stripped_item.take_damage(damage_amount = stripped_item.max_integrity * 0.15, sound_effect = FALSE)
+	if(damage_chance && prob(damage_chance) && !istype(stripped_item, /obj/item/storage) && !istype(stripped_item, /obj/item/clothing/ring))
+		stripped_item.take_damage(damage_amount = stripped_item.max_integrity * damage_ratio, sound_effect = FALSE)
 
-	basic_mob.visible_message(span_danger("[basic_mob] tears [human_target]'s [stripped_item] loose!"))
-	human_target.dropItemToGround(stripped_item)
-	stripped_item.throw_at(pick(orange(2, get_turf(human_target))), 2, 1, basic_mob, TRUE)
+	if(human_target == basic_mob)
+		basic_mob.visible_message(span_danger("[basic_mob] tears off [basic_mob.p_their()] [stripped_item]!"))
+	else
+		basic_mob.visible_message(span_danger("[basic_mob] tears [human_target]'s [stripped_item] loose!"))
+		var/turf/landing_spot = pick(orange(2, get_turf(human_target)))
+		if(landing_spot)
+			stripped_item.throw_at(landing_spot, 2, 1, basic_mob, TRUE)
 	return TRUE
+
+/datum/ai_behavior/horny/simple_mob/proc/strip_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
+	return do_strip_human_target(basic_mob, human_target, rand(12, 20) DECISECONDS, 35, 0.15, allow_regular_clothes = TRUE)
 
 /datum/ai_behavior/horny/human/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
 	if(!iscarbon(basic_mob))
@@ -350,12 +433,26 @@
 
 	var/mob/living/carbon/carbon_mob = basic_mob
 	ensure_target_grab(carbon_mob, target_living)
+	if(session.current_action)
+		return FALSE
+
+	var/has_valid_action = !isnull(select_horny_ai_act(basic_mob, target_living, session))
+	if(!has_valid_action && ishuman(basic_mob))
+		var/mob/living/carbon/human/human_basic_mob = basic_mob
+		if(pick_strip_target(basic_mob, human_basic_mob, FALSE))
+			return do_strip_human_target(basic_mob, human_basic_mob, 8 DECISECONDS, include_mouth_cover = FALSE)
 
 	if(!ishuman(target_living))
 		return FALSE
 
 	var/mob/living/carbon/human/human_target = target_living
-	strip_human_target(basic_mob, human_target)
+	if(!controller.blackboard[BB_HORNY_INITIAL_STRIP_DONE])
+		controller.set_blackboard_key(BB_HORNY_INITIAL_STRIP_DONE, TRUE)
+		if(pick_strip_target(basic_mob, human_target, allow_regular_clothes = TRUE))
+			return strip_human_target(basic_mob, human_target)
+
+	if((!has_valid_action || prob(20)) && strip_human_target(basic_mob, human_target))
+		return TRUE
 
 	if(tie_human_target(carbon_mob, human_target))
 		return TRUE
@@ -401,27 +498,7 @@
 	return TRUE
 
 /datum/ai_behavior/horny/human/proc/strip_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
-	var/pririty_list = list(human_target.wear_pants, human_target.wear_armor, human_target.wear_shirt)
-	for(var/obj/item/clothing/priority_cloth in pririty_list)
-		if(priority_cloth && (priority_cloth.flags_inv & HIDECROTCH) && !priority_cloth.genital_access)
-			if(!do_after(basic_mob, 1 SECONDS, human_target))
-				basic_mob.visible_message(span_danger("[basic_mob] manages to rip [human_target]'s [priority_cloth.name] off!"))
-				var/obj/item/clothing/thepants = priority_cloth
-				human_target.dropItemToGround(thepants)
-				thepants.throw_at(pick(orange(2, get_turf(human_target))), 2, 1, basic_mob, TRUE)
-
-	if(!prob(10))
-		return
-
-	var/obj/item/item = pick(human_target.get_equipped_items(FALSE))
-	if(!istype(item, /obj/item/clothing) && !istype(item, /obj/item/storage/belt))
-		return
-	if(!do_after(basic_mob, 1 SECONDS, human_target))
-		if(!istype(item, /obj/item/storage) && !istype(item, /obj/item/clothing/ring))
-			item.take_damage(damage_amount = item.max_integrity * 0.2, sound_effect = FALSE)
-		basic_mob.visible_message(span_danger("[basic_mob] manages to rip [human_target]'s [item] off!"))
-		human_target.dropItemToGround(item)
-		item.throw_at(pick(orange(2, get_turf(human_target))), 2, 1, basic_mob, TRUE)
+	return do_strip_human_target(basic_mob, human_target, 1 SECONDS, 20, 0.2, allow_regular_clothes = TRUE)
 
 /datum/ai_behavior/horny/human/proc/tie_human_target(mob/living/carbon/carbon_mob, mob/living/carbon/human/human_target)
 	if(human_target.body_position != LYING_DOWN || human_target.get_active_held_item())
@@ -457,7 +534,10 @@
 	var/atom/current_horny_target = controller.blackboard[BB_BASIC_MOB_CURRENT_HORNY_TARGET]
 
 	if(attacker == current_horny_target)
-		var/hit_count = (controller.blackboard[BB_HORNY_TARGET_ATTACK_COUNT] || 0) + 1
+		var/hit_count = controller.blackboard[BB_HORNY_TARGET_ATTACK_COUNT]
+		if(isnull(hit_count))
+			hit_count = 0
+		hit_count += 1
 		controller.set_blackboard_key(BB_HORNY_TARGET_ATTACK_COUNT, hit_count)
 		var/should_retaliate = hit_count >= 4 || (hit_count >= 2 && source.health <= source.maxHealth * 0.75)
 		if(!should_retaliate)
@@ -504,11 +584,14 @@
 		picked_organ.toggle_visibility(FALSE)
 
 
-	seekboredom = 0
-	knockdown_need = TRUE
-	wrong_action = FALSE
 	basic_mob.stop_pulling()
 	controller.clear_blackboard_key(BB_HORNY_TARGET_ATTACK_COUNT)
+	controller.clear_blackboard_key(BB_HORNY_INITIAL_STRIP_DONE)
+	controller.clear_blackboard_key(BB_HORNY_SEEK_START_TIME)
+	controller.clear_blackboard_key(BB_HORNY_STAND_UP_COUNTER)
+	controller.clear_blackboard_key(BB_HORNY_ACTIONLESS_TICKS)
+	controller.clear_blackboard_key(BB_HORNY_WRONG_ACTION)
+	controller.clear_blackboard_key(BB_HORNY_KNOCKDOWN_NEED)
 	controller.clear_blackboard_key(target_key)
 	controller.clear_blackboard_key(BB_HORNY_TIME_START)
 	if(basic_mob.is_dead())
