@@ -134,7 +134,7 @@
 	ambientnight = 'modular_rmh/sound/music/area/oasis_night.ogg'
 	//spookysounds = null
 	//spookynight = null
-	background_track = nul'sound/silence.ogg'l
+	background_track = 'sound/silence.ogg'
 	background_track_dusk = 'sound/silence.ogg'
 	background_track_night = 'sound/silence.ogg'
 	converted_type = /area/indoors/shelter/rmh_desert
