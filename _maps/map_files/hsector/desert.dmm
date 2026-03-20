@@ -127,9 +127,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/blocks/stonered/tiny,
 /area/indoors/rmh_desert)
-"ajS" = (
-/turf/closed/wall/mineral/underbrick/fake_world,
-/area/under/rmh_bedrock)
 "akB" = (
 /obj/structure/door/iron/bars{
 	damage_deflection = 500
@@ -180,16 +177,6 @@
 	},
 /turf/open/floor/wood,
 /area/outdoors/rmh_desert/valley)
-"aoa" = (
-/obj/machinery/light/fueled/firebowl/church,
-/turf/closed/wall/mineral/underbrick/fake_world,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "aor" = (
 /obj/machinery/light/fueled/wallfire/candle/weak/r,
 /turf/open/floor/cobble/alt,
@@ -466,16 +453,6 @@
 /obj/structure/curtain/magenta,
 /turf/closed/wall/mineral/desert_soapstone,
 /area/under/rmh_desert/tea/hareml)
-"aMR" = (
-/obj/structure/underworld/barrier,
-/turf/open/floor/underworld/space/sparkle_quiet,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "aNi" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
 /turf/open/floor/tile/diamond,
@@ -556,15 +533,6 @@
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass/healthy,
 /area/under/cave/mazedungeon)
-"aSK" = (
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "aSN" = (
 /mob/living/simple_animal/hostile/retaliate/infernal/imp{
 	del_on_deaggro = 0
@@ -704,15 +672,6 @@
 	},
 /turf/open/floor/blocks/stonered/tiny,
 /area/under/cave/mazedungeon)
-"bdu" = (
-/turf/closed/wall/window/stained/alt,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "beb" = (
 /obj/structure/flora/rock,
 /turf/open/floor/naturalstone,
@@ -1512,8 +1471,7 @@
 /turf/open/floor/sandstone,
 /area/outdoors/rmh_desert/port)
 "cmp" = (
-/obj/structure/dungeon_entry/center,
-/turf/open/floor/herringbone,
+/turf/open/floor/concrete,
 /area/under/rmh_desert/pyramid)
 "cmt" = (
 /obj/effect/decal/edge{
@@ -1654,22 +1612,11 @@
 /turf/open/floor/cobble/mossy,
 /area/outdoors/rmh_desert/port)
 "cDf" = (
-/obj/structure/fluff/customsign{
-	desc = "Удача -3 & Проклятие нулевой любви";
-	name = "READ ME #3";
-	icon = 'icons/roguetown/items/precious_objects.dmi';
-	icon_state = "volf_silv"
+/obj/structure/rmh_waystone{
+	name = "Seaport Village"
 	},
-/turf/open/floor/tile/masonic{
-	dir = 1
-	},
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
+/turf/open/floor/sand/dunes/citybrick/citybrick1,
+/area/outdoors/rmh_desert/port)
 "cDn" = (
 /obj/item/natural/brick,
 /turf/open/floor/volcanic,
@@ -1809,13 +1756,6 @@
 /obj/structure/flora/hotspring_rocks,
 /turf/open/floor/grass/mixyel,
 /area/outdoors/rmh_desert/oasis)
-"cLX" = (
-/obj/structure/gate{
-	gid = "pyramidgate";
-	redstone_id = "pyramidgate"
-	},
-/turf/open/floor/concrete,
-/area/under/rmh_desert/pyramid)
 "cNn" = (
 /obj/effect/decal/edge{
 	dir = 4;
@@ -1927,23 +1867,6 @@
 /obj/item/natural/wood/plank,
 /turf/open/floor/sandstone,
 /area/under/rmh_desert/tea/harem)
-"cXZ" = (
-/obj/structure/fluff/customsign{
-	desc = "Удача +3 & Золотые монеты";
-	name = "READ ME #3";
-	icon = 'icons/roguetown/gems/gem_jade.dmi';
-	icon_state = "dragon_jade"
-	},
-/turf/open/floor/tile/masonic{
-	dir = 4
-	},
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "cYE" = (
 /obj/structure/flora/junglebush,
 /turf/open/floor/grass,
@@ -2010,15 +1933,6 @@
 /obj/effect/spawner/map_spawner/loot/decrepit_equipment_spawner,
 /turf/open/floor/cobble/alt,
 /area/under/cave/mazedungeon)
-"deK" = (
-/turf/open/floor/underworld/space/quiet,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "deL" = (
 /obj/structure/giantfur/small,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2047,30 +1961,9 @@
 	color = "#e3ca4f"
 	},
 /area/under/rmh_desert/spider)
-"diA" = (
-/turf/open/floor/underworld/space/sparkle_quiet,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "diQ" = (
 /turf/open/floor/ruinedwood/herringbone_clear,
 /area/outdoors/rmh_air)
-"djo" = (
-/obj/structure/flora/tree/underworld{
-	opacity = 0
-	},
-/turf/open/floor/underworld/space,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "djv" = (
 /obj/effect/decal/cobbleedge{
 	dir = 1;
@@ -2173,16 +2066,6 @@
 /obj/item/natural/glass,
 /turf/open/floor/tile/diamond/blue,
 /area/outdoors/rmh_desert/valley)
-"drW" = (
-/obj/structure/rmh_waystone{
-	name = "Desert Catacombs Waystone"
-	},
-/turf/open/floor/sandstone,
-/area/under/rmh_desert/pyramid)
-"dsQ" = (
-/obj/machinery/light/fueled/firebowl/church/unholyfire,
-/turf/open/floor/herringbone,
-/area/under/rmh_desert/pyramid)
 "dtr" = (
 /obj/structure/underworld/barrier,
 /obj/machinery/light/fueled/chand{
@@ -2621,9 +2504,6 @@
 	},
 /turf/open/floor/churchrough,
 /area/under/cave/mazedungeon)
-"ecB" = (
-/turf/open/floor/herringbone,
-/area/under/rmh_desert/pyramid)
 "ecO" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /turf/open/floor/tile/harem1,
@@ -2984,19 +2864,9 @@
 /turf/open/floor/sand/dunes,
 /area/outdoors/rmh_desert/valley)
 "ezt" = (
-/obj/structure/underworld/barrier,
-/obj/structure/flora/tree/underworld{
-	opacity = 0;
-	pixel_y = 5
-	},
-/turf/open/floor/underworld/space,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
+/obj/machinery/light/fueled/firebowl/church/unholyfire,
+/turf/open/floor/herringbone,
+/area/under/rmh_desert/pyramid)
 "ezF" = (
 /turf/open/floor/metal/barograte,
 /area/under/rmh_desert/pyramid)
@@ -3196,21 +3066,6 @@
 /obj/structure/flora/grass,
 /turf/open/floor/sand/desertsand/oasis,
 /area/outdoors/rmh_desert/oasis)
-"eQC" = (
-/obj/structure/fluff/customsign{
-	desc = "Удача -4 & Проклятие тела";
-	name = "READ ME #4";
-	icon = 'icons/roguetown/items/precious_objects.dmi';
-	icon_state = "finger_silv"
-	},
-/turf/open/floor/tile/masonic,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "eQK" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/sandstone,
@@ -3258,19 +3113,6 @@
 	},
 /turf/open/floor/tile/diamond,
 /area/indoors/rmh_desert)
-"eSp" = (
-/obj/effect/decal/edge{
-	dir = 4;
-	color = "#3b3b3b"
-	},
-/turf/open/floor/underworld/arena,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "eSu" = (
 /obj/effect/spawner/map_spawner/hauntpile,
 /turf/open/floor/cobble,
@@ -3589,24 +3431,6 @@
 	color = "#e3ca4f"
 	},
 /area/under/rmh_desert/spider)
-"fmZ" = (
-/obj/structure/table/map{
-	dir = 1;
-	damage_deflection = 999
-	},
-/obj/item/clothing/head/helmet/heavy/sinistar,
-/obj/item/clothing/armor/basiceast/captainrobe,
-/obj/item/clothing/gloves/eastgloves1,
-/obj/item/clothing/pants/trou/leather/eastpants2,
-/obj/item/clothing/shoes/rumaclan,
-/turf/open/floor/carpet/stellar,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "fnA" = (
 /obj/structure/bars/pipe,
 /obj/structure/bars/pipe{
@@ -3651,6 +3475,10 @@
 /turf/open/floor/sand/dunes,
 /area/outdoors/rmh_desert/port)
 "frP" = (
+/obj/structure/gate{
+	gid = "pyramidgate";
+	redstone_id = "pyramidgate"
+	},
 /turf/open/floor/concrete,
 /area/under/rmh_desert/pyramid)
 "fsc" = (
@@ -3914,19 +3742,6 @@
 	},
 /turf/open/floor/twig,
 /area/outdoors/rmh_desert/port)
-"fNc" = (
-/obj/structure/flora/tree/underworld{
-	opacity = 0;
-	pixel_y = 5
-	},
-/turf/open/floor/underworld/space/sparkle_quiet,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "fNf" = (
 /mob/living/simple_animal/hostile/retaliate/bogbug{
 	name = "desert bug";
@@ -4057,23 +3872,6 @@
 /obj/structure/rotation_piece/cog,
 /turf/open/floor/metal/barograte/open,
 /area/under/cave/mazedungeon)
-"fZI" = (
-/obj/structure/fluff/customsign{
-	desc = "Удача -1";
-	name = "READ ME #1";
-	icon = 'icons/roguetown/items/valuable.dmi';
-	icon_state = "ststatue1"
-	},
-/turf/open/floor/tile/masonic{
-	dir = 8
-	},
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "fZT" = (
 /obj/machinery/light/fueled/hearth,
 /turf/open/floor/concrete,
@@ -4312,20 +4110,6 @@
 "gqU" = (
 /turf/closed/wall/mineral/decowood,
 /area/indoors/rmh_desert/phouse)
-"grn" = (
-/obj/machinery/light/fueled/firebowl/church{
-	alpha = 0
-	},
-/turf/closed/wall/window/stained/yellow{
-	opacity = 0
-	},
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "gru" = (
 /obj/structure/fluff/railing/corner/north_east,
 /obj/effect/decal/edge{
@@ -4564,92 +4348,6 @@
 	},
 /turf/open/floor/churchrough,
 /area/under/cave/mazedungeon)
-"gMJ" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "gMX" = (
 /turf/open/floor/sand/dunes/lightpath,
 /area/outdoors/rmh_desert/port)
@@ -4904,19 +4602,6 @@
 /obj/structure/closet/crate/chest/wicker,
 /turf/open/floor/sand/dunes/lightpath,
 /area/outdoors/rmh_desert/port)
-"hho" = (
-/obj/structure/table/map{
-	dir = 10;
-	damage_deflection = 999
-	},
-/turf/open/floor/carpet/stellar,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "hhx" = (
 /obj/effect/decal/edge{
 	color = "#7a684b";
@@ -5325,81 +5010,6 @@
 /obj/item/fertilizer/ash,
 /turf/open/floor/dirt,
 /area/outdoors/rmh_desert/valley)
-"hJA" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#4";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "hJK" = (
 /obj/effect/decal/carpet/square,
 /turf/open/floor/sand/dunes/sandbrick,
@@ -5728,19 +5338,6 @@
 	},
 /turf/open/floor/churchmarble,
 /area/under/rmh_desert/tea/palacecellar)
-"iip" = (
-/obj/structure/table/map{
-	dir = 6;
-	damage_deflection = 999
-	},
-/turf/open/floor/carpet/stellar,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "iiR" = (
 /obj/structure/rack/shelf/biggest,
 /turf/open/floor/cobblerock,
@@ -5976,20 +5573,6 @@
 /obj/item/natural/silk,
 /turf/open/floor/tile/diamond,
 /area/indoors/rmh_desert)
-"iAC" = (
-/obj/structure/table/map{
-	dir = 5;
-	damage_deflection = 999
-	},
-/obj/item/coin/gold,
-/turf/open/floor/carpet/stellar,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "iAE" = (
 /obj/structure/roguerock,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -6094,18 +5677,6 @@
 /obj/structure/fluff/clodpile,
 /turf/open/floor/greenstone,
 /area/under/town/sewer)
-"iKa" = (
-/obj/machinery/light/fueled/firebowl/standing/blue{
-	pixel_y = 8
-	},
-/turf/open/floor/underworld/space/sparkle_quiet,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "iKf" = (
 /obj/structure/fluff/railing/corner{
 	dir = 9
@@ -6585,92 +6156,6 @@
 /obj/structure/carpet/green,
 /turf/open/floor/tile/bfloorz,
 /area/under/rmh_desert/tea/hareml)
-"jny" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "jnI" = (
 /turf/open/floor/sandstone_tile/two,
 /area/outdoors/rmh_desert/valley)
@@ -6742,85 +6227,6 @@
 "juv" = (
 /turf/closed/wall/mineral/decostone/cand/reddish,
 /area/under/cave/mazedungeon)
-"juB" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "juO" = (
 /obj/structure/flora/driftwood,
 /turf/open/floor/sand/dunes/sandbrick,
@@ -6967,19 +6373,6 @@
 	},
 /turf/open/floor/tile/harem1,
 /area/outdoors/rmh_desert/valley)
-"jEV" = (
-/obj/structure/flora/tree/underworld{
-	opacity = 0;
-	pixel_y = 5
-	},
-/turf/open/floor/underworld/space,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "jFe" = (
 /obj/structure/fluff/railing/corner/north_east,
 /obj/effect/decal/cleanable/blood/old,
@@ -7088,81 +6481,6 @@
 	},
 /turf/open/floor/wood,
 /area/outdoors/rmh_desert/oasis)
-"jOH" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "jOO" = (
 /obj/effect/decal/edge{
 	color = "#7a684b"
@@ -7235,14 +6553,8 @@
 /turf/open/floor/sandstone_tile,
 /area/under/rmh_desert/tea/palacecasemates)
 "jSL" = (
-/turf/open/floor/underworld/space,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
+/turf/open/floor/sand/dunes/citybrick/citybrick1,
+/area/outdoors/rmh_desert/port)
 "jTf" = (
 /obj/effect/decal/edge_corner{
 	dir = 8;
@@ -7594,20 +6906,11 @@
 /turf/open/floor/sand,
 /area/outdoors/rmh_desert/valley)
 "kre" = (
-/obj/structure/underworld/barrier,
-/obj/machinery/light/fueled/firebowl/standing/blue,
-/obj/effect/decal/edge_corner{
-	dir = 1;
-	color = "#3b3b3b"
+/obj/structure/rmh_waystone{
+	name = "Desert Catacombs Waystone"
 	},
-/turf/open/floor/underworld/arena,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
+/turf/open/floor/sandstone,
+/area/under/rmh_desert/pyramid)
 "krv" = (
 /obj/structure/stairs/fancy/l{
 	dir = 1;
@@ -7651,21 +6954,6 @@
 	},
 /turf/open/floor/tile/harem,
 /area/under/rmh_desert/ziqurat)
-"kti" = (
-/obj/structure/fluff/customsign{
-	desc = "Удача +1";
-	name = "READ ME #1";
-	icon = 'icons/roguetown/gems/gem_rose.dmi';
-	icon_state = "carp_rose"
-	},
-/turf/open/floor/tile/masonic,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "kty" = (
 /obj/item/natural/rock/random_ore,
 /turf/open/floor/sand/dunes/lightpath,
@@ -7815,22 +7103,9 @@
 /turf/open/floor/church,
 /area/under/cave/mazedungeon)
 "kEU" = (
-/obj/structure/fluff/customsign{
-	desc = "Удача +2 & Серебряные монеты";
-	name = "READ ME #2";
-	icon = 'icons/roguetown/gems/gem_shell.dmi';
-	icon_state = "turtle_shell"
-	},
-/turf/open/floor/tile/masonic{
-	dir = 1
-	},
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
+/obj/structure/dungeon_entry/center,
+/turf/open/floor/herringbone,
+/area/under/rmh_desert/pyramid)
 "kEZ" = (
 /obj/structure/flora/driftwood,
 /turf/open/water/ocean,
@@ -7858,20 +7133,6 @@
 /obj/structure/flora/grass/bush_meagre/green3,
 /turf/open/floor/grass/healthy,
 /area/under/cave/mazedungeon)
-"kGg" = (
-/obj/structure/underworld/barrier,
-/obj/effect/decal/edge{
-	dir = 4;
-	color = "#3b3b3b"
-	},
-/turf/open/floor/underworld/arena,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "kHG" = (
 /obj/structure/fluff/customsign{
 	name = "UNDER CONSTRUCTION!";
@@ -8309,27 +7570,6 @@
 /obj/structure/industrial_lift/tram,
 /turf/open/openspace,
 /area/outdoors/rmh_air)
-"lnk" = (
-/mob/living/carbon/human/species/skeleton{
-	should_have_aggro = 0;
-	skel_outfit = null;
-	wander = 0;
-	faction = list("Neutral");
-	name = "your luck";
-	real_name = "Your Luck"
-	},
-/obj/effect/decal/edge{
-	dir = 1;
-	color = "#3b3b3b"
-	},
-/turf/open/floor/underworld/arena,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "lny" = (
 /obj/machinery/light/fueled/wallfire/candle/l,
 /turf/open/floor/tile/brownbrick,
@@ -8432,75 +7672,6 @@
 /obj/structure/flora/hotspring_rocks,
 /turf/open/floor/sand/desertsand/oasis,
 /area/outdoors/rmh_desert/oasis)
-"luQ" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "luU" = (
 /obj/effect/decal/cobbleedge{
 	dir = 8;
@@ -8571,16 +7742,6 @@
 /obj/structure/flora/grass,
 /turf/open/floor/grass,
 /area/outdoors/rmh_desert/oasis)
-"lzi" = (
-/obj/structure/underworld/barrier,
-/turf/open/floor/underworld/space,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "lzu" = (
 /obj/structure/fluff/railing/corner/south_east,
 /obj/effect/decal/remains/human,
@@ -8594,20 +7755,6 @@
 "lAm" = (
 /turf/closed/wall/mineral/wooddark/vertical,
 /area/outdoors/rmh_desert/valley)
-"lBh" = (
-/obj/structure/underworld/barrier,
-/obj/effect/decal/edge{
-	dir = 2;
-	color = "#3b3b3b"
-	},
-/turf/open/floor/underworld/arena,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "lBr" = (
 /obj/structure/fluff/railing/border/north,
 /turf/open/floor/sandstone_tile/six,
@@ -8707,92 +7854,6 @@
 /obj/structure/fluff/walldeco/bath/wallpipes,
 /turf/open/floor/concrete,
 /area/under/cave/mazedungeon)
-"lIf" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "lIu" = (
 /obj/effect/decal/edge_corner{
 	dir = 2;
@@ -9117,9 +8178,6 @@
 	},
 /turf/open/floor/sandstone,
 /area/under/rmh_desert/pyramid)
-"mkq" = (
-/turf/open/lava,
-/area/under/rmh_bedrock)
 "mkM" = (
 /turf/open/floor/underworld/space/sparkle_quiet,
 /area/under/cave/mazedungeon)
@@ -9250,16 +8308,6 @@
 /obj/structure/spider/cocoon,
 /turf/open/floor/sand/sandstone,
 /area/under/rmh_desert/spider)
-"mzA" = (
-/obj/item/rune/tir,
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "mzF" = (
 /obj/structure/roguerock,
 /turf/open/floor/naturalstone,
@@ -9457,16 +8505,6 @@
 	},
 /turf/open/floor/sandstone,
 /area/under/rmh_desert/tea/palacecellar)
-"mJG" = (
-/obj/item/dice/d4,
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "mJK" = (
 /obj/effect/decal/cobbleedge{
 	dir = 8;
@@ -9554,106 +8592,10 @@
 /mob/living/simple_animal/hostile/retaliate/gator,
 /turf/open/water/ocean/deep,
 /area/outdoors/rmh_desert/sea)
-"mSm" = (
-/obj/item/dice/d6/bone,
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "mSA" = (
 /obj/structure/flora/tree,
 /turf/open/floor/grass/cold,
 /area/under/cave/mazedungeon)
-"mTc" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#6";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "mTB" = (
 /obj/effect/decal/cobbleedge{
 	dir = 2;
@@ -9846,15 +8788,6 @@
 /obj/structure/stalagmite,
 /turf/open/floor/cobblerock,
 /area/under/cave)
-"ngp" = (
-/turf/open/floor/tile/masonic/inverted,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "ngV" = (
 /obj/structure/flora/grass/herb/random,
 /obj/structure/flora/grass/herb/random,
@@ -10208,81 +9141,6 @@
 /obj/structure/flora/grass/herb/atropa,
 /turf/open/floor/grass/mixyel,
 /area/outdoors/rmh_desert/oasis)
-"nGG" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#5";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "nGV" = (
 /obj/structure/spider/stickyweb,
 /obj/structure/spider/stickyweb,
@@ -10364,15 +9222,6 @@
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/sandstone,
 /area/under/rmh_desert/tea/palacecellar)
-"nOY" = (
-/turf/open/floor/tile/masonic/single,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "nPg" = (
 /obj/effect/decal/edge_corner{
 	color = "#7a684b";
@@ -10388,23 +9237,6 @@
 /obj/structure/carpet/purple,
 /turf/open/floor/tile/harem1,
 /area/under/rmh_desert/tea/palacecasemates)
-"nQl" = (
-/obj/structure/underworld/barrier,
-/obj/machinery/light/fueled/firebowl/standing/blue{
-	pixel_y = 8
-	},
-/obj/effect/decal/edge_corner{
-	dir = 4;
-	color = "#3b3b3b"
-	},
-/turf/open/floor/underworld/arena,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "nQv" = (
 /turf/open/floor/sand,
 /area/indoors/cave/rmh_desertcaves)
@@ -10803,16 +9635,6 @@
 /obj/item/natural/glass/shard,
 /turf/open/floor/cobblerock,
 /area/outdoors/rmh_desert/valley)
-"ooY" = (
-/obj/item/coin/silver/pile,
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "ooZ" = (
 /obj/effect/decal/cleanable/dreamfiend_ichor,
 /turf/open/floor/tile/kitchen,
@@ -10843,16 +9665,6 @@
 /obj/structure/rotation_piece/cog,
 /turf/open/floor/metal,
 /area/under/cave/mazedungeon)
-"oqM" = (
-/obj/structure/fluff/statue/small,
-/turf/closed/wall/mineral/underbrick/fake_world,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "oqV" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/generic,
@@ -11163,21 +9975,6 @@
 /obj/structure/fluff/railing/wood/west,
 /turf/open/floor/grass/cold,
 /area/under/cave/mazedungeon)
-"oHs" = (
-/obj/structure/underworld/barrier,
-/obj/machinery/light/fueled/firebowl/standing/blue,
-/obj/effect/decal/edge_corner{
-	dir = 8;
-	color = "#3b3b3b"
-	},
-/turf/open/floor/underworld/arena,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "oHQ" = (
 /obj/structure/fluff/railing/wood/east,
 /obj/machinery/essence/enchantment_altar{
@@ -11185,23 +9982,6 @@
 	},
 /turf/open/floor/sandstone_tile/four,
 /area/outdoors/rmh_air)
-"oHR" = (
-/obj/structure/underworld/barrier,
-/obj/machinery/light/fueled/firebowl/standing/blue{
-	pixel_y = 8
-	},
-/obj/effect/decal/edge_corner{
-	dir = 2;
-	color = "#3b3b3b"
-	},
-/turf/open/floor/underworld/arena,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "oIk" = (
 /obj/effect/decal/edge_corner{
 	dir = 2;
@@ -11514,23 +10294,6 @@
 /obj/effect/decal/carpet,
 /turf/open/floor/tile/harem1,
 /area/under/rmh_desert/tea/palacecasemates)
-"pfc" = (
-/obj/structure/fluff/customsign{
-	desc = "Удача -2 & Деревянная рука";
-	name = "READ ME #2";
-	icon = 'icons/roguetown/items/precious_objects.dmi';
-	icon_state = "elven_silv"
-	},
-/turf/open/floor/tile/masonic{
-	dir = 4
-	},
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "pfh" = (
 /obj/machinery/light/fueled/wallfire/candle/weak/l,
 /turf/open/floor/ruinedwood/chevron,
@@ -11952,16 +10715,6 @@
 	},
 /turf/open/floor/carpet/lord/center,
 /area/under/rmh_desert/tea/palacecasemates)
-"pEB" = (
-/obj/item/rune/amn,
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "pEQ" = (
 /obj/structure/stairs{
 	dir = 1
@@ -12109,75 +10862,6 @@
 	},
 /turf/open/floor/ruinedwood/darker,
 /area/outdoors/rmh_desert/valley)
-"pRY" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#3";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "pSh" = (
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/sandstone,
@@ -12376,16 +11060,6 @@
 	},
 /turf/open/floor/ruinedwood/turned,
 /area/indoors/rmh_desert/phouse)
-"qjX" = (
-/obj/item/coin/gold/pile,
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "qkn" = (
 /obj/machinery/light/fueled/firebowl/standing,
 /obj/structure/fluff/railing/corner/south_west,
@@ -12472,18 +11146,6 @@
 	},
 /turf/closed/wall/mineral/desert_soapstone,
 /area/under/rmh_desert/ziqurat)
-"qrq" = (
-/obj/structure/flora/tree/underworld{
-	opacity = 0
-	},
-/turf/open/floor/underworld/space/sparkle_quiet,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "qry" = (
 /turf/closed/wall/mineral/desert_sandstone,
 /area/under/rmh_desert/ziqurat)
@@ -12546,18 +11208,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/churchmarble,
 /area/under/cave/mazedungeon)
-"qvz" = (
-/obj/machinery/light/fueled/firebowl/church/unholyfire{
-	alpha = 0
-	},
-/turf/closed/wall/window/stained/alt,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "qvH" = (
 /obj/effect/decal/mossy{
 	dir = 8;
@@ -12781,18 +11431,6 @@
 	},
 /turf/closed/wall/mineral/desert_sandstone,
 /area/under/rmh_desert/tea/hareml)
-"qUR" = (
-/obj/machinery/light/fueled/firebowl/church{
-	alpha = 0
-	},
-/turf/closed/wall/window/stained/alt,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "qVe" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/sandstone,
@@ -12979,99 +11617,6 @@
 /obj/structure/spider/stickyweb,
 /turf/open/floor/tile/brownbrick,
 /area/under/town/sewer)
-"rnd" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#1";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "rnC" = (
 /obj/structure/spider/nest,
 /turf/open/floor/sand/sandstone,
@@ -13507,9 +12052,6 @@
 /obj/item/reagent_containers/glass/bottle/stampot,
 /turf/open/floor/sandstone_tile,
 /area/under/rmh_desert/tea/hareml)
-"rXn" = (
-/turf/open/floor/sand/dunes/citybrick/citybrick1,
-/area/outdoors/rmh_desert/port)
 "rXA" = (
 /obj/effect/spawner/trap,
 /turf/open/floor/cobble,
@@ -13527,23 +12069,6 @@
 /obj/structure/flora/grass/herb/calendula,
 /turf/open/floor/grass/mixyel,
 /area/outdoors/rmh_desert/oasis)
-"saj" = (
-/mob/living/carbon/human/species/skeleton{
-	should_have_aggro = 0;
-	skel_outfit = null;
-	wander = 0;
-	faction = list("Neutral");
-	name = "your luck";
-	real_name = "Your Luck"
-	},
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "sbh" = (
 /obj/structure/flora/grass/herb/rosa,
 /turf/open/floor/grass,
@@ -13577,23 +12102,6 @@
 /obj/machinery/light/fueled/firebowl,
 /turf/open/floor/sand/dunes/sandbrick,
 /area/outdoors/rmh_desert/valley)
-"seG" = (
-/obj/structure/underworld/barrier,
-/obj/effect/decal/edge{
-	dir = 1;
-	color = "#3b3b3b"
-	},
-/obj/item/dmusicbox{
-	alpha = 5
-	},
-/turf/open/floor/underworld/arena,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "sfh" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/sandstone_tile,
@@ -14170,20 +12678,6 @@
 	dir = 1
 	},
 /area/under/cave/mazedungeon)
-"sQZ" = (
-/obj/structure/underworld/barrier,
-/obj/effect/decal/edge{
-	dir = 8;
-	color = "#3b3b3b"
-	},
-/turf/open/floor/underworld/arena,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "sRO" = (
 /turf/open/floor/sandstone_tile/six,
 /area/outdoors/rmh_desert/valley)
@@ -14314,19 +12808,6 @@
 /obj/item/natural/rock/random_ore,
 /turf/open/floor/sand/dunes,
 /area/outdoors/rmh_desert/valley)
-"tdi" = (
-/obj/structure/table/map{
-	damage_deflection = 999
-	},
-/obj/item/clothing/face/skullmask,
-/turf/open/floor/carpet/stellar,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "tdp" = (
 /obj/structure/bridge,
 /turf/open/water/sewer,
@@ -14347,42 +12828,6 @@
 	},
 /turf/open/floor/concrete,
 /area/indoors/rmh_desert/phouse)
-"tfu" = (
-/obj/machinery/light/fueled/firebowl/firebowlb{
-	name = "health fire"
-	},
-/obj/effect/wisp/prestidigitation{
-	pixel_x = -12;
-	name = "Health Orb";
-	pixel_y = 11;
-	light_on = 0
-	},
-/obj/effect/wisp/prestidigitation{
-	pixel_x = 17;
-	name = "Health Orb";
-	pixel_y = 13;
-	light_on = 0
-	},
-/obj/effect/wisp/prestidigitation{
-	pixel_x = 15;
-	name = "Health Orb";
-	pixel_y = -13;
-	light_on = 0
-	},
-/obj/effect/wisp/prestidigitation{
-	pixel_x = -15;
-	name = "Health Orb";
-	light_on = 0;
-	pixel_y = -17
-	},
-/turf/open/floor/underworld/space/sparkle_quiet,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "tgm" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/blocks/stonered/tiny,
@@ -14712,92 +13157,6 @@
 /obj/item/fertilizer/ash,
 /turf/open/floor/sandstone_tile/three,
 /area/outdoors/rmh_desert/valley)
-"tDw" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/obj/item/gun/ballistic/revolver/grenadelauncher/airgun/prefilled{
-	name = "#2";
-	chambered = "/obj/item/ammo_casing/caseless/bullet";
-	steam_lever = 1;
-	pressure_to_use = 2;
-	cranked = 1
-	},
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "tDB" = (
 /obj/effect/decal/cobbleedge{
 	dir = 8;
@@ -15341,22 +13700,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/sandstone,
 /area/outdoors/rmh_desert/valley)
-"usU" = (
-/obj/item/storage/belt/pouch/bullets,
-/obj/item/storage/belt/pouch/bullets,
-/obj/item/storage/belt/pouch/bullets,
-/obj/item/storage/belt/pouch/bullets,
-/obj/item/storage/belt/pouch/bullets,
-/obj/item/storage/belt/pouch/bullets,
-/obj/item/storage/belt/pouch/bullets,
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "utW" = (
 /obj/effect/decal/edge_corner{
 	color = "#7a684b";
@@ -15603,15 +13946,6 @@
 /obj/machinery/light/fueled/wallfire/candle/weak/r,
 /turf/open/floor/cobble,
 /area/under/cave/mazedungeon)
-"uNb" = (
-/turf/closed/wall/mineral/underbrick/fake_world,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "uQd" = (
 /obj/structure/fluff/railing/wood/west,
 /turf/open/floor/woodturned,
@@ -15841,16 +14175,6 @@
 	},
 /turf/open/floor/metal/alt,
 /area/under/cave/mazedungeon)
-"veT" = (
-/obj/structure/table/stone_small,
-/turf/open/floor/snow,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "vfj" = (
 /obj/structure/flora/grass,
 /turf/open/floor/grass/mixyel,
@@ -16376,17 +14700,8 @@
 /turf/open/floor/ruinedwood/darker,
 /area/outdoors/rmh_desert/valley)
 "vLi" = (
-/obj/structure/flora/tree/underworld{
-	opacity = 0
-	},
-/turf/open/floor/underworld/space/quiet,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
+/turf/open/floor/herringbone,
+/area/under/rmh_desert/pyramid)
 "vLE" = (
 /obj/structure/flora/driftwood,
 /turf/open/floor/sand/sandstone,
@@ -16641,16 +14956,6 @@
 	},
 /turf/open/floor/grass/cold,
 /area/under/cave/mazedungeon)
-"wkR" = (
-/obj/machinery/light/fueled/firebowl/standing/blue,
-/turf/open/floor/underworld/space/sparkle_quiet,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "wlb" = (
 /obj/machinery/light/fueled/firebowl,
 /turf/open/floor/sand/dunes/sandbrick,
@@ -16760,19 +15065,6 @@
 /obj/effect/particle_effect/sparks,
 /turf/open/floor/metal/barograte,
 /area/under/cave/mazedungeon)
-"wsR" = (
-/obj/effect/decal/edge{
-	dir = 8;
-	color = "#3b3b3b"
-	},
-/turf/open/floor/underworld/arena,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "wsV" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /mob/living/simple_animal/hostile/retaliate/infernal/hellhound{
@@ -16854,20 +15146,6 @@
 	},
 /turf/open/floor/tile/diamond,
 /area/under/rmh_desert/tea/palacecasemates)
-"wAt" = (
-/obj/structure/table/map{
-	dir = 9;
-	damage_deflection = 999
-	},
-/obj/item/coin/gold,
-/turf/open/floor/carpet/stellar,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "wAV" = (
 /obj/structure/table/wood/plain,
 /obj/item/reagent_containers/glass/bowl{
@@ -17371,12 +15649,6 @@
 	},
 /turf/open/floor/sandstone,
 /area/under/rmh_desert/pyramid)
-"xsf" = (
-/obj/structure/rmh_waystone{
-	name = "Seaport Village"
-	},
-/turf/open/floor/sand/dunes/citybrick/citybrick1,
-/area/outdoors/rmh_desert/port)
 "xsD" = (
 /turf/open/water/river{
 	dir = 8
@@ -17497,20 +15769,6 @@
 /obj/effect/spawner/map_spawner/loot/valuable_tableware_spawner,
 /turf/open/floor/sandstone_tile,
 /area/under/rmh_desert/tea/palacecasemates)
-"xDt" = (
-/obj/machinery/light/fueled/firebowl/church/unholyfire{
-	alpha = 0
-	},
-/turf/closed/wall/window/stained/red{
-	opacity = 0
-	},
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "xDD" = (
 /turf/open/floor/tile,
 /area/under/rmh_desert/tea/palacecasemates)
@@ -17590,19 +15848,6 @@
 	},
 /turf/open/floor/ruinedwood/spiral,
 /area/outdoors/rmh_desert/valley)
-"xIQ" = (
-/obj/effect/decal/edge{
-	dir = 2;
-	color = "#3b3b3b"
-	},
-/turf/open/floor/underworld/arena,
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "xIS" = (
 /obj/item/fertilizer/ash,
 /obj/effect/decal/cleanable/debris/wood,
@@ -17669,23 +15914,6 @@
 	},
 /turf/open/floor/sandstone,
 /area/outdoors/rmh_desert/valley)
-"xNl" = (
-/obj/structure/fluff/customsign{
-	desc = "Удача +4 & Случайная руна";
-	name = "READ ME #4";
-	icon = 'icons/roguetown/gems/gem_turq.dmi';
-	icon_state = "scarab_turq"
-	},
-/turf/open/floor/tile/masonic{
-	dir = 8
-	},
-/area/indoors/inq/office{
-	name = "Get Your Luck";
-	first_time_text = "TEST YOUR LUCK";
-	background_track_dusk = null;
-	background_track = null;
-	background_track_night = null
-	})
 "xNQ" = (
 /obj/structure/fluff/railing/border/north,
 /obj/structure/fluff/railing/border/east,
@@ -17858,9 +16086,6 @@
 	},
 /turf/open/floor/churchrough,
 /area/under/cave/mazedungeon)
-"yfT" = (
-/turf/open/floor/abyss_sand,
-/area/under/rmh_bedrock)
 "ygW" = (
 /obj/effect/decal/cobblerockedge{
 	dir = 9
@@ -58788,7 +57013,7 @@ pTl
 blZ
 wBr
 wBr
-dsQ
+ezt
 wBr
 rUR
 kBe
@@ -59044,13 +57269,13 @@ pTl
 pTl
 wBr
 wBr
-ecB
-ecB
-cLX
+vLi
+vLi
+frP
 kBe
-frP
-frP
-frP
+cmp
+cmp
+cmp
 kBe
 rUR
 jiP
@@ -59301,13 +57526,13 @@ pTl
 pTl
 wBr
 wBr
+kEU
+vLi
 cmp
-ecB
-frP
 kBe
-frP
+cmp
 jIP
-frP
+cmp
 kBe
 kBe
 dMK
@@ -59558,13 +57783,13 @@ pTl
 pTl
 wBr
 wBr
-ecB
-ecB
-frP
+vLi
+vLi
+cmp
 kBe
-frP
-frP
-frP
+cmp
+cmp
+cmp
 kBe
 kBe
 bSv
@@ -59816,7 +58041,7 @@ pTl
 blZ
 wBr
 wBr
-dsQ
+ezt
 wBr
 kBe
 kBe
@@ -60077,7 +58302,7 @@ wBr
 wBr
 kBe
 kBe
-drW
+kre
 kBe
 kBe
 kBe
@@ -77068,11 +75293,11 @@ pTl
 pTl
 pTl
 pTl
-uNb
-uNb
-qUR
-uNb
-uNb
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -77325,11 +75550,11 @@ pTl
 pTl
 pTl
 pTl
-uNb
-kti
-nOY
-cXZ
-uNb
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -77579,14 +75804,14 @@ pTl
 pTl
 pTl
 pTl
-yfT
-yfT
-yfT
-qUR
-nOY
-grn
-nOY
-qUR
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -77836,14 +76061,14 @@ pTl
 pTl
 pTl
 pTl
-ajS
 pTl
 pTl
-uNb
-kEU
-nOY
-xNl
-uNb
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -78092,16 +76317,16 @@ pTl
 pTl
 pTl
 pTl
-uNb
-oqM
-uNb
-bdu
-uNb
-uNb
-bdu
-uNb
-oqM
-uNb
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -78349,16 +76574,16 @@ pTl
 pTl
 pTl
 pTl
-uNb
-wkR
-diA
-deK
-diA
-jSL
-jSL
-diA
-iKa
-uNb
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -78593,29 +76818,29 @@ pTl
 pTl
 pTl
 pTl
-uNb
-aoa
-aoa
-aoa
-uNb
-pTl
-uNb
-aoa
-aoa
-aoa
-uNb
 pTl
 pTl
-uNb
-vLi
-jSL
-diA
-tfu
-deK
-jSL
-jSL
-jSL
-uNb
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -78850,29 +77075,29 @@ pTl
 pTl
 pTl
 pTl
-uNb
-rnd
-aSK
-lIf
-uNb
-pTl
-uNb
-mSm
-aSK
-aSK
-uNb
 pTl
 pTl
-bdu
-diA
-jSL
-oHs
-sQZ
-wsR
-oHR
-diA
-jSL
-bdu
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -79107,29 +77332,29 @@ pTl
 pTl
 pTl
 pTl
-aoa
-luQ
-aSK
-tDw
-aoa
-pTl
-aoa
-aSK
-mJG
-aSK
-aoa
 pTl
 pTl
-uNb
-jSL
-ezt
-seG
-wAt
-hho
-lBh
-lzi
-djo
-uNb
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -79364,29 +77589,29 @@ pTl
 pTl
 pTl
 pTl
-aoa
-pRY
-aSK
-jny
-aoa
-pTl
-aoa
-aSK
-aSK
-ooY
-aoa
 pTl
 pTl
-oqM
-jSL
-aMR
-lnk
-fmZ
-tdi
-xIQ
-lzi
-deK
-oqM
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -79621,29 +77846,29 @@ pTl
 pTl
 pTl
 pTl
-uNb
-hJA
-usU
-gMJ
-uNb
-pTl
-aoa
-aSK
-aSK
-qjX
-aoa
 pTl
 pTl
-uNb
-jSL
-aMR
-seG
-iAC
-iip
-lBh
-aMR
-diA
-uNb
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -79878,29 +78103,29 @@ pTl
 pTl
 pTl
 pTl
-uNb
-nGG
-aSK
-juB
-uNb
-pTl
-uNb
-veT
-pEB
-mzA
-uNb
 pTl
 pTl
-bdu
-diA
-qrq
-kre
-eSp
-kGg
-nQl
-jEV
-jSL
-bdu
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -80135,29 +78360,29 @@ pTl
 pTl
 pTl
 pTl
-aoa
-jOH
-aSK
-mTc
-aoa
-pTl
-uNb
-aoa
-aoa
-aoa
-uNb
 pTl
 pTl
-uNb
-deK
-jSL
-jSL
-diA
-tfu
-diA
-jSL
-fNc
-uNb
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -80392,11 +78617,6 @@ pTl
 pTl
 pTl
 pTl
-aoa
-aSK
-saj
-aSK
-aoa
 pTl
 pTl
 pTl
@@ -80405,16 +78625,21 @@ pTl
 pTl
 pTl
 pTl
-uNb
-wkR
-diA
-jSL
-jSL
-deK
-diA
-deK
-iKa
-uNb
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -80649,29 +78874,29 @@ pTl
 pTl
 pTl
 pTl
-uNb
-aSK
-aSK
-aSK
-uNb
 pTl
 pTl
 pTl
 pTl
 pTl
-mkq
 pTl
 pTl
-uNb
-oqM
-uNb
-bdu
-uNb
-uNb
-bdu
-uNb
-oqM
-uNb
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -80906,11 +79131,6 @@ pTl
 pTl
 pTl
 pTl
-uNb
-aoa
-aoa
-aoa
-uNb
 pTl
 pTl
 pTl
@@ -80920,14 +79140,19 @@ pTl
 pTl
 pTl
 pTl
-ajS
 pTl
 pTl
-uNb
-fZI
-ngp
-cDf
-uNb
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -81177,14 +79402,14 @@ pTl
 pTl
 pTl
 pTl
-yfT
-yfT
-yfT
-qvz
-ngp
-xDt
-ngp
-qvz
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -81437,11 +79662,11 @@ pTl
 pTl
 pTl
 pTl
-uNb
-pfc
-ngp
-eQC
-uNb
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -81694,11 +79919,11 @@ pTl
 pTl
 pTl
 pTl
-uNb
-uNb
-qvz
-uNb
-uNb
+pTl
+pTl
+pTl
+pTl
+pTl
 pTl
 pTl
 pTl
@@ -166446,9 +164671,9 @@ rBG
 mYJ
 rBG
 rBG
-rXn
-rXn
-rXn
+jSL
+jSL
+jSL
 mYJ
 rBG
 ntK
@@ -166703,9 +164928,9 @@ rBG
 mYJ
 rBG
 rBG
-rXn
-xsf
-rXn
+jSL
+cDf
+jSL
 rBG
 rBG
 lBJ
@@ -166960,9 +165185,9 @@ gxa
 gSB
 vsA
 vsA
-rXn
-rXn
-rXn
+jSL
+jSL
+jSL
 rBG
 rBG
 aWe
