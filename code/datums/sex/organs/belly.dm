@@ -142,8 +142,8 @@
 /datum/component/belly_fullness/proc/handle_life(seconds)
 	SIGNAL_HANDLER
 
-	if(refresh_tracked_organs())
-		recalculate_size()
+	refresh_tracked_organs()
+	recalculate_size()
 
 /datum/component/belly_fullness/proc/on_storage_changed(datum/source, datum/component/body_storage/storage)
 	SIGNAL_HANDLER
@@ -248,9 +248,18 @@
 
 	if(istype(organ, /obj/item/organ/genitals/filling_organ))
 		var/obj/item/organ/genitals/filling_organ/filling_organ = organ
+		if(fluid_fullness_counts_for_organ(filling_organ) && filling_organ.reagents?.maximum_volume > 0)
+			current_bulk += deep_capacity * filling_organ.reagents.total_volume / filling_organ.reagents.maximum_volume
 		current_bulk += round(deep_capacity * filling_organ.conventional_pregnancy_stage / 3)
 
 	return growth_steps_from_fullness(current_bulk, deep_capacity)
+
+/datum/component/belly_fullness/proc/fluid_fullness_counts_for_organ(obj/item/organ/genitals/filling_organ/filling_organ)
+	if(!istype(filling_organ, /obj/item/organ/genitals/filling_organ/anus) && !istype(filling_organ, /obj/item/organ/genitals/filling_organ/vagina))
+		return TRUE
+	if(!carrier?.client?.prefs)
+		return TRUE
+	return carrier.get_erp_pref(/datum/erp_preference/boolean/allow_belly_inflation)
 
 /datum/component/belly_fullness/proc/growth_steps_from_fullness(current_bulk, capacity)
 	if(current_bulk <= 0 || capacity <= 0)

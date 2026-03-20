@@ -68,6 +68,11 @@
 	if(special && startsfilled) // won't fill the organ if you insert this organ via surgery
 		reagents.add_reagent(reagent_to_make, reagents.maximum_volume)
 
+/obj/item/organ/genitals/filling_organ/on_reagent_change(changetype)
+	. = ..()
+	if(slot == ORGAN_SLOT_ANUS || slot == ORGAN_SLOT_VAGINA)
+		SEND_SIGNAL(src, COMSIG_BODYSTORAGE_CHANGED)
+
 /obj/item/organ/genitals/filling_organ/on_life()
 	var/mob/living/carbon/human/H = owner
 

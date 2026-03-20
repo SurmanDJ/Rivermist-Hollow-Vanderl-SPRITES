@@ -22,6 +22,12 @@
 	default_value = TRUE
 	category = "General"
 
+/datum/erp_preference/boolean/allow_belly_inflation
+	name = "Belly Inflation"
+	description = "If fluids in your vagina or anus can visibly inflate your belly"
+	default_value = TRUE
+	category = "General"
+
 /datum/erp_preference/boolean/always_show_nsfw_flavor
 	name = "Always show nsfw flavor"
 	description = "If you want your nsfw flavor to be shown even when clothed"
