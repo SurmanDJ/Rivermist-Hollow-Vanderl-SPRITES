@@ -171,6 +171,7 @@
 	var/boost_target_value = 12
 	var/datum/component/boss_ring_stat_boost/equipped_stat_bonus
 	var/datum/weakref/bonus_owner_ref
+	misc_flags = CRAFTING_TEST_EXCLUDE
 
 /obj/item/clothing/ring/gold/quest_deadly_prize/Initialize(mapload)
 	. = ..()
@@ -235,6 +236,7 @@
 	var/boost_target_value = 16
 	var/datum/component/boss_ring_stat_boost/equipped_stat_bonus
 	var/datum/weakref/bonus_owner_ref
+	misc_flags = CRAFTING_TEST_EXCLUDE
 
 /obj/item/clothing/ring/gold/boss_prize/Initialize(mapload)
 	. = ..()
