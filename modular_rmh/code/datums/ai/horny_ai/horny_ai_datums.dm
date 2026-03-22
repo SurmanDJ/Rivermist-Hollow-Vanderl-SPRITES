@@ -16,17 +16,6 @@
 	if(isnull(targetting_datum))
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
 
-	if(isnull(controller.blackboard[BB_HORNY_TIME_START]))
-		controller.set_blackboard_key(BB_HORNY_TIME_START, world.time)
-	controller.set_blackboard_key(BB_HORNY_TARGET_ATTACK_COUNT, 0)
-	controller.clear_blackboard_key(BB_HORNY_AGGRO_TARGET)
-	controller.clear_blackboard_key(BB_HORNY_INITIAL_STRIP_DONE)
-	controller.clear_blackboard_key(BB_HORNY_SEEK_START_TIME)
-	controller.set_blackboard_key(BB_HORNY_STAND_UP_COUNTER, 0)
-	controller.set_blackboard_key(BB_HORNY_ACTIONLESS_TICKS, 0)
-	controller.set_blackboard_key(BB_HORNY_WRONG_ACTION, FALSE)
-	controller.set_blackboard_key(BB_HORNY_KNOCKDOWN_NEED, TRUE)
-
 	var/atom/target = controller.blackboard[target_key]
 
 	var/mob/living/target_living = target
@@ -47,6 +36,16 @@
 
 	if(!targetting_datum.can_horny(basic_mob, target_living))
 		return FALSE
+
+	controller.set_blackboard_key(BB_HORNY_TIME_START, world.time)
+	controller.set_blackboard_key(BB_HORNY_TARGET_ATTACK_COUNT, 0)
+	controller.clear_blackboard_key(BB_HORNY_AGGRO_TARGET)
+	controller.clear_blackboard_key(BB_HORNY_INITIAL_STRIP_DONE)
+	controller.clear_blackboard_key(BB_HORNY_SEEK_START_TIME)
+	controller.set_blackboard_key(BB_HORNY_STAND_UP_COUNTER, 0)
+	controller.set_blackboard_key(BB_HORNY_ACTIONLESS_TICKS, 0)
+	controller.set_blackboard_key(BB_HORNY_WRONG_ACTION, FALSE)
+	controller.set_blackboard_key(BB_HORNY_KNOCKDOWN_NEED, TRUE)
 
 	if(basic_mob.gender == MALE)
 		basic_mob.visible_message(span_boldwarning("[basic_mob] has his eyes on [target_living], cock throbbing!"))
@@ -134,13 +133,17 @@
 	SEND_SIGNAL(basic_mob, COMSIG_SEX_GET_AROUSAL, arousal_data)
 	var/is_spent = arousal_data["is_spent"]
 	var/last_orgasm_time = arousal_data["last_ejaculation_time"]
+	var/horny_start_time = controller.blackboard[BB_HORNY_TIME_START]
+	if(isnull(horny_start_time))
+		horny_start_time = world.time
+		controller.set_blackboard_key(BB_HORNY_TIME_START, horny_start_time)
 
 	var/datum/sex_session/session = get_sex_session(basic_mob, target_living)
 	if(!session) //if we took too long and it's deleted
 		session = basic_mob.start_sex_session(target_living)
 
 	//check if we are sated
-	if(last_orgasm_time > world.time - 10 SECONDS || is_spent || controller.blackboard[BB_HORNY_TIME_START] < world.time - 5 MINUTES)
+	if(last_orgasm_time > world.time - 10 SECONDS || is_spent || horny_start_time < world.time - 5 MINUTES)
 		if(session)
 			session.stop_current_action()
 		finish_action(controller, TRUE, target_key)

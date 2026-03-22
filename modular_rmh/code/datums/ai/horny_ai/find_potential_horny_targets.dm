@@ -13,7 +13,9 @@
 
 /datum/ai_behavior/find_potential_horny_targets/setup(datum/ai_controller/controller, target_key, targetting_datum_key)
 	. = ..()
-	var/mob/living/simple_animal/basic_mob = controller.pawn
+	var/mob/living/basic_mob = controller.pawn
+	if(!basic_mob)
+		return FALSE
 
 	if(!basic_mob.GetComponent(/datum/component/arousal))
 		basic_mob.AddComponent(/datum/component/arousal)

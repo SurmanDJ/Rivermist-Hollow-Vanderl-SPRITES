@@ -15,8 +15,9 @@
 /datum/ai_planning_subtree/horny/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
-	if(QDELETED(target))
-		return
+	if(target && QDELETED(target))
+		controller.clear_blackboard_key(target_key)
+		target = null
 	if(world.time < controller.blackboard[BB_HORNY_SEEK_COOLDOWN])
 		return
 	if(horny_ai_should_yield_to_aggro(controller))
