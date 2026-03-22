@@ -188,10 +188,18 @@
     check_same_tile = FALSE
     check_distance = FALSE
 
-/datum/sex_action/portal_base/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
-
+/datum/sex_action/portal_base/proc/get_portal_wearer(mob/living/carbon/human/user)
 	var/obj/item/portallight/L = user.get_active_held_item()
 	if(!istype(L, /obj/item/portallight))
+		return null
+	return L.get_wearer()
+
+/datum/sex_action/portal_base/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	var/obj/item/portallight/L = user.get_active_held_item()
+	if(!istype(L, /obj/item/portallight))
+		return FALSE
+	var/mob/living/carbon/human/W = get_portal_wearer(user)
+	if(!W || target != W)
 		return FALSE
 	if(hole_id != L.org_target && !isnull(hole_id))
 		return FALSE
@@ -199,16 +207,19 @@
 
 /datum/sex_action/portal_base/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	. = ..()
+	if(!.)
+		return FALSE
 	var/obj/item/portallight/L = user.get_active_held_item()
 	if(!istype(L, /obj/item/portallight))
 		return FALSE
-	var/mob/living/carbon/human/W = L.get_wearer()
+	var/mob/living/carbon/human/W = get_portal_wearer(user)
 	if(!W)
 		return FALSE
-	if(user == target && user != W)
+	if(target != W)
 		return FALSE
 	light = L
-	target = W
+	src.target = W
+	return TRUE
 
 /**
  * SEX ACTION: PORTAL HAND
@@ -545,15 +556,22 @@
 	continous = TRUE
 
 /datum/sex_action/portal_base/portal_remove_vaginal/shows_on_menu(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(!user.get_inactive_held_item())
 		return FALSE
 	if(user == target)
 		target_organ = user.getorganslot(hole_id)
 	else
 		target_organ = target.getorganslot(hole_id)
+	if(!target_organ)
+		return FALSE
 	var/list/stored_items = SEND_SIGNAL(target_organ, COMSIG_BODYSTORAGE_GET_LISTS)
+	if(!islist(stored_items))
+		return FALSE
 	var/list/stored_items_layer = stored_items[STORAGE_LAYER_INNER]
-	if(!stored_items_layer.len)
+	if(!length(stored_items_layer))
 		return FALSE
 	return TRUE
 
