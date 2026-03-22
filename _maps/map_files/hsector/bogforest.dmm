@@ -1448,6 +1448,13 @@
 /obj/structure/flora/grass/bush_meagre,
 /turf/open/floor/dirt,
 /area/outdoors)
+"jy" = (
+/obj/effect/decal/cleanable/debris/stone,
+/obj/structure/rmh_waystone{
+	name = "Goblin Camp"
+	},
+/turf/open/floor/cobblerock,
+/area/outdoors/woods/rmh/goblincampfire)
 "jz" = (
 /turf/open/openspace,
 /area/indoors/dungeon)
@@ -3599,6 +3606,12 @@
 /obj/structure/spider/cocoon,
 /turf/open/floor/naturalstone,
 /area/under/cave/spider/rmh)
+"wX" = (
+/obj/structure/rmh_waystone{
+	name = "Swamp Village"
+	},
+/turf/open/floor/cobblerock,
+/area/outdoors/bog/rmh/north)
 "wY" = (
 /obj/structure/fluff/walldeco/vinez,
 /turf/closed/dungeon_void{
@@ -69680,7 +69693,7 @@ DP
 UB
 Ya
 Jk
-co
+jy
 ja
 Xh
 iI
@@ -85911,9 +85924,9 @@ GF
 GF
 PL
 PL
-PL
-PL
-PL
+pV
+pV
+pV
 Pf
 Pf
 VW
@@ -86128,9 +86141,9 @@ VW
 VW
 Pf
 bP
-PL
-PL
-PL
+pV
+wX
+pV
 Pf
 Pf
 VW
@@ -86345,9 +86358,9 @@ VW
 Pf
 Pf
 PL
-PL
-PL
-PL
+pV
+pV
+pV
 Pf
 Pf
 VW

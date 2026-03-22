@@ -1,6 +1,13 @@
 //MAIN MAP AREAS//
 
 
+/area/outdoors/exposed/rmh
+	icon_state = "exposed"
+	background_track = 'modular_rmh/sound/music/area/field_day.ogg'
+	background_track_dusk = 'modular_rmh/sound/music/area/field_dusk.ogg'
+	background_track_night = 'modular_rmh/sound/music/area/field_night.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/field_dawn.ogg'
+
 //FORESTS
 
 /area/outdoors/rmh_field
@@ -72,8 +79,8 @@
 	first_time_text = "CAVES"
 	icon_state = "caves"
 	background_track = 'sound/music/area/caves.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/caves.ogg'
+	background_track_night = 'sound/music/area/caves.ogg'
 
 
 /area/indoors/cave/rmh_cave/mine
@@ -102,8 +109,8 @@
 	ambientsounds = DRONING_CAVE_WET
 	ambientnight = DRONING_CAVE_WET
 	background_track = 'sound/music/area/caves.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/caves.ogg'
+	background_track_night = 'sound/music/area/caves.ogg'
 	//deathsight_message = "wet caverns"
 
 /area/indoors/cave/rmh_cave/wet/lake
@@ -118,8 +125,8 @@
 	icon_state = "decap"
 	ambush_mobs = null
 	background_track = 'sound/music/area/decap.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/decap.ogg'
+	background_track_night = 'sound/music/area/decap.ogg'
 	first_time_text = "DUSK SPIRE PASS"
 	ambush_times = null
 	converted_type = /area/indoors/shelter/mountains/rmh_mountains
@@ -129,8 +136,8 @@
 	icon = 'modular_rmh/icons/turf/areas.dmi'
 	icon_state = "indoors"
 	background_track = 'sound/music/area/decap.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/decap.ogg'
+	background_track_night = 'sound/music/area/decap.ogg'
 
 /area/outdoors/rmh_field/north_mountain
 	name = "Northern Mountains Basin"
@@ -189,8 +196,10 @@
 	name = "indoors"
 	icon = 'modular_rmh/icons/turf/areas.dmi'
 	icon_state = "indoors"
-	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
-	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	background_track = 'modular_rmh/sound/music/area/town_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/town_dawn.ogg'
+	background_track_dusk = 'modular_rmh/sound/music/area/town_dusk.ogg'
+	background_track_night = 'modular_rmh/sound/music/area/town_night.ogg'
 	ambient_index = null
 	converted_type = /area/outdoors/exposed/town/rmh
 	//deathsight_message = "the town of Rivermist Hollow and all its bustling souls"
@@ -247,8 +256,8 @@
 	//spookysounds = SPOOKY_DUNGEON
 	//spookynight = SPOOKY_DUNGEON
 	background_track = 'sound/music/area/catacombs.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
 	soundenv = 5
 	converted_type = /area/outdoors/exposed/rmh/under/basement
 	ceiling_protected = TRUE
@@ -256,8 +265,8 @@
 /area/outdoors/exposed/rmh/under/basement
 	icon_state = "basement"
 	background_track = 'sound/music/area/catacombs.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
 
 /area/under/town/rmh/treasury
 	name = "treasury"
@@ -268,8 +277,8 @@
 	//spookysounds = SPOOKY_DUNGEON
 	//spookynight = SPOOKY_DUNGEON
 	background_track = 'sound/music/area/catacombs.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
 	soundenv = 5
 	converted_type = /area/outdoors/exposed/rmh/under/basement
 	ceiling_protected = TRUE
@@ -277,14 +286,14 @@
 /area/under/town/rmh/bank
 	name = "bank vault"
 	icon = 'modular_rmh/icons/turf/areas.dmi'
-	icon_state = "bank"
+	icon_state = "bank_vault"
 	ambientsounds = DRONING_BASEMENT
 	ambientnight = DRONING_BASEMENT
 	//spookysounds = SPOOKY_DUNGEON
 	//spookynight = SPOOKY_DUNGEON
 	background_track = 'sound/music/area/catacombs.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
 	soundenv = 5
 	converted_type = /area/outdoors/exposed/rmh/under/basement
 	ceiling_protected = TRUE
@@ -294,14 +303,13 @@
 	first_time_text = "TOWN GUARDHOUSE"
 	icon_state = "garrison"
 	background_track = 'sound/music/area/manorgarri.ogg'
-	background_track_dusk = null
-	background_track_night = null
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/manorgarri.ogg'
+	background_track_night = 'sound/music/area/manorgarri.ogg'
 	converted_type = /area/outdoors/exposed/town/rmh
 
 /area/indoors/town/rmh/garrison/wall
 	name = "Town Wall"
+	icon_state = "wall"
 	first_time_text = "TOWN WALL"
 
 /area/indoors/town/rmh/cell
@@ -311,8 +319,8 @@
 	//spookysounds = SPOOKY_DUNGEON
 	//spookynight = SPOOKY_DUNGEON
 	background_track = 'sound/music/area/manorgarri.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/manorgarri.ogg'
+	background_track_night = 'sound/music/area/manorgarri.ogg'
 	converted_type = /area/outdoors/exposed/town/rmh
 	cell_area = TRUE
 
@@ -325,8 +333,8 @@
 	//spookysounds = SPOOKY_RATS
 	//spookynight = SPOOKY_RATS
 	background_track = 'sound/music/area/sewers.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/sewers.ogg'
+	background_track_night = 'sound/music/area/sewers.ogg'
 	//ambientrain = RAIN_SEWER
 	soundenv = 21
 	converted_type = /area/outdoors/exposed/under/rmh/sewer
@@ -337,36 +345,24 @@
 	first_time_text = "RIVERMIST HOLLOW SEWERS"
 	icon_state = "sewer"
 	background_track = 'sound/music/area/sewers.ogg'
-	background_track_dusk = null
-	background_track_night = null
-
-/area/indoors/town/rmh/magician
-	name = "Wizard's Tower"
-	first_time_text = "WIZARD'S TOWER"
-	icon_state = "magician"
-	//spookysounds = SPOOKY_MYSTICAL
-	//spookynight = SPOOKY_MYSTICAL
-	background_track = 'sound/music/area/magiciantower.ogg'
-	background_track_dusk = null
-	background_track_night = null
-	converted_type = /area/outdoors/exposed/magiciantower
+	background_track_dusk = 'sound/music/area/sewers.ogg'
+	background_track_night = 'sound/music/area/sewers.ogg'
 
 /area/outdoors/exposed/magiciantower
 	name = "Wizard's Tower"
 	first_time_text = "WIZARD'S TOWER"
-	icon_state = "magiciantower"
+	icon_state = "living"
 	background_track = 'sound/music/area/magiciantower.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/magiciantower.ogg'
+	background_track_night = 'sound/music/area/magiciantower.ogg'
 
 /area/indoors/town/rmh/magician/pass
 	name = "Secret Pass"
 	first_time_text = "SECRET PASS"
-	//spookysounds = SPOOKY_MYSTICAL
-	//spookynight = SPOOKY_MYSTICAL
+	icon_state = "living"
 	background_track = 'sound/music/area/magiciantower.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/magiciantower.ogg'
+	background_track_night = 'sound/music/area/magiciantower.ogg'
 	ceiling_protected = TRUE
 
 /area/indoors/town/rmh/barber
@@ -418,8 +414,8 @@
 	first_time_text = "CRAFTERS GUILD"
 	icon_state = "dwarfin"
 	background_track = 'sound/music/area/dwarf.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/dwarf.ogg'
+	background_track_night = 'sound/music/area/dwarf.ogg'
 	converted_type = /area/outdoors/exposed/rmh/crafters
 
 /area/outdoors/exposed/rmh/crafters
@@ -427,16 +423,16 @@
 	first_time_text = "CRAFTERS GUILD"
 	icon_state = "dwarf"
 	background_track = 'sound/music/area/dwarf.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/dwarf.ogg'
+	background_track_night = 'sound/music/area/dwarf.ogg'
 
 /area/indoors/town/rmh/merchant
 	name = "Merchants Guild"
 	first_time_text = "MERCHANTS GUILD"
 	icon_state = "shop"
 	background_track = 'sound/music/area/shop.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/shop.ogg'
+	background_track_night = 'sound/music/area/shop.ogg'
 	converted_type = /area/outdoors/exposed/rmh/merchant
 
 /area/outdoors/exposed/rmh/merchant
@@ -453,8 +449,8 @@
 	ambientsounds = DRONING_INDOORS
 	ambientnight = DRONING_INDOORS
 	background_track = 'sound/silence.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/silence.ogg'
+	background_track_night = 'sound/silence.ogg'
 	converted_type = /area/outdoors/exposed/rmh/tavern
 	tavern_area = TRUE
 
@@ -462,8 +458,8 @@
 	name = "Drunk Dwarf Tavern"
 	first_time_text = "DRUNK DWARF TAVERN"
 	background_track = 'sound/silence.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/silence.ogg'
+	background_track_night = 'sound/silence.ogg'
 	tavern_area = TRUE
 
 /area/indoors/town/rmh/town_hall
@@ -475,8 +471,8 @@
 	first_time_text = "THE TOWN CHAPEL"
 	icon_state = "church"
 	background_track = 'sound/music/area/church.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/church.ogg'
+	background_track_night = 'sound/music/area/churchdawn.ogg'
 	holy_area = TRUE
 	background_track_dawn = 'sound/music/area/churchdawn.ogg'
 	converted_type = /area/outdoors/exposed/church
@@ -488,17 +484,18 @@
 	icon = 'modular_rmh/icons/turf/areas.dmi'
 	icon_state = "outdoors"
 	background_track = 'sound/music/area/church.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/church.ogg'
+	background_track_night = 'sound/music/area/churchdawn.ogg'
 	background_track_dawn = 'sound/music/area/churchdawn.ogg'
 	//deathsight_message = "a chapel"
 
 /area/indoors/town/rmh/chapel/basement
-	icon_state = "The Ancient Crypt"
+	name = "The Ancient Crypt"
+	icon_state = "church"
 	first_time_text = "THE ANCIENT CRYPT"
 	background_track = 'sound/music/area/catacombs.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
 	first_time_text = "THE ANCIENT CRYPT"
 
 //HERMITS
@@ -510,6 +507,10 @@
 	name = "Witch's Hut"
 	first_time_text = "WITCH'S HUT"
 
+/area/indoors/town/rmh/herbalist
+	name = "HERBALIST's Hut"
+	first_time_text = "HERBALIST'S HUT"
+H
 //BEDROCK AND BORDERS
 /area/under/rmh_bedrock
 	name = "Bedrock Border"
@@ -524,3 +525,491 @@
 	//deathsight_message = "open air"
 	ambientsounds = DRONING_MOUNTAIN
 	ambientnight = DRONING_MOUNTAIN
+
+// NEW
+
+/area/under/rmh_dungeon
+	name = "dungeons"
+	icon_state = "under"
+	background_track = 'sound/music/area/catacombs.ogg'
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
+	background_track_dawn = 'sound/music/area/catacombs.ogg'
+	soundenv = 8
+	plane = INDOOR_PLANE
+	converted_type = /area/outdoors/exposed/rmh
+
+/area/under/rmh_dungeon/arena
+	name = "ruined arena"
+	icon_state = "under"
+	first_time_text = "FORGOTTEN ARENA"
+	background_track = 'sound/music/area/dungeon2.ogg'
+	background_track_dusk = 'sound/music/area/dungeon2.ogg'
+	background_track_night = 'sound/music/area/dungeon2.ogg'
+	ceiling_protected = TRUE
+
+/area/under/rmh_dungeon/catacombs
+	name = "catacombs"
+	icon_state = "under"
+	first_time_text = "CATACOMBS"
+	background_track = 'sound/music/area/dungeon2.ogg'
+	background_track_dusk = 'sound/music/area/dungeon2.ogg'
+	background_track_night = 'sound/music/area/dungeon2.ogg'
+	ceiling_protected = TRUE
+
+/area/under/rmh_dungeon/jergal
+	name = "jergal dungeon"
+	icon_state = "under"
+	first_time_text = "DEATH'S HALLS"
+	background_track = 'sound/music/area/dungeon2.ogg'
+	background_track_dusk = 'sound/music/area/dungeon2.ogg'
+	background_track_night = 'sound/music/area/dungeon2.ogg'
+	ceiling_protected = TRUE
+
+/area/under/rmh_dungeon/underdarkmaze
+	name = "underdark maze"
+	icon_state = "under"
+	first_time_text = "FORTRESS FROM UNDER THE DARKNESS"
+	background_track = 'sound/music/area/dungeon2.ogg'
+	background_track_dusk = 'sound/music/area/dungeon2.ogg'
+	background_track_night = 'sound/music/area/dungeon2.ogg'
+	ceiling_protected = TRUE
+
+/area/under/rmh_dungeon/catacombs_church
+	name = "church's catacombs"
+	icon_state = "under"
+	first_time_text = "CHURCH'S CATACOMBS"
+	background_track = 'sound/music/area/dungeon2.ogg'
+	background_track_dusk = 'sound/music/area/dungeon2.ogg'
+	background_track_night = 'sound/music/area/dungeon2.ogg'
+	ceiling_protected = TRUE
+
+/area/under/rmh_dungeon/catacombs_town
+	name = "town's catacombs"
+	icon_state = "under"
+	first_time_text = "TOWN'S CATACOMBS"
+	background_track = 'sound/music/area/dungeon2.ogg'
+	background_track_dusk = 'sound/music/area/dungeon2.ogg'
+	background_track_night = 'sound/music/area/dungeon2.ogg'
+	ceiling_protected = TRUE
+
+/area/indoors/cave/rmh
+	name = "The Undercoast" // Forgive me I need a better name but Northern Coastl Cave is too wordy
+	icon_state = "cave"
+	background_track = 'sound/music/area/caves.ogg'
+	background_track_night = 'sound/music/area/caves.ogg'
+	soundenv = 8
+
+
+/area/indoors/cave/rmh/west
+	name = "Western Caves"
+	first_time_text = "Western Caves"
+	ceiling_protected = TRUE
+
+/area/indoors/cave/rmh/east
+	name = "Eastern Caves"
+	first_time_text = "Eastern Caves"
+	ceiling_protected = TRUE
+
+/area/indoors/cave/rmh/central
+	name = "Central Caves"
+	first_time_text = "Central Caves"
+	ceiling_protected = TRUE
+
+/area/indoors/cave/rmh/northern
+	name = "Northern Caves"
+	first_time_text = "Northern Caves"
+	ceiling_protected = TRUE
+
+/area/indoors/cave/rmh/southern
+	name = "Southern Caves"
+	first_time_text = "Southern Caves"
+	ceiling_protected = TRUE
+
+/area/indoors/cave/rmh/southern
+	name = "Southern Caves"
+	first_time_text = "Southern Caves"
+	ceiling_protected = TRUE
+
+/area/indoors/cave/rmh/cave_druid
+	name = "Druid's Caves"
+	first_time_text = "Druid's Caves"
+	ceiling_protected = TRUE
+
+/area/indoors/cave/rmh/cave_leshiy
+	name = "Warrior's Caves"
+	first_time_text = "Hidden Cave"
+	ceiling_protected = TRUE
+
+/area/under/town/basement/rmh
+	name = "basements"
+	icon_state = "basement"
+	droning_index = DRONING_BASEMENT
+	ambient_index = AMBIENCE_DUNGEON
+	background_track = 'sound/music/area/catacombs.ogg'
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
+	soundenv = 5
+	converted_type = /area/outdoors/exposed/rmh
+
+/area/under/town/basement/rmh/mages
+	name = "mage's basement"
+	icon_state = "basement"
+	droning_index = DRONING_BASEMENT
+	ambient_index = AMBIENCE_DUNGEON
+	background_track = 'sound/music/area/catacombs.ogg'
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
+	soundenv = 5
+	ceiling_protected = TRUE
+
+/area/under/town/basement/rmh/tavern
+	name = "tavern's basement"
+	icon_state = "basement"
+	droning_index = DRONING_BASEMENT
+	ambient_index = AMBIENCE_DUNGEON
+	background_track = 'sound/music/area/catacombs.ogg'
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
+	soundenv = 5
+	ceiling_protected = TRUE
+
+/area/under/town/basement/rmh/merchant
+	name = "shop's basement"
+	icon_state = "basement"
+	droning_index = DRONING_BASEMENT
+	ambient_index = AMBIENCE_DUNGEON
+	background_track = 'sound/music/area/catacombs.ogg'
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
+	soundenv = 5
+	ceiling_protected = TRUE
+
+/area/under/town/basement/rmh/bank
+	name = "banks's basement"
+	icon_state = "basement"
+	droning_index = DRONING_BASEMENT
+	ambient_index = AMBIENCE_DUNGEON
+	background_track = 'sound/music/area/catacombs.ogg'
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
+	soundenv = 5
+	ceiling_protected = TRUE
+
+/area/under/town/basement/rmh/church
+	name = "church's basement"
+	icon_state = "basement"
+	droning_index = DRONING_BASEMENT
+	ambient_index = AMBIENCE_DUNGEON
+	background_track = 'sound/music/area/catacombs.ogg'
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
+	soundenv = 5
+	ceiling_protected = TRUE
+
+/area/under/town/basement/rmh/townhall
+	name = "townhall's basement"
+	icon_state = "basement"
+	droning_index = DRONING_BASEMENT
+	ambient_index = AMBIENCE_DUNGEON
+	background_track = 'sound/music/area/catacombs.ogg'
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
+	soundenv = 5
+	ceiling_protected = TRUE
+
+/area/under/town/basement/rmh/artificer
+	name = "artificer's basement"
+	icon_state = "basement"
+	droning_index = DRONING_BASEMENT
+	ambient_index = AMBIENCE_DUNGEON
+	background_track = 'sound/music/area/catacombs.ogg'
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
+	soundenv = 5
+	ceiling_protected = TRUE
+
+/area/under/town/basement/rmh/blacksmith
+	name = "blacksmith's basement"
+	icon_state = "basement"
+	droning_index = DRONING_BASEMENT
+	ambient_index = AMBIENCE_DUNGEON
+	background_track = 'sound/music/area/catacombs.ogg'
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
+	soundenv = 5
+	ceiling_protected = TRUE
+
+/area/under/town/basement/rmh/farm
+	name = "farm's basement"
+	icon_state = "basement"
+	droning_index = DRONING_BASEMENT
+	ambient_index = AMBIENCE_DUNGEON
+	background_track = 'sound/music/area/catacombs.ogg'
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
+	soundenv = 5
+	ceiling_protected = TRUE
+
+/area/under/town/basement/rmh/bdsm
+	name = "bdsm's dungeon"
+	icon_state = "basement"
+	droning_index = DRONING_BASEMENT
+	ambient_index = AMBIENCE_DUNGEON
+	background_track = 'sound/music/area/catacombs.ogg'
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
+	soundenv = 5
+	ceiling_protected = TRUE
+
+/area/under/town/basement/rmh/basement
+	name = "basement"
+	icon_state = "basement"
+	droning_index = DRONING_BASEMENT
+	ambient_index = AMBIENCE_DUNGEON
+	background_track = 'sound/music/area/catacombs.ogg'
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
+	soundenv = 5
+	ceiling_protected = TRUE
+
+/area/under/town/basement/rmh/pump
+	name = "water pump"
+	icon_state = "basement"
+	droning_index = DRONING_BASEMENT
+	ambient_index = AMBIENCE_DUNGEON
+	background_track = 'sound/music/area/catacombs.ogg'
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
+	soundenv = 5
+	ceiling_protected = TRUE
+
+/area/under/town/basement/rmh/lab
+	name = "clinic's lab"
+	icon_state = "basement"
+	droning_index = DRONING_BASEMENT
+	ambient_index = AMBIENCE_DUNGEON
+	background_track = 'sound/music/area/catacombs.ogg'
+	background_track_dusk = 'sound/music/area/catacombs.ogg'
+	background_track_night = 'sound/music/area/catacombs.ogg'
+	soundenv = 5
+	ceiling_protected = TRUE
+
+
+/area/indoors/town/rmh/craft
+	name = "craft's indoors"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+
+/area/indoors/town/rmh/craft/artificer
+	name = "artificer's indoors"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+
+/area/indoors/town/rmh/craft/blacksmith
+	name = "blacksmith's indoors"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+
+/area/indoors/town/rmh/craft/tailor
+	name = "tailor's indoors"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+
+/area/indoors/town/rmh/craft/clinic
+	name = "clinic's indoors"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+
+/area/indoors/town/rmh/craft/apothecary
+	name = "apothecary's indoors"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+
+
+
+/area/indoors/town/rmh/greenhouse
+	name = "greenhouse"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+
+/area/indoors/town/rmh/loudmouth
+	name = "loudmouth's house"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+
+/area/indoors/town/rmh/farm
+	name = "farm's zones"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+
+/area/indoors/town/rmh/farm
+	name = "farm's zones"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+/area/indoors/town/rmh/farm/house
+	name = "farm's house"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+/area/indoors/town/rmh/farm/ambar
+	name = "ambar"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+/area/indoors/town/rmh/farm/henhouse
+	name = "henhouse"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+/area/indoors/town/rmh/farm/stall
+	name = "stall"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+/area/indoors/town/rmh/farm/goat_rue
+	name = "goat's rue"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+/area/indoors/town/rmh/magician
+	name = "Mage's Guild"
+	icon_state = "living"
+	ambient_index = AMBIENCE_MYSTICAL
+	converted_type = /area/outdoors/rmh_field/rmh_mageporch
+
+/area/outdoors/rmh_field/rmh_mageporch
+	name = "Mage's porch"
+	icon_state = "entrance"
+	droning_index = DRONING_RIVER_DAY
+	droning_index_night = DRONING_RIVER_NIGHT
+	ambient_index = AMBIENCE_MYSTICAL
+	ambient_index_night = AMBIENCE_FOREST
+	converted_type = /area/indoors/shelter/rmh_field
+
+
+/area/indoors/town/rmh/living
+	name = "living zones"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+/area/indoors/town/rmh/living/cer
+	name = "tower"
+	icon = 'modular_rmh/icons/turf/areas.dmi'
+	icon_state = "indoors"
+	background_track = 'modular_rmh/sound/music/area/townindoor_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/townindoor_dawn.ogg'
+	ambient_index = null
+
+
+
+/area/outdoors/rmh_river
+	name = "river"
+	icon_state = "river"
+	droning_index = DRONING_RIVER_DAY
+	droning_index_night = DRONING_RIVER_NIGHT
+	ambient_index = AMBIENCE_FROG
+	ambient_index_night = AMBIENCE_FOREST
+	background_track = 'sound/music/area/forest.ogg'
+	background_track_dusk = 'sound/music/area/septimus.ogg'
+	background_track_night = 'sound/music/area/forestnight.ogg'
+	converted_type = /area/indoors/shelter/rmh_field
+
+/area/outdoors/rmh_magelake
+	name = "lake"
+	icon_state = "lake"
+	droning_index = DRONING_RIVER_DAY
+	droning_index_night = DRONING_RIVER_NIGHT
+	ambient_index = AMBIENCE_FROG
+	ambient_index_night = AMBIENCE_FOREST
+	background_track = 'sound/music/area/forest.ogg'
+	background_track_dusk = 'sound/music/area/septimus.ogg'
+	background_track_night = 'sound/music/area/forestnight.ogg'
+	converted_type = /area/indoors/shelter/rmh_field
+
+/area/outdoors/rmh_eilistraee
+	name = "eilistraee glade"
+	icon_state = "woods"
+	droning_index = DRONING_FOREST_DAY
+	droning_index_night = DRONING_FOREST_NIGHT
+	ambient_index = AMBIENCE_BIRDS
+	ambient_index_night = AMBIENCE_FOREST
+	background_track = 'sound/music/area/forest.ogg'
+	background_track_dusk = 'sound/music/area/septimus.ogg'
+	background_track_night = 'sound/music/area/forestnight.ogg'
+	soundenv = 15
+	converted_type = /area/indoors/shelter/rmh_field
+
+/area/under/rmh_eilistraeelake
+	name = "eilistraee lake"
+	icon_state = "lake"
+	droning_index = DRONING_LAKE
+	ambient_index = AMBIENCE_CAVE
+	ambient_index_night = AMBIENCE_GENERIC
+
+/area/outdoors/rmh_platz
+	name = "platz"
+	icon_state = "garrison"
+	background_track = 'modular_rmh/sound/music/area/town_day.ogg'
+	background_track_dawn = 'modular_rmh/sound/music/area/town_dawn.ogg'
+	background_track_dusk = 'modular_rmh/sound/music/area/town_dusk.ogg'
+	background_track_night = 'modular_rmh/sound/music/area/town_night.ogg'
+	converted_type = /area/indoors/shelter/town/rmh/roofs

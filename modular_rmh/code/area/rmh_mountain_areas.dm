@@ -10,6 +10,8 @@
 	background_track_night = 'sound/music/area/decap.ogg'
 	first_time_text = "DUSK SPIRE MOUNTAINS"
 	ambush_times = list("night","dawn","dusk")
+	ambush_types = list(
+				/turf/open/floor/snow/rough)
 	ambush_mobs = list(
 				/mob/living/carbon/human/species/skeleton/npc/ambush = 11,
 				/mob/living/simple_animal/hostile/retaliate/direbear = 13,
