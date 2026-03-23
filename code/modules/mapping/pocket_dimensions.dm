@@ -451,77 +451,14 @@
 /obj/item/pocket_dimension_tester
 	name = "folded-space scroll"
 	desc = "A debugging scroll that opens a small test pocket dimension."
-	icon_state = "scroll"
-	item_state = "scroll"
+	icon_state = "skub"
+	item_state = "skub"
 	w_class = WEIGHT_CLASS_SMALL
 	var/template_ref = /datum/map_template/pocket/test_chamber
+	var/access_mode = POCKET_ACCESS_INSTANCE_OWNER
 	var/pocket_lifecycle_policy = POCKET_LIFECYCLE_HIBERNATE
 	var/pocket_idle_timeout = 2 MINUTES
 
-/obj/item/pocket_dimension_tester/examine(mob/user)
+/obj/item/pocket_dimension_tester/Initialize(mapload)
 	. = ..()
-	. += span_notice("Use it to enter its pocket room. Use it again while inside to leave. Use collapse to delete the instance.")
-	. += span_notice("Lifecycle: [capitalize(format_pocket_lifecycle_policy(pocket_lifecycle_policy))] after [DisplayTimeText(pocket_idle_timeout)] of idleness.")
-	var/datum/pocket_dimension/instance = SSpocket_dimensions?.get_instance(REF(src))
-	if(instance)
-		. += span_notice("Current state: [instance.is_hibernating() ? "hibernating" : "loaded"].")
-
-/obj/item/pocket_dimension_tester/Destroy()
-	if(SSpocket_dimensions)
-		SSpocket_dimensions.delete_instance(REF(src), "The scroll burns away, and the pocket dimension collapses around you!")
-	return ..()
-
-/obj/item/pocket_dimension_tester/attack_self(mob/user)
-	. = ..()
-	if(!user || !SSpocket_dimensions)
-		return
-
-	var/instance_key = REF(src)
-	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_instance(instance_key)
-	var/inside_pocket = instance?.contains_turf(get_turf(user))
-
-	var/list/options = list(inside_pocket ? "Leave" : "Enter")
-	if(instance?.reservation && !instance.has_occupants())
-		options += "Hibernate"
-	if(instance)
-		options += "Collapse"
-	options += "Cancel"
-
-	var/choice = tgui_alert(
-		user,
-		"The scroll hums with folded space. What do you want it to do?",
-		"Pocket Dimension",
-		options,
-	)
-	if(!choice || choice == "Cancel")
-		return
-
-	switch(choice)
-		if("Enter")
-			instance = SSpocket_dimensions.get_or_create_instance(instance_key, template_ref, pocket_lifecycle_policy, pocket_idle_timeout)
-			if(!instance)
-				to_chat(user, span_warning("The scroll fails to stabilize a pocket dimension."))
-				return
-			if(!instance.enter_mob(user, get_turf(user)))
-				to_chat(user, span_warning("The folded space sputters and refuses to open."))
-
-		if("Leave")
-			if(!instance || !inside_pocket)
-				to_chat(user, span_warning("The scroll has nothing to pull you back from."))
-				return
-			instance.exit_mob(user)
-
-		if("Hibernate")
-			if(!instance?.hibernate())
-				to_chat(user, span_warning("The folded space refuses to settle while something living remains inside."))
-
-		if("Collapse")
-			if(tgui_alert(
-				user,
-				"Collapse the loaded pocket? This ejects any occupants and deletes the room.",
-				"Pocket Dimension",
-				list("Collapse", "Cancel"),
-			) != "Collapse")
-				return
-			if(!SSpocket_dimensions.delete_instance(instance_key, "The pocket dimension buckles and throws you back into mundane space!"))
-				to_chat(user, span_warning("Nothing answers. The pocket was already gone."))
+	AddComponent(/datum/component/pocket_access, template_ref, access_mode, pocket_lifecycle_policy, pocket_idle_timeout, null, TRUE, TRUE, TRUE, "Pocket Dimension", "The scroll hums with folded space. What do you want it to do?", "The pocket dimension buckles and throws you back into mundane space!", "The scroll burns away, and the pocket dimension collapses around you!")

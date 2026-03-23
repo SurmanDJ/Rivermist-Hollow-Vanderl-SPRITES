@@ -130,6 +130,19 @@ require only minor tweaks.
 #define POCKET_LIFECYCLE_HIBERNATE "hibernate"
 #define POCKET_LIFECYCLE_COLLAPSE "collapse"
 
+// Pocket access instance key modes
+// USER mode is scoped to the access owner, so each user gets their own pocket per access point.
+#define POCKET_ACCESS_INSTANCE_OWNER "owner"
+#define POCKET_ACCESS_INSTANCE_USER "user"
+#define POCKET_ACCESS_INSTANCE_LOCATION "location"
+#define POCKET_ACCESS_INSTANCE_CUSTOM "custom"
+
+// Pocket access actions
+#define POCKET_ACTION_ENTER "enter"
+#define POCKET_ACTION_LEAVE "leave"
+#define POCKET_ACTION_HIBERNATE "hibernate"
+#define POCKET_ACTION_COLLAPSE "collapse"
+
 // Pocket dimension instance states
 #define POCKET_STATE_ACTIVE "active"
 #define POCKET_STATE_HIBERNATING "hibernating"
