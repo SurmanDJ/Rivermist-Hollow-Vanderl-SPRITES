@@ -169,7 +169,7 @@ var/global/list/colorlist = list(
 		dat += "<A href='byond://?src=[ref];action=eject'>Remove item.</A>"
 		dat += "<HR>"
 
-		dat += "Color: <span style='color:[active_color];'>&#9898;</span>"
+		dat += "Color: <span style='color:[active_color];'>■</span>"
 		dat += "<BR>"
 		dat += "<A href='byond://?src=[ref];action=select'>Select new color.</A>"
 		dat += "<BR>"
@@ -214,6 +214,10 @@ var/global/list/colorlist = list(
 			else
 				active_color = selectable_colors[choice]
 
+			user << browse(null, "window=colormate")
+			interact(user)
+			//return
+
 		if("paint")
 			if(!inserted)
 				return
@@ -226,7 +230,7 @@ var/global/list/colorlist = list(
 				null, \
 				span_hear("I hear something moving in water.") \
 			)
-			if(do_after(user, 5 SECONDS, src))
+			if(do_after(user, 1 SECONDS, src))
 				if(href_list["type"] == "detail" && isitem(inserted))
 					var/obj/item/I = inserted
 					I.detail_color = active_color
@@ -238,6 +242,9 @@ var/global/list/colorlist = list(
 					span_notice("[user] dyes [inserted] in [src]."), \
 					span_notice("I dye [inserted] in [src]."), \
 				)
+			inserted.forceMove(get_turf(src))
+			inserted = null
+			icon_state = initial(icon_state)
 
 		if("eject")
 			if(!inserted)
