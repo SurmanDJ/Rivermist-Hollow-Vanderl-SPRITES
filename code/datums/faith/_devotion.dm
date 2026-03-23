@@ -156,12 +156,18 @@
 	max_devotion = CLERIC_REQ_3
 	progression = CLERIC_REQ_2
 	max_progression = CLERIC_REQ_3
+	miracles_extra += list(
+		/datum/action/cooldown/spell/undirected/protection_evil_good,
+	)
 
 /datum/devotion/proc/make_cleric()
 	devotion = 200
 	max_devotion = CLERIC_REQ_3
 	progression = CLERIC_REQ_3
 	max_progression = CLERIC_REQ_3
+	miracles_extra += list(
+		/datum/action/cooldown/spell/undirected/protection_evil_good,
+	)
 
 /datum/devotion/proc/make_acolyte()
 	devotion = 150

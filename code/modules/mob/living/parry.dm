@@ -49,6 +49,12 @@
 	if(HAS_TRAIT(user, TRAIT_GUIDANCE))
 		prob2defend -= 10
 
+	// Protection from Evil and Good - bonus against matching creature types and vampires
+	var/datum/status_effect/buff/protection_evil_good/ward = has_status_effect(/datum/status_effect/buff/protection_evil_good)
+	var/protection_disadvantage = ward?.is_warded_against(user)
+	if(protection_disadvantage)
+		prob2defend += 15
+
 	if(body_position == LYING_DOWN)
 		prob2defend *= 0.8
 
@@ -66,6 +72,8 @@
 				text += " Our dual wielding cancels out!"
 			else	//If we're defending against or as a dual wielder, we roll disadv. But if we're both dual wielding it cancels out.
 				text += " Twice! Disadvantage!"
+		if(protection_disadvantage)
+			text += " Divine protection! Attacker has disadvantage!"
 		to_chat(src, span_info("[text]"))
 
 	// Check if parry is successful
@@ -75,6 +83,12 @@
 	if(attacker_dualwielding && !defender_dualwielding) // 2 times if dualwielding
 		if(!prob(prob2defend))
 			parry_status = FALSE
+	// Protection from Evil and Good: if first roll failed, get a second chance
+	if(!parry_status && protection_disadvantage)
+		if(prob(prob2defend))
+			parry_status = TRUE
+			to_chat(src, ward.get_ward_message(user))
+			src.visible_message(ward.get_ward_message_visible(user), ignored_mobs = list(src))
 
 	if(!parry_status)
 		to_chat(src, span_warning("The enemy defeated my parry!"))
