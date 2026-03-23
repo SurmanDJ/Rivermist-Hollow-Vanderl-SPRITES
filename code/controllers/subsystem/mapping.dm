@@ -41,6 +41,7 @@ SUBSYSTEM_DEF(mapping)
 	var/datum/space_level/transit
 	var/datum/space_level/empty_space
 	var/num_of_res_levels = 1
+	var/num_of_pocket_res_levels = 0
 	/// True when in the process of adding a new Z-level, global locking
 	var/adding_new_zlevel = FALSE
 
@@ -151,6 +152,7 @@ SUBSYSTEM_DEF(mapping)
 
 	z_list = SSmapping.z_list
 	multiz_levels = SSmapping.multiz_levels
+	num_of_pocket_res_levels = SSmapping.num_of_pocket_res_levels
 
 #define INIT_ANNOUNCE(X) to_chat(world, span_boldannounce("[X]")); log_world(X)
 /datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE, delve = 0)
@@ -374,6 +376,30 @@ SUBSYSTEM_DEF(mapping)
 			if(reserve.Reserve(width, height, z))
 				return reserve
 	QDEL_NULL(reserve)
+
+/datum/controller/subsystem/mapping/proc/RequestPocketBlockReservation(width, height, type = /datum/turf_reservation, turf_type_override)
+	UNTIL(!clearing_reserved_turfs)
+	for(var/z_level in levels_by_trait(ZTRAIT_POCKET_RESERVED))
+		var/datum/turf_reservation/existing_reserve = new type
+		if(turf_type_override)
+			existing_reserve.turf_type = turf_type_override
+		if(existing_reserve.Reserve(width, height, z_level))
+			return existing_reserve
+		qdel(existing_reserve)
+
+	num_of_pocket_res_levels += 1
+	var/datum/space_level/new_reserved = add_new_zlevel("Pocket/Reserved [num_of_pocket_res_levels]", list(
+		ZTRAIT_RESERVED = TRUE,
+		ZTRAIT_POCKET_RESERVED = TRUE,
+	))
+	initialize_reserved_level(new_reserved.z_value)
+
+	var/datum/turf_reservation/new_reserve = new type
+	if(turf_type_override)
+		new_reserve.turf_type = turf_type_override
+	if(new_reserve.Reserve(width, height, new_reserved.z_value))
+		return new_reserve
+	QDEL_NULL(new_reserve)
 
 //This is not for wiping reserved levels, use wipe_reservations() for that.
 /datum/controller/subsystem/mapping/proc/initialize_reserved_level(z)
