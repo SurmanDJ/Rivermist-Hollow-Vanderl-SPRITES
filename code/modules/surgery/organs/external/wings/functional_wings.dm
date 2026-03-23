@@ -48,6 +48,13 @@
 	flight_for_species = list(SPEC_ID_DRAGONBORN)
 	flight_time = 20 SECONDS
 
+/obj/item/organ/wings/flight/aasimar
+	name = "aasimar wings"
+	accessory_type = /datum/sprite_accessory/wings/huge/angel
+	flight_for_species = list(SPEC_ID_AASIMAR)
+	flight_time = null
+	can_open = TRUE
+
 /obj/effect/flyer_shadow
 	name = "humanoid shadow"
 	desc = "A shadow cast from something flying above."
@@ -161,7 +168,7 @@
 
 	var/mob/living/flier = owner
 
-	if(flier.get_encumbrance() > 0.7)
+	if(flier.get_encumbrance() > 0.9)
 		owner.balloon_alert(owner, "too heavy!")
 		return FALSE
 
