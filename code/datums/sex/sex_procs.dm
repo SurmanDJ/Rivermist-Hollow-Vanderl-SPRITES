@@ -95,6 +95,18 @@
 		return session
 	return null
 
+/proc/get_or_create_sex_session(mob/living/giver, mob/living/taker, show_ui = FALSE)
+	if(!giver || !taker)
+		return null
+
+	var/datum/sex_session/session = get_sex_session(giver, taker)
+	if(session && !QDELETED(session))
+		if(show_ui)
+			session.show_ui()
+		return session
+
+	return giver.start_sex_session(taker, show_ui)
+
 /mob/living/proc/has_hands()
 	return TRUE
 

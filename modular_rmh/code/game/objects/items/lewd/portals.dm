@@ -242,9 +242,9 @@
 	to_chat(target, span_love("You feel a distant touch through the portal!"))
 
 /datum/sex_action/portal_base/portal_hand/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    var/datum/sex_session/sex_session = get_sex_session(user, target)
+    var/datum/sex_session/sex_session = get_or_create_sex_session(user, target)
     if(!sex_session)
-        sex_session = new(user, target)
+        return
     do_thrust_animate(user, user)
     if(can_show_action_message())
         to_chat(user, sex_session.spanify_force("You [sex_session.get_generic_force_adjective()] finger your target through the portal."))
@@ -279,9 +279,9 @@
 	to_chat(target, span_love("Warm sensations bloom between your legs!"))
 
 /datum/sex_action/portal_base/portal_oral/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    var/datum/sex_session/sex_session = get_sex_session(user, target)
+    var/datum/sex_session/sex_session = get_or_create_sex_session(user, target)
     if(!sex_session)
-        sex_session = new(user, target)
+        return
     user.make_sucking_noise()
     if(can_show_action_message())
         to_chat(user, sex_session.spanify_force("You [sex_session.get_generic_force_adjective()] lick your target through the portal."))
@@ -327,9 +327,9 @@
 	to_chat(target, span_love("You feel feel someting penetrating your pussy through the portal!"))
 
 /datum/sex_action/portal_base/portal_penis_vaginal/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    var/datum/sex_session/sex_session = get_sex_session(user, target)
+    var/datum/sex_session/sex_session = get_or_create_sex_session(user, target)
     if(!sex_session)
-        sex_session = new(user, target)
+        return
     do_thrust_animate(user, user)
     if(can_show_action_message(user, target))
         to_chat(user, sex_session.spanify_force("You [sex_session.get_generic_force_adjective()] fuck your target's pussy through the portal."))
@@ -385,9 +385,9 @@
 	to_chat(target, span_love("You feel someting penetrating your ass through the portal!"))
 
 /datum/sex_action/portal_base/portal_penis_anal/on_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-    var/datum/sex_session/sex_session = get_sex_session(user, target)
+    var/datum/sex_session/sex_session = get_or_create_sex_session(user, target)
     if(!sex_session)
-        sex_session = new(user, target)
+        return
     do_thrust_animate(user, user)
     if(can_show_action_message(user, target))
         to_chat(user, sex_session.spanify_force("You [sex_session.get_generic_force_adjective()] fuck your target's ass through the portal."))
