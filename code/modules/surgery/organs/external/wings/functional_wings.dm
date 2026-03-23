@@ -168,7 +168,7 @@
 
 	var/mob/living/flier = owner
 
-	if(flier.get_encumbrance() > 0.9)
+	if(flier.get_encumbrance() > 0.7)
 		owner.balloon_alert(owner, "too heavy!")
 		return FALSE
 
