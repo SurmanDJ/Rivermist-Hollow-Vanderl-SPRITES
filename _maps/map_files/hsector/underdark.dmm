@@ -59,12 +59,6 @@
 "aS" = (
 /turf/open/water/swamp,
 /area/under/underdark/rmh/flow)
-"aU" = (
-/obj/structure/window/stained/zizo{
-	icon_state = "stained-zizobr"
-	},
-/turf/closed/wall/mineral/decostone/moss/blue/cand,
-/area/under/underdark/rmh/shar)
 "aV" = (
 /mob/living/simple_animal/hostile/retaliate/voiddragon,
 /turf/open/floor/naturalstone,
@@ -1027,12 +1021,6 @@
 /obj/structure/rack/shelf/biggest,
 /turf/open/floor/churchrough,
 /area/under/underdark/rmh/shar)
-"mL" = (
-/turf/open/water/river{
-	dir = 8;
-	icon_state = "rockwd"
-	},
-/area/under/underdark/rmh)
 "mM" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/churchmarble,
@@ -2656,12 +2644,6 @@
 	},
 /turf/open/floor/hexstone,
 /area/under/underdark/rmh/shar)
-"IX" = (
-/obj/structure/window/stained/silver/alt,
-/turf/closed/wall/mineral/underbrick{
-	damage_deflection = 1000
-	},
-/area/under/underdark/rmh/main)
 "IY" = (
 /obj/structure/fluff/railing/wood/east,
 /turf/open/floor/ruinedwood/spiral,
@@ -29397,7 +29379,7 @@ fF
 Qt
 Fo
 ep
-aU
+Yt
 Nn
 HV
 Nn
@@ -47650,8 +47632,8 @@ Pz
 Pz
 Pz
 Pz
-mL
-mL
+Pz
+Pz
 UR
 UR
 UR
@@ -47905,7 +47887,7 @@ Pz
 Pz
 Pz
 Pz
-mL
+Pz
 rl
 rl
 UR
@@ -48160,7 +48142,7 @@ Pz
 Pz
 Pz
 Pz
-mL
+Pz
 rl
 rl
 rl
@@ -48411,7 +48393,7 @@ Sk
 Pz
 Pz
 Pz
-mL
+Pz
 ic
 ic
 ic
@@ -71362,7 +71344,7 @@ bD
 Au
 NC
 Zw
-IX
+bD
 Kt
 uC
 Zw
@@ -72904,7 +72886,7 @@ bD
 YR
 uC
 Zw
-IX
+bD
 IG
 uC
 Zw

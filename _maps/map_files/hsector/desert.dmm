@@ -2140,7 +2140,7 @@
 /area/under/cave/mazedungeon)
 "dBk" = (
 /obj/structure/window/harem2,
-/turf/closed/wall/mineral/desert_soapstone,
+/turf/open/floor/sandstone,
 /area/under/rmh_desert/tea/harem)
 "dCh" = (
 /obj/effect/decal/cobbleedge{
@@ -15528,10 +15528,6 @@
 /obj/structure/fluff/statue/aasimar,
 /turf/open/floor/grass,
 /area/outdoors/rmh_desert/oasis)
-"xlB" = (
-/obj/structure/window/harem2,
-/turf/open/floor/sandstone,
-/area/under/rmh_desert/tea/harem)
 "xmo" = (
 /turf/closed/mineral/bedrock{
 	name = "solid rock"
@@ -94488,15 +94484,15 @@ vFl
 pTl
 jQS
 jQS
-xlB
-xlB
+dBk
+dBk
 dMo
 nca
 lsV
 eIQ
 dMo
-xlB
-xlB
+dBk
+dBk
 dMo
 jQS
 jQS
@@ -95000,7 +94996,7 @@ vFl
 "}
 (53,1,2) = {"
 pTl
-xlB
+dBk
 djS
 kOl
 gox
@@ -95026,7 +95022,7 @@ gox
 fsw
 eoa
 dLt
-xlB
+dBk
 pTl
 pTl
 pTl
@@ -95257,7 +95253,7 @@ vFl
 "}
 (54,1,2) = {"
 pTl
-xlB
+dBk
 krw
 igj
 eoa
@@ -95283,7 +95279,7 @@ gox
 kOl
 ccF
 dLt
-xlB
+dBk
 pTl
 pTl
 pTl
@@ -95773,15 +95769,15 @@ vFl
 pTl
 jQS
 jQS
-xlB
-xlB
+dBk
+dBk
 bAc
 bUM
 dSm
 oyK
 oUB
-xlB
-xlB
+dBk
+dBk
 jQS
 jQS
 fDw
@@ -96826,7 +96822,7 @@ bEx
 bEx
 laL
 mLg
-xlB
+dBk
 pTl
 pTl
 pTl
@@ -97340,7 +97336,7 @@ qbs
 qbs
 iwK
 mLg
-xlB
+dBk
 pTl
 pTl
 pTl
@@ -98343,15 +98339,15 @@ pTl
 pTl
 jQS
 jQS
-xlB
-xlB
+dBk
+dBk
 bAc
 bUM
 wSW
 oyK
 oUB
-xlB
-xlB
+dBk
+dBk
 jQS
 jQS
 tPq
@@ -98855,7 +98851,7 @@ pTl
 "}
 (68,1,2) = {"
 pTl
-xlB
+dBk
 iuk
 dNJ
 kOl
@@ -98881,7 +98877,7 @@ gox
 kOl
 kOl
 dLt
-xlB
+dBk
 pTl
 pTl
 pTl
@@ -99112,7 +99108,7 @@ pTl
 "}
 (69,1,2) = {"
 pTl
-xlB
+dBk
 cXJ
 fsw
 dNJ
@@ -99138,7 +99134,7 @@ iwK
 fsw
 fsw
 dLt
-xlB
+dBk
 pTl
 pTl
 pTl
@@ -99383,9 +99379,9 @@ ame
 sGW
 rnJ
 fDw
-xlB
+dBk
 rGY
-xlB
+dBk
 fDw
 osp
 lHr
@@ -99629,13 +99625,13 @@ pTl
 jQS
 jQS
 dMo
-xlB
+dBk
 dMo
 pfl
 bSR
 kdr
 dMo
-xlB
+dBk
 dMo
 dMo
 jQS
