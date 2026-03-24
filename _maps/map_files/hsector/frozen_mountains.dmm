@@ -44,9 +44,7 @@
 /turf/open/floor/herringbone,
 /area/indoors/town/keep)
 "am" = (
-/turf/open/floor/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/tile,
 /area/under/town/basement/keep)
 "an" = (
 /obj/structure/flora/ausbushes/lavendergrass,
@@ -418,9 +416,7 @@
 /obj/structure/table/wood/fancy/black{
 	color = "#858585"
 	},
-/turf/open/floor/tile{
-	icon_state = "bfloorz"
-	},
+/turf/open/floor/tile/bfloorz,
 /area/indoors/town/keep)
 "bT" = (
 /turf/closed/wall/mineral/decostone/end{
@@ -491,16 +487,8 @@
 /turf/open/floor/tile,
 /area/under/town/basement/keep)
 "cg" = (
-/obj/item/gem/red,
-/obj/item/gem/red,
-/obj/item/gem/violet,
-/obj/item/gem/yellow,
-/obj/item/gem/green,
-/obj/item/gem/blue,
-/obj/structure/closet/crate/chest/neu_fancy,
-/obj/machinery/light/fueled/wallfire/candle/blue/r,
-/turf/open/floor/tile/checker,
-/area/under/rmh_bedrock)
+/turf/open/floor/greenstone/glyph5,
+/area/under/town/basement/keep)
 "ch" = (
 /obj/structure/fluff/railing/border{
 	dir = 9
@@ -668,9 +656,8 @@
 /turf/open/floor/hexstone,
 /area/indoors/cave/rmh_dwarf_keep/entrance)
 "cV" = (
-/obj/structure/chair/stool,
-/obj/structure/chair/stool,
-/turf/open/floor/cobble,
+/obj/machinery/light/fueled/wallfire/candle/blue/l,
+/turf/open/floor/tile/checker,
 /area/under/town/basement/keep)
 "cW" = (
 /obj/effect/decal/cobbleedge{
@@ -768,9 +755,7 @@
 	icon_state = "largetable"
 	},
 /obj/item/candle/gold/lit,
-/turf/open/floor/tile{
-	icon_state = "bfloorz"
-	},
+/turf/open/floor/tile/bfloorz,
 /area/indoors/town/keep)
 "dt" = (
 /obj/structure/flora/grass/green,
@@ -901,9 +886,6 @@
 	},
 /turf/open/floor/tile/bfloorz,
 /area/indoors/town/keep)
-"ea" = (
-/turf/open/floor/greenstone/glyph6,
-/area/under/rmh_bedrock)
 "eb" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/herringbone,
@@ -1425,9 +1407,7 @@
 /obj/machinery/light/fueled/wallfire/candle/blue/l{
 	pixel_y = 32
 	},
-/turf/open/floor/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/tile,
 /area/under/town/basement/keep)
 "gh" = (
 /obj/structure/fluff/railing/border{
@@ -1529,10 +1509,9 @@
 /turf/open/floor/tile/harem2,
 /area/indoors/town/bath)
 "gz" = (
-/turf/open/floor/tile{
-	icon_state = "bfloorz"
-	},
-/area/indoors/town/keep)
+/obj/item/coin/silver/pile,
+/turf/open/floor/tile,
+/area/under/town/basement/keep)
 "gA" = (
 /obj/structure/table/wood{
 	icon_state = "map2"
@@ -1656,14 +1635,11 @@
 /turf/open/floor/snow/rough,
 /area/outdoors/mountains/rmh_mountains)
 "hb" = (
-/obj/structure/door/viewport{
-	dir = 2;
-	name = "Vault Door"
+/obj/structure/fluff/walldeco/painting{
+	pixel_y = -32
 	},
-/obj/effect/mapping_helpers/access/keyset/manor/vault,
-/obj/effect/mapping_helpers/access/locker,
-/turf/open/floor/concrete,
-/area/under/rmh_bedrock)
+/turf/open/floor/greenstone/glyph3,
+/area/under/town/basement/keep)
 "hd" = (
 /obj/structure/stairs/stone{
 	dir = 8
@@ -2601,9 +2577,16 @@
 /turf/open/floor/tile/harem2,
 /area/indoors/town/bath)
 "kQ" = (
+/obj/item/gem/red,
+/obj/item/gem/red,
+/obj/item/gem/violet,
+/obj/item/gem/yellow,
+/obj/item/gem/green,
+/obj/item/gem/blue,
+/obj/structure/closet/crate/chest/neu_fancy,
 /obj/machinery/light/fueled/wallfire/candle/blue/r,
 /turf/open/floor/tile/checker,
-/area/under/rmh_bedrock)
+/area/under/town/basement/keep)
 "kR" = (
 /turf/closed/wall/mineral/craftstone,
 /area/indoors/cave/rmh_dwarf_keep)
@@ -2746,9 +2729,7 @@
 /turf/closed/wall/mineral/decostone/cand,
 /area/indoors/cave/rmh_dwarf_keep/living)
 "ls" = (
-/turf/open/floor/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/tile,
 /area/indoors/town/keep)
 "lt" = (
 /obj/structure/table/wood,
@@ -2789,9 +2770,7 @@
 	pixel_y = 0;
 	pixel_x = -32
 	},
-/turf/open/floor/tile{
-	icon_state = "bfloorz"
-	},
+/turf/open/floor/tile/bfloorz,
 /area/indoors/town/keep)
 "lC" = (
 /obj/structure/closet/crate/chest/neu_iron,
@@ -3619,9 +3598,7 @@
 "pm" = (
 /obj/structure/window,
 /obj/structure/curtain/black,
-/turf/open/floor/ruinedwood{
-	icon_state = "weird1"
-	},
+/turf/open/floor/ruinedwood/spiral,
 /area/indoors/town/keep)
 "pn" = (
 /mob/living/simple_animal/hostile/retaliate/minotaur/axe,
@@ -4078,12 +4055,6 @@
 "rp" = (
 /turf/closed/wall/mineral/decostone,
 /area/indoors/town/keep)
-"rq" = (
-/obj/structure/fluff/walldeco/painting/seraphina{
-	pixel_y = -32
-	},
-/turf/open/floor/greenstone/glyph1,
-/area/under/rmh_bedrock)
 "rr" = (
 /obj/effect/decal/cleanable/debris/stone,
 /turf/open/floor/herringbone,
@@ -4487,9 +4458,14 @@
 /turf/open/floor/tile/tilerg,
 /area/indoors/town/keep)
 "ta" = (
-/obj/structure/fluff/statue/gargoyle,
+/obj/structure/door/viewport{
+	dir = 2;
+	name = "Vault Door"
+	},
+/obj/effect/mapping_helpers/access/keyset/manor/vault,
+/obj/effect/mapping_helpers/access/locker,
 /turf/open/floor/concrete,
-/area/under/rmh_bedrock)
+/area/under/town/basement/keep)
 "te" = (
 /obj/structure/bars/tough,
 /obj/structure/bars/pipe,
@@ -4554,9 +4530,7 @@
 /area/outdoors/mountains/rmh_mountains/frozen)
 "tq" = (
 /obj/structure/closet/crate/chest/wicker,
-/turf/open/floor/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/tile,
 /area/indoors/town/keep)
 "ts" = (
 /obj/structure/underworld/barrier,
@@ -5351,8 +5325,9 @@
 /turf/open/floor/ruinedwood/herringbone,
 /area/indoors/town/keep)
 "wz" = (
-/turf/open/floor/greenstone/glyph5,
-/area/under/rmh_bedrock)
+/obj/item/statue/gold/loot,
+/turf/open/floor/tile,
+/area/under/town/basement/keep)
 "wA" = (
 /obj/machinery/light/fueled/wallfire/candle/blue/r,
 /turf/open/water/bath,
@@ -5604,9 +5579,8 @@
 /turf/open/floor/concrete,
 /area/indoors/cave/rmh_dwarf_keep/smelters)
 "xF" = (
-/obj/structure/closet/crate/chest/neu_fancy,
-/turf/open/floor/tile/checker,
-/area/under/rmh_bedrock)
+/turf/open/floor/greenstone/glyph4,
+/area/under/town/basement/keep)
 "xG" = (
 /obj/structure/chair/bench{
 	dir = 8
@@ -5663,9 +5637,7 @@
 /area/indoors/cave/rmh_dwarf_keep/communal)
 "xU" = (
 /obj/structure/fake_machine/submission,
-/turf/open/floor/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/tile,
 /area/under/town/basement/keep)
 "xW" = (
 /obj/structure/closet/dirthole/closed,
@@ -5719,9 +5691,11 @@
 /turf/open/floor/ruinedwood/herringbone,
 /area/indoors/town/keep)
 "yk" = (
-/obj/machinery/light/fueled/wallfire/candle/blue/l,
-/turf/open/floor/tile/checker,
-/area/under/rmh_bedrock)
+/obj/effect/landmark/hammer/dev_text{
+	name = "[BALANCE] Temporarily removed for DS, as it allowed vampires to escape into the estate of the lords of the Rivermist lands."
+	},
+/turf/open/floor/tile,
+/area/under/town/basement/keep)
 "yl" = (
 /obj/structure/composter/full,
 /turf/open/floor/cobble/mossy,
@@ -5810,7 +5784,6 @@
 /area/outdoors/exposed/rmh/manorgarri)
 "yD" = (
 /obj/effect/decal/herringbone,
-/obj/structure/closet/crate/chest/neu_fancy,
 /obj/structure/closet/crate/chest/neu_fancy,
 /obj/item/weapon/shield/tower/metal,
 /obj/item/weapon/mace/stunmace,
@@ -5946,19 +5919,15 @@
 /turf/open/floor/cobble,
 /area/outdoors/mountains/rmh_mountains/frozen)
 "zl" = (
-/obj/structure/fluff/walldeco/painting{
-	pixel_y = -32
-	},
-/turf/open/floor/greenstone/glyph3,
-/area/under/rmh_bedrock)
+/obj/machinery/light/fueled/wallfire/candle/blue/r,
+/turf/open/floor/tile/checker,
+/area/under/town/basement/keep)
 "zm" = (
 /obj/structure/bookcase/random/archive,
 /obj/structure/fluff/statue/small{
 	pixel_x = 32
 	},
-/turf/open/floor/tile{
-	icon_state = "bfloorz"
-	},
+/turf/open/floor/tile/bfloorz,
 /area/indoors/town/keep)
 "zn" = (
 /turf/open/floor/church,
@@ -6382,14 +6351,11 @@
 /turf/open/floor/wood,
 /area/under/town/basement/keep)
 "Bs" = (
-/obj/structure/closet/crate/chest/neu_fancy,
-/obj/item/coin/silver/pile,
-/obj/structure/bars/pipe{
-	pixel_x = 20;
-	pixel_y = 8
+/obj/machinery/light/fueled/wallfire/candle/blue{
+	pixel_y = -32
 	},
-/turf/open/floor/tile/checker,
-/area/under/rmh_bedrock)
+/turf/open/floor/greenstone/glyph2,
+/area/under/town/basement/keep)
 "Bt" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -6497,9 +6463,7 @@
 	dir = 6
 	},
 /obj/item/broom,
-/turf/open/floor/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/tile,
 /area/indoors/town/keep)
 "BR" = (
 /obj/structure/table/wood,
@@ -6511,14 +6475,6 @@
 	pixel_y = 2
 	},
 /turf/open/floor/tile/masonic/single,
-/area/indoors/town/keep)
-"BU" = (
-/obj/structure/stairs/fancy/l{
-	dir = 1
-	},
-/turf/open/floor/carpet/lord{
-	icon_state = "carpet_l"
-	},
 /area/indoors/town/keep)
 "BV" = (
 /obj/machinery/light/fueled/chand,
@@ -6613,9 +6569,7 @@
 	icon_state = "chair1";
 	dir = 4
 	},
-/turf/open/floor/tile{
-	icon_state = "bfloorz"
-	},
+/turf/open/floor/tile/bfloorz,
 /area/indoors/town/keep)
 "Cs" = (
 /obj/item/natural/stone,
@@ -6637,20 +6591,13 @@
 /turf/open/floor/snow,
 /area/outdoors/mountains/rmh_mountains/frozen/forsaken_village)
 "Cx" = (
-/obj/effect/landmark/hammer/dev_text{
-	name = "[BALANCE] Temporarily removed for DS, as it allowed vampires to escape into the estate of the lords of the Rivermist lands."
-	},
-/turf/open/floor/tile,
-/area/under/rmh_bedrock)
+/turf/open/floor/greenstone/glyph6,
+/area/under/town/basement/keep)
 "Cy" = (
 /obj/structure/table/wood/cooling,
 /turf/open/floor/herringbone,
 /area/indoors/town/keep)
 "Cz" = (
-/obj/structure/table/wood{
-	dir = 1;
-	icon_state = "longtable"
-	},
 /obj/structure/table/wood{
 	dir = 1;
 	icon_state = "longtable"
@@ -6763,10 +6710,6 @@
 	},
 /turf/open/floor/herringbone,
 /area/indoors/cave/rmh_dwarf_keep/entrance)
-"Da" = (
-/obj/item/statue/gold/loot,
-/turf/open/floor/tile,
-/area/under/rmh_bedrock)
 "Db" = (
 /turf/open/floor/wood,
 /area/under/town/basement/keep)
@@ -6888,9 +6831,7 @@
 "DF" = (
 /obj/structure/window/openclose/reinforced,
 /obj/structure/curtain/black,
-/turf/open/floor/ruinedwood{
-	icon_state = "weird1"
-	},
+/turf/open/floor/ruinedwood/spiral,
 /area/indoors/town/keep)
 "DG" = (
 /turf/closed/wall/mineral/craftstone,
@@ -7070,11 +7011,12 @@
 	},
 /area/indoors/cave/rmh_cave/to_underdark)
 "Es" = (
-/obj/structure/stairs/fancy/c{
-	dir = 1
+/obj/structure/bars/pipe{
+	pixel_y = 8;
+	pixel_x = -20
 	},
-/turf/open/floor/carpet/lord,
-/area/indoors/town/keep)
+/turf/open/floor/tile/checker,
+/area/under/town/basement/keep)
 "Et" = (
 /obj/effect/decal/edge{
 	dir = 1;
@@ -7901,9 +7843,7 @@
 /area/indoors/cave/rmh_dwarf_keep/living)
 "Ib" = (
 /obj/structure/window,
-/turf/open/floor/ruinedwood{
-	icon_state = "weird1"
-	},
+/turf/open/floor/ruinedwood/spiral,
 /area/indoors/town/keep)
 "Ic" = (
 /turf/open/floor/cobblerock/snow,
@@ -8055,9 +7995,6 @@
 	},
 /turf/open/floor/tile/bfloorz,
 /area/indoors/town/keep)
-"IJ" = (
-/turf/closed/wall/mineral/craftstone,
-/area/under/rmh_bedrock)
 "IK" = (
 /obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
@@ -8647,9 +8584,7 @@
 /area/indoors/town/keep)
 "Lm" = (
 /obj/machinery/light/fueled/wallfire/candle,
-/turf/open/floor/tile{
-	icon_state = "bfloorz"
-	},
+/turf/open/floor/tile/bfloorz,
 /area/indoors/town/keep)
 "Ln" = (
 /obj/structure/door/viewport{
@@ -8810,9 +8745,7 @@
 /area/indoors/town/keep)
 "LP" = (
 /obj/machinery/light/fueled/wallfire/candle,
-/turf/open/floor/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/tile,
 /area/indoors/town/keep)
 "LU" = (
 /turf/closed/mineral/bedrock/cold{
@@ -9079,9 +9012,7 @@
 "Nc" = (
 /obj/machinery/light/fueled/wallfire/candle/r,
 /obj/machinery/light/fueled/wallfire/candle/r,
-/turf/open/floor/tile{
-	icon_state = "bfloorz"
-	},
+/turf/open/floor/tile/bfloorz,
 /area/indoors/town/keep)
 "Ne" = (
 /obj/effect/decal/cleanable/dreamfiend_ichor/large,
@@ -9189,9 +9120,7 @@
 /area/indoors/town/keep)
 "Nu" = (
 /obj/machinery/light/fueled/wallfire/candle/r,
-/turf/open/floor/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/tile,
 /area/indoors/town/keep)
 "Nv" = (
 /turf/closed/wall/mineral/decostone/long,
@@ -9314,9 +9243,7 @@
 /area/indoors/cave/rmh_dwarf_keep/throne)
 "NT" = (
 /obj/machinery/light/fueled/wallfire/candle/l,
-/turf/open/floor/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/tile,
 /area/indoors/town/keep)
 "NV" = (
 /obj/effect/decal/remains/human{
@@ -9555,14 +9482,6 @@
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass,
 /area/indoors/town/keep)
-"OZ" = (
-/obj/structure/stairs/fancy/r{
-	dir = 1
-	},
-/turf/open/floor/carpet/lord{
-	icon_state = "carpet_r"
-	},
-/area/indoors/town/keep)
 "Pa" = (
 /obj/effect/decal/cleanable/debris/wood,
 /mob/living/simple_animal/hostile/retaliate/minotaur,
@@ -9724,9 +9643,7 @@
 /area/indoors/cave/rmh_dwarf_keep/smelters)
 "PP" = (
 /obj/structure/bookcase/random/archive,
-/turf/open/floor/tile{
-	icon_state = "bfloorz"
-	},
+/turf/open/floor/tile/bfloorz,
 /area/indoors/town/keep)
 "PQ" = (
 /turf/open/floor/metal/barograte,
@@ -9839,9 +9756,7 @@
 /area/indoors/town/keep)
 "Qp" = (
 /obj/structure/window,
-/turf/open/floor/tile{
-	icon_state = "bfloorz"
-	},
+/turf/open/floor/tile/bfloorz,
 /area/indoors/town/keep)
 "Qq" = (
 /turf/closed/wall/mineral/craftstone,
@@ -9975,9 +9890,7 @@
 	icon_state = "largetable"
 	},
 /obj/item/candle/gold/lit,
-/turf/open/floor/tile{
-	icon_state = "bfloorz"
-	},
+/turf/open/floor/tile/bfloorz,
 /area/indoors/town/keep)
 "QV" = (
 /obj/structure/fluff/railing/border{
@@ -10036,9 +9949,7 @@
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_y = -32
 	},
-/turf/open/floor/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/tile,
 /area/indoors/town/keep)
 "Rm" = (
 /obj/effect/decal/cleanable/debris/stone,
@@ -10067,11 +9978,9 @@
 /turf/open/floor/herringbone,
 /area/outdoors/exposed/rmh/manorgarri)
 "Rs" = (
-/obj/machinery/light/fueled/wallfire/candle/blue{
-	pixel_y = -32
-	},
-/turf/open/floor/greenstone/glyph2,
-/area/under/rmh_bedrock)
+/obj/structure/closet/crate/chest/neu_fancy,
+/turf/open/floor/tile/checker,
+/area/under/town/basement/keep)
 "Rt" = (
 /obj/effect/decal/cleanable/blood/gibs/core,
 /obj/effect/decal/remains/human,
@@ -10127,7 +10036,7 @@
 /area/outdoors/mountains/rmh_mountains/frozen/forsaken_village)
 "RE" = (
 /obj/structure/window/stained/yellow,
-/turf/closed/wall/mineral/decostone,
+/turf/open/floor/concrete,
 /area/indoors/cave/rmh_dwarf_keep/forge)
 "RF" = (
 /obj/effect/decal/edge_corner{
@@ -10170,9 +10079,6 @@
 "RP" = (
 /turf/open/floor/ruinedwood/spiral,
 /area/outdoors/mountains/rmh_mountains/frozen/forsaken_village)
-"RQ" = (
-/turf/open/floor/tile/checker,
-/area/under/rmh_bedrock)
 "RR" = (
 /obj/structure/fluff/traveltile{
 	aportalgoesto = "mainmapvampire";
@@ -10193,9 +10099,6 @@
 /obj/effect/decal/cleanable/debris/stone,
 /turf/open/floor/churchmarble,
 /area/indoors/cave/rmh_dwarf_keep/throne)
-"RW" = (
-/turf/open/floor/tile,
-/area/under/rmh_bedrock)
 "RX" = (
 /obj/structure/table/wood{
 	icon_state = "tablewood1"
@@ -10271,7 +10174,6 @@
 /obj/effect/decal/herringbone{
 	dir = 5
 	},
-/obj/structure/closet/crate/coffin/vampire,
 /obj/structure/closet/crate/coffin/vampire,
 /turf/open/floor/tile/masonic{
 	dir = 4
@@ -10461,11 +10363,6 @@
 /obj/item/reagent_containers/glass/bowl/iron,
 /turf/open/floor/hexstone,
 /area/indoors/cave/rmh_dwarf_keep/entrance)
-"To" = (
-/obj/structure/closet/crate/chest/neu_fancy,
-/obj/machinery/light/fueled/wallfire/candle/blue/l,
-/turf/open/floor/tile/checker,
-/area/under/rmh_bedrock)
 "Tq" = (
 /turf/open/floor/dirt,
 /area/outdoors/exposed/rmh/manorgarri)
@@ -10527,9 +10424,7 @@
 	icon_state = "largetable"
 	},
 /obj/item/candle/candlestick/gold/lit,
-/turf/open/floor/tile{
-	icon_state = "bfloorz"
-	},
+/turf/open/floor/tile/bfloorz,
 /area/indoors/town/keep)
 "TB" = (
 /obj/machinery/light/fueled/torchholder/hotspring/standing,
@@ -10579,16 +10474,16 @@
 /turf/open/floor/volcanic,
 /area/indoors/cave/rmh_dwarf_keep/grand)
 "TO" = (
-/obj/structure/bars/pipe{
-	pixel_y = 8;
-	pixel_x = -20
-	},
+/obj/structure/closet/crate/chest/neu_fancy,
+/obj/machinery/light/fueled/wallfire/candle/blue/l,
 /turf/open/floor/tile/checker,
-/area/under/rmh_bedrock)
+/area/under/town/basement/keep)
 "TP" = (
-/obj/item/coin/silver/pile,
-/turf/open/floor/tile,
-/area/under/rmh_bedrock)
+/obj/structure/fluff/walldeco/painting/seraphina{
+	pixel_y = -32
+	},
+/turf/open/floor/greenstone/glyph1,
+/area/under/town/basement/keep)
 "TQ" = (
 /obj/machinery/light/fueled/hearth{
 	pixel_y = 5
@@ -10787,9 +10682,7 @@
 /area/under/town/basement/keep)
 "UI" = (
 /obj/structure/fluff/railing/border,
-/turf/open/floor/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/tile,
 /area/indoors/town/keep)
 "UK" = (
 /obj/structure/stairs/stone{
@@ -10910,9 +10803,7 @@
 "Vf" = (
 /obj/structure/window/openclose,
 /obj/structure/curtain/black,
-/turf/open/floor/ruinedwood{
-	icon_state = "weird1"
-	},
+/turf/open/floor/ruinedwood/spiral,
 /area/indoors/town/keep)
 "Vg" = (
 /obj/structure/table/church/m{
@@ -10980,9 +10871,7 @@
 	pixel_x = 0;
 	pixel_y = 0
 	},
-/turf/open/floor/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/tile,
 /area/indoors/town/keep)
 "Vy" = (
 /obj/machinery/light/fueled/wallfire/candle/l,
@@ -11287,9 +11176,7 @@
 /turf/open/floor/woodturned,
 /area/indoors/town/keep)
 "WH" = (
-/turf/closed/mineral/bedrock/cold{
-	name = "solid rock"
-	},
+/turf/open/floor/tile/checker,
 /area/under/town/basement/keep)
 "WJ" = (
 /obj/structure/rack,
@@ -11436,9 +11323,7 @@
 /area/indoors/cave/rmh_dwarf_keep/communal)
 "Xm" = (
 /obj/machinery/light/fueled/wallfire/candle/blue,
-/turf/open/floor/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/tile,
 /area/under/town/basement/keep)
 "Xn" = (
 /obj/machinery/light/fueled/candle/floorcandle/alt,
@@ -11472,9 +11357,7 @@
 /area/outdoors/exposed/rmh_dwarf_keep)
 "Xv" = (
 /obj/machinery/light/fueled/wallfire/candle/blue/l,
-/turf/open/floor/tile{
-	icon_state = "chess"
-	},
+/turf/open/floor/tile,
 /area/under/town/basement/keep)
 "Xw" = (
 /turf/closed/wall/mineral/decostone/moss/red/long{
@@ -11842,8 +11725,14 @@
 /turf/open/floor/snow,
 /area/outdoors/mountains/rmh_mountains/frozen)
 "YM" = (
-/turf/open/floor/greenstone/glyph4,
-/area/under/rmh_bedrock)
+/obj/structure/closet/crate/chest/neu_fancy,
+/obj/item/coin/silver/pile,
+/obj/structure/bars/pipe{
+	pixel_x = 20;
+	pixel_y = 8
+	},
+/turf/open/floor/tile/checker,
+/area/under/town/basement/keep)
 "YP" = (
 /obj/structure/bars/pipe{
 	dir = 8;
@@ -15905,13 +15794,13 @@ yl
 QC
 bH
 bH
-ta
-IJ
-IJ
-IJ
-Iq
-IJ
-IJ
+bH
+bH
+bH
+bH
+bH
+bH
+bH
 bH
 bH
 bH
@@ -16034,13 +15923,13 @@ hA
 QC
 bH
 bH
-IJ
-IJ
-yk
-xF
-TO
-To
-IJ
+bH
+bH
+bH
+bH
+bH
+bH
+bH
 bH
 bH
 bH
@@ -16163,13 +16052,13 @@ QC
 QC
 bH
 bH
-IJ
-TP
-RW
-RW
-YM
-rq
-IJ
+bH
+bH
+bH
+bH
+bH
+bH
+bH
 bH
 bH
 bH
@@ -16292,13 +16181,13 @@ bH
 bH
 bH
 bH
-hb
-Cx
-RW
-RW
-wz
-Rs
-IJ
+bH
+bH
+bH
+bH
+bH
+bH
+bH
 bH
 bH
 bH
@@ -16421,13 +16310,13 @@ bH
 bH
 bH
 bH
-IJ
-RW
-RW
-Da
-ea
-zl
-IJ
+bH
+bH
+bH
+bH
+bH
+bH
+bH
 bH
 bH
 bH
@@ -16550,13 +16439,13 @@ bH
 bH
 bH
 bH
-IJ
-IJ
-cg
-RQ
-Bs
-kQ
-IJ
+bH
+bH
+bH
+bH
+bH
+bH
+bH
 bH
 bH
 bH
@@ -16679,13 +16568,13 @@ bH
 bH
 bH
 bH
-ta
-IJ
-IJ
-IJ
-Iq
-IJ
-IJ
+bH
+bH
+bH
+bH
+bH
+bH
+bH
 bH
 bH
 bH
@@ -16796,12 +16685,12 @@ UH
 nU
 Jb
 MS
-WH
-WH
-WH
-WH
-WH
-WH
+MS
+cV
+Rs
+Es
+TO
+MS
 bH
 bH
 bH
@@ -16925,12 +16814,12 @@ UH
 nU
 Jb
 MS
-WH
-WH
-WH
-WH
-WH
-WH
+gz
+am
+am
+xF
+TP
+MS
 bH
 MS
 MS
@@ -17053,13 +16942,13 @@ nU
 vg
 nU
 yN
+ta
+yk
+am
+am
+cg
+Bs
 MS
-WH
-WH
-WH
-WH
-WH
-WH
 bH
 MS
 xZ
@@ -17183,12 +17072,12 @@ UH
 nU
 Jb
 MS
-WH
-WH
-WH
-WH
-WH
-WH
+am
+am
+wz
+Cx
+hb
+MS
 bH
 MS
 ep
@@ -17312,12 +17201,12 @@ UH
 nU
 Jb
 MS
+MS
+kQ
 WH
-WH
-WH
-WH
-WH
-WH
+YM
+zl
+MS
 bH
 MS
 JX
@@ -18074,16 +17963,16 @@ Mh
 OM
 Ep
 kO
-MS
-MS
-MS
-MS
-MS
-MS
-MS
-MS
-MS
-MS
+QC
+kO
+vF
+GP
+kO
+IC
+kO
+vF
+GP
+kO
 MS
 kO
 MS
@@ -18203,16 +18092,16 @@ nU
 UH
 nU
 MS
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
+QC
+MS
+fD
+nC
+vo
+oI
+UQ
+nC
+rM
+MS
 bH
 MS
 Zb
@@ -18332,16 +18221,16 @@ UH
 UH
 nU
 MS
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
+QC
+MS
+jS
+nC
+dG
+pw
+Wp
+nC
+dz
+MS
 bH
 MS
 xZ
@@ -18461,16 +18350,16 @@ nU
 UH
 nU
 MS
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
+QC
+MS
+VN
+jn
+TY
+hR
+ND
+sp
+HE
+MS
 bH
 MS
 XK
@@ -18590,16 +18479,16 @@ MS
 IN
 MS
 MS
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
+QC
+MS
+LC
+KD
+Tf
+Tf
+Tf
+Pw
+Ly
+MS
 bH
 MS
 ep
@@ -18720,15 +18609,15 @@ nU
 vH
 MS
 bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
-bH
+kO
+MS
+MS
+Mt
+IM
+Zg
+MS
+MS
+kO
 bH
 MS
 fk
@@ -18851,11 +18740,11 @@ MS
 bH
 bH
 bH
-bH
-bH
-bH
-bH
-bH
+kO
+MS
+MS
+MS
+kO
 bH
 bH
 bH
@@ -19255,7 +19144,7 @@ yU
 Db
 sL
 Oa
-cV
+Fo
 bW
 Fo
 Oa
@@ -19884,16 +19773,16 @@ Vu
 Vu
 bH
 bH
-QC
-kO
-vF
-GP
-kO
-IC
-kO
-vF
-GP
-kO
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
 bH
 bH
 bH
@@ -20013,16 +19902,16 @@ Vu
 Vu
 bH
 bH
-QC
-MS
-fD
-nC
-vo
-oI
-UQ
-nC
-rM
-MS
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
 bH
 bH
 bH
@@ -20142,16 +20031,16 @@ Vu
 Vu
 bH
 bH
-QC
-MS
-jS
-nC
-dG
-pw
-Wp
-nC
-dz
-MS
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
 bH
 bH
 bH
@@ -20271,16 +20160,16 @@ Vu
 Vu
 bH
 bH
-QC
-MS
-VN
-jn
-TY
-hR
-ND
-sp
-HE
-MS
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
 bH
 bH
 bH
@@ -20400,16 +20289,16 @@ Vu
 Vu
 bH
 bH
-QC
-MS
-LC
-KD
-Tf
-Tf
-Tf
-Pw
-Ly
-MS
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
 bH
 bH
 bH
@@ -20530,15 +20419,15 @@ Vu
 bH
 bH
 bH
-kO
-MS
-MS
-Mt
-IM
-Zg
-MS
-MS
-kO
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
+bH
 bH
 bH
 bH
@@ -20661,11 +20550,11 @@ bH
 bH
 bH
 bH
-kO
-MS
-MS
-MS
-kO
+bH
+bH
+bH
+bH
+bH
 bH
 bH
 bH
@@ -49807,7 +49696,7 @@ iq
 uU
 GN
 XT
-BU
+lc
 XT
 XT
 XT
@@ -49936,7 +49825,7 @@ iq
 uU
 az
 RK
-Es
+kC
 RK
 wj
 RK
@@ -50065,7 +49954,7 @@ iq
 uU
 Hr
 kZ
-OZ
+su
 kZ
 kZ
 kZ
@@ -81302,9 +81191,9 @@ PP
 aw
 aw
 aw
-gz
+XJ
 lB
-gz
+XJ
 aw
 aw
 aw
@@ -81431,9 +81320,9 @@ PP
 aw
 aw
 aw
-gz
-gz
-gz
+XJ
+XJ
+XJ
 aw
 aw
 aw
@@ -81566,7 +81455,7 @@ nX
 nX
 nX
 nX
-gz
+XJ
 cB
 ii
 ii
@@ -81817,13 +81706,13 @@ mA
 ZL
 Lm
 nX
-gz
+XJ
 ds
 TA
 QT
-gz
+XJ
 nX
-gz
+XJ
 ox
 mA
 ob

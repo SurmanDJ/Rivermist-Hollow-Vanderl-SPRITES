@@ -29,7 +29,7 @@
 	lockids = list("groom5")
 
 /obj/structure/fake_machine/vendor/guild_rmh
-	lock = /datum/lock/key/vendor
+	lockids = list(ACCESS_GAFFER)
 	density = FALSE
 
 /obj/structure/fake_machine/vendor/guild_rmh/Initialize()
