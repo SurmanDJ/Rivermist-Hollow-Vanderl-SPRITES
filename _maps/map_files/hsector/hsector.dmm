@@ -2809,10 +2809,8 @@
 /turf/open/floor/grass/healthy,
 /area/outdoors/rmh_field/west)
 "bgT" = (
-/turf/open/floor/ruinedwood/platform{
-	icon_state = "wooden_floort"
-	},
-/area/outdoors/town/rmh/roofs)
+/turf/closed/wall/mineral/stone/moss,
+/area/indoors/cave/rmh_cave/west)
 "bgU" = (
 /obj/structure/rack/shelf/biggest,
 /obj/item/storage/sack,
@@ -16773,7 +16771,7 @@
 /area/indoors/town/rmh/merchant)
 "gpo" = (
 /obj/structure/window/harem2,
-/turf/closed/wall/mineral/craftstone,
+/turf/open/floor/wood,
 /area/indoors/town/rmh/merchant)
 "gpu" = (
 /obj/structure/window/openclose/reinforced{
@@ -25984,9 +25982,6 @@
 /turf/open/floor/cobblerock,
 /area/under/town/rmh/sewer)
 "jJY" = (
-/obj/structure/table/church{
-	icon_state = "churchtable_end"
-	},
 /obj/item/candle/candlestick/gold/lit{
 	pixel_y = 23
 	},
@@ -28018,6 +28013,7 @@
 /obj/machinery/light/fueled/wallfire/candle/weak{
 	pixel_y = -32
 	},
+/obj/structure/ladder/hatch,
 /turf/open/floor/ruinedwood/turned,
 /area/indoors/town/rmh/herbalist)
 "kxW" = (
@@ -35406,6 +35402,10 @@
 "ngu" = (
 /turf/open/floor/ruinedwood/darker,
 /area/outdoors/exposed/town/rmh/farm)
+"ngA" = (
+/obj/structure/ladder,
+/turf/open/floor/cobblerock,
+/area/indoors/cave/rmh_cave/west)
 "ngJ" = (
 /obj/structure/well{
 	icon = 'icons/obj/structures/rotation_devices/water_vent.dmi';
@@ -41728,7 +41728,7 @@
 	name = "tall window"
 	},
 /obj/structure/curtain/red,
-/turf/closed/wall/mineral/wood/window,
+/turf/open/floor/ruinedwood,
 /area/indoors)
 "pro" = (
 /turf/open/floor/ruinedwood/turned/darker,
@@ -46067,10 +46067,8 @@
 /turf/open/floor/grass/healthy,
 /area/outdoors/exposed/town/rmh/farm)
 "qSn" = (
-/turf/open/floor/ruinedwood/platform{
-	icon_state = "wooden_floort"
-	},
-/area/outdoors/town/rmh)
+/turf/closed/wall/mineral/stone,
+/area/indoors/cave/rmh_cave/west)
 "qSs" = (
 /obj/effect/decal/cobblerockedge{
 	dir = 9
@@ -137177,10 +137175,10 @@ dfA
 dfA
 dfA
 dfA
-dfA
-dfA
-dfA
-dfA
+bgT
+bgT
+qSn
+qSn
 uwS
 mlS
 uwS
@@ -137434,11 +137432,11 @@ dfA
 dfA
 dfA
 dfA
-mlS
-mlS
-mlS
-dfA
+qSn
 uwS
+uwS
+bgT
+mlS
 xbF
 uwS
 xbF
@@ -137691,12 +137689,12 @@ dfA
 dfA
 dfA
 dfA
-dfA
-dfA
+qSn
+uwS
+uwS
+uwS
 mlS
 dfA
-dfA
-uwS
 dfA
 cDr
 cDr
@@ -137948,12 +137946,12 @@ dfA
 dfA
 dfA
 dfA
+mlS
+uwS
+uwS
+ngA
+bgT
 dfA
-dfA
-dfA
-dfA
-dfA
-cDr
 dfA
 dfA
 mlS
@@ -138205,11 +138203,11 @@ dfA
 dfA
 dfA
 dfA
-dfA
-dfA
-dfA
-dfA
-dfA
+mlS
+uwS
+uwS
+uwS
+bgT
 dfA
 dfA
 dfA
@@ -138462,11 +138460,11 @@ dfA
 dfA
 dfA
 dfA
-dfA
-dfA
-dfA
-dfA
-mlS
+bgT
+bgT
+qSn
+qSn
+bgT
 dfA
 dfA
 dfA
@@ -238398,8 +238396,8 @@ lzI
 lzI
 lzI
 lzI
-bgT
-bgT
+kGP
+kGP
 kGP
 kGP
 eUx
@@ -238658,7 +238656,7 @@ lzI
 pix
 pix
 pix
-qSn
+pix
 eUx
 eUx
 evu
@@ -238913,9 +238911,9 @@ eUx
 eUx
 eUx
 pix
-qSn
-qSn
-qSn
+pix
+pix
+pix
 eUx
 ktg
 mOG

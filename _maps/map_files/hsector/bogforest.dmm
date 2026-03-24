@@ -3147,10 +3147,6 @@
 "uY" = (
 /turf/open/floor/twig,
 /area/indoors/rmh_darkforestbog/forest/treehouse)
-"uZ" = (
-/turf/open/floor/dirt/road,
-/turf/open/floor/dirt,
-/area/outdoors/rmh_bog/north)
 "va" = (
 /turf/closed/wall/mineral/stonebrick,
 /area/outdoors/rmh_darkforest)
@@ -3404,11 +3400,6 @@
 	max_integrity = 9999
 	},
 /area/indoors/rmh_darkforestbog/forest/treehouse)
-"wt" = (
-/obj/structure/flora/newtree,
-/turf/open/floor/dirt/road,
-/turf/open/floor/dirt,
-/area/outdoors/rmh_bog/north)
 "wu" = (
 /obj/structure/rack,
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/long,
@@ -4720,10 +4711,6 @@
 /obj/structure/stairs/stone,
 /turf/open/floor/cobblerock,
 /area/indoors/rmh_darkforestbog/forest/forestranger)
-"FE" = (
-/turf/open/floor/dirt,
-/turf/open/floor/dirt,
-/area/outdoors/rmh_bog/north)
 "FF" = (
 /obj/structure/trap/spike,
 /turf/open/floor/cobble,
@@ -86937,9 +86924,9 @@ um
 um
 Pf
 um
-FE
-wt
-uZ
+Pf
+uW
+Pf
 um
 Eb
 FI
@@ -87371,7 +87358,7 @@ um
 um
 um
 uW
-FE
+Pf
 PL
 Pf
 um
