@@ -562,7 +562,7 @@
 "ako" = (
 /turf/open/floor/hexstone,
 /area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
+	ceiling_protected = 1;
 	})
 "akU" = (
 /turf/open/floor/naturalstone,

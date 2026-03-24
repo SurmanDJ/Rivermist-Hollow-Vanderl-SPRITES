@@ -131,6 +131,10 @@
 	name = "Goblin Camp"
 	icon_state = "indoors"
 
+/area/indoors/rmh_darkforestbog/forest/treehouse
+	name = "Tree House"
+	icon_state = "indoors"
+
 /area/indoors/rmh_darkforestbog/bog/swampvillage
 	name = "Swamp village"
 	icon_state = "indoors"

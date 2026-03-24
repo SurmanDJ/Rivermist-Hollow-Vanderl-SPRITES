@@ -59,9 +59,7 @@
 /obj/structure/flora/grass/bush/wall,
 /obj/structure/fluff/walldeco/vinez,
 /turf/closed/wall/mineral/wooddark/vertical,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "az" = (
 /obj/structure/stairs/stone,
 /turf/open/floor/naturalstone,
@@ -191,9 +189,7 @@
 /obj/structure/fluff/railing/wood/west,
 /obj/structure/wild_plant/random,
 /turf/open/floor/grass,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "bd" = (
 /obj/machinery/light/fueled/torchholder/r,
 /turf/open/floor/cobble,
@@ -213,9 +209,7 @@
 "bg" = (
 /obj/structure/wild_plant/random,
 /turf/open/floor/grass,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "bk" = (
 /obj/structure/fluff/railing/border/north,
 /turf/open/floor/wood/nosmooth/saiga,
@@ -398,9 +392,7 @@
 "cx" = (
 /obj/structure/fluff/walldeco/vinez,
 /turf/closed/wall/mineral/wooddark/end,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "cy" = (
 /mob/living/simple_animal/hostile/retaliate/bogbug{
 	dir = 2
@@ -434,9 +426,7 @@
 /obj/structure/flora/grass,
 /obj/structure/wild_plant/random,
 /turf/open/floor/grass,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "cJ" = (
 /obj/structure/rack,
 /obj/item/ammo_holder/quiver/arrows,
@@ -616,9 +606,7 @@
 "dO" = (
 /obj/structure/flora/grass/herb/euphorbia,
 /turf/open/floor/grass,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "dP" = (
 /turf/closed/wall/mineral/wooddark/window,
 /area/indoors/rmh_darkforestbog/bog/swampvillage)
@@ -761,9 +749,7 @@
 "eT" = (
 /obj/structure/bridge_stakes,
 /turf/open/floor/ruinedwood,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "eU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/ruinedwood,
@@ -1033,9 +1019,7 @@
 /area/under/rmh_bogforest_caves/moistcaves)
 "gM" = (
 /turf/closed/wall/mineral/wooddark/window,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "gN" = (
 /obj/effect/wisp/prestidigitation{
 	pixel_x = 0;
@@ -1164,9 +1148,7 @@
 	desc = "A small, fiery ball of light made up of mystical energy."
 	},
 /turf/open/floor/twig,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "hT" = (
 /obj/item/clothing/neck/talkstone,
 /obj/structure/closet/crate/chest/crate,
@@ -1233,9 +1215,7 @@
 "il" = (
 /obj/structure/fluff/walldeco/vinez,
 /turf/closed/wall/mineral/wooddark/window,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "im" = (
 /obj/machinery/light/fueled/hearth,
 /obj/item/reagent_containers/glass/bucket/pot,
@@ -1340,9 +1320,7 @@
 "iT" = (
 /obj/structure/flora/grass/thorn_bush,
 /turf/open/floor/twig,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "iV" = (
 /obj/effect/decal/remains/human,
 /obj/effect/spawner/map_spawner/loot/decrepit_equipment_spawner,
@@ -1632,9 +1610,7 @@
 "kH" = (
 /obj/structure/fluff/walldeco/vinez,
 /turf/closed/wall/mineral/wooddark/horizontal,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "kJ" = (
 /turf/open/floor/volcanic,
 /area/under/rmh_bogforest_caves/moistcaves)
@@ -1657,18 +1633,14 @@
 /area/outdoors/rmh_darkforest/goblincampfire)
 "kO" = (
 /turf/closed/wall/mineral/wooddark/horizontal,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "kP" = (
 /obj/item/natural/rock/random_ore,
 /turf/open/floor/naturalstone,
 /area/under/rmh_bogforest_caves/moistcaves/southeast)
 "kQ" = (
 /turf/open/floor/grass,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "kS" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/ruinedwood/spiral,
@@ -1904,9 +1876,7 @@
 "mj" = (
 /obj/structure/fluff/walldeco/vinez,
 /turf/closed/wall/mineral/wooddark/vertical,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "mn" = (
 /turf/closed/mineral/bedrock{
 	name = "solid rock"
@@ -1978,9 +1948,7 @@
 	desc = "A small, fiery ball of light made up of mystical energy."
 	},
 /turf/open/floor/grass,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "mZ" = (
 /obj/structure/well/climb_down,
 /turf/open/floor/cobblerock/alt,
@@ -2202,9 +2170,7 @@
 "oo" = (
 /obj/structure/flora/grass/thorn_bush,
 /turf/open/floor/ruinedwood/herringbone,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "os" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/railing/tall/palisade{
@@ -2446,9 +2412,7 @@
 "pU" = (
 /obj/structure/flora/grass/thorn_bush,
 /turf/open/floor/grass,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "pV" = (
 /turf/open/floor/cobblerock,
 /area/outdoors/rmh_bog/north)
@@ -2547,9 +2511,7 @@
 "qz" = (
 /obj/structure/flora/grass,
 /turf/open/floor/twig,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "qA" = (
 /obj/effect/landmark/quest_spawner/hard,
 /turf/open/floor/grass,
@@ -2706,9 +2668,7 @@
 /area/under/rmh_bogforest_caves/mindflayer)
 "rD" = (
 /turf/open/floor/ruinedwood/herringbone,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "rE" = (
 /mob/living/simple_animal/hostile/mirespider_lurker/angry,
 /turf/open/floor/naturalstone,
@@ -2817,9 +2777,7 @@
 "sh" = (
 /obj/structure/vine,
 /turf/closed/wall/mineral/wooddark/horizontal,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "si" = (
 /obj/structure/table/wood/plain/alt,
 /obj/item/storage/backpack/satchel/cloth,
@@ -2856,9 +2814,7 @@
 /obj/structure/fluff/railing/wood/north,
 /obj/structure/wild_plant/random,
 /turf/open/floor/grass,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "sx" = (
 /obj/structure/vine,
 /obj/structure/fluff/walldeco/vinez,
@@ -2900,9 +2856,7 @@
 	desc = ""
 	},
 /turf/open/floor/grass,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "sO" = (
 /turf/closed/wall/mineral/stone/moss/blue,
 /area/indoors/rmh_darkforestbog/bogpass)
@@ -3192,9 +3146,7 @@
 /area/outdoors/rmh_bog/north)
 "uY" = (
 /turf/open/floor/twig,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "uZ" = (
 /turf/open/floor/dirt/road,
 /turf/open/floor/dirt,
@@ -3225,9 +3177,7 @@
 /obj/structure/fluff/walldeco/vinez,
 /obj/structure/flora/grass/bush/wall,
 /turf/closed/wall/mineral/wooddark/vertical,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "vk" = (
 /obj/effect/decal/cobbleedge/alt{
 	dir = 9
@@ -3453,9 +3403,7 @@
 	desc = "Very tough and moist roots covered with some kind of goo.";
 	max_integrity = 9999
 	},
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "wt" = (
 /obj/structure/flora/newtree,
 /turf/open/floor/dirt/road,
@@ -3725,9 +3673,7 @@
 "yn" = (
 /obj/structure/curtain/bounty,
 /turf/open/floor/ruinedwood,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "yq" = (
 /obj/structure/lever/hidden{
 	redstone_id = "orcd"
@@ -3749,9 +3695,7 @@
 	desc = ""
 	},
 /turf/open/floor/ruinedwood/herringbone,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "yy" = (
 /obj/structure/vine,
 /obj/item/natural/rock/random_ore,
@@ -3775,9 +3719,7 @@
 "yE" = (
 /obj/structure/flora/grass,
 /turf/open/floor/grass,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "yH" = (
 /obj/structure/flora/tree/pine/dead{
 	icon_state = "dead2"
@@ -3997,9 +3939,7 @@
 "Ae" = (
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/ruinedwood,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "Ah" = (
 /obj/structure/flora/grass/water/reeds,
 /obj/structure/kneestingers,
@@ -4392,9 +4332,7 @@
 	desc = "A small, fiery ball of light made up of mystical energy."
 	},
 /turf/open/floor/grass,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "De" = (
 /turf/closed/wall/mineral/craftstone,
 /area/indoors/rmh_darkforestbog/bog/orcsdarfort)
@@ -4721,9 +4659,7 @@
 /area/outdoors/rmh_bog)
 "Ff" = (
 /turf/closed/wall/mineral/wooddark/slitted,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "Fh" = (
 /obj/item/natural/wood/plank,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -4937,9 +4873,7 @@
 /obj/structure/fluff/railing/wood/west,
 /obj/structure/flora/grass,
 /turf/open/floor/grass,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "Gx" = (
 /obj/structure/bars/grille{
 	max_integrity = 1500
@@ -5017,9 +4951,7 @@
 "GO" = (
 /obj/structure/flora/grass,
 /turf/open/floor/ruinedwood/herringbone,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "GQ" = (
 /obj/item/natural/stone,
 /turf/open/floor/grass,
@@ -5274,9 +5206,7 @@
 	desc = "Very tough and moist roots covered with some kind of goo.";
 	max_integrity = 9999
 	},
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "IB" = (
 /obj/structure/ladder,
 /turf/open/floor/ruinedwood/darker,
@@ -5769,9 +5699,7 @@
 /obj/structure/fluff/railing/wood/east,
 /obj/structure/flora/grass,
 /turf/open/floor/grass,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "Lv" = (
 /obj/structure/flora/newleaf,
 /turf/open/openspace,
@@ -6084,9 +6012,7 @@
 "Nj" = (
 /obj/structure/fluff/railing/wood/west,
 /turf/open/floor/ruinedwood,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "Nk" = (
 /obj/structure/vine,
 /turf/closed/wall/mineral/wooddark/vertical,
@@ -6113,9 +6039,7 @@
 	desc = "A small, fiery ball of light made up of mystical energy."
 	},
 /turf/open/floor/ruinedwood/herringbone,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "NC" = (
 /obj/structure/flora/newleaf/corner{
 	dir = 6
@@ -6193,9 +6117,7 @@
 /turf/closed/wall/mineral/wooddark/end{
 	dir = 1
 	},
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "Of" = (
 /obj/machinery/light/fueled/firebowl,
 /turf/open/floor/dirt,
@@ -6354,9 +6276,7 @@
 "Ph" = (
 /obj/structure/curtain/bounty,
 /turf/open/floor/twig,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "Pi" = (
 /turf/closed/wall/mineral/wooddark/horizontal,
 /area/under/cave)
@@ -6494,9 +6414,7 @@
 /obj/structure/fluff/railing/wood/north,
 /obj/structure/flora/grass,
 /turf/open/floor/grass,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "PT" = (
 /obj/structure/flora/tree/pine/dead{
 	icon_state = "dead3"
@@ -6584,9 +6502,7 @@
 	desc = ""
 	},
 /turf/open/floor/twig,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "QB" = (
 /turf/closed/wall/mineral/decostone/cand,
 /area/indoors/rmh_darkforestbog/bogpass)
@@ -6678,9 +6594,7 @@
 "Rf" = (
 /obj/structure/vine,
 /turf/closed/wall/mineral/wooddark/vertical,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "Rh" = (
 /obj/effect/decal/cleanable/food/mess/rotting,
 /obj/effect/decal/cleanable/debris/wood,
@@ -6782,9 +6696,7 @@
 /area/under/rmh_dungeon/orcpost)
 "RN" = (
 /turf/closed/wall/mineral/wooddark/vertical,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "RO" = (
 /obj/structure/flora/newleaf/corner{
 	dir = 6
@@ -7053,9 +6965,7 @@
 "Ub" = (
 /obj/structure/fluff/railing/wood/north,
 /turf/open/floor/grass,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "Uc" = (
 /turf/open/floor/cobblerock,
 /area/outdoors/rmh_darkforest)
@@ -7152,9 +7062,7 @@
 "UC" = (
 /obj/structure/fluff/railing/wood/east,
 /turf/open/floor/ruinedwood,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "UE" = (
 /obj/structure/bars/tough{
 	icon = 'icons/effects/effects.dmi';
@@ -7293,15 +7201,11 @@
 /obj/structure/vine,
 /obj/structure/flora/grass/bush/wall,
 /turf/closed/wall/mineral/wooddark/vertical,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "Vp" = (
 /obj/structure/vine,
 /turf/closed/wall/mineral/wooddark/slitted,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "Vq" = (
 /obj/structure/door/weak/bolt{
 	dir = 4
@@ -7328,9 +7232,7 @@
 "VA" = (
 /obj/structure/fluff/walldeco/vinez,
 /turf/closed/wall/mineral/wooddark/slitted,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "VB" = (
 /obj/machinery/light/fueled/firebowl/stump,
 /turf/open/floor/dirt,
@@ -8018,9 +7920,7 @@
 	desc = "A small, fiery ball of light made up of mystical energy."
 	},
 /turf/open/floor/ruinedwood,
-/area/indoors/dungeon{
-	name = "Tree House"
-	})
+/area/indoors/rmh_darkforestbog/forest/treehouse)
 "ZY" = (
 /turf/closed/wall/mineral/tent{
 	dir = 8
