@@ -2080,10 +2080,6 @@
 /obj/structure/table/wood/plain/alt,
 /turf/open/floor/cobble,
 /area/indoors/rmh_darkforestbog/bog/orcsdarfort)
-"nP" = (
-/turf/open/water/swamp/deep,
-/turf/open/floor/dirt,
-/area/outdoors/rmh_bog/north)
 "nQ" = (
 /obj/effect/decal/cleanable/debris/stone,
 /turf/open/floor/dirt,
@@ -87794,7 +87790,7 @@ Pf
 Pf
 PL
 Pf
-nP
+Pf
 um
 um
 FI
