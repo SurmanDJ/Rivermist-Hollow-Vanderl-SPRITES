@@ -561,9 +561,7 @@
 /area/outdoors/rmh_field/north)
 "ako" = (
 /turf/open/floor/hexstone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1;
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "akU" = (
 /turf/open/floor/naturalstone,
 /area/under/rmh_bedrock)
@@ -704,9 +702,7 @@
 /area/outdoors/exposed/rmh/chapel)
 "ana" = (
 /turf/open/floor/mushroom/green,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "anz" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/fluff/railing/wood{
@@ -912,9 +908,7 @@
 	icon_state = "Light2d"
 	},
 /turf/closed/mineral,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "arI" = (
 /obj/structure/door/stone{
 	name = "Wine Cellar"
@@ -1460,9 +1454,7 @@
 /area/indoors/town/rmh/merchant)
 "aCo" = (
 /turf/closed/wall/mineral/decostone/moss/cand,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "aCq" = (
 /obj/structure/flora/grass,
 /obj/structure/flora/hotspring_rocks/grassy,
@@ -8997,9 +8989,7 @@
 /area/indoors/town/rmh/living/cer)
 "dxR" = (
 /turf/closed/mineral/random/med,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "dxS" = (
 /obj/structure/water_pipe{
 	plane = -10
@@ -9202,9 +9192,7 @@
 "dBB" = (
 /obj/effect/decal/cleanable/debris/stone,
 /turf/open/floor/hexstone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "dBL" = (
 /obj/structure/fluff/customsign{
 	desc = "Dangerous boglands. ";
@@ -11330,9 +11318,7 @@
 /obj/effect/decal/cleanable/debris/stone,
 /obj/item/natural/stoneblock,
 /turf/open/floor/herringbone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "eoN" = (
 /obj/effect/decal/cleanable/debris/stone,
 /obj/effect/decal/remains/human,
@@ -11669,9 +11655,7 @@
 /area/under/rmh_dungeon/catacombs_church)
 "eve" = (
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "evi" = (
 /turf/closed/wall/mineral/decostone/cand,
 /area/outdoors/rmh_field/rmh_mageporch)
@@ -14145,9 +14129,7 @@
 "frD" = (
 /obj/structure/wild_plant/nospread/mushroom/waddle,
 /turf/open/floor/naturalstone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "frF" = (
 /obj/effect/decal/borderfall{
 	pixel_y = 0;
@@ -14541,9 +14523,7 @@
 /obj/effect/decal/cleanable/debris/stone,
 /obj/structure/roguerock,
 /turf/open/floor/naturalstone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "fzE" = (
 /obj/structure/door{
 	lockid = "roomii";
@@ -16037,9 +16017,7 @@
 "gdV" = (
 /obj/structure/roguerock,
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "gea" = (
 /obj/structure/bars/tough{
 	icon = 'icons/effects/effects.dmi';
@@ -16412,9 +16390,7 @@
 	aportalid = "mainmapud1"
 	},
 /turf/open/floor/hexstone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "gju" = (
 /obj/effect/decal/edge{
 	dir = 8;
@@ -17604,9 +17580,7 @@
 /area/outdoors/town/rmh)
 "gDt" = (
 /turf/open/floor/naturalstone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "gDw" = (
 /obj/effect/decal/cleanable/debris/stone,
 /obj/item/cooking/pan,
@@ -17979,9 +17953,7 @@
 /obj/effect/decal/cleanable/debris/stone,
 /obj/item/natural/stoneblock,
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "gIF" = (
 /turf/open/floor/rooftop/green{
 	dir = 4
@@ -20146,9 +20118,7 @@
 /turf/closed/mineral/random/high{
 	mineralChance = 25
 	},
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "hAL" = (
 /obj/item/riddleofsteel,
 /turf/open/floor/volcanic,
@@ -21277,9 +21247,7 @@
 "hYs" = (
 /obj/item/natural/rock,
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "hYv" = (
 /turf/closed/wall/mineral/stone/window/moss/blue,
 /area/indoors/cave/rmh_cave/mine)
@@ -22233,9 +22201,7 @@
 "ipq" = (
 /obj/structure/flora/grass/mushroom,
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "ipr" = (
 /obj/structure/ladder/hatch,
 /turf/open/floor/grass/yel,
@@ -22762,9 +22728,7 @@
 	aportalid = "mainmapud3"
 	},
 /turf/open/floor/naturalstone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "ixd" = (
 /turf/open/floor/cobble,
 /area/indoors/cave/rmh_cave/greenskins)
@@ -23774,9 +23738,7 @@
 "iQs" = (
 /obj/effect/decal/cleanable/debris/stone,
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "iQv" = (
 /obj/structure/table/wood/counter/end,
 /obj/item/weapon/knife/villager,
@@ -24326,9 +24288,7 @@
 	aportalid = "mainmapud1"
 	},
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "iZm" = (
 /obj/structure/hotspring,
 /obj/structure/hotspring,
@@ -25209,9 +25169,7 @@
 /turf/closed/mineral/random/high{
 	mineralChance = 25
 	},
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "jsy" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
@@ -28181,9 +28139,7 @@
 /obj/effect/decal/cleanable/debris/stone,
 /obj/item/natural/rock,
 /turf/open/floor/naturalstone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "kzo" = (
 /obj/machinery/loom{
 	pixel_y = 23
@@ -31086,9 +31042,7 @@
 /area/indoors/town/rmh/bank)
 "lzZ" = (
 /turf/open/water/swamp/deep,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "lAd" = (
 /obj/structure/door/iron/bars{
 	name = "Prison"
@@ -31686,9 +31640,7 @@
 /area/under/rmh_dungeon/jergal)
 "lMB" = (
 /turf/closed/wall/mineral/decostone/moss,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "lMC" = (
 /obj/structure/fluff/walldeco/church/line,
 /obj/structure/fluff/walldeco/church/line{
@@ -32809,9 +32761,7 @@
 	name = "fog"
 	},
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "mgu" = (
 /obj/structure/bed/inn/double,
 /obj/item/bedsheet/double_pelt,
@@ -33474,9 +33424,7 @@
 /obj/structure/flora/mushroomcluster,
 /obj/structure/flora/grass,
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "mtW" = (
 /obj/effect/decal/cobbleedge{
 	dir = 10;
@@ -41242,9 +41190,7 @@
 /area/outdoors/town/rmh)
 "pfF" = (
 /turf/closed/mineral/random/high_valuable,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "pfI" = (
 /obj/effect/decal/cobblerockedge{
 	dir = 6
@@ -41262,9 +41208,7 @@
 "pfY" = (
 /obj/structure/stalagmite,
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "pgf" = (
 /obj/structure/water_pipe{
 	plane = -10
@@ -43287,9 +43231,7 @@
 "pSc" = (
 /obj/structure/flora/grass,
 /turf/open/floor/grass/yel,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "pSu" = (
 /obj/effect/decal/cobblerockedge{
 	dir = 6
@@ -45240,9 +45182,7 @@
 /turf/closed/mineral/random{
 	mineralChance = 5
 	},
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "qBm" = (
 /turf/closed/mineral/bedrock{
 	name = "solid rock"
@@ -45786,9 +45726,7 @@
 	name = "fog"
 	},
 /turf/open/floor/naturalstone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "qLH" = (
 /obj/structure/bars/pipe{
 	dir = 4;
@@ -46693,9 +46631,7 @@
 /area/indoors/town/rmh/garrison)
 "rbe" = (
 /turf/closed/mineral,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "rbo" = (
 /turf/closed/wall/mineral/roofwall/outercorner{
 	dir = 8
@@ -46875,9 +46811,7 @@
 /obj/effect/decal/cleanable/debris/stone,
 /obj/item/natural/rock,
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "rgm" = (
 /turf/closed/wall/mineral/wooddark,
 /area/outdoors/rmh_field/west)
@@ -46896,9 +46830,7 @@
 /area/indoors/cave/rmh_cave/west)
 "rgL" = (
 /turf/open/floor/mushroom/blue,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "rgT" = (
 /obj/effect/mapping_helpers/access/keyset/town/tailor,
 /obj/structure/door{
@@ -47962,9 +47894,7 @@
 "ryt" = (
 /obj/structure/stalagmite,
 /turf/open/floor/naturalstone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "ryN" = (
 /turf/open/floor/cobblerock,
 /area/indoors/cave/east)
@@ -49406,9 +49336,7 @@
 	icon_state = "Light2d"
 	},
 /turf/open/floor/grass/yel,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "saA" = (
 /obj/structure/closet/crate/drawer,
 /obj/item/key/priest,
@@ -50158,9 +50086,7 @@
 /turf/closed/mineral/random/high{
 	mineralChance = 25
 	},
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "srB" = (
 /obj/effect/decal/wood/herringbone2{
 	dir = 4
@@ -50176,9 +50102,7 @@
 /area/outdoors/rmh_field/tavel/forest)
 "srX" = (
 /turf/open/floor/grass/yel,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "srY" = (
 /obj/structure/stairs{
 	dir = 2
@@ -50848,9 +50772,7 @@
 /area/under/rmh_dungeon/catacombs_church)
 "sHh" = (
 /turf/open/floor/herringbone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "sHr" = (
 /obj/structure/well/fountain{
 	plane = -4;
@@ -51290,9 +51212,7 @@
 "sOJ" = (
 /obj/structure/flora/grass/mushroom,
 /turf/open/floor/mushroom/green,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "sOP" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1
@@ -52667,9 +52587,7 @@
 "toe" = (
 /obj/effect/decal/cleanable/debris/stone,
 /turf/open/floor/herringbone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "tor" = (
 /obj/structure/fluff/railing/border/north,
 /obj/effect/decal/edge{
@@ -55397,9 +55315,7 @@
 	name = "fog"
 	},
 /turf/open/floor/hexstone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "unI" = (
 /obj/effect/spawner/map_spawner/loot/dungeon,
 /obj/structure/closet/crate/chest/old_crate,
@@ -56361,9 +56277,7 @@
 "uGR" = (
 /obj/structure/roguerock,
 /turf/open/floor/naturalstone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "uGZ" = (
 /turf/open/floor/rooftop/green{
 	dir = 4
@@ -56579,9 +56493,7 @@
 "uMl" = (
 /obj/item/natural/stone,
 /turf/open/floor/herringbone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "uMt" = (
 /obj/structure/water_pipe{
 	plane = -10
@@ -57127,9 +57039,7 @@
 /obj/structure/flora/grass,
 /obj/structure/flora/grass,
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "uXc" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8
@@ -60017,9 +59927,7 @@
 /area/under/town/rmh/basement/lab)
 "wcm" = (
 /turf/open/water/marsh/deep,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "wcp" = (
 /turf/open/floor/cobblerock,
 /area/under/town/rmh/basement/basement)
@@ -61239,9 +61147,7 @@
 "wwz" = (
 /obj/structure/flora/grass/mushroom,
 /turf/open/floor/naturalstone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "wwI" = (
 /obj/machinery/light/fueled/wallfire/candle/blue{
 	pixel_y = -32;
@@ -61342,9 +61248,7 @@
 "wxY" = (
 /obj/structure/flora/mushroomcluster,
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "wyb" = (
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_y = -32
@@ -61521,9 +61425,7 @@
 "wCg" = (
 /obj/structure/flora/grass/mushroom,
 /turf/open/floor/mushroom/blue,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "wCh" = (
 /obj/structure/bars/tough{
 	icon = 'icons/effects/effects.dmi';
@@ -63801,9 +63703,7 @@
 "xtf" = (
 /obj/structure/flora/grass,
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "xtj" = (
 /obj/structure/fluff/walldeco/vinez/offset{
 	pixel_y = -32
@@ -63915,9 +63815,7 @@
 "xup" = (
 /obj/item/natural/stoneblock,
 /turf/open/floor/naturalstone,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "xuH" = (
 /obj/item/natural/stone,
 /turf/open/floor/cobblerock,
@@ -64348,9 +64246,7 @@
 "xEn" = (
 /obj/item/natural/stone,
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "xEu" = (
 /obj/structure/stairs{
 	dir = 4
@@ -65909,9 +65805,7 @@
 "ygJ" = (
 /obj/structure/flora/shroom_tree,
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "ygK" = (
 /obj/structure/bed/hay,
 /obj/structure/spider/stickyweb,
@@ -66099,9 +65993,7 @@
 "ykz" = (
 /obj/structure/wild_plant/nospread/mushroom/waddle,
 /turf/open/floor/cobblerock,
-/area/indoors/cave/rmh_cave/to_underdark{
-	ceiling_protected = 1
-	})
+/area/indoors/cave/rmh_cave/to_underdark)
 "ykB" = (
 /obj/structure/fluff/customsign{
 	name = "TOWN DIRECTORY"

@@ -757,6 +757,7 @@
 	name = "UNDERDARK DESCENT"
 	first_time_text = "UNDERDARK DESCENT"
 	icon_state = "underworld"
+	ceiling_protected = TRUE
 
 /area/outdoors/beach/rmh_beach
 	name = "Misty Lake"
