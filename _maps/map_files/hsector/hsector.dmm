@@ -7918,9 +7918,7 @@
 /area/indoors/town/rmh/craft/tailor)
 "dio" = (
 /obj/structure/window/stained/yellow,
-/turf/closed/wall/mineral/decostone/end{
-	dir = 1
-	},
+/turf/open/floor/concrete,
 /area/indoors/town/rmh/chapel)
 "dip" = (
 /obj/structure/fluff/railing/corner/north_east,
@@ -14091,7 +14089,7 @@
 /area/indoors/town/rmh/craft/clinic)
 "fri" = (
 /obj/structure/window/harem2,
-/turf/closed/wall/mineral/craftstone,
+/turf/open/floor/tile/bfloorz,
 /area/indoors/town/rmh/bath)
 "frn" = (
 /obj/structure/flora/hotspring_rocks/grassy,
@@ -54391,7 +54389,7 @@
 /obj/structure/window/harem3{
 	name = "tall window"
 	},
-/turf/closed/wall/mineral/decostone/cand,
+/turf/open/floor/concrete,
 /area/indoors/town/rmh/craft/clinic)
 "tWX" = (
 /turf/closed/wall/mineral/wooddark,
@@ -62287,7 +62285,7 @@
 /area/outdoors/rmh_field/druid)
 "wVc" = (
 /obj/structure/window/harem1,
-/turf/closed/wall/mineral/craftstone,
+/turf/open/floor/tile/bfloorz,
 /area/indoors/town/rmh/craft/clinic)
 "wVd" = (
 /obj/structure/water_pipe{
