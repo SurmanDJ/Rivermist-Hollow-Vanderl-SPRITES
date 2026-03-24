@@ -1,4 +1,4 @@
-/obj/item/storage/backpack/bag_of_holding
+/obj/item/storage/backpack/bag_of_holding_small
 	name = "bag of holding"
 	desc = "A small magical bag with a face painted on its front, holding far more than it appears, thanks to a hidden extradimensional space inside."
 	icon_state = "bag_of_holding"

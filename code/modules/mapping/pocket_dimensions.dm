@@ -32,6 +32,7 @@
 	var/turf/return_turf
 	var/list/affected_turfs = list()
 	var/list/turf/entry_turfs = list()
+	var/list/turf/drop_turfs = list()
 	var/list/obj/structure/pocket_dimension_exit/exit_objects = list()
 	var/list/area/managed_areas = list()
 	var/list/atom/movable/native_movables = list()
@@ -92,6 +93,7 @@
 	QDEL_LIST(exit_objects)
 	managed_areas.Cut()
 	entry_turfs.Cut()
+	drop_turfs.Cut()
 	affected_turfs.Cut()
 	native_movables.Cut()
 	load_turf = null
@@ -132,6 +134,7 @@
 /datum/pocket_dimension/proc/cache_loaded_layout()
 	affected_turfs.Cut()
 	entry_turfs.Cut()
+	drop_turfs.Cut()
 	managed_areas.Cut()
 	native_movables.Cut()
 	QDEL_LIST(exit_objects)
@@ -147,6 +150,10 @@
 		for(var/obj/effect/landmark/pocket_dimension/entry/entry_marker in current_turf)
 			entry_turfs += current_turf
 			qdel(entry_marker)
+
+		for(var/obj/effect/landmark/pocket_dimension/drop_spot/drop_marker in current_turf)
+			drop_turfs += current_turf
+			qdel(drop_marker)
 
 		for(var/obj/effect/landmark/pocket_dimension/exit/exit_marker in current_turf)
 			var/obj/structure/pocket_dimension_exit/exit_object = new(current_turf)
@@ -206,6 +213,30 @@
 		return pick(entry_turfs)
 	return get_center_turf()
 
+/datum/pocket_dimension/proc/is_valid_drop_turf(turf/target, atom/movable/movable)
+	if(!target || QDELETED(target) || !contains_turf(target) || !isopenturf(target))
+		return FALSE
+	return !target.is_blocked_turf(TRUE, movable)
+
+/datum/pocket_dimension/proc/get_drop_turf(atom/movable/movable)
+	if(length(drop_turfs))
+		var/list/turf/valid_drop_spots = list()
+		for(var/turf/drop_turf as anything in drop_turfs)
+			if(is_valid_drop_turf(drop_turf, movable))
+				valid_drop_spots += drop_turf
+		if(length(valid_drop_spots))
+			return pick(valid_drop_spots)
+
+	var/list/turf/fallback_turfs = list()
+	for(var/turf/current_turf as anything in affected_turfs)
+		if(!is_valid_drop_turf(current_turf, movable))
+			continue
+		fallback_turfs += current_turf
+
+	if(length(fallback_turfs))
+		return pick(fallback_turfs)
+	return get_entry_turf() || get_center_turf()
+
 /datum/pocket_dimension/proc/get_return_turf()
 	if(isturf(return_turf) && !QDELETED(return_turf))
 		return return_turf
@@ -232,6 +263,24 @@
 	touch()
 	user.forceMove(entry_turf)
 	return TRUE
+
+/datum/pocket_dimension/proc/send_movable_inside(atom/movable/movable, turf/new_return_turf = null, turf/forced_drop_turf = null)
+	if(!movable || QDELETED(movable))
+		return FALSE
+	if(!reservation && !activate())
+		return FALSE
+
+	if(new_return_turf && (!isturf(return_turf) || QDELETED(return_turf) || !has_occupants()))
+		return_turf = new_return_turf
+
+	var/turf/drop_turf = forced_drop_turf
+	if(!is_valid_drop_turf(drop_turf, movable))
+		drop_turf = get_drop_turf(movable)
+	if(!drop_turf)
+		return FALSE
+
+	touch()
+	return transfer_foreign_movable(movable, drop_turf)
 
 /datum/pocket_dimension/proc/exit_mob(mob/user)
 	if(!user)
@@ -395,6 +444,9 @@
 /area/pocket_dimension/test_chamber
 	name = "Pocket Test Chamber"
 
+/area/pocket_dimension/bag_of_holding
+	name = "Bag of Holding Cache"
+
 /obj/effect/landmark/pocket_dimension
 	name = "pocket dimension marker"
 	invisibility = INVISIBILITY_ABSTRACT
@@ -402,6 +454,9 @@
 
 /obj/effect/landmark/pocket_dimension/entry
 	name = "pocket entry marker"
+
+/obj/effect/landmark/pocket_dimension/drop_spot
+	name = "pocket drop spot marker"
 
 /obj/effect/landmark/pocket_dimension/exit
 	name = "pocket exit marker"
@@ -412,8 +467,8 @@
 /obj/structure/pocket_dimension_exit
 	name = "return seam"
 	desc = "A stable tear in space. Touch it to return to where you entered from."
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "ladder"
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "ladder01"
 	density = FALSE
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -447,6 +502,13 @@
 	name = "Pocket Test Chamber"
 	id = "pocket_test_chamber"
 	mappath = "_maps/templates/pocket_test_chamber.dmm"
+
+/datum/map_template/pocket/bag_of_holding
+	name = "Bag of Holding Cache"
+	id = "pocket_bag_of_holding"
+	mappath = "_maps/templates/pocket_bag_of_holding.dmm"
+	lifecycle_policy = POCKET_LIFECYCLE_HIBERNATE
+	idle_timeout = 2 MINUTES
 
 /obj/item/pocket_dimension_tester
 	name = "folded-space scroll"

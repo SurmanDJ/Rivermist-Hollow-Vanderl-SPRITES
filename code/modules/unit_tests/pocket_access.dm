@@ -13,6 +13,7 @@
 	var/mob/living/carbon/human/user_two = allocate(/mob/living/carbon/human, run_loc_floor_bottom_left)
 	var/turf/origin_one = get_turf(user_one)
 	var/turf/origin_two = get_turf(user_two)
+	var/turf/anchor_turf = get_turf(test_anchor)
 
 	TEST_ASSERT(access.enter_user(user_one), "Pocket access should let the first user enter.")
 	var/datum/pocket_dimension/instance_one = access.get_instance_for_user(user_one)
@@ -21,10 +22,15 @@
 	TEST_ASSERT(access.leave_user(user_one), "Pocket access should let the first user leave.")
 	TEST_ASSERT_EQUAL(get_turf(user_one), origin_one, "First user should return to their origin turf.")
 
+	var/obj/item/natural/cloth/foreign_item = allocate(/obj/item/natural/cloth, origin_one)
+	TEST_ASSERT(access.store_movable_for_user(user_one, foreign_item, anchor_turf), "Pocket access should let a user stash foreign movables in their pocket.")
+	TEST_ASSERT(instance_one.contains_turf(get_turf(foreign_item)), "Stored foreign movables should arrive inside the user's pocket.")
+
 	TEST_ASSERT(access.hibernate_pocket(user_one), "Pocket access should let a user hibernate their pocket.")
 	TEST_ASSERT(instance_one.is_hibernating(), "Pocket access hibernation should unload the user's pocket.")
 	TEST_ASSERT(access.enter_user(user_one), "Pocket access should wake a hibernating pocket on entry.")
 	TEST_ASSERT(instance_one.contains_turf(get_turf(user_one)), "First user should re-enter the same pocket instance after hibernation.")
+	TEST_ASSERT(instance_one.contains_turf(get_turf(foreign_item)), "Stored foreign movables should survive hibernation and return on wake.")
 	TEST_ASSERT(access.leave_user(user_one), "Pocket access should still allow leaving after waking the pocket.")
 
 	TEST_ASSERT(access.enter_user(user_two), "Pocket access should let the second user enter.")
@@ -40,3 +46,4 @@
 	qdel(test_anchor, force = TRUE)
 	TEST_ASSERT_NULL(SSpocket_dimensions.get_instance(instance_key_one), "Destroying the access owner should collapse the first tracked pocket.")
 	TEST_ASSERT_NULL(SSpocket_dimensions.get_instance(instance_key_two), "Destroying the access owner should collapse the second tracked pocket.")
+	TEST_ASSERT_EQUAL(get_turf(foreign_item), anchor_turf, "Destroying the access owner should eject stored foreign movables.")

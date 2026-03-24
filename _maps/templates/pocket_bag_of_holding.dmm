@@ -1,0 +1,80 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/wood,
+/area/pocket_dimension/bag_of_holding)
+"b" = (
+/turf/open/floor/wood,
+/area/pocket_dimension/bag_of_holding)
+"c" = (
+/obj/effect/landmark/pocket_dimension/entry,
+/turf/open/floor/wood,
+/area/pocket_dimension/bag_of_holding)
+"d" = (
+/obj/effect/landmark/pocket_dimension/exit,
+/turf/open/floor/wood,
+/area/pocket_dimension/bag_of_holding)
+"e" = (
+/obj/structure/closet/crate/chest/neu,
+/turf/open/floor/wood,
+/area/pocket_dimension/bag_of_holding)
+"f" = (
+/obj/structure/closet/crate/chest/neu_fancy,
+/turf/open/floor/wood,
+/area/pocket_dimension/bag_of_holding)
+"g" = (
+/obj/item/candle/yellow/lit/infinite,
+/turf/open/floor/wood,
+/area/pocket_dimension/bag_of_holding)
+"h" = (
+/obj/effect/landmark/pocket_dimension/drop_spot,
+/turf/open/floor/wood,
+/area/pocket_dimension/bag_of_holding)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+g
+e
+b
+b
+a
+"}
+(3,1,1) = {"
+a
+c
+b
+b
+d
+a
+"}
+(4,1,1) = {"
+a
+g
+h
+b
+b
+a
+"}
+(5,1,1) = {"
+a
+b
+f
+b
+b
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}

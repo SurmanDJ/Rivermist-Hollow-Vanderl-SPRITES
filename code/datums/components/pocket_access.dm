@@ -263,6 +263,39 @@
 /datum/component/pocket_access/proc/collapse_pocket(mob/user)
 	return perform_action(user, POCKET_ACTION_COLLAPSE)
 
+/datum/component/pocket_access/proc/store_movable_for_user(mob/user, atom/movable/movable, turf/origin_turf = null, turf/forced_drop_turf = null)
+	if(!SSpocket_dimensions || !movable || QDELETED(movable) || movable == parent)
+		return FALSE
+
+	var/datum/pocket_dimension/instance = get_or_create_instance_for_user(user)
+	if(!instance)
+		return FALSE
+
+	var/turf/anchor_turf = origin_turf || get_turf(parent) || get_turf(user)
+	if(!instance.send_movable_inside(movable, anchor_turf, forced_drop_turf))
+		return FALSE
+
+	keep_parent_outside_pocket(instance, anchor_turf)
+	return TRUE
+
+/datum/component/pocket_access/proc/keep_parent_outside_pocket(datum/pocket_dimension/instance, turf/origin_turf)
+	if(!instance || !ismovable(parent))
+		return
+
+	var/atom/movable/access_point = parent
+	if(QDELETED(access_point) || !instance.contains_turf(get_turf(access_point)))
+		return
+
+	var/turf/target = origin_turf || instance.get_return_turf()
+	if(!target)
+		return
+
+	if(isitem(access_point) && ismob(access_point.loc))
+		var/mob/item_holder = access_point.loc
+		item_holder.temporarilyRemoveItemFromInventory(access_point, TRUE)
+
+	access_point.forceMove(target)
+
 /datum/component/pocket_access/proc/perform_action(mob/user, action, datum/pocket_dimension/instance = null)
 	if(!SSpocket_dimensions)
 		to_chat(user, span_warning("Pocket dimensions are not available right now."))
@@ -274,13 +307,15 @@
 
 	switch(action)
 		if(POCKET_ACTION_ENTER)
+			var/turf/origin_turf = get_turf(user)
 			instance = get_or_create_instance_for_user(user)
 			if(!instance)
 				to_chat(user, span_warning("The folded space sputters and refuses to open."))
 				return FALSE
-			if(!instance.enter_mob(user, get_turf(user)))
+			if(!instance.enter_mob(user, origin_turf))
 				to_chat(user, span_warning("The folded space sputters and refuses to open."))
 				return FALSE
+			keep_parent_outside_pocket(instance, origin_turf)
 
 		if(POCKET_ACTION_LEAVE)
 			if(!instance?.exit_mob(user))
@@ -396,5 +431,5 @@
 
 /datum/component/pocket_access/proc/on_interact(datum/source, mob/user, list/modifiers)
 	SIGNAL_HANDLER
-	interact(user)
+	INVOKE_ASYNC(src, PROC_REF(interact), user)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
