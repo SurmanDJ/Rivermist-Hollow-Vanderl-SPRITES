@@ -166,6 +166,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SIXTHSENSE "sixth_sense"
 /// Immune to the effects of phobias
 #define TRAIT_FEARLESS "fearless"
+/// Protected from evil and good - disadvantage for matching creatures attacking this mob
+#define TRAIT_PROTECTION_EVIL_GOOD "protection_evil_good"
 //These are used for brain-based paralysis, where replacing the limb won't fix it
 /// Brain paralysis of left arm
 #define TRAIT_PARALYSIS_L_ARM "para-l-arm"
