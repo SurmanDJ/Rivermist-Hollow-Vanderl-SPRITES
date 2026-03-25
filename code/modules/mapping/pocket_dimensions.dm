@@ -5,6 +5,7 @@
 	var/padding = 1
 	var/lifecycle_policy = POCKET_LIFECYCLE_KEEP_LOADED
 	var/idle_timeout = POCKET_DEFAULT_IDLE_TIMEOUT
+	var/persistence_mode = POCKET_PERSISTENCE_NONE
 
 /proc/is_valid_pocket_lifecycle_policy(policy)
 	return policy == POCKET_LIFECYCLE_KEEP_LOADED || policy == POCKET_LIFECYCLE_HIBERNATE || policy == POCKET_LIFECYCLE_COLLAPSE
@@ -19,12 +20,30 @@
 			return "collapse"
 	return "unknown"
 
+/proc/is_valid_pocket_persistence_mode(mode)
+	return mode == POCKET_PERSISTENCE_NONE || mode == POCKET_PERSISTENCE_MOVABLES
+
+/proc/format_pocket_persistence_mode(mode)
+	switch(mode)
+		if(POCKET_PERSISTENCE_NONE)
+			return "none"
+		if(POCKET_PERSISTENCE_MOVABLES)
+			return "movables"
+	return "unknown"
+
+/datum/pocket_movable_snapshot
+	var/atom/movable/movable
+	var/offset_x = 0
+	var/offset_y = 0
+	var/removed = FALSE
+
 /datum/pocket_dimension
 	var/instance_id
 	var/instance_key
 	var/datum/map_template/pocket/template
 	var/lifecycle_policy = POCKET_LIFECYCLE_KEEP_LOADED
 	var/idle_timeout = POCKET_DEFAULT_IDLE_TIMEOUT
+	var/persistence_mode = POCKET_PERSISTENCE_NONE
 	var/state = POCKET_STATE_HIBERNATING
 	var/last_touched = 0
 	var/datum/turf_reservation/reservation
@@ -36,7 +55,12 @@
 	var/list/obj/structure/pocket_dimension_exit/exit_objects = list()
 	var/list/area/managed_areas = list()
 	var/list/atom/movable/native_movables = list()
-	var/list/atom/movable/hibernated_movables = list()
+	var/list/native_movable_keys = list()
+	var/list/atom/movable/native_movables_by_key = list()
+	var/list/native_slot_offsets = list()
+	var/list/atom/movable/snapshotted_native_movables = list()
+	var/list/datum/pocket_movable_snapshot/native_snapshots = list()
+	var/list/datum/pocket_movable_snapshot/hibernated_foreign_movables = list()
 	var/obj/effect/abstract/pocket_dimension_storage/storage
 
 /datum/pocket_dimension/New(datum/map_template/pocket/template, instance_key, instance_id, lifecycle_policy, idle_timeout)
@@ -51,12 +75,19 @@
 	if(SSpocket_dimensions)
 		SSpocket_dimensions.unregister_instance(src)
 
+	// Fail safe: even if someone qdel()s the pocket datum directly, expel any
+	// foreign occupants and contents before we tear the room or storage down.
+	eject_all()
+	eject_foreign_movables()
 	release_loaded_layout()
-	hibernated_movables.Cut()
+	QDEL_LIST_ASSOC_VAL(native_snapshots)
+	QDEL_LIST_ASSOC_VAL(hibernated_foreign_movables)
+	snapshotted_native_movables.Cut()
 	QDEL_NULL(storage)
 
 	template = null
 	instance_key = null
+	persistence_mode = null
 	state = null
 	last_touched = 0
 	return_turf = null
@@ -73,11 +104,19 @@
 	else
 		idle_timeout = max(0, template?.idle_timeout || 0)
 
+	if(is_valid_pocket_persistence_mode(template?.persistence_mode))
+		persistence_mode = template.persistence_mode
+	else
+		persistence_mode = POCKET_PERSISTENCE_NONE
+
 /datum/pocket_dimension/proc/touch()
 	last_touched = world.time
 
 /datum/pocket_dimension/proc/is_hibernating()
 	return state == POCKET_STATE_HIBERNATING && !reservation
+
+/datum/pocket_dimension/proc/uses_movable_snapshot_persistence()
+	return persistence_mode == POCKET_PERSISTENCE_MOVABLES
 
 /datum/pocket_dimension/proc/release_loaded_layout()
 	for(var/obj/structure/pocket_dimension_exit/exit_object as anything in exit_objects)
@@ -96,6 +135,9 @@
 	drop_turfs.Cut()
 	affected_turfs.Cut()
 	native_movables.Cut()
+	native_movable_keys.Cut()
+	native_movables_by_key.Cut()
+	native_slot_offsets.Cut()
 	load_turf = null
 
 	QDEL_NULL(reservation)
@@ -127,9 +169,38 @@
 
 	cache_loaded_layout()
 	state = POCKET_STATE_ACTIVE
-	restore_hibernated_movables()
+	restore_hibernated_layout()
 	touch()
 	return TRUE
+
+/datum/pocket_dimension/proc/should_track_native_movable(atom/movable/movable)
+	if(!movable || QDELETED(movable) || ismob(movable))
+		return FALSE
+	if(istype(movable, /obj/structure/pocket_dimension_exit))
+		return FALSE
+	if(istype(movable, /obj/effect/abstract/pocket_dimension_storage))
+		return FALSE
+	return TRUE
+
+/datum/pocket_dimension/proc/build_native_slot_key(atom/movable/movable, turf/current_turf, list/slot_counts)
+	var/offset_x = current_turf.x - load_turf.x
+	var/offset_y = current_turf.y - load_turf.y
+	var/slot_prefix = "[movable.type]@[offset_x],[offset_y]"
+	var/slot_index = (slot_counts[slot_prefix] || 0) + 1
+	slot_counts[slot_prefix] = slot_index
+	return "[slot_prefix]#[slot_index]"
+
+/datum/pocket_dimension/proc/register_native_movable(atom/movable/movable, slot_key, turf/current_turf)
+	if(!movable || !slot_key)
+		return
+
+	native_movables[movable] = TRUE
+	native_movable_keys[movable] = slot_key
+	native_movables_by_key[slot_key] = movable
+	native_slot_offsets[slot_key] = list(
+		current_turf.x - load_turf.x,
+		current_turf.y - load_turf.y,
+	)
 
 /datum/pocket_dimension/proc/cache_loaded_layout()
 	affected_turfs.Cut()
@@ -137,8 +208,12 @@
 	drop_turfs.Cut()
 	managed_areas.Cut()
 	native_movables.Cut()
+	native_movable_keys.Cut()
+	native_movables_by_key.Cut()
+	native_slot_offsets.Cut()
 	QDEL_LIST(exit_objects)
 	exit_objects = list()
+	var/list/native_slot_counts = list()
 
 	var/list/turfs = template.get_affected_turfs(load_turf)
 	for(var/turf/current_turf as anything in turfs)
@@ -163,6 +238,11 @@
 
 		for(var/atom/movable/movable as anything in current_turf)
 			native_movables[movable] = TRUE
+			if(!should_track_native_movable(movable))
+				continue
+
+			var/slot_key = build_native_slot_key(movable, current_turf, native_slot_counts)
+			register_native_movable(movable, slot_key, current_turf)
 
 	if(!length(entry_turfs))
 		var/turf/fallback_entry = get_center_turf()
@@ -212,6 +292,11 @@
 	if(length(entry_turfs))
 		return pick(entry_turfs)
 	return get_center_turf()
+
+/datum/pocket_dimension/proc/get_relative_turf(offset_x, offset_y)
+	if(!load_turf)
+		return null
+	return locate(load_turf.x + offset_x, load_turf.y + offset_y, load_turf.z)
 
 /datum/pocket_dimension/proc/is_valid_drop_turf(turf/target, atom/movable/movable)
 	if(!target || QDELETED(target) || !contains_turf(target) || !isopenturf(target))
@@ -304,12 +389,47 @@
 			to_chat(occupant, span_warning(message))
 		occupant.forceMove(target)
 
+/datum/pocket_dimension/proc/is_native_snapshot_movable(atom/movable/movable)
+	if(!movable || QDELETED(movable))
+		return FALSE
+	return native_movables[movable] || snapshotted_native_movables[movable]
+
 /datum/pocket_dimension/proc/should_preserve_foreign_movable(atom/movable/movable, items_only = FALSE)
-	if(!movable || QDELETED(movable) || native_movables[movable] || ismob(movable))
+	if(!movable || QDELETED(movable) || is_native_snapshot_movable(movable) || ismob(movable))
 		return FALSE
 	if(items_only && !isitem(movable))
 		return FALSE
 	return TRUE
+
+/datum/pocket_dimension/proc/collect_preservable_foreign_movables(atom/source, list/targets, list/visited, items_only = FALSE, skip_native_snapshot_contents = FALSE)
+	if(!source)
+		return
+
+	for(var/atom/movable/movable as anything in source.contents)
+		if(QDELETED(movable) || visited[movable])
+			continue
+		visited[movable] = TRUE
+
+		if(should_preserve_foreign_movable(movable, items_only))
+			targets += movable
+			continue
+
+		if(skip_native_snapshot_contents && native_movable_keys[movable])
+			continue
+
+		collect_preservable_foreign_movables(movable, targets, visited, items_only, skip_native_snapshot_contents)
+
+/datum/pocket_dimension/proc/get_preservable_foreign_movables(items_only = FALSE, skip_native_snapshot_contents = FALSE)
+	var/list/foreign_movables = list()
+	var/list/visited = list()
+
+	for(var/turf/current_turf as anything in affected_turfs)
+		collect_preservable_foreign_movables(current_turf, foreign_movables, visited, items_only, skip_native_snapshot_contents)
+
+	if(storage)
+		collect_preservable_foreign_movables(storage, foreign_movables, visited, items_only, skip_native_snapshot_contents)
+
+	return foreign_movables
 
 /datum/pocket_dimension/proc/transfer_foreign_movable(atom/movable/movable, atom/new_loc)
 	if(!movable || !new_loc || QDELETED(movable))
@@ -326,25 +446,10 @@
 	if(!target)
 		return
 
-	var/list/already_checked = list()
-	for(var/turf/current_turf as anything in affected_turfs)
-		for(var/atom/movable/movable as anything in current_turf.get_all_contents())
-			if(already_checked[movable] || !should_preserve_foreign_movable(movable, items_only))
-				continue
-			already_checked[movable] = TRUE
+	for(var/atom/movable/movable as anything in get_preservable_foreign_movables(items_only))
+		transfer_foreign_movable(movable, target)
 
-			if(!contains_turf(get_turf(movable)))
-				continue
-
-			transfer_foreign_movable(movable, target)
-
-	if(storage)
-		for(var/atom/movable/movable as anything in storage.contents.Copy())
-			if(!should_preserve_foreign_movable(movable, items_only))
-				continue
-			transfer_foreign_movable(movable, target)
-
-	hibernated_movables.Cut()
+	QDEL_LIST_ASSOC_VAL(hibernated_foreign_movables)
 	if(storage && !length(storage.contents))
 		QDEL_NULL(storage)
 
@@ -353,43 +458,113 @@
 		storage = new
 	return storage
 
-/datum/pocket_dimension/proc/store_foreign_movables_for_hibernation()
+/datum/pocket_dimension/proc/capture_foreign_movables_for_hibernation(skip_native_snapshot_contents = FALSE)
 	var/obj/effect/abstract/pocket_dimension_storage/hibernate_storage = ensure_storage()
 	if(!hibernate_storage || !load_turf)
 		return
 
-	hibernated_movables.Cut()
+	QDEL_LIST_ASSOC_VAL(hibernated_foreign_movables)
 
-	var/list/already_checked = list()
-	for(var/turf/current_turf as anything in affected_turfs)
-		for(var/atom/movable/movable as anything in current_turf.get_all_contents())
-			if(already_checked[movable] || !should_preserve_foreign_movable(movable))
-				continue
-			already_checked[movable] = TRUE
+	for(var/atom/movable/movable as anything in get_preservable_foreign_movables(FALSE, skip_native_snapshot_contents))
+		var/turf/movable_turf = get_turf(movable)
+		if(!contains_turf(movable_turf))
+			continue
 
-			var/turf/movable_turf = get_turf(movable)
-			if(!contains_turf(movable_turf))
-				continue
+		var/datum/pocket_movable_snapshot/snapshot = new
+		snapshot.movable = movable
+		snapshot.offset_x = movable_turf.x - load_turf.x
+		snapshot.offset_y = movable_turf.y - load_turf.y
 
-			hibernated_movables[movable] = list(
-				movable_turf.x - load_turf.x,
-				movable_turf.y - load_turf.y,
-			)
+		if(!transfer_foreign_movable(movable, hibernate_storage))
+			qdel(snapshot)
+			continue
 
-			if(!transfer_foreign_movable(movable, hibernate_storage))
-				hibernated_movables -= movable
+		hibernated_foreign_movables[movable] = snapshot
 
-/datum/pocket_dimension/proc/restore_hibernated_movables()
-	if(!length(hibernated_movables) || !load_turf)
+/datum/pocket_dimension/proc/capture_native_snapshots()
+	if(!uses_movable_snapshot_persistence())
+		QDEL_LIST_ASSOC_VAL(native_snapshots)
+		snapshotted_native_movables.Cut()
+		return
+
+	var/obj/effect/abstract/pocket_dimension_storage/hibernate_storage = ensure_storage()
+	if(!hibernate_storage || !load_turf)
+		return
+
+	QDEL_LIST_ASSOC_VAL(native_snapshots)
+	snapshotted_native_movables.Cut()
+
+	for(var/slot_key in native_slot_offsets)
+		var/datum/pocket_movable_snapshot/snapshot = new
+		var/atom/movable/native_movable = native_movables_by_key[slot_key]
+		if(!native_movable || QDELETED(native_movable))
+			snapshot.removed = TRUE
+			native_snapshots[slot_key] = snapshot
+			continue
+
+		var/turf/native_turf = get_turf(native_movable)
+		if(!contains_turf(native_turf))
+			snapshot.removed = TRUE
+			native_snapshots[slot_key] = snapshot
+			continue
+
+		snapshot.movable = native_movable
+		snapshot.offset_x = native_turf.x - load_turf.x
+		snapshot.offset_y = native_turf.y - load_turf.y
+
+		if(!native_movable.forceMove(hibernate_storage))
+			snapshot.movable = null
+			snapshot.removed = TRUE
+		else
+			snapshotted_native_movables[native_movable] = TRUE
+
+		native_snapshots[slot_key] = snapshot
+
+/datum/pocket_dimension/proc/restore_native_snapshots()
+	if(!uses_movable_snapshot_persistence() || !length(native_snapshots) || !load_turf)
 		return
 
 	var/turf/fallback_turf = get_entry_turf() || get_center_turf()
-	for(var/atom/movable/movable as anything in hibernated_movables)
+	for(var/slot_key in native_snapshots)
+		var/atom/movable/template_movable = native_movables_by_key[slot_key]
+		if(template_movable)
+			native_movables -= template_movable
+			native_movable_keys -= template_movable
+			native_movables_by_key -= slot_key
+			qdel(template_movable)
+
+		var/datum/pocket_movable_snapshot/snapshot = native_snapshots[slot_key]
+		if(!snapshot || snapshot.removed || !snapshot.movable || QDELETED(snapshot.movable))
+			continue
+
+		var/turf/restore_turf = get_relative_turf(snapshot.offset_x, snapshot.offset_y)
+		if(!restore_turf || !contains_turf(restore_turf))
+			restore_turf = fallback_turf
+		if(!restore_turf)
+			continue
+
+		if(!snapshot.movable.forceMove(restore_turf))
+			continue
+
+		register_native_movable(snapshot.movable, slot_key, restore_turf)
+
+	QDEL_LIST_ASSOC_VAL(native_snapshots)
+	snapshotted_native_movables.Cut()
+
+/datum/pocket_dimension/proc/restore_hibernated_foreign_movables()
+	if(!length(hibernated_foreign_movables) || !load_turf)
+		return
+
+	var/turf/fallback_turf = get_entry_turf() || get_center_turf()
+	for(var/atom/movable/movable as anything in hibernated_foreign_movables)
 		if(QDELETED(movable))
 			continue
 
-		var/list/offsets = hibernated_movables[movable]
-		var/turf/restore_turf = locate(load_turf.x + offsets[1], load_turf.y + offsets[2], load_turf.z)
+		var/datum/pocket_movable_snapshot/snapshot = hibernated_foreign_movables[movable]
+		if(!snapshot || QDELETED(snapshot))
+			continue
+
+		var/turf/restore_turf = get_relative_turf(snapshot.offset_x, snapshot.offset_y)
 		if(!restore_turf || !contains_turf(restore_turf))
 			restore_turf = fallback_turf
 		if(!restore_turf)
@@ -397,9 +572,117 @@
 
 		movable.forceMove(restore_turf)
 
-	hibernated_movables.Cut()
+/datum/pocket_dimension/proc/capture_hibernation_state()
+	if(uses_movable_snapshot_persistence())
+		capture_foreign_movables_for_hibernation(TRUE)
+		capture_native_snapshots()
+		return
+
+	capture_foreign_movables_for_hibernation()
+
+/datum/pocket_dimension/proc/restore_hibernated_layout()
+	restore_native_snapshots()
+	restore_hibernated_foreign_movables()
+
+	QDEL_LIST_ASSOC_VAL(hibernated_foreign_movables)
 	if(storage && !length(storage.contents))
 		QDEL_NULL(storage)
+
+/datum/pocket_dimension/proc/get_debug_label()
+	var/template_name = template?.name || "Unknown Template"
+	var/state_text = is_hibernating() ? "hibernating" : "active"
+	return "#[instance_id] [template_name] ([state_text])"
+
+/datum/pocket_dimension/proc/format_debug_turf(turf/target)
+	if(!target || QDELETED(target))
+		return "none"
+	return "[html_encode("[target]")] ([target.x], [target.y], [target.z])"
+
+/datum/pocket_dimension/proc/get_debug_reservation_text()
+	if(!reservation?.bottom_left_coords)
+		return "none"
+
+	var/start_x = reservation.bottom_left_coords[1]
+	var/start_y = reservation.bottom_left_coords[2]
+	var/start_z = reservation.bottom_left_coords[3]
+	var/reserved_width = template ? (template.width + (template.padding * 2)) : 0
+	var/reserved_height = template ? (template.height + (template.padding * 2)) : 0
+	var/end_x = start_x + max(reserved_width - 1, 0)
+	var/end_y = start_y + max(reserved_height - 1, 0)
+	return "[start_x], [start_y], [start_z] to [end_x], [end_y], [start_z]"
+
+/datum/pocket_dimension/proc/get_storage_content_count()
+	return storage ? length(storage.contents) : 0
+
+/datum/pocket_dimension/proc/build_debug_html(include_snapshot_details = FALSE)
+	var/list/html = list()
+	html += "<html><body>"
+	html += "<h2>[html_encode(get_debug_label())]</h2>"
+	html += "<ul>"
+	html += "<li><b>Reference:</b> <code>[html_encode(REF(src))]</code></li>"
+	html += "<li><b>Instance key:</b> <code>[html_encode("[instance_key]")]</code></li>"
+	html += "<li><b>Template:</b> [html_encode("[template?.type || "unknown"]")]</li>"
+	html += "<li><b>Lifecycle:</b> [html_encode(format_pocket_lifecycle_policy(lifecycle_policy))]</li>"
+	html += "<li><b>Persistence:</b> [html_encode(format_pocket_persistence_mode(persistence_mode))]</li>"
+	html += "<li><b>Idle timeout:</b> [idle_timeout ? html_encode(DisplayTimeText(idle_timeout)) : "disabled"]</li>"
+	html += "<li><b>Last touched:</b> [last_touched ? html_encode("[DisplayTimeText(world.time - last_touched)] ago") : "never"]</li>"
+	html += "<li><b>Reservation:</b> [html_encode(get_debug_reservation_text())]</li>"
+	html += "<li><b>Return turf:</b> [format_debug_turf(return_turf)]</li>"
+	html += "<li><b>Load turf:</b> [format_debug_turf(load_turf)]</li>"
+	html += "<li><b>Occupants:</b> [length(get_occupants())]</li>"
+	html += "<li><b>Affected turfs:</b> [length(affected_turfs)]</li>"
+	html += "<li><b>Entry turfs:</b> [length(entry_turfs)]</li>"
+	html += "<li><b>Drop turfs:</b> [length(drop_turfs)]</li>"
+	html += "<li><b>Tracked native movables:</b> [length(native_movables_by_key)]</li>"
+	html += "<li><b>Stored native snapshots:</b> [length(native_snapshots)]</li>"
+	html += "<li><b>Stored foreign snapshots:</b> [length(hibernated_foreign_movables)]</li>"
+	html += "<li><b>Storage contents:</b> [get_storage_content_count()]</li>"
+	html += "</ul>"
+
+	if(include_snapshot_details)
+		html += "<h3>Native Snapshots</h3>"
+		if(!length(native_snapshots))
+			html += "<p>None.</p>"
+		else
+			html += "<ul>"
+			for(var/slot_key in native_snapshots)
+				var/datum/pocket_movable_snapshot/snapshot = native_snapshots[slot_key]
+				if(!snapshot)
+					continue
+
+				var/entry_text
+				if(snapshot.removed || !snapshot.movable || QDELETED(snapshot.movable))
+					entry_text = "removed"
+				else
+					entry_text = "[html_encode("[snapshot.movable]")] ([html_encode("[snapshot.movable.type]")]) at ([snapshot.offset_x], [snapshot.offset_y])"
+
+				html += "<li><code>[html_encode("[slot_key]")]</code>: [entry_text]</li>"
+			html += "</ul>"
+
+		html += "<h3>Foreign Snapshots</h3>"
+		if(!length(hibernated_foreign_movables))
+			html += "<p>None.</p>"
+		else
+			html += "<ul>"
+			for(var/atom/movable/movable as anything in hibernated_foreign_movables)
+				var/datum/pocket_movable_snapshot/snapshot = hibernated_foreign_movables[movable]
+				if(!snapshot)
+					continue
+				html += "<li>[html_encode("[movable]")] ([html_encode("[movable.type]")]) at ([snapshot.offset_x], [snapshot.offset_y])</li>"
+			html += "</ul>"
+
+		html += "<h3>Storage Contents</h3>"
+		if(!storage || !length(storage.contents))
+			html += "<p>None.</p>"
+		else
+			html += "<ul>"
+			for(var/atom/movable/movable as anything in storage.contents)
+				var/entry_kind = snapshotted_native_movables[movable] ? "native snapshot" : "foreign snapshot"
+				html += "<li>[html_encode("[movable]")] ([html_encode("[movable.type]")]) - [entry_kind]</li>"
+			html += "</ul>"
+
+	html += "</body></html>"
+	return html.Join()
 
 /datum/pocket_dimension/proc/hibernate()
 	if(is_hibernating())
@@ -407,7 +690,7 @@
 	if(has_occupants())
 		return FALSE
 
-	store_foreign_movables_for_hibernation()
+	capture_hibernation_state()
 	release_loaded_layout()
 	state = POCKET_STATE_HIBERNATING
 	return TRUE
@@ -509,6 +792,7 @@
 	mappath = "_maps/templates/pocket_bag_of_holding.dmm"
 	lifecycle_policy = POCKET_LIFECYCLE_HIBERNATE
 	idle_timeout = 2 MINUTES
+	persistence_mode = POCKET_PERSISTENCE_MOVABLES
 
 /obj/item/pocket_dimension_tester
 	name = "folded-space scroll"

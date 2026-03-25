@@ -130,6 +130,10 @@ require only minor tweaks.
 #define POCKET_LIFECYCLE_HIBERNATE "hibernate"
 #define POCKET_LIFECYCLE_COLLAPSE "collapse"
 
+// Pocket dimension persistence policies
+#define POCKET_PERSISTENCE_NONE "none"
+#define POCKET_PERSISTENCE_MOVABLES "movables"
+
 // Pocket access instance key modes
 // USER mode is scoped to the access owner, so each user gets their own pocket per access point.
 #define POCKET_ACCESS_INSTANCE_OWNER "owner"

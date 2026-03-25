@@ -100,6 +100,25 @@ SUBSYSTEM_DEF(pocket_dimensions)
 	qdel(instance)
 	return TRUE
 
+/datum/controller/subsystem/pocket_dimensions/proc/get_debug_instances()
+	var/list/instances = list()
+
+	for(var/instance_id = 1 to next_instance_id - 1)
+		var/datum/pocket_dimension/instance = instances_by_id["[instance_id]"]
+		if(!instance || QDELETED(instance))
+			continue
+		instances += instance
+
+	return instances
+
+/datum/controller/subsystem/pocket_dimensions/proc/build_debug_instance_choices()
+	var/list/choices = list()
+
+	for(var/datum/pocket_dimension/instance as anything in get_debug_instances())
+		choices[instance.get_debug_label()] = instance
+
+	return choices
+
 /datum/controller/subsystem/pocket_dimensions/stat_entry(msg)
 	var/active_instances = 0
 	var/hibernating_instances = 0

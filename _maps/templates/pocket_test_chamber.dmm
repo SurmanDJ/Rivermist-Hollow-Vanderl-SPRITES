@@ -7,6 +7,7 @@
 /area/pocket_dimension/test_chamber)
 "c" = (
 /obj/effect/landmark/pocket_dimension/entry,
+/obj/structure/chair/wood/alt,
 /turf/open/floor/wood,
 /area/pocket_dimension/test_chamber)
 "d" = (
@@ -18,9 +19,19 @@
 /turf/open/floor/wood,
 /area/pocket_dimension/test_chamber)
 "f" = (
-/obj/structure/chair/wood/alt{
-	dir = 4
-	},
+/obj/machinery/light/fueled/torchholder/metal_torch/west,
+/turf/open/floor/wood,
+/area/pocket_dimension/test_chamber)
+"A" = (
+/obj/machinery/light/fueled/torchholder/metal_torch,
+/turf/closed/wall/mineral/wood,
+/area/pocket_dimension/test_chamber)
+"N" = (
+/obj/machinery/light/fueled/torchholder/metal_torch/north,
+/turf/open/floor/wood,
+/area/pocket_dimension/test_chamber)
+"R" = (
+/obj/machinery/light/fueled/torchholder/metal_torch/east,
 /turf/open/floor/wood,
 /area/pocket_dimension/test_chamber)
 
@@ -37,7 +48,7 @@ a
 a
 b
 b
-b
+R
 b
 b
 a
@@ -52,12 +63,12 @@ b
 a
 "}
 (4,1,1) = {"
-a
+A
 d
 b
 c
 e
-b
+N
 a
 "}
 (5,1,1) = {"

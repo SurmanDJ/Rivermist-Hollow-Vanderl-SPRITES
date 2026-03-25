@@ -1,33 +1,42 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/wall/mineral/wood,
+/turf/closed/wall/mineral/tent,
 /area/pocket_dimension/bag_of_holding)
 "b" = (
-/turf/open/floor/wood,
+/obj/structure/table/wood/cooling,
+/obj/machinery/light/fueled/torchholder/metal_torch/west,
+/turf/open/floor/carpet,
 /area/pocket_dimension/bag_of_holding)
 "c" = (
-/obj/effect/landmark/pocket_dimension/entry,
-/turf/open/floor/wood,
+/obj/structure/closet/crate/crafted_closet/inn,
+/turf/open/floor/carpet,
 /area/pocket_dimension/bag_of_holding)
 "d" = (
-/obj/effect/landmark/pocket_dimension/exit,
-/turf/open/floor/wood,
+/obj/effect/landmark/pocket_dimension/entry,
+/turf/open/floor/carpet,
 /area/pocket_dimension/bag_of_holding)
 "e" = (
-/obj/structure/closet/crate/chest/neu,
-/turf/open/floor/wood,
+/obj/structure/closet/crate/chest/neu_fancy,
+/turf/open/floor/carpet,
 /area/pocket_dimension/bag_of_holding)
 "f" = (
-/obj/structure/closet/crate/chest/neu_fancy,
-/turf/open/floor/wood,
+/obj/effect/landmark/pocket_dimension/exit,
+/turf/closed/wall/mineral/tent,
 /area/pocket_dimension/bag_of_holding)
 "g" = (
-/obj/item/candle/yellow/lit/infinite,
-/turf/open/floor/wood,
+/obj/structure/table/wood/cooling,
+/obj/machinery/light/fueled/torchholder/metal_torch/east,
+/turf/open/floor/carpet,
 /area/pocket_dimension/bag_of_holding)
 "h" = (
 /obj/effect/landmark/pocket_dimension/drop_spot,
-/turf/open/floor/wood,
+/turf/open/floor/carpet/royalblack,
+/area/pocket_dimension/bag_of_holding)
+"K" = (
+/turf/open/floor/carpet/royalblack,
+/area/pocket_dimension/bag_of_holding)
+"Z" = (
+/turf/open/floor/carpet,
 /area/pocket_dimension/bag_of_holding)
 
 (1,1,1) = {"
@@ -42,32 +51,32 @@ a
 a
 g
 e
-b
-b
+e
+e
 a
 "}
 (3,1,1) = {"
 a
 c
-b
-b
+K
+K
 d
-a
+f
 "}
 (4,1,1) = {"
 a
-g
+c
 h
-b
-b
+K
+Z
 a
 "}
 (5,1,1) = {"
 a
 b
-f
-b
-b
+e
+e
+e
 a
 "}
 (6,1,1) = {"

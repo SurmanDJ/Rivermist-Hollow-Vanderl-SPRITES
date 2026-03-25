@@ -36,3 +36,46 @@
 
 	TEST_ASSERT(SSpocket_dimensions.delete_instance(instance), "Bag pocket test instance should be deletable.")
 	TEST_ASSERT_EQUAL(get_turf(foreign_item), origin, "Foreign item should be ejected back to the origin turf on collapse.")
+
+/datum/unit_test/pocket_dimension_snapshot/Run()
+	var/turf/origin = run_loc_floor_bottom_left
+	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance("[REF(src)]::snapshot", /datum/map_template/pocket/bag_of_holding, POCKET_LIFECYCLE_HIBERNATE, 1)
+	TEST_ASSERT_NOTNULL(instance, "Snapshot test instance should be created.")
+	TEST_ASSERT(instance.uses_movable_snapshot_persistence(), "Bag pocket should opt into movable snapshot persistence.")
+
+	var/list/chests = list()
+	for(var/turf/current_turf as anything in instance.affected_turfs)
+		for(var/obj/structure/closet/crate/chest/chest as anything in current_turf)
+			chests += chest
+
+	TEST_ASSERT(length(chests) >= 2, "Bag pocket should load both template chests for the snapshot test.")
+
+	var/obj/structure/closet/crate/chest/first_chest = chests[1]
+	var/obj/structure/closet/crate/chest/second_chest = chests[2]
+	var/turf/second_chest_origin = get_turf(second_chest)
+	first_chest.name = "snapshot chest"
+
+	var/obj/item/natural/feather/chest_loot = allocate(/obj/item/natural/feather, first_chest)
+	var/obj/item/natural/cloth/loose_item = allocate(/obj/item/natural/cloth, get_turf(first_chest))
+	second_chest.forceMove(origin)
+
+	TEST_ASSERT(instance.hibernate(), "Snapshot test pocket should hibernate cleanly.")
+	TEST_ASSERT(instance.is_hibernating(), "Snapshot test pocket should enter a hibernating state.")
+	TEST_ASSERT(instance.activate(), "Snapshot test pocket should wake back up after hibernation.")
+
+	TEST_ASSERT(instance.contains_turf(get_turf(first_chest)), "Snapshotted native chest should be restored into the pocket.")
+	TEST_ASSERT_EQUAL(first_chest.name, "snapshot chest", "Native movable state should survive a hibernation snapshot.")
+	TEST_ASSERT_EQUAL(chest_loot.loc, first_chest, "Foreign contents inside a snapshotted native container should stay with that container.")
+	TEST_ASSERT(instance.contains_turf(get_turf(loose_item)), "Loose foreign movables should still be restored after a snapshot wake.")
+	TEST_ASSERT_NULL(locate(/obj/structure/closet/crate/chest) in second_chest_origin, "A removed template-native chest should not respawn after snapshot restore.")
+
+	TEST_ASSERT(SSpocket_dimensions.delete_instance(instance), "Snapshot test pocket should be deletable after waking.")
+
+/datum/unit_test/bag_of_holding_constraints/Run()
+	var/turf/origin = run_loc_floor_bottom_left
+	var/obj/item/storage/backpack/bag_of_holding/test_bag = allocate(/obj/item/storage/backpack/bag_of_holding, origin)
+	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human, origin)
+	var/obj/item/pocket_dimension_tester/tester_scroll = allocate(/obj/item/pocket_dimension_tester, origin)
+
+	TEST_ASSERT(test_bag.store_item_in_pocket(tester_scroll, user), "Bag of holding should consume attempts to store another pocket-holder item.")
+	TEST_ASSERT_EQUAL(get_turf(tester_scroll), origin, "Bag of holding should refuse to swallow another pocket-holder item.")
