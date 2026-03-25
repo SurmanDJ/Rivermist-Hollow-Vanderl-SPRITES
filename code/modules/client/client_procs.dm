@@ -580,6 +580,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	tgui_panel.initialize()
 
 	INVOKE_ASYNC(src, PROC_REF(acquire_dpi))
+	addtimer(CALLBACK(src, PROC_REF(enforce_status_window_layout)), 1 SECONDS)
 
 	if(alert_mob_dupe_login && !holder)
 		var/dupe_login_message = "Your ComputerID has already logged in with another key this round, please log out of this one NOW or risk being banned!"
