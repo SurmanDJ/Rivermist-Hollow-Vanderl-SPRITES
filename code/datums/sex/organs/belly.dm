@@ -218,7 +218,8 @@
 	belly.organ_size = target_size
 	if(iscarbon(carrier))
 		var/mob/living/carbon/carbon_owner = carrier
-		carbon_owner.update_body_parts()
+		// Belly size lives on a visible organ overlay, so force a redraw when it changes.
+		carbon_owner.update_body_parts(TRUE)
 	return TRUE
 
 /datum/component/belly_fullness/proc/get_total_growth_steps()
