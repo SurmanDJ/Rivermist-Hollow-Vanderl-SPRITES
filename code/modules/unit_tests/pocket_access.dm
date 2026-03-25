@@ -1,12 +1,6 @@
 /datum/unit_test/pocket_access/Run()
 	var/obj/item/storage/backpack/test_anchor = allocate(/obj/item/storage/backpack, run_loc_floor_bottom_left)
-	var/datum/component/pocket_access/access = test_anchor.AddComponent(
-		/datum/component/pocket_access,
-		/datum/map_template/pocket/test_chamber,
-		POCKET_ACCESS_INSTANCE_USER,
-		POCKET_LIFECYCLE_HIBERNATE,
-		1
-	)
+	var/datum/component/pocket_access/access = test_anchor.AddComponent(/datum/component/pocket_access, /datum/map_template/pocket/test_chamber, POCKET_ACCESS_INSTANCE_USER, POCKET_LIFECYCLE_HIBERNATE, 1)
 	TEST_ASSERT_NOTNULL(access, "Pocket access component should attach to a valid owner.")
 
 	var/mob/living/carbon/human/user_one = allocate(/mob/living/carbon/human, run_loc_floor_bottom_left)
