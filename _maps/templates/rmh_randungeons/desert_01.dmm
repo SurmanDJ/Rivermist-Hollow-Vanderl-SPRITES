@@ -164,10 +164,6 @@
 	},
 /turf/open/floor/sandstone_tile,
 /area/under/rmh_desert/pyramid)
-"eO" = (
-/obj/structure/window/stained/yellow,
-/turf/closed/wall/window/stained/yellow,
-/area/under/rmh_desert/pyramid)
 "eR" = (
 /obj/structure/flora/grass/bush/wall,
 /turf/open/floor/grass,
@@ -710,7 +706,6 @@
 	floor_turf = /turf/open/floor/concrete
 	},
 /turf/closed/wall/window/stained/yellow,
-/turf/open/floor/concrete,
 /area/under/rmh_desert/pyramid)
 "Ac" = (
 /turf/closed/wall/mineral/desert_soapstone,
@@ -907,7 +902,6 @@
 	floor_turf = /turf/open/floor/concrete
 	},
 /turf/closed/wall/window/stained/yellow,
-/turf/open/floor/sandstone_tile/five,
 /area/under/rmh_desert/pyramid)
 "HK" = (
 /obj/effect/decal/edge{
@@ -1041,7 +1035,6 @@
 	floor_turf = /turf/open/floor/concrete
 	},
 /turf/closed/wall/window/stained/yellow,
-/turf/open/floor/concrete,
 /area/under/rmh_desert/pyramid)
 "Lo" = (
 /obj/structure/bars/passage{
@@ -1591,7 +1584,7 @@ wb
 Ao
 IL
 jT
-eO
+Op
 Wj
 Wj
 Ao
@@ -2273,7 +2266,7 @@ wo
 xr
 Js
 fB
-eO
+Op
 Wj
 Wj
 Vb
