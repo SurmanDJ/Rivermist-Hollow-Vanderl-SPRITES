@@ -16,7 +16,7 @@
 	invocation_type = INVOCATION_SHOUT
 
 	charge_required = FALSE
-	cooldown_time = 1 MINUTES
+	cooldown_time = 5 MINUTES
 	spell_cost = 30
 
 /datum/action/cooldown/spell/undirected/protection_evil_good/can_cast_spell(feedback)
@@ -33,7 +33,7 @@
 /datum/status_effect/buff/protection_evil_good
 	id = "protection_evil_good"
 	status_type = STATUS_EFFECT_UNIQUE
-	duration = 5 MINUTES
+	duration = 1 MINUTES
 	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = /atom/movable/screen/alert/status_effect/buff/protection_evil_good
 	var/static/mutable_appearance/ward_overlay = mutable_appearance('icons/effects/beam.dmi', "purple_lightning", -MUTATIONS_LAYER)
