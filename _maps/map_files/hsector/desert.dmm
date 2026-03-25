@@ -25,7 +25,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ach" = (
 /obj/structure/well/fountain{
 	pixel_x = -16;
@@ -35,10 +35,10 @@
 	},
 /obj/structure/hotspring,
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "acj" = (
 /turf/closed/wall/mineral/decostone/long/east_west,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "adu" = (
 /obj/structure/stairs/stone/reddish{
 	dir = 1
@@ -64,7 +64,7 @@
 	layer = 3
 	},
 /turf/open/water/river,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "agg" = (
 /obj/item/customlock/finished,
 /turf/open/floor/sandstone_tile/six,
@@ -155,7 +155,7 @@
 "ank" = (
 /obj/structure/flora/grass/thorn_bush,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "anN" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/tile/kitchen,
@@ -180,7 +180,7 @@
 "aor" = (
 /obj/machinery/light/fueled/wallfire/candle/weak/r,
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "aov" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 2
@@ -189,7 +189,7 @@
 	dir = 8
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "apu" = (
 /obj/structure/table/stone_small,
 /obj/effect/spawner/map_spawner/loot/magic,
@@ -221,19 +221,19 @@
 	layer = 2
 	},
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "aqX" = (
 /obj/structure/fluff/statue/knight/interior{
 	dir = 8
 	},
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ard" = (
 /obj/structure/stairs/fancy/c{
 	dir = 8
 	},
 /turf/open/floor/carpet/lord/center,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ary" = (
 /obj/structure/fluff/railing/wood/east{
 	pixel_x = 16
@@ -271,7 +271,7 @@
 "ati" = (
 /obj/effect/spawner/map_spawner/loot/weapon,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "atL" = (
 /obj/effect/decal/cleanable/dirt/dust{
 	name = "sand";
@@ -286,7 +286,7 @@
 	mouse_opacity = 0
 	},
 /turf/open/floor/grass/eora,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "auC" = (
 /obj/effect/decal/shadow_floor{
 	icon = 'icons/effects/atmospherics.dmi';
@@ -326,7 +326,7 @@
 	dir = 9
 	},
 /turf/open/floor/hexstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "axI" = (
 /turf/closed/wall/mineral/stone,
 /area/outdoors/rmh_desert/valley)
@@ -349,7 +349,7 @@
 	layer = 3
 	},
 /turf/open/water/river,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "aAr" = (
 /obj/effect/decal/cleanable/debris/stone,
 /turf/open/floor/sand/dunes,
@@ -361,7 +361,7 @@
 	},
 /obj/structure/table/wood/large/corner/north_west,
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "aDd" = (
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/wood,
@@ -372,7 +372,7 @@
 	},
 /obj/structure/flora/pillar,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "aFb" = (
 /obj/structure/fluff/railing/border/east,
 /obj/structure/fluff/railing/border,
@@ -387,7 +387,7 @@
 "aGw" = (
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/water/sewer,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "aHf" = (
 /obj/effect/decal/edge{
 	dir = 4;
@@ -403,7 +403,7 @@
 /turf/closed/wall/mineral/decostone/end{
 	dir = 4
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "aJF" = (
 /turf/open/floor/rooftop{
 	dir = 8
@@ -411,10 +411,10 @@
 /area/outdoors/rmh_desert/roofs)
 "aJZ" = (
 /turf/closed/wall/mineral/pipe,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "aKe" = (
 /turf/open/floor/blocks,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "aKW" = (
 /obj/effect/decal/edge_corner{
 	dir = 1;
@@ -438,7 +438,7 @@
 "aLv" = (
 /obj/effect/spawner/map_spawner/loot/dungeon/materials,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "aMf" = (
 /obj/structure/window/harem2,
 /obj/structure/curtain/magenta,
@@ -454,7 +454,7 @@
 	},
 /obj/effect/spawner/trap,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "aNE" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/churchmarble,
@@ -475,7 +475,7 @@
 	dir = 4
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "aPo" = (
 /obj/structure/fluff/railing/border{
 	dir = 6
@@ -503,7 +503,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/map_spawner/loot/dungeon/medical,
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "aQQ" = (
 /turf/closed/wall/mineral/desert_sandstone/window/brass,
 /area/indoors/rmh_desert)
@@ -523,7 +523,7 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "aSN" = (
 /mob/living/simple_animal/hostile/retaliate/infernal/imp{
 	del_on_deaggro = 0
@@ -594,14 +594,14 @@
 "aXx" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "aXH" = (
 /turf/open/floor/cracked_earth,
 /area/outdoors/rmh_desert/oasis)
 "aYo" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "aYw" = (
 /obj/structure/flora/grass/bush_meagre/yellow,
 /turf/open/floor/dirt,
@@ -617,12 +617,12 @@
 /turf/open/floor/carpet/lord/left{
 	dir = 1
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "aZx" = (
 /obj/structure/closet/crate/chest/wicker,
 /obj/effect/spawner/map_spawner/loot/dungeon/medical,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "aZL" = (
 /obj/effect/decal/cobbleedge{
 	dir = 8;
@@ -650,23 +650,23 @@
 "bbb" = (
 /obj/item/natural/rock/mana_crystal,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bbo" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bcs" = (
 /obj/effect/decal/edge{
 	dir = 4;
 	color = "#522f26"
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "beb" = (
 /obj/structure/flora/rock,
 /turf/open/floor/naturalstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bep" = (
 /obj/effect/spawner/map_spawner/loot/decrepit_equipment_spawner,
 /turf/open/floor/sand/sandstone,
@@ -679,7 +679,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/map_spawner/loot/dungeon/clothing,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "bfw" = (
 /obj/effect/decal/cleanable/debris/wood,
 /turf/open/floor/wood,
@@ -689,14 +689,14 @@
 	alpha = 2
 	},
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "bgq" = (
 /turf/open/floor/dirt,
 /area/outdoors/rmh_desert/oasis)
 "bgs" = (
 /obj/effect/spawner/map_spawner/loot/dungeon/medical,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "bgR" = (
 /obj/effect/decal/cobbleedge{
 	dir = 1;
@@ -742,7 +742,7 @@
 /obj/effect/spawner/map_spawner/hauntpile,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bkY" = (
 /obj/effect/decal/cobbleedge{
 	dir = 2;
@@ -763,10 +763,10 @@
 	redstone_id = "deast"
 	},
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bls" = (
 /turf/open/floor/carpet/lord/right,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "blx" = (
 /obj/effect/decal/cobbleedge{
 	dir = 1;
@@ -785,10 +785,10 @@
 "blP" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "blQ" = (
 /turf/open/floor/mushroom/green,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "blZ" = (
 /turf/closed/wall/mineral/desert_sandstone,
 /area/under/rmh_desert/pyramid)
@@ -806,7 +806,7 @@
 /area/outdoors/rmh_air)
 "bof" = (
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "bpB" = (
 /obj/item/fertilizer/ash,
 /obj/item/fertilizer/ash,
@@ -866,17 +866,17 @@
 "buO" = (
 /obj/structure/water_pipe,
 /turf/open/floor/metal,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bvn" = (
 /turf/open/floor/blocks/stonered,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bwc" = (
 /obj/structure/fluff/walldeco/vinez,
 /obj/structure/lever/hidden{
 	redstone_id = "dungeon1"
 	},
 /turf/closed/wall/mineral/decostone/moss/cand,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bwd" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -911,7 +911,7 @@
 	dir = 4
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bxq" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/sandstone_tile,
@@ -925,7 +925,7 @@
 /obj/effect/spawner/map_spawner/loot/dungeon/tools,
 /obj/effect/spawner/map_spawner/loot/potion_vitals,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "byF" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -937,7 +937,7 @@
 /obj/structure/door/stone,
 /obj/effect/spawner/trap,
 /turf/open/floor/metal,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bzt" = (
 /obj/effect/decal/cleanable/debris/wood,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1001,7 +1001,7 @@
 	},
 /obj/structure/table/wood/large/corner/south_east,
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bFM" = (
 /obj/item/natural/wood/plank,
 /turf/open/floor/sandstone,
@@ -1027,7 +1027,7 @@
 	},
 /obj/structure/bars/shop,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bGY" = (
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/sandstone,
@@ -1053,7 +1053,7 @@
 /obj/structure/flora/pillar,
 /obj/machinery/light/fueled/wallfire/candle/skull/r,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bIQ" = (
 /turf/open/floor/cobble/mossy,
 /area/outdoors/rmh_desert/port)
@@ -1073,11 +1073,11 @@
 "bLP" = (
 /obj/effect/spawner/map_spawner/loot/decrepit_equipment_spawner,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "bMY" = (
 /obj/structure/leyline,
 /turf/open/floor/greenstone/runed,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "bNA" = (
 /obj/item/fertilizer/ash,
 /obj/effect/decal/cleanable/debris/wood,
@@ -1087,7 +1087,7 @@
 "bNK" = (
 /obj/machinery/light/fueled/wallfire/candle/weak,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bOh" = (
 /obj/structure/fluff{
 	icon_state = "chest_neu";
@@ -1103,11 +1103,11 @@
 "bOV" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "bPk" = (
 /mob/living/simple_animal/hostile/orc/ranged,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bPv" = (
 /obj/structure/fluff/railing/corner{
 	dir = 9
@@ -1149,7 +1149,7 @@
 /obj/structure/fluff/railing/corner/south_west,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/hexstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bSR" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -1161,7 +1161,7 @@
 /area/under/rmh_desert/tea/harem)
 "bTn" = (
 /turf/open/floor/underworld/space,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bTq" = (
 /mob/living/simple_animal/hostile/retaliate/bogbug{
 	name = "desert bug";
@@ -1172,17 +1172,17 @@
 "bTE" = (
 /obj/structure/door/viewport/stone/broken,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bUb" = (
 /obj/structure/minecart_rail,
 /turf/open/floor/herringbone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bUi" = (
 /obj/structure/rotation_piece{
 	dir = 2
 	},
 /turf/open/floor/metal,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bUl" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /turf/open/floor/tile/diamond,
@@ -1231,7 +1231,7 @@
 	icon_state = "boards"
 	},
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "bXs" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/fluff/railing/corner/south_east,
@@ -1266,11 +1266,11 @@
 	pixel_y = 6
 	},
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "bZd" = (
 /obj/structure/tent_wall,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "bZs" = (
 /obj/effect/decal/edge_corner{
 	color = "#7a684b";
@@ -1297,7 +1297,7 @@
 	layer = 2.81
 	},
 /turf/open/floor/metal,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "caz" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/shadow_floor{
@@ -1316,7 +1316,7 @@
 	},
 /obj/structure/table/wood/large/corner/north_east,
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "cbF" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/tile/harem,
@@ -1372,7 +1372,7 @@
 /obj/structure/water_pipe,
 /obj/structure/rotation_piece/cog/large,
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ciw" = (
 /obj/structure/flora/rock/pile,
 /turf/open/floor/sand/dunes,
@@ -1455,7 +1455,7 @@
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "clU" = (
 /obj/structure/fluff/railing/border/east,
 /obj/structure/chair/stool,
@@ -1477,7 +1477,7 @@
 	},
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "coM" = (
 /turf/open/floor/sand{
 	hover_color = "#e3ca4f";
@@ -1497,7 +1497,7 @@
 	},
 /obj/structure/table/wood/large/corner/south_west,
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "cqN" = (
 /obj/effect/landmark/tram/queued_path/cargo_map_enter{
 	next_path_id = "point_1"
@@ -1538,11 +1538,11 @@
 	pixel_x = -13
 	},
 /turf/closed/wall/mineral/pipe,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ctC" = (
 /obj/structure/underworld/barrier,
 /turf/open/floor/herringbone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "cuA" = (
 /obj/structure/winch{
 	redstone_id = "pyramidgate2";
@@ -1558,7 +1558,7 @@
 	dir = 2
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "cwj" = (
 /obj/effect/decal/cobbleedge{
 	dir = 2;
@@ -1596,7 +1596,7 @@
 "cCw" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "cCy" = (
 /obj/structure/pillory/reinforced,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1665,7 +1665,7 @@
 "cFT" = (
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "cGx" = (
 /obj/structure/window/harem1,
 /turf/open/floor/concrete,
@@ -1675,7 +1675,7 @@
 /obj/effect/spawner/map_spawner/loot/dungeon/clothing,
 /obj/effect/spawner/map_spawner/loot/potion_stats,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "cHb" = (
 /obj/structure/stairs{
 	dir = 1
@@ -1688,7 +1688,7 @@
 "cJj" = (
 /obj/structure/flora/grass/herb/valeriana,
 /turf/open/floor/grass/eora,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "cJp" = (
 /obj/structure/fluff/pillow/green,
 /turf/open/floor/tile/diamond,
@@ -1738,7 +1738,7 @@
 	dir = 4
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "cKJ" = (
 /obj/structure/flora/junglebush/large,
 /turf/open/floor/sand/desertsand/oasis,
@@ -1758,7 +1758,7 @@
 "cOf" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/naturalstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "cOv" = (
 /obj/item/ingot/steel_slag,
 /turf/open/floor/naturalstone,
@@ -1769,7 +1769,7 @@
 "cOZ" = (
 /obj/structure/bed/shit,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "cPG" = (
 /obj/structure/stairs/fancy/r{
 	dir = 1
@@ -1783,7 +1783,7 @@
 "cPX" = (
 /obj/effect/spawner/map_spawner/loot/dungeon/misc,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "cSe" = (
 /obj/effect/decal/mossy{
 	dir = 8;
@@ -1835,15 +1835,15 @@
 /turf/open/water/river{
 	dir = 8
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "cWv" = (
 /obj/structure/flora/grass/tundra,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "cWI" = (
 /obj/structure/flora/grass/bush/green,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "cXx" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -1906,7 +1906,7 @@
 	plane = -6
 	},
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ddY" = (
 /obj/structure/fluff/railing/stonehedge{
 	color = "#e0cb94"
@@ -1923,19 +1923,19 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/map_spawner/loot/decrepit_equipment_spawner,
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "deL" = (
 /obj/structure/giantfur/small,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "dfy" = (
 /turf/open/floor/sandstone_tile/six,
 /area/under/rmh_desert/tea/hareml)
 "dfG" = (
 /obj/machinery/light/fueled/torchholder/c,
 /turf/open/floor/cobblerock,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "dgc" = (
 /obj/structure/closet/crate/chest/neu_iron,
 /obj/effect/spawner/map_spawner/loot/food,
@@ -1999,12 +1999,12 @@
 "dng" = (
 /obj/structure/flora/tree/burnt,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dpg" = (
 /obj/structure/closet/crate/chest/wicker,
 /obj/effect/spawner/map_spawner/loot/potion_poisons,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "dpG" = (
 /obj/structure/fluff/railing/wood/west,
 /obj/structure/fluff/railing/wood/west,
@@ -2031,7 +2031,7 @@
 /obj/effect/spawner/map_spawner/loot/potion_poisons,
 /obj/effect/spawner/map_spawner/loot/potion_ingredient/herb,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dqz" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/spider/stickyweb,
@@ -2052,7 +2052,7 @@
 	dir = 4
 	},
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "drK" = (
 /obj/item/natural/glass,
 /turf/open/floor/tile/diamond/blue,
@@ -2063,7 +2063,7 @@
 	alpha = 0
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dts" = (
 /obj/effect/decal/cobbleedge{
 	dir = 8;
@@ -2082,14 +2082,14 @@
 "dtB" = (
 /obj/structure/fluff/clodpile,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "dtK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/hexstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dtU" = (
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "dum" = (
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/floor/sandstone,
@@ -2097,7 +2097,7 @@
 "duM" = (
 /obj/structure/spider/stickyweb/solo,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "dvO" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/decal/cleanable/blood/tracks,
@@ -2106,7 +2106,7 @@
 "dxe" = (
 /obj/structure/fluff/statue/small,
 /turf/closed/wall/mineral/desert_sandstone,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "dxF" = (
 /obj/effect/decal/edge_corner{
 	color = "#7a684b";
@@ -2124,7 +2124,7 @@
 "dyF" = (
 /obj/effect/spawner/trap,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dzy" = (
 /obj/structure/flora/grass/pyroclasticflowers,
 /turf/open/floor/sand,
@@ -2137,7 +2137,7 @@
 "dAA" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/tile/tilerg,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dBk" = (
 /obj/structure/window/harem2,
 /turf/open/floor/sandstone,
@@ -2174,16 +2174,13 @@
 /obj/structure/fluff/railing/wood/west,
 /turf/open/floor/ruinedwood/herringbone,
 /area/indoors/rmh_desert/phouse)
-"dDq" = (
-/turf/open/floor/naturalstone,
-/area/under/cave)
 "dDC" = (
 /obj/item/essence_connector,
 /turf/open/floor/hexstone,
 /area/indoors/rmh_desert)
 "dDJ" = (
 /turf/open/floor/tile,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dDQ" = (
 /obj/structure/fluff/railing/border/north,
 /turf/open/floor/sandstone_tile,
@@ -2208,7 +2205,7 @@
 	dir = 1
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dGN" = (
 /turf/open/floor/tile/masonic/spiral,
 /area/under/rmh_desert/tea/hareml)
@@ -2229,7 +2226,7 @@
 	dir = 8
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dHN" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
@@ -2238,7 +2235,7 @@
 	dir = 2
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dIn" = (
 /turf/closed/mineral/random/low_nonval,
 /area/indoors/cave/rmh_desertcaves)
@@ -2259,11 +2256,11 @@
 	dir = 1
 	},
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dKy" = (
 /mob/living/simple_animal/hostile/retaliate/troll/broodmother,
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dKV" = (
 /turf/open/floor/blocks/stonered/tiny,
 /area/outdoors/rmh_desert/port)
@@ -2278,24 +2275,24 @@
 	dir = 4
 	},
 /turf/open/floor/hexstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dLG" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dLH" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dLJ" = (
 /obj/item/natural/rock/random,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/naturalstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dLL" = (
 /obj/structure/spider/stickyweb,
 /mob/living/simple_animal/hostile/retaliate/spider/mutated,
@@ -2331,11 +2328,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "dNs" = (
 /obj/machinery/artificer_table,
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "dNJ" = (
 /obj/item/fertilizer/ash,
 /obj/item/fertilizer/ash,
@@ -2453,7 +2450,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "dYv" = (
 /obj/machinery/light/fueled/wallfire/candle/l,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2477,7 +2474,7 @@
 "ebY" = (
 /obj/structure/bars/alt,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ece" = (
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/sandstone,
@@ -2494,7 +2491,7 @@
 	dir = 4
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ecO" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /turf/open/floor/tile/harem1,
@@ -2517,7 +2514,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eeD" = (
 /obj/structure/closet/crate/chest/crate,
 /obj/effect/spawner/map_spawner/loot/medium,
@@ -2530,7 +2527,7 @@
 /area/outdoors/rmh_air)
 "efA" = (
 /turf/closed/wall/mineral/decostone/long,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "efM" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/wood,
@@ -2568,7 +2565,7 @@
 	dir = 8
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eil" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8
@@ -2577,13 +2574,13 @@
 	dir = 1
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eiG" = (
 /obj/structure/stairs/fancy/l{
 	dir = 1
 	},
 /turf/open/floor/carpet/lord/left,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eiK" = (
 /obj/structure/industrial_lift/tram{
 	icon_state = "wooden_floor"
@@ -2676,7 +2673,7 @@
 	layer = 2.81
 	},
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "enq" = (
 /obj/structure/fluff/walldeco/chains{
 	icon_state = "chains2";
@@ -2686,7 +2683,7 @@
 /area/under/rmh_desert/tea/palacecellar)
 "enu" = (
 /turf/closed/wall/mineral/desert_sandstone,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "eoa" = (
 /turf/open/floor/sandstone,
 /area/under/rmh_desert/tea/harem)
@@ -2712,7 +2709,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eoV" = (
 /obj/effect/decal/cobblerockedge,
 /obj/effect/decal/cobblerockedge{
@@ -2720,7 +2717,7 @@
 	},
 /obj/structure/vine,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "epe" = (
 /obj/item/fertilizer/ash,
 /turf/open/floor/tile/kitchen,
@@ -2798,9 +2795,6 @@
 "etM" = (
 /turf/closed/wall/mineral/wooddark,
 /area/outdoors/rmh_desert/port)
-"euY" = (
-/turf/open/openspace,
-/area/under/cave)
 "evd" = (
 /obj/item/fishingrod,
 /obj/structure/closet/crate/chest/wicker,
@@ -2824,7 +2818,7 @@
 	plane = -5
 	},
 /turf/open/floor/dirt/road,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ewy" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
 /turf/open/floor/sandstone,
@@ -2832,7 +2826,7 @@
 "ewB" = (
 /obj/structure/bed/shit,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "ewP" = (
 /turf/open/floor/sand/dunes/citybrick/citybrick5,
 /area/outdoors/rmh_desert/valley)
@@ -2842,7 +2836,7 @@
 "exv" = (
 /obj/structure/gearbox,
 /turf/open/floor/herringbone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "exw" = (
 /obj/structure/carpet/purple,
 /turf/open/floor/tile/diamond,
@@ -2903,7 +2897,7 @@
 /turf/closed/wall/mineral/decostone/long{
 	dir = 1
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eCM" = (
 /turf/open/floor/sand/dunes/lightpath,
 /area/indoors/cave/rmh_desertcaves)
@@ -2993,14 +2987,14 @@
 "eLr" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eLL" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eME" = (
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/sandstone_tile,
@@ -3020,23 +3014,23 @@
 /area/under/rmh_desert/tea/palacecellar)
 "eOs" = (
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eOx" = (
 /turf/closed/wall/mineral/decostone/end{
 	dir = 8
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eOJ" = (
 /obj/structure/bars,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "eOQ" = (
 /turf/open/floor/dirt,
 /area/indoors/rmh_desert)
 "ePx" = (
 /obj/structure/fluff/nest,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "ePJ" = (
 /obj/item/fertilizer/ash,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3068,11 +3062,11 @@
 "eQU" = (
 /obj/structure/bars,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "eQW" = (
 /obj/structure/flora/grass/herb/random,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eRo" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -3107,7 +3101,7 @@
 "eSu" = (
 /obj/effect/spawner/map_spawner/hauntpile,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eSW" = (
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/ruinedwood,
@@ -3146,7 +3140,7 @@
 	dir = 5
 	},
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eUZ" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/sandstone,
@@ -3156,7 +3150,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eVH" = (
 /obj/structure/stairs/fancy/l{
 	dir = 1
@@ -3166,7 +3160,7 @@
 "eVL" = (
 /obj/structure/water_pipe,
 /turf/open/water/cleanshallow,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eWb" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -3186,7 +3180,7 @@
 	lifetime = 14400
 	},
 /turf/open/water/river,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eXw" = (
 /obj/structure/winch{
 	dir = 2;
@@ -3194,7 +3188,7 @@
 	redstone_id = "deast"
 	},
 /turf/closed/indestructible/wooddark,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eXY" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
@@ -3203,13 +3197,13 @@
 	dir = 1
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eXZ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/spawner/map_spawner/loot/dungeon/misc,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "eYc" = (
 /turf/closed/wall/mineral/wooddark/horizontal,
 /area/indoors/rmh_desert)
@@ -3219,7 +3213,7 @@
 	dir = 8
 	},
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eYp" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -3251,16 +3245,16 @@
 "eYR" = (
 /obj/effect/spawner/map_spawner/loot/dungeon/misc,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "eZs" = (
 /obj/structure/fluff/steamvent,
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "eZO" = (
 /obj/machinery/light/fueled/wallfire/candle,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "fam" = (
 /obj/effect/decal/edge_corner{
 	dir = 8;
@@ -3297,13 +3291,13 @@
 	dir = 10
 	},
 /turf/open/floor/dirt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fdg" = (
 /obj/structure/stairs/fancy/c{
 	dir = 1
 	},
 /turf/open/floor/carpet/lord/center,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fdx" = (
 /obj/structure/flora/grass/jungle,
 /turf/open/floor/grass,
@@ -3318,7 +3312,7 @@
 /area/outdoors/rmh_desert/valley)
 "fdM" = (
 /turf/open/lava/acid,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fei" = (
 /turf/open/floor/sandstone,
 /area/outdoors/rmh_air)
@@ -3340,7 +3334,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ffM" = (
 /obj/effect/decal/cleanable/dirt/dust{
 	name = "sand";
@@ -3394,7 +3388,7 @@
 "fjf" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "fjN" = (
 /obj/item/fertilizer/ash,
 /turf/open/floor/sandstone,
@@ -3402,13 +3396,13 @@
 "fkZ" = (
 /obj/structure/vine,
 /turf/closed/mineral/bedrock/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fml" = (
 /obj/structure/stairs/fancy/c{
 	dir = 4
 	},
 /turf/open/floor/carpet/lord/center,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fmt" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/natural/brick,
@@ -3429,7 +3423,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fnR" = (
 /obj/structure/table/stone_small,
 /obj/structure/curtain/purple,
@@ -3448,7 +3442,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fpg" = (
 /obj/item/fertilizer/ash,
 /obj/item/natural/glass/shard,
@@ -3460,7 +3454,7 @@
 	},
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "frs" = (
 /obj/item/natural/stone,
 /turf/open/floor/sand/dunes,
@@ -3500,7 +3494,7 @@
 	mouse_opacity = 0
 	},
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ftm" = (
 /obj/structure/trap/wall_projectile/fireball{
 	dir = 4;
@@ -3512,7 +3506,7 @@
 "ftF" = (
 /obj/structure/underworld/barrier,
 /turf/open/floor/underworld/space,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fuh" = (
 /turf/open/floor/twig,
 /area/outdoors/rmh_desert/valley)
@@ -3564,7 +3558,7 @@
 "fyQ" = (
 /obj/structure/flora/grass/bush/wall/green,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fyR" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/fertilizer/ash,
@@ -3572,11 +3566,11 @@
 /area/outdoors/rmh_air)
 "fyZ" = (
 /turf/closed/wall/mineral/decostone/cand,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fzz" = (
 /obj/machinery/light/fueled/firebowl/church,
 /turf/open/floor/hexstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fAw" = (
 /obj/structure/fluff/railing/border/north,
 /turf/open/water/ocean,
@@ -3622,13 +3616,13 @@
 	},
 /obj/structure/vine,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fES" = (
 /turf/closed/wall/mineral/abyssal,
 /area/under/rmh_desert/ziqurat)
 "fFj" = (
 /turf/closed/wall/mineral/decostone/fluffstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fFD" = (
 /obj/structure/stairs,
 /obj/structure/fluff/railing/wood/west,
@@ -3674,7 +3668,7 @@
 	dir = 8
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fIs" = (
 /obj/effect/decal/edge{
 	color = "#7a684b";
@@ -3700,7 +3694,7 @@
 	},
 /obj/structure/table/wood/large/corner/middle_east,
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fKt" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/natural/silk,
@@ -3714,7 +3708,7 @@
 /obj/structure/flora/pillar,
 /obj/machinery/light/fueled/wallfire/candle/skull,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fLV" = (
 /obj/item/natural/wood/plank,
 /turf/open/floor/sand/dunes,
@@ -3790,7 +3784,7 @@
 /obj/structure/table/wood/plain/alt,
 /obj/effect/spawner/map_spawner/loot/dungeon/money,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "fWy" = (
 /obj/structure/curtain/purple,
 /turf/closed/wall/mineral/desert_soapstone,
@@ -3826,7 +3820,7 @@
 	pixel_y = 0
 	},
 /turf/closed/wall/mineral/stonebrick/reddish,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fYs" = (
 /turf/open/floor/churchmarble,
 /area/under/rmh_desert/tea/hareml)
@@ -3835,13 +3829,13 @@
 /area/indoors/rmh_desert/phouse)
 "fYA" = (
 /turf/closed/mineral/bedrock/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fYD" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8
 	},
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fYU" = (
 /obj/structure/closet/crate/chest/neu_iron,
 /obj/effect/spawner/map_spawner/loot/food,
@@ -3850,7 +3844,7 @@
 "fZm" = (
 /obj/structure/spider/stickyweb/solo,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "fZn" = (
 /obj/effect/decal/edge_corner{
 	color = "#7a684b"
@@ -3860,7 +3854,7 @@
 "fZH" = (
 /obj/structure/rotation_piece/cog,
 /turf/open/floor/metal/barograte/open,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "fZT" = (
 /obj/machinery/light/fueled/hearth,
 /turf/open/floor/concrete,
@@ -3885,7 +3879,7 @@
 /obj/machinery/light/fueled/wallfire/candle/weak/l,
 /obj/effect/spawner/map_spawner/loot/decrepit_equipment_spawner,
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gcc" = (
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/carpet/lord/left,
@@ -3905,7 +3899,7 @@
 "gcz" = (
 /obj/structure/table/wood/large/corner/middle_west,
 /turf/open/floor/blocks/stonered,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gcW" = (
 /obj/structure/bars/pipe{
 	dir = 4;
@@ -3923,7 +3917,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gcY" = (
 /obj/structure/well/climb_down,
 /turf/open/floor/sand/sandstone,
@@ -3931,7 +3925,7 @@
 "gel" = (
 /obj/structure/underworld/barrier,
 /turf/open/floor/underworld/space/sparkle_quiet,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "geB" = (
 /turf/open/floor/tile/harem1,
 /area/under/rmh_desert/tea/hareml)
@@ -3967,7 +3961,7 @@
 "gil" = (
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/floor/herringbone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gjl" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
 /turf/open/floor/sandstone,
@@ -3983,7 +3977,7 @@
 "gkA" = (
 /obj/structure/flora/pillar,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gkF" = (
 /obj/structure/flora/junglebush/c,
 /turf/open/floor/grass,
@@ -4004,7 +3998,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "glY" = (
 /obj/effect/decal/cleanable/dirt/dust{
 	name = "sand";
@@ -4073,7 +4067,7 @@
 	},
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gqm" = (
 /obj/structure/stairs/fancy{
 	dir = 8
@@ -4110,7 +4104,7 @@
 "grK" = (
 /obj/structure/underworld/barrier,
 /turf/open/floor/underworld/space/sparkle_quiet/fake_world,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "grP" = (
 /obj/structure/hotspring/border/three,
 /obj/structure/fluff/walldeco/church/line{
@@ -4120,7 +4114,7 @@
 	dir = 4
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gsO" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/carpet/lord/right,
@@ -4155,7 +4149,7 @@
 	lifetime = 14400
 	},
 /turf/open/floor/metal,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gxa" = (
 /obj/effect/decal/edge{
 	color = "#7a684b";
@@ -4187,7 +4181,7 @@
 	light_power = 2
 	},
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gyZ" = (
 /turf/open/floor/tile/harem,
 /area/outdoors/rmh_desert/valley)
@@ -4222,7 +4216,7 @@
 "gBf" = (
 /obj/fae_trickery_trap/disorient,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gBH" = (
 /turf/closed/wall/mineral/wooddark/vertical,
 /area/indoors/rmh_desert/phouse)
@@ -4261,7 +4255,7 @@
 "gEV" = (
 /obj/structure/steam_recharger,
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gFL" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/fluff/railing/corner/south_west,
@@ -4284,7 +4278,7 @@
 "gGS" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gHu" = (
 /obj/structure/carpet/red,
 /turf/open/floor/tile/kitchen,
@@ -4321,10 +4315,10 @@
 /area/outdoors/rmh_desert/valley)
 "gKK" = (
 /turf/closed/indestructible/rock,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gLi" = (
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gLB" = (
 /turf/open/floor/tile/masonic/spiral,
 /area/outdoors/rmh_air)
@@ -4336,7 +4330,7 @@
 	dir = 1
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gMX" = (
 /turf/open/floor/sand/dunes/lightpath,
 /area/outdoors/rmh_desert/port)
@@ -4368,7 +4362,7 @@
 	},
 /obj/fae_trickery_trap/disorient,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gQt" = (
 /obj/structure/closet/crate/chest/neu_fancy,
 /obj/effect/spawner/map_spawner/loot/potion_stats,
@@ -4422,7 +4416,7 @@
 "gUk" = (
 /obj/structure/plasticflaps,
 /turf/open/water/sewer,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "gUB" = (
 /obj/structure/fluff/railing/corner/south_east,
 /obj/item/fertilizer/ash,
@@ -4442,12 +4436,12 @@
 	plane = -6
 	},
 /turf/open/floor/metal,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gVL" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gVR" = (
 /obj/structure/rack,
 /turf/open/floor/sandstone,
@@ -4480,7 +4474,7 @@
 	pixel_x = -6
 	},
 /turf/closed/wall/mineral/pipe,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "gYm" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -4536,7 +4530,7 @@
 	dir = 2
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "hdV" = (
 /obj/structure/fluff/railing/stonehedge{
 	color = "#e0cb94";
@@ -4563,7 +4557,7 @@
 /area/under/rmh_desert/spider)
 "hfB" = (
 /turf/open/floor/carpet/lord/center,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "hfF" = (
 /obj/effect/decal/edge_corner{
 	dir = 8;
@@ -4571,7 +4565,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "hfK" = (
 /obj/structure/flora/grass/thorn_bush,
 /turf/closed/mineral/bedrock{
@@ -4714,7 +4708,7 @@
 "hoW" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "hqy" = (
 /turf/open/floor/sand/dunes/lightpath,
 /area/outdoors/rmh_desert/roofs)
@@ -4783,7 +4777,7 @@
 "hvM" = (
 /obj/structure/underworld/barrier,
 /turf/closed/wall/mineral/stone/window/moss/red,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "hvY" = (
 /obj/effect/decal/edge{
 	color = "#7a684b"
@@ -4819,7 +4813,7 @@
 /obj/effect/spawner/map_spawner/loot/dungeon/food,
 /obj/effect/spawner/map_spawner/loot/dungeon/food,
 /turf/open/floor/cobblerock,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "hyD" = (
 /turf/open/openspace,
 /area/outdoors/rmh_desert/roofs)
@@ -4839,7 +4833,7 @@
 	dir = 9
 	},
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "hAB" = (
 /obj/structure/fluff/railing/wood/north,
 /obj/structure/fluff/railing/border/north,
@@ -4860,11 +4854,11 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "hCg" = (
 /obj/effect/spawner/map_spawner/loot/potion_poisons,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "hCR" = (
 /obj/machinery/light/fueled/firebowl,
 /turf/open/floor/sand/dunes,
@@ -4874,11 +4868,11 @@
 	dir = 4
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "hDX" = (
 /obj/effect/spawner/map_spawner/hauntpile,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "hEl" = (
 /obj/structure/fluff/statue/small{
 	icon_state = "sandpillar1";
@@ -4986,11 +4980,11 @@
 /obj/structure/closet/crate/chest/old_crate,
 /obj/effect/spawner/map_spawner/loot/dungeon/armor,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "hJx" = (
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "hJz" = (
 /obj/effect/decal/edge{
 	color = "#7a684b";
@@ -5009,7 +5003,7 @@
 	},
 /obj/effect/spawner/map_spawner/loot/potion_ingredient,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "hKl" = (
 /obj/structure/hotspring/border/fourteen,
 /obj/structure/fluff/walldeco/church/line{
@@ -5019,10 +5013,10 @@
 	dir = 4
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "hMf" = (
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "hMG" = (
 /obj/structure/fluff{
 	icon_state = "barrel_tapped_ready";
@@ -5134,7 +5128,7 @@
 "hRY" = (
 /obj/effect/spawner/map_spawner/loot/dungeon/misc,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "hTg" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/tile,
@@ -5176,7 +5170,7 @@
 /area/outdoors/rmh_desert/valley)
 "hYl" = (
 /turf/open/floor/metal,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "hZf" = (
 /turf/open/floor/twig,
 /area/outdoors/rmh_desert/oasis)
@@ -5209,7 +5203,7 @@
 	dir = 8
 	},
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "idg" = (
 /obj/structure/flora/driftwood,
 /turf/open/floor/sand/dunes,
@@ -5269,11 +5263,11 @@
 	pixel_y = 0
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ieZ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/tile/tilerg,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ifb" = (
 /obj/structure/fluff/statue/small,
 /turf/closed/wall/mineral/desert_sandstone,
@@ -5281,7 +5275,7 @@
 "ifd" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "ifn" = (
 /obj/structure/table/wood/reinf_long,
 /obj/item/reagent_containers/glass/carafe/gold/redwine{
@@ -5318,7 +5312,7 @@
 "ihh" = (
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/hexstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ihI" = (
 /obj/structure/stairs/fancy{
 	dir = 8
@@ -5328,18 +5322,18 @@
 "iiR" = (
 /obj/structure/rack/shelf/biggest,
 /turf/open/floor/cobblerock,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "ijk" = (
 /obj/machinery/light/fueled/wallfire/candle/weak/l,
 /turf/open/floor/tile/tilerg,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ijq" = (
 /obj/structure/noose,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "ijr" = (
 /turf/open/water/cleanshallow,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iks" = (
 /obj/item/natural/glass/shard,
 /turf/open/floor/hexstone,
@@ -5349,7 +5343,7 @@
 	dir = 6
 	},
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iky" = (
 /obj/structure/dye_bin,
 /turf/open/floor/sand/dunes,
@@ -5360,7 +5354,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "imD" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /mob/living/simple_animal/hostile/retaliate/infernal/imp{
@@ -5405,14 +5399,14 @@
 /area/under/rmh_desert/ziqurat)
 "ipy" = (
 /turf/open/floor/cobblerock,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ipV" = (
 /obj/effect/decal/cobblerockedge{
 	dir = 4
 	},
 /obj/structure/vine,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ipZ" = (
 /obj/effect/decal/cobblerockedge{
 	dir = 1
@@ -5421,7 +5415,7 @@
 	dir = 8
 	},
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "isI" = (
 /turf/closed/wall/mineral/desert_sandstone,
 /area/outdoors/rmh_desert/valley)
@@ -5431,7 +5425,7 @@
 /obj/effect/spawner/map_spawner/loot/dungeon/clothing,
 /obj/effect/spawner/map_spawner/loot/valuable_jewelry_spawner,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "itP" = (
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/carpet/lord/center,
@@ -5471,7 +5465,7 @@
 /area/indoors/rmh_desert)
 "ixE" = (
 /turf/open/water/sewer,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "ixM" = (
 /obj/structure/fluff/railing/border/east,
 /obj/structure/closet/crate/chest/wicker,
@@ -5488,13 +5482,13 @@
 	dir = 1
 	},
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iym" = (
 /obj/structure/door/weak/bolt{
 	dir = 1
 	},
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iyn" = (
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/floor/sandstone,
@@ -5508,7 +5502,7 @@
 	alpha = 5
 	},
 /turf/open/floor/carpet/lord/center,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iyE" = (
 /obj/structure/closet/dirthole/closed/loot,
 /obj/effect/spawner/map_spawner/loot/dungeon/medical,
@@ -5524,7 +5518,7 @@
 	},
 /obj/machinery/light/fueled/wallfire/candle/skull/r,
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "izt" = (
 /obj/structure/bars/tough{
 	icon = 'icons/effects/effects.dmi';
@@ -5550,7 +5544,7 @@
 	dir = 1
 	},
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iAk" = (
 /obj/item/fertilizer/ash,
 /obj/item/natural/silk,
@@ -5560,7 +5554,7 @@
 /obj/structure/roguerock,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/naturalstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iCg" = (
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/floor/sandstone_tile,
@@ -5579,7 +5573,7 @@
 /obj/structure/fluff/statue,
 /obj/structure/flora/grass/bush/wall,
 /turf/open/floor/sand/dunes/darkpath,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iEf" = (
 /obj/effect/decal/edge{
 	dir = 2;
@@ -5603,7 +5597,7 @@
 	},
 /obj/structure/table/wood/large/corner/middle_west,
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iFH" = (
 /obj/structure/stairs/stone/reddish{
 	dir = 4
@@ -5617,7 +5611,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/metal/barograte/open,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iGk" = (
 /obj/effect/decal/cobbleedge{
 	dir = 1;
@@ -5633,7 +5627,7 @@
 /area/outdoors/rmh_desert/port)
 "iHq" = (
 /turf/open/floor/cobblerock,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "iHA" = (
 /obj/item/natural/stone,
 /obj/effect/decal/cobbleedge{
@@ -5659,14 +5653,14 @@
 "iIU" = (
 /obj/structure/fluff/clodpile,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "iKf" = (
 /obj/structure/fluff/railing/corner{
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/hexstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iKL" = (
 /obj/effect/decal/edge{
 	color = "#7a684b";
@@ -5697,7 +5691,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iMZ" = (
 /obj/structure/fluff/railing/wood/west,
 /obj/structure/fluff/railing/wood,
@@ -5717,7 +5711,7 @@
 /obj/effect/spawner/map_spawner/loot/valuable_jewelry_spawner,
 /obj/effect/spawner/map_spawner/loot/potion_stats,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iOd" = (
 /obj/structure/stairs{
 	dir = 1
@@ -5735,7 +5729,7 @@
 	dir = 1
 	},
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iOX" = (
 /obj/item/weapon/whip/psydon{
 	atom_integrity = 30;
@@ -5817,12 +5811,12 @@
 /turf/open/water/river{
 	dir = 8
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iUP" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iVf" = (
 /obj/item/natural/wood/plank,
 /turf/open/floor/wood,
@@ -5886,7 +5880,7 @@
 /area/indoors/rmh_desert/phouse)
 "iWD" = (
 /turf/open/floor/carpet/lord/left,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "iWN" = (
 /obj/structure/well/fountain{
 	pixel_x = -16
@@ -5905,7 +5899,7 @@
 /obj/structure/spider/stickyweb,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "iYn" = (
 /obj/structure/table/wood/plain,
 /obj/item/weapon/knife/villager,
@@ -5947,10 +5941,10 @@
 /area/under/rmh_desert/tea/harem)
 "jbu" = (
 /turf/open/floor/underworld/space/quiet,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "jbE" = (
 /turf/open/water/river,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "jbG" = (
 /obj/structure/curtain/black{
 	open = 0;
@@ -5985,7 +5979,7 @@
 /area/outdoors/rmh_desert/oasis)
 "jcV" = (
 /turf/open/floor/underworld/space/sparkle_quiet/fake_world,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "jdv" = (
 /obj/effect/decal/edge{
 	color = "#7a684b";
@@ -6012,7 +6006,7 @@
 "jfu" = (
 /obj/fae_trickery_trap/drop,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "jgl" = (
 /mob/living/simple_animal/hostile/retaliate/infernal/imp{
 	del_on_deaggro = 0
@@ -6064,7 +6058,7 @@
 /obj/structure/closet/crate/chest/wicker,
 /obj/effect/spawner/map_spawner/loot/dungeon/money,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "jjd" = (
 /obj/structure/closet/crate/chest{
 	base_icon_state = "woodchestalt";
@@ -6073,7 +6067,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "jjh" = (
 /obj/structure/fluff/railing/stonehedge{
 	color = "#e0cb94";
@@ -6103,7 +6097,7 @@
 "jlj" = (
 /obj/structure/water_pipe,
 /turf/closed/wall/mineral/pipe,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "jme" = (
 /mob/living/simple_animal/hostile/retaliate/spider,
 /turf/open/floor/sand{
@@ -6154,7 +6148,7 @@
 /area/outdoors/rmh_desert/valley)
 "jpj" = (
 /turf/closed/wall/mineral/decostone/cand,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "jqn" = (
 /turf/closed/mineral/bedrock{
 	name = "solid rock"
@@ -6163,7 +6157,7 @@
 "jqJ" = (
 /obj/structure/kneestingers,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "jrY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/debris/glass,
@@ -6204,7 +6198,7 @@
 /area/under/rmh_desert/tea/hareml)
 "juv" = (
 /turf/closed/wall/mineral/decostone/cand/reddish,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "juO" = (
 /obj/structure/flora/driftwood,
 /turf/open/floor/sand/dunes/sandbrick,
@@ -6248,7 +6242,7 @@
 "jwk" = (
 /obj/structure/flora/ausbushes/sparsegrass,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "jxk" = (
 /turf/closed/wall/mineral/craftstone,
 /area/indoors/rmh_desert)
@@ -6373,7 +6367,7 @@
 /obj/effect/decal/cobblerockedge,
 /obj/structure/vine,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "jHO" = (
 /obj/item/natural/stone,
 /turf/open/floor/ruinedwood/spiral,
@@ -6397,7 +6391,7 @@
 /obj/effect/spawner/map_spawner/hauntpile,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "jNa" = (
 /mob/living/simple_animal/hostile/retaliate/elemental/collossus{
 	del_on_deaggro = 590955;
@@ -6514,7 +6508,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/spawner/map_spawner/loot/potion_poisons,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "jSk" = (
 /turf/closed/wall/mineral/wood,
 /area/indoors/rmh_desert/phouse)
@@ -6539,7 +6533,7 @@
 	dir = 4
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "jTA" = (
 /obj/structure/stalagmite,
 /turf/open/floor/sand,
@@ -6564,7 +6558,7 @@
 "jUl" = (
 /obj/structure/underworld/barrier,
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "jVo" = (
 /obj/structure/flora/junglebush,
 /turf/open/floor/grass/mixyel,
@@ -6589,7 +6583,7 @@
 	dir = 4
 	},
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "jWx" = (
 /obj/item/natural/wood/plank,
 /obj/effect/decal/edge_corner{
@@ -6614,7 +6608,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "jWY" = (
 /obj/machinery/light/fueled/firebowl,
 /turf/open/floor/sand/dunes,
@@ -6633,7 +6627,7 @@
 	},
 /obj/effect/particle_effect/sparks,
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "jZq" = (
 /obj/effect/decal/edge{
 	dir = 4;
@@ -6664,7 +6658,7 @@
 /area/outdoors/rmh_desert/valley)
 "kct" = (
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "kcU" = (
 /obj/effect/decal/cleanable/dirt/dust{
 	name = "sand";
@@ -6710,7 +6704,7 @@
 /obj/structure/rack/underworld,
 /obj/effect/spawner/map_spawner/loot/dungeon/tools,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kfY" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8
@@ -6719,7 +6713,7 @@
 	dir = 2
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kgb" = (
 /turf/open/floor/sandstone_tile/five,
 /area/outdoors/rmh_air)
@@ -6769,7 +6763,7 @@
 	dir = 1
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kjn" = (
 /obj/structure/fluff/statue/small,
 /obj/effect/decal/cleanable/debris/wood,
@@ -6782,7 +6776,7 @@
 /obj/structure/closet/crate/chest/neu,
 /obj/effect/spawner/map_spawner/loot/cheap_jewelry_spawner,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "kkb" = (
 /obj/structure/fluff/railing/corner{
 	dir = 9
@@ -6798,7 +6792,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "klu" = (
 /mob/living/simple_animal/hostile/retaliate/infernal/imp{
 	del_on_deaggro = 0
@@ -6816,10 +6810,10 @@
 "klU" = (
 /obj/structure/flora/starfish,
 /turf/open/floor/grass/eora,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kmG" = (
 /turf/open/floor/mushroom,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kmM" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -6858,7 +6852,7 @@
 	},
 /obj/effect/particle_effect/sparks,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kpk" = (
 /obj/structure/stairs/fancy/r{
 	dir = 8
@@ -6866,7 +6860,7 @@
 /turf/open/floor/carpet/lord/right{
 	dir = 1
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kpt" = (
 /obj/structure/door/weak/bolt{
 	dir = 2
@@ -6980,7 +6974,7 @@
 /area/outdoors/rmh_desert/valley)
 "kxO" = (
 /turf/open/floor/ruinedwood/herringbone_clear,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kyI" = (
 /obj/structure/closet/crate/chest/crate,
 /obj/effect/spawner/map_spawner/loot/dungeon/misc,
@@ -7025,7 +7019,7 @@
 	dir = 4
 	},
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kBe" = (
 /turf/open/floor/sandstone,
 /area/under/rmh_desert/pyramid)
@@ -7052,7 +7046,7 @@
 	},
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kEl" = (
 /obj/effect/decal/edge_corner{
 	dir = 1;
@@ -7071,7 +7065,7 @@
 	},
 /obj/structure/table/church/m,
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kEU" = (
 /obj/structure/dungeon_entry/center,
 /turf/open/floor/herringbone,
@@ -7089,7 +7083,7 @@
 	alpha = 2
 	},
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "kFL" = (
 /obj/structure/table/wood/reinf_long{
 	dir = 1;
@@ -7098,11 +7092,11 @@
 /obj/item/storage/backpack/satchel/surgbag/shit,
 /obj/machinery/light/fueled/wallfire/candle/weak,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kFV" = (
 /obj/structure/flora/grass/bush_meagre/green3,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kHG" = (
 /obj/structure/fluff/customsign{
 	name = "UNDER CONSTRUCTION!";
@@ -7120,35 +7114,28 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/remains/human,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "kIO" = (
 /obj/structure/bed/shit,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "kJa" = (
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_y = -32
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
-"kJb" = (
-/obj/structure/stalagmite,
-/turf/open/floor/sand,
-/area/under/cave)
+/area/under/town/rmh/sewer)
 "kJI" = (
 /turf/closed/mineral/bedrock{
 	name = "solid rock"
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kKj" = (
 /obj/structure/fluff/railing/corner/north_east,
 /obj/structure/carpet/purple,
 /turf/open/floor/tile/harem1,
 /area/under/rmh_desert/tea/palacecasemates)
-"kKk" = (
-/turf/open/floor/cobblerock,
-/area/under/cave)
 "kKl" = (
 /obj/structure/fluff/railing/corner{
 	dir = 9
@@ -7184,7 +7171,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/blocks/stonered,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kLE" = (
 /obj/machinery/light/fueled/firebowl/church/unholyfire{
 	pixel_y = 4
@@ -7200,7 +7187,7 @@
 	dir = 8
 	},
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kLV" = (
 /obj/structure/fluff/railing/corner/south_east,
 /obj/effect/decal/cobbleedge{
@@ -7266,17 +7253,17 @@
 	dir = 9
 	},
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kRa" = (
 /obj/structure/bed/mediocre,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kRy" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/tile/tilerg,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kTk" = (
 /turf/open/floor/sand/dunes/lightpath,
 /area/under/rmh_bedrock)
@@ -7345,7 +7332,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "kYW" = (
 /mob/living/simple_animal/hostile/retaliate/infernal/imp{
 	del_on_deaggro = 0
@@ -7360,7 +7347,7 @@
 /obj/structure/closet/crate/chest/wicker,
 /obj/effect/spawner/map_spawner/loot/dungeon/money,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "kZW" = (
 /obj/item/fertilizer/ash,
 /obj/structure/curtain/magenta,
@@ -7372,7 +7359,7 @@
 /area/outdoors/rmh_desert/oasis)
 "lat" = (
 /turf/open/floor/herringbone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "laL" = (
 /mob/living/simple_animal/hostile/retaliate/infernal/imp{
 	del_on_deaggro = 0
@@ -7390,7 +7377,7 @@
 	light_power = 2
 	},
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "leN" = (
 /obj/structure/fluff/railing/wood/west,
 /obj/structure/fluff/railing/wood,
@@ -7411,7 +7398,7 @@
 "lfy" = (
 /obj/structure/table/wood/reinforced_alter,
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "lfN" = (
 /obj/item/fertilizer/ash,
 /obj/item/fertilizer/ash,
@@ -7485,7 +7472,7 @@
 /obj/machinery/light/fueled/wallfire/candle/weak,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ljw" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/twig,
@@ -7510,7 +7497,7 @@
 "lkg" = (
 /obj/effect/spawner/map_spawner/loot/decrepit_equipment_spawner,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "lky" = (
 /obj/effect/decal/edge{
 	dir = 8;
@@ -7526,7 +7513,7 @@
 	name = "meat chest"
 	},
 /turf/open/floor/cobble,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "llm" = (
 /turf/open/openspace,
 /area/indoors/cave/rmh_desertcaves)
@@ -7543,7 +7530,7 @@
 "lny" = (
 /obj/machinery/light/fueled/wallfire/candle/l,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "lnN" = (
 /turf/open/water/marsh,
 /area/outdoors/rmh_desert/valley)
@@ -7554,11 +7541,11 @@
 /area/under/rmh_desert/tea/palacecasemates)
 "lox" = (
 /turf/open/floor/cobble,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "loz" = (
 /obj/structure/fluff/clodpile,
 /turf/open/floor/dirt,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "loQ" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/sandstone,
@@ -7571,7 +7558,7 @@
 "lpD" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "lqD" = (
 /turf/open/floor/hexstone,
 /area/indoors/rmh_desert)
@@ -7624,7 +7611,7 @@
 "ltF" = (
 /obj/structure/rotation_piece/cog/large,
 /turf/closed/wall/mineral/stonebrick/reddish,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ltT" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -7695,7 +7682,7 @@
 	dir = 8
 	},
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "lyf" = (
 /obj/item/natural/wood/plank,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -7721,7 +7708,7 @@
 /obj/structure/minecart_rail/railbreak,
 /obj/structure/closet/crate/miningcar,
 /turf/open/floor/herringbone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "lAm" = (
 /turf/closed/wall/mineral/wooddark/vertical,
 /area/outdoors/rmh_desert/valley)
@@ -7748,14 +7735,14 @@
 "lCB" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "lDm" = (
 /obj/effect/decal/cobblerockedge,
 /obj/effect/decal/cobblerockedge{
 	dir = 8
 	},
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "lDT" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/volcanic,
@@ -7786,14 +7773,14 @@
 "lED" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "lFe" = (
 /obj/structure/hotspring/border/five,
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "lFX" = (
 /turf/closed/wall/mineral/wooddark,
 /area/outdoors/rmh_air)
@@ -7808,7 +7795,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "lHm" = (
 /obj/structure/bed/shit,
 /turf/open/floor/sandstone,
@@ -7823,7 +7810,7 @@
 /obj/structure/fluff/steamvent,
 /obj/structure/fluff/walldeco/bath/wallpipes,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "lIu" = (
 /obj/effect/decal/edge_corner{
 	dir = 2;
@@ -7836,11 +7823,11 @@
 "lIS" = (
 /obj/effect/decal/remains/human,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "lJg" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "lJh" = (
 /obj/effect/decal/carpet/kover_darkred{
 	dir = 1;
@@ -7903,7 +7890,7 @@
 	dir = 2
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "lLy" = (
 /obj/structure/flora/grass/herb/euphorbia,
 /turf/open/floor/grass/mixyel,
@@ -8035,14 +8022,14 @@
 /area/under/rmh_desert/spider)
 "lXC" = (
 /turf/open/floor/dirt,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "lXO" = (
 /obj/effect/decal/cobblerockedge{
 	dir = 8
 	},
 /obj/effect/decal/cobblerockedge,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "lYm" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/fertilizer/ash,
@@ -8052,18 +8039,18 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "maj" = (
 /obj/structure/fluff/railing/corner/north_east,
 /turf/open/floor/sandstone_tile/six,
 /area/outdoors/rmh_desert/valley)
 "maH" = (
 /turf/closed/wall/mineral/decostone/moss/blue/cand,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "maW" = (
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/hexstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "maY" = (
 /obj/structure/spider/nest,
 /obj/structure/spider/stickyweb,
@@ -8074,7 +8061,7 @@
 /area/under/rmh_desert/spider)
 "mbk" = (
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mbP" = (
 /obj/structure/fluff/railing/wood/north{
 	layer = 2.7;
@@ -8097,7 +8084,7 @@
 	dir = 4
 	},
 /turf/open/floor/herringbone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mgt" = (
 /obj/structure/gate{
 	damage_deflection = 9999;
@@ -8105,14 +8092,14 @@
 	redstone_id = "deast"
 	},
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mhK" = (
 /obj/structure/hotspring/border/seven,
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mit" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/gibs/up,
@@ -8123,10 +8110,10 @@
 /obj/effect/spawner/trap,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mje" = (
 /turf/closed/wall/mineral/craftstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mjo" = (
 /turf/open/floor/cobblerock,
 /area/indoors/cave/rmh_desertcaves)
@@ -8150,7 +8137,7 @@
 /area/under/rmh_desert/pyramid)
 "mkM" = (
 /turf/open/floor/underworld/space/sparkle_quiet,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mkW" = (
 /obj/effect/decal/edge{
 	dir = 2;
@@ -8176,7 +8163,7 @@
 	dir = 8
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mnd" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/tile/diamond/blue,
@@ -8200,11 +8187,11 @@
 /area/outdoors/rmh_desert/port)
 "mpS" = (
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mpT" = (
 /obj/structure/vine,
 /turf/open/floor/cobblerock,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mqt" = (
 /obj/item/natural/wood/plank,
 /obj/item/natural/glass/shard,
@@ -8219,7 +8206,7 @@
 	pixel_y = 21
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mqR" = (
 /obj/item/fertilizer/ash,
 /turf/open/floor/twig,
@@ -8281,7 +8268,7 @@
 "mzF" = (
 /obj/structure/roguerock,
 /turf/open/floor/naturalstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mzT" = (
 /obj/structure/fluff/railing/wood/north{
 	layer = 2.7;
@@ -8312,7 +8299,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mBr" = (
 /obj/machinery/light/fueled/oven/south,
 /obj/structure/table/wood/reinf_long{
@@ -8346,7 +8333,7 @@
 /obj/structure/fluff/railing/corner/south_east,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mCG" = (
 /obj/effect/decal/edge{
 	dir = 2;
@@ -8360,7 +8347,7 @@
 /area/under/rmh_bedrock)
 "mCM" = (
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mCV" = (
 /obj/structure/flora/pillar,
 /obj/machinery/light/fueled/wallfire/candle/skull,
@@ -8370,7 +8357,7 @@
 	},
 /obj/effect/mine/explosive,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mDG" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -8390,9 +8377,6 @@
 	},
 /turf/open/floor/sandstone_tile,
 /area/under/rmh_desert/tea/hareml)
-"mEV" = (
-/turf/open/floor/sand,
-/area/under/cave)
 "mEW" = (
 /obj/effect/decal/edge{
 	dir = 8;
@@ -8414,7 +8398,7 @@
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "mGh" = (
 /obj/structure/composter/full,
 /obj/item/weapon/shovel/small,
@@ -8427,7 +8411,7 @@
 /turf/open/floor/carpet/lord/right{
 	dir = 1
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mHK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/natural/glass/shard,
@@ -8449,7 +8433,7 @@
 "mIB" = (
 /obj/structure/flora/rock/water,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mIH" = (
 /obj/structure/stairs/fancy/r{
 	dir = 4
@@ -8457,7 +8441,7 @@
 /turf/open/floor/carpet/lord/left{
 	dir = 1
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mIQ" = (
 /obj/effect/decal/cleanable/blood/drip,
 /mob/living/simple_animal/hostile/retaliate/infernal/imp{
@@ -8543,7 +8527,7 @@
 "mQp" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mQE" = (
 /obj/effect/decal/cleanable/dirt/dust{
 	name = "sand";
@@ -8555,7 +8539,7 @@
 "mRq" = (
 /obj/machinery/light/fueled/firebowl/church/unholyfire,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mRY" = (
 /mob/living/simple_animal/hostile/retaliate/gator,
 /turf/open/water/ocean/deep,
@@ -8563,7 +8547,7 @@
 "mSA" = (
 /obj/structure/flora/tree,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mTB" = (
 /obj/effect/decal/cobbleedge{
 	dir = 2;
@@ -8582,7 +8566,7 @@
 "mUk" = (
 /obj/structure/flora/grass/bush_meagre/green2,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mUu" = (
 /turf/open/floor/ruinedwood/chevron,
 /area/indoors/rmh_desert/phouse)
@@ -8659,7 +8643,7 @@
 /obj/effect/decal/cobblerockedge,
 /obj/structure/vine,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "mZQ" = (
 /obj/effect/decal/edge{
 	dir = 4;
@@ -8681,7 +8665,7 @@
 	dir = 8
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "nbB" = (
 /turf/open/floor/sandstone_tile/six,
 /area/under/rmh_desert/ziqurat)
@@ -8742,7 +8726,7 @@
 "ndW" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobblerock,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "neg" = (
 /obj/structure/underworld/ship/smol,
 /obj/effect/decal/cobbleedge{
@@ -8759,17 +8743,17 @@
 "nfg" = (
 /obj/structure/stalagmite,
 /turf/open/floor/cobblerock,
-/area/under/cave)
+/area/indoors/cave/rmh_desertcaves)
 "ngV" = (
 /obj/structure/flora/grass/herb/random,
 /obj/structure/flora/grass/herb/random,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "nhh" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/spawner/map_spawner/loot/dungeon/clothing,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "nhl" = (
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/floor/woodturned,
@@ -8796,7 +8780,7 @@
 	dir = 8
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "njj" = (
 /obj/structure/fluff/railing/corner/south_east,
 /turf/open/floor/tile/harem1,
@@ -8817,10 +8801,10 @@
 "nkS" = (
 /obj/structure/door/weak/bolt,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "nkU" = (
 /turf/open/floor/cobblerock/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "nkV" = (
 /obj/item/natural/wood/plank,
 /obj/item/fertilizer/ash,
@@ -8854,7 +8838,7 @@
 "nmR" = (
 /obj/structure/water_pipe,
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "nne" = (
 /obj/item/natural/brick,
 /turf/open/floor/sandstone,
@@ -8893,7 +8877,7 @@
 	dir = 8
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "nsE" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /mob/living/simple_animal/hostile/retaliate/infernal/imp{
@@ -8908,7 +8892,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/map_spawner/loot/dungeon/tools,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "ntI" = (
 /obj/effect/decal/cobbleedge{
 	dir = 1;
@@ -8979,7 +8963,7 @@
 	dir = 8
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "nxe" = (
 /obj/structure/bars/pipe{
 	dir = 10;
@@ -8996,13 +8980,13 @@
 	pixel_y = 7
 	},
 /turf/open/floor/metal/barograte/open,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "nxT" = (
 /obj/structure/closet/crate/chest/neu_iron,
 /obj/effect/spawner/map_spawner/loot/dungeon/clothing,
 /obj/effect/spawner/map_spawner/loot/potion_vitals,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "nzu" = (
 /obj/structure/fluff/railing/corner/south_east,
 /turf/open/floor/sandstone,
@@ -9069,7 +9053,7 @@
 	dir = 2
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "nCc" = (
 /turf/open/floor/sandstone,
 /area/indoors/rmh_desert/phouse)
@@ -9079,7 +9063,7 @@
 	dir = 9
 	},
 /turf/open/floor/hexstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "nEp" = (
 /obj/structure/fluff/railing/corner/north_east,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -9101,7 +9085,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/metal/barograte/open,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "nFH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/sand/dunes/lightpath,
@@ -9117,7 +9101,7 @@
 /obj/structure/spider/stickyweb,
 /obj/structure/spider/stickyweb,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "nHg" = (
 /obj/structure/fluff/railing/corner{
 	dir = 9
@@ -9136,7 +9120,7 @@
 "nHH" = (
 /obj/structure/bed/mediocre,
 /turf/open/floor/ruinedwood/herringbone_clear,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "nIc" = (
 /obj/structure/fluff/railing/corner/south_west,
 /obj/effect/decal/edge{
@@ -9204,7 +9188,7 @@
 "nQf" = (
 /obj/structure/flora/rock/pile,
 /turf/open/floor/cobblerock/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "nQg" = (
 /obj/structure/carpet/purple,
 /turf/open/floor/tile/harem1,
@@ -9320,7 +9304,7 @@
 	dir = 4
 	},
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "nZz" = (
 /obj/structure/closet/dirthole/closed/loot,
 /obj/effect/spawner/map_spawner/loot/potion_stats,
@@ -9385,10 +9369,10 @@
 	pixel_y = 0
 	},
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ocR" = (
 /turf/closed/indestructible/roguewindow,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ocV" = (
 /obj/structure/fluff/railing/corner/south_east,
 /turf/open/floor/sandstone_tile/six,
@@ -9396,7 +9380,7 @@
 "oda" = (
 /obj/structure/rotation_piece/cog,
 /turf/open/floor/herringbone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "odk" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/machinery/light/fueledstreet/orange/wall{
@@ -9404,7 +9388,7 @@
 	mouse_opacity = 0
 	},
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "odQ" = (
 /turf/open/openspace,
 /area/under/rmh_desert/ziqurat)
@@ -9424,7 +9408,7 @@
 "oeg" = (
 /obj/structure/minecart_rail/railbreak,
 /turf/open/floor/herringbone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oei" = (
 /obj/machinery/light/fueled/firebowl,
 /turf/open/floor/sand/dunes/lightpath,
@@ -9485,7 +9469,7 @@
 "ofT" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ogO" = (
 /obj/effect/decal/cobbleedge{
 	dir = 8;
@@ -9581,7 +9565,7 @@
 /area/outdoors/rmh_air)
 "onh" = (
 /turf/closed/wall/mineral/desert_soapstone,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "onR" = (
 /obj/structure/fluff/railing/border/west,
 /obj/structure/fluff/railing/border/north,
@@ -9613,7 +9597,7 @@
 /area/under/rmh_desert/tea/hareml)
 "ops" = (
 /turf/closed/wall/mineral/wood,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "opG" = (
 /turf/closed/wall/mineral/wooddark/vertical,
 /area/outdoors/rmh_desert/port)
@@ -9636,7 +9620,7 @@
 /obj/structure/water_pipe,
 /obj/structure/rotation_piece/cog,
 /turf/open/floor/metal,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oqV" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/generic,
@@ -9658,7 +9642,7 @@
 /area/under/rmh_desert/tea/hareml)
 "orF" = (
 /turf/closed/wall/mineral/stone/moss,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "orX" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
@@ -9667,7 +9651,7 @@
 	dir = 2
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "osl" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -9695,7 +9679,7 @@
 	layer = 2.81
 	},
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "osI" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -9766,10 +9750,10 @@
 "oxf" = (
 /obj/structure/flora/pillar,
 /turf/closed/wall/mineral/decorstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oyF" = (
 /turf/closed/wall/mineral/stonebrick/reddish,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oyK" = (
 /obj/effect/decal/cobbleedge{
 	dir = 2;
@@ -9790,7 +9774,7 @@
 "ozA" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/closed/wall/mineral/decostone/cand,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ozC" = (
 /obj/structure/fluff/railing/corner/south_east,
 /obj/effect/decal/cleanable/blood/old,
@@ -9813,7 +9797,7 @@
 "oAB" = (
 /obj/structure/roguetent,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "oBH" = (
 /obj/effect/decal/carpet{
 	dir = 8;
@@ -9843,7 +9827,7 @@
 	dir = 4
 	},
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oDW" = (
 /obj/structure/desertbarrier{
 	density = 0
@@ -9853,7 +9837,7 @@
 "oEl" = (
 /obj/structure/flora/hotspring_rocks/small/four,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oEr" = (
 /obj/effect/decal/carpet{
 	dir = 2;
@@ -9900,7 +9884,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oFo" = (
 /obj/structure/flora/junglebush/large,
 /obj/structure/fluff/railing/corner{
@@ -9912,7 +9896,7 @@
 /obj/structure/orphan_smasher,
 /obj/effect/particle_effect/sparks,
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oFB" = (
 /obj/effect/decal/cobblerockedge{
 	dir = 4
@@ -9922,7 +9906,7 @@
 	},
 /obj/structure/vine,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oFU" = (
 /obj/effect/spawner/map_spawner/loot/dungeon/misc,
 /turf/open/floor/sand,
@@ -9934,7 +9918,7 @@
 "oGM" = (
 /obj/structure/fluff/railing/border/north,
 /turf/open/floor/herringbone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oGU" = (
 /obj/structure/fluff/walldeco/chains{
 	icon_state = "chains2";
@@ -9946,7 +9930,7 @@
 /obj/structure/flora/grass/bush/wall/tall/tundra,
 /obj/structure/fluff/railing/wood/west,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oHQ" = (
 /obj/structure/fluff/railing/wood/east,
 /obj/machinery/essence/enchantment_altar{
@@ -9977,7 +9961,7 @@
 /obj/effect/spawner/map_spawner/loot/valuable_jewelry_spawner,
 /obj/effect/spawner/map_spawner/loot/magic,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oJp" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -10001,7 +9985,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "oKk" = (
 /turf/open/floor/tile/brownbrick,
 /area/under/rmh_desert/pyramid)
@@ -10014,25 +9998,25 @@
 	dir = 1
 	},
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oLI" = (
 /obj/structure/fluff/railing/border/west,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/hexstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oLP" = (
 /turf/closed/wall/mineral/desert_soapstone,
 /area/indoors/rmh_desert)
 "oLR" = (
 /obj/effect/spawner/map_spawner/loot/dungeon/clothing,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "oLW" = (
 /turf/open/floor/sand/dunes/citybrick/citybrick3,
 /area/outdoors/rmh_desert/valley)
 "oMd" = (
 /turf/closed/wall/mineral/decorstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oMl" = (
 /obj/structure/fluff/railing/corner{
 	dir = 9
@@ -10099,7 +10083,7 @@
 	dir = 4
 	},
 /turf/open/water/sewer,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "oSn" = (
 /obj/structure/flora/ausbushes/sunnybush,
 /turf/open/floor/grass/mixyel,
@@ -10140,7 +10124,7 @@
 /area/under/rmh_desert/tea/harem)
 "oUQ" = (
 /turf/open/floor/hexstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oVm" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -10182,7 +10166,7 @@
 	pixel_x = 9
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "oYf" = (
 /obj/effect/decal/carpet/kover_darkred,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -10235,7 +10219,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "peu" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/tile/harem1,
@@ -10251,7 +10235,7 @@
 	},
 /obj/structure/door/stone,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "peD" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/tile/diamond,
@@ -10309,7 +10293,7 @@
 	dir = 1
 	},
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "pfH" = (
 /obj/effect/decal/cleanable/blood/gibs/up,
 /turf/open/floor/tile/harem1,
@@ -10332,7 +10316,7 @@
 	alpha = 5
 	},
 /turf/open/floor/carpet/lord/right,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "phH" = (
 /obj/structure/stairs/fancy/l{
 	dir = 1
@@ -10396,7 +10380,7 @@
 	},
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "pnP" = (
 /obj/structure/stairs/fancy/c{
 	dir = 1
@@ -10406,7 +10390,7 @@
 "poe" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobblerock,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "poq" = (
 /obj/effect/decal/cleanable/debris/glass,
 /turf/open/floor/sandstone_tile/five,
@@ -10442,12 +10426,12 @@
 	pixel_y = 0
 	},
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ppe" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ppR" = (
 /mob/living/simple_animal/hostile/retaliate/infernal/imp{
 	del_on_deaggro = 0
@@ -10518,7 +10502,7 @@
 "psp" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "psB" = (
 /obj/effect/decal/cobbleedge{
 	icon_state = "planks_1";
@@ -10549,7 +10533,7 @@
 	dir = 4
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "pts" = (
 /obj/structure/carpet/red,
 /turf/open/floor/churchmarble,
@@ -10558,7 +10542,7 @@
 /obj/structure/water_pipe,
 /obj/structure/bars/grille,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "puw" = (
 /obj/effect/decal/edge{
 	color = "#7a684b";
@@ -10572,7 +10556,7 @@
 	color = "#522f26"
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "puA" = (
 /obj/effect/decal/cobbleedge{
 	dir = 1;
@@ -10592,7 +10576,7 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "pvJ" = (
 /obj/effect/decal/cobbleedge{
 	dir = 1;
@@ -10619,7 +10603,7 @@
 /area/under/rmh_desert/spider)
 "pxT" = (
 /turf/closed/wall/mineral/decostone/end,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "pyh" = (
 /obj/effect/decal/edge{
 	color = "#7a684b"
@@ -10727,7 +10711,7 @@
 	del_on_deaggro = 5999999
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "pHM" = (
 /turf/open/openspace,
 /area/outdoors/rmh_desert/valley)
@@ -10737,7 +10721,7 @@
 	aportalid = "desertunderdark"
 	},
 /turf/open/floor/cobblerock,
-/area/under/cave)
+/area/indoors/cave/rmh_desertcaves)
 "pIk" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -10776,7 +10760,7 @@
 	},
 /obj/structure/table/wood/large/corner/south_west,
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "pOF" = (
 /obj/structure/table/wood/reinf_long{
 	dir = 1;
@@ -10784,7 +10768,7 @@
 	},
 /obj/structure/bars/shop,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "pOT" = (
 /obj/effect/decal/edge_corner{
 	dir = 8;
@@ -10793,7 +10777,7 @@
 	},
 /obj/structure/table/wood/large/corner/north_west,
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "pQU" = (
 /obj/effect/decal/edge{
 	dir = 8;
@@ -10817,7 +10801,7 @@
 	alpha = 2
 	},
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "pRL" = (
 /obj/item/natural/fur{
 	desc = "A piece of fur with color of sands.";
@@ -10855,7 +10839,7 @@
 /area/under/rmh_bedrock)
 "pTy" = (
 /turf/closed/wall/mineral/decostone/center,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "pTD" = (
 /obj/structure/fluff/traveltile{
 	aportalgoesto = "mainmapdesert";
@@ -10882,7 +10866,7 @@
 /area/under/rmh_desert/tea/palacecasemates)
 "pUt" = (
 /turf/open/lava,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "pUZ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/ruinedwood/darker,
@@ -10890,7 +10874,7 @@
 "pVc" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/tile/tilerg,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "pVV" = (
 /obj/effect/decal/shadow_floor{
 	icon = 'icons/effects/atmospherics.dmi';
@@ -10906,14 +10890,14 @@
 	dir = 9
 	},
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "pYh" = (
 /obj/effect/decal/edge{
 	dir = 2;
 	color = "#522f26"
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "pYq" = (
 /obj/structure/closet/crate/chest/wicker,
 /turf/open/floor/sandstone,
@@ -10921,16 +10905,16 @@
 "pYC" = (
 /obj/structure/flora/grass/herb/random,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "pZi" = (
 /obj/structure/kneestingers,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "qan" = (
 /obj/effect/decal/cobblerockedge,
 /obj/structure/vine,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "qbs" = (
 /obj/effect/decal/edge{
 	dir = 4;
@@ -10958,7 +10942,7 @@
 "qdD" = (
 /obj/structure/bars/grille,
 /turf/open/water/sewer,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "qej" = (
 /obj/effect/decal/shadow_floor{
 	icon = 'icons/effects/atmospherics.dmi';
@@ -10999,10 +10983,6 @@
 	},
 /turf/open/floor/ruinedwood/darker,
 /area/indoors/rmh_desert/phouse)
-"qhc" = (
-/obj/structure/stalagmite,
-/turf/open/floor/naturalstone,
-/area/under/cave)
 "qhw" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/carpet/lord/right,
@@ -11038,14 +11018,14 @@
 "qkp" = (
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "qlW" = (
 /obj/structure/stairs/stone{
 	dir = 1
 	},
 /obj/structure/fluff/railing/border/west,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "qmo" = (
 /turf/open/floor/sandstone,
 /area/under/rmh_desert/tea/palacecellar)
@@ -11064,7 +11044,7 @@
 /obj/effect/spawner/map_spawner/loot/medium,
 /obj/effect/spawner/map_spawner/loot/potion_stats,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "qos" = (
 /obj/structure/fluff/railing/border/west,
 /obj/machinery/light/fueled/torchholder/c,
@@ -11077,7 +11057,7 @@
 	},
 /obj/structure/flora/hotspring_rocks/small/five,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "qpu" = (
 /obj/effect/decal/shadow_floor{
 	icon = 'icons/effects/atmospherics.dmi';
@@ -11140,7 +11120,7 @@
 "qse" = (
 /obj/structure/bars,
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "qti" = (
 /obj/effect/decal/edge{
 	dir = 1;
@@ -11172,12 +11152,12 @@
 	pixel_y = 0
 	},
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "qvy" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "qvH" = (
 /obj/effect/decal/mossy{
 	dir = 8;
@@ -11245,7 +11225,7 @@
 	color = "#522f26"
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "qES" = (
 /obj/structure/stalagmite,
 /turf/open/floor/naturalstone,
@@ -11374,7 +11354,7 @@
 "qTp" = (
 /obj/structure/lootable_structure/fish_barrel,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "qTr" = (
 /obj/structure/chair/stool,
 /turf/open/floor/sandstone,
@@ -11386,7 +11366,7 @@
 "qTX" = (
 /obj/structure/bars,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "qUh" = (
 /obj/effect/decal/carpet,
 /obj/structure/fluff/pillow/green{
@@ -11427,7 +11407,7 @@
 "qXn" = (
 /obj/machinery/light/fueledstreet/midlamp,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "qZE" = (
 /turf/open/floor/volcanic,
 /area/outdoors/rmh_desert/valley)
@@ -11448,7 +11428,7 @@
 	alpha = 5
 	},
 /turf/open/floor/carpet/lord/left,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "raL" = (
 /obj/item/natural/glass/shard,
 /turf/open/floor/sandstone_tile/five,
@@ -11464,7 +11444,7 @@
 	light_power = 2
 	},
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rbb" = (
 /turf/open/openspace,
 /area/under/rmh_desert/pyramid)
@@ -11480,7 +11460,7 @@
 "rbY" = (
 /obj/effect/spawner/map_spawner/hauntpile,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rcq" = (
 /obj/structure/fluff/railing/wood/west,
 /turf/open/floor/sandstone_tile/six,
@@ -11489,7 +11469,7 @@
 /turf/open/floor/carpet/lord/right{
 	dir = 1
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rdt" = (
 /obj/item/natural/wood/plank,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -11499,10 +11479,10 @@
 /obj/structure/fluff/railing/corner/north_east,
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "reb" = (
 /turf/open/floor/metal/barograte/open,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rei" = (
 /obj/structure/fluff/railing/border/east,
 /turf/open/openspace,
@@ -11512,10 +11492,10 @@
 /area/under/rmh_desert/tea/hareml)
 "rip" = (
 /turf/closed/wall/mineral/wooddark,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "riH" = (
 /turf/closed/wall/mineral/stone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "rjg" = (
 /obj/effect/decal/edge_corner{
 	dir = 8;
@@ -11586,7 +11566,7 @@
 "rmt" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "rnC" = (
 /obj/structure/spider/nest,
 /turf/open/floor/sand/sandstone,
@@ -11602,7 +11582,7 @@
 /area/under/rmh_desert/tea/harem)
 "ros" = (
 /turf/open/floor/tile/tilerg,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rqg" = (
 /obj/structure/chair/stool,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -11649,7 +11629,7 @@
 	},
 /obj/structure/table/wood/large/corner/south_east,
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rvC" = (
 /obj/machinery/light/fueled/firebowl,
 /turf/open/floor/sand/dunes/lightpath,
@@ -11657,7 +11637,7 @@
 "rxk" = (
 /obj/structure/rotation_piece/cog/large,
 /turf/open/floor/metal,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rxy" = (
 /obj/structure/fluff/railing/wood/north,
 /turf/open/floor/ruinedwood,
@@ -11669,7 +11649,7 @@
 "ryg" = (
 /obj/structure/door/stone,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ryv" = (
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/ruinedwood/darker,
@@ -11709,7 +11689,7 @@
 /area/outdoors/rmh_air)
 "rzx" = (
 /turf/open/floor/naturalstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rzH" = (
 /obj/structure/stairs/fancy/l{
 	dir = 1
@@ -11734,7 +11714,7 @@
 	pixel_y = -17
 	},
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rBv" = (
 /turf/open/floor/ruinedwood/darker,
 /area/outdoors/rmh_desert/valley)
@@ -11755,10 +11735,10 @@
 	dir = 8
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rDC" = (
 /turf/closed/wall/mineral/stone/window/moss/red,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rDK" = (
 /obj/structure/spider/stickyweb,
 /obj/structure/spider/nest,
@@ -11769,7 +11749,7 @@
 /area/under/rmh_desert/spider)
 "rDP" = (
 /turf/open/floor/grass/eora,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rEc" = (
 /obj/structure/fluff/railing/wood/north{
 	layer = 2.7;
@@ -11829,13 +11809,13 @@
 /obj/structure/bed/mediocre,
 /obj/machinery/light/fueled/wallfire/candle/weak/r,
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rIB" = (
 /obj/effect/decal/cobblerockedge{
 	dir = 9
 	},
 /turf/open/floor/dirt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rIJ" = (
 /obj/structure/fluff{
 	icon_state = "woodchestalt";
@@ -11854,7 +11834,7 @@
 /area/under/rmh_desert/tea/palacecellar)
 "rIL" = (
 /turf/open/floor/dirt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rJO" = (
 /obj/effect/decal/edge{
 	color = "#7a684b"
@@ -11910,7 +11890,7 @@
 /turf/closed/wall/mineral/decostone/end{
 	dir = 1
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rOz" = (
 /obj/machinery/light/fueled/firebowl/stump{
 	status = 3;
@@ -11955,7 +11935,7 @@
 	mouse_opacity = 0
 	},
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rTi" = (
 /obj/structure/fluff/railing/corner{
 	dir = 9
@@ -11965,7 +11945,7 @@
 /area/under/rmh_desert/tea/palacecasemates)
 "rUi" = (
 /turf/closed/wall/mineral/stonebrick/reddish,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "rUw" = (
 /obj/structure/fluff/railing/corner/south_west,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -11980,7 +11960,7 @@
 "rUF" = (
 /obj/structure/flora/grass/bush/wall/tundra,
 /turf/open/floor/dirt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rUR" = (
 /obj/structure/spider/stickyweb,
 /turf/open/floor/sandstone,
@@ -12021,7 +12001,7 @@
 "rXA" = (
 /obj/effect/spawner/trap,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "rYe" = (
 /obj/structure/train/far_travel,
 /turf/open/floor/sand/dunes/lightpath,
@@ -12047,7 +12027,7 @@
 	dir = 1
 	},
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "sbV" = (
 /obj/structure/bars/pipe{
 	dir = 4;
@@ -12063,7 +12043,7 @@
 	},
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/metal/barograte/open,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "sdG" = (
 /obj/machinery/light/fueled/firebowl,
 /turf/open/floor/sand/dunes/sandbrick,
@@ -12080,14 +12060,14 @@
 	},
 /obj/structure/underworld/barrier,
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "sfY" = (
 /turf/open/floor/tile,
 /area/under/rmh_desert/tea/palacecellar)
 "sgG" = (
 /obj/structure/flora/grass/bush/wall/tall/green,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "sgM" = (
 /obj/item/natural/glass/shard,
 /turf/open/floor/tile/masonic/spiral,
@@ -12100,7 +12080,7 @@
 "shO" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "shW" = (
 /obj/effect/spawner/map_spawner/hauntpile,
 /turf/open/floor/sandstone,
@@ -12119,7 +12099,7 @@
 	dir = 4
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "sjY" = (
 /obj/structure/fluff/railing/border/west,
 /obj/structure/fluff/railing/border,
@@ -12155,18 +12135,18 @@
 	},
 /obj/effect/particle_effect/sparks,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "slu" = (
 /obj/structure/fluid_drain,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "slC" = (
 /obj/structure/door/weak/bolt{
 	dir = 2
 	},
 /obj/effect/spawner/trap,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "slL" = (
 /obj/effect/decal/carpet{
 	dir = 1;
@@ -12219,7 +12199,7 @@
 /obj/structure/bed/shit,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "sor" = (
 /obj/structure/flora/ausbushes/reedbush,
 /turf/open/floor/dirt,
@@ -12229,13 +12209,13 @@
 /turf/open/water/river{
 	dir = 8
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "soX" = (
 /obj/structure/bars,
 /turf/open/water/river{
 	dir = 8
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "spn" = (
 /obj/structure/fluff/railing/border{
 	dir = 4
@@ -12288,7 +12268,7 @@
 	},
 /obj/effect/particle_effect/sparks,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "srv" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/natural/wood/plank,
@@ -12327,7 +12307,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/remains/human,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "svr" = (
 /obj/structure/stairs/stone/reddish{
 	dir = 4
@@ -12345,12 +12325,12 @@
 "svN" = (
 /obj/machinery/light/fueledstreet/midlamp,
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "swJ" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "swX" = (
 /obj/effect/mapping_helpers/secret_door_creator{
 	redstone_id = "pyramid1";
@@ -12390,7 +12370,7 @@
 /obj/structure/flora/pillar,
 /obj/machinery/light/fueled/wallfire/candle/skull/l,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "syY" = (
 /obj/structure/flora/grass,
 /obj/effect/landmark/quest_spawner,
@@ -12399,7 +12379,7 @@
 "szb" = (
 /obj/structure/table/wood/large/corner/middle_east,
 /turf/open/floor/blocks/stonered,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "szV" = (
 /obj/structure/chair/stool,
 /obj/effect/decal/wood/herringbone,
@@ -12475,7 +12455,7 @@
 /area/outdoors/rmh_desert/port)
 "sBU" = (
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "sCW" = (
 /obj/effect/decal/edge{
 	dir = 2;
@@ -12630,7 +12610,7 @@
 	},
 /obj/effect/particle_effect/sparks,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "sPW" = (
 /obj/structure/table/wood/plain/alt,
 /turf/open/floor/wood,
@@ -12643,7 +12623,7 @@
 /turf/open/floor/carpet/lord/left{
 	dir = 1
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "sRO" = (
 /turf/open/floor/sandstone_tile/six,
 /area/outdoors/rmh_desert/valley)
@@ -12695,7 +12675,7 @@
 	dir = 1
 	},
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "sXU" = (
 /obj/structure/fluff/railing/border/east,
 /obj/structure/fluff/railing/corner/south_east,
@@ -12777,7 +12757,7 @@
 "tdp" = (
 /obj/structure/bridge,
 /turf/open/water/sewer,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "tdR" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
@@ -12787,7 +12767,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "tfc" = (
 /obj/structure/door/weak/bolt{
 	dir = 8
@@ -12822,7 +12802,7 @@
 	lifetime = 14400
 	},
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "thf" = (
 /obj/structure/flora/grass/thorn_bush,
 /obj/effect/decal/shadow_floor{
@@ -12864,7 +12844,7 @@
 "tmk" = (
 /obj/machinery/light/fueled/firebowl/standing/blue,
 /turf/closed/wall/mineral/craftstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "tml" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/fertilizer/ash,
@@ -12914,7 +12894,7 @@
 	dir = 4
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "tnK" = (
 /obj/effect/spawner/trap,
 /turf/open/floor/sandstone,
@@ -12958,18 +12938,18 @@
 "tpu" = (
 /obj/structure/fluff/railing/corner,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "tqv" = (
 /obj/structure/flora/hotspring_rocks/grassy,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "tqz" = (
 /obj/effect/decal/cobblerockedge{
 	dir = 4
 	},
 /obj/effect/decal/cobblerockedge,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "tqG" = (
 /obj/effect/decal/cobbleedge{
 	dir = 8;
@@ -12985,7 +12965,7 @@
 	plane = -6
 	},
 /turf/open/floor/grass/eora,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "tsA" = (
 /mob/living/simple_animal/hostile/retaliate/infernal/watcher{
 	del_on_deaggro = 0
@@ -13020,7 +13000,7 @@
 "tuN" = (
 /obj/effect/waterfall,
 /turf/open/water/river,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "twt" = (
 /obj/structure/closet/crate/chest/wicker,
 /turf/open/floor/sand/dunes,
@@ -13037,7 +13017,7 @@
 	dir = 1
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "txk" = (
 /obj/structure/stairs/fancy/r{
 	dir = 1
@@ -13083,7 +13063,7 @@
 /obj/machinery/light/fueled/wallfire/candle/weak/r,
 /obj/effect/spawner/map_spawner/loot/dungeon/clothing,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "tAH" = (
 /obj/machinery/light/fueled/torchholder/hotspring/standing,
 /turf/open/floor/grass,
@@ -13172,7 +13152,7 @@
 /turf/open/water/river{
 	dir = 8
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "tGk" = (
 /obj/item/natural/silk,
 /turf/open/floor/tile/diamond,
@@ -13244,7 +13224,7 @@
 "tKT" = (
 /obj/structure/flora/rock,
 /turf/open/floor/cobblerock/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "tLw" = (
 /obj/structure/fluff/railing/border{
 	dir = 4
@@ -13267,7 +13247,7 @@
 	dir = 8
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "tLV" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/remains/human,
@@ -13277,7 +13257,7 @@
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "tMV" = (
 /turf/open/floor/tile/brownbrick,
 /area/indoors/rmh_desert/phouse)
@@ -13337,7 +13317,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "tSy" = (
 /obj/structure/fluff{
 	icon_state = "chest_neu";
@@ -13385,7 +13365,7 @@
 	},
 /obj/effect/particle_effect/sparks,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "tUd" = (
 /obj/effect/decal/edge{
 	color = "#7a684b";
@@ -13426,7 +13406,7 @@
 "tXs" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/herringbone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "tYt" = (
 /obj/effect/decal/edge{
 	color = "#7a684b";
@@ -13531,7 +13511,7 @@
 "uiS" = (
 /obj/structure/fluff/steamvent,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "uju" = (
 /obj/structure/flora/grass/bush_meagre/yellow,
 /turf/open/floor/sand/dunes,
@@ -13541,14 +13521,14 @@
 	dir = 4
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ukW" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/tile/diamond,
 /area/under/rmh_desert/tea/palacecasemates)
 "ulc" = (
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ulf" = (
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_y = -32
@@ -13581,7 +13561,7 @@
 "uma" = (
 /obj/structure/fluff/statue/aasimar,
 /turf/open/water/cleanshallow,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "umN" = (
 /obj/item/fertilizer/ash,
 /turf/open/floor/churchmarble,
@@ -13608,15 +13588,15 @@
 	dir = 5
 	},
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "unV" = (
 /obj/structure/closet/burial_shroud,
 /turf/open/floor/dirt,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "uoa" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/closed/mineral/bedrock/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "uoA" = (
 /turf/closed/wall/mineral/desert_soapstone,
 /area/under/rmh_desert/tea/hareml)
@@ -13630,12 +13610,12 @@
 /turf/open/water/river{
 	dir = 8
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "uqf" = (
 /obj/structure/fluff/clodpile,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/greenstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "uqZ" = (
 /turf/open/floor/sand/dunes/darkpath,
 /area/outdoors/rmh_desert/valley)
@@ -13654,7 +13634,7 @@
 	dir = 8
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "usQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -13706,12 +13686,12 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "uyz" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/map_spawner/loot/dungeon/misc,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "uyU" = (
 /obj/structure/shisha/hookah,
 /turf/open/floor/tile/diamond,
@@ -13758,7 +13738,7 @@
 "uBJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/dirt,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "uDu" = (
 /obj/structure/fluff/railing/border{
 	dir = 5
@@ -13784,7 +13764,7 @@
 	dir = 4
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "uEU" = (
 /obj/structure/fluff/railing/wood/west,
 /turf/open/floor/sand/dunes/sandbrick,
@@ -13801,7 +13781,7 @@
 	redstone_id = "dw"
 	},
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "uFN" = (
 /obj/structure/curtain/red,
 /turf/closed/wall/mineral/desert_sandstone,
@@ -13818,7 +13798,7 @@
 /obj/effect/decal/cleanable/blood/gibs/core,
 /obj/machinery/light/fueled/wallfire/candle/weak/r,
 /turf/open/floor/tile/tilerg,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "uID" = (
 /obj/structure/fluff/railing/corner/south_east,
 /obj/effect/decal/edge{
@@ -13851,7 +13831,7 @@
 /obj/effect/spawner/map_spawner/loot/dungeon/medical,
 /obj/effect/spawner/map_spawner/loot/potion_stats,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "uJu" = (
 /obj/item/reagent_containers/glass/bottle/vial/stronghealthpot,
 /turf/open/floor/tile/kitchen,
@@ -13861,7 +13841,7 @@
 	dir = 9
 	},
 /turf/open/floor/herringbone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "uLh" = (
 /obj/structure/stairs/stone/reddish{
 	dir = 4
@@ -13901,11 +13881,11 @@
 /obj/structure/table/stone_small,
 /obj/effect/spawner/map_spawner/loot/decrepit_equipment_spawner,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "uMy" = (
 /obj/machinery/light/fueled/wallfire/candle/weak/r,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "uQd" = (
 /obj/structure/fluff/railing/wood/west,
 /turf/open/floor/woodturned,
@@ -14004,7 +13984,7 @@
 	pixel_y = 5
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "uWO" = (
 /obj/item/fertilizer/ash,
 /obj/item/natural/silk,
@@ -14038,7 +14018,7 @@
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "uZN" = (
 /turf/open/floor/sandstone_tile,
 /area/under/rmh_desert/tea/hareml)
@@ -14102,7 +14082,7 @@
 "vcx" = (
 /obj/structure/underworld/barrier,
 /turf/closed/wall/mineral/decostone/cand/reddish,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vcB" = (
 /obj/machinery/light/fueled/firebowl/standing/blue,
 /turf/open/floor/greenstone/runed,
@@ -14134,7 +14114,7 @@
 	lifetime = 14400
 	},
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vfj" = (
 /obj/structure/flora/grass,
 /turf/open/floor/grass/mixyel,
@@ -14209,7 +14189,7 @@
 	},
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vhp" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/effect/decal/cleanable/blood,
@@ -14231,7 +14211,7 @@
 	plane = -6
 	},
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vit" = (
 /turf/closed/wall/mineral/desert_sandstone/window,
 /area/indoors/rmh_desert/phouse)
@@ -14246,7 +14226,7 @@
 	},
 /obj/structure/table/wood/large/corner/north_east,
 /turf/open/floor/blocks/stonered/tiny,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vku" = (
 /obj/structure/fluff/railing/corner/south_west,
 /obj/structure/fluff/railing/corner/north_east{
@@ -14286,11 +14266,11 @@
 /area/indoors/rmh_desert)
 "vnl" = (
 /turf/open/floor/mushroom/blue,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vnp" = (
 /obj/structure/flora/rock/pile,
 /turf/open/floor/naturalstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vnK" = (
 /obj/structure/fluff/railing/border/north,
 /obj/item/natural/brick,
@@ -14327,7 +14307,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/map_spawner/loot/dungeon/misc,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "vrh" = (
 /obj/effect/decal/edge{
 	dir = 1;
@@ -14343,7 +14323,7 @@
 "vsf" = (
 /obj/structure/rack/shelf/biggest,
 /turf/open/floor/cobble,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "vsA" = (
 /turf/open/floor/twig,
 /area/outdoors/rmh_desert/port)
@@ -14357,7 +14337,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vtw" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -14414,7 +14394,7 @@
 	},
 /obj/effect/decal/cleanable/greenglow,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vwR" = (
 /obj/item/fertilizer/ash,
 /turf/open/floor/tile/diamond,
@@ -14433,7 +14413,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vxy" = (
 /obj/structure/fluff/walldeco/vinez,
 /turf/closed/wall/mineral/wood,
@@ -14454,7 +14434,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/spawner/map_spawner/loot/dungeon/misc,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "vzt" = (
 /turf/closed/wall/mineral/desert_sandstone,
 /area/under/rmh_desert/tea/palacecasemates)
@@ -14493,7 +14473,7 @@
 "vzS" = (
 /obj/effect/decal/cobblerockedge,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vAd" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/debris/glass,
@@ -14508,7 +14488,7 @@
 	},
 /obj/item/weapon/surgery/saw,
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vBQ" = (
 /obj/effect/decal/carpet,
 /obj/structure/fluff/pillow/red{
@@ -14546,7 +14526,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vEj" = (
 /obj/effect/decal/mossy,
 /turf/open/floor/dirt,
@@ -14609,7 +14589,7 @@
 /turf/open/water/river{
 	dir = 8
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vHo" = (
 /obj/structure/fluff/railing/corner/north_east,
 /obj/effect/decal/cobbleedge{
@@ -14626,7 +14606,7 @@
 "vIf" = (
 /obj/structure/underworld/barrier,
 /turf/closed/wall/mineral/stonebrick/reddish,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vJk" = (
 /obj/effect/decal/carpet{
 	dir = 1;
@@ -14645,7 +14625,7 @@
 	},
 /obj/machinery/light/fueled/wallfire/candle/skull/l,
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vJu" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -14669,7 +14649,7 @@
 "vMj" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/cobble/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vNT" = (
 /obj/structure/ladder/hatch{
 	pixel_y = 7
@@ -14686,7 +14666,7 @@
 /obj/structure/table/stone_small,
 /obj/effect/spawner/map_spawner/loot/dungeon/medical,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vQr" = (
 /obj/structure/fluff/railing/border/east,
 /obj/machinery/light/fueled/torchholder/c,
@@ -14701,7 +14681,7 @@
 "vRw" = (
 /obj/structure/flora/grass/bush/wall,
 /turf/open/floor/sand/dunes/darkpath,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vRE" = (
 /obj/structure/stairs/fancy/r{
 	dir = 1
@@ -14712,12 +14692,12 @@
 /obj/machinery/light/fueled/wallfire/candle/skull,
 /obj/structure/flora/pillar,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vTD" = (
 /obj/structure/bars,
 /obj/structure/water_pipe,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vUa" = (
 /obj/structure/curtain/purple,
 /turf/open/floor/sandstone_tile,
@@ -14753,7 +14733,7 @@
 "vXi" = (
 /obj/structure/door/viewport/stone,
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vXX" = (
 /obj/structure/fluff/railing/border/west,
 /obj/structure/fluff/railing/border/north,
@@ -14766,7 +14746,7 @@
 "vYi" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "vYn" = (
 /obj/effect/decal/mossy,
 /obj/effect/decal/cobbleedge/mossy{
@@ -14800,7 +14780,7 @@
 	dir = 4
 	},
 /turf/open/floor/tile,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wbO" = (
 /obj/effect/decal/cobbleedge{
 	dir = 8;
@@ -14817,7 +14797,7 @@
 /turf/open/water/river{
 	dir = 8
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wbW" = (
 /obj/effect/decal/edge{
 	color = "#7a684b";
@@ -14838,7 +14818,7 @@
 /obj/structure/minecart_rail,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/herringbone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wcU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -14887,7 +14867,7 @@
 /area/outdoors/rmh_desert/valley)
 "wgM" = (
 /turf/closed/basic,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "whb" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/blood/gibs/up,
@@ -14896,7 +14876,7 @@
 "wiN" = (
 /obj/structure/flora/rock/coral,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wiU" = (
 /obj/effect/decal/cobbleedge{
 	dir = 1;
@@ -14915,7 +14895,7 @@
 	dir = 6
 	},
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wlb" = (
 /obj/machinery/light/fueled/firebowl,
 /turf/open/floor/sand/dunes/sandbrick,
@@ -14923,7 +14903,7 @@
 "wlt" = (
 /obj/machinery/light/fueled/firebowl/firebowlb,
 /turf/closed/wall/mineral/decostone/cand,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wlC" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/tile/harem1,
@@ -14994,7 +14974,7 @@
 "wqT" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wra" = (
 /obj/structure/spider/nest,
 /turf/open/floor/sand{
@@ -15024,7 +15004,7 @@
 	},
 /obj/effect/particle_effect/sparks,
 /turf/open/floor/metal/barograte,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wsV" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /mob/living/simple_animal/hostile/retaliate/infernal/hellhound{
@@ -15034,7 +15014,7 @@
 /area/under/rmh_desert/tea/palacecellar)
 "wtX" = (
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wum" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/sandstone,
@@ -15075,10 +15055,10 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wwI" = (
 /turf/open/floor/dirt/road,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wwQ" = (
 /turf/open/floor/ruinedwood/spiralfade,
 /area/outdoors/rmh_desert/valley)
@@ -15177,7 +15157,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wFS" = (
 /turf/open/floor/ruinedwood/turned,
 /area/outdoors/rmh_desert/roofs)
@@ -15229,7 +15209,7 @@
 	},
 /obj/structure/vine,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wIC" = (
 /obj/structure/carpet/red,
 /turf/open/floor/sandstone_tile,
@@ -15245,12 +15225,12 @@
 /obj/effect/spawner/map_spawner/hauntpile,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wLv" = (
 /obj/structure/flora/grass/bush/wall/tall/tundra,
 /obj/structure/fluff/railing/wood/east,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wLI" = (
 /obj/structure/fluff{
 	icon_state = "chest_neu";
@@ -15341,7 +15321,7 @@
 /obj/machinery/light/fueled/firebowl/church/unholyfire,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/churchmarble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wSW" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/tile/brownbrick,
@@ -15351,7 +15331,7 @@
 /area/indoors/rmh_desert)
 "wTV" = (
 /turf/closed/indestructible/wooddark,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wTW" = (
 /obj/machinery/light/fueled/firebowl/church{
 	status = 3;
@@ -15386,15 +15366,15 @@
 "wXu" = (
 /obj/structure/flora/hotspring_rocks/small/three,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wXz" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wXQ" = (
 /obj/structure/flora/grass/bush/wall/tundra,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wYw" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -15422,7 +15402,7 @@
 	mouse_opacity = 0
 	},
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "wZo" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/gibs/body,
@@ -15432,7 +15412,7 @@
 "xab" = (
 /obj/structure/fluff/steamvent,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xau" = (
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/machinery/light/fueledstreet/orange/wall{
@@ -15440,7 +15420,7 @@
 	mouse_opacity = 0
 	},
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xbr" = (
 /obj/effect/mapping_helpers/secret_door_creator{
 	name = "Desert DungeonMain Door";
@@ -15454,16 +15434,16 @@
 	redstone_id = "dungeon1"
 	},
 /turf/closed/wall/mineral/decostone/long,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xdA" = (
 /obj/structure/fluff/railing/corner/south_west,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/metal/alt,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xdG" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "xee" = (
 /obj/structure/fluff/railing/border/east,
 /turf/open/floor/sandstone,
@@ -15489,7 +15469,7 @@
 "xeN" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xfZ" = (
 /obj/structure/flora/junglebush,
 /turf/open/floor/sand/desertsand/oasis,
@@ -15513,11 +15493,11 @@
 	dir = 1
 	},
 /turf/open/floor/carpet/lord/right,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xiV" = (
 /obj/structure/rotation_piece/cog,
 /turf/closed/wall/mineral/stonebrick/reddish,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xkV" = (
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -15543,7 +15523,7 @@
 	dir = 4
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xmy" = (
 /obj/effect/decal/cleanable/dirt/paper{
 	dir = 8
@@ -15562,7 +15542,7 @@
 /obj/structure/fluff/walldeco/church/line,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xor" = (
 /obj/structure/door/red,
 /turf/open/floor/ruinedwood/spiral,
@@ -15605,7 +15585,7 @@
 /turf/open/water/river{
 	dir = 8
 	},
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xtU" = (
 /mob/living/simple_animal/hostile/retaliate/spider,
 /obj/structure/spider/stickyweb,
@@ -15649,7 +15629,7 @@
 	redstone_id = "ds"
 	},
 /turf/open/floor/concrete,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xyM" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/blocks/stonered/tiny,
@@ -15662,7 +15642,7 @@
 "xzy" = (
 /obj/machinery/light/fueled/campfire,
 /turf/open/floor/sandstone,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "xzO" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/fluff/railing/corner/south_west,
@@ -15678,11 +15658,11 @@
 	name = "meat chest"
 	},
 /turf/open/floor/cobblerock,
-/area/under/town/rmh/basement)
+/area/under/town/rmh/basement/basement)
 "xBv" = (
 /obj/machinery/light/fueled/firebowl,
 /turf/closed/wall/mineral/decostone/cand,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xBG" = (
 /obj/effect/decal/edge{
 	color = "#7a684b"
@@ -15698,13 +15678,13 @@
 "xCs" = (
 /obj/item/natural/rock/random,
 /turf/open/floor/naturalstone,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xCy" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xCz" = (
 /turf/open/floor/sandstone,
 /area/outdoors/rmh_desert/port)
@@ -15773,7 +15753,7 @@
 	dir = 8
 	},
 /turf/open/floor/church,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xIs" = (
 /obj/effect/decal/edge{
 	dir = 4;
@@ -15821,7 +15801,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/map_spawner/loot/decrepit_equipment_spawner,
 /turf/open/floor/tile/brownbrick,
-/area/under/town/sewer)
+/area/under/town/rmh/sewer)
 "xJx" = (
 /turf/closed/mineral/bedrock{
 	name = "solid rock"
@@ -15845,7 +15825,7 @@
 "xKv" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xLo" = (
 /obj/effect/decal/cleanable/debris/wood,
 /turf/open/floor/ruinedwood/spiral,
@@ -15899,7 +15879,7 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xRG" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -15913,7 +15893,7 @@
 "xRJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/blocks,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xRP" = (
 /obj/structure/curtain/brown,
 /turf/open/floor/sandstone,
@@ -15973,14 +15953,14 @@
 	dir = 10
 	},
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xWD" = (
 /turf/closed/mineral/random/low_valuable,
 /area/indoors/cave/rmh_desertcaves)
 "xXv" = (
 /obj/structure/flora/grass/bush_meagre/green,
 /turf/open/floor/grass/healthy,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "xYH" = (
 /obj/structure/closet/dirthole/closed/loot,
 /turf/open/floor/sand{
@@ -16026,7 +16006,7 @@
 /area/outdoors/rmh_desert/valley)
 "ycL" = (
 /turf/open/floor/cobble,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ycT" = (
 /obj/structure/fluff/railing/corner/south_west,
 /turf/open/floor/tile/harem1,
@@ -16037,13 +16017,13 @@
 	pixel_x = -7
 	},
 /turf/open/floor/churchrough,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "ygW" = (
 /obj/effect/decal/cobblerockedge{
 	dir = 9
 	},
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "yhd" = (
 /obj/machinery/light/fueled/firebowl,
 /turf/open/floor/sandstone_tile,
@@ -16073,7 +16053,7 @@
 "yku" = (
 /obj/structure/flora/grass/bush_meagre/tundra,
 /turf/open/floor/grass/cold,
-/area/under/cave/mazedungeon)
+/area/under/rmh_dungeon)
 "yll" = (
 /turf/open/floor/sand/dunes/lightpath,
 /area/outdoors/rmh_desert/valley)
@@ -62692,8 +62672,8 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -62947,10 +62927,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-qhc
-mEV
-dDq
+xvB
+qES
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -63203,10 +63183,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-mEV
-mEV
+xvB
+xvB
+nQv
+nQv
 pTl
 pTl
 pTl
@@ -63460,10 +63440,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-mEV
-mEV
+xvB
+nQv
+nQv
+nQv
 pTl
 pTl
 pTl
@@ -63716,10 +63696,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-mEV
-dDq
+xvB
+nQv
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -63973,9 +63953,9 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-dDq
+xvB
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -64229,10 +64209,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-qhc
-dDq
+xvB
+xvB
+qES
+xvB
 pTl
 pTl
 pTl
@@ -64485,10 +64465,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
+xvB
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -64742,10 +64722,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
+xvB
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -64999,9 +64979,9 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-dDq
+xvB
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -65254,11 +65234,11 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-mEV
-mEV
-dDq
+xvB
+xvB
+nQv
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -65510,11 +65490,11 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-mEV
-mEV
-dDq
+xvB
+xvB
+nQv
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -65766,12 +65746,12 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-mEV
-dDq
-dDq
+xvB
+xvB
+xvB
+nQv
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -66022,12 +66002,12 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-qhc
-mEV
-mEV
-mEV
+xvB
+xvB
+qES
+nQv
+nQv
+nQv
 pTl
 pTl
 pTl
@@ -66279,12 +66259,12 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
-mEV
-dDq
+xvB
+xvB
+xvB
+xvB
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -66535,13 +66515,13 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
-mEV
-mEV
-dDq
+xvB
+xvB
+xvB
+xvB
+nQv
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -66791,12 +66771,12 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
-mEV
-mEV
+xvB
+xvB
+xvB
+xvB
+nQv
+nQv
 pTl
 pTl
 pTl
@@ -67048,12 +67028,12 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-mEV
-mEV
-mEV
-dDq
+xvB
+xvB
+nQv
+nQv
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -67304,13 +67284,13 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-mEV
-mEV
-mEV
-dDq
-dDq
+xvB
+xvB
+nQv
+nQv
+nQv
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -67561,13 +67541,13 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-mEV
-dDq
-dDq
-dDq
-dDq
+xvB
+nQv
+nQv
+xvB
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -67818,11 +67798,11 @@ pTl
 pTl
 pTl
 pTl
-mEV
-mEV
-dDq
-qhc
-dDq
+nQv
+nQv
+xvB
+qES
+xvB
 pTl
 pTl
 pTl
@@ -68074,12 +68054,12 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -68330,12 +68310,12 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -68586,12 +68566,12 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-mEV
-dDq
-dDq
+xvB
+xvB
+xvB
+nQv
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -68843,11 +68823,11 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-mEV
-dDq
+xvB
+xvB
+xvB
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -69099,12 +69079,12 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-qhc
-mEV
-dDq
-dDq
+xvB
+xvB
+qES
+nQv
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -69355,12 +69335,12 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-mEV
-mEV
-mEV
-dDq
+xvB
+nQv
+nQv
+nQv
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -69611,12 +69591,12 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-mEV
-mEV
-mEV
-dDq
+xvB
+nQv
+nQv
+nQv
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -69867,12 +69847,12 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-mEV
-mEV
-dDq
-dDq
+xvB
+nQv
+nQv
+nQv
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -70122,13 +70102,13 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-mEV
-mEV
-dDq
-dDq
-dDq
+xvB
+xvB
+nQv
+nQv
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -70377,14 +70357,14 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
-mEV
-mEV
-dDq
-dDq
+xvB
+xvB
+xvB
+xvB
+nQv
+nQv
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -70634,13 +70614,13 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-kJb
-mEV
-dDq
-dDq
+xvB
+xvB
+xvB
+jTA
+nQv
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -70890,13 +70870,13 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-mEV
-mEV
-mEV
-dDq
-dDq
+xvB
+xvB
+nQv
+nQv
+nQv
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -71144,15 +71124,15 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-mEV
-mEV
-mEV
-mEV
-mEV
-dDq
-dDq
+xvB
+xvB
+nQv
+nQv
+nQv
+nQv
+nQv
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -71398,15 +71378,15 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
-dDq
-mEV
-dDq
-mEV
-mEV
+xvB
+xvB
+xvB
+xvB
+xvB
+nQv
+xvB
+nQv
+nQv
 pTl
 pTl
 pTl
@@ -71651,17 +71631,17 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
-qhc
-dDq
-mEV
-mEV
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
+qES
+xvB
+nQv
+nQv
 pTl
 pTl
 pTl
@@ -71904,20 +71884,20 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
-qhc
-dDq
-mEV
-mEV
-mEV
-mEV
-mEV
-mEV
-dDq
-dDq
+xvB
+xvB
+xvB
+xvB
+qES
+xvB
+nQv
+nQv
+nQv
+nQv
+nQv
+nQv
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -72159,21 +72139,21 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
-mEV
-dDq
-mEV
-mEV
-mEV
-mEV
-dDq
-dDq
-dDq
-dDq
-dDq
+xvB
+xvB
+xvB
+xvB
+nQv
+xvB
+nQv
+nQv
+nQv
+nQv
+xvB
+xvB
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -72406,27 +72386,27 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
-mEV
-mEV
-mEV
-mEV
-mEV
-mEV
-mEV
-dDq
-dDq
-dDq
-dDq
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
+nQv
+nQv
+nQv
+nQv
+nQv
+nQv
+nQv
+xvB
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -72663,24 +72643,24 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
-qhc
-dDq
-mEV
-mEV
-mEV
-mEV
-mEV
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
+xvB
+xvB
+xvB
+xvB
+qES
+xvB
+nQv
+nQv
+nQv
+nQv
+nQv
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -72914,27 +72894,27 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
-mEV
-mEV
-mEV
-mEV
-mEV
-mEV
-mEV
-mEV
-mEV
-qhc
-dDq
-dDq
-dDq
-dDq
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
+nQv
+nQv
+nQv
+nQv
+nQv
+nQv
+nQv
+nQv
+nQv
+qES
+xvB
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -73167,25 +73147,25 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
-qhc
-dDq
-dDq
-dDq
-mEV
-mEV
-mEV
-mEV
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
+xvB
+xvB
+xvB
+xvB
+qES
+xvB
+xvB
+xvB
+nQv
+nQv
+nQv
+nQv
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -73421,23 +73401,23 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
-mEV
-mEV
-mEV
-mEV
-dDq
-dDq
-dDq
-dDq
-dDq
-dDq
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
+nQv
+nQv
+nQv
+nQv
+xvB
+xvB
+xvB
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -73677,19 +73657,19 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-qhc
-dDq
-mEV
-mEV
-mEV
-mEV
-dDq
-dDq
-dDq
-dDq
-dDq
+xvB
+xvB
+qES
+xvB
+nQv
+nQv
+nQv
+nQv
+xvB
+xvB
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -73934,11 +73914,11 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-mEV
-mEV
-dDq
+xvB
+nQv
+nQv
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -74191,10 +74171,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
+xvB
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -138959,7 +138939,7 @@ pTl
 pTl
 pTl
 pTl
-euY
+llm
 pTl
 pTl
 pTl
@@ -139214,9 +139194,9 @@ pTl
 pTl
 pTl
 pTl
-euY
-euY
-euY
+llm
+llm
+llm
 pTl
 pTl
 pTl
@@ -139470,10 +139450,10 @@ pTl
 pTl
 pTl
 pTl
-euY
-euY
-euY
-euY
+llm
+llm
+llm
+llm
 pTl
 pTl
 pTl
@@ -139726,10 +139706,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-euY
-euY
-euY
+xvB
+llm
+llm
+llm
 pTl
 pTl
 pTl
@@ -139982,10 +139962,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
+xvB
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -140238,12 +140218,12 @@ pTl
 pTl
 pTl
 pTl
-dDq
-qhc
-mEV
-dDq
-dDq
-dDq
+xvB
+qES
+nQv
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -140494,12 +140474,12 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-dDq
-mEV
-dDq
-dDq
+xvB
+nQv
+xvB
+nQv
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -140750,11 +140730,11 @@ pTl
 pTl
 pTl
 pTl
-mEV
-mEV
-mEV
-mEV
-dDq
+nQv
+nQv
+nQv
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -141007,11 +140987,11 @@ pTl
 pTl
 pTl
 pTl
-mEV
-mEV
-mEV
-qhc
-dDq
+nQv
+nQv
+nQv
+qES
+xvB
 pTl
 pTl
 pTl
@@ -141262,13 +141242,13 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-mEV
-mEV
-mEV
-dDq
-dDq
+xvB
+nQv
+nQv
+nQv
+nQv
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -141519,10 +141499,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-mEV
-mEV
+xvB
+xvB
+nQv
+nQv
 pTl
 pTl
 pTl
@@ -141775,12 +141755,12 @@ pTl
 pTl
 pTl
 pTl
-dDq
-qhc
-mEV
-mEV
-mEV
-dDq
+xvB
+qES
+nQv
+nQv
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -142032,11 +142012,11 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-mEV
-mEV
-dDq
+xvB
+xvB
+nQv
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -142289,10 +142269,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-mEV
-mEV
+xvB
+xvB
+nQv
+nQv
 pTl
 pTl
 pTl
@@ -142546,9 +142526,9 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-mEV
+xvB
+xvB
+nQv
 pTl
 pTl
 pTl
@@ -142802,10 +142782,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-mEV
-mEV
+xvB
+xvB
+nQv
+nQv
 pTl
 pTl
 pTl
@@ -143059,10 +143039,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-qhc
-mEV
-mEV
+xvB
+qES
+nQv
+nQv
 pTl
 pTl
 pTl
@@ -143316,10 +143296,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-dDq
-dDq
+xvB
+xvB
+xvB
+xvB
 pTl
 pTl
 pTl
@@ -143574,9 +143554,9 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-dDq
+xvB
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -143830,10 +143810,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-qhc
-dDq
+xvB
+nQv
+qES
+xvB
 pTl
 pTl
 pTl
@@ -144087,9 +144067,9 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-dDq
+xvB
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -144343,10 +144323,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-dDq
-mEV
-dDq
+xvB
+xvB
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -144600,10 +144580,10 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-mEV
-dDq
+xvB
+nQv
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -144857,11 +144837,11 @@ pTl
 pTl
 pTl
 pTl
-dDq
-mEV
-mEV
-mEV
-dDq
+xvB
+nQv
+nQv
+nQv
+xvB
 pTl
 pTl
 pTl
@@ -145114,11 +145094,11 @@ pTl
 pTl
 pTl
 pTl
-kKk
+mjo
 nfg
-mEV
-mEV
-kKk
+nQv
+nQv
+mjo
 pTl
 pTl
 pTl
@@ -145371,11 +145351,11 @@ pTl
 pTl
 pTl
 pTl
-kKk
-kKk
-kKk
-kKk
-kKk
+mjo
+mjo
+mjo
+mjo
+mjo
 pTl
 pTl
 pTl
@@ -145629,10 +145609,10 @@ pTl
 pTl
 pTl
 pTl
-kKk
-kKk
-kKk
-kKk
+mjo
+mjo
+mjo
+mjo
 pTl
 pTl
 pTl
