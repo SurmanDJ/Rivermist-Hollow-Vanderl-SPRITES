@@ -36,9 +36,9 @@
 
 /obj/item/storage/backpack/bag_of_holding/examine(mob/user)
 	. = ..()
-	. += span_notice("Use it to climb inside its folded cache.")
-	. += span_notice("Hit it with an item to feed that item inside.")
-	. += span_notice("Use a firm grab on it to start stuffing someone into the pocket.")
+	. += span_notice("Use it to climb inside its folded space.")
+	. += span_notice("Hit it with an item to stuff that item inside.")
+	. += span_notice("Use a firm grab on it to start stuffing someone into the bag.")
 
 /obj/item/storage/backpack/bag_of_holding/proc/get_pocket_access()
 	return GetComponent(/datum/component/pocket_access)
@@ -56,10 +56,10 @@
 
 	return TRUE
 
-/obj/item/storage/backpack/bag_of_holding/attack_self(mob/user, list/modifiers)
+/obj/item/storage/backpack/bag_of_holding/proc/try_climb_inside(mob/user)
 	var/datum/component/pocket_access/access = get_pocket_access()
 	if(!access)
-		return ..()
+		return FALSE
 
 	var/datum/pocket_dimension/instance = access.get_instance_for_user(user)
 	if(instance?.contains_turf(get_turf(user)))
@@ -83,6 +83,17 @@
 
 	return access.enter_user(user)
 
+/obj/item/storage/backpack/bag_of_holding/attack_self(mob/user, list/modifiers)
+	if(get_pocket_access())
+		return try_climb_inside(user)
+	return ..()
+
+/obj/item/storage/backpack/bag_of_holding/MouseDrop_T(atom/dropping, mob/user)
+	if(dropping == user && ismob(dropping))
+		try_climb_inside(user)
+		return
+	return ..()
+
 /obj/item/storage/backpack/bag_of_holding/proc/store_item_in_pocket(obj/item/item_to_store, mob/user)
 	if(!item_to_store || item_to_store == src)
 		return FALSE
@@ -100,8 +111,8 @@
 		return TRUE
 
 	user.visible_message(
-		span_notice("[user] feeds [item_to_store] into [src]."),
-		span_notice("I feed [item_to_store] into [src]."),
+		span_notice("[user] stuffs [item_to_store] into [src]."),
+		span_notice("I stuff [item_to_store] into [src]."),
 	)
 	return TRUE
 
@@ -110,7 +121,7 @@
 		return FALSE
 
 	if(!ismob(grab.grabbed))
-		to_chat(user, span_warning("[src] only swallows someone I'm actually holding onto."))
+		to_chat(user, span_warning("I can stuff someone into [src] only if I'm holding onto them."))
 		return TRUE
 
 	var/mob/grabbed_mob = grab.grabbed

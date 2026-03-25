@@ -93,8 +93,7 @@ SUBSYSTEM_DEF(pocket_dimensions)
 	if(!instance)
 		return FALSE
 
-	instance.eject_all(eject_message)
-	instance.eject_foreign_movables()
+	instance.eject_teardown_contents(eject_message)
 
 	unregister_instance(instance)
 	qdel(instance)

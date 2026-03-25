@@ -37,6 +37,27 @@
 	TEST_ASSERT(SSpocket_dimensions.delete_instance(instance), "Bag pocket test instance should be deletable.")
 	TEST_ASSERT_EQUAL(get_turf(foreign_item), origin, "Foreign item should be ejected back to the origin turf on collapse.")
 
+/datum/unit_test/pocket_dimension_boundary_cleanup/Run()
+	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance("[REF(src)]::boundary_cleanup", /datum/map_template/pocket/bag_of_holding, POCKET_LIFECYCLE_KEEP_LOADED, 0)
+	TEST_ASSERT_NOTNULL(instance, "Boundary cleanup test pocket should be created.")
+	TEST_ASSERT_NOTNULL(instance.reservation, "Boundary cleanup test pocket should reserve turf space.")
+
+	var/list/reserved_turfs = instance.reservation.reserved_turfs.Copy()
+	var/list/border_turfs = list()
+	for(var/turf/current_turf as anything in reserved_turfs)
+		if(instance.contains_turf(current_turf))
+			continue
+		border_turfs += current_turf
+
+	TEST_ASSERT(length(border_turfs), "Pocket padding should leave a border outside the loaded room.")
+	for(var/turf/border_turf as anything in border_turfs)
+		TEST_ASSERT(istype(border_turf, /turf/closed/indestructible/pocket_border), "Pocket padding should be sealed with folded-space boundary walls.")
+
+	TEST_ASSERT(SSpocket_dimensions.delete_instance(instance), "Boundary cleanup test pocket should be deletable.")
+	for(var/turf/released_turf as anything in reserved_turfs)
+		TEST_ASSERT(istype(released_turf, RESERVED_TURF_TYPE), "Released pocket turfs should be restored to reserved turf.")
+		TEST_ASSERT(released_turf.turf_flags & UNUSED_RESERVATION_TURF, "Released pocket turfs should be marked as available again.")
+
 /datum/unit_test/pocket_dimension_snapshot/Run()
 	var/turf/origin = run_loc_floor_bottom_left
 	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance("[REF(src)]::snapshot", /datum/map_template/pocket/bag_of_holding, POCKET_LIFECYCLE_HIBERNATE, 1)

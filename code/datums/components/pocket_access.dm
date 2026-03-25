@@ -378,6 +378,8 @@
 
 	if(length(actions) == 1)
 		return perform_action(user, actions[1], instance)
+	if(!user?.client?.prefs)
+		return perform_action(user, actions[1], instance)
 
 	var/list/action_by_label = list()
 	var/list/options = list()

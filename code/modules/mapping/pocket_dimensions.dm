@@ -76,9 +76,8 @@
 		SSpocket_dimensions.unregister_instance(src)
 
 	// Fail safe: even if someone qdel()s the pocket datum directly, expel any
-	// foreign occupants and contents before we tear the room or storage down.
-	eject_all()
-	eject_foreign_movables()
+	// living occupants and foreign movables before we tear the room or storage down.
+	eject_teardown_contents()
 	release_loaded_layout()
 	QDEL_LIST_ASSOC_VAL(native_snapshots)
 	QDEL_LIST_ASSOC_VAL(hibernated_foreign_movables)
@@ -167,11 +166,30 @@
 		QDEL_NULL(reservation)
 		return FALSE
 
+	seal_padding_ring()
 	cache_loaded_layout()
 	state = POCKET_STATE_ACTIVE
 	restore_hibernated_layout()
 	touch()
 	return TRUE
+
+/datum/pocket_dimension/proc/seal_padding_ring()
+	if(!reservation || !load_turf || !template?.padding)
+		return
+
+	var/min_inner_x = load_turf.x
+	var/min_inner_y = load_turf.y
+	var/max_inner_x = load_turf.x + template.width - 1
+	var/max_inner_y = load_turf.y + template.height - 1
+
+	for(var/turf/border_turf as anything in reservation.reserved_turfs)
+		var/is_inside_loaded_room = border_turf.x >= min_inner_x && border_turf.x <= max_inner_x && border_turf.y >= min_inner_y && border_turf.y <= max_inner_y
+		if(is_inside_loaded_room)
+			continue
+		if(istype(border_turf, /turf/closed/indestructible/pocket_border))
+			continue
+
+		border_turf.ChangeTurf(/turf/closed/indestructible/pocket_border, /turf/closed/indestructible/pocket_border)
 
 /datum/pocket_dimension/proc/should_track_native_movable(atom/movable/movable)
 	if(!movable || QDELETED(movable) || ismob(movable))
@@ -269,7 +287,10 @@
 	var/list/occupants = list()
 
 	for(var/turf/current_turf as anything in affected_turfs)
-		for(var/mob/occupant as anything in current_turf.get_all_contents())
+		for(var/atom/movable/potential_occupant as anything in current_turf.get_all_contents())
+			if(!ismob(potential_occupant))
+				continue
+			var/mob/occupant = potential_occupant
 			if(QDELETED(occupant) || occupants[occupant] || !contains_turf(get_turf(occupant)))
 				continue
 			occupants[occupant] = TRUE
@@ -379,15 +400,20 @@
 	user.forceMove(target)
 	return TRUE
 
-/datum/pocket_dimension/proc/eject_all(message = null)
+/datum/pocket_dimension/proc/eject_occupants(message = null)
 	var/turf/target = get_return_turf()
 	if(!target)
 		return
 
 	for(var/mob/occupant as anything in get_occupants())
+		if(!ismob(occupant) || QDELETED(occupant))
+			continue
 		if(message)
 			to_chat(occupant, span_warning(message))
 		occupant.forceMove(target)
+
+/datum/pocket_dimension/proc/eject_all(message = null)
+	return eject_occupants(message)
 
 /datum/pocket_dimension/proc/is_native_snapshot_movable(atom/movable/movable)
 	if(!movable || QDELETED(movable))
@@ -452,6 +478,10 @@
 	QDEL_LIST_ASSOC_VAL(hibernated_foreign_movables)
 	if(storage && !length(storage.contents))
 		QDEL_NULL(storage)
+
+/datum/pocket_dimension/proc/eject_teardown_contents(message = null)
+	eject_occupants(message)
+	eject_foreign_movables()
 
 /datum/pocket_dimension/proc/ensure_storage()
 	if(!storage)
@@ -729,6 +759,11 @@
 
 /area/pocket_dimension/bag_of_holding
 	name = "Bag of Holding Cache"
+
+/turf/closed/indestructible/pocket_border
+	name = "folded-space boundary"
+	desc = "Looking at this is making your head hurt."
+	icon_state = "shroud1"
 
 /obj/effect/landmark/pocket_dimension
 	name = "pocket dimension marker"
