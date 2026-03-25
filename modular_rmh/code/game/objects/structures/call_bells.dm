@@ -158,7 +158,7 @@
 	notify_titles = list(
 		/datum/job/advclass/towner/town_mouth
 	)
-	specific_location = "Tavern"
+	specific_location = "Tavern's second floor"
 
 //CHAPEL BELLS
 
