@@ -27321,9 +27321,7 @@
 /turf/open/floor/churchmarble,
 /area/under/town/rmh/basement/merchant)
 "kjG" = (
-/turf/closed/wall/mineral/wooddark/end{
-	icon_state = "wooddark-k"
-	},
+/turf/closed/wall/mineral/wooddark/deco,
 /area/indoors/town/rmh/library)
 "kjS" = (
 /obj/structure/table/wood/reinf_long{
@@ -39482,8 +39480,7 @@
 /turf/open/floor/concrete,
 /area/indoors/town/rmh/chapel/basement)
 "oDk" = (
-/turf/closed/wall/mineral/wooddark/end{
-	icon_state = "wooddark-k";
+/turf/closed/wall/mineral/wooddark/deco{
 	dir = 1
 	},
 /area/indoors/town/rmh/craft/clinic)
@@ -43153,9 +43150,7 @@
 	},
 /area/indoors/town/rmh/merchant)
 "pRU" = (
-/turf/closed/wall/mineral/wooddark/end{
-	icon_state = "wooddark-k"
-	},
+/turf/closed/wall/mineral/wooddark/deco,
 /area/indoors/town/rmh/craft/clinic)
 "pRX" = (
 /obj/effect/decal/cobblerockedge{
@@ -60675,8 +60670,7 @@
 /turf/open/floor/naturalstone,
 /area/under/rmh_dungeon/catacombs_town)
 "woJ" = (
-/turf/closed/wall/mineral/wooddark/end{
-	icon_state = "wooddark-k";
+/turf/closed/wall/mineral/wooddark/deco{
 	dir = 1
 	},
 /area/indoors/town/rmh/library)
@@ -228604,7 +228598,7 @@ hcr
 vSu
 egF
 kjG
-fzO
+egF
 woJ
 egF
 lzI

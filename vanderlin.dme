@@ -3890,6 +3890,7 @@
 #include "modular_rmh\code\game\objects\structures\waterwheel.dm"
 #include "modular_rmh\code\game\objects\structures\woodcutter.dm"
 #include "modular_rmh\code\game\objects\structures\wooden_horse.dm"
+#include "modular_rmh\code\game\turfs\closed\walls\walls.dm"
 #include "modular_rmh\code\game\turfs\open\floor\azure_floors.dm"
 #include "modular_rmh\code\game\turfs\open\floor\desertfloor.dm"
 #include "modular_rmh\code\game\turfs\open\floor\rogue_floor.dm"
