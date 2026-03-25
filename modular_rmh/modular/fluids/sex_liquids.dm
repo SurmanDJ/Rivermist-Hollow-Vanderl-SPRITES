@@ -63,6 +63,7 @@
 		testes.reagent_to_make = cum
 		testes.reagents.clear_reagents()
 		testes.create_reagents(testes.max_reagents/2)
+		testes.sync_cum_source_data()
 
 /mob/living/proc/set_girlcum(femcum_in)
 	femcum = femcum_in
@@ -155,6 +156,7 @@
 /datum/reagent/consumable/cum/goblinp
 	color = "#c6c6c6"
 	taste_description = "fishy earthiness"
+	triggers_embryo_pregnancy = TRUE
 
 /datum/reagent/consumable/femcum/goblinp
 	color = "#c6c6c6"

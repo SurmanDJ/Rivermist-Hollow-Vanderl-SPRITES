@@ -87,3 +87,36 @@
 
 /obj/item/mob_holder/container_resist()
 	release()
+
+/obj/item/mob_holder/internal_womb
+	name = "womb-held hatchling"
+	desc = "Something alive is being held inside."
+	slot_flags = NONE
+	can_head = FALSE
+	body_storage_bulk = 2
+	body_storage_manual_removal = FALSE
+	body_storage_random_removal = FALSE
+	var/allow_internal_release = FALSE
+
+/obj/item/mob_holder/internal_womb/Destroy()
+	allow_internal_release = TRUE
+	return ..()
+
+/obj/item/mob_holder/internal_womb/proc/set_internal_bulk(new_bulk)
+	body_storage_bulk = max(1, round(new_bulk))
+	return body_storage_bulk
+
+/obj/item/mob_holder/internal_womb/release(del_on_release = TRUE)
+	if(!allow_internal_release && held_mob)
+		return FALSE
+	return ..()
+
+/obj/item/mob_holder/internal_womb/relaymove(mob/user)
+	if(allow_internal_release)
+		return ..()
+	return FALSE
+
+/obj/item/mob_holder/internal_womb/container_resist()
+	if(allow_internal_release)
+		return ..()
+	return FALSE

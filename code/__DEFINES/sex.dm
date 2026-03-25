@@ -72,7 +72,7 @@ GLOBAL_LIST_EMPTY(locked_sex_objects)
 #define COMSIG_BODYSTORAGE_TRY_INSERT "hole_try_fit"			// (incoming_item, target_layer, force, override)
 #define COMSIG_BODYSTORAGE_FORCE_INSERT "hole_force_insert"		// (incoming_item, target_layer)
 #define COMSIG_BODYSTORAGE_CHECK_FIT "hole_check_fit"			// (incoming_item, target_layer, force, override)
-#define COMSIG_BODYSTORAGE_TRY_REMOVE "hole_try_remove"			// (removed_item, target_layer)
+#define COMSIG_BODYSTORAGE_TRY_REMOVE "hole_try_remove"			// (removed_item, target_layer, removal_reason)
 #define COMSIG_BODYSTORAGE_FORCE_REMOVE "hole_force_remove"		// (removed_item, target_layer)
 #define COMSIG_BODYSTORAGE_GET_LISTS "hole_get_lists"           //
 #define COMSIG_BODYSTORAGE_SELECT_RAND_ITEM "hole_sel_item"		// (target_layer)
@@ -84,6 +84,10 @@ GLOBAL_LIST_EMPTY(locked_sex_objects)
 #define COMSIG_BODYSTORAGE_CHANGED "hole_changed"			// (storage_component)
 #define COMSIG_BODYSTORAGE_FIND_ITEM_LAYER "hole_find_item_layer"	// ()
 #define COMSIG_BODYSTORAGE_SWAP_LAYERS_RAND "hole_swap_layers"	// (target_layer, force)
+
+#define BODYSTORAGE_REMOVE_MANUAL "manual"
+#define BODYSTORAGE_REMOVE_RANDOM "random"
+#define BODYSTORAGE_REMOVE_INTERNAL "internal"
 
 #define SEX_SPEED_LOW 1
 #define SEX_SPEED_MID 2

@@ -314,6 +314,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/has_body_storage_overlay = FALSE
 	/// If the item has visual overlay only on specific layer
 	var/bstorage_visible_layer
+	/// Can a user directly pull this item out of body storage?
+	var/body_storage_manual_removal = TRUE
+	/// Can random storage effects pick and remove this item?
+	var/body_storage_random_removal = TRUE
 	/// If this item has visual overlay when inserted into a body_storage
 	var/loadout_blacklisted = FALSE
 
@@ -368,6 +372,14 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /obj/item/proc/get_detail_color() //this is for extra layers on clothes or items
 	return detail_color
+
+/obj/item/proc/can_remove_from_body_storage(removal_reason = BODYSTORAGE_REMOVE_MANUAL)
+	switch(removal_reason)
+		if(BODYSTORAGE_REMOVE_INTERNAL)
+			return TRUE
+		if(BODYSTORAGE_REMOVE_RANDOM)
+			return body_storage_random_removal
+	return body_storage_manual_removal
 
 /// Handles sprite changes and decals
 /obj/item/proc/update_transform()

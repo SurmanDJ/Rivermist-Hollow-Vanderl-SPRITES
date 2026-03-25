@@ -250,7 +250,7 @@
 	if(istype(organ, /obj/item/organ/genitals/filling_organ))
 		var/obj/item/organ/genitals/filling_organ/filling_organ = organ
 		if(fluid_fullness_counts_for_organ(filling_organ) && filling_organ.reagents?.maximum_volume > 0)
-			current_bulk += deep_capacity * filling_organ.reagents.total_volume / filling_organ.reagents.maximum_volume
+			current_bulk += deep_capacity * filling_organ.reagents.total_volume / filling_organ.reagents.maximum_volume * 0.5
 		current_bulk += round(deep_capacity * filling_organ.conventional_pregnancy_stage / 3)
 
 	return growth_steps_from_fullness(current_bulk, deep_capacity)
