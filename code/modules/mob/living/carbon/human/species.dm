@@ -550,6 +550,9 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	RETURN_TYPE(/list)
 	return GLOB.skin_tones
 
+/datum/species/proc/get_random_features()
+	return random_features()
+
 /datum/species/proc/get_hairc_list()
 	return GLOB.haircolor
 
@@ -670,7 +673,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	H.accessory = "Nothing"
 	if(H.dna)
 		H.dna.real_name = H.real_name
-		var/list/features = random_features()
+		var/list/features = get_random_features()
 		H.dna.features = features.Copy()
 		H.dna.body_markings = get_random_body_markings(H.dna.features)
 	validate_customizer_entries(H)
