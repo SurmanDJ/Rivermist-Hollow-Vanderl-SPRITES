@@ -146,31 +146,50 @@
 	else
 		taur_type = null
 
-/datum/preferences/proc/update_preview_icon()
-	set waitfor = 0
-	if(!parent)
-		return
-	// Determine what job is marked as 'High' priority, and dress them up as such.
-	var/datum/job/previewJob
+/datum/preferences/proc/get_preview_job()
+	var/datum/job/preview_job
 	var/highest_pref = 0
 	for(var/job in job_preferences)
 		if(job_preferences[job] > highest_pref)
-			previewJob = SSjob.GetJob(job)
+			preview_job = SSjob.GetJob(job)
 			highest_pref = job_preferences[job]
+	return preview_job
 
-	// Set up the dummy for its photoshoot
+/datum/preferences/proc/get_character_preview_data()
+	var/list/preview_data = list()
+	var/datum/job/preview_job = get_preview_job()
+
 	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
-	//for(var/datum/quirk/quirk in mannequin.quirks)
-	//	mannequin.remove_quirk(quirk.type)
 	mannequin.transform = matrix()
 
 	apply_prefs_to(mannequin, TRUE, TRUE)
 	if(preview_subclass)
 		mannequin.job = preview_subclass.title
 		mannequin.dress_up_as_job(preview_subclass, TRUE)
-	else if(previewJob)
-		mannequin.job = previewJob.title
-		mannequin.dress_up_as_job(previewJob, TRUE)
+	else if(preview_job)
+		mannequin.job = preview_job.title
+		mannequin.dress_up_as_job(preview_job, TRUE)
 
-	parent.show_character_previews(new /mutable_appearance(mannequin))
+	var/list/preview_dirs = list(
+		"preview_north" = NORTH,
+		"preview_south" = SOUTH,
+		"preview_east" = EAST,
+		"preview_west" = WEST,
+	)
+
+	for(var/preview_key in preview_dirs)
+		var/icon/flat_icon = getFlatIcon(mannequin, preview_dirs[preview_key], no_anim = TRUE)
+		preview_data[preview_key] = "data:image/png;base64,[icon2base64(flat_icon, preview_key)]"
+
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES, TRUE)
+	return preview_data
+
+/datum/preferences/proc/update_preview_icon()
+	set waitfor = 0
+	var/mob/user = parent?.mob
+	if(!user || !winexists(user, "preferences_browser"))
+		return
+
+	var/list/preview_data = get_character_preview_data()
+	if(length(preview_data))
+		user << output(list2params(preview_data), "preferences_browser:updateCharacterData")
