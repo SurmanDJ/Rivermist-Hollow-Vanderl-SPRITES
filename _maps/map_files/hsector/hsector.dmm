@@ -2836,7 +2836,8 @@
 /area/indoors/town/rmh/tavern)
 "bhQ" = (
 /obj/structure/roguetent{
-	icon_state = "tent_door0"
+	icon_state = "tent_door0";
+	base_state = "tent_door0"
 	},
 /turf/open/floor/dirt/road,
 /area/outdoors/rmh_field/north)
@@ -20013,7 +20014,8 @@
 /area/indoors)
 "hzy" = (
 /obj/structure/roguetent{
-	icon_state = "tent_door0"
+	icon_state = "tent_door0";
+	base_state = "tent_door0"
 	},
 /turf/open/floor/naturalstone,
 /area/indoors/cave/rmh_cave/cave_leshiy)
@@ -23385,7 +23387,8 @@
 /area/indoors/town/rmh/craft/blacksmith)
 "iJA" = (
 /obj/structure/roguetent{
-	icon_state = "tent_door0"
+	icon_state = "tent_door0";
+	base_state = "tent_door0"
 	},
 /turf/open/floor/twig,
 /area/outdoors/rmh_field)
@@ -51321,7 +51324,8 @@
 /area/indoors/town/rmh/magician)
 "sRJ" = (
 /obj/structure/roguetent{
-	icon_state = "tent_door0"
+	icon_state = "tent_door0";
+	base_state = "tent_door0"
 	},
 /turf/open/floor/grass/healthy,
 /area/indoors/town)
@@ -54353,7 +54357,8 @@
 /area/indoors/town/rmh/living/cer)
 "tVH" = (
 /obj/structure/roguetent{
-	icon_state = "tent_door0"
+	icon_state = "tent_door0";
+	base_state = "tent_door0"
 	},
 /turf/open/floor/hay,
 /area/outdoors/rmh_field)
