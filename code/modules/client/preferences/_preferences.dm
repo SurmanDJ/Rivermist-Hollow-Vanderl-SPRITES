@@ -428,28 +428,33 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		break
 
 	user?.client.acquire_dpi()
+	var/list/preview_data = get_character_preview_data()
 
 	dat += {"
 <html lang="en">
 <head>
 	<style>
+		html {
+			height: 100%;
+			width: 100%;
+			overflow: hidden;
+		}
 		body {
 			background-color: #1a1a1a;
-			display: flex;
-			justify-content: center;
-			align-items: center;
 			height: 100%;
 			width: 100%;
 			margin: 0;
+			overflow: hidden;
 			image-rendering: pixelated;
+			position: relative;
 		}
 		.ui-container {
-			position: relative;
+			position: absolute;
 			width: 272px;
 			height: 315px;
 			background-image: url('Charsheet_BG.1.png');
 			background-size: cover;
-			transform: scale(3);
+			transform-origin: top left;
 		}
 		.sprite { position: absolute; background-repeat: no-repeat; cursor: pointer; }
 
@@ -563,8 +568,72 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		.menu-toggles:hover {
 			background-image: url('toggles_hover.png');
 		}
+
+		.preview-grid {
+			position: absolute;
+			top: 52px;
+			left: 10px;
+			width: 94px;
+			height: 79px;
+			background-color: #000;
+			display: flex;
+			flex-wrap: wrap;
+			overflow: hidden;
+		}
+
+		.preview-slot {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 47px;
+			height: 39px;
+			overflow: visible;
+		}
+
+		.preview-slot img {
+			width: 32px;
+			height: 32px;
+			transform-origin: center center;
+			image-rendering: pixelated;
+			pointer-events: none;
+		}
 	</style>
 	<script>
+		function getViewportWidth() {
+			return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 816;
+		}
+
+		function getViewportHeight() {
+			return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 950;
+		}
+
+		function decodeOutputValue(value) {
+			try {
+				return decodeURIComponent(value);
+			} catch (error) {
+				return value;
+			}
+		}
+
+		function applyLayoutScale() {
+			var container = document.getElementById('ui-container');
+			if(!container) {
+				return;
+			}
+
+			var viewportWidth = getViewportWidth();
+			var viewportHeight = getViewportHeight();
+			var scale = Math.min(3, (viewportWidth - 8) / 272, (viewportHeight - 8) / 315);
+
+			if(!isFinite(scale) || scale <= 0) {
+				scale = 1;
+			}
+
+			container.style.transform = 'scale(' + scale + ')';
+			container.style.left = Math.max(0, Math.floor((viewportWidth - (272 * scale)) / 2)) + 'px';
+			container.style.top = Math.max(0, Math.floor((viewportHeight - (315 * scale)) / 2)) + 'px';
+		}
+
 		function shrinkText(element) {
 			// Reset to default size first
 			element.style.fontSize = '8px';
@@ -613,6 +682,13 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			}
 		}
 
+		function updatePreviewImage(fieldId, value) {
+			var elem = document.getElementById(fieldId);
+			if(elem && value) {
+				elem.src = value;
+			}
+		}
+
 		function updateCharacterData() {
 			// BYOND's list2params() with output() sends arguments in pairs
 			// Arguments come as: arg0, arg1, arg2, arg3... where each pair is key=value so we can't just do update(data)
@@ -624,7 +700,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 				if(typeof arg === 'string' && arg.indexOf('=') !== -1) {
 					var parts = arg.split('=');
 					var key = parts\[0\];
-					var value = parts.slice(1).join('='); // In case value contains '='
+					var value = decodeOutputValue(parts.slice(1).join('=')); // In case value contains '='
 					data\[key\] = value;
 				}
 			}
@@ -650,6 +726,10 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 			if('headshot' in data) updateHeadshot(data.headshot);
 			if('bespecial' in data) updateBeSpecial(data.bespecial === '1');
+			if('preview_north' in data) updatePreviewImage('preview-north', data.preview_north);
+			if('preview_south' in data) updatePreviewImage('preview-south', data.preview_south);
+			if('preview_east' in data) updatePreviewImage('preview-east', data.preview_east);
+			if('preview_west' in data) updatePreviewImage('preview-west', data.preview_west);
 
 
 			if('gender' in data) {
@@ -670,14 +750,22 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		}
 
 		window.addEventListener('load', function() {
+			applyLayoutScale();
 			document.querySelectorAll('.auto-shrink').forEach(shrinkText);
 		});
+		window.addEventListener('resize', applyLayoutScale);
 	</script>
 </head>
 <body>
-<div class="ui-container">
+<div id="ui-container" class="ui-container">
 	<div class="sprite header-bg"></div>
 	<div class="sprite preview-bg"></div>
+	<div class="preview-grid">
+		<div class="preview-slot"><img id="preview-north" src="[preview_data["preview_north"] || ""]"></div>
+		<div class="preview-slot"><img id="preview-south" src="[preview_data["preview_south"] || ""]"></div>
+		<div class="preview-slot"><img id="preview-east" src="[preview_data["preview_east"] || ""]"></div>
+		<div class="preview-slot"><img id="preview-west" src="[preview_data["preview_west"] || ""]"></div>
+	</div>
 	<div class="sprite body-bg"></div>
 	<div class="sprite voice-bg"></div>
 	<div class="sprite family-bg"></div>
@@ -819,10 +907,10 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 "}
 
 	winshow(user, "stonekeep_prefwin", TRUE)
-	winshow(user, "stonekeep_prefwin.character_preview_map", TRUE)
+	user.client?.clear_character_previews()
+	winshow(user, "stonekeep_prefwin.character_preview_map", FALSE)
 	// This should really be a browser datum
 	user << browse(dat.Join(), "window=preferences_browser;size=816x950")
-	update_preview_icon()
 	onclose(user, "stonekeep_prefwin", src)
 
 /datum/preferences/proc/update_menu_data(mob/user, list/fields_to_update)
