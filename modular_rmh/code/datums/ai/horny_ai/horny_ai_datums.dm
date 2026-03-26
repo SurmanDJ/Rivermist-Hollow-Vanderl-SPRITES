@@ -88,6 +88,11 @@
 	var/atom/current_target = controller.blackboard[target_key]
 	var/mob/living/basic_mob = controller.pawn
 
+	if(should_interrupt_for_aggro(controller, targetting_datum, current_target))
+		stop_active_horny_actions(basic_mob)
+		finish_action(controller, FALSE, target_key)
+		return
+
 	if(basic_mob.stat > SOFT_CRIT)
 		return
 
@@ -173,6 +178,51 @@
 		return
 
 	start_horny_action(controller, basic_mob, target_living, session, target_key)
+
+/datum/ai_behavior/horny/proc/stop_active_horny_actions(mob/living/basic_mob)
+	if(!basic_mob)
+		return
+
+	for(var/datum/sex_session/session as anything in return_sessions_with_user(basic_mob))
+		if(session.user != basic_mob)
+			continue
+		session.stop_current_action()
+
+/datum/ai_behavior/horny/proc/is_valid_aggro_interrupt_target(mob/living/basic_mob, datum/targetting_datum/targetting_datum, atom/target)
+	if(!target || target == basic_mob || QDELETED(target))
+		return FALSE
+
+	if(!targetting_datum.can_attack(basic_mob, target) && !targetting_datum.should_disarm(basic_mob, target))
+		return FALSE
+
+	if(isliving(target))
+		var/mob/living/living_target = target
+		if(living_target.stat == DEAD)
+			return FALSE
+		if(living_target.rogue_sneaking)
+			var/extra_chance = (basic_mob.health <= basic_mob.maxHealth * 0.5) ? 30 : 0
+			if(!basic_mob.npc_detect_sneak(living_target, extra_chance))
+				return FALSE
+
+	return TRUE
+
+/datum/ai_behavior/horny/proc/should_interrupt_for_aggro(datum/ai_controller/controller, datum/targetting_datum/targetting_datum, atom/current_horny_target)
+	var/mob/living/basic_mob = controller?.pawn
+	if(!basic_mob || !targetting_datum)
+		return FALSE
+
+	if(current_horny_target && targetting_datum.is_horny_target_now_hostile(basic_mob, current_horny_target))
+		return TRUE
+
+	var/atom/current_target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	if(current_target != current_horny_target && is_valid_aggro_interrupt_target(basic_mob, targetting_datum, current_target))
+		return TRUE
+
+	var/atom/highest_threat = controller.blackboard[BB_HIGHEST_THREAT_MOB]
+	if(highest_threat != current_horny_target && is_valid_aggro_interrupt_target(basic_mob, targetting_datum, highest_threat))
+		return TRUE
+
+	return FALSE
 
 /datum/ai_behavior/horny/proc/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
 	// Override this in mob-specific subclasses when they need setup work before the sex action starts.
@@ -522,7 +572,7 @@
 
 /datum/ai_behavior/horny/proc/on_attacked(mob/living/source, atom/attacker, damage)
 	SIGNAL_HANDLER
-	if(!damage || !source?.ai_controller || !attacker)
+	if(!source?.ai_controller || !attacker)
 		return
 	if(attacker == source || QDELETED(attacker) || isturf(attacker))
 		return
@@ -535,6 +585,7 @@
 
 	var/datum/ai_controller/controller = source.ai_controller
 	var/atom/current_horny_target = controller.blackboard[BB_BASIC_MOB_CURRENT_HORNY_TARGET]
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[BB_TARGETTING_DATUM]
 
 	if(attacker == current_horny_target)
 		var/hit_count = controller.blackboard[BB_HORNY_TARGET_ATTACK_COUNT]
@@ -542,14 +593,10 @@
 			hit_count = 0
 		hit_count += 1
 		controller.set_blackboard_key(BB_HORNY_TARGET_ATTACK_COUNT, hit_count)
-		var/should_retaliate = hit_count >= 4 || (hit_count >= 2 && source.health <= source.maxHealth * 0.75)
-		if(!should_retaliate)
-			return
-
-		controller.set_blackboard_key(BB_HORNY_AGGRO_TARGET, attacker)
 		controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker, world.time)
-
-	var/datum/targetting_datum/targetting_datum = controller.blackboard[BB_TARGETTING_DATUM]
+		targetting_datum?.set_horny_target_hostile(source, attacker)
+	else
+		targetting_datum?.set_horny_target_hostile(source, attacker)
 
 	controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, attacker)
 
@@ -559,19 +606,39 @@
 	else
 		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 
+	stop_active_horny_actions(source)
 	controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_HORNY_TARGET)
 	controller.CancelActions()
 
 
 
+/datum/ai_behavior/horny/proc/clear_completed_target_hostility(datum/ai_controller/controller, atom/finished_target)
+	if(!controller || !finished_target)
+		return
+
+	// A partner who just completed an encounter with us should not stay stuck in the
+	// retaliation/aggro memory and block horny retargeting after the seek cooldown ends.
+	var/list/retaliate_list = controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
+	if(retaliate_list && !isnull(retaliate_list[finished_target]))
+		controller.remove_thing_from_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST, finished_target)
+
+	var/list/aggro_table = controller.blackboard[BB_MOB_AGGRO_TABLE]
+	if(aggro_table && !isnull(aggro_table[finished_target]))
+		aggro_table -= finished_target
+
+	if(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] == finished_target)
+		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+
+	if(controller.blackboard[BB_HIGHEST_THREAT_MOB] == finished_target)
+		controller.clear_blackboard_key(BB_HIGHEST_THREAT_MOB)
+
 /datum/ai_behavior/horny/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
 	. = ..()
 	var/mob/living/basic_mob = controller.pawn
+	var/atom/finished_target = controller.blackboard[target_key]
 
-	for(var/datum/sex_session/session as anything in return_sessions_with_user(basic_mob))
-		if(session.user != basic_mob)
-			continue
-		session.stop_current_action()
+	stop_active_horny_actions(basic_mob)
 
 	UnregisterSignal(basic_mob, COMSIG_ATOM_WAS_ATTACKED)
 
@@ -595,6 +662,7 @@
 	controller.clear_blackboard_key(BB_HORNY_ACTIONLESS_TICKS)
 	controller.clear_blackboard_key(BB_HORNY_WRONG_ACTION)
 	controller.clear_blackboard_key(BB_HORNY_KNOCKDOWN_NEED)
+	controller.clear_blackboard_key(BB_HORNY_AGGRO_TARGET)
 	controller.clear_blackboard_key(target_key)
 	controller.clear_blackboard_key(BB_HORNY_TIME_START)
 	if(basic_mob.is_dead())
@@ -610,6 +678,7 @@
 
 
 	//if sated - go off and sleep or smth
+	clear_completed_target_hostility(controller, finished_target)
 	controller.set_blackboard_key(BB_HORNY_SEEK_COOLDOWN, world.time + 90 SECONDS)
 	basic_mob.visible_message(span_danger("[basic_mob] exhales contently!"))
 	controller.modify_cooldown(src, world.time)

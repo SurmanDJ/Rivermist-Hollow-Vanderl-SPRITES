@@ -39,7 +39,7 @@
 	var/spawn_embryo_on_fertilization = FALSE
 	var/fertilization_embryo_egg_type = OVI_EGG_EMBRYO
 	var/fertilization_embryo_hatch_result_type = null
-	var/fertilization_embryo_limit = 1
+	var/fertilization_embryo_limit = 3
 
 	//misc
 	var/last_size_alert = 0

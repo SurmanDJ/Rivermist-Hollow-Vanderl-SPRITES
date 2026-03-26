@@ -98,6 +98,7 @@
 
 #define BB_BASIC_MOB_CURRENT_HORNY_TARGET "BB_basic_current_horny_target"
 #define BB_HORNY_AGGRO_TARGET "BB_horny_aggro_target"
+#define BB_HORNY_HOSTILE_TARGETS "BB_horny_hostile_targets"
 #define BB_HORNY_TARGET_ATTACK_COUNT "BB_horny_target_attack_count"
 #define BB_HORNY_SEEK_COOLDOWN "BB_horny_seek_cooldown"
 #define BB_HORNY_SEEK_START_TIME "BB_horny_seek_start_time"
