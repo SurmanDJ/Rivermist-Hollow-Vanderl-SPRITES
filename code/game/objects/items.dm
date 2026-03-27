@@ -321,6 +321,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	/// If this item has visual overlay when inserted into a body_storage
 	var/loadout_blacklisted = FALSE
 
+	var/allow_erp_equipped = FALSE
+
 
 	var/toggle_state // Needed for grandmaster/martyr weapons, might be shitcode, might be usable for the future, *shrug, it works
 
