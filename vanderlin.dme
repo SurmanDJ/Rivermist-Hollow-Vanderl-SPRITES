@@ -4144,6 +4144,7 @@
 #include "modular_rmh\code\modules\mob\living\carbon\human\npc\npc_zizombie.dm"
 #include "modular_rmh\code\modules\mob\living\carbon\human\species_types\constructs\constructs.dm"
 #include "modular_rmh\code\modules\mob\living\carbon\human\species_types\dwarf\duergar.dm"
+#include "modular_rmh\code\modules\mob\living\carbon\human\species_types\elf\drider.dm"
 #include "modular_rmh\code\modules\mob\living\carbon\human\species_types\elf\elfw.dm"
 #include "modular_rmh\code\modules\mob\living\carbon\human\species_types\fluvian\fluvian.dm"
 #include "modular_rmh\code\modules\mob\living\carbon\human\species_types\gnome\gnome.dm"

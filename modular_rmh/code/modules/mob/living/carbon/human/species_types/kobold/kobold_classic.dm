@@ -8,7 +8,9 @@
 	desc = "City kobolds are small, quick, and intensely communal draconic folk who originated in warrens, cliffside camps, and cavern roads. \
 	They moved to big cities, but still remain skilled trappers, and fiercely proud of the treasures and stories their clans preserve. \
 	\n\n\
-	(-1 STR, -1 CON, +1 SPD, +1 LCK)."
+	(-1 STR, -1 CON, +1 SPD, +1 LCK).\
+	\n\n\
+	THIS IS A DISCRIMINATED SPECIES. PLAY AT YOUR OWN RISK."
 
 	species_traits = list(EYECOLOR, LIPS, STUBBLE, MUTCOLORS)
 	inherent_traits = list(TRAIT_TINY, TRAIT_DARKVISION)

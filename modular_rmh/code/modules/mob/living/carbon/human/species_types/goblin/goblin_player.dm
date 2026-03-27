@@ -8,7 +8,9 @@
 	desc = "Goblins are clever, wiry opportunists who survive through speed, nerve, and an instinct for finding advantage where others miss it. \
 	They are common in badlands, caves, and frontier warrens, though some leave their tribes to make a place in larger realms. \
 	\n\n\
-	(+1 SPD, Darkvision)."
+	(+1 SPD, Darkvision).\
+	\n\n\
+	THIS IS A DISCRIMINATED SPECIES. PLAY AT YOUR OWN RISK."
 
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, STUBBLE, OLDGREY)
 	inherent_traits = list(TRAIT_DARKVISION)
