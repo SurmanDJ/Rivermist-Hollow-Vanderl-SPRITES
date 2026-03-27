@@ -2611,14 +2611,9 @@
 /turf/open/floor/hexstone,
 /area/under/town/rmh/basement/artificer)
 "bbL" = (
-/obj/structure/closet/crate/chest/wicker,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/reagent_containers/glass/bowl,
-/obj/item/kitchen/spoon,
-/obj/item/kitchen/spoon,
-/turf/open/floor/woodturned,
-/area/outdoors/town/rmh/roofs)
+/obj/structure/resurrection_rune/outlaw,
+/turf/open/floor/cobblerock,
+/area/indoors/cave/rmh_cave/southern)
 "bcp" = (
 /obj/structure/flora/grass,
 /obj/structure/flora/newtree,
@@ -5861,7 +5856,7 @@
 /turf/open/water/cleanshallow/dirt,
 /area/outdoors/rmh_magelake)
 "cpS" = (
-/obj/structure/resurrection_rune,
+/obj/structure/resurrection_rune/city,
 /turf/open/floor/churchmarble,
 /area/indoors/town/rmh/chapel/basement)
 "cpU" = (
@@ -9576,10 +9571,6 @@
 /obj/machinery/light/fueled/torchholder/l,
 /turf/open/floor/cobble,
 /area/outdoors/town/rmh)
-"dHW" = (
-/obj/structure/fluff/railing/wood/west,
-/turf/open/floor/woodturned,
-/area/outdoors/town/rmh/roofs)
 "dIa" = (
 /obj/machinery/light/fueled/wallfire/candle/blue{
 	pixel_x = 32
@@ -14207,19 +14198,6 @@
 	},
 /turf/open/floor/ruinedwood/herringbone_clear,
 /area/indoors/town/rmh/tavern)
-"fte" = (
-/obj/machinery/light/fueled/oven/south,
-/obj/structure/table/wood/reinf_long{
-	dir = 8
-	},
-/obj/item/weapon/knife/villager,
-/obj/effect/decal/edge{
-	dir = 1;
-	color = "#3b3b3b";
-	layer = 2
-	},
-/turf/open/floor/blocks/stonered,
-/area/outdoors/town/rmh/roofs)
 "ftf" = (
 /obj/effect/decal/edge{
 	dir = 8;
@@ -16386,20 +16364,6 @@
 /obj/machinery/light/fueled/wallfire/candle/blue/r,
 /turf/open/floor/tile/tilerg,
 /area/under/town/rmh/basement/bank)
-"gjw" = (
-/obj/machinery/light/fueled/hearth{
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/glass/bucket/pot/stone{
-	pixel_y = 7
-	},
-/obj/effect/decal/edge_corner{
-	dir = 8;
-	color = "#522f26";
-	pixel_y = 0
-	},
-/turf/open/floor/blocks/stonered/tiny,
-/area/outdoors/town/rmh/roofs)
 "gjC" = (
 /obj/machinery/light/fueled/torchholder/c,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -20923,13 +20887,6 @@
 "hRW" = (
 /turf/closed/wall/mineral/decostone/cand,
 /area/indoors/town/rmh/chapel/basement)
-"hRX" = (
-/obj/effect/decal/edge{
-	dir = 2;
-	color = "#522f26"
-	},
-/turf/open/floor/blocks/stonered/tiny,
-/area/outdoors/town/rmh/roofs)
 "hRY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/naturalstone,
@@ -41229,25 +41186,6 @@
 	},
 /turf/open/floor/church,
 /area/under/rmh_dungeon/underdarkmaze)
-"pil" = (
-/obj/structure/table/wood/reinf_long{
-	dir = 4
-	},
-/obj/item/reagent_containers/glass/carafe/redwine{
-	pixel_y = 15;
-	pixel_x = -12
-	},
-/obj/structure/fluff/millstone{
-	pixel_y = 13;
-	pixel_x = 6
-	},
-/obj/effect/decal/edge_corner{
-	dir = 1;
-	color = "#522f26";
-	pixel_y = 0
-	},
-/turf/open/floor/blocks/stonered,
-/area/outdoors/town/rmh/roofs)
 "pio" = (
 /obj/machinery/light/fueled/wallfire/candle/l,
 /turf/open/floor/cobble,
@@ -43597,13 +43535,6 @@
 	},
 /turf/open/floor/woodturned,
 /area/under/town/rmh/basement/tavern)
-"qaA" = (
-/obj/effect/decal/edge_corner{
-	dir = 4;
-	color = "#522f26"
-	},
-/turf/open/floor/blocks/stonered,
-/area/outdoors/town/rmh/roofs)
 "qaD" = (
 /obj/effect/decal/cleanable/dirt/paper{
 	dir = 1
@@ -53587,14 +53518,6 @@
 	},
 /turf/open/floor/blocks,
 /area/under/rmh_dungeon/catacombs_church)
-"tHv" = (
-/obj/effect/decal/edge_corner{
-	dir = 2;
-	color = "#522f26";
-	pixel_y = 0
-	},
-/turf/open/floor/blocks/stonered,
-/area/outdoors/town/rmh/roofs)
 "tHV" = (
 /obj/item/natural/stone,
 /obj/effect/decal/cleanable/debris/stone,
@@ -55696,12 +55619,6 @@
 /obj/structure/ladder,
 /turf/open/floor/ruinedwood/darker,
 /area/under/tomb/indoors/church)
-"uuT" = (
-/obj/structure/stairs{
-	dir = 1
-	},
-/turf/open/floor/ruinedwood,
-/area/outdoors/town/rmh/roofs)
 "uuZ" = (
 /obj/structure/table/wood/counter/end,
 /obj/structure/bars/alt,
@@ -58318,10 +58235,6 @@
 /obj/item/natural/stoneblock,
 /turf/open/floor/herringbone,
 /area/under/rmh_dungeon/jergal)
-"vyB" = (
-/obj/structure/fermentation_keg/water,
-/turf/open/floor/woodturned,
-/area/outdoors/town/rmh/roofs)
 "vyC" = (
 /obj/structure/fluff/railing/corner/south_east,
 /obj/structure/fluff/customsign{
@@ -230432,10 +230345,10 @@ lzI
 lzI
 lzI
 lzI
-gjw
-tHv
-kiQ
-kbf
+lzI
+lzI
+lzI
+lzI
 lzI
 gzW
 raw
@@ -230689,10 +230602,10 @@ lzI
 lzI
 lzI
 lzI
-fte
-hRX
-kiQ
-uuT
+lzI
+lzI
+lzI
+lzI
 lzI
 gzW
 raw
@@ -230946,10 +230859,10 @@ lzI
 lzI
 lzI
 lzI
-pil
-qaA
-kiQ
-dHW
+lzI
+lzI
+lzI
+lzI
 lzI
 nft
 xRc
@@ -231203,10 +231116,10 @@ lzI
 lzI
 lzI
 lzI
-vyB
-kiQ
-kiQ
-bbL
+lzI
+lzI
+lzI
+lzI
 lzI
 lzI
 lzI
@@ -288101,7 +288014,7 @@ gLU
 gLU
 iuw
 iuw
-iuw
+bbL
 iuw
 iuw
 gLU
