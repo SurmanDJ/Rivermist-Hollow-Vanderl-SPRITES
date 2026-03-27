@@ -234,6 +234,10 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 
 	/// Default mutant bodyparts for this species. Don't forget to set one for every mutant bodypart you allow this species to have.
 	var/list/default_features = MANDATORY_FEATURE_LIST
+	/// Optional per-species palette hooks. Current mutant-color selection uses a shared palette, but the vars remain for future overrides.
+	var/list/mutant_color_preset_1
+	var/list/mutant_color_preset_2
+	var/list/mutant_color_preset_3
 
 	/// List of organs this species has.
 	var/list/organs = list(
@@ -546,9 +550,62 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 /datum/species/proc/get_hexcolor(list/L)
 	return L
 
+/datum/species/proc/get_common_mutant_color_palette() as /list
+	RETURN_TYPE(/list)
+	var/static/list/common_mutant_color_palette = list(
+		"Brown" = "8B5E3C",
+		"Green" = "416431",
+		"Black" = "1F1F1F",
+		"White" = "F2F2F2",
+		"Gray" = "7A7A7A",
+		"Yellow" = "D4BE47",
+		"Red" = "9E3E3E",
+		"Rust" = "6B330D",
+		"Blue" = "486C9C",
+		"Orange" = "a5642b",
+		"Beige" = "D7C0A1",
+		"Tan" = "B88C62",
+		"Pink" = "D59CB4",
+		"Purple" = "77508D",
+		"Violet" = "8E6CC9",
+		"Silver" = "BFC7CC",
+		"Gold" = "D4AF37",
+		"Bronze" = "9B6A3C",
+		"Cream" = "EDE1C8",
+		"Olive" = "6B7442",
+		"Turquoise" = "4FA39A",
+	)
+	return common_mutant_color_palette.Copy()
+
 /datum/species/proc/get_skin_list() as /list
 	RETURN_TYPE(/list)
+	if(use_skintones && ((MUTCOLORS in species_traits) || (MUTCOLORS_PARTSONLY in species_traits)))
+		return get_common_mutant_color_palette()
 	return GLOB.skin_tones
+
+/datum/species/proc/get_mutant_color_list(color_slot = 1) as /list
+	RETURN_TYPE(/list)
+	if((MUTCOLORS in species_traits) || (MUTCOLORS_PARTSONLY in species_traits))
+		return get_common_mutant_color_palette()
+	return list()
+
+/datum/species/proc/get_random_features()
+	var/list/returned = random_features()
+
+	for(var/color_slot in 1 to 3)
+		var/list/palette = get_mutant_color_list(color_slot)
+		if(!length(palette))
+			continue
+
+		switch(color_slot)
+			if(1)
+				returned["mcolor"] = pick_assoc(palette)
+			if(2)
+				returned["mcolor2"] = pick_assoc(palette)
+			if(3)
+				returned["mcolor3"] = pick_assoc(palette)
+
+	return returned
 
 /datum/species/proc/get_hairc_list()
 	return GLOB.haircolor
@@ -670,7 +727,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	H.accessory = "Nothing"
 	if(H.dna)
 		H.dna.real_name = H.real_name
-		var/list/features = random_features()
+		var/list/features = get_random_features()
 		H.dna.features = features.Copy()
 		H.dna.body_markings = get_random_body_markings(H.dna.features)
 	validate_customizer_entries(H)

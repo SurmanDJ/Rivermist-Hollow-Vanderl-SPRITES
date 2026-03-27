@@ -129,7 +129,8 @@
 		skin_tone = pick_assoc(skins)
 	if(randomise[RANDOM_EYE_COLOR])
 		eye_color = random_eye_color()
-	features = random_features()
+	features = pref_species.get_random_features()
+	sanitize_species_mutant_colors()
 
 	if(pref_species.default_features["ears"])
 		features["ears"] = pref_species.default_features["ears"]
