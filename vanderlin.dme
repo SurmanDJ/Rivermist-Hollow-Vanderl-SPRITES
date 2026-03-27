@@ -1462,6 +1462,7 @@
 #include "code\datums\sex\sex_stress.dm"
 #include "code\datums\sex\actions\_base_action.dm"
 #include "code\datums\sex\actions\hole_storage\base.dm"
+#include "code\datums\sex\actions\hole_storage\expel_foreign_fluids.dm"
 #include "code\datums\sex\actions\hole_storage\storage_anus.dm"
 #include "code\datums\sex\actions\hole_storage\storage_between_boobs.dm"
 #include "code\datums\sex\actions\hole_storage\storage_vaginal.dm"

@@ -78,6 +78,7 @@
 #include "mindbound_actions.dm"
 #include "pocket_access.dm"
 #include "pocket_dimensions.dm"
+#include "preferences_preview_taur_cleanup.dm"
 #include "projectiles.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_names.dm"
