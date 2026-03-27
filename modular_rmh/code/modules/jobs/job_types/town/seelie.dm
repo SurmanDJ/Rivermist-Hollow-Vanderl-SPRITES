@@ -5,8 +5,8 @@
 	Because seelies arrive as itinerant visitors, this role is intended as a latejoin option."
 	department_flag = TOWN
 	faction = FACTION_TOWN
-	total_positions = 6
-	spawn_positions = 0
+	total_positions = 1
+	spawn_positions = 1
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_SEELIE
 	bypass_lastclass = TRUE

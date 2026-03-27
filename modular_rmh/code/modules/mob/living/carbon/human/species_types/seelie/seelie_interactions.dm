@@ -35,6 +35,9 @@
 /mob/living/carbon/human/proc/seelie_enter_container(atom/target)
 	if(!is_seelie() || QDELETED(target) || get_dist(src, target) > 1 || loc == target)
 		return FALSE
+	if(seelie_has_grand_glamour())
+		to_chat(src, span_warning("I'm too large to squeeze into [target] while the glamour holds."))
+		return FALSE
 
 	if(istype(target, /obj/item/flashlight/flare/torch/lantern))
 		var/obj/item/flashlight/flare/torch/lantern/lantern = target
@@ -92,17 +95,23 @@
 
 	if(!is_seelie())
 		return
+	if(!seelie_leave_container())
+		if(handcuffed || legcuffed)
+			to_chat(src, span_warning("I'm bound and can't wriggle free. I need to escape my restraints first!"))
+			resist_restraints()
+
+/mob/living/carbon/human/proc/seelie_leave_container(force_exit = FALSE)
+	if(!is_seelie())
+		return FALSE
 	if(isturf(loc) || ismob(loc))
-		return
-	if(handcuffed || legcuffed)
-		to_chat(src, span_warning("I'm bound and can't wriggle free. I need to escape my restraints first!"))
-		resist_restraints()
-		return
+		return FALSE
+	if(!force_exit && (handcuffed || legcuffed))
+		return FALSE
 
 	var/atom/old_container = loc
 	var/turf/destination = get_turf(old_container)
 	if(!destination)
-		return
+		return FALSE
 
 	var/obj/item/flashlight/flare/torch/lantern/lantern = old_container
 	if(istype(lantern))
@@ -114,6 +123,8 @@
 
 	if(istype(lantern))
 		lantern.update_brightness()
+
+	return TRUE
 
 /obj/structure/closet/MouseDrop_T(atom/movable/dropping, mob/living/user)
 	if(ishuman(dropping))

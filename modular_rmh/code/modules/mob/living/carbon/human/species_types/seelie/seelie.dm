@@ -8,11 +8,18 @@
 /mob/living/carbon/human/proc/is_seelie()
 	return istype(dna?.species, /datum/species/seelie)
 
+/mob/living/carbon/human/proc/seelie_has_grand_glamour()
+	return !!has_status_effect(/datum/status_effect/buff/seelie_grand_glamour)
+
 /mob/living/carbon/human/proc/seelie_ensure_scale()
 	if(!is_seelie())
 		return
 
-	transform = matrix().Scale(SEELIE_SCALE, SEELIE_SCALE)
+	if(seelie_has_grand_glamour())
+		transform = matrix()
+	else
+		transform = matrix().Scale(SEELIE_SCALE, SEELIE_SCALE)
+
 	update_transform()
 
 /datum/species/seelie
@@ -22,7 +29,6 @@
 	\n\n\
 	(-6 STR, +4 PER, +2 INT, -6 CON, -1 END, +7 SPD)."
 
-	skin_tone_wording = "Courtly Hue"
 	native_language = "Common"
 
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, STUBBLE, OLDGREY)
@@ -79,6 +85,44 @@
 
 	enflamed_icon = "widefire"
 
+	offset_features_m = list(
+		OFFSET_RING = list(0,-1),\
+		OFFSET_GLOVES = list(0,0),\
+		OFFSET_WRISTS = list(0,0),\
+		OFFSET_HANDS = list(0,0),\
+		OFFSET_CLOAK = list(0,0),\
+		OFFSET_FACEMASK = list(0,-1),\
+		OFFSET_HEAD = list(0,-1),\
+		OFFSET_FACE = list(0,-1),\
+		OFFSET_BELT = list(0,0),\
+		OFFSET_BACK = list(0,-1),\
+		OFFSET_NECK = list(0,-1),\
+		OFFSET_MOUTH = list(0,-1),\
+		OFFSET_PANTS = list(0,0),\
+		OFFSET_SHIRT = list(0,0),\
+		OFFSET_ARMOR = list(0,0),\
+		OFFSET_UNDIES = list(0,-1),\
+	)
+
+	offset_features_f = list(
+		OFFSET_RING = list(0,-1),\
+		OFFSET_GLOVES = list(0,0),\
+		OFFSET_WRISTS = list(0,0),\
+		OFFSET_HANDS = list(0,0),\
+		OFFSET_CLOAK = list(0,0),\
+		OFFSET_FACEMASK = list(0,-1),\
+		OFFSET_HEAD = list(0,-1),\
+		OFFSET_FACE = list(0,-1),\
+		OFFSET_BELT = list(0,0),\
+		OFFSET_BACK = list(0,-1),\
+		OFFSET_NECK = list(0,-1),\
+		OFFSET_MOUTH = list(0,-1),\
+		OFFSET_PANTS = list(0,0),\
+		OFFSET_SHIRT = list(0,0),\
+		OFFSET_ARMOR = list(0,0),\
+		OFFSET_UNDIES = list(0,-1),\
+	)
+
 /datum/species/seelie/spec_life(mob/living/carbon/human/human)
 	. = ..()
 	if(!istype(human))
@@ -113,11 +157,13 @@
 		return
 
 	var/mob/living/carbon/human/human = carbon_mob
+	human.grant_language(/datum/language/common)
 	human.pass_flags |= (PASSTABLE | PASSMOB)
 	human.seelie_ensure_scale()
 	human.add_movespeed_modifier(SEELIE_MOVESPEED_ID, override = TRUE, multiplicative_slowdown = 0.5)
 	ADD_TRAIT(human, TRAIT_PACIFISM, "[type]")
 	ADD_TRAIT(human, TRAIT_MOVE_FLOATING, "[type]")
+	human.add_spell(/datum/action/cooldown/spell/undirected/seelie_grand_glamour)
 
 	if(!human.getorganslot(ORGAN_SLOT_WINGS))
 		var/obj/item/organ/wings/anthro/seelie/wings = new
@@ -133,6 +179,7 @@
 		return
 
 	var/mob/living/carbon/human/human = carbon_mob
+	human.remove_status_effect(/datum/status_effect/buff/seelie_grand_glamour)
 	human.pass_flags &= ~(PASSTABLE | PASSMOB)
 	human.transform = matrix()
 	human.update_transform()
@@ -141,6 +188,7 @@
 	REMOVE_TRAIT(human, TRAIT_FLOORED, SEELIE_WING_TRAIT)
 	REMOVE_TRAIT(human, TRAIT_MOVE_FLOATING, "[type]")
 	REMOVE_TRAIT(human, TRAIT_PACIFISM, "[type]")
+	human.remove_spell(/datum/action/cooldown/spell/undirected/seelie_grand_glamour)
 	human.verbs -= /mob/living/carbon/human/proc/seelie_exit_container
 
 /datum/species/seelie/check_roundstart_eligible()

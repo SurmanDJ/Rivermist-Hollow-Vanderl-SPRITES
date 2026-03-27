@@ -118,28 +118,4 @@
 	return assemble_body_markings_from_set(GLOB.body_marking_sets_by_type[pick(body_marking_sets)], passed_features, src)
 
 /datum/species/fluvian/get_random_features()
-	var/list/returned = MANDATORY_FEATURE_LIST
-
-	switch(rand(1, 5))
-		if(1)
-			returned["mcolor"] = "edcf7e"
-			returned["mcolor2"] = "2b2a24"
-			returned["mcolor3"] = "2b2a24"
-		if(2)
-			returned["mcolor"] = "e4d8c6"
-			returned["mcolor2"] = "6b5640"
-			returned["mcolor3"] = "6b5640"
-		if(3)
-			returned["mcolor"] = "a798c9"
-			returned["mcolor2"] = "2d233b"
-			returned["mcolor3"] = "2d233b"
-		if(4)
-			returned["mcolor"] = "b9d4bf"
-			returned["mcolor2"] = "32483d"
-			returned["mcolor3"] = "32483d"
-		if(5)
-			returned["mcolor"] = "d9c0a1"
-			returned["mcolor2"] = "5a4035"
-			returned["mcolor3"] = "5a4035"
-
-	return returned
+	return ..()

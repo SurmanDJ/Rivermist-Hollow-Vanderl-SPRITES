@@ -42,17 +42,17 @@
 		OFFSET_GLOVES = list(0,0),\
 		OFFSET_WRISTS = list(0,0),\
 		OFFSET_HANDS = list(0,0),\
-		OFFSET_CLOAK = list(0,0),\
+		OFFSET_CLOAK = list(0,6),\
 		OFFSET_FACEMASK = list(0,6),\
-		OFFSET_HEAD = list(0,0),\
+		OFFSET_HEAD = list(0,6),\
 		OFFSET_FACE = list(0,6),\
 		OFFSET_BELT = list(0,0),\
 		OFFSET_BACK = list(0,6),\
 		OFFSET_NECK = list(0,6),\
 		OFFSET_MOUTH = list(0,6),\
 		OFFSET_PANTS = list(0,0),\
-		OFFSET_SHIRT = list(0,0),\
-		OFFSET_ARMOR = list(0,0),\
+		OFFSET_SHIRT = list(0,6),\
+		OFFSET_ARMOR = list(0,6),\
 		OFFSET_UNDIES = list(0,0),\
 	)
 
@@ -61,26 +61,26 @@
 		OFFSET_GLOVES = list(0,1),\
 		OFFSET_WRISTS = list(0,0),\
 		OFFSET_HANDS = list(0,0),\
-		OFFSET_CLOAK = list(0,0),\
+		OFFSET_CLOAK = list(0,6),\
 		OFFSET_FACEMASK = list(0,6),\
-		OFFSET_HEAD = list(0,0),\
+		OFFSET_HEAD = list(0,6),\
 		OFFSET_FACE = list(0,6),\
 		OFFSET_BELT = list(0,0),\
 		OFFSET_BACK = list(0,6),\
 		OFFSET_NECK = list(0,6),\
 		OFFSET_MOUTH = list(0,6),\
 		OFFSET_PANTS = list(0,0),\
-		OFFSET_SHIRT = list(0,0),\
-		OFFSET_ARMOR = list(0,0),\
+		OFFSET_SHIRT = list(0,6),\
+		OFFSET_ARMOR = list(0,6),\
 		OFFSET_UNDIES = list(0,-1),\
 	)
 
 	offset_genitals_m = list(
-		OFFSET_BREASTS = list(0,3),\
+		OFFSET_BREASTS = list(0,5),\
 	)
 
 	offset_genitals_f = list(
-		OFFSET_BREASTS = list(0,3),\
+		OFFSET_BREASTS = list(0,5),\
 	)
 
 	specstats_m = list(STATKEY_STR = 2, STATKEY_CON = 2, STATKEY_END = 1, STATKEY_INT = -3, STATKEY_SPD = -1)

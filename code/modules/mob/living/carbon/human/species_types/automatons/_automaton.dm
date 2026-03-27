@@ -201,6 +201,8 @@
 	return ..()
 
 /datum/species/automaton/get_skin_list()
+	if((MUTCOLORS in species_traits) || (MUTCOLORS_PARTSONLY in species_traits))
+		return get_common_mutant_color_palette()
 	return sortList(list(
 		"Polished Brass" = "B87333",
 		"Tarnished Bronze" = "8C7853",

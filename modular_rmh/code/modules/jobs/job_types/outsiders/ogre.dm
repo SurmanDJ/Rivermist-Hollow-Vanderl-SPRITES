@@ -5,9 +5,9 @@
 	Pick the kind of ogre you are and carve out a place in Rivermist Hollow."
 	department_flag = OUTSIDERS
 	faction = FACTION_NEUTRAL
-	total_positions = 3
-	spawn_positions = 3
-	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
+	total_positions = 0
+	spawn_positions = 0
+	job_flags = (JOB_EQUIP_RANK) //(JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_OGRE
 	bypass_lastclass = TRUE
 

@@ -36,21 +36,21 @@
 	soundpack_f = /datum/voicepack/werewolf
 
 	offset_features_m = list(
-		OFFSET_RING = list(0,0),\
-		OFFSET_GLOVES = list(0,0),\
-		OFFSET_WRISTS = list(0,0),\
-		OFFSET_HANDS = list(0,0),\
-		OFFSET_CLOAK = list(0,0),\
-		OFFSET_FACEMASK = list(0,0),\
-		OFFSET_HEAD = list(0,0),\
-		OFFSET_FACE = list(0,0),\
-		OFFSET_BELT = list(0,0),\
-		OFFSET_BACK = list(0,0),\
-		OFFSET_NECK = list(0,0),\
-		OFFSET_MOUTH = list(0,0),\
-		OFFSET_PANTS = list(0,0),\
-		OFFSET_SHIRT = list(0,0),\
-		OFFSET_ARMOR = list(0,0),\
+		OFFSET_RING = list(0,1),\
+		OFFSET_GLOVES = list(0,1),\
+		OFFSET_WRISTS = list(0,1),\
+		OFFSET_HANDS = list(0,1),\
+		OFFSET_CLOAK = list(0,1),\
+		OFFSET_FACEMASK = list(0,1),\
+		OFFSET_HEAD = list(0,1),\
+		OFFSET_FACE = list(0,1),\
+		OFFSET_BELT = list(0,1),\
+		OFFSET_BACK = list(0,1),\
+		OFFSET_NECK = list(0,1),\
+		OFFSET_MOUTH = list(0,1),\
+		OFFSET_PANTS = list(0,1),\
+		OFFSET_SHIRT = list(0,1),\
+		OFFSET_ARMOR = list(0,1),\
 		OFFSET_UNDIES = list(0,0),\
 	)
 
@@ -59,19 +59,20 @@
 		OFFSET_GLOVES = list(0,0),\
 		OFFSET_WRISTS = list(0,0),\
 		OFFSET_HANDS = list(0,0),\
-		OFFSET_CLOAK = list(0,1),\
+		OFFSET_CLOAK = list(0,0),\
 		OFFSET_FACEMASK = list(0,-1),\
 		OFFSET_HEAD = list(0,-1),\
-		OFFSET_FACE = list(0,0),\
+		OFFSET_FACE = list(0,-1),\
 		OFFSET_BELT = list(0,0),\
-		OFFSET_BACK = list(0,0),\
+		OFFSET_BACK = list(0,-1),\
 		OFFSET_NECK = list(0,-1),\
 		OFFSET_MOUTH = list(0,-1),\
 		OFFSET_PANTS = list(0,0),\
-		OFFSET_SHIRT = list(0,2),\
-		OFFSET_ARMOR = list(0,1),\
+		OFFSET_SHIRT = list(0,0),\
+		OFFSET_ARMOR = list(0,0),\
 		OFFSET_UNDIES = list(0,-1),\
 	)
+
 
 	organs = list(
 		ORGAN_SLOT_BRAIN = /obj/item/organ/brain,
@@ -156,6 +157,7 @@
 
 /datum/species/gnoll/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
+	C.grant_language(/datum/language/common)
 	C.grant_language(/datum/language/beast)
 
 /datum/species/gnoll/after_creation(mob/living/carbon/C)
@@ -164,45 +166,10 @@
 	to_chat(C, "<span class='info'>I can speak Beastish with ,b before my speech.</span>")
 
 /datum/species/gnoll/get_skin_list()
-	return list(
-		"Ember" = "8C6A43",
-		"Ash" = "8A7C70",
-		"Bone" = "CDBF9E",
-		"Blood" = "8D6654",
-		"Midnight" = "4F4A4E",
-		"Duskhide" = "6B604D",
-	)
+	return ..()
 
 /datum/species/gnoll/get_random_body_markings(list/passed_features)
 	return list()
 
 /datum/species/gnoll/get_random_features()
-	var/list/returned = MANDATORY_FEATURE_LIST
-
-	switch(rand(1, 6))
-		if(1)
-			returned["mcolor"] = "8c6a43"
-			returned["mcolor2"] = "d2b07b"
-			returned["mcolor3"] = "4a3627"
-		if(2)
-			returned["mcolor"] = "8a7c70"
-			returned["mcolor2"] = "d3c6b6"
-			returned["mcolor3"] = "453f3a"
-		if(3)
-			returned["mcolor"] = "cdbf9e"
-			returned["mcolor2"] = "f4ead5"
-			returned["mcolor3"] = "6a5543"
-		if(4)
-			returned["mcolor"] = "8d6654"
-			returned["mcolor2"] = "c49575"
-			returned["mcolor3"] = "3a2520"
-		if(5)
-			returned["mcolor"] = "4f4a4e"
-			returned["mcolor2"] = "aea596"
-			returned["mcolor3"] = "272228"
-		if(6)
-			returned["mcolor"] = "6b604d"
-			returned["mcolor2"] = "c8ad7a"
-			returned["mcolor3"] = "3b3125"
-
-	return returned
+	return ..()

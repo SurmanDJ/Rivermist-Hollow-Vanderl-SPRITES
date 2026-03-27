@@ -122,36 +122,4 @@
 	return assemble_body_markings_from_set(GLOB.body_marking_sets_by_type[/datum/body_marking_set/kobold_scale], passed_features, src)
 
 /datum/species/kobold/classic/get_random_features()
-	var/list/returned = MANDATORY_FEATURE_LIST
-
-	switch(rand(1, 9))
-		if(1)
-			returned["mcolor"] = "e43900"
-			returned["mcolor2"] = "ea673c"
-		if(2)
-			returned["mcolor"] = "ea6f01"
-			returned["mcolor2"] = "ea8e3c"
-		if(3)
-			returned["mcolor"] = "eaa501"
-			returned["mcolor2"] = "e7b43a"
-		if(4)
-			returned["mcolor"] = "63d100"
-			returned["mcolor2"] = "89d248"
-		if(5)
-			returned["mcolor"] = "51aa01"
-			returned["mcolor2"] = "70ae39"
-		if(6)
-			returned["mcolor"] = "00b302"
-			returned["mcolor2"] = "2eb62f"
-		if(7)
-			returned["mcolor"] = "02c33c"
-			returned["mcolor2"] = "3ac664"
-		if(8)
-			returned["mcolor"] = "00c170"
-			returned["mcolor2"] = "3fbf89"
-		if(9)
-			returned["mcolor"] = "00bc94"
-			returned["mcolor2"] = "3cbea2"
-
-	returned["mcolor3"] = returned["mcolor2"]
-	return returned
+	return ..()

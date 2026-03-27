@@ -1,14 +1,17 @@
-/obj/item/organ/wings/moth
+/obj/item/organ/wings/flight/moth
 	name = "fluvian wings"
 	desc = "A powdery pair of moth wings."
 	accessory_type = /datum/sprite_accessory/wings/moth/plain
+	flight_for_species = list(SPEC_ID_FLUVIAN)
+	flight_time = 20 SECONDS
 
-/obj/item/organ/wings/anthro/seelie
+/obj/item/organ/wings/flight/seelie
 	name = "seelie wings"
 	desc = "A delicate set of shimmering faerie wings."
 	w_class = WEIGHT_CLASS_TINY
 	dropshrink = 0.35
 	accessory_type = /datum/sprite_accessory/wings/seelie/fairy
+	flight_for_species = list(SPEC_ID_SEELIE)
 
 /obj/item/organ/wings/anthro/seelie/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !ishuman(target))

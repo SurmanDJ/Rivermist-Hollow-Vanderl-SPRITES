@@ -115,7 +115,8 @@
 	return TRUE
 
 /datum/species/automaton/construct/get_skin_list()
-	return list(
+	var/list/colors = ..()
+	var/list/additional_colors = list(
 		"Brass" = "DFBD6C",
 		"Iron" = "525352",
 		"Steel" = "BABBB9",
@@ -136,16 +137,13 @@
 		"Lapis" = "26619C",
 		"Basalt" = "474A4C",
 	)
+	return additional_colors + colors
 
 /datum/species/automaton/construct/get_random_body_markings(list/passed_features)
 	return assemble_body_markings_from_set(GLOB.body_marking_sets_by_type[pick(body_marking_sets)], passed_features, src)
 
 /datum/species/automaton/construct/get_random_features()
-	var/list/returned = MANDATORY_FEATURE_LIST
-	returned["mcolor"] = "babbb9"
-	returned["mcolor2"] = "4a4a4a"
-	returned["mcolor3"] = "1f1f1f"
-	return returned
+	return ..()
 
 /datum/species/automaton/construct/doll
 	name = "Doll"
@@ -182,7 +180,8 @@
 	specstats_f = list(STATKEY_STR = -2, STATKEY_PER = 0, STATKEY_INT = 2, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 1, STATKEY_LCK = 0)
 
 /datum/species/automaton/construct/doll/get_skin_list()
-	return list(
+	var/list/colors = ..()
+	var/list/additional_colors = list(
 		"Porcelain" = "FFFFFF",
 		"Sienna" = "A0522D",
 		"Lotus" = "DBCCA9",
@@ -191,12 +190,10 @@
 		"Gloom" = "897489",
 		"Ebon" = "4E3729",
 	)
+	return additional_colors + colors
 
 /datum/species/automaton/construct/doll/get_random_body_markings(list/passed_features)
 	return list()
 
 /datum/species/automaton/construct/doll/get_random_features()
-	var/list/returned = ..()
-	returned["mcolor2"] = "8b8b8b"
-	returned["mcolor3"] = "5a5a5a"
-	return returned
+	return ..()
