@@ -17,6 +17,7 @@
 	hydration_factor = 2
 	var/virile = TRUE
 	var/triggers_embryo_pregnancy = FALSE
+	var/vitilty_factor = 1
 	evaporation_rate = 0.2
 
 /datum/reagent/consumable/cum/proc/sync_parent_data(mob/living/parent)
@@ -132,7 +133,7 @@
 			return
 		var/allow_embryo_pregnancy = triggers_embryo_pregnancy || parent_triggers_oviposition_embryo_pregnancy(father)
 		if(forgan.can_attempt_impregnation(allow_embryo_pregnancy))
-			if(prob(20))
+			if(prob(20 * vitilty_factor))
 				var/list/father_features = get_parent_features_from_transfer(father)
 				var/father_name = get_parent_name_from_transfer(father)
 				var/embryo_hatch_result_type = get_parent_hatch_result_type_from_transfer(father)

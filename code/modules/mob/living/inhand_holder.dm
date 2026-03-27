@@ -64,10 +64,22 @@
 	appearance = L?.appearance
 	plane = ABOVE_HUD_PLANE
 
+/obj/item/mob_holder/proc/is_in_hole_storage()
+	if(!istype(loc, /obj/item/organ))
+		return FALSE
+
+	var/obj/item/organ/storage_organ = loc
+	return !!SEND_SIGNAL(storage_organ, COMSIG_BODYSTORAGE_FIND_ITEM_LAYER, src)
+
+/obj/item/mob_holder/proc/can_release_from_hole_storage()
+	return FALSE
+
 /obj/item/mob_holder/proc/release(del_on_release = TRUE)
 	if(!held_mob)
 		if(del_on_release && !destroying)
 			qdel(src)
+		return FALSE
+	if(!destroying && is_in_hole_storage() && !can_release_from_hole_storage())
 		return FALSE
 	if(isliving(loc))
 		var/mob/living/L = loc
@@ -106,10 +118,8 @@
 	body_storage_bulk = max(1, round(new_bulk))
 	return body_storage_bulk
 
-/obj/item/mob_holder/internal_womb/release(del_on_release = TRUE)
-	if(!allow_internal_release && held_mob)
-		return FALSE
-	return ..()
+/obj/item/mob_holder/internal_womb/can_release_from_hole_storage()
+	return allow_internal_release
 
 /obj/item/mob_holder/internal_womb/relaymove(mob/user)
 	if(allow_internal_release)

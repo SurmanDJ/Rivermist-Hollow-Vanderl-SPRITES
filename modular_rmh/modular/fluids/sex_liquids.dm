@@ -50,6 +50,10 @@
 		cum = /datum/reagent/consumable/cum/goblinp
 		femcum = /datum/reagent/consumable/femcum/goblinp
 
+/datum/species/goblin/player
+		cum = /datum/reagent/consumable/cum/goblinp/player
+		femcum = /datum/reagent/consumable/femcum/goblinp
+
 
 /datum/species/on_species_gain(mob/living/carbon/C, datum/species/old_species, datum/preferences/pref_load)
 	. = ..()
@@ -157,6 +161,10 @@
 	color = "#c6c6c6"
 	taste_description = "fishy earthiness"
 	triggers_embryo_pregnancy = TRUE
+	vitilty_factor = 5
+
+/datum/reagent/consumable/cum/goblinp/player
+	triggers_embryo_pregnancy = FALSE
 
 /datum/reagent/consumable/femcum/goblinp
 	color = "#c6c6c6"

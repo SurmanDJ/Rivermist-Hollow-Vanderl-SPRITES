@@ -4112,6 +4112,7 @@
 #include "modular_rmh\code\modules\jobs\job_types\town\towner_types\town_lumberjack.dm"
 #include "modular_rmh\code\modules\jobs\job_types\town\towner_types\town_miner.dm"
 #include "modular_rmh\code\modules\jobs\job_types\town\towner_types\town_mouth.dm"
+#include "modular_rmh\code\modules\jobs\outlaw_decree.dm"
 #include "modular_rmh\code\modules\jobs\job_types\townhall\burgmeister.dm"
 #include "modular_rmh\code\modules\jobs\job_types\townhall\councillor.dm"
 #include "modular_rmh\code\modules\jobs\job_types\townhall\servant.dm"
