@@ -215,7 +215,6 @@
 /area/under/underdark/rmh/mountain)
 "cz" = (
 /obj/structure/door/stone{
-	lockid = /obj/effect/landmark/start/steward;
 	name = "Laboratory Chamber";
 	max_integrity = 5000
 	},
