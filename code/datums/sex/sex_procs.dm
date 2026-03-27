@@ -395,6 +395,22 @@
 /mob/proc/has_erp_pref(pref_type)
 	return get_erp_pref(pref_type) == TRUE
 
+/proc/should_apply_mob_erp_target_pref(mob/living/actor, mob/living/target)
+	if(!isliving(actor) || !isliving(target))
+		return FALSE
+	if(actor.client)
+		return FALSE
+	if(!target.client)
+		return FALSE
+	return TRUE
+
+/proc/target_allows_mob_erp_action(mob/living/actor, mob/living/target, pref_type)
+	if(!ispath(pref_type, /datum/erp_preference))
+		return TRUE
+	if(!should_apply_mob_erp_target_pref(actor, target))
+		return TRUE
+	return target.get_erp_pref(pref_type)
+
 /mob/proc/get_all_erp_prefs()
 	if(!client?.prefs)
 		return list()

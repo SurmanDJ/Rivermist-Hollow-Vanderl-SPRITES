@@ -111,11 +111,25 @@
 	. = ..()
 	reconcile_parent_data(current_parent_ref, current_parent_name, current_parent_features, current_hatch_result_type, incoming_data)
 
-/datum/reagent/consumable/cum/on_transfer(atom/A, method, trans_volume)
+/datum/reagent/consumable/cum/proc/get_impregnation_actor_from_transfer(mob/living/father = null, mob/transfered_by = null)
+	if(isliving(transfered_by))
+		return transfered_by
+	if(isliving(holder?.my_atom))
+		return holder.my_atom
+	if(istype(holder?.my_atom, /obj/item/organ/genitals/filling_organ/testicles))
+		var/obj/item/organ/genitals/filling_organ/testicles/testes = holder.my_atom
+		if(isliving(testes.owner))
+			return testes.owner
+	return father
+
+/datum/reagent/consumable/cum/on_transfer(atom/A, method, trans_volume, mob/transfered_by = null)
 	. = ..()
 	if(istype(A, /obj/item/organ/genitals/filling_organ) && virile)
 		var/obj/item/organ/genitals/filling_organ/forgan = A
 		var/mob/living/father = get_parent_from_transfer()
+		var/mob/living/impregnation_actor = get_impregnation_actor_from_transfer(father, transfered_by)
+		if(!target_allows_mob_erp_action(impregnation_actor, forgan.owner, /datum/erp_preference/boolean/allow_mob_breeding))
+			return
 		var/allow_embryo_pregnancy = triggers_embryo_pregnancy || parent_triggers_oviposition_embryo_pregnancy(father)
 		if(forgan.can_attempt_impregnation(allow_embryo_pregnancy))
 			if(prob(20))

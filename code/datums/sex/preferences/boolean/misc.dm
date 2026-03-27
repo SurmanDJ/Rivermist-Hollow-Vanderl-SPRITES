@@ -33,3 +33,15 @@
 	description = "If you want your nsfw flavor to be shown even when clothed"
 	default_value = FALSE
 	category = "General"
+
+/datum/erp_preference/boolean/allow_mob_oviposition
+	name = "Allow mob oviposition"
+	description = "If you want mobs to perform oviposition when possible"
+	default_value = TRUE
+	category = "Mobs"
+
+/datum/erp_preference/boolean/allow_mob_breeding
+	name = "Allow mob breeding"
+	description = "If you want mobs to breed you when possible"
+	default_value = FALSE
+	category = "Mobs"
