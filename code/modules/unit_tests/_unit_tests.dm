@@ -76,6 +76,8 @@
 #include "map_landmarks.dm"
 #include "mapping.dm"
 #include "mindbound_actions.dm"
+#include "pocket_access.dm"
+#include "pocket_dimensions.dm"
 #include "projectiles.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_names.dm"

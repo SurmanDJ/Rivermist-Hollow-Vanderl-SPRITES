@@ -182,10 +182,6 @@
 		"Depth Grey-Blue" = SKIN_TONE_DROW_DEPTH_GREY_BLUE, // #5f5f70
 		"Pink"            = SKIN_TONE_DROW_PINK,            // #897489
 		"Very Pale"		  = SKIN_COLOR_DROW_PALE,	       // #fff0e9
-
-		"white - ice" = "f4f4f4",
-		"white - cavedew" = "dee9ed",
-		"white - spiderweb" = "f4f4f4"
 	))
 
 /datum/species/human/halfdrow/get_possible_names(gender = MALE)

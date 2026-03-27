@@ -315,6 +315,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/change_accent = FALSE
 
 	var/datum/job/advclass/preview_subclass
+	var/tmp/preview_image_revision = 0
 	/// Custom UI scale
 	var/ui_scale
 	///this is our character slot
@@ -428,28 +429,33 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		break
 
 	user?.client.acquire_dpi()
+	var/list/preview_data = get_character_preview_data(user)
 
 	dat += {"
 <html lang="en">
 <head>
 	<style>
+		html {
+			height: 100%;
+			width: 100%;
+			overflow: hidden;
+		}
 		body {
 			background-color: #1a1a1a;
-			display: flex;
-			justify-content: center;
-			align-items: center;
 			height: 100%;
 			width: 100%;
 			margin: 0;
+			overflow: hidden;
 			image-rendering: pixelated;
+			position: relative;
 		}
 		.ui-container {
-			position: relative;
+			position: absolute;
 			width: 272px;
 			height: 315px;
 			background-image: url('Charsheet_BG.1.png');
 			background-size: cover;
-			transform: scale(3);
+			transform-origin: top left;
 		}
 		.sprite { position: absolute; background-repeat: no-repeat; cursor: pointer; }
 
@@ -563,8 +569,72 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		.menu-toggles:hover {
 			background-image: url('toggles_hover.png');
 		}
+
+		.preview-grid {
+			position: absolute;
+			top: 52px;
+			left: 10px;
+			width: 94px;
+			height: 79px;
+			background-color: #000;
+			display: flex;
+			flex-wrap: wrap;
+			overflow: hidden;
+		}
+
+		.preview-slot {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 47px;
+			height: 39px;
+			overflow: visible;
+		}
+
+		.preview-slot img {
+			width: 32px;
+			height: 32px;
+			transform-origin: center center;
+			image-rendering: pixelated;
+			pointer-events: none;
+		}
 	</style>
 	<script>
+		function getViewportWidth() {
+			return window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 816;
+		}
+
+		function getViewportHeight() {
+			return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 950;
+		}
+
+		function decodeOutputValue(value) {
+			try {
+				return decodeURIComponent(value);
+			} catch (error) {
+				return value;
+			}
+		}
+
+		function applyLayoutScale() {
+			var container = document.getElementById('ui-container');
+			if(!container) {
+				return;
+			}
+
+			var viewportWidth = getViewportWidth();
+			var viewportHeight = getViewportHeight();
+			var scale = Math.min(3, (viewportWidth - 8) / 272, (viewportHeight - 8) / 315);
+
+			if(!isFinite(scale) || scale <= 0) {
+				scale = 1;
+			}
+
+			container.style.transform = 'scale(' + scale + ')';
+			container.style.left = Math.max(0, Math.floor((viewportWidth - (272 * scale)) / 2)) + 'px';
+			container.style.top = Math.max(0, Math.floor((viewportHeight - (315 * scale)) / 2)) + 'px';
+		}
+
 		function shrinkText(element) {
 			// Reset to default size first
 			element.style.fontSize = '8px';
@@ -613,6 +683,13 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			}
 		}
 
+		function updatePreviewImage(fieldId, value) {
+			var elem = document.getElementById(fieldId);
+			if(elem && value) {
+				elem.src = value;
+			}
+		}
+
 		function updateCharacterData() {
 			// BYOND's list2params() with output() sends arguments in pairs
 			// Arguments come as: arg0, arg1, arg2, arg3... where each pair is key=value so we can't just do update(data)
@@ -624,7 +701,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 				if(typeof arg === 'string' && arg.indexOf('=') !== -1) {
 					var parts = arg.split('=');
 					var key = parts\[0\];
-					var value = parts.slice(1).join('='); // In case value contains '='
+					var value = decodeOutputValue(parts.slice(1).join('=')); // In case value contains '='
 					data\[key\] = value;
 				}
 			}
@@ -650,6 +727,10 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 			if('headshot' in data) updateHeadshot(data.headshot);
 			if('bespecial' in data) updateBeSpecial(data.bespecial === '1');
+			if('preview_north' in data) updatePreviewImage('preview-north', data.preview_north);
+			if('preview_south' in data) updatePreviewImage('preview-south', data.preview_south);
+			if('preview_east' in data) updatePreviewImage('preview-east', data.preview_east);
+			if('preview_west' in data) updatePreviewImage('preview-west', data.preview_west);
 
 
 			if('gender' in data) {
@@ -670,14 +751,22 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		}
 
 		window.addEventListener('load', function() {
+			applyLayoutScale();
 			document.querySelectorAll('.auto-shrink').forEach(shrinkText);
 		});
+		window.addEventListener('resize', applyLayoutScale);
 	</script>
 </head>
 <body>
-<div class="ui-container">
+<div id="ui-container" class="ui-container">
 	<div class="sprite header-bg"></div>
 	<div class="sprite preview-bg"></div>
+	<div class="preview-grid">
+		<div class="preview-slot"><img id="preview-north" src="[preview_data["preview_north"] || ""]"></div>
+		<div class="preview-slot"><img id="preview-south" src="[preview_data["preview_south"] || ""]"></div>
+		<div class="preview-slot"><img id="preview-east" src="[preview_data["preview_east"] || ""]"></div>
+		<div class="preview-slot"><img id="preview-west" src="[preview_data["preview_west"] || ""]"></div>
+	</div>
 	<div class="sprite body-bg"></div>
 	<div class="sprite voice-bg"></div>
 	<div class="sprite family-bg"></div>
@@ -819,10 +908,11 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 "}
 
 	winshow(user, "stonekeep_prefwin", TRUE)
-	winshow(user, "stonekeep_prefwin.character_preview_map", TRUE)
+	user.client?.clear_character_previews()
+	winshow(user, "stonekeep_prefwin.character_preview_map", FALSE)
 	// This should really be a browser datum
 	user << browse(dat.Join(), "window=preferences_browser;size=816x950")
-	update_preview_icon()
+	addtimer(CALLBACK(src, PROC_REF(update_preview_icon)), 1)
 	onclose(user, "stonekeep_prefwin", src)
 
 /datum/preferences/proc/update_menu_data(mob/user, list/fields_to_update)
@@ -2007,6 +2097,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						reset_patron(user)
 						reset_culture(user)
 						randomise_appearance_prefs(~(RANDOMIZE_SPECIES))
+						features = pref_species.get_random_features()
+						sanitize_species_mutant_colors()
 						customizer_entries = list()
 						validate_customizer_entries()
 						reset_all_customizer_accessory_colors()
@@ -2043,9 +2135,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					show_misc_pref_ui(user)
 
 				if("taur_color")
-					var/new_taur_color = input(user, "Choose your character's taur color:", "Character Preference", "#"+taur_color) as color|null
+					var/new_taur_color = pick_common_color_from_palette(user, "CHOOSE YOUR HERO'S TAUR COLOR", "TAUR COLOR", taur_color)
 					if(new_taur_color)
-						taur_color = sanitize_hexcolor(new_taur_color)
+						taur_color = new_taur_color
 					show_misc_pref_ui(user)
 
 				if("taur_markings")
@@ -2061,40 +2153,19 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					show_misc_pref_ui(user)
 
 				if("mutant_color")
-					var/new_mutantcolor = input(user, "Choose your character's mutant #1 color:", "Character Preference","#"+features["mcolor"]) as color|null
-					if(new_mutantcolor)
-
-						features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
-						try_update_mutant_colors()
+					pick_mutant_color_from_palette(user, 1)
 					show_misc_pref_ui(user)
 
 				if("mutant_color2")
-					var/new_mutantcolor = input(user, "Choose your character's mutant #2 color:", "Character Preference","#"+features["mcolor2"]) as color|null
-					if(new_mutantcolor)
-						features["mcolor2"] = sanitize_hexcolor(new_mutantcolor)
-						try_update_mutant_colors()
+					pick_mutant_color_from_palette(user, 2)
 					show_misc_pref_ui(user)
 
 				if("mutant_color3")
-					var/new_mutantcolor = input(user, "Choose your character's mutant #3 color:", "Character Preference","#"+features["mcolor3"]) as color|null
-					if(new_mutantcolor)
-						features["mcolor3"] = sanitize_hexcolor(new_mutantcolor)
-						try_update_mutant_colors()
+					pick_mutant_color_from_palette(user, 3)
 					show_misc_pref_ui(user)
 
 				if("skin_choice_pick")
-					var/prompt = alert(user, "Choose skin/scales color",, "Custom", "Predefined")
-					if(prompt == "Custom")
-						var/new_mutantcolor = input(user, "Choose your character's skin/scale color:", "Character Preference","#"+features["mcolor"]) as color|null
-						if(new_mutantcolor)
-							features["mcolor"] = sanitize_hexcolor(new_mutantcolor)
-							try_update_mutant_colors()
-					if(prompt == "Predefined")
-						var/listy = pref_species.get_skin_list()
-						var/new_mutantcolor = input(user, "Choose your character's skin tone:", "Sun")  as null|anything in listy
-						if(new_mutantcolor)
-							features["mcolor"] = listy[new_mutantcolor]
-							try_update_mutant_colors()
+					pick_mutant_color_from_palette(user, 1)
 					show_misc_pref_ui(user)
 				if("race_title")
 					var/list/titles = pref_species.race_titles
@@ -2460,6 +2531,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					if(new_s_tone)
 						skin_tone = listy[new_s_tone]
 						features["mcolor"] = listy[new_s_tone]
+						sanitize_species_mutant_colors()
 
 				if("selected_accent")
 					if(length(pref_species.multiple_accents))
@@ -2944,6 +3016,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		validate_customizer_entries()
 		save_character()*/
 
+	sanitize_species_mutant_colors()
+
 	if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == SPEC_ID_HUMEN))
 		var/firstspace = findtext(real_name, " ")
 		var/name_length = length(real_name)
@@ -3113,6 +3187,102 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		reset_body_marking_colors()
 		reset_all_customizer_accessory_colors()
 
+/datum/preferences/proc/has_mutant_color_preferences()
+	return pref_species && ((MUTCOLORS in pref_species.species_traits) || (MUTCOLORS_PARTSONLY in pref_species.species_traits))
+
+/datum/preferences/proc/get_mutant_color_feature_key(color_slot)
+	switch(color_slot)
+		if(1)
+			return "mcolor"
+		if(2)
+			return "mcolor2"
+		if(3)
+			return "mcolor3"
+	return null
+
+/datum/preferences/proc/get_mutant_palette_choice(list/palette, color_value)
+	if(!length(palette) || !length(color_value))
+		return null
+
+	var/normalized_color = lowertext("[color_value]")
+	for(var/palette_name in palette)
+		if(lowertext("[palette[palette_name]]") == normalized_color)
+			return palette_name
+
+	return null
+
+/datum/preferences/proc/is_mutant_color_in_palette(color_value, list/palette)
+	return !isnull(get_mutant_palette_choice(palette, color_value))
+
+/datum/preferences/proc/get_first_mutant_palette_color(list/palette)
+	for(var/palette_name in palette)
+		return palette[palette_name]
+	return null
+
+/datum/preferences/proc/sanitize_species_mutant_colors()
+	if(!has_mutant_color_preferences())
+		return
+
+	for(var/color_slot in 1 to 3)
+		var/list/palette = pref_species.get_mutant_color_list(color_slot)
+		if(!length(palette))
+			continue
+
+		var/feature_key = get_mutant_color_feature_key(color_slot)
+		if(!feature_key)
+			continue
+
+		if(color_slot == 1 && pref_species.use_skintones)
+			var/feature_valid = is_mutant_color_in_palette(features[feature_key], palette)
+			var/skin_valid = is_mutant_color_in_palette(skin_tone, palette)
+
+			if(feature_valid)
+				skin_tone = features[feature_key]
+			else if(skin_valid)
+				features[feature_key] = skin_tone
+			/*else
+				var/default_color = get_first_mutant_palette_color(palette)
+				features[feature_key] = default_color
+				skin_tone = default_color*/
+			continue
+
+		if(!is_mutant_color_in_palette(features[feature_key], palette))
+			features[feature_key] = get_first_mutant_palette_color(palette)
+
+/datum/preferences/proc/pick_mutant_color_from_palette(mob/user, color_slot)
+	if(!has_mutant_color_preferences())
+		return
+
+	var/feature_key = get_mutant_color_feature_key(color_slot)
+	if(!feature_key)
+		return
+
+	var/list/palette = pref_species.get_mutant_color_list(color_slot)
+	if(!length(palette))
+		to_chat(user, span_warning("This species does not have a preset palette for color #[color_slot] yet."))
+		return
+
+	var/current_choice = get_mutant_palette_choice(palette, features[feature_key])
+	if(color_slot == 1 && pref_species.use_skintones && !current_choice)
+		current_choice = get_mutant_palette_choice(palette, skin_tone)
+
+	var/selection = browser_input_list(user, "CHOOSE YOUR HERO'S COLOR #[color_slot]", "BODY COLOR #[color_slot]", palette, current_choice)
+	if(!selection)
+		return
+
+	features[feature_key] = palette[selection]
+	if(color_slot == 1 && pref_species.use_skintones)
+		skin_tone = features[feature_key]
+
+	try_update_mutant_colors()
+
+/datum/preferences/proc/pick_common_color_from_palette(mob/user, prompt, title, current_color)
+	var/list/palette = pref_species.get_common_mutant_color_palette()
+	var/current_choice = get_mutant_palette_choice(palette, current_color)
+	var/selection = browser_input_list(user, prompt, title, palette, current_choice)
+	if(!selection)
+		return null
+	return palette[selection]
 /datum/preferences/proc/is_active_migrant()
 	if(!migrant)
 		return FALSE
