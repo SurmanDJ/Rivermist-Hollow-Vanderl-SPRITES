@@ -156,20 +156,13 @@
 			highest_pref = job_preferences[job]
 	return preview_job
 
-/datum/preferences/proc/get_character_preview_data()
+/datum/preferences/proc/get_character_preview_data(mob/user)
 	var/list/preview_data = list()
-	var/datum/job/preview_job = get_preview_job()
+	if(!user?.client)
+		return preview_data
 
-	var/mob/living/carbon/human/dummy/mannequin = generate_or_wait_for_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES)
-	mannequin.transform = matrix()
-
-	apply_prefs_to(mannequin, TRUE, TRUE)
-	if(preview_subclass)
-		mannequin.job = preview_subclass.title
-		mannequin.dress_up_as_job(preview_subclass, TRUE)
-	else if(preview_job)
-		mannequin.job = preview_job.title
-		mannequin.dress_up_as_job(preview_job, TRUE)
+	var/datum/job/preview_job = preview_subclass || get_preview_job()
+	preview_image_revision++
 
 	var/list/preview_dirs = list(
 		"preview_north" = NORTH,
@@ -177,12 +170,22 @@
 		"preview_east" = EAST,
 		"preview_west" = WEST,
 	)
+	var/icon/preview_icon = get_flat_human_icon(
+		null,
+		preview_job,
+		src,
+		DUMMY_HUMAN_SLOT_PREFERENCES,
+		list(NORTH, SOUTH, EAST, WEST)
+	)
+	if(!preview_icon)
+		preview_icon = icon('icons/blanks/32x32.dmi', "nothing")
 
 	for(var/preview_key in preview_dirs)
-		var/icon/flat_icon = getFlatIcon(mannequin, preview_dirs[preview_key], no_anim = TRUE)
-		preview_data[preview_key] = "data:image/png;base64,[icon2base64(flat_icon, preview_key)]"
+		var/icon/flat_icon = icon(preview_icon, "", preview_dirs[preview_key], 1, 0)
+		var/resource_name = "preference_preview_[preview_key]_[preview_image_revision].png"
+		user << browse_rsc(flat_icon, resource_name)
+		preview_data[preview_key] = resource_name
 
-	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_PREFERENCES, TRUE)
 	return preview_data
 
 /datum/preferences/proc/update_preview_icon()
@@ -191,6 +194,6 @@
 	if(!user || !winexists(user, "preferences_browser"))
 		return
 
-	var/list/preview_data = get_character_preview_data()
+	var/list/preview_data = get_character_preview_data(user)
 	if(length(preview_data))
 		user << output(list2params(preview_data), "preferences_browser:updateCharacterData")

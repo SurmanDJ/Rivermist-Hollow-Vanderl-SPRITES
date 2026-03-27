@@ -315,6 +315,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/change_accent = FALSE
 
 	var/datum/job/advclass/preview_subclass
+	var/tmp/preview_image_revision = 0
 	/// Custom UI scale
 	var/ui_scale
 	///this is our character slot
@@ -428,7 +429,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		break
 
 	user?.client.acquire_dpi()
-	var/list/preview_data = get_character_preview_data()
+	var/list/preview_data = get_character_preview_data(user)
 
 	dat += {"
 <html lang="en">
@@ -911,6 +912,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	winshow(user, "stonekeep_prefwin.character_preview_map", FALSE)
 	// This should really be a browser datum
 	user << browse(dat.Join(), "window=preferences_browser;size=816x950")
+	addtimer(CALLBACK(src, PROC_REF(update_preview_icon)), 1)
 	onclose(user, "stonekeep_prefwin", src)
 
 /datum/preferences/proc/update_menu_data(mob/user, list/fields_to_update)
