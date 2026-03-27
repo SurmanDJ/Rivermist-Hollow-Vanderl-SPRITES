@@ -316,6 +316,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	var/datum/job/advclass/preview_subclass
 	var/tmp/preview_image_revision = 0
+	var/tmp/preview_update_generation = 0
 	/// Custom UI scale
 	var/ui_scale
 	///this is our character slot
@@ -918,12 +919,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 /datum/preferences/proc/update_menu_data(mob/user, list/fields_to_update)
 	if(!winexists(user, "preferences_browser"))
 		return
-
-	// Quick-and-dirty live fix: rebuild the whole preferences browser so all UI
-	// assets and preview images are re-sent after every change.
-	send_character_ui_resources(user)
-	build_and_show_menu(user)
-	return
 
 	var/datum/faith/selected_faith = GLOB.faith_list[selected_patron.associated_faith]
 	var/datum/job/high_job

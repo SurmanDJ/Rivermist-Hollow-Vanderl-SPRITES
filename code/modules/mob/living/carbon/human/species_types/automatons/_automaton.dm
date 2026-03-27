@@ -170,6 +170,11 @@
 	for(var/obj/item/bodypart/part as anything in C.bodyparts)
 		part.status = BODYPART_ROBOTIC
 
+/datum/species/automaton/proc/reset_robotic_bodyparts(mob/living/carbon/C)
+	for(var/obj/item/bodypart/part as anything in C.bodyparts)
+		if(part.status == BODYPART_ROBOTIC)
+			part.status = BODYPART_ORGANIC
+
 /datum/species/automaton/on_species_gain(mob/living/carbon/C, datum/species/old_species, datum/preferences/pref_load)
 	. = ..()
 	add_synthetic_components(C)
@@ -184,8 +189,10 @@
 
 	apply_robotic_bodyparts(C)
 
-/datum/species/automaton/on_species_loss(mob/living/carbon/C)
+/datum/species/automaton/on_species_loss(mob/living/carbon/C, datum/species/new_species)
 	. = ..()
+	if(!istype(new_species, /datum/species/automaton))
+		reset_robotic_bodyparts(C)
 	remove_synthetic_components(C)
 	remove_species_actions(C)
 	UnregisterSignal(C, list(COMSIG_MOB_SAY))

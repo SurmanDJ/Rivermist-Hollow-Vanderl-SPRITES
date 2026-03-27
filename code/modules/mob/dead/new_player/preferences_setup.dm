@@ -194,6 +194,16 @@
 	if(!user || !winexists(user, "preferences_browser"))
 		return
 
+	var/update_generation = ++preview_update_generation
 	var/list/preview_data = get_character_preview_data(user)
 	if(length(preview_data))
-		user << output(list2params(preview_data), "preferences_browser:updateCharacterData")
+		// Let the browser receive the freshly browse_rsc'd preview images before
+		// we swap the <img> sources, otherwise live clients can briefly lose them.
+		addtimer(CALLBACK(src, PROC_REF(push_preview_icon_update), user, preview_data, update_generation), 1)
+
+/datum/preferences/proc/push_preview_icon_update(mob/user, list/preview_data, update_generation)
+	if(update_generation != preview_update_generation)
+		return
+	if(!user || !winexists(user, "preferences_browser"))
+		return
+	user << output(list2params(preview_data), "preferences_browser:updateCharacterData")
