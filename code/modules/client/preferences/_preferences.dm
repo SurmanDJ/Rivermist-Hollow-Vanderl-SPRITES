@@ -919,6 +919,12 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	if(!winexists(user, "preferences_browser"))
 		return
 
+	// Quick-and-dirty live fix: rebuild the whole preferences browser so all UI
+	// assets and preview images are re-sent after every change.
+	send_character_ui_resources(user)
+	build_and_show_menu(user)
+	return
+
 	var/datum/faith/selected_faith = GLOB.faith_list[selected_patron.associated_faith]
 	var/datum/job/high_job
 	for(var/job_type in job_preferences)
