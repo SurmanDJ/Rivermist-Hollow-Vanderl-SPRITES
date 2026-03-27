@@ -6,6 +6,7 @@
 	var/lifecycle_policy = POCKET_LIFECYCLE_KEEP_LOADED
 	var/idle_timeout = POCKET_DEFAULT_IDLE_TIMEOUT
 	var/persistence_mode = POCKET_PERSISTENCE_NONE
+	var/exit_structure_type = /obj/structure/pocket_dimension_exit
 
 /proc/is_valid_pocket_lifecycle_policy(policy)
 	return policy == POCKET_LIFECYCLE_KEEP_LOADED || policy == POCKET_LIFECYCLE_HIBERNATE || policy == POCKET_LIFECYCLE_COLLAPSE
@@ -220,6 +221,15 @@
 		current_turf.y - load_turf.y,
 	)
 
+/datum/pocket_dimension/proc/create_exit_object(obj/effect/landmark/pocket_dimension/exit/exit_marker, turf/current_turf)
+	var/exit_type = exit_marker?.exit_structure_type || template?.exit_structure_type || /obj/structure/pocket_dimension_exit
+	if(!ispath(exit_type, /obj/structure/pocket_dimension_exit))
+		exit_type = /obj/structure/pocket_dimension_exit
+
+	var/obj/structure/pocket_dimension_exit/exit_object = new exit_type(current_turf)
+	exit_object.linked_pocket = src
+	return exit_object
+
 /datum/pocket_dimension/proc/cache_loaded_layout()
 	affected_turfs.Cut()
 	entry_turfs.Cut()
@@ -249,9 +259,9 @@
 			qdel(drop_marker)
 
 		for(var/obj/effect/landmark/pocket_dimension/exit/exit_marker in current_turf)
-			var/obj/structure/pocket_dimension_exit/exit_object = new(current_turf)
-			exit_object.linked_pocket = src
-			exit_objects += exit_object
+			var/obj/structure/pocket_dimension_exit/exit_object = create_exit_object(exit_marker, current_turf)
+			if(exit_object)
+				exit_objects += exit_object
 			qdel(exit_marker)
 
 		for(var/atom/movable/movable as anything in current_turf)
@@ -268,9 +278,9 @@
 			entry_turfs += fallback_entry
 
 	if(!length(exit_objects) && length(entry_turfs))
-		var/obj/structure/pocket_dimension_exit/fallback_exit = new(entry_turfs[1])
-		fallback_exit.linked_pocket = src
-		exit_objects += fallback_exit
+		var/obj/structure/pocket_dimension_exit/fallback_exit = create_exit_object(null, entry_turfs[1])
+		if(fallback_exit)
+			exit_objects += fallback_exit
 
 	for(var/area/current_area as anything in managed_areas)
 		if(!istype(current_area, /area/pocket_dimension))
@@ -760,6 +770,9 @@
 /area/pocket_dimension/bag_of_holding
 	name = "Bag of Holding Cache"
 
+/area/pocket_dimension/magic_closet
+	name = "Magic Closet Interior"
+
 /turf/closed/indestructible/pocket_border
 	name = "folded-space boundary"
 	desc = "Looking at this is making your head hurt."
@@ -778,6 +791,11 @@
 
 /obj/effect/landmark/pocket_dimension/exit
 	name = "pocket exit marker"
+	var/exit_structure_type = /obj/structure/pocket_dimension_exit
+
+/obj/effect/landmark/pocket_dimension/exit/closet
+	name = "pocket closet exit marker"
+	exit_structure_type = /obj/structure/pocket_dimension_exit/closet
 
 /obj/effect/abstract/pocket_dimension_storage
 	invisibility = INVISIBILITY_ABSTRACT
@@ -816,18 +834,42 @@
 /obj/structure/pocket_dimension_exit/attack_paw(mob/user, list/modifiers)
 	use_exit(user)
 
+/obj/structure/pocket_dimension_exit/closet
+	name = "return wardrobe"
+	desc = "A wardrobe door humming with folded space. Touch it to return outside."
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "closet3"
+	density = TRUE
+
 /datum/map_template/pocket/test_chamber
 	name = "Pocket Test Chamber"
 	id = "pocket_test_chamber"
-	mappath = "_maps/templates/pocket_test_chamber.dmm"
+	mappath = "_maps/templates/pockets/pocket_test_chamber.dmm"
 
 /datum/map_template/pocket/bag_of_holding
 	name = "Bag of Holding Cache"
 	id = "pocket_bag_of_holding"
-	mappath = "_maps/templates/pocket_bag_of_holding.dmm"
+	mappath = "_maps/templates/pockets/pocket_bag_of_holding.dmm"
 	lifecycle_policy = POCKET_LIFECYCLE_HIBERNATE
 	idle_timeout = 2 MINUTES
 	persistence_mode = POCKET_PERSISTENCE_MOVABLES
+
+/datum/map_template/pocket/magic_closet
+	name = "Magic Closet Interior"
+	id = "pocket_magic_closet"
+	mappath = "_maps/templates/pockets/pocket_magic_closet.dmm"
+	lifecycle_policy = POCKET_LIFECYCLE_HIBERNATE
+	idle_timeout = 2 MINUTES
+	persistence_mode = POCKET_PERSISTENCE_MOVABLES
+	exit_structure_type = /obj/structure/pocket_dimension_exit/closet
+
+/datum/map_template/pocket/magic_closet/dungeon
+	name = "Dungeon Closet Interior"
+	id = "pocket_magic_closet_dungeon"
+	mappath = "_maps/templates/pockets/intimate_dungeon.dmm"
+	lifecycle_policy = POCKET_LIFECYCLE_KEEP_LOADED
+	persistence_mode = POCKET_PERSISTENCE_MOVABLES
+	exit_structure_type = /obj/structure/pocket_dimension_exit/closet
 
 /obj/item/pocket_dimension_tester
 	name = "folded-space scroll"

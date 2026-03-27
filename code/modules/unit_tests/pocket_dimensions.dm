@@ -58,6 +58,32 @@
 		TEST_ASSERT(istype(released_turf, RESERVED_TURF_TYPE), "Released pocket turfs should be restored to reserved turf.")
 		TEST_ASSERT(released_turf.turf_flags & UNUSED_RESERVATION_TURF, "Released pocket turfs should be marked as available again.")
 
+/datum/unit_test/magic_closet_transport/Run()
+	var/turf/origin = run_loc_floor_bottom_left
+	var/obj/structure/closet/crate/crafted_closet/magic/magic_closet = allocate(/obj/structure/closet/crate/crafted_closet/magic, origin)
+	var/mob/living/carbon/human/user = allocate(/mob/living/carbon/human, origin)
+	var/obj/item/natural/cloth/foreign_item = allocate(/obj/item/natural/cloth, origin)
+
+	TEST_ASSERT(magic_closet.open(user), "Magic closet should open like a normal wardrobe.")
+	TEST_ASSERT(magic_closet.close(user), "Magic closet should close and fold its contents into the pocket.")
+
+	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_instance(magic_closet.get_pocket_instance_key())
+	TEST_ASSERT_NOTNULL(instance, "Closing the magic closet should create its shared pocket.")
+	TEST_ASSERT(instance.contains_turf(get_turf(user)), "Closing the magic closet on an occupant should transport them into the pocket.")
+	TEST_ASSERT(instance.contains_turf(get_turf(foreign_item)), "Closing the magic closet on an item should transport it into the pocket.")
+
+	var/obj/structure/pocket_dimension_exit/closet/exit_closet
+	for(var/obj/structure/pocket_dimension_exit/closet/found_exit as anything in instance.exit_objects)
+		exit_closet = found_exit
+		break
+
+	TEST_ASSERT_NOTNULL(exit_closet, "Magic closet pocket should spawn a closet-shaped exit.")
+	TEST_ASSERT(instance.exit_mob(user), "Pocket occupants should be able to return outside.")
+	TEST_ASSERT_EQUAL(get_turf(user), origin, "Leaving the magic closet pocket should return the user to the wardrobe.")
+
+	TEST_ASSERT(SSpocket_dimensions.delete_instance(instance), "Magic closet pocket should be deletable.")
+	TEST_ASSERT_EQUAL(get_turf(foreign_item), origin, "Deleting the magic closet pocket should eject stored foreign items.")
+
 /datum/unit_test/pocket_dimension_snapshot/Run()
 	var/turf/origin = run_loc_floor_bottom_left
 	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance("[REF(src)]::snapshot", /datum/map_template/pocket/bag_of_holding, POCKET_LIFECYCLE_HIBERNATE, 1)
