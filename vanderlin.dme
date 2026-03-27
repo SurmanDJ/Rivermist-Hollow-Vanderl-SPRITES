@@ -3906,13 +3906,10 @@
 #include "modular_rmh\code\game\turfs\open\floor\snowyfloors.dm"
 #include "modular_rmh\code\modules\artifacts\bag_of_holding.dm"
 #include "modular_rmh\code\modules\artifacts\waystone.dm"
-<<<<<<< map-16
 #include "modular_rmh\code\modules\client\preferred_language.dm"
-=======
 #include "modular_rmh\code\modules\client\customizers\organ\antennas.dm"
 #include "modular_rmh\code\modules\client\customizers\organ\ears.dm"
 #include "modular_rmh\code\modules\client\customizers\organ\gnoll.dm"
->>>>>>> main
 #include "modular_rmh\code\modules\client\customizers\organ\horns.dm"
 #include "modular_rmh\code\modules\client\customizers\organ\wings.dm"
 #include "modular_rmh\code\modules\client\customizers\organ\features\neck_feature.dm"
