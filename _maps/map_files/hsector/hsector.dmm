@@ -10727,7 +10727,7 @@
 /turf/open/floor/cobblerock,
 /area/under/cavewet)
 "edp" = (
-/obj/item/natural/stone,
+/obj/structure/closet/crate/crafted_closet/magic/dungeon,
 /turf/open/floor/cobblerock,
 /area/under/town/rmh/basement/basement)
 "edq" = (
@@ -25243,6 +25243,10 @@
 "juU" = (
 /turf/closed/wall/mineral/wooddark,
 /area/indoors/town/rmh/farm/goat_rue)
+"jva" = (
+/obj/structure/closet/crate/crafted_closet/magic,
+/turf/open/floor/cobble/alt,
+/area/under/town/rmh/basement/merchant)
 "jvp" = (
 /obj/structure/fluff/railing/wood/west,
 /turf/open/floor/ruinedwood,
@@ -106234,7 +106238,7 @@ koi
 geA
 iIW
 pAv
-iIW
+jva
 oKM
 oKM
 gLU
