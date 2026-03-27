@@ -13,7 +13,7 @@
 	accessory_type = /datum/sprite_accessory/wings/seelie/fairy
 	flight_for_species = list(SPEC_ID_SEELIE)
 
-/obj/item/organ/wings/anthro/seelie/afterattack(atom/target, mob/user, proximity)
+/obj/item/organ/wings/flight/seelie/afterattack(atom/target, mob/user, proximity)
 	if(!proximity || !ishuman(target))
 		return ..()
 

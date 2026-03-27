@@ -64,7 +64,7 @@
 		ORGAN_SLOT_APPENDIX = /obj/item/organ/appendix,
 		ORGAN_SLOT_GUTS = /obj/item/organ/guts,
 		ORGAN_SLOT_ANUS = /obj/item/organ/genitals/filling_organ/anus,
-		ORGAN_SLOT_WINGS = /obj/item/organ/wings/anthro/seelie,
+		ORGAN_SLOT_WINGS = /obj/item/organ/wings/flight/seelie,
 	)
 
 	customizers = list(
@@ -166,7 +166,7 @@
 	human.add_spell(/datum/action/cooldown/spell/undirected/seelie_grand_glamour)
 
 	if(!human.getorganslot(ORGAN_SLOT_WINGS))
-		var/obj/item/organ/wings/anthro/seelie/wings = new
+		var/obj/item/organ/wings/flight/seelie/wings = new
 		wings.Insert(human, TRUE, TRUE)
 
 	enforce_wing_requirement(human)

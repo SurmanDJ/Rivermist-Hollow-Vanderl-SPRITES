@@ -5,7 +5,7 @@
 
 /datum/customizer_choice/organ/wings/moth
 	name = "Fluvian Wings"
-	organ_type = /obj/item/organ/wings/moth
+	organ_type = /obj/item/organ/wings/flight/moth
 	sprite_accessories = list(
 		/datum/sprite_accessory/wings/moth/plain,
 		/datum/sprite_accessory/wings/moth/monarch,
@@ -39,7 +39,7 @@
 
 /datum/customizer_choice/organ/wings/seelie
 	name = "Seelie Wings"
-	organ_type = /obj/item/organ/wings/anthro/seelie
+	organ_type = /obj/item/organ/wings/flight/seelie
 	allows_accessory_color_customization = TRUE
 	generic_random_pick = TRUE
 	default_accessory = /datum/sprite_accessory/wings/seelie/fairy

@@ -40,7 +40,7 @@
 		ORGAN_SLOT_ANUS = /obj/item/organ/genitals/filling_organ/anus,
 		ORGAN_SLOT_ANTENNAS = /obj/item/organ/antennas/moth,
 		ORGAN_SLOT_NECK_FEATURE = /obj/item/organ/neck_feature/moth_fluff,
-		ORGAN_SLOT_WINGS = /obj/item/organ/wings/moth,
+		ORGAN_SLOT_WINGS = /obj/item/organ/wings/flight/moth,
 	)
 
 	customizers = list(

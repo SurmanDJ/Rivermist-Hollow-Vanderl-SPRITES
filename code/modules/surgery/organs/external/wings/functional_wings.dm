@@ -52,7 +52,7 @@
 	name = "aasimar wings"
 	accessory_type = /datum/sprite_accessory/wings/huge/angel
 	flight_for_species = list(SPEC_ID_AASIMAR)
-	flight_time = 1 MINUTE
+	flight_time = 1 MINUTES
 	can_open = TRUE
 
 /obj/effect/flyer_shadow
