@@ -50,6 +50,7 @@
 	var/datum/turf_reservation/reservation
 	var/turf/load_turf
 	var/turf/return_turf
+	var/datum/weakref/return_anchor_ref
 	var/list/affected_turfs = list()
 	var/list/turf/entry_turfs = list()
 	var/list/turf/drop_turfs = list()
@@ -91,6 +92,7 @@
 	state = null
 	last_touched = 0
 	return_turf = null
+	return_anchor_ref = null
 	return ..()
 
 /datum/pocket_dimension/proc/apply_lifecycle_settings(new_lifecycle_policy = null, new_idle_timeout = null)
@@ -354,23 +356,37 @@
 	return get_entry_turf() || get_center_turf()
 
 /datum/pocket_dimension/proc/get_return_turf()
+	var/atom/return_anchor = return_anchor_ref?.resolve()
+	if(return_anchor && !QDELETED(return_anchor))
+		var/turf/anchor_turf = get_turf(return_anchor)
+		if(anchor_turf && !QDELETED(anchor_turf))
+			return anchor_turf
 	if(isturf(return_turf) && !QDELETED(return_turf))
 		return return_turf
 	return find_safe_turf()
+
+/datum/pocket_dimension/proc/set_return_target(turf/new_return_turf = null, atom/new_return_anchor = null)
+	if(new_return_anchor && !QDELETED(new_return_anchor))
+		return_anchor_ref = WEAKREF(new_return_anchor)
+	else if(new_return_turf)
+		return_anchor_ref = null
+
+	if(new_return_turf)
+		return_turf = new_return_turf
 
 /datum/pocket_dimension/proc/contains_turf(turf/target)
 	if(!target)
 		return FALSE
 	return !!affected_turfs[target]
 
-/datum/pocket_dimension/proc/enter_mob(mob/user, turf/new_return_turf)
+/datum/pocket_dimension/proc/enter_mob(mob/user, turf/new_return_turf, atom/new_return_anchor = null)
 	if(!user)
 		return FALSE
 	if(!reservation && !activate())
 		return FALSE
 
-	if(new_return_turf)
-		return_turf = new_return_turf
+	if(new_return_turf || new_return_anchor)
+		set_return_target(new_return_turf, new_return_anchor)
 
 	var/turf/entry_turf = get_entry_turf()
 	if(!entry_turf)
@@ -380,14 +396,14 @@
 	user.forceMove(entry_turf)
 	return TRUE
 
-/datum/pocket_dimension/proc/send_movable_inside(atom/movable/movable, turf/new_return_turf = null, turf/forced_drop_turf = null)
+/datum/pocket_dimension/proc/send_movable_inside(atom/movable/movable, turf/new_return_turf = null, turf/forced_drop_turf = null, atom/new_return_anchor = null)
 	if(!movable || QDELETED(movable))
 		return FALSE
 	if(!reservation && !activate())
 		return FALSE
 
-	if(new_return_turf && (!isturf(return_turf) || QDELETED(return_turf) || !has_occupants()))
-		return_turf = new_return_turf
+	if((new_return_turf || new_return_anchor) && (!isturf(return_turf) || QDELETED(return_turf) || !has_occupants() || new_return_anchor))
+		set_return_target(new_return_turf, new_return_anchor)
 
 	var/turf/drop_turf = forced_drop_turf
 	if(!is_valid_drop_turf(drop_turf, movable))
@@ -571,6 +587,7 @@
 			native_movables -= template_movable
 			native_movable_keys -= template_movable
 			native_movables_by_key -= slot_key
+			template_movable.moveToNullspace()
 			qdel(template_movable)
 
 		var/datum/pocket_movable_snapshot/snapshot = native_snapshots[slot_key]

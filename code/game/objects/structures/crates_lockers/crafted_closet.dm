@@ -80,11 +80,11 @@
 
 		if(ismob(stored_movable))
 			var/mob/stored_mob = stored_movable
-			if(!instance.enter_mob(stored_mob, origin_turf))
+			if(!instance.enter_mob(stored_mob, origin_turf, src))
 				return FALSE
 			continue
 
-		if(!instance.send_movable_inside(stored_movable, origin_turf))
+		if(!instance.send_movable_inside(stored_movable, origin_turf, null, src))
 			return FALSE
 
 	return TRUE

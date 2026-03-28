@@ -156,12 +156,21 @@
 			highest_pref = job_preferences[job]
 	return preview_job
 
+/datum/preferences/proc/get_preview_resource_token()
+	if(!preview_resource_token)
+		preview_resource_token = copytext(md5("[REF(src)]"), 1, 9)
+	return preview_resource_token
+
+/datum/preferences/proc/get_preview_dummy_key()
+	return "[DUMMY_HUMAN_SLOT_PREFERENCES]_[get_preview_resource_token()]"
+
 /datum/preferences/proc/get_character_preview_data(mob/user)
 	var/list/preview_data = list()
 	if(!user?.client)
 		return preview_data
 
 	var/datum/job/preview_job = preview_subclass || get_preview_job()
+	var/resource_token = get_preview_resource_token()
 	preview_image_revision++
 
 	var/list/preview_dirs = list(
@@ -174,7 +183,7 @@
 		null,
 		preview_job,
 		src,
-		DUMMY_HUMAN_SLOT_PREFERENCES,
+		get_preview_dummy_key(),
 		list(NORTH, SOUTH, EAST, WEST)
 	)
 	if(!preview_icon)
@@ -182,7 +191,7 @@
 
 	for(var/preview_key in preview_dirs)
 		var/icon/flat_icon = icon(preview_icon, "", preview_dirs[preview_key], 1, 0)
-		var/resource_name = "preference_preview_[preview_key]_[preview_image_revision].png"
+		var/resource_name = "preference_preview_[resource_token]_[preview_key]_[preview_image_revision].png"
 		user << browse_rsc(flat_icon, resource_name)
 		preview_data[preview_key] = resource_name
 

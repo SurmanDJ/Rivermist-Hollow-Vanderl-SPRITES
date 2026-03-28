@@ -317,6 +317,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/datum/job/advclass/preview_subclass
 	var/tmp/preview_image_revision = 0
 	var/tmp/preview_update_generation = 0
+	var/tmp/preview_resource_token
 	/// Custom UI scale
 	var/ui_scale
 	///this is our character slot
@@ -398,6 +399,32 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		save_preferences()
 	save_character()		//let's save this new random character so it doesn't keep generating new ones.
 	menuoptions = list()
+
+/datum/preferences/Destroy()
+	parent = null
+	selected_patron = null
+	combat_music = null
+	preview_subclass = null
+
+	QDEL_NULL(migrant)
+	QDEL_NULL(pref_species)
+	QDEL_NULL(multi_ready_panel)
+	QDEL_LIST(customizer_entries)
+	QDEL_LIST(descriptor_entries)
+	QDEL_LIST(custom_descriptors)
+
+	for(var/i in 1 to 10)
+		QDEL_NULL(vars["loadout[i]"])
+
+	if(customization_history)
+		for(var/list/snapshot as anything in customization_history)
+			for(var/i in 1 to 10)
+				var/datum/loadout_item/loadout_item = snapshot["loadout[i]"]
+				if(loadout_item)
+					qdel(loadout_item)
+		customization_history.Cut()
+
+	return ..()
 
 /datum/preferences/Topic(href, href_list, hsrc)			//yeah, gotta do this I guess..
 	. = ..()

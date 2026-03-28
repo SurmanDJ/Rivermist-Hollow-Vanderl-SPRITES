@@ -271,8 +271,9 @@
 	if(!instance)
 		return FALSE
 
-	var/turf/anchor_turf = origin_turf || get_turf(parent) || get_turf(user)
-	if(!instance.send_movable_inside(movable, anchor_turf, forced_drop_turf))
+	var/atom/return_anchor = parent
+	var/turf/anchor_turf = get_turf(return_anchor) || origin_turf || get_turf(user)
+	if(!instance.send_movable_inside(movable, anchor_turf, forced_drop_turf, return_anchor))
 		return FALSE
 
 	keep_parent_outside_pocket(instance, anchor_turf)
@@ -308,14 +309,16 @@
 	switch(action)
 		if(POCKET_ACTION_ENTER)
 			var/turf/origin_turf = get_turf(user)
+			var/atom/return_anchor = parent
+			var/turf/return_turf = get_turf(return_anchor) || origin_turf
 			instance = get_or_create_instance_for_user(user)
 			if(!instance)
 				to_chat(user, span_warning("The folded space sputters and refuses to open."))
 				return FALSE
-			if(!instance.enter_mob(user, origin_turf))
+			if(!instance.enter_mob(user, return_turf, return_anchor))
 				to_chat(user, span_warning("The folded space sputters and refuses to open."))
 				return FALSE
-			keep_parent_outside_pocket(instance, origin_turf)
+			keep_parent_outside_pocket(instance, return_turf)
 
 		if(POCKET_ACTION_LEAVE)
 			if(!instance?.exit_mob(user))
