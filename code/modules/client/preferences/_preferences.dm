@@ -711,10 +711,38 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			}
 		}
 
+		function tryApplyPreviewImage(elem, value, loadToken, attempt) {
+			if(!elem || elem.previewLoadToken !== loadToken) {
+				return;
+			}
+
+			var preloader = new Image();
+			preloader.onload = function() {
+				if(!elem || elem.previewLoadToken !== loadToken) {
+					return;
+				}
+				elem.src = value;
+			};
+			preloader.onerror = function() {
+				if(!elem || elem.previewLoadToken !== loadToken) {
+					return;
+				}
+				if(attempt >= 5) {
+					return;
+				}
+				setTimeout(function() {
+					tryApplyPreviewImage(elem, value, loadToken, attempt + 1);
+				}, 50 * (attempt + 1));
+			};
+			preloader.src = value;
+		}
+
 		function updatePreviewImage(fieldId, value) {
 			var elem = document.getElementById(fieldId);
 			if(elem && value) {
-				elem.src = value;
+				var loadToken = String(Date.now()) + Math.random();
+				elem.previewLoadToken = loadToken;
+				tryApplyPreviewImage(elem, value, loadToken, 0);
 			}
 		}
 

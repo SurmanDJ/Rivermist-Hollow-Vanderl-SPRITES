@@ -206,9 +206,16 @@
 	var/update_generation = ++preview_update_generation
 	var/list/preview_data = get_character_preview_data(user)
 	if(length(preview_data))
-		// Let the browser receive the freshly browse_rsc'd preview images before
-		// we swap the <img> sources, otherwise live clients can briefly lose them.
+		schedule_preview_icon_update(user, preview_data, update_generation)
+
+/datum/preferences/proc/schedule_preview_icon_update(mob/user, list/preview_data, update_generation)
+	// Before subsystem init, addtimer() is not reliable for lobby preview refreshes.
+	// Keep the one-tick delay that fixes live browser loading, but fall back to spawn.
+	if(SStimer?.initialized)
 		addtimer(CALLBACK(src, PROC_REF(push_preview_icon_update), user, preview_data, update_generation), 1)
+	else
+		sleep(world.tick_lag)
+		push_preview_icon_update(user, preview_data, update_generation)
 
 /datum/preferences/proc/push_preview_icon_update(mob/user, list/preview_data, update_generation)
 	if(update_generation != preview_update_generation)
