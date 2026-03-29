@@ -1746,7 +1746,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			"Default Toggles" = list("toggles_default", toggles),
 			"Maptext Toggles" = list("toggles_maptext", toggles_maptext)
 		)
-		var/toggle_type = browser_input_list(user, title = "Toggle Select", items = toggles_list)
+		var/toggle_type = tgui_input_list(user, message = "", title = "Toggle Select", items = toggles_list)
 		if(!toggle_type)
 			return
 		var/list/toggles_data = toggles_list[toggle_type]
@@ -1838,7 +1838,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 			switch(href_list["preference"])
 				if("name")
-					var/new_name = browser_input_text(user, "DECIDE YOUR HERO'S IDENTITY", "THE SELF", real_name, MAX_NAME_LEN, encode = FALSE)
+					var/new_name = tgui_input_text(user, "DECIDE YOUR HERO'S IDENTITY", "THE SELF", real_name, MAX_NAME_LEN, encode = FALSE)
 					if(new_name)
 						new_name = reject_bad_name(new_name)
 						if(new_name)
@@ -1866,7 +1866,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						to_chat(user, "<b>This role does not have any subclasses!</b>")
 						return
 					if(length(choices))
-						var/new_choice = input(user, "Choose an outfit preview:", "Outfit Preview")  as anything in choices|null
+						var/new_choice = tgui_input_list(user, "Choose an outfit preview:", "Outfit Preview", choices)
 						if(new_choice && new_choice != "None")
 							preview_subclass = choices[new_choice]
 							update_preview_icon()
@@ -1875,7 +1875,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 							update_preview_icon()
 						update_menu_data(user, list("job"))
 				if("age")
-					var/new_age = browser_input_list(user, "SELECT YOUR HERO'S AGE", "YILS DEAD", pref_species.possible_ages, age)
+					var/new_age = tgui_input_list(user, "SELECT YOUR HERO'S AGE", "YILS DEAD", pref_species.possible_ages, age)
 					if(new_age)
 						age = new_age
 						reset_jobs(user)
@@ -1890,7 +1890,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						to_chat(user, span_warning("This species can only use [pronouns]."))
 						return
 
-					var/pronouns_input = browser_input_list(user, "CHOOSE HOW MORTALS REFER TO YOUR HERO", "DISOBEY SOCIAL NORMS", allowed_pronouns)
+					var/pronouns_input = tgui_input_list(user, "CHOOSE HOW MORTALS REFER TO YOUR HERO", "DISOBEY SOCIAL NORMS", allowed_pronouns)
 					if(pronouns_input)
 						pronouns = pronouns_input
 						to_chat(user, span_warning("Your character's pronouns are now [pronouns]."))
@@ -1909,7 +1909,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						to_chat(user, span_warning("This species can only use the [voice_type] voice type."))
 						return
 
-					var/voicetype_input = browser_input_list(user, "CHOOSE YOUR HERO'S VOICE TYPE", "DISCARD SOCIETY'S EXPECTATIONS", allowed_voices)
+					var/voicetype_input = tgui_input_list(user, "CHOOSE YOUR HERO'S VOICE TYPE", "DISCARD SOCIETY'S EXPECTATIONS", allowed_voices)
 					if(voicetype_input)
 						voice_type = voicetype_input
 						if(voicetype_input == VOICE_TYPE_ANDRO)
@@ -1926,7 +1926,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						else if(moanpack_type_input == "Custom")*/
 					if (user.client.prefs.voice_type == VOICE_TYPE_MASC)
 						generate_selectable_moanpacks()
-						var moanpack_sel_input = input(user, "Choose your character's moanpack", "Moanpack") as null|anything in GLOB.selectable_moanpacks_male
+						var/moanpack_sel_input = tgui_input_list(user, "Choose your character's moanpack", "Moanpack", GLOB.selectable_moanpacks_male)
 						if(moanpack_sel_input)
 							moan_selection = moanpack_sel_input
 							to_chat(user, "<font color='red'>Your character will now use the '[lowertext(moanpack_sel_input)]' moanpack.</font>")
@@ -1934,7 +1934,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 							moan_selection = MOANPACK_TYPE_DEF
 					else
 						generate_selectable_moanpacks()
-						var moanpack_sel_input = input(user, "Choose your character's moanpack", "Moanpack") as null|anything in GLOB.selectable_moanpacks_female
+						var/moanpack_sel_input = tgui_input_list(user, "Choose your character's moanpack", "Moanpack", GLOB.selectable_moanpacks_female)
 						if(moanpack_sel_input)
 							moan_selection = moanpack_sel_input
 							to_chat(user, "<font color='red'>Your character will now use the '[lowertext(moanpack_sel_input)]' moanpack.</font>")
@@ -1947,7 +1947,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						if(!faith.preference_accessible(src))
 							continue
 						faiths_named["\The [faith.name]"] = faith
-					var/faith_input = browser_input_list(user, "SELECT YOUR HERO'S BELIEF", "PUPPETS ON STRINGS", faiths_named, "\The [selected_patron.associated_faith::name]")
+					var/faith_input = tgui_input_list(user, "SELECT YOUR HERO'S BELIEF", "PUPPETS ON STRINGS", faiths_named, "\The [selected_patron.associated_faith::name]")
 					if(faith_input)
 						var/datum/faith/faith = faiths_named[faith_input]
 						to_chat(user, "<font color='purple'>Pantheon: [faith.name]</font>")
@@ -1965,7 +1965,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 					if(length(patrons_named))
 						var/datum/faith/current_faith = GLOB.faith_list[selected_patron.associated_faith] || GLOB.faith_list[initial(default_patron.associated_faith)]
-						var/god_input = browser_input_list(user, "SELECT YOUR HERO'S PATRON GOD", uppertext("\The [current_faith.name]"), patrons_named, selected_patron)
+						var/patron_default = selected_patron?.display_name ? selected_patron.display_name : selected_patron?.name
+						var/god_input = tgui_input_list(user, "SELECT YOUR HERO'S PATRON GOD", uppertext("\The [current_faith.name]"), patrons_named, patron_default)
 						if(god_input)
 							selected_patron = patrons_named[god_input]
 
@@ -1984,7 +1985,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						which is influenced by your job class, villain status, or certain events.\n\
 						You can change this later through \"Combat Mode Music\" in the Options tab.\"</span>")
 						combat_music_helptext_shown = TRUE
-					var/track_select = browser_input_list(user, "Set a track to be your combat music.", "Combat Music", GLOB.cmode_tracks_by_name, combat_music?.name)
+					var/track_select = tgui_input_list(user, "Set a track to be your combat music.", "Combat Music", GLOB.cmode_tracks_by_name, combat_music?.name)
 					if(track_select)
 						combat_music = GLOB.cmode_tracks_by_name[track_select]
 						to_chat(user, span_notice("Selected track: <b>[track_select]</b>."))
@@ -1995,7 +1996,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					show_misc_pref_ui(user)
 
 				if("voice")
-					var/new_voice = input(user, "SELECT YOUR HERO'S VOICE COLOR", "THE THROAT","#"+voice_color) as color|null
+					var/new_voice = tgui_color_picker(user, "SELECT YOUR HERO'S VOICE COLOR", "THE THROAT", "#[voice_color]")
 					if(new_voice)
 						if(color_hex2num(new_voice) < 230)
 							to_chat(user, "<font color='red'>This voice color is too dark for mortals.</font>")
@@ -2006,7 +2007,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					to_chat(user, "<span class='notice'>Please use an image of the head and shoulder area to maintain immersion level. Lastly, ["<span class='bold'>do not use a real life photo or use any image that is less than serious.</span>"]</span>")
 					to_chat(user, "<span class='notice'>If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser.</span>")
 					to_chat(user, "<span class='notice'>Keep in mind that the photo will be downsized to 325x325 pixels, so the more square the photo, the better it will look.</span>")
-					var/new_headshot_link = input(user, "Input the headshot link (https, hosts: gyazo, lensdump, imgbox, catbox):", "Headshot", headshot_link) as text|null
+					var/new_headshot_link = tgui_input_text(user, "Input the headshot link (https, hosts: gyazo, lensdump, imgbox, catbox):", "Headshot", headshot_link, encode = FALSE)
 					if(new_headshot_link == null)
 						return
 					if(new_headshot_link == "")
@@ -2051,7 +2052,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					popup.set_content(dat.Join())
 					popup.open(FALSE)
 				if("loadout1hex")
-					var/choice = input(user, "Choose a color.", "Loadout Item One Colour") as null|anything in colorlist
+					var/choice = tgui_input_list(user, "Choose a color.", "Loadout Item One Colour", colorlist)
 					if (choice && colorlist[choice])
 						loadout_1_hex = colorlist[choice]
 						if (loadout1)
@@ -2060,7 +2061,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						loadout_1_hex = null
 						to_chat(user, "The colour for your <b>first</b> loadout item has been cleared.")
 				if("loadout2hex")
-					var/choice = input(user, "Choose a color.", "Loadout Item Two Colour") as null|anything in colorlist
+					var/choice = tgui_input_list(user, "Choose a color.", "Loadout Item Two Colour", colorlist)
 					if (choice && colorlist[choice])
 						loadout_2_hex = colorlist[choice]
 						if (loadout2)
@@ -2069,7 +2070,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						loadout_2_hex = null
 						to_chat(user, "The colour for your <b>second</b> loadout item has been cleared.")
 				if("loadout3hex")
-					var/choice = input(user, "Choose a color.", "Loadout Item Three Colour") as null|anything in colorlist
+					var/choice = tgui_input_list(user, "Choose a color.", "Loadout Item Three Colour", colorlist)
 					if (choice && colorlist[choice])
 						loadout_3_hex = colorlist[choice]
 						if (loadout3)
@@ -2093,7 +2094,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 						selectable[species.name] = species.type
 
-					var/result = browser_input_list(user, "SELECT YOUR HERO'S PEOPLE:", "PEOPLE OF FAERUN", selectable, pref_species)
+					var/result = tgui_input_list(user, "SELECT YOUR HERO'S PEOPLE:", "PEOPLE OF FAERUN", selectable, pref_species?.name)
 
 					if(result)
 						user << browse(null, "window=misc_customization")
@@ -2169,13 +2170,13 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					show_misc_pref_ui(user)
 
 				if("taur_markings")
-					var/new_taur_markings = input(user, "Choose your character's taur markings color:", "Character Preference", "#"+taur_markings) as color|null
+					var/new_taur_markings = tgui_color_picker(user, "Choose your character's taur markings color:", "Character Preference", "#[taur_markings]")
 					if(new_taur_markings)
 						taur_markings = sanitize_hexcolor(new_taur_markings)
 					show_misc_pref_ui(user)
 
 				if("taur_tertiary")
-					var/new_taur_tertiary = input(user, "Choose your character's taur tertiary markings color:", "Character Preference", "#"+taur_tertiary) as color|null
+					var/new_taur_tertiary = tgui_color_picker(user, "Choose your character's taur tertiary markings color:", "Character Preference", "#[taur_tertiary]")
 					if(new_taur_tertiary)
 						taur_tertiary = sanitize_hexcolor(new_taur_tertiary)
 					show_misc_pref_ui(user)
@@ -2214,7 +2215,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 				if("flavortext")
 					to_chat(user, span_notice("["<span class='bold'>Flavortext should not include nonphysical nonsensory attributes such as backstory or the character's internal thoughts. NSFW descriptions are prohibited.</span>"]"))
-					var/new_flavortext = input(user, "Input your character description", "DESCRIBE YOURSELF", flavortext) as message|null  // browser_input_text sanitizes in the box itself, which makes it look kind of ugly when editing A LOT of FTs
+					// Keep this raw while editing; we encode it later for the rendered preview.
+					var/new_flavortext = tgui_input_text(user, "Input your character description", "DESCRIBE YOURSELF", flavortext, multiline = TRUE, encode = FALSE)
 					if(new_flavortext == null)
 						return
 					if(new_flavortext == "")
@@ -2231,7 +2233,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					log_game("[user] has set their flavortext'.")
 				if("nsfw_headshot")
 					to_chat(user, "<span class='notice'>Finally a place to show it all.</span>")
-					var/new_nsfw_headshot_link = input(user, "Input the nsfw headshot link (https, hosts: gyazo, lensdump, imgbox, catbox):", "NSFW Headshot", nsfw_headshot_link) as text|null
+					var/new_nsfw_headshot_link = tgui_input_text(user, "Input the nsfw headshot link (https, hosts: gyazo, lensdump, imgbox, catbox):", "NSFW Headshot", nsfw_headshot_link, encode = FALSE)
 					if(new_nsfw_headshot_link == null)
 						return
 					if(new_nsfw_headshot_link == "")
@@ -2248,7 +2250,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 				if("ooc_notes")
 					to_chat(user, span_notice("["<span class='bold'>Do not put anything NSFW here. This feature is for stuff that wouldn't fit in the flavortext.</span>"]"))
-					var/new_ooc_notes = input(user, "Input your OOC preferences:", "OOC notes", ooc_notes) as message|null
+					var/new_ooc_notes = tgui_input_text(user, "Input your OOC preferences:", "OOC notes", ooc_notes, multiline = TRUE, encode = FALSE)
 					if(new_ooc_notes == null)
 						return
 					if(new_ooc_notes == "")
@@ -2289,15 +2291,11 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 				if("gossip")
 					to_chat(user, span_notice("Gossip is rumours spread around, and known only in Noble circles, only other well-born individuals are aware of it. Gossip, similarly to standard rumours does not need to be precise or true, but remember that it can provide hints and avenues for other Nobles to interact with, and judge your Character.\n<b>Avoid explicit bodily descriptions, though rumors like \"sleeps around a lot\" are fine.</b>"))
-					var/new_gossip = tgui_input_text(user, "Input noble gossip about your character: (380 Character Limit)", "Noble Gossip", noble_gossip, multiline = TRUE, encode = FALSE)
+					var/new_gossip = tgui_input_text(user, "Input noble gossip about your character:", "Noble Gossip", noble_gossip, multiline = TRUE, encode = FALSE)
 					if(new_gossip == null)
 						return
 					if(new_gossip == "")
 						noble_gossip = null
-						update_menu_data(user)
-						return
-					if(length(new_gossip) > 380)
-						to_chat(user, span_notice("Noble gossip cannot exceed 380 characters."))
 						update_menu_data(user)
 						return
 					noble_gossip = new_gossip
@@ -2306,15 +2304,11 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 				if("rumour")
 					to_chat(user, span_notice("Rumours are things others might know, or think they know about you, they don't necessarily have to be precise, or even true. But remember that they can provide a hint to another player on how to interact with, or even think about your character.\n<b>Avoid explicit bodily descriptions, though rumors like \"sleeps around a lot\" are fine.</b>"))
-					var/new_rumour = tgui_input_text(user, "Input rumours about your character: (380 Character Limit)", "Rumours", rumour, multiline = TRUE, encode = FALSE)
+					var/new_rumour = tgui_input_text(user, "Input rumours about your character:", "Rumours", rumour, multiline = TRUE, encode = FALSE)
 					if(new_rumour == null)
 						return
 					if(new_rumour == "")
 						rumour = null
-						update_menu_data(user)
-						return
-					if(length(new_rumour) > 380)
-						to_chat(user, span_warning("Rumours cannot exceed 380 characters."))
 						update_menu_data(user)
 						return
 					rumour = new_rumour
@@ -2341,7 +2335,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 				if("nsfwflavortext")
 					to_chat(user, "<span class='notice'>["<span class='bold'>NSFW Flavortext can be used for setting things like body descriptions and other physical details that may be conisdered explicit.</span>"]</span>")
 					to_chat(user, "<font color = '#d6d6d6'>Leave blank to clear.</font>")
-					var/new_nsfwflavortext = input(user, "Input your character description:", "NSFW Flavortext", nsfwflavortext) as message|null
+					var/new_nsfwflavortext = tgui_input_text(user, "Input your character description:", "NSFW Flavortext", nsfwflavortext, multiline = TRUE, encode = FALSE)
 					if(new_nsfwflavortext == null)
 						return
 					if(new_nsfwflavortext == "")
@@ -2488,7 +2482,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 				if("ooc_extra")
 					to_chat(user, "<span class='notice'>["<span class='bold'>Erotic Roleplay preferences. If you put 'anything goes' or 'no limits' here, do not be surprised if people take you up on it.</span>"]</span>")
 					to_chat(user, "<font color = '#d6d6d6'>Leave blank to clear.</font>")
-					var/new_erpprefs = input(user, "Input your preferences:", "ERP Preferences", erpprefs_flavor) as message|null
+					var/new_erpprefs = tgui_input_text(user, "Input your preferences:", "ERP Preferences", erpprefs_flavor, multiline = TRUE, encode = FALSE)
 					if(new_erpprefs == null)
 						return
 					if(new_erpprefs == "")
@@ -2555,7 +2549,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						log_game("[user] has set their OOC Extra to '[ooc_extra_link]'.")*/
 				if("s_tone")
 					var/list/listy = pref_species.get_skin_list()
-					var/new_s_tone = browser_input_list(user, "CHOOSE YOUR HERO'S [uppertext(pref_species.skin_tone_wording)]", "THE SUN", listy)
+					var/new_s_tone = tgui_input_list(user, "CHOOSE YOUR HERO'S [uppertext(pref_species.skin_tone_wording)]", "THE SUN", listy)
 					if(new_s_tone)
 						skin_tone = listy[new_s_tone]
 						features["mcolor"] = listy[new_s_tone]
@@ -2571,30 +2565,35 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						selected_accent = ACCENT_DEFAULT
 						return
 					var/accent
-					accent = browser_input_list(user, "CHOOSE YOUR HERO'S ACCENT", "VOICE OF THE WORLD", GLOB.accent_list, selected_accent)
+					accent = tgui_input_list(user, "CHOOSE YOUR HERO'S ACCENT", "VOICE OF THE WORLD", GLOB.accent_list, selected_accent)
 					if(accent)
 						selected_accent = accent
 					else if(change_accent)
-						accent = browser_input_list(user, "CHOOSE YOUR HERO'S ACCENT", "VOICE OF THE WORLD", pref_species.multiple_accents, selected_accent)
+						var/accent_default
+						for(var/accent_name in pref_species.multiple_accents)
+							if(pref_species.multiple_accents[accent_name] == selected_accent)
+								accent_default = accent_name
+								break
+						accent = tgui_input_list(user, "CHOOSE YOUR HERO'S ACCENT", "VOICE OF THE WORLD", pref_species.multiple_accents, accent_default)
 						if(accent)
 							selected_accent = pref_species.multiple_accents[accent]
 				if("ooccolor")
-					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference", ooccolor) as color|null
+					var/new_ooccolor = tgui_color_picker(user, "Choose your OOC colour:", "Game Preference", ooccolor)
 					if(new_ooccolor)
 						ooccolor = sanitize_ooccolor(new_ooccolor)
 
 				if("asaycolor")
-					var/new_asaycolor = input(user, "Choose your ASAY color:", "Game Preference", asaycolor) as color|null
+					var/new_asaycolor = tgui_color_picker(user, "Choose your ASAY color:", "Game Preference", asaycolor)
 					if(new_asaycolor)
 						asaycolor = sanitize_ooccolor(new_asaycolor)
 				if ("clientfps")
-					var/desiredfps = input(user, "Choose your desired fps. (0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
+					var/desiredfps = tgui_input_number(user, "Choose your desired fps. (0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps, 500, 0)
 					if (!isnull(desiredfps))
 						clientfps = desiredfps
 						parent.fps = desiredfps
 
 				if("ui")
-					var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style)  as null|anything in sortList(GLOB.available_ui_styles)
+					var/pickedui = tgui_input_list(user, "Choose your UI style.", "Character Preference", sortList(GLOB.available_ui_styles), UI_style)
 					if(pickedui)
 						UI_style = "Rogue"
 						if (parent && parent.mob && parent.mob.hud_used)
@@ -2618,7 +2617,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		else
 			switch(href_list["preference"])
 				if ("max_chat_length")
-					var/desiredlength = input(user, "Choose the max character length of shown Runechat messages. Valid range is 1 to [CHAT_MESSAGE_MAX_LENGTH] (default: [initial(max_chat_length)]))", "Character Preference", max_chat_length)  as null|num
+					var/desiredlength = tgui_input_number(user, "Choose the max character length of shown Runechat messages. Valid range is 1 to [CHAT_MESSAGE_MAX_LENGTH] (default: [initial(max_chat_length)]))", "Character Preference", max_chat_length, CHAT_MESSAGE_MAX_LENGTH, 1)
 					if (!isnull(desiredlength))
 						max_chat_length = clamp(desiredlength, 1, CHAT_MESSAGE_MAX_LENGTH)
 				if("gender")
@@ -2663,7 +2662,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 				if("family")
 					var/list/famtree_options_list = list(FAMILY_NONE, FAMILY_PARTIAL, FAMILY_NEWLYWED, FAMILY_FULL, "EXPLAIN THIS TO ME")
-					var/new_family = browser_input_list(user, "SELECT YOUR HERO'S BOND", "BLOOD IS THICKER THAN WATER", famtree_options_list, family)
+					var/new_family = tgui_input_list(user, "SELECT YOUR HERO'S BOND", "BLOOD IS THICKER THAN WATER", famtree_options_list, family)
 					if(new_family == "EXPLAIN THIS TO ME")
 						to_chat(user, span_purple("\
 						--[FAMILY_NONE] will disable this feature.<br>\
@@ -2676,7 +2675,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						family = new_family
 				//Setspouse is part of the family subsystem. It will check existing families for this character and attempt to place you in this family.
 				if("setspouse")
-					var/newspouse = browser_input_text(user, "INPUT THE IDENTITY OF ANOTHER HERO", "TIL DEATH DO US PART")
+					var/newspouse = tgui_input_text(user, "INPUT THE IDENTITY OF ANOTHER HERO", "TIL DEATH DO US PART", max_length = MAX_MESSAGE_LEN)
 					if(newspouse)
 						setspouse = newspouse
 					else
@@ -2692,12 +2691,12 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						gender_choice = ANY_GENDER
 					else
 						var/list/gender_choice_option_list = list(ANY_GENDER, SAME_GENDER, DIFFERENT_GENDER)
-						var/new_gender_choice  = browser_input_list(user, "SELECT YOUR HERO'S PREFERENCE", "TO LOVE AND TO CHERISH", gender_choice_option_list, gender_choice)
+						var/new_gender_choice  = tgui_input_list(user, "SELECT YOUR HERO'S PREFERENCE", "TO LOVE AND TO CHERISH", gender_choice_option_list, gender_choice)
 						if(new_gender_choice)
 							gender_choice = new_gender_choice
 					genderize_customizer_entries()
 				if("alignment")
-					var/new_alignment = browser_input_list(user, "SELECT YOUR HERO'S MORALITY", "CUT FROM THE SAME CLOTH", ALL_ALIGNMENTS_LIST, alignment)
+					var/new_alignment = tgui_input_list(user, "SELECT YOUR HERO'S MORALITY", "CUT FROM THE SAME CLOTH", ALL_ALIGNMENTS_LIST, alignment)
 					if(new_alignment)
 						alignment = new_alignment
 				if("hotkeys")
@@ -2893,7 +2892,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 								if(!name)
 									name = "Slot[i]"
 								choices[name] = i
-					var/choice = browser_input_list(user, "WHO IS YOUR HERO?", "NECRA AWAITS", choices, real_name)
+					var/choice = tgui_input_list(user, "WHO IS YOUR HERO?", "NECRA AWAITS", choices, real_name)
 					if(choice)
 						choice = choices[choice]
 						if(!load_character(choice))
@@ -3196,7 +3195,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	if(!namedata)
 		return
 
-	var/raw_name = input(user, "Choose your character's [namedata["qdesc"]]:","Character Preference") as text|null
+	var/raw_name = tgui_input_text(user, "Choose your character's [namedata["qdesc"]]:", "Character Preference", max_length = MAX_NAME_LEN, encode = FALSE)
 	if(!raw_name)
 		if(namedata["allow_null"])
 			custom_names[name_id] = get_default_name(name_id)
@@ -3294,7 +3293,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	if(color_slot == 1 && pref_species.use_skintones && !current_choice)
 		current_choice = get_mutant_palette_choice(palette, skin_tone)
 
-	var/selection = browser_input_list(user, "CHOOSE YOUR HERO'S COLOR #[color_slot]", "BODY COLOR #[color_slot]", palette, current_choice)
+	var/selection = tgui_input_list(user, "CHOOSE YOUR HERO'S COLOR #[color_slot]", "BODY COLOR #[color_slot]", palette, current_choice)
 	if(!selection)
 		return
 
@@ -3307,7 +3306,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 /datum/preferences/proc/pick_common_color_from_palette(mob/user, prompt, title, current_color)
 	var/list/palette = pref_species.get_common_mutant_color_palette()
 	var/current_choice = get_mutant_palette_choice(palette, current_color)
-	var/selection = browser_input_list(user, prompt, title, palette, current_choice)
+	var/selection = tgui_input_list(user, prompt, title, palette, current_choice)
 	if(!selection)
 		return null
 	return palette[selection]

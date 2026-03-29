@@ -439,6 +439,9 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	stat_panel = new(src, "statbrowser")
 	stat_panel.subscribe(src, PROC_REF(on_stat_panel_message))
 
+	if(byond_version >= 516)
+		winset(src, null, "browser-options=find,devtools,byondstorage")
+
 	GLOB.ahelp_tickets.ClientLogin(src)
 	var/connecting_admin = FALSE //because de-admined admins connecting should be treated like admins.
 	//Admin Authorisation
@@ -578,6 +581,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 
 	// Initalize tgui panel
 	tgui_panel.initialize()
+	addtimer(CALLBACK(SStgui, TYPE_PROC_REF(/datum/controller/subsystem/tgui, prewarm_popup_window), mob), 1 TICKS)
 
 	INVOKE_ASYNC(src, PROC_REF(acquire_dpi))
 	addtimer(CALLBACK(src, PROC_REF(enforce_status_window_layout)), 1 SECONDS)
@@ -723,8 +727,8 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		if (menuitem)
 			menuitem.Load_checked(src)
 
-	if(byond_version >= 516) // byondstorage handled by tgui
-		winset(src, null, "browser-options=find,devtools")
+	if(byond_version >= 516)
+		winset(src, null, "browser-options=find,devtools,byondstorage")
 
 	loot_panel = new(src)
 
@@ -1241,10 +1245,18 @@ GLOBAL_LIST_EMPTY(respawncounts)
 
 		//load info on what assets the client has
 		src << browse('code/modules/asset_cache/validate_assets.html', "window=asset_cache_browser")
+		addtimer(CALLBACK(src, PROC_REF(preload_tgui_assets)), 1 SECONDS)
 
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		if (CONFIG_GET(flag/asset_simple_preload))
 			addtimer(CALLBACK(SSassets.transport, TYPE_PROC_REF(/datum/asset_transport, send_assets_slow), src, SSassets.transport.preload), 5 SECONDS)
+
+/client/proc/preload_tgui_assets()
+	set waitfor = FALSE
+
+	var/datum/asset/group/tgui_preload/assets = get_asset_datum(/datum/asset/group/tgui_preload)
+	if(assets.send(src))
+		browse_queue_flush()
 
 
 //Hook, override it to run code when dir changes
