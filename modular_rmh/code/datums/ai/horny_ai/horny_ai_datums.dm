@@ -2,6 +2,8 @@
 	action_cooldown = 2 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	var/seek_timeout = 1.5 MINUTES
+	var/failed_seek_cooldown = 10 SECONDS
+	var/successful_seek_cooldown = 15 SECONDS
 
 /datum/ai_behavior/horny/simple_mob
 	// Simple mobs currently only use the shared horny flow as-is.
@@ -27,11 +29,7 @@
 	if((basic_mob.gender == MALE && !basic_mob.getorganslot(ORGAN_SLOT_PENIS)) || (basic_mob.gender == FEMALE && !basic_mob.getorganslot(ORGAN_SLOT_VAGINA)))
 		basic_mob.give_genitals()
 
-	var/list/arousal_data = list()
-	SEND_SIGNAL(basic_mob, COMSIG_SEX_GET_AROUSAL, arousal_data)
-	var/is_spent = arousal_data["is_spent"]
-
-	if(world.time < controller.blackboard[BB_HORNY_SEEK_COOLDOWN] || is_spent) // if on cooldown or unhorny - stop
+	if(world.time < controller.blackboard[BB_HORNY_SEEK_COOLDOWN]) // if on cooldown - stop
 		return FALSE
 
 	if(!targetting_datum.can_horny(basic_mob, target_living))
@@ -136,7 +134,6 @@
 
 	var/list/arousal_data = list()
 	SEND_SIGNAL(basic_mob, COMSIG_SEX_GET_AROUSAL, arousal_data)
-	var/is_spent = arousal_data["is_spent"]
 	var/last_orgasm_time = arousal_data["last_ejaculation_time"]
 	var/horny_start_time = controller.blackboard[BB_HORNY_TIME_START]
 	if(isnull(horny_start_time))
@@ -148,7 +145,7 @@
 		session = basic_mob.start_sex_session(target_living)
 
 	//check if we are sated
-	if(last_orgasm_time > world.time - 10 SECONDS || is_spent || horny_start_time < world.time - 5 MINUTES)
+	if(last_orgasm_time > world.time - 10 SECONDS || horny_start_time < world.time - 5 MINUTES)
 		if(session)
 			session.stop_current_action()
 		finish_action(controller, TRUE, target_key)
@@ -192,6 +189,11 @@
 	if(!target || target == basic_mob || QDELETED(target))
 		return FALSE
 
+	// Human NPCs can consider prone, armed victims "disarm targets"; that should not
+	// override horny retargeting while this same mob is still a valid horny partner.
+	if(targetting_datum.can_horny(basic_mob, target))
+		return FALSE
+
 	if(!targetting_datum.can_attack(basic_mob, target) && !targetting_datum.should_disarm(basic_mob, target))
 		return FALSE
 
@@ -231,6 +233,10 @@
 /datum/ai_behavior/horny/proc/try_pre_knockdown_disarm(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
 	return FALSE
 
+/datum/ai_behavior/horny/proc/get_horny_disarm_intent()
+	var/static/datum/intent/unarmed/shove/disarm_intent = new()
+	return disarm_intent
+
 /datum/ai_behavior/horny/proc/attempt_stamina_knockdown(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
 	if(!basic_mob.Adjacent(target_living))
 		controller.set_blackboard_key(BB_HORNY_KNOCKDOWN_NEED, TRUE)
@@ -251,7 +257,7 @@
 		prob2defend *= 0.1
 	prob2defend = CLAMP(prob2defend, 0, 85)
 
-	var/base_stamina_drain = iscarbon(basic_mob) ? target_living.maximum_stamina * 0.18 : target_living.maximum_stamina * 0.24
+	var/base_stamina_drain = iscarbon(basic_mob) ? target_living.maximum_stamina * 0.20 : target_living.maximum_stamina * 0.28
 	var/stamina_drain = max(round(base_stamina_drain * (1 - (prob2defend / 125))), 5)
 	target_living.adjust_stamina(stamina_drain, null, FALSE, FALSE)
 
@@ -379,6 +385,13 @@
 		return FALSE
 	if(!human_target.get_active_held_item() && !human_target.get_inactive_held_item())
 		return FALSE
+	var/datum/intent/disarm_intent = get_horny_disarm_intent()
+	var/datum/intent/cached_intent = basic_mob.used_intent
+	basic_mob.used_intent = disarm_intent
+	if(human_target.checkdefense(disarm_intent, basic_mob))
+		basic_mob.used_intent = cached_intent
+		return TRUE
+	basic_mob.used_intent = cached_intent
 	if(!prob(50))
 		human_target.visible_message(span_danger("[basic_mob] swats at [human_target]'s hands, but fails to disarm them!"), \
 				span_userdanger("[basic_mob] swats at my hands, but I keep hold of my weapon!"), span_hear("I hear a rough struggle over a weapon!"), COMBAT_MESSAGE_RANGE)
@@ -538,6 +551,13 @@
 		return FALSE
 	if(!human_target.get_active_held_item() && !human_target.get_inactive_held_item())
 		return FALSE
+	var/datum/intent/disarm_intent = get_horny_disarm_intent()
+	var/datum/intent/cached_intent = basic_mob.used_intent
+	basic_mob.used_intent = disarm_intent
+	if(human_target.checkdefense(disarm_intent, basic_mob))
+		basic_mob.used_intent = cached_intent
+		return TRUE
+	basic_mob.used_intent = cached_intent
 	if(!prob(50))
 		human_target.visible_message(span_danger("[basic_mob] lunges for [human_target]'s weapon, but can't wrench it free!"), \
 				span_userdanger("[basic_mob] lunges for my weapon, but I keep hold of it!"), span_hear("I hear a struggle over a weapon!"), COMBAT_MESSAGE_RANGE)
@@ -593,10 +613,13 @@
 			hit_count = 0
 		hit_count += 1
 		controller.set_blackboard_key(BB_HORNY_TARGET_ATTACK_COUNT, hit_count)
-		controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker, world.time)
-		targetting_datum?.set_horny_target_hostile(source, attacker)
-	else
-		targetting_datum?.set_horny_target_hostile(source, attacker)
+
+		var/health_below_breakpoint = source.maxHealth && source.health <= source.maxHealth * 0.75
+		if(hit_count < 4 && !(hit_count >= 2 && health_below_breakpoint))
+			return
+
+	controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker, world.time)
+	targetting_datum?.set_horny_target_hostile(source, attacker)
 
 	controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, attacker)
 
@@ -618,6 +641,17 @@
 
 	// A partner who just completed an encounter with us should not stay stuck in the
 	// retaliation/aggro memory and block horny retargeting after the seek cooldown ends.
+	var/mob/living/basic_mob = controller.pawn
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[BB_TARGETTING_DATUM]
+	if(targetting_datum && basic_mob)
+		targetting_datum.clear_horny_target_hostility(basic_mob, finished_target)
+	else
+		var/list/hostile_targets = controller.blackboard[BB_HORNY_HOSTILE_TARGETS]
+		if(hostile_targets && !isnull(hostile_targets[finished_target]))
+			controller.remove_thing_from_blackboard_key(BB_HORNY_HOSTILE_TARGETS, finished_target)
+		if(controller.blackboard[BB_HORNY_AGGRO_TARGET] == finished_target)
+			controller.clear_blackboard_key(BB_HORNY_AGGRO_TARGET)
+
 	var/list/retaliate_list = controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
 	if(retaliate_list && !isnull(retaliate_list[finished_target]))
 		controller.remove_thing_from_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST, finished_target)
@@ -663,13 +697,14 @@
 	controller.clear_blackboard_key(BB_HORNY_WRONG_ACTION)
 	controller.clear_blackboard_key(BB_HORNY_KNOCKDOWN_NEED)
 	controller.clear_blackboard_key(BB_HORNY_AGGRO_TARGET)
+	controller.clear_blackboard_key(BB_HORNY_STUN_COOLDOWN)
 	controller.clear_blackboard_key(target_key)
 	controller.clear_blackboard_key(BB_HORNY_TIME_START)
 	if(basic_mob.is_dead())
 		return
 	if(!succeeded)
 		//if ran away - be angry
-		controller.set_blackboard_key(BB_HORNY_SEEK_COOLDOWN, world.time + 30 SECONDS)
+		controller.set_blackboard_key(BB_HORNY_SEEK_COOLDOWN, world.time + failed_seek_cooldown)
 		basic_mob.visible_message(span_danger("[basic_mob] stomps on the ground, clearly unsatisfied!"))
 		controller.modify_cooldown(src, world.time)
 		//controller.CancelActions()
@@ -679,8 +714,14 @@
 
 	//if sated - go off and sleep or smth
 	clear_completed_target_hostility(controller, finished_target)
-	controller.set_blackboard_key(BB_HORNY_SEEK_COOLDOWN, world.time + 90 SECONDS)
-	basic_mob.visible_message(span_danger("[basic_mob] exhales contently!"))
+	var/success_cooldown = successful_seek_cooldown
+	var/datum/component/arousal/arousal_component = basic_mob.GetComponent(/datum/component/arousal)
+	var/message = span_danger("[basic_mob] exhales contently!")
+	if(arousal_component?.recent_orgasm_count >= 3)
+		success_cooldown += 2 MINUTES
+		message = span_danger("[basic_mob] lets out a releved sigh and releases [finished_target] for now.")
+	controller.set_blackboard_key(BB_HORNY_SEEK_COOLDOWN, world.time + success_cooldown)
+	basic_mob.visible_message(message)
 	controller.modify_cooldown(src, world.time)
 	//controller.CancelActions()
 

@@ -303,6 +303,9 @@
 	active_actions -= action
 	action.on_finish(user, target)
 	update_current_action()
+	if(!length(active_actions))
+		// This is only a one-shot "finish the current loop" latch; don't let it leak into a future encounter.
+		just_climaxed = FALSE
 	qdel(action)
 
 /datum/sex_session/proc/can_perform_action(action_type, performing = FALSE)

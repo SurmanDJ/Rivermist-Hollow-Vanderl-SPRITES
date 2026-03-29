@@ -1,6 +1,11 @@
 /datum/ai_behavior/find_aggro_targets
 	action_cooldown = 1 SECONDS
 
+/datum/ai_behavior/find_aggro_targets/setup(datum/ai_controller/controller, ...)
+	if(controller.blackboard[BB_FIND_TARGETS_FIELD(type)])
+		return FALSE
+	return ..()
+
 /datum/ai_behavior/find_aggro_targets/get_cooldown(datum/ai_controller/cooldown_for)
 	if(cooldown_for.blackboard[BB_FIND_TARGETS_FIELD(type)])
 		return 60 SECONDS
@@ -63,8 +68,9 @@
 	// Clear target key since we don't have a valid target
 	controller.clear_blackboard_key(target_key)
 
-	// If we're using a field rn, just don't do anything
+	// A passive field is already watching for new threats, so don't block future planning while we wait.
 	if(controller.blackboard[BB_FIND_TARGETS_FIELD(type)])
+		finish_action(controller, succeeded = FALSE)
 		return
 
 	// If we don't have a target, check for new targets in range
