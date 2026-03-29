@@ -5,6 +5,16 @@
 		return
 	if(horny_ai_should_yield_to_aggro(controller))
 		return
+	var/mob/living/living_pawn = controller.pawn
+	var/datum/targetting_datum/targetting_datum = controller.blackboard[BB_TARGETTING_DATUM]
+	var/atom/current_target = controller.blackboard[BB_BASIC_MOB_CURRENT_HORNY_TARGET]
+	if(current_target && QDELETED(current_target))
+		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_HORNY_TARGET)
+		current_target = null
+	if(current_target && targetting_datum?.can_horny(living_pawn, current_target))
+		return
+	if(current_target)
+		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_HORNY_TARGET)
 	controller.queue_behavior(/datum/ai_behavior/find_potential_horny_targets, BB_BASIC_MOB_CURRENT_HORNY_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 
 /datum/ai_planning_subtree/horny
@@ -22,9 +32,11 @@
 		return
 	if(horny_ai_should_yield_to_aggro(controller))
 		return
-	controller.queue_behavior(get_horny_behavior_type(controller), BB_BASIC_MOB_CURRENT_HORNY_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
-	if(target)
-		return SUBTREE_RETURN_FINISH_PLANNING //we are going into +battle+...no distractions.
+	var/behavior_type = get_horny_behavior_type(controller)
+	var/datum/ai_behavior/horny/horny_behavior = GET_AI_BEHAVIOR(behavior_type)
+	controller.queue_behavior(behavior_type, BB_BASIC_MOB_CURRENT_HORNY_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+	if(target && LAZYACCESS(controller.planned_behaviors, horny_behavior))
+		return SUBTREE_RETURN_FINISH_PLANNING // Once horny actually has the wheel, don't queue later combat finders behind it.
 
 /datum/ai_planning_subtree/horny/proc/get_horny_behavior_type(datum/ai_controller/controller)
 	if(ishuman(controller.pawn))
@@ -73,6 +85,11 @@
 
 /datum/ai_planning_subtree/proc/horny_ai_is_valid_aggro_target(mob/living/living_pawn, datum/targetting_datum/targetting_datum, atom/target)
 	if(!target || target == living_pawn || QDELETED(target))
+		return FALSE
+
+	// Human NPCs can consider prone, armed victims "disarm targets"; keep that from
+	// hijacking horny planning while this same mob is still a valid horny partner.
+	if(targetting_datum.can_horny(living_pawn, target))
 		return FALSE
 
 	if(!targetting_datum.can_attack(living_pawn, target) && !targetting_datum.should_disarm(living_pawn, target))

@@ -238,7 +238,7 @@
 		return
 
 	var/mob/living/carbon/human/H = src
-	var/mob/living/carbon/human/U = user
+	var/mob/living/carbon/human/U = ishuman(user) ? user : null
 
 	// Defender skill gain
 	if((body_position != LYING_DOWN) && attacker_skill && (defender_skill < attacker_skill - SKILL_LEVEL_NOVICE))
@@ -249,15 +249,15 @@
 			H.adjust_experience(used_weapon.associated_skill, max(round(H.STAINT/2), 0), FALSE)
 
 	// Attacker skill gain
-	var/obj/item/AB = intenty.get_master_item()
-	if((U.body_position != LYING_DOWN) && defender_skill && (attacker_skill < defender_skill - SKILL_LEVEL_NOVICE))
+	var/obj/item/AB = intenty?.get_master_item()
+	if(U && (U.body_position != LYING_DOWN) && defender_skill && (attacker_skill < defender_skill - SKILL_LEVEL_NOVICE))
 		if(AB)
 			U.adjust_experience(AB.associated_skill, max(round(U.STAINT/2), 0), FALSE)
 		else
 			U.adjust_experience(/datum/skill/combat/unarmed, max(round(U.STAINT/2), 0), FALSE)
 
-	var/obj/effect/temp_visual/dir_setting/block/blk = new(get_turf(src), get_dir(H, U))
-	blk.icon_state = "p[U.used_intent.animname]"
+	var/obj/effect/temp_visual/dir_setting/block/blk = new(get_turf(src), get_dir(H, user))
+	blk.icon_state = "p[user?.used_intent?.animname || intenty?.animname || "strike"]"
 
 	if(prob(66) && AB)
 		if((used_weapon.flags_1 & CONDUCT_1) && (AB.flags_1 & CONDUCT_1))
@@ -272,7 +272,7 @@
 	else
 		flash_fullscreen("blackflash2")
 
-	var/dam2take = round((get_complex_damage(AB, user, FALSE)/2), 1)
+	var/dam2take = AB ? round((get_complex_damage(AB, user, FALSE)/2), 1) : 0
 	if(dam2take)
 		var/intdam = used_weapon.max_blade_int ? INTEG_PARRY_DECAY : INTEG_PARRY_DECAY_NOSHARP
 		used_weapon.take_damage(intdam, BRUTE, used_weapon.damage_type)

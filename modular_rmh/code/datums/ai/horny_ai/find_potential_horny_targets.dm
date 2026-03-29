@@ -13,6 +13,8 @@
 
 /datum/ai_behavior/find_potential_horny_targets/setup(datum/ai_controller/controller, target_key, targetting_datum_key)
 	. = ..()
+	if(controller.blackboard[BB_FIND_HORNY_TARGETS_FIELD(type)])
+		return FALSE
 	var/mob/living/basic_mob = controller.pawn
 	if(!basic_mob)
 		return FALSE
@@ -39,8 +41,9 @@
 		return
 
 	controller.clear_blackboard_key(target_key)
-	// If we're using a field rn, just don't do anything yeah?
+	// A passive field is already watching for horny targets, so don't sit in current_behaviors blocking planning.
 	if(controller.blackboard[BB_FIND_HORNY_TARGETS_FIELD(type)])
+		finish_action(controller, succeeded = FALSE)
 		return
 
 	var/list/potential_targets = hearers(vision_range, controller.pawn) - living_mob //Remove self, so we don't suicide

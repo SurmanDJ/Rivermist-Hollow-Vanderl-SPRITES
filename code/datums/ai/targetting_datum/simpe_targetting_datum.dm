@@ -33,6 +33,20 @@
 	controller.set_blackboard_key(BB_HORNY_AGGRO_TARGET, target)
 	return TRUE
 
+/datum/targetting_datum/proc/clear_horny_target_hostility(mob/living/living_mob, atom/target)
+	var/datum/ai_controller/controller = living_mob?.ai_controller
+	if(!controller || !target)
+		return FALSE
+
+	var/list/hostile_targets = controller.blackboard[BB_HORNY_HOSTILE_TARGETS]
+	if(hostile_targets && !isnull(hostile_targets[target]))
+		controller.remove_thing_from_blackboard_key(BB_HORNY_HOSTILE_TARGETS, target)
+
+	if(controller.blackboard[BB_HORNY_AGGRO_TARGET] == target)
+		controller.clear_blackboard_key(BB_HORNY_AGGRO_TARGET)
+
+	return TRUE
+
 /datum/targetting_datum/proc/is_horny_target_now_hostile(mob/living/living_mob, atom/target)
 	var/datum/ai_controller/controller = living_mob?.ai_controller
 	if(!controller)
