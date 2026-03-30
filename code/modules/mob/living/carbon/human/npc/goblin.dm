@@ -161,6 +161,7 @@
 
 	dam_icon_f = null
 	dam_icon_m = null
+	gender_ratio = 90 // 90 percent of them will be male
 	damage_overlay_type = ""
 	changesource_flags = WABBAJACK
 	var/raceicon = "goblin"

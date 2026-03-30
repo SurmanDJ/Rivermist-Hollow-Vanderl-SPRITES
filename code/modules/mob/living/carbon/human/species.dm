@@ -23,6 +23,8 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	var/list/possible_ages = ALL_AGES_LIST
 	/// Whether or not this species has sexual characteristics
 	var/sexes = TRUE
+	/// Percentage split of male female members of this species. Skews for males.
+	var/gender_ratio = 50
 	/// Whether this species a requires donator subscription to access, we removed all donator restrictions for species, but it's here if we ever want to reenable them or smth.
 	var/donator_req = FALSE
 	/// Used for sorting the species in the species_list, check out species_order_list for the order itself
