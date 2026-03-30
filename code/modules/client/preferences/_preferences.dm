@@ -2628,9 +2628,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 							parent.mob.hud_used.update_ui_style(ui_style2icon(UI_style))
 
 				if("culture")
-					to_chat(user, span_info("This feature is not ready yet!"))
-					return
-					/*var/list/cultures = list()
+					var/list/cultures = list()
 					for(var/culture_type in GLOB.culture_singletons)
 						var/datum/culture/culture = GLOB.culture_singletons[culture_type]
 						if(!culture.is_selectable(src))
@@ -2641,7 +2639,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						return
 					culture = cultures[choice]
 					to_chat(user, span_notice("[culture::name]"))
-					to_chat(user, span_notice("[culture::description]"))*/
+					to_chat(user, span_notice("[culture::description]"))
 		else
 			switch(href_list["preference"])
 				if ("max_chat_length")

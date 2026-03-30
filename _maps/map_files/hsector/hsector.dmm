@@ -5583,7 +5583,7 @@
 	pixel_y = 0;
 	dir = 1
 	},
-/obj/structure/bookcase/random/eoratica{
+/obj/structure/bookcase/random/erotica{
 	density = 0;
 	opacity = 0;
 	pixel_x = 32
@@ -13037,7 +13037,7 @@
 /obj/structure/fluff/railing/wood{
 	alpha = 5
 	},
-/obj/structure/bookcase/random/eoratica{
+/obj/structure/bookcase/random/erotica{
 	density = 0;
 	opacity = 0;
 	pixel_x = 32
@@ -16521,7 +16521,7 @@
 /obj/item/candle/tin/lit{
 	pixel_x = 8
 	},
-/obj/structure/bookcase/random/eoratica{
+/obj/structure/bookcase/random/erotica{
 	density = 0;
 	opacity = 0;
 	pixel_x = 32
@@ -33248,7 +33248,7 @@
 	pixel_y = 15;
 	icon = 'icons/turf/constructed/misc.dmi'
 	},
-/obj/structure/bookcase/random/eoratica{
+/obj/structure/bookcase/random/erotica{
 	density = 0;
 	opacity = 0;
 	pixel_x = 32
@@ -38523,7 +38523,7 @@
 /turf/open/water/cleanshallow,
 /area/indoors/cave/rmh_cave/cave_druid)
 "onB" = (
-/obj/structure/bookcase/random/eoratica{
+/obj/structure/bookcase/random/erotica{
 	density = 0;
 	opacity = 0;
 	pixel_y = 32
@@ -58376,7 +58376,7 @@
 /turf/open/floor/cobble,
 /area/indoors/town/rmh/garrison)
 "vAQ" = (
-/obj/structure/bookcase/random/eoratica,
+/obj/structure/bookcase/random/erotica,
 /obj/effect/decal/cleanable/dirt/cobweb,
 /obj/item/recipe_book/alchemy,
 /obj/item/recipe_book/agriculture,
@@ -63601,7 +63601,7 @@
 	pixel_y = 20;
 	pixel_x = 9
 	},
-/obj/item/book/random_book/eoratica{
+/obj/item/book/random_book/erotica{
 	pixel_y = 1;
 	pixel_x = -5
 	},

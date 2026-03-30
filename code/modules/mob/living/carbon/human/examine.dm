@@ -273,13 +273,14 @@
 					. += span_redtext("[m1] an ex-agent of the court.")
 
 			if(real_name in GLOB.excommunicated_players)
-				. += span_userdanger("EXCOMMUNICATED!")
+				. += span_userdanger("GOD-FORSAKEN!")
 
 			if(real_name in GLOB.heretical_players)
 				. += span_userdanger("HERETIC! SHAME!")
 
 			if(user.mind)
-				if(is_zizocultist(user.mind) || is_zizolackey(user.mind))
+				var/mob/living/carbon/human/HU = user
+				if(is_zizocultist(user.mind) || is_zizolackey(user.mind) || HU.has_quirk(/datum/quirk/vice/lovefiend))
 					if(virginity)
 						. += span_userdanger("VIRGIN!")
 
