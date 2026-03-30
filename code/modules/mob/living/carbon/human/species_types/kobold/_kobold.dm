@@ -26,7 +26,7 @@
 /datum/species/kobold
 	name = "Kobold"
 	id = SPEC_ID_KOBOLD
-	desc = "Speculated to have originated from the dank depths of Subterra, \
+	desc = "Speculated to have originated from the dank depths of Underdark, \
 	Kobolds are a species of stout sea-faring and mountain-dwelling lizardfolk infamous for their skills in trap-making, \
 	their habit of hoarding grandiose amounts of trinkets and artifacts, and their opportunism.\
 	\n\n\

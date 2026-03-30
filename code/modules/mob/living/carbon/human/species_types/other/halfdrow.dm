@@ -11,7 +11,7 @@
 	name = "Half-Drow"
 	id = SPEC_ID_HALF_DROW
 	multiple_accents = list(
-		"Humen Accent" = "Imperial",
+		"Human Accent" = "Imperial",
 		"Dark Elf Accent" = "Elfish"
 	)
 	desc = "Half-Drow are born from unions between drow and surface folk, most often humans or elves. \
