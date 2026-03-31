@@ -1,3 +1,23 @@
+/datum/attribute_holder/sheet/job/moon_priest
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 2,
+		STAT_INTELLIGENCE = 3,
+		STAT_CONSTITUTION = 1,
+		STAT_ENDURANCE = 2,
+		STAT_SPEED = 1,
+		STAT_FORTUNE = 2,
+		/datum/attribute/skill/magic/holy = 50,
+		/datum/attribute/skill/misc/reading = 50,
+		/datum/attribute/skill/misc/medicine = 40,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/polearms = 20,
+		/datum/attribute/skill/combat/shields = 20,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 10,
+		/datum/attribute/skill/labor/mathematics = 30
+	)
+
 /datum/job/moon_priest
 	title = "Moon Priest"
 	f_title = "Moon Priestess"
@@ -25,27 +45,8 @@
 	exp_requirements = list(EXP_TYPE_CHURCH = 700)
 
 	allowed_patrons = list(/datum/patron/faerun/good_gods/Selune)
-	jobstats = list(
-		STATKEY_PER = 2,
-		STATKEY_INT = 3,
-		STATKEY_CON = 1,
-		STATKEY_END = 2,
-		STATKEY_SPD = 1,
-		STATKEY_LCK = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/moon_priest
 
-	skills = list(
-		/datum/skill/magic/holy = 5,
-		/datum/skill/misc/reading = 5,
-		/datum/skill/misc/medicine = 4,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/polearms = 2,
-		/datum/skill/combat/shields = 2,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 1,
-		/datum/skill/labor/mathematics = 3
-	)
 
 	traits = list(
 		TRAIT_HOLY,

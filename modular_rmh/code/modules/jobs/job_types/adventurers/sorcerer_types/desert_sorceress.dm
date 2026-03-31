@@ -1,3 +1,15 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_sorcerer/desert_sorceress
+	raw_attribute_list = list(
+		STAT_ENDURANCE = 2,
+		STAT_INTELLIGENCE = 1,
+		STAT_ENDURANCE = 1,
+		/datum/attribute/skill/magic/arcane = 30,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/combat/knives = 10,
+		/datum/attribute/skill/combat/whipsflails = 20
+	)
+
 /datum/job/advclass/combat/adventurer_sorcerer/desert_sorceress
 	title = "Desert Sorceress"
 	tutorial = "You call on the Weave to shape fire and ash. Magic is delicate, but deadly in skilled hands."
@@ -7,19 +19,8 @@
 	outfit = /datum/outfit/adventurer_sorcerer/desert_sorceress
 	category_tags = list(CAT_ADVENTURER_SORCERER)
 
-	jobstats = list(
-		STATKEY_END = 2,
-		STATKEY_INT = 1,
-		STATKEY_END = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_sorcerer/desert_sorceress
 
-	skills = list(
-		/datum/skill/magic/arcane = 3,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/combat/knives = 1,
-		/datum/skill/combat/whipsflails = 2,
-	)
 
 	traits = list(
 		TRAIT_GOODLOVER,

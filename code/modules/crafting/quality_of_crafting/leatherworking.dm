@@ -9,7 +9,7 @@
 
 	starting_atom = /obj/item/needle
 	attacked_atom = /obj/item/natural/hide/cured
-	skillcraft = /datum/skill/craft/tanning
+	skillcraft = /datum/attribute/skill/craft/tanning
 	craftdiff = 0
 	subtypes_allowed = TRUE // so you can use any subtype of fur
 	category = "Leatherworking"
@@ -743,6 +743,13 @@
 	requirements = list(/obj/item/natural/hide/cured = 1,
 				/obj/item/natural/fibers = 1,
 				/obj/item/reagent_containers/food/snacks/tallow = 1)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/leather/standalone/bracer_scabbard
+	name = "knife-sheath bracers"
+	output = /obj/item/clothing/wrists/bracers/leather/scabbard
+	requirements = list(/obj/item/natural/hide/cured = 1,
+				/obj/item/natural/fibers = 1)
 	craftdiff = 4
 
 /datum/repeatable_crafting_recipe/leather/standalone/top_hat

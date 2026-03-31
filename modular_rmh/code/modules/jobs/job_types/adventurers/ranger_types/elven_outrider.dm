@@ -1,3 +1,20 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_ranger/elven_outrider
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_PERCEPTION = 2,
+		STAT_SPEED = 1,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/polearms = 30,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/riding = 50,
+		/datum/attribute/skill/combat/bows = 40,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/reading = 20
+	)
+
 /datum/job/advclass/combat/adventurer_ranger/elven_outrider
 	title = "Elven Outrider"
 	tutorial = "An elven outrider tasked with scouting distant roads, fighting from saddle, bow, and spear alike."
@@ -7,24 +24,8 @@
 	category_tags = list(CAT_ADVENTURER_RANGER)
 	give_bank_account = TRUE
 
-	skills = list(
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/polearms = 3,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/riding = 5,
-		/datum/skill/combat/bows = 4,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/reading = 2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_ranger/elven_outrider
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_PER = 2,
-		STATKEY_SPD = 1,
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR

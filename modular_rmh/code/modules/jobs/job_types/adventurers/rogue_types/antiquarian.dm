@@ -1,3 +1,25 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/antiquarian
+	raw_attribute_list = list(
+		STAT_CONSTITUTION = -1,
+		STAT_ENDURANCE = -1,
+		STAT_STRENGTH = -2, // These are all relatively low, the class requires cantrips to work around these.
+		/datum/attribute/skill/combat/axesmaces = SKILL_LEVEL_JOURNEYMAN * 10,
+		// Needed just for NPC's.
+		/datum/attribute/skill/misc/swimming = SKILL_LEVEL_MASTER * 10,
+		/datum/attribute/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN * 10,
+		/datum/attribute/skill/combat/unarmed = SKILL_LEVEL_EXPERT * 10,
+		// They're not meant to kill.
+		/datum/attribute/skill/misc/climbing = SKILL_LEVEL_MASTER * 10,
+		/datum/attribute/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN * 10,
+		/datum/attribute/skill/misc/athletics = SKILL_LEVEL_EXPERT * 10,
+		/datum/attribute/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN * 10,
+		/datum/attribute/skill/misc/sneaking = SKILL_LEVEL_LEGENDARY * 10,
+		/datum/attribute/skill/misc/stealing = SKILL_LEVEL_LEGENDARY * 10,
+		/datum/attribute/skill/misc/lockpicking = SKILL_LEVEL_MASTER * 10,
+		/datum/attribute/skill/misc/sewing = SKILL_LEVEL_JOURNEYMAN * 10,
+		/datum/attribute/skill/craft/bombs = SKILL_LEVEL_JOURNEYMAN * 10 // To craft Smoke Bombs.
+	)
+
 /datum/job/advclass/combat/adventurer_rogue/antiquarian
 	title = "Shadow Antiquarian"
 	tutorial = "A streetwise antiquarian, skilled in stealth, subterfuge, and minor magics, \
@@ -10,21 +32,7 @@
 // The idea is that they're a slippery bastard. Cantrip focused, stealth-focused. They rely on their spells.
 	languages = list(/datum/language/thievescant)
 
-	skills = list(
-		/datum/skill/combat/axesmaces = SKILL_LEVEL_JOURNEYMAN, // Needed just for NPC's.
-		/datum/skill/misc/swimming = SKILL_LEVEL_MASTER,
-		/datum/skill/combat/wrestling = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/combat/unarmed = SKILL_LEVEL_EXPERT, // They're not meant to kill.
-		/datum/skill/misc/climbing = SKILL_LEVEL_MASTER,
-		/datum/skill/craft/crafting = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/athletics = SKILL_LEVEL_EXPERT,
-		/datum/skill/misc/reading = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/misc/sneaking = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/misc/stealing = SKILL_LEVEL_LEGENDARY,
-		/datum/skill/misc/lockpicking = SKILL_LEVEL_MASTER,
-		/datum/skill/misc/sewing = SKILL_LEVEL_JOURNEYMAN,
-		/datum/skill/craft/bombs = SKILL_LEVEL_JOURNEYMAN // To craft Smoke Bombs.
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/antiquarian
 
 	traits = list(
 		TRAIT_DEADNOSE,
@@ -33,11 +41,6 @@
 		TRAIT_LIGHT_STEP
 	)
 
-	jobstats = list(
-		STATKEY_CON = -1,
-		STATKEY_END = -1,
-		STATKEY_STR = -2 // These are all relatively low, the class requires cantrips to work around these.
-	)
 
 	spells = list(
 		/datum/action/cooldown/spell/undirected/conjure_item/smoke_bomb,
@@ -49,7 +52,43 @@
 		/datum/action/cooldown/spell/aoe/snuff,
 		/datum/action/cooldown/spell/undirected/conjure_item/calling_card
 	)
-
+	var/list/honoraries = list(
+		"Acquisitions Expert" = HONORARY_PREFIX,
+		"the Cleptologist" = HONORARY_SUFFIX,
+		"the One Who Walks" = HONORARY_SUFFIX,
+		"of Deadly Shadows" = HONORARY_SUFFIX,
+		"the Prince of Shadows" = HONORARY_SUFFIX,
+		"the Recovery Specialist" = HONORARY_SUFFIX,
+		"the Acquirer" = HONORARY_SUFFIX,
+		"the Antiquarian" = HONORARY_SUFFIX,
+		"the Art Critic" = HONORARY_SUFFIX,
+		"the Collector" = HONORARY_SUFFIX,
+		"the Courier" = HONORARY_SUFFIX,
+		"the Crow" = HONORARY_SUFFIX,
+		"the Fence" = HONORARY_SUFFIX,
+		"the Filcher" = HONORARY_SUFFIX,
+		"the Ghost" = HONORARY_SUFFIX,
+		"the Grifter" = HONORARY_SUFFIX,
+		"the Infiltrator" = HONORARY_SUFFIX,
+		"the Intruder" = HONORARY_SUFFIX,
+		"the Invisible" = HONORARY_SUFFIX,
+		"the Keeper" = HONORARY_SUFFIX,
+		"the Locksmith" = HONORARY_SUFFIX,
+		"the Lurker" = HONORARY_SUFFIX,
+		"the Magpie" = HONORARY_SUFFIX,
+		"the Mask" = HONORARY_SUFFIX,
+		"the Master Thief" = HONORARY_SUFFIX,
+		"the Night Watch" = HONORARY_SUFFIX,
+		"the Phantom" = HONORARY_SUFFIX,
+		"the Raven" = HONORARY_SUFFIX,
+		"the Respectable Citizen" = HONORARY_SUFFIX,
+		"the Shadow" = HONORARY_SUFFIX,
+		"the Skeleton Key" = HONORARY_SUFFIX,
+		"the Specialist" = HONORARY_SUFFIX,
+		"the Stalker" = HONORARY_SUFFIX,
+		"the Trickster" = HONORARY_SUFFIX,
+		"the Watcher" = HONORARY_SUFFIX,
+	)
 
 /datum/outfit/adventurer_rogue/antiquarian
 	name = "Shadow Antiquarian"
@@ -84,11 +123,9 @@
 
 /datum/job/advclass/combat/adventurer_rogue/antiquarian/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
-	if(alert("Do you wish for a random title? You will not receive one if you click No.", "", "Yes", "No") == "Yes")
-		var/prev_real_name = spawned.real_name
-		var/prev_name = spawned.name
-		var/title
-		var/list/titles = list("The Keeper", "The Phantom", "The Crow", "The Raven", "The Magpie", "The Courier", "The Mask", "The Shadow", "The Ghost", "The Fence", "The Intruder", "The Infiltrator", "The Filcher", "The Grifter", "He Who Walks", "The Invisible", "The Watcher", "The Master Thief", "The Dark Project", "The Lurker", "Prince of Shadows", "The Night Watch", "The Antiquarian", "Acquisitions Expert", "Cleptologist", "The Specialist", "The Stalker", "Of Deadly Shadows", "The Trickster", "The Respectable Citizen", "The Locksmith", "The Acquirer", "The Collector", "The Skeleton Key", "The Art Critic", "Recovery Specialist" ) //Dude, Trust.
-		title = pick(titles)
-		spawned.real_name = "[prev_real_name], [title]"
-		spawned.name = "[prev_name], [title]"
+	if(length(honoraries) && alert("Do you wish for a random title? You will not receive one if you click No.", "", "Yes", "No") == "Yes")
+		var/selected_honorary = pick(honoraries)
+		if(honoraries[selected_honorary] == HONORARY_SUFFIX)
+			spawned.honorary_suffix = selected_honorary
+		else
+			spawned.honorary = selected_honorary

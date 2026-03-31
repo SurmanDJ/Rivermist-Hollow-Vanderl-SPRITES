@@ -1,3 +1,20 @@
+/datum/attribute_holder/sheet/job/advclass/towner/lumberjack
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_ENDURANCE = 2,
+		STAT_CONSTITUTION = 2,
+		/datum/attribute/skill/combat/knives = 10,
+		/datum/attribute/skill/combat/unarmed = 10,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/craft/crafting = 10,
+		/datum/attribute/skill/misc/climbing = 10,
+		/datum/attribute/skill/misc/swimming = 10,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/combat/axesmaces = 30,
+		/datum/attribute/skill/labor/lumberjacking = 40,
+		/datum/attribute/skill/craft/carpentry = 20
+	)
+
 /datum/job/advclass/towner/lumberjack
 	title = "Lumberjack"
 	tutorial = "You're a lumberjack, ensure the settlement has wood."
@@ -10,24 +27,8 @@
 
 	job_bitflag = BITFLAG_CONSTRUCTOR
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_END = 2,
-		STATKEY_CON = 2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/towner/lumberjack
 
-	skills = list(
-		/datum/skill/combat/knives = 1,
-		/datum/skill/combat/unarmed = 1,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/craft/crafting = 1,
-		/datum/skill/misc/climbing = 1,
-		/datum/skill/misc/swimming = 1,
-		/datum/skill/misc/athletics = 1,
-		/datum/skill/combat/axesmaces = 3,
-		/datum/skill/labor/lumberjacking = 4,
-		/datum/skill/craft/carpentry = 2
-	)
 
 /datum/outfit/towner/lumberjack
 	name = "Lumberjack"

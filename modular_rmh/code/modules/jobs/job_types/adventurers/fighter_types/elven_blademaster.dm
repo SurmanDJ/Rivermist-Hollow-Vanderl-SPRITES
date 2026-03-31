@@ -1,3 +1,20 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/elven_blademaster
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_CONSTITUTION = 1,
+		STAT_ENDURANCE = 1,
+		STAT_SPEED = 1,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/combat/swords = 40,
+		/datum/attribute/skill/combat/bows = 20,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/reading = 20
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/elven_blademaster
 	title = "Elven Blademaster"
 	tutorial = "Honed in the courts of Evereska, you are a master of blade and agility. \
@@ -9,24 +26,8 @@
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
 
-	skills = list(
-		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/swords = 4,
-		/datum/skill/combat/bows = 2,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/reading = 2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/elven_blademaster
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_CON = 1,
-		STATKEY_END = 1,
-		STATKEY_SPD = 1,
-	)
 
 	traits = list(
 		TRAIT_HEAVYARMOR,

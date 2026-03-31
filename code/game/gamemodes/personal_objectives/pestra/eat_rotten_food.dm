@@ -36,7 +36,7 @@
 
 /datum/objective/personal/rotten_feast/reward_owner()
 	. = ..()
-	owner.current.adjust_stat_modifier(STATMOD_PESTRA_BLESSING, STATKEY_CON, 1)
+	owner.current.adjust_stat_modifier(STATMOD_PESTRA_BLESSING, list(STAT_CONSTITUTION = 1))
 
 /datum/objective/personal/rotten_feast/update_explanation_text()
 	explanation_text = "Endure what others would cast aside. Consume [meals_required] piece of rotten food to gain Ilmater's favor!"

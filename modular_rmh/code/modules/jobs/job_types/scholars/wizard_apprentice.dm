@@ -1,3 +1,16 @@
+/datum/attribute_holder/sheet/job/guild_wizard_apprentice
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 1,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/magic/arcane = 10,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/combat/polearms = 20
+	)
+
 /datum/job/guild_wizard_apprentice
 	title = "Guild Wizard Apprentice"
 	tutorial = "You are learning the arcane arts. Study hard, assist your mentors, and practice your magic to become a fully fledged guild wizard."
@@ -17,20 +30,8 @@
 	give_bank_account = 20
 	exp_types_granted = list(EXP_TYPE_MAGICK, EXP_TYPE_ADVENTURER)
 
-	jobstats = list(
-		STATKEY_INT = 1,
-		STATKEY_SPD = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/guild_wizard_apprentice
 
-	skills = list(
-		/datum/skill/magic/arcane = 1,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/athletics = 1,
-		/datum/skill/combat/polearms = 2
-	)
 
 	magic_user = TRUE
 	spell_points = 15

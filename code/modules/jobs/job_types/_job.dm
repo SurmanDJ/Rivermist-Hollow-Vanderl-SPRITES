@@ -112,14 +112,14 @@
 	/// Voicepack to grant to females
 	var/datum/voicepack/voicepack_f
 
-	/// Stats given to the job in the form of list(STA_X = value)
-	var/list/jobstats
+	/// Stats given to the job in the form of list(STA_X = value) DEPRECIATED DO NOT USE
+	VAR_FINAL/list/jobstats
 
 	/// Skill levels granted at roundstart.
 	/// Possibly modified by species.
-	/// Basic format is list(/datum/skill/foo = value).
-	/// Supports (/datum/skill/bar = list(value, clamp)).
-	var/list/skills
+	/// Basic format is list(/datum/attribute/skill/foo = value).
+	/// Supports (/datum/attribute/skill/bar = list(value, clamp)). DEPRECIATED DO NOT USE
+	VAR_FINAL/list/skills
 
 	/// Associative list of skill - base multiplier to set for skill_holder
 	var/list/skill_multipliers = list()
@@ -190,6 +190,13 @@
 	/// Do we get passive income every day from our noble estates?
 	var/noble_income = FALSE
 
+	/// Honorary titles appended to names. Based off pronouns
+	var/honorary
+	var/honorary_f
+	/// Same as above, but for suffixes. See Khan
+	var/honorary_suffix
+	var/honorary_suffix_f
+
 	/// Antagonist role to grant with this job
 	var/datum/antagonist/antag_role
 
@@ -205,7 +212,6 @@
 	var/pack_title = "JOB PACKS"
 	var/pack_message = "Choose a job pack"
 
-
 	///The job's subclasses, if any. Overrides jobstats if present.
 	var/list/job_subclasses
 
@@ -218,6 +224,14 @@
 	/// Which resurrection rune tag this job should auto-link to. Use RUNE_LINK_NONE to opt out.
 	var/rune_linked = RUNE_LINK_DEFAULT
 
+	var/attribute_sheet
+	var/attribute_sheet_old
+	var/attribute_sheet_child
+	var/attribute_sheet_adult
+
+	/// Runtime-cached bridge for legacy jobstats/skills content.
+	var/datum/attribute_holder/sheet/job/legacy_attribute_sheet
+
 /datum/job/proc/get_default_rune_link()
 	if(antag_job)
 		return RUNE_LINK_ANTAG
@@ -227,6 +241,9 @@
 	. = ..()
 	if(rune_linked == RUNE_LINK_DEFAULT)
 		rune_linked = get_default_rune_link()
+	if(!attribute_sheet && !attribute_sheet_old && !attribute_sheet_child && !attribute_sheet_adult)
+		attribute_sheet = get_legacy_attribute_sheet()
+	populate_legacy_attribute_lists()
 	if(give_bank_account)
 		for(var/X in GLOB.lords_positions)
 			peopleiknow += X
@@ -279,6 +296,9 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_SPAWN, src, spawned, player_client)
 
+	var/used_attribute_sheet = FALSE
+	if(spawned.attributes)
+		used_attribute_sheet = assign_attributes(spawned, player_client)
 	if(!ishuman(spawned))
 		return
 
@@ -314,14 +334,15 @@
 	if(clear_job_stats) // Reset for most non-advclasses
 		spawned.remove_stat_modifier(STATMOD_JOB)
 
-	spawned.adjust_stat_modifier_list(STATMOD_JOB, jobstats)
+	if(!used_attribute_sheet)
+		spawned.adjust_stat_modifier(STATMOD_JOB, jobstats)
 
-	for(var/datum/skill/skill as anything in skills)
-		var/amount_or_list = skills[skill]
-		if(islist(amount_or_list))
-			spawned.clamped_adjust_skillrank(skill, amount_or_list[1], amount_or_list[2], TRUE)
-		else
-			spawned.adjust_skillrank(skill, amount_or_list, TRUE)
+		for(var/datum/attribute/skill/skill as anything in skills)
+			var/amount_or_list = skills[skill]
+			if(islist(amount_or_list))
+				spawned.clamped_adjust_skill_level(skill, amount_or_list[1], amount_or_list[2], TRUE)
+			else
+				spawned.adjust_skillrank(skill, amount_or_list, TRUE)
 
 	for(var/skill_type in skill_multipliers)
 		spawned.set_skill_exp_multiplier(skill_type, skill_multipliers[skill_type])
@@ -371,6 +392,7 @@
 	if(voicepack_f)
 		spawned.dna?.species.soundpack_f = new voicepack_f()
 
+	assign_honorary_titles(spawned)
 	/// WHY WAS THIS ON OUTFIT??? It shouldn't be HERE either
 	if(spawned.familytree_pref != FAMILY_NONE && !spawned.family_datum)
 		SSfamilytree.AddLocal(spawned, spawned.familytree_pref)
@@ -433,6 +455,59 @@
 //Used for a special check of whether to allow a client to latejoin as this job.
 /datum/job/proc/special_check_latejoin(client/C)
 	return TRUE
+
+/datum/job/proc/assign_attributes(mob/living/spawned, client/player_client)
+	if(!ishuman(spawned))
+		return FALSE
+	var/mob/living/carbon/human/spawned_human = spawned
+	var/datum/attribute_holder/sheet/sheet_to_apply
+	if(attribute_sheet_old && spawned_human.age == AGE_OLD)
+		sheet_to_apply = attribute_sheet_old
+	else if(attribute_sheet_child && spawned_human.age == AGE_CHILD)
+		sheet_to_apply = attribute_sheet_child
+	else if(attribute_sheet_adult && spawned_human.age == AGE_ADULT)
+		sheet_to_apply = attribute_sheet_adult
+	else if(attribute_sheet)
+		sheet_to_apply = attribute_sheet
+	else
+		sheet_to_apply = get_legacy_attribute_sheet()
+
+	if(!sheet_to_apply)
+		return FALSE
+
+	spawned_human.attributes?.add_sheet(sheet_to_apply)
+	return TRUE
+
+/datum/job/proc/get_legacy_attribute_sheet()
+	if(!LAZYLEN(jobstats) && !LAZYLEN(skills))
+		return null
+	if(!legacy_attribute_sheet)
+		legacy_attribute_sheet = build_legacy_attribute_sheet(jobstats, skills)
+	return legacy_attribute_sheet
+
+/datum/job/proc/get_attribute_sheet_for_legacy_views()
+	if(attribute_sheet)
+		return resolve_attribute_sheet(attribute_sheet)
+	if(attribute_sheet_adult)
+		return resolve_attribute_sheet(attribute_sheet_adult)
+	if(attribute_sheet_old)
+		return resolve_attribute_sheet(attribute_sheet_old)
+	if(attribute_sheet_child)
+		return resolve_attribute_sheet(attribute_sheet_child)
+	return null
+
+/datum/job/proc/populate_legacy_attribute_lists()
+	if(LAZYLEN(jobstats) && LAZYLEN(skills))
+		return
+
+	var/datum/attribute_holder/sheet/legacy_view_sheet = get_attribute_sheet_for_legacy_views()
+	if(!legacy_view_sheet)
+		return
+
+	if(!LAZYLEN(jobstats))
+		jobstats = build_legacy_jobstats_from_sheet(legacy_view_sheet)
+	if(!LAZYLEN(skills))
+		skills = build_legacy_skills_from_sheet(legacy_view_sheet)
 
 /datum/job/proc/GetAntagRep()
 	. = CONFIG_GET(keyed_list/antag_rep)[lowertext(title)]
@@ -627,6 +702,16 @@
 			return f_title
 
 	return title
+
+/datum/job/proc/assign_honorary_titles(mob/living/carbon/grantee)
+	if(honorary)
+		grantee.honorary = honorary
+	if(honorary_f && grantee.pronouns == SHE_HER)
+		grantee.honorary = honorary_f
+	if(honorary_suffix)
+		grantee.honorary_suffix = honorary_suffix
+	if(honorary_suffix_f && grantee.pronouns == SHE_HER)
+		grantee.honorary_suffix = honorary_suffix_f
 
 /datum/job/proc/set_spawn_and_total_positions(count)
 	return spawn_positions

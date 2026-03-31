@@ -1,3 +1,17 @@
+/datum/attribute_holder/sheet/job/waterdeep_banker
+	raw_attribute_list = list(
+		STAT_STRENGTH = -2,
+		STAT_INTELLIGENCE = 5,
+		STAT_CONSTITUTION = -1,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/misc/reading = 70,
+		/datum/attribute/skill/misc/riding = 10,
+		/datum/attribute/skill/misc/stealing = 20,
+		/datum/attribute/skill/misc/sneaking = 10,
+		/datum/attribute/skill/misc/lockpicking = 50,
+		/datum/attribute/skill/labor/mathematics = 70
+	)
+
 /datum/job/waterdeep_banker
 	title = "Waterdeep Guild Banker"
 	tutorial = "You are a certified banker of the Waterdeep Merchant's Guild, entrusted with accounts, contracts, and taxation in Rivermist Hollow. \
@@ -25,21 +39,8 @@
 		EXP_TYPE_MERCHANT_COMPANY = 600,
 	)
 
-	jobstats = list(
-		STATKEY_STR = -2,
-		STATKEY_INT = 5,
-		STATKEY_CON = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/waterdeep_banker
 
-	skills = list(
-		/datum/skill/combat/knives = 2,
-		/datum/skill/misc/reading = 7,
-		/datum/skill/misc/riding = 1,
-		/datum/skill/misc/stealing = 2,
-		/datum/skill/misc/sneaking = 1,
-		/datum/skill/misc/lockpicking = 5,
-		/datum/skill/labor/mathematics = 7
-	)
 
 	traits = list(
 		TRAIT_SEEPRICES,

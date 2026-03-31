@@ -1,3 +1,20 @@
+/datum/attribute_holder/sheet/job/watch_warden
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_CONSTITUTION = 2,
+		STAT_ENDURANCE = 2,
+		STAT_PERCEPTION = 1,
+		STAT_SPEED = 1,
+		/datum/attribute/skill/combat/wrestling = 40,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/combat/whipsflails = 20,
+		/datum/attribute/skill/combat/swords = 20,
+		/datum/attribute/skill/combat/axesmaces = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/craft/traps = 20
+	)
+
 /datum/job/watch_warden
 	title = "Town Watch Warden"
 	tutorial = "You are a Warden of the Town Watch. \
@@ -26,25 +43,8 @@
 
 	job_bitflag = BITFLAG_GARRISON
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_CON = 2,
-		STATKEY_END = 2,
-		STATKEY_PER = 1,
-		STATKEY_SPD = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/watch_warden
 
-	skills = list(
-		/datum/skill/combat/wrestling = 4,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/combat/whipsflails = 2,
-		/datum/skill/combat/swords = 2,
-		/datum/skill/combat/axesmaces = 3,
-
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/craft/traps = 2
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,

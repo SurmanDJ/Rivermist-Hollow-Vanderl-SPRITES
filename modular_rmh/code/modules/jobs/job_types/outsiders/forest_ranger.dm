@@ -38,6 +38,32 @@
 
 //SUBCLASSES
 
+/datum/attribute_holder/sheet/job/advclass/forest_ranger/pathfinder
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_ENDURANCE = 3,
+		STAT_CONSTITUTION = 3,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/misc/swimming = 30,
+		/datum/attribute/skill/misc/climbing = 40,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/misc/riding = 20,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/labor/lumberjacking = 10,
+		/datum/attribute/skill/craft/carpentry = 10,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/craft/tanning = 10,
+		/datum/attribute/skill/combat/axesmaces = 30,
+		/datum/attribute/skill/combat/whipsflails = 30,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/combat/shields = 30,
+		/datum/attribute/skill/combat/bows = 10,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 30
+	)
+
 /datum/job/advclass/forest_ranger/pathfinder
 	title = "Forest Pathfinder"
 	tutorial = "You are the first into rough ground and the last to retreat. \
@@ -46,33 +72,8 @@
 	outfit = /datum/outfit/forest_ranger/pathfinder
 	category_tags = list(CAT_FOREST_RANGER)
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_END = 3,
-		STATKEY_CON = 3,
-		STATKEY_SPD = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/forest_ranger/pathfinder
 
-	skills = list(
-		/datum/skill/misc/swimming = 3,
-		/datum/skill/misc/climbing = 4,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/riding = 2,
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/labor/lumberjacking = 1,
-		/datum/skill/craft/carpentry = 1,
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/craft/tanning = 1,
-		/datum/skill/combat/axesmaces = 3,
-		/datum/skill/combat/whipsflails = 3,
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/shields = 3,
-		/datum/skill/combat/bows = 1,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 3
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,
@@ -126,6 +127,29 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/forest_ranger/scout
+	raw_attribute_list = list(
+		STAT_STRENGTH = -3,
+		STAT_ENDURANCE = 1,
+		STAT_PERCEPTION = 3,
+		STAT_SPEED = 3,
+		/datum/attribute/skill/misc/swimming = 30,
+		/datum/attribute/skill/misc/climbing = 40,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/misc/riding = 20,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/labor/lumberjacking = 10,
+		/datum/attribute/skill/craft/carpentry = 10,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/craft/tanning = 10,
+		/datum/attribute/skill/combat/bows = 30,
+		/datum/attribute/skill/combat/crossbows = 30,
+		/datum/attribute/skill/combat/knives = 30,
+		/datum/attribute/skill/combat/axesmaces = 10,
+		/datum/attribute/skill/combat/wrestling = 10
+	)
+
 /datum/job/advclass/forest_ranger/scout
 	title = "Forest Scout"
 	tutorial = "Light on your feet and sharp of eye, you range ahead of the patrol. \
@@ -134,30 +158,8 @@
 	outfit = /datum/outfit/forest_ranger/scout
 	category_tags = list(CAT_FOREST_RANGER)
 
-	jobstats = list(
-		STATKEY_STR = -3,
-		STATKEY_END = 1,
-		STATKEY_PER = 3,
-		STATKEY_SPD = 3
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/forest_ranger/scout
 
-	skills = list(
-		/datum/skill/misc/swimming = 3,
-		/datum/skill/misc/climbing = 4,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/riding = 2,
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/labor/lumberjacking = 1,
-		/datum/skill/craft/carpentry = 1,
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/craft/tanning = 1,
-		/datum/skill/combat/bows = 3,
-		/datum/skill/combat/crossbows = 3,
-		/datum/skill/combat/knives = 3,
-		/datum/skill/combat/axesmaces = 1,
-		/datum/skill/combat/wrestling = 1
-	)
 
 	traits = list(
 		TRAIT_DODGEEXPERT,
@@ -211,6 +213,28 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/forest_ranger/vanguard
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_CONSTITUTION = 2,
+		STAT_ENDURANCE = 2,
+		STAT_SPEED = 1,
+		/datum/attribute/skill/misc/swimming = 30,
+		/datum/attribute/skill/misc/climbing = 40,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/misc/riding = 20,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/labor/lumberjacking = 10,
+		/datum/attribute/skill/craft/carpentry = 10,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/craft/tanning = 10,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/combat/axesmaces = 30
+	)
+
 /datum/job/advclass/forest_ranger/vanguard
 	title = "Forest Vanguard"
 	tutorial = "When danger cannot be avoided, you meet it head-on. \
@@ -219,29 +243,8 @@
 	outfit = /datum/outfit/forest_ranger/vanguard
 	category_tags = list(CAT_FOREST_RANGER)
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_CON = 2,
-		STATKEY_END = 2,
-		STATKEY_SPD = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/forest_ranger/vanguard
 
-	skills = list(
-		/datum/skill/misc/swimming = 3,
-		/datum/skill/misc/climbing = 4,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/riding = 2,
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/labor/lumberjacking = 1,
-		/datum/skill/craft/carpentry = 1,
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/craft/tanning = 1,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/axesmaces = 3
-	)
 
 	traits = list(
 		TRAIT_DUALWIELDER,

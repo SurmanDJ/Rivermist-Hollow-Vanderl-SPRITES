@@ -1,3 +1,18 @@
+/datum/attribute_holder/sheet/job/advclass/artisan_apprentice/tailor
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 1,
+		STAT_SPEED = 1,
+		STAT_PERCEPTION = 1,
+		STAT_STRENGTH = -1,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/craft/tanning = 10,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/combat/knives = 10,
+		/datum/attribute/skill/misc/sneaking = 10,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/labor/mathematics = 10
+	)
+
 /datum/job/advclass/artisan_apprentice/tailor
 	title = "Tailor Apprentice"
 	f_title = "Seamstress Apprentice"
@@ -9,22 +24,8 @@
 	give_bank_account = 6
 	job_bitflag = BITFLAG_CONSTRUCTOR
 
-	jobstats = list(
-		STATKEY_INT = 1,
-		STATKEY_SPD = 1,
-		STATKEY_PER = 1,
-		STATKEY_STR = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/artisan_apprentice/tailor
 
-	skills = list(
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/craft/tanning = 1,
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/combat/knives = 1,
-		/datum/skill/misc/sneaking = 1,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/labor/mathematics = 1,
-	)
 
 /datum/outfit/artisan_apprentice/tailor
 	name = "Tailor"

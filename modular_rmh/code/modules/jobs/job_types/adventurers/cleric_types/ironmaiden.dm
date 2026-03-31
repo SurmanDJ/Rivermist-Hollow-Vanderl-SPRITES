@@ -1,3 +1,19 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_cleric/ironmaiden
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_ENDURANCE = 2,
+		STAT_INTELLIGENCE = 2,
+		/datum/attribute/skill/combat/knives = 10,
+		/datum/attribute/skill/misc/medicine = 40,
+		/datum/attribute/skill/misc/sewing = 30,
+		/datum/attribute/skill/misc/reading = 30,
+		// Using the higher value (3) since there were two entries with different values
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/craft/alchemy = 20,
+		/datum/attribute/skill/labor/mathematics = 30
+	)
+
 /datum/job/advclass/combat/adventurer_cleric/ironmaiden
 	title = "Iron Maiden"
 	tutorial = "Trained in both battlefield medicine and heavy armor, \
@@ -10,22 +26,8 @@
 	category_tags = list(CAT_ADVENTURER_CLERIC)
 	give_bank_account = TRUE
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_END = 2,
-		STATKEY_INT = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_cleric/ironmaiden
 
-	skills = list(
-		/datum/skill/combat/knives = 1,
-		/datum/skill/misc/medicine = 4,
-		/datum/skill/misc/sewing = 3,
-		/datum/skill/misc/reading = 3, // Using the higher value (3) since there were two entries with different values
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/craft/alchemy = 2,
-		/datum/skill/labor/mathematics = 3
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,

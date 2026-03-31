@@ -82,6 +82,12 @@
 /proc/pathflatten(path)
 	return replacetext(path, "/", "_")
 
+/proc/file2list(path, separator = "\n")
+	var/text = file2text(path)
+	if(isnull(text))
+		return list()
+	return splittext(text, separator)
+
 /// Returns the md5 of a file at a given path.
 /proc/md5filepath(path)
 	. = md5(file(path))

@@ -1,3 +1,20 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/corsair
+	raw_attribute_list = list(
+		STAT_ENDURANCE = 2,
+		STAT_SPEED = 2,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/labor/fishing = 30,
+		/datum/attribute/skill/misc/swimming = 40,
+		/datum/attribute/skill/misc/climbing = 50,
+		/datum/attribute/skill/misc/sneaking = 20,
+		/datum/attribute/skill/misc/lockpicking = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/craft/cooking = 30
+	)
+
 /datum/job/advclass/combat/adventurer_rogue/corsair
 	title = "Corsair"
 	tutorial = "Once privateers sailing along the Sword Coast, \
@@ -8,25 +25,8 @@
 	category_tags = list(CAT_ADVENTURER_ROGUE)
 	give_bank_account = TRUE
 
-	jobstats = list(
-		STATKEY_END = 2,
-		STATKEY_SPD = 2
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/corsair
 
-	)
-
-	skills = list(
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/labor/fishing = 3,
-		/datum/skill/misc/swimming = 4,
-		/datum/skill/misc/climbing = 5,
-		/datum/skill/misc/sneaking = 2,
-		/datum/skill/misc/lockpicking = 3,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/craft/cooking = 3
-	)
 
 	traits = list(
 		TRAIT_DODGEEXPERT

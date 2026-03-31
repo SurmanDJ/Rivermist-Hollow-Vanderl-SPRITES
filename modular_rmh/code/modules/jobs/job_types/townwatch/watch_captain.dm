@@ -1,3 +1,28 @@
+/datum/attribute_holder/sheet/job/watch_captain
+	raw_attribute_list = list(
+		STAT_STRENGTH = 3,
+		STAT_PERCEPTION = 3,
+		STAT_INTELLIGENCE = 2,
+		STAT_CONSTITUTION = 3,
+		STAT_ENDURANCE = 3,
+		STAT_SPEED = 2,
+		/datum/attribute/skill/combat/swords = 40,
+		/datum/attribute/skill/combat/shields = 40,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/combat/axesmaces = 30,
+		/datum/attribute/skill/combat/polearms = 30,
+		/datum/attribute/skill/combat/bows = 30,
+		/datum/attribute/skill/combat/crossbows = 30,
+		/datum/attribute/skill/combat/firearms = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/riding = 20,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/labor/mathematics = 20
+	)
+
 /datum/job/watch_captain
 	title = "Town Watch Captain"
 	tutorial = "You are the Captain of the Town Watch of Rivermist Hollow. \
@@ -28,33 +53,8 @@
 
 	job_bitflag = BITFLAG_GARRISON
 
-	jobstats = list(
-		STATKEY_STR = 3,
-		STATKEY_PER = 3,
-		STATKEY_INT = 2,
-		STATKEY_CON = 3,
-		STATKEY_END = 3,
-		STATKEY_SPD = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/watch_captain
 
-	skills = list(
-		/datum/skill/combat/swords = 4,
-		/datum/skill/combat/shields = 4,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/combat/axesmaces = 3,
-		/datum/skill/combat/polearms = 3,
-		/datum/skill/combat/bows = 3,
-		/datum/skill/combat/crossbows = 3,
-		/datum/skill/combat/firearms = 3,
-
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/riding = 2,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/labor/mathematics = 2
-	)
 
 	traits = list(
 		TRAIT_HEAVYARMOR,

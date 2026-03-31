@@ -3104,11 +3104,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	character.real_name = real_name
 	character.name = character.real_name
 
-	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
-	if(organ_eyes)
-		organ_eyes.eye_color = eye_color
-		organ_eyes.old_eye_color = eye_color
-
 	character.skin_tone = skin_tone
 	character.culture = GLOB.culture_singletons[culture]
 	character.detail = detail

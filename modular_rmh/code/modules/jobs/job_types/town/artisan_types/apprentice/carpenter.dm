@@ -1,3 +1,17 @@
+/datum/attribute_holder/sheet/job/advclass/artisan_apprentice/carpenter
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_ENDURANCE = 1,
+		STAT_CONSTITUTION = 1,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/craft/carpentry = 30,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/labor/lumberjacking = 20,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/misc/climbing = 10,
+		/datum/attribute/skill/misc/reading = 10
+	)
+
 /datum/job/advclass/artisan_apprentice/carpenter
 	title = "Carpenter Apprentice"
 	tutorial = "You carry timber, measure beams, and learn to cut straight — eventually."
@@ -8,21 +22,8 @@
 	give_bank_account = 3
 	job_bitflag = BITFLAG_CONSTRUCTOR
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_END = 1,
-		STATKEY_CON = 1,
-		STATKEY_SPD = -1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/artisan_apprentice/carpenter
 
-	skills = list(
-		/datum/skill/craft/carpentry = 3,
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/labor/lumberjacking = 2,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/misc/climbing = 1,
-		/datum/skill/misc/reading = 1,
-	)
 
 /datum/outfit/artisan_apprentice/carpenter
 	name = "Carpenter Apprentice"

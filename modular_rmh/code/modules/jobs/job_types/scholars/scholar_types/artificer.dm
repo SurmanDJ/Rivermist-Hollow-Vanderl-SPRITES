@@ -1,3 +1,24 @@
+/datum/attribute_holder/sheet/job/advclass/town_scholar/artificer
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_INTELLIGENCE = 2,
+		STAT_ENDURANCE = 1,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/combat/axesmaces = 20,
+		/datum/attribute/skill/craft/masonry = 30,
+		/datum/attribute/skill/craft/crafting = 40,
+		/datum/attribute/skill/craft/engineering = 40,
+		/datum/attribute/skill/misc/lockpicking = 30,
+		/datum/attribute/skill/misc/swimming = 10,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/labor/mining = 20,
+		/datum/attribute/skill/craft/smelting = 40,
+		/datum/attribute/skill/misc/reading = 20,
+		/datum/attribute/skill/labor/mathematics = 20,
+		/datum/attribute/skill/craft/bombs = 30
+	)
+
 /datum/job/advclass/town_scholar/artificer
 	title = "Artificer"
 	tutorial = "You are a learned craftsperson of mechanisms and materials. \
@@ -18,28 +39,8 @@
 	exp_type = list(EXP_TYPE_LIVING)
 	exp_requirements = list(EXP_TYPE_LIVING = 600)
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_INT = 2,
-		STATKEY_END = 1,
-		STATKEY_SPD = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/town_scholar/artificer
 
-	skills = list(
-		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/craft/masonry = 3,
-		/datum/skill/craft/crafting = 4,
-		/datum/skill/craft/engineering = 4,
-		/datum/skill/misc/lockpicking = 3,
-		/datum/skill/misc/swimming = 1,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/labor/mining = 2,
-		/datum/skill/craft/smelting = 4,
-		/datum/skill/misc/reading = 2,
-		/datum/skill/labor/mathematics = 2,
-		/datum/skill/craft/bombs = 3,
-	)
 
 	traits = list(
 		TRAIT_TUTELAGE,

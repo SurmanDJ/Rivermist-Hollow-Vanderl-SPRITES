@@ -1,3 +1,23 @@
+/datum/attribute_holder/sheet/job/advclass/artisan/blacksmith
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_ENDURANCE = 2,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/combat/axesmaces = 20,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/craft/crafting = 30,
+		/datum/attribute/skill/craft/blacksmithing = 50,
+		/datum/attribute/skill/craft/armorsmithing = 50,
+		/datum/attribute/skill/craft/weaponsmithing = 50,
+		/datum/attribute/skill/craft/smelting = 30,
+		/datum/attribute/skill/craft/engineering = 30,
+		/datum/attribute/skill/craft/traps = 20,
+		/datum/attribute/skill/misc/reading = 20,
+		/datum/attribute/skill/labor/mathematics = 20
+	)
+
 /datum/job/advclass/artisan/blacksmith
 	title = "Blacksmith"
 	tutorial = "Steel is your craft, whether shaped for war, work, or protection."
@@ -11,27 +31,8 @@
 	give_bank_account = 30
 	job_bitflag = BITFLAG_CONSTRUCTOR
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_END = 2,
-		STATKEY_SPD = -1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/artisan/blacksmith
 
-	skills = list(
-		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/craft/crafting = 3,
-		/datum/skill/craft/blacksmithing = 5,
-		/datum/skill/craft/armorsmithing = 5,
-		/datum/skill/craft/weaponsmithing = 5,
-		/datum/skill/craft/smelting = 3,
-		/datum/skill/craft/engineering = 3,
-		/datum/skill/craft/traps = 2,
-		/datum/skill/misc/reading = 2,
-		/datum/skill/labor/mathematics = 2,
-	)
 
 	traits = list(
 		TRAIT_TUTELAGE,

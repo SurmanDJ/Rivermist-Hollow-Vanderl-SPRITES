@@ -1,3 +1,26 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/disgraced
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_PERCEPTION = 2,
+		STAT_ENDURANCE = 2,
+		STAT_CONSTITUTION = 2,
+		STAT_INTELLIGENCE = 1,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/combat/polearms = 30,
+		/datum/attribute/skill/combat/axesmaces = 30,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/knives = 30,
+		/datum/attribute/skill/combat/shields = 40,
+		/datum/attribute/skill/combat/whipsflails = 30,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/misc/swimming = 40,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/misc/athletics = 40,
+		/datum/attribute/skill/misc/climbing = 40,
+		/datum/attribute/skill/misc/riding = 40,
+		/datum/attribute/skill/misc/reading = 30
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/disgraced
 	title = "Disgraced Knight"
 	tutorial = "Once a venerated knight sworn to protect the realm, you broke your oath and were cast out. \
@@ -8,31 +31,11 @@
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
 	total_positions = 2
+	honorary = "Sir"
+	honorary_f = "Dame"
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_PER = 2,
-		STATKEY_END = 2,
-		STATKEY_CON = 2,
-		STATKEY_INT = 1,
-		STATKEY_SPD = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/disgraced
 
-	skills = list(
-		/datum/skill/combat/polearms = 3,
-		/datum/skill/combat/axesmaces = 3,
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/knives = 3,
-		/datum/skill/combat/shields = 4,
-		/datum/skill/combat/whipsflails = 3,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/misc/swimming = 4,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/misc/athletics = 4,
-		/datum/skill/misc/climbing = 4,
-		/datum/skill/misc/riding = 4,
-		/datum/skill/misc/reading = 3
-	)
 
 	traits = list(
 		TRAIT_STEELHEARTED,
@@ -44,14 +47,6 @@
 
 /datum/job/advclass/combat/adventurer_fighter/disgraced/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
-	var/prev_real_name = spawned.real_name
-	var/prev_name = spawned.name
-	var/honorary = "Sir"
-	if(spawned.pronouns == SHE_HER)
-		honorary = "Dame"
-	spawned.real_name = "[honorary] [prev_real_name]"
-	spawned.name = "[honorary] [prev_name]"
-
 	if(alert("Do you wish to be recognized as a non-foreigner?", "", "Yes", "No") == "Yes")
 		REMOVE_TRAIT(spawned, TRAIT_FOREIGNER, TRAIT_GENERIC)
 

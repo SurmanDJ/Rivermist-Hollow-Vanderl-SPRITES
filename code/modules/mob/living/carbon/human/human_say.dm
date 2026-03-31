@@ -8,7 +8,7 @@
 /mob/living/carbon/human/GetVoice()
 	if(GetSpecialVoice())
 		return GetSpecialVoice()
-	return real_name
+	return name
 
 /mob/living/carbon/human/IsVocal()
 	// how do species that don't breathe talk? magic, that's what.
@@ -31,7 +31,7 @@
 	return special_voice
 
 /mob/living/carbon/human/get_alt_name()
-	if(name != GetVoice())
+	if(get_face_name("") != GetVoice())
 		// This isn't accurate purposely
 		var/appendage = "Figure"
 		switch(client?.prefs.voice_type)

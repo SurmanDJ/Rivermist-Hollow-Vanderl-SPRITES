@@ -33,8 +33,12 @@
 	last_drinkblood_use = world.time
 	changeNext_move(CLICK_CD_MELEE)
 
-	var/datum/antagonist/vampire/VDrinker = mind.has_antag_datum(/datum/antagonist/vampire)
+	var/datum/antagonist/vampire/VDrinker = mind?.has_antag_datum(/datum/antagonist/vampire)
 	var/datum/antagonist/vampire/VVictim = victim.mind?.has_antag_datum(/datum/antagonist/vampire)
+	var/used_vitae = 0
+
+	if(VDrinker)
+		vampire_detected(length(CheckEyewitness(victim)))
 
 	if(mind && victim.mind)
 		if(victim.blood_volume <= BLOOD_VOLUME_BAD && !cmode)
@@ -71,16 +75,20 @@
 				if(victim.bloodpool > 0)
 					victim.blood_volume = max(victim.blood_volume-45, 0)
 					if(ishuman(victim))
-						var/used_vitae = 150
+						used_vitae = 150
 						if(victim.bloodpool < used_vitae)
 							used_vitae = victim.bloodpool // We assume they're left with 250 vitae or less, so we take it all
 							to_chat(src, "<span class='warning'>...But alas, only leftovers...</span>")
+						var/modified_vitae = clan?.handle_bloodsuck(src, blood_handle, used_vitae)
+						if(!isnull(modified_vitae))
+							used_vitae = modified_vitae
 						src.adjust_bloodpool(used_vitae)
 						src.adjust_hydration(used_vitae * 0.1)
 						if(VVictim)
 							victim.adjust_bloodpool(-used_vitae) //twice the loss
 						victim.adjust_bloodpool(-used_vitae)
-					clan.handle_bloodsuck(src, blood_handle)
+					else
+						clan?.handle_bloodsuck(src, blood_handle)
 				else
 					if(ishuman(victim))
 						if(victim.clan && clan)
@@ -121,29 +129,40 @@
 	to_chat(src, span_warning("I drink from [victim]'s [parse_zone(sublimb_grabbed)]."))
 	log_combat(src, victim, "drank blood from ")
 
-	if(ishuman(victim) && mind)
-		if(clan_position?.can_assign_positions && victim.bloodpool <= 150 && !HAS_TRAIT(victim, TRAIT_BLOODLOSS_IMMUNE))
-			if(browser_alert(src, "Would you like to sire a new spawn?", "THE CURSE OF KAIN", list("MAKE IT SO", "I RESCIND")) != "MAKE IT SO")
-				to_chat(src, span_warning("I decide [victim] is unworthy."))
-			else
-				INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob/living/carbon/human, vampire_conversion_prompt), src)
-
 /mob/living/carbon/human/proc/vampire_conversion_prompt(mob/living/carbon/sire)
-	if(HAS_TRAIT(src, "choosing"))
+	if(HAS_TRAIT(src, "offered_vampirism"))
 		return
-	var/datum/antagonist/vampire/VDrinker = sire?.mind?.has_antag_datum(/datum/antagonist/vampire)
-	if(!istype(VDrinker))
+	if(!istype(sire?.mind?.has_antag_datum(/datum/antagonist/vampire), /datum/antagonist/vampire) || !sire.clan)
 		return
-	ADD_TRAIT(src, "choosing", INNATE_TRAIT)
-	if(browser_alert(src, "Would you like to rise as a vampire spawn? Warning: you will die shall you reject.", "THE CURSE OF KAIN", list("MAKE IT SO", "I RESCIND")) != "MAKE IT SO")
-		REMOVE_TRAIT(src, "choosing", INNATE_TRAIT)
-		to_chat(sire, span_danger("Your victim twitches, yet the curse fails to take over. As if something otherworldly intervenes..."))
+	var/mob/client_victim = src
+	if(!client_victim.client)
+		client_victim = get_ghost(FALSE, TRUE)
+		if(!client_victim?.client)
+			client_victim = get_spirit()
+			if(!client_victim?.client)
+				to_chat(sire, span_warning("[src]'s soul is beyond your grasp."))
+				return
+
+	ADD_TRAIT(src, "offered_vampirism", INNATE_TRAIT)
+	if(is_antag_banned(client_victim.ckey, ROLE_VAMPIRE))
+		to_chat(sire, span_warning("[src] could not be sired."))
+		return
+
+	var/datum/clan/C = sire.clan
+	var/choice = browser_alert(client_victim, "You have been offered the immortal blessing. Take it, or perish.", "THE CURSE OF KAIN", list("I ACCEPT", "TO NECRA"), timeout = 15 SECONDS)
+	if(QDELETED(src))
+		return
+	if(choice != "I ACCEPT")
+		to_chat(client_victim, span_bloody("So be it."))
+		var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
+		B?.brain_death = TRUE
 		death()
+		if(!QDELETED(sire))
+			to_chat(sire, span_warning("[src] has refused your blessing."))
 		return
-	REMOVE_TRAIT(src, "choosing", INNATE_TRAIT)
-	visible_message(span_danger("Some dark energy begins to flow from [sire] into [src]..."))
+	grab_ghost(TRUE, TRUE)
+	revive((HEAL_DAMAGE|HEAL_AFFLICTIONS|HEAL_LIMBS|HEAL_WOUNDS), 500, TRUE)
+	mind.add_antag_datum(new /datum/antagonist/vampire(C, TRUE))
+	set_bloodpool(500)
+	visible_message(span_danger("Some dark energy begins to flow into [src]..."))
 	visible_message(span_red("[src] rises as a new spawn!"))
-	var/datum/antagonist/vampire/new_antag = new /datum/antagonist/vampire(sire.clan, TRUE)
-	mind.add_antag_datum(new_antag)
-	adjust_bloodpool(500)
-	fully_heal()

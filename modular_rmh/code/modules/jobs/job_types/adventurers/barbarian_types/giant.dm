@@ -1,3 +1,24 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_barbarian/giant
+	raw_attribute_list = list(
+		STAT_STRENGTH = 3,
+		STAT_ENDURANCE = 2,
+		STAT_CONSTITUTION = 2,
+		STAT_INTELLIGENCE = -2,
+		/datum/attribute/skill/combat/axesmaces = 30,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/shields = 30,
+		/datum/attribute/skill/craft/tanning = 20,
+		/datum/attribute/skill/misc/swimming = 40,
+		/datum/attribute/skill/misc/climbing = 40,
+		/datum/attribute/skill/misc/athletics = 40,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/craft/cooking = 10,
+		/datum/attribute/skill/labor/butchering = 10,
+		/datum/attribute/skill/misc/medicine = 10
+	)
+
 /datum/job/advclass/combat/adventurer_barbarian/giant
 	title = "Giant"
 	tutorial = "You walk the path of giants, \
@@ -7,28 +28,8 @@
 	category_tags = list(CAT_ADVENTURER_BARBARIAN)
 	give_bank_account = TRUE
 
-	jobstats = list(
-		STATKEY_STR = 3,
-		STATKEY_END = 2,
-		STATKEY_CON = 2,
-		STATKEY_INT = -2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_barbarian/giant
 
-	skills = list(
-		/datum/skill/combat/axesmaces = 3,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/shields = 3,
-		/datum/skill/craft/tanning = 2,
-		/datum/skill/misc/swimming = 4,
-		/datum/skill/misc/climbing = 4,
-		/datum/skill/misc/athletics = 4,
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/craft/cooking = 1,
-		/datum/skill/labor/butchering = 1,
-		/datum/skill/misc/medicine = 1,
-	)
 
 	traits = list(
 		TRAIT_STEELHEARTED,

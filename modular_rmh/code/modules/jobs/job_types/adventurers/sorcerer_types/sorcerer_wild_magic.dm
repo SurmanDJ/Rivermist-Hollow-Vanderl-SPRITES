@@ -1,3 +1,17 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_sorcerer/wild_magic
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 2,
+		STAT_CONSTITUTION = 1,
+		STAT_ENDURANCE = -1,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/misc/reading = 20,
+		/datum/attribute/skill/magic/arcane = 40,
+		/datum/attribute/skill/combat/polearms = 20,
+		/datum/attribute/skill/craft/cooking = 10,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/craft/alchemy = 20
+	)
+
 /datum/job/advclass/combat/adventurer_sorcerer/wild_magic
 	title = "Wild Magic Sorcerer"
 	f_title = "Wild Magic Sorceress"
@@ -14,21 +28,8 @@
 		/datum/action/cooldown/spell/forced_orgasm,
 	)
 
-	skills = list(
-		/datum/skill/misc/reading = 2,
-		/datum/skill/magic/arcane = 4,
-		/datum/skill/combat/polearms = 2,
-		/datum/skill/craft/cooking = 1,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/craft/alchemy = 2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_sorcerer/wild_magic
 
-	jobstats = list(
-		STATKEY_INT = 2,
-		STATKEY_CON = 1,
-		STATKEY_END = -1,
-		STATKEY_SPD = -1,
-	)
 
 	traits = list(
 		TRAIT_WILDMAGIC

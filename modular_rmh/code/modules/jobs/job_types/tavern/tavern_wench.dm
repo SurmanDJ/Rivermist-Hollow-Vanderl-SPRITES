@@ -33,6 +33,17 @@
 	)
 
 //SUBCLASSES
+/datum/attribute_holder/sheet/job/advclass/tavern_wench/waitress
+	raw_attribute_list = list(
+		STAT_SPEED = 2,
+		STAT_PERCEPTION = 1,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/misc/sneaking = 10,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/misc/stealing = 20,
+		/datum/attribute/skill/craft/cooking = 20
+	)
+
 /datum/job/advclass/tavern_wench/waitress
 	title = "Tavern Waitress"
 	tutorial = "You serve food and drink, flirt for tips, and keep the Drunken Dwarf loud and welcoming. \
@@ -41,18 +52,8 @@
 	outfit = /datum/outfit/tavern_wench/waitress
 	category_tags = list(CAT_WAITRESS)
 
-	jobstats = list(
-		STATKEY_SPD = 2,
-		STATKEY_PER = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/tavern_wench/waitress
 
-	skills = list(
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/misc/sneaking = 1,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/stealing = 2,
-		/datum/skill/craft/cooking = 2
-	)
 
 	traits = list(
 		TRAIT_GOODLOVER,
@@ -103,6 +104,16 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/tavern_wench/courtesan
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 1,
+		STAT_PERCEPTION = 2,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/misc/sneaking = 30,
+		/datum/attribute/skill/misc/stealing = 30,
+		/datum/attribute/skill/misc/medicine = 10
+	)
+
 /datum/job/advclass/tavern_wench/courtesan
 	title = "Courtesan"
 	tutorial = "You specialize in charm, conversation, and companionship. \
@@ -112,17 +123,8 @@
 	outfit = /datum/outfit/tavern_wench/courtesan
 	category_tags = list(CAT_WAITRESS)
 
-	jobstats = list(
-		STATKEY_INT = 1,
-		STATKEY_PER = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/tavern_wench/courtesan
 
-	skills = list(
-		/datum/skill/misc/reading = 3,
-		/datum/skill/misc/sneaking = 3,
-		/datum/skill/misc/stealing = 3,
-		/datum/skill/misc/medicine = 1
-	)
 
 	traits = list(
 		TRAIT_SEEPRICES,
@@ -160,6 +162,16 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/tavern_wench/bath_wench
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 1,
+		STAT_SPEED = 1,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/sneaking = 20,
+		/datum/attribute/skill/craft/cooking = 10
+	)
+
 /datum/job/advclass/tavern_wench/bath_wench
 	title = "Bath Wench"
 	tutorial = "You tend the baths and private washing rooms. \
@@ -169,17 +181,8 @@
 	outfit = /datum/outfit/tavern_wench/bath_wench
 	category_tags = list(CAT_WAITRESS)
 
-	jobstats = list(
-		STATKEY_PER = 1,
-		STATKEY_SPD = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/tavern_wench/bath_wench
 
-	skills = list(
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/sneaking = 2,
-		/datum/skill/craft/cooking = 1
-	)
 
 	traits = list(
 		TRAIT_GOODLOVER,

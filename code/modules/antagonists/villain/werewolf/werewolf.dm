@@ -1,4 +1,4 @@
-// Once a blessing Dendor's champions, now a curse suffering endless hunger from Graggar's corruption.
+// Hungry Beasts
 
 /datum/antagonist/werewolf
 	name = "Werewolf"
@@ -139,6 +139,8 @@
 /mob/living/carbon/human/proc/can_werewolf()
 	if(!mind)
 		return FALSE
+	if(is_antag_banned(ckey, ROLE_WEREWOLF))
+		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/zombie))
 		return FALSE
 	if(mind.has_antag_datum(/datum/antagonist/vampire))
@@ -238,7 +240,7 @@
 	force = 15
 	block_chance = 0
 	wdefense = AVERAGE_PARRY
-	associated_skill = /datum/skill/combat/unarmed
+	associated_skill = /datum/attribute/skill/combat/unarmed
 	wlength = WLENGTH_NORMAL
 	wbalance = EASY_TO_DODGE
 	w_class = WEIGHT_CLASS_BULKY

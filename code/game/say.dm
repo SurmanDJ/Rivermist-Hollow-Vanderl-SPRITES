@@ -20,12 +20,13 @@
 	return TRUE
 
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, list/message_mods = list(), original_message)
-	var/rendered = compose_message(src, message_language, message, , spans, message_mods)
+	var/rendered = compose_message(src, message_language, message, null, spans, message_mods)
 	for(var/atom/movable/hearing_movable as anything in get_hearers_in_view(range, source))
 		if(!hearing_movable) // theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
 			stack_trace("somehow there's a null returned from get_hearers_in_view() in send_speech!")
 			continue
 		hearing_movable.Hear(rendered, src, message_language, message, , spans, message_mods, original_message)
+
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), face_name = FALSE)
 	// Check if this message should be part of a sex collective
 	var/collective_span = ""
@@ -52,7 +53,7 @@
 	if(ishuman(speaker))
 		var/mob/living/carbon/human/H = speaker
 		if(face_name)
-			namepart = "[H.get_face_name()]"
+			namepart = "[H.get_visible_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
 		if(H.voice_color)
 			colorpart = "<span style='color:#[H.voice_color];'>"
 	if(speaker.voicecolor_override)

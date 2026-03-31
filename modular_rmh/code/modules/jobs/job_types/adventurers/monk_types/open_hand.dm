@@ -1,3 +1,21 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_monk/open_hand
+	raw_attribute_list = list(
+		STAT_STRENGTH = 3,
+		STAT_CONSTITUTION = 3,
+		STAT_ENDURANCE = 3,
+		STAT_PERCEPTION = 2,
+		STAT_SPEED = 2,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/combat/unarmed = 60,
+		/datum/attribute/skill/combat/wrestling = 50,
+		/datum/attribute/skill/combat/polearms = 30,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/misc/climbing = 40,
+		/datum/attribute/skill/misc/athletics = 40
+	)
+
 /datum/job/advclass/combat/adventurer_monk/open_hand
 	title = "Open Hand"
 	tutorial = "You specialise in unarmed combat, \
@@ -7,25 +25,8 @@
 	category_tags = list(CAT_ADVENTURER_MONK)
 	give_bank_account = TRUE
 
-	skills = list(
-		/datum/skill/misc/reading = 3,
-		/datum/skill/combat/unarmed = 6,
-		/datum/skill/combat/wrestling = 5,
-		/datum/skill/combat/polearms = 3,
-		/datum/skill/combat/swords = 3,
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/misc/climbing = 4,
-		/datum/skill/misc/athletics = 4,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_monk/open_hand
 
-	jobstats = list(
-		STATKEY_STR = 3,
-		STATKEY_CON = 3,
-		STATKEY_END = 3,
-		STATKEY_PER = 2,
-		STATKEY_SPD = 2,
-	)
 
 	traits = list(
 		TRAIT_BREADY,

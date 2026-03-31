@@ -141,6 +141,10 @@ GLOBAL_LIST_EMPTY(quirk_points_by_type)
 		if(!QDELETED(src) && !QDELETED(owner))
 			on_spawn()
 
+/// Called when you are examined
+/datum/quirk/proc/on_examined(mob/user, list/P, list/examine_contents)
+	return
+
 /// Called every life tick if implemented
 /datum/quirk/proc/on_life(mob/living/user)
 	return
@@ -202,7 +206,7 @@ GLOBAL_LIST_EMPTY(quirk_points_by_type)
 			return TRUE
 	return FALSE
 
-/mob/living/proc/has_quirk(quirk_type)
+/mob/proc/has_quirk(quirk_type)
 	return
 
 /mob/living/carbon/human/has_quirk(quirk_type)

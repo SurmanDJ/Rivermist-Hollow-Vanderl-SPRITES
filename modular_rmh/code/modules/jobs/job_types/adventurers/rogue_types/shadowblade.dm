@@ -1,3 +1,16 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/shadowblade
+	raw_attribute_list = list(
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/misc/sneaking = 10,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 10,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/misc/riding = 10
+	)
+
 /datum/job/advclass/combat/adventurer_rogue/shadowblade
 	title = "Shadowblade"
 	tutorial = "Once enforcers of the Underdark, these drow now walk the surface as mercenaries, striking from shadows with deadly precision."
@@ -7,17 +20,7 @@
 	category_tags = list(CAT_ADVENTURER_ROGUE)
 	give_bank_account = TRUE
 
-	skills = list(
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/misc/sneaking = 1,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 1,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/riding = 1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/shadowblade
 
 	traits = list(
 		TRAIT_STEELHEARTED,

@@ -1,3 +1,29 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_monk/shadow
+	raw_attribute_list = list(
+		STAT_ENDURANCE = 1,
+		STAT_SPEED = 2,
+		//they're basically ninjas.
+		STAT_STRENGTH = 1,
+		//because they're mainly supposed to use blunt weapons.
+		STATKET_INT = -1,
+		STAT_PERCEPTION = -1,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 40,
+		/datum/attribute/skill/combat/axesmaces = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/sneaking = 30,
+		/datum/attribute/skill/misc/climbing = 50,
+		/datum/attribute/skill/misc/swimming = 10,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/sewing = 10,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/labor/mathematics = 10,
+		/datum/attribute/skill/misc/lockpicking = 20,
+		//these guys free slaves, they probably know how to disarm traps and unlock things
+		/datum/attribute/skill/misc/stealing = 20,
+		/datum/attribute/skill/craft/crafting = 10
+	)
+
 /datum/job/advclass/combat/adventurer_monk/shadow
 	title = "Shadow"
 	tutorial = "You value the arts of stealth and subterfuge, bending the shadows to your will to strike without warning."
@@ -6,30 +32,8 @@
 	give_bank_account = TRUE
 	outfit = /datum/outfit/adventurer_monk/shadow
 
-	jobstats = list(
-		STATKEY_END = 1,
-		STATKEY_SPD = 2, //they're basically ninjas.
-		STATKEY_STR = 1, //because they're mainly supposed to use blunt weapons.
-		STATKET_INT = -1,
-		STATKEY_PER = -1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_monk/shadow
 
-	skills = list(
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 4,
-		/datum/skill/combat/axesmaces = 3,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/sneaking = 3,
-		/datum/skill/misc/climbing = 5,
-		/datum/skill/misc/swimming = 1,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/sewing = 1,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/labor/mathematics = 1,
-		/datum/skill/misc/lockpicking = 2, //these guys free slaves, they probably know how to disarm traps and unlock things
-		/datum/skill/misc/stealing = 2,
-		/datum/skill/craft/crafting = 1,
-	)
 
 	traits = list(
 		TRAIT_DODGEEXPERT,

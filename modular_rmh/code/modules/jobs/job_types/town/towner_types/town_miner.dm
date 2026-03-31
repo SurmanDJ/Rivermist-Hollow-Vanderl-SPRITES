@@ -1,3 +1,26 @@
+/datum/attribute_holder/sheet/job/advclass/towner/miner
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_INTELLIGENCE = -2,
+		STAT_ENDURANCE = 2,
+		STAT_CONSTITUTION = 1,
+		STAT_FORTUNE = 1,
+		/datum/attribute/skill/combat/axesmaces = 20,
+		/datum/attribute/skill/labor/mining = 40,
+		/datum/attribute/skill/combat/wrestling = 10,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/misc/swimming = 10,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/craft/traps = 10,
+		/datum/attribute/skill/craft/engineering = 20,
+		/datum/attribute/skill/craft/blacksmithing = 10,
+		/datum/attribute/skill/craft/smelting = 20,
+		/datum/attribute/skill/misc/reading = 10
+	)
+
 /datum/job/advclass/towner/miner
 	title = "Miner"
 	tutorial = "In the hills near Rivermist Hollow, \
@@ -15,30 +38,8 @@
 
 	job_bitflag = BITFLAG_CONSTRUCTOR
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_INT = -2,
-		STATKEY_END = 2,
-		STATKEY_CON = 1,
-		STATKEY_LCK = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/towner/miner
 
-	skills = list(
-		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/labor/mining = 4,
-		/datum/skill/combat/wrestling = 1,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/misc/swimming = 1,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/craft/traps = 1,
-		/datum/skill/craft/engineering = 2,
-		/datum/skill/craft/blacksmithing = 1,
-		/datum/skill/craft/smelting = 2,
-		/datum/skill/misc/reading = 1
-	)
 
 /datum/outfit/towner/miner
 	name = "Miner"

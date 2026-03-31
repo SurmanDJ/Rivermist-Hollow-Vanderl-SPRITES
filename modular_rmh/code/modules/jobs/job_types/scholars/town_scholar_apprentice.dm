@@ -28,6 +28,16 @@
 
 //SUBCLASSES
 
+/datum/attribute_holder/sheet/job/advclass/town_scholar_apprentice/librarian
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 3,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/misc/reading = 60,
+		/datum/attribute/skill/craft/alchemy = 30,
+		/datum/attribute/skill/magic/arcane = 30,
+		/datum/attribute/skill/labor/mathematics = 50
+	)
+
 /datum/job/advclass/town_scholar_apprentice/librarian
 	title = "Librarian"
 	tutorial = "A quiet keeper of knowledge. You tend the town’s library, sell books, and preserve local history."
@@ -37,17 +47,8 @@
 	outfit = /datum/outfit/town_scholar_apprentice/librarian
 	category_tags = list(CAT_ARCHIVISTAP)
 
-	jobstats = list(
-		STATKEY_INT = 3,
-		STATKEY_SPD = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/town_scholar_apprentice/librarian
 
-	skills = list(
-		/datum/skill/misc/reading = 6,
-		/datum/skill/craft/alchemy = 3,
-		/datum/skill/magic/arcane = 3,
-		/datum/skill/labor/mathematics = 5
-	)
 
 	magic_user = TRUE
 	spell_points = 15

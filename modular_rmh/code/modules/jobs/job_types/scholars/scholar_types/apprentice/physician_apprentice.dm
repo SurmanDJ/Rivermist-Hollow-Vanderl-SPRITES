@@ -1,3 +1,19 @@
+/datum/attribute_holder/sheet/job/advclass/town_scholar_apprentice/physician_apprentice
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 1,
+		STAT_PERCEPTION = 1,
+		/datum/attribute/skill/craft/alchemy = 20,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/misc/sewing = 10,
+		/datum/attribute/skill/labor/farming = 20,
+		/datum/attribute/skill/craft/crafting = 10,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/misc/sneaking = 10,
+		/datum/attribute/skill/combat/knives = 10,
+		/datum/attribute/skill/combat/unarmed = 10
+	)
+
 /datum/job/advclass/town_scholar_apprentice/physician_apprentice
 	title = "Physician’s Apprentice"
 	tutorial = "You are apprenticed to the Town Physician. \
@@ -14,23 +30,8 @@
 
 	give_bank_account = 20
 
-	jobstats = list(
-		STATKEY_INT = 1,
-		STATKEY_PER = 1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/town_scholar_apprentice/physician_apprentice
 
-	skills = list(
-		/datum/skill/craft/alchemy = 2,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/misc/sewing = 1,
-		/datum/skill/labor/farming = 2,
-		/datum/skill/craft/crafting = 1,
-		/datum/skill/misc/athletics = 1,
-		/datum/skill/misc/sneaking = 1,
-		/datum/skill/combat/knives = 1,
-		/datum/skill/combat/unarmed = 1
-	)
 
 	traits = list(
 		TRAIT_FORAGER,

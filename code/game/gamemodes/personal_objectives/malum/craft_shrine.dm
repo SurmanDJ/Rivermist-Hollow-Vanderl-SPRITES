@@ -45,7 +45,7 @@
 
 /datum/objective/personal/craft_shrine/reward_owner()
 	. = ..()
-	owner.current.adjust_skillrank(/datum/skill/craft/crafting, 1)
+	owner.current.adjust_skill_level(/datum/attribute/skill/craft/crafting, 10)
 
 /datum/objective/personal/craft_shrine/update_explanation_text()
 	explanation_text = "Build [target_count] wooden holy symbol[target_count > 1 ? "s" : ""] to demonstrate your devotion to Moradin."

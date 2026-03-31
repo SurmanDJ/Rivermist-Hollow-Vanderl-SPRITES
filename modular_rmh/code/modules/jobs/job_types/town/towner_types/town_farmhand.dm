@@ -1,3 +1,28 @@
+/datum/attribute_holder/sheet/job/advclass/towner/farmhand
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_CONSTITUTION = 1,
+		STAT_ENDURANCE = 1,
+		STAT_INTELLIGENCE = -1,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/combat/polearms = 20,
+		/datum/attribute/skill/combat/whipsflails = 10,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/misc/sewing = 10,
+		/datum/attribute/skill/labor/farming = 40,
+		/datum/attribute/skill/labor/taming = 50,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/craft/cooking = 10,
+		/datum/attribute/skill/craft/carpentry = 10,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/craft/tanning = 20,
+		/datum/attribute/skill/misc/riding = 10,
+		/datum/attribute/skill/labor/butchering = 40
+	)
+
 /datum/job/advclass/towner/farmhand
 	title = "Farmhand"
 	tutorial = "You live by the turning of seasons and the moods of the soil. \
@@ -15,32 +40,8 @@
 
 	job_bitflag = BITFLAG_CONSTRUCTOR
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_CON = 1,
-		STATKEY_END = 1,
-		STATKEY_INT = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/towner/farmhand
 
-	skills = list(
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/polearms = 2,
-		/datum/skill/combat/whipsflails = 1,
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/misc/sewing = 1,
-		/datum/skill/labor/farming = 4,
-		/datum/skill/labor/taming = 5,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/craft/cooking = 1,
-		/datum/skill/craft/carpentry = 1,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/craft/tanning = 2,
-		/datum/skill/misc/riding = 1,
-		/datum/skill/labor/butchering = 4
-	)
 
 	traits = list(
 		TRAIT_DEADNOSE,

@@ -7,8 +7,8 @@
 	has_visual_effects = FALSE
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
-	associated_skill = /datum/skill/magic/holy
-	invocation = "GRAGGAR!! GRAGGAR!! GRAGGAR!!"
+	associated_skill = /datum/attribute/skill/magic/holy
+	invocation = "GRRRAAAAAAA!!!"
 	invocation_type = INVOCATION_SHOUT
 	charge_required = FALSE
 	cooldown_time = 5 MINUTES

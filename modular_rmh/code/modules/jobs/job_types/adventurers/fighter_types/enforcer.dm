@@ -1,3 +1,25 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/enforcer
+	raw_attribute_list = list(
+		STAT_CONSTITUTION = 3,
+		STAT_ENDURANCE = 2,
+		STAT_PERCEPTION = 1,
+		STAT_INTELLIGENCE = -1,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/sneaking = 20,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/shields = 30,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/labor/mathematics = 30
+		//They use math to calculate the trajectory of attacks, so they can parry behind them, trust, ook told me
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/enforcer
 	title = "Enforcer"
 	tutorial = "Once feared enforcers along the Sword Coast, these warriors clad in black wield blade and shield with deadly precision, \
@@ -7,28 +29,8 @@
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
 
-	jobstats = list(
-		STATKEY_CON = 3,
-		STATKEY_END = 2,
-		STATKEY_PER = 1,
-		STATKEY_INT = -1,
-		STATKEY_SPD = -1,
-	) //4 - Statline - The Idea is that they're tanky and supposed to be able to block hits for a longer time, hence higher CON and END
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/enforcer
 
-	skills = list(
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/sneaking = 2,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/shields = 3,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/labor/mathematics = 3, //They use math to calculate the trajectory of attacks, so they can parry behind them, trust, ook told me
-	)
 
 	traits = list(
 		TRAIT_NOPAINSTUN,

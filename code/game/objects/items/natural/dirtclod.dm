@@ -6,6 +6,9 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/item/natural/clod/dirt
+	parent_type = /obj/item/natural/dirtclod
+
 /obj/item/natural/dirtclod/Initialize()
 	. = ..()
 	icon_state = "clod[rand(1,2)]"

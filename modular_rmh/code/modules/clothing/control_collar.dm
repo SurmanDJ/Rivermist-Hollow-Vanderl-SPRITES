@@ -291,6 +291,16 @@ GLOBAL_LIST_INIT(reverse_slave_phrases_translations, list(
 	if(!stuck_check(usr))
 		return ..()
 
+/obj/item/clothing/neck/slave_collar/get_examine_string(mob/user, thats)
+	. = ..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/h_user = user
+	if(lowertext(h_user.job) == "town master" || lowertext(h_user.job) == "consort")
+		. += span_userdanger("You notice three engraved phrases on the gorget:")
+		for(var/el in phrases_list)
+			. += "<br><b>[GLOB.slave_phrases_translations[el]]:</b> \"[phrases_list[el]]\""
+
 /proc/normalize_slave_phrase(text)
 	text = lowertext(strip_html(text))
 	text = strip_punctuation(text)

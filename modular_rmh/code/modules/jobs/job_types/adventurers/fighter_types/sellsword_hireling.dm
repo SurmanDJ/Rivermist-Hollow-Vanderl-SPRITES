@@ -1,3 +1,24 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/sellsword_hireling
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_ENDURANCE = 1,
+		STAT_CONSTITUTION = 1,
+		STAT_SPEED = 1,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/wrestling = 10,
+		/datum/attribute/skill/combat/swords = 20,
+		/datum/attribute/skill/combat/axesmaces = 10,
+		/datum/attribute/skill/combat/polearms = 10,
+		/datum/attribute/skill/combat/knives = 10,
+		/datum/attribute/skill/combat/bows = 10,
+		/datum/attribute/skill/combat/shields = 10,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/swimming = 10,
+		/datum/attribute/skill/misc/riding = 10,
+		/datum/attribute/skill/misc/reading = 10
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/sellsword_hireling
 	title = "Sellsword Hireling"
 	tutorial = "New to the mercenary life, you’ve only just begun selling your blade. \
@@ -9,28 +30,8 @@
 	give_bank_account = TRUE
 	allowed_ages = list(AGE_ADULT)
 
-	skills = list(
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/wrestling = 1,
-		/datum/skill/combat/swords = 2,
-		/datum/skill/combat/axesmaces = 1,
-		/datum/skill/combat/polearms = 1,
-		/datum/skill/combat/knives = 1,
-		/datum/skill/combat/bows = 1,
-		/datum/skill/combat/shields = 1,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/swimming = 1,
-		/datum/skill/misc/riding = 1,
-		/datum/skill/misc/reading = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/sellsword_hireling
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_END = 1,
-		STATKEY_CON = 1,
-		STATKEY_SPD = 1
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,

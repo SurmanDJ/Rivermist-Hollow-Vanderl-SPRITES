@@ -1,3 +1,23 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/longbeard
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		// Same stat spread as lancer/swordmaster, but no -1 speed at the cost of 1 point of endurance. A very powerful dwarf indeed
+		STAT_CONSTITUTION = 2,
+		STAT_ENDURANCE = 1,
+		/datum/attribute/skill/combat/axesmaces = 40,
+		/datum/attribute/skill/combat/polearms = 30,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/craft/blacksmithing = 20,
+		/datum/attribute/skill/craft/armorsmithing = 20,
+		/datum/attribute/skill/craft/weaponsmithing = 20,
+		/datum/attribute/skill/misc/reading = 20
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/longbeard
 	title = "Longbeard"
 	tutorial = "An elder dwarf warrior, hammer in hand, a steadfast enforcer of tradition and justice."
@@ -9,26 +29,8 @@
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
 
-	skills = list(
-		/datum/skill/combat/axesmaces = 4,
-		/datum/skill/combat/polearms = 3,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/craft/blacksmithing = 2,
-		/datum/skill/craft/armorsmithing = 2,
-		/datum/skill/craft/weaponsmithing = 2,
-		/datum/skill/misc/reading = 2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/longbeard
 
-	jobstats = list(
-		STATKEY_STR = 2, // Same stat spread as lancer/swordmaster, but no -1 speed at the cost of 1 point of endurance. A very powerful dwarf indeed
-		STATKEY_CON = 2,
-		STATKEY_END = 1,
-	)
 
 	traits = list(
 		TRAIT_HEAVYARMOR,

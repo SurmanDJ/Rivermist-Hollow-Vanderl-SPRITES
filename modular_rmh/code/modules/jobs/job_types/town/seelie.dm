@@ -1,3 +1,17 @@
+/datum/attribute_holder/sheet/job/seelie
+	raw_attribute_list = list(
+		STAT_SPEED = 1,
+		STAT_PERCEPTION = 1,
+		/datum/attribute/skill/misc/swimming = 10,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/magic/arcane = 30,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/craft/crafting = 10,
+		/datum/attribute/skill/misc/sneaking = 20
+	)
+
 /datum/job/seelie
 	title = "Seelie"
 	tutorial = "You are a tiny fae wanderer welcome in town so long as your tricks stay kind. \
@@ -19,21 +33,8 @@
 	give_bank_account = FALSE
 	exp_types_granted = list(EXP_TYPE_MAGICK)
 
-	jobstats = list(
-		STATKEY_SPD = 1,
-		STATKEY_PER = 1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/seelie
 
-	skills = list(
-		/datum/skill/misc/swimming = 1,
-		/datum/skill/misc/athletics = 1,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/magic/arcane = 3,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/craft/crafting = 1,
-		/datum/skill/misc/sneaking = 2,
-	)
 
 	spells = list(
 		/datum/action/cooldown/spell/status/seelie_dust,

@@ -89,7 +89,7 @@
 					if(HAS_TRAIT(I, TRAIT_WIELDED))
 						if(HAS_TRAIT(src, TRAIT_TINY))
 							effective *= 0.75
-					if(effective > STASTR)
+					if(effective > GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH))
 						if(prob(effective))
 							dropItemToGround(I, silent = FALSE)
 

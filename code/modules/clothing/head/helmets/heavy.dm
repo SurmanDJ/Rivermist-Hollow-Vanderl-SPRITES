@@ -98,13 +98,6 @@
 	body_parts_covered = HEAD_NECK
 	block2add = FOV_BEHIND
 
-/obj/item/clothing/head/helmet/heavy/ancient
-	name = "ancient savoyard"
-	desc = "A terrifying old savoyard."
-	icon_state = "ancientsavoyard"
-	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR
-	block2add = FOV_BEHIND
-
 //............... Frog Helmet ............... //
 /obj/item/clothing/head/helmet/heavy/frog
 	name = "frog helmet"

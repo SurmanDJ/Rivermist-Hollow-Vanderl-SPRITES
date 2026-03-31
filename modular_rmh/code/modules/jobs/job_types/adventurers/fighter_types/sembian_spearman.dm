@@ -1,3 +1,17 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/sembian_spearman
+	raw_attribute_list = list(
+		STAT_SPEED = 2,
+		STAT_ENDURANCE = 1,
+		STAT_STRENGTH = 1,
+		/datum/attribute/skill/combat/polearms = 30,
+		/datum/attribute/skill/combat/bows = 30,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/athletics = 30
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/sembian_spearman
 	title = "Sembian Spearman"
 	f_title = "Sembian Spearwoman"
@@ -9,21 +23,8 @@
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
 
-	jobstats = list(
-		STATKEY_SPD = 2,
-		STATKEY_END = 1,
-		STATKEY_STR = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/sembian_spearman
 
-	skills = list(
-		/datum/skill/combat/polearms = 3,
-		/datum/skill/combat/bows = 3,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/athletics = 3
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR

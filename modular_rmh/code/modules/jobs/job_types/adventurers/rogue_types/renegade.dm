@@ -1,3 +1,24 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/renegade
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 3,
+		STAT_INTELLIGENCE = 2,
+		STAT_SPEED = 1,
+		STAT_FORTUNE = 2,
+		/datum/attribute/skill/misc/swimming = 40,
+		/datum/attribute/skill/misc/athletics = 40,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/misc/climbing = 40,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/misc/sewing = 40,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/lockpicking = 20,
+		/datum/attribute/skill/combat/firearms = 40,
+		/datum/attribute/skill/combat/knives = 30,
+		/datum/attribute/skill/magic/holy = 10
+	)
+
 /datum/job/advclass/combat/adventurer_rogue/renegade
 	title = "Renegade"
 	tutorial = "A shadowy gunslinger of Faerûn, you were cast out by betrayal or your own reckless choices. \
@@ -7,28 +28,8 @@
 	category_tags = list(CAT_ADVENTURER_ROGUE)
 	give_bank_account = TRUE
 
-	jobstats = list(
-        STATKEY_PER = 3,
-        STATKEY_INT = 2,
-        STATKEY_SPD = 1,
-        STATKEY_LCK = 2
-    )
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/renegade
 
-	skills = list(
-        /datum/skill/misc/swimming = 4,
-        /datum/skill/misc/athletics = 4,
-        /datum/skill/combat/wrestling = 3,
-        /datum/skill/combat/unarmed = 3,
-        /datum/skill/misc/climbing = 4,
-        /datum/skill/misc/reading = 3,
-        /datum/skill/craft/crafting = 2,
-        /datum/skill/misc/sewing = 4,
-        /datum/skill/misc/medicine = 2,
-        /datum/skill/misc/lockpicking = 2,
-        /datum/skill/combat/firearms = 4,
-        /datum/skill/combat/knives = 3,
-        /datum/skill/magic/holy = 1
-    )
 
 	traits = list(
         TRAIT_DECEIVING_MEEKNESS,
@@ -44,13 +45,10 @@
 /datum/job/advclass/combat/adventurer_rogue/renegade/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
 	if(alert("Do you wish for a random title? You will not receive one if you click No.", "", "Yes", "No") == "Yes")
-		var/prev_real_name = spawned.real_name
-		var/prev_name = spawned.name
 		var/title
 		var/list/titles = list("The Showoff", "The Gunslinger", "Amna Shot", "The Desperado", "Last Sight", "The Courier", "Lethal Shot", "Guns Blazing", "Punished Shade", "The One Who Sold Creation", "V1", "V2", "The Opposition", "Mattarella", "High Noon", "Underdark-Walker", "Big Iron", "The Hanged Man", "The Equalizer", "Bodystacker", "Schotgonne Surgeon", "Of The Gallows", "The Renegade", "The Wanted Man", "Dead or Alive", "The Killer Seven", "The Cleaner", "The Son of a Bitch", "Mister Fridae Nite", "Heaven's Smile", "Of No Paradise", "Number One", "The Hitman", "Corpsestacker", "The First Murderer", "The Amna-Taker", "The Lifestealer", "The Power-Monger")
 		title = pick(titles)
-		spawned.real_name = "[prev_real_name], [title]"
-		spawned.name = "[prev_name], [title]"
+		spawned.honorary_suffix = title
 
 /datum/outfit/adventurer_rogue/renegade
 	name = "Renegade"

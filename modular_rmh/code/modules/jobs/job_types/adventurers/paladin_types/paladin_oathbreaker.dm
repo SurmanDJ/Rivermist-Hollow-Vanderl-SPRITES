@@ -1,6 +1,27 @@
 #define EVIL_POWER 10
 #define EVIL_COLDOWN 60 SECONDS
 
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_paladin/oathbreaker
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_INTELLIGENCE = 1,
+		STAT_CONSTITUTION = 2,
+		STAT_ENDURANCE = 2,
+		STAT_SPEED = -1,
+		STAT_FORTUNE = -1,
+		/datum/attribute/skill/combat/axesmaces = 20,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/combat/swords = 40,
+		/datum/attribute/skill/combat/shields = 20,
+		/datum/attribute/skill/misc/climbing = 10,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/magic/holy = 30,
+		/datum/attribute/skill/craft/cooking = 10,
+		/datum/attribute/skill/labor/mathematics = 30
+	)
+
 /datum/job/advclass/combat/adventurer_paladin/oathbreaker
 	title = "Oath Of Oathbreaker"
 	tutorial = "An oathbreaker is a paladin who breaks their sacred oaths to pursue some dark ambition or serve an evil power.\
@@ -33,28 +54,8 @@
 	/datum/patron/faerun/neutral_gods/Jergal
 	)
 
-	skills = list(
-		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/combat/swords = 4,
-		/datum/skill/combat/shields = 2,
-		/datum/skill/misc/climbing = 1,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/magic/holy = 3,
-		/datum/skill/craft/cooking = 1,
-		/datum/skill/labor/mathematics = 3,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_paladin/oathbreaker
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_INT = 1,
-		STATKEY_CON = 2,
-		STATKEY_END = 2,
-		STATKEY_SPD = -1,
-		STATKEY_LCK = -1,
-	)
 
 	traits = list(
 		TRAIT_HEAVYARMOR,

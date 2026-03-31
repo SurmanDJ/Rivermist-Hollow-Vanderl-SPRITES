@@ -1,3 +1,26 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_barbarian/exiled
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_ENDURANCE = 2,
+		STAT_CONSTITUTION = 2,
+		STAT_SPEED = -1,
+		STAT_INTELLIGENCE = 3,
+		/datum/attribute/skill/misc/swimming = 30,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/sneaking = 40,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/craft/crafting = 10,
+		/datum/attribute/skill/craft/tanning = 10,
+		/datum/attribute/skill/combat/axesmaces = 30,
+		/datum/attribute/skill/craft/cooking = 10,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/craft/traps = 30
+	)
+
 /datum/job/advclass/combat/adventurer_barbarian/exiled
 	title = "Exiled Warrior"
 	tutorial = "A barbarian - you're a brute, and you're a long way from home. \
@@ -9,30 +32,8 @@
 	category_tags = list(CAT_ADVENTURER_BARBARIAN)
 	give_bank_account = TRUE
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_END = 2,
-		STATKEY_CON = 2,
-		STATKEY_SPD = -1,
-		STATKEY_INT = 3
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_barbarian/exiled
 
-	skills = list(
-		/datum/skill/misc/swimming = 3,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/sneaking = 4,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/craft/crafting = 1,
-		/datum/skill/craft/tanning = 1,
-		/datum/skill/combat/axesmaces = 3,
-		/datum/skill/craft/cooking = 1,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/craft/traps = 3
-	)
 
 	traits = list(
 		TRAIT_STEELHEARTED,

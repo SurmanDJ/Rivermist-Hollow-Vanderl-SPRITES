@@ -32,6 +32,18 @@
 // SUBCLASSES
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/waterdeep_guild_assistant/shophand
+	raw_attribute_list = list(
+		STAT_SPEED = 1,
+		STAT_STRENGTH = 1,
+		/datum/attribute/skill/misc/stealing = 40,
+		/datum/attribute/skill/misc/sneaking = 20,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/labor/mathematics = 30
+	)
+
 /datum/job/advclass/waterdeep_guild_assistant/shophand
 	title = "Guild Shophand"
 	tutorial = "Assigned to the guild shop and warehouse. \
@@ -40,19 +52,8 @@
 	outfit = /datum/outfit/waterdeep_guild_assistant/shophand
 	category_tags = list(CAT_SHOPHAND)
 
-	jobstats = list(
-		STATKEY_SPD = 1,
-		STATKEY_STR = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/waterdeep_guild_assistant/shophand
 
-	skills = list(
-		/datum/skill/misc/stealing = 4,
-		/datum/skill/misc/sneaking = 2,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/labor/mathematics = 3
-	)
 
 
 	traits = list(
@@ -95,6 +96,16 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/waterdeep_guild_assistant/banker_assistant
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 2,
+		STAT_SPEED = 1,
+		/datum/attribute/skill/misc/reading = 50,
+		/datum/attribute/skill/misc/lockpicking = 30,
+		/datum/attribute/skill/misc/sneaking = 10,
+		/datum/attribute/skill/labor/mathematics = 50
+	)
+
 /datum/job/advclass/waterdeep_guild_assistant/banker_assistant
 	title = "Guild Banker Assistant"
 	tutorial = "Assigned to the guild bank. \
@@ -103,17 +114,8 @@
 	outfit = /datum/outfit/waterdeep_guild_assistant/banker_assistant
 	category_tags = list(CAT_SHOPHAND)
 
-	jobstats = list(
-		STATKEY_INT = 2,
-		STATKEY_SPD = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/waterdeep_guild_assistant/banker_assistant
 
-	skills = list(
-		/datum/skill/misc/reading = 5,
-		/datum/skill/misc/lockpicking = 3,
-		/datum/skill/misc/sneaking = 1,
-		/datum/skill/labor/mathematics = 5
-	)
 
 	traits = list(
 		TRAIT_SEEPRICES

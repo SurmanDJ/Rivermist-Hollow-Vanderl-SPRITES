@@ -41,25 +41,26 @@
 	var/selector = player_client ? player_client : spawned
 	return spawned.select_equippable(selector, selectableweapon, message = message, title = title)
 
+/datum/attribute_holder/sheet/job/advclass/ogre/dumdum
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_CONSTITUTION = 1,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/axesmaces = 20,
+		/datum/attribute/skill/combat/swords = 10,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/misc/climbing = 10
+	)
+
 /datum/job/advclass/ogre/dumdum
 	title = "Dum Dum"
 	tutorial = "You left your old haunts because food was scarce, tempers were shorter still, and the road at least offered fresh trouble. \
 	You are big, hungry, and not especially subtle, but that has never stopped an ogre before."
 	outfit = /datum/outfit/ogre/dumdum
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_CON = 1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/ogre/dumdum
 
-	skills = list(
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/combat/swords = 1,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/misc/climbing = 1,
-	)
 
 /datum/job/advclass/ogre/dumdum/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
@@ -79,28 +80,29 @@
 		if("Iron Axe", "Bludgeon")
 			spawned.clamped_adjust_skillrank(/datum/skill/combat/axesmaces, 3, 3, TRUE)
 
+/datum/attribute_holder/sheet/job/advclass/ogre/avatar
+	raw_attribute_list = list(
+		STAT_STRENGTH = 4,
+		STAT_CONSTITUTION = 5,
+		STAT_ENDURANCE = 4,
+		STAT_INTELLIGENCE = -2,
+		/datum/attribute/skill/combat/axesmaces = 40,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/knives = 40,
+		/datum/attribute/skill/combat/wrestling = 40,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/misc/athletics = 40,
+		/datum/attribute/skill/misc/climbing = 10
+	)
+
 /datum/job/advclass/ogre/avatar
 	title = "War Avatar"
 	tutorial = "You are a towering chosen warrior, built to break lines and crush resistance. \
 	When steel is drawn, you are meant to be the loudest, heaviest thing on the field."
 	outfit = /datum/outfit/ogre/avatar
 
-	jobstats = list(
-		STATKEY_STR = 4,
-		STATKEY_CON = 5,
-		STATKEY_END = 4,
-		STATKEY_INT = -2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/ogre/avatar
 
-	skills = list(
-		/datum/skill/combat/axesmaces = 4,
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/knives = 4,
-		/datum/skill/combat/wrestling = 4,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/misc/athletics = 4,
-		/datum/skill/misc/climbing = 1,
-	)
 
 	traits = list(
 		TRAIT_NOPAINSTUN,
@@ -128,28 +130,29 @@
 		if("Warhammer", "Great Axe")
 			spawned.clamped_adjust_skillrank(/datum/skill/combat/axesmaces, 5, 5, TRUE)
 
+/datum/attribute_holder/sheet/job/advclass/ogre/mercenary
+	raw_attribute_list = list(
+		STAT_STRENGTH = 4,
+		STAT_CONSTITUTION = 3,
+		STAT_ENDURANCE = 3,
+		STAT_INTELLIGENCE = -2,
+		/datum/attribute/skill/combat/axesmaces = 40,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/misc/athletics = 40,
+		/datum/attribute/skill/misc/climbing = 10
+	)
+
 /datum/job/advclass/ogre/mercenary
 	title = "Ogre Mercenary"
 	tutorial = "You sell your strength where coin, meat, and drink are plentiful. \
 	You have seen enough battle to know how to survive it, and enough hardship to know why payment comes first."
 	outfit = /datum/outfit/ogre/mercenary
 
-	jobstats = list(
-		STATKEY_STR = 4,
-		STATKEY_CON = 3,
-		STATKEY_END = 3,
-		STATKEY_INT = -2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/ogre/mercenary
 
-	skills = list(
-		/datum/skill/combat/axesmaces = 4,
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/misc/athletics = 4,
-		/datum/skill/misc/climbing = 1,
-	)
 
 	traits = list(
 		TRAIT_NOPAINSTUN,
@@ -176,28 +179,29 @@
 		if("Grand Mace", "Great Axe")
 			spawned.clamped_adjust_skillrank(/datum/skill/combat/axesmaces, 5, 5, TRUE)
 
+/datum/attribute_holder/sheet/job/advclass/ogre/warlord
+	raw_attribute_list = list(
+		STAT_STRENGTH = 3,
+		STAT_CONSTITUTION = 2,
+		STAT_ENDURANCE = 2,
+		/datum/attribute/skill/combat/axesmaces = 40,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/misc/athletics = 40,
+		/datum/attribute/skill/misc/climbing = 10,
+		/datum/attribute/skill/misc/reading = 10
+	)
+
 /datum/job/advclass/ogre/warlord
 	title = "Ogre Warlord"
 	tutorial = "You are used to being obeyed. \
 	Whether by clan-right, brute reputation, or sheer force of personality, you are the sort of ogre others follow when the shouting starts."
 	outfit = /datum/outfit/ogre/warlord
 
-	jobstats = list(
-		STATKEY_STR = 3,
-		STATKEY_CON = 2,
-		STATKEY_END = 2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/ogre/warlord
 
-	skills = list(
-		/datum/skill/combat/axesmaces = 4,
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/misc/athletics = 4,
-		/datum/skill/misc/climbing = 1,
-		/datum/skill/misc/reading = 1,
-	)
 
 	traits = list(
 		TRAIT_NOPAINSTUN,
@@ -227,31 +231,32 @@
 		if("Grand Mace", "Great Axe")
 			spawned.clamped_adjust_skillrank(/datum/skill/combat/axesmaces, 5, 5, TRUE)
 
+/datum/attribute_holder/sheet/job/advclass/ogre/cook
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_CONSTITUTION = 2,
+		STAT_ENDURANCE = 1,
+		STAT_SPEED = -2,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/combat/knives = 30,
+		/datum/attribute/skill/combat/axesmaces = 20,
+		/datum/attribute/skill/combat/wrestling = 40,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/craft/cooking = 50,
+		/datum/attribute/skill/craft/tanning = 10,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/labor/butchering = 50
+	)
+
 /datum/job/advclass/ogre/cook
 	title = "Cook-Cook"
 	tutorial = "You feed the hungry, butcher the slain, and know exactly how much heat and salt it takes to make almost anything edible. \
 	An ogre camp without a cook does not stay a camp for long."
 	outfit = /datum/outfit/ogre/cook
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_CON = 2,
-		STATKEY_END = 1,
-		STATKEY_SPD = -2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/ogre/cook
 
-	skills = list(
-		/datum/skill/misc/athletics = 1,
-		/datum/skill/combat/knives = 3,
-		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/combat/wrestling = 4,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/craft/cooking = 5,
-		/datum/skill/craft/tanning = 1,
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/labor/butchering = 5,
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,

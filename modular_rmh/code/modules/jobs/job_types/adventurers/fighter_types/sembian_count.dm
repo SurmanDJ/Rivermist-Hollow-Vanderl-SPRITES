@@ -1,3 +1,22 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/sembian_count
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 1,
+		STAT_ENDURANCE = 2,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/riding = 30,
+		/datum/attribute/skill/misc/reading = 40,
+		/datum/attribute/skill/misc/music = 10,
+		/datum/attribute/skill/craft/cooking = 20,
+		/datum/attribute/skill/combat/bows = 10,
+		/datum/attribute/skill/combat/crossbows = 20,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/labor/mathematics = 30
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/sembian_count
 	title = "Sembian Count"
 	tutorial = "A Sembian count of the eastern Heartlands, visiting on formal state business."
@@ -6,27 +25,12 @@
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
 	total_positions = 1
+	is_recognized = TRUE
+	honorary = "Count"
+	honorary_f = "Countess"
 
-	jobstats = list(
-		STATKEY_INT = 1,
-		STATKEY_END = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/sembian_count
 
-	skills = list(
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/riding = 3,
-		/datum/skill/misc/reading = 4,
-		/datum/skill/misc/music = 1,
-		/datum/skill/craft/cooking = 2,
-		/datum/skill/combat/bows = 1,
-		/datum/skill/combat/crossbows = 2,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/labor/mathematics = 3
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,
@@ -40,13 +44,9 @@
 
 /datum/job/advclass/combat/adventurer_fighter/sembian_count/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
-	var/prev_real_name = spawned.real_name
-	var/prev_name = spawned.name
-	var/honorary = "Count"
-	if(spawned.pronouns == SHE_HER)
-		honorary = "Countess"
-	spawned.real_name = "[honorary] [prev_real_name]"
-	spawned.name = "[honorary] [prev_name]"
+	if(spawned.dna?.species.id == SPEC_ID_HUMEN)
+		spawned.dna.species.native_language = "Old Psydonic"
+		spawned.dna.species.accent_language = spawned.dna.species.get_accent(spawned.dna.species.native_language)
 
 /datum/outfit/adventurer_fighter/sembian_count
 	name = "Sembian Count"

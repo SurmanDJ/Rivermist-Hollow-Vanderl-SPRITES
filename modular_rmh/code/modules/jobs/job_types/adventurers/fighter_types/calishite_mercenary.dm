@@ -1,3 +1,24 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/calishite_mercenary
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_ENDURANCE = 2,
+		STAT_PERCEPTION = 1,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/sneaking = 30,
+		/datum/attribute/skill/misc/lockpicking = 10,
+		/datum/attribute/skill/combat/axesmaces = 20,
+		/datum/attribute/skill/combat/bows = 20,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/polearms = 10,
+		/datum/attribute/skill/combat/whipsflails = 10,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/combat/shields = 10
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/calishite_mercenary
 	title = "Calishite Mercenary"
 	tutorial = "A hardened sellsword from the deserts of Calimshan, you learned early that steel and nerve matter more than honor. \
@@ -8,28 +29,8 @@
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_END = 2,
-		STATKEY_PER = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/calishite_mercenary
 
-	skills = list(
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/sneaking = 3,
-		/datum/skill/misc/lockpicking = 1,
-		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/combat/bows = 2,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/polearms = 1,
-		/datum/skill/combat/whipsflails = 1,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/combat/shields = 1,
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,

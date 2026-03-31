@@ -37,6 +37,28 @@
 
 //SUBCLASSES
 
+/datum/attribute_holder/sheet/job/advclass/adventurers_guildmaster/ranger
+	raw_attribute_list = list(
+		STAT_SPEED = 2,
+		STAT_PERCEPTION = 1,
+		STAT_STRENGTH = 1,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/knives = 30,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/crossbows = 40,
+		/datum/attribute/skill/combat/bows = 50,
+		/datum/attribute/skill/misc/swimming = 30,
+		/datum/attribute/skill/misc/climbing = 40,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/sneaking = 20,
+		/datum/attribute/skill/misc/reading = 50,
+		/datum/attribute/skill/craft/cooking = 30,
+		/datum/attribute/skill/craft/traps = 10,
+		/datum/attribute/skill/labor/butchering = 50,
+		/datum/attribute/skill/labor/mathematics = 50
+	)
+
 /datum/job/advclass/adventurers_guildmaster/ranger
 	title = "Retired Ranger"
 	tutorial = "A veteran of the wilds and monster hunts."
@@ -44,29 +66,8 @@
 	outfit = /datum/outfit/adventurers_guildmaster/ranger
 	category_tags = list(CAT_AHEAD)
 
-	jobstats = list(
-		STATKEY_SPD = 2,
-		STATKEY_PER = 1,
-		STATKEY_STR = 1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/adventurers_guildmaster/ranger
 
-	skills = list(
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/knives = 3,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/crossbows = 4,
-		/datum/skill/combat/bows = 5,
-		/datum/skill/misc/swimming = 3,
-		/datum/skill/misc/climbing = 4,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/sneaking = 2,
-		/datum/skill/misc/reading = 5,
-		/datum/skill/craft/cooking = 3,
-		/datum/skill/craft/traps = 1,
-		/datum/skill/labor/butchering = 5,
-		/datum/skill/labor/mathematics = 5,
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,
@@ -128,6 +129,24 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/adventurers_guildmaster/eldritch_knight
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 2,
+		STAT_STRENGTH = 1,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/combat/wrestling = 10,
+		/datum/attribute/skill/combat/unarmed = 10,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/misc/reading = 50,
+		/datum/attribute/skill/labor/mathematics = 50,
+		/datum/attribute/skill/magic/arcane = 30,
+		/datum/attribute/skill/misc/reading = 40,
+		/datum/attribute/skill/craft/alchemy = 20
+	)
+
 /datum/job/advclass/adventurers_guildmaster/eldritch_knight
 	title = "Retired Eldritch Knight"
 	tutorial = "A master of blade and magic."
@@ -140,25 +159,8 @@
 	attunements_max = 10
 	attunements_min = 5
 
-	jobstats = list(
-		STATKEY_INT = 2,
-		STATKEY_STR = 1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/adventurers_guildmaster/eldritch_knight
 
-	skills = list(
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/wrestling = 1,
-		/datum/skill/combat/unarmed = 1,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/misc/reading = 5,
-		/datum/skill/labor/mathematics = 5,
-		/datum/skill/magic/arcane = 3,
-		/datum/skill/misc/reading = 4,
-		/datum/skill/craft/alchemy = 2,
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,

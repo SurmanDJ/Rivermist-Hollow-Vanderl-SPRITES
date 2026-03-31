@@ -1,3 +1,21 @@
+/datum/attribute_holder/sheet/job/heart_priest
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 1,
+		STAT_INTELLIGENCE = 2,
+		STAT_CONSTITUTION = 1,
+		STAT_ENDURANCE = 2,
+		STAT_SPEED = 2,
+		STAT_FORTUNE = 3,
+		/datum/attribute/skill/magic/holy = 40,
+		/datum/attribute/skill/misc/reading = 40,
+		/datum/attribute/skill/misc/medicine = 30,
+		/datum/attribute/skill/misc/music = 40,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/whipsflails = 20,
+		/datum/attribute/skill/misc/sewing = 30
+	)
+
 /datum/job/heart_priest
 	title = "Heart Priest"
 	f_title = "Heart Priestess"
@@ -24,25 +42,8 @@
 	exp_requirements = list(EXP_TYPE_CHURCH = 700)
 
 	allowed_patrons = list(/datum/patron/faerun/good_gods/Sune)
-	jobstats = list(
-		STATKEY_PER = 1,
-		STATKEY_INT = 2,
-		STATKEY_CON = 1,
-		STATKEY_END = 2,
-		STATKEY_SPD = 2,
-		STATKEY_LCK = 3
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/heart_priest
 
-	skills = list(
-		/datum/skill/magic/holy = 4,
-		/datum/skill/misc/reading = 4,
-		/datum/skill/misc/medicine = 3,
-		/datum/skill/misc/music = 4,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/whipsflails = 2,
-		/datum/skill/misc/sewing = 3,
-	)
 
 	traits = list(
 		TRAIT_HOLY,

@@ -35,6 +35,16 @@
 
 //SUBCLASSES
 
+/datum/attribute_holder/sheet/job/advclass/towner/commoner
+	raw_attribute_list = list(
+		STAT_CONSTITUTION = 1,
+		STAT_SPEED = 1,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/misc/sneaking = 10,
+		/datum/attribute/skill/misc/stealing = 10,
+		/datum/attribute/skill/labor/mathematics = 10
+	)
+
 /datum/job/advclass/towner/commoner
 	title = "Commoner"
 	tutorial = "You are one of the many faces of Rivermist Hollow. \
@@ -44,17 +54,8 @@
 	category_tags = list(CAT_TOWNER)
 	give_bank_account = 5
 
-	jobstats = list(
-		STATKEY_CON = 1,
-		STATKEY_SPD = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/towner/commoner
 
-	skills = list(
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/misc/sneaking = 1,
-		/datum/skill/misc/stealing = 1,
-		/datum/skill/labor/mathematics = 1
-	)
 
 	traits = list(
 		TRAIT_DEADNOSE,
@@ -91,6 +92,16 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/towner/burgess
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 1,
+		STAT_PERCEPTION = 1,
+		/datum/attribute/skill/misc/reading = 20,
+		/datum/attribute/skill/labor/mathematics = 30,
+		/datum/attribute/skill/misc/sneaking = 10,
+		/datum/attribute/skill/misc/athletics = 10
+	)
+
 /datum/job/advclass/towner/burgess
 	title = "Burgess"
 	tutorial = "You are comfortably established — a property holder, trader, or respected townsman. \
@@ -100,17 +111,8 @@
 	category_tags = list(CAT_TOWNER)
 	give_bank_account = 25
 
-	jobstats = list(
-		STATKEY_INT = 1,
-		STATKEY_PER = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/towner/burgess
 
-	skills = list(
-		/datum/skill/misc/reading = 2,
-		/datum/skill/labor/mathematics = 3,
-		/datum/skill/misc/sneaking = 1,
-		/datum/skill/misc/athletics = 1
-	)
 
 	traits = list(
 		TRAIT_SEEPRICES
@@ -147,6 +149,20 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/towner/patrician
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 1,
+		STAT_SPEED = 1,
+		STAT_CONSTITUTION = 1,
+		/datum/attribute/skill/misc/reading = 20,
+		/datum/attribute/skill/labor/mathematics = 30,
+		/datum/attribute/skill/misc/riding = 20,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/combat/unarmed = 10,
+		/datum/attribute/skill/combat/wrestling = 10,
+		/datum/attribute/skill/combat/bows = 20
+	)
+
 /datum/job/advclass/towner/patrician
 	title = "Patrician"
 	tutorial = "Your family helped build Rivermist Hollow — or at least paid for it. \
@@ -159,36 +175,17 @@
 	noble_income = 16
 	job_bitflag = BITFLAG_ROYALTY
 
-	jobstats = list(
-		STATKEY_INT = 1,
-		STATKEY_SPD = 1,
-		STATKEY_CON = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/towner/patrician
 
-	skills = list(
-		/datum/skill/misc/reading = 2,
-		/datum/skill/labor/mathematics = 3,
-		/datum/skill/misc/riding = 2,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/combat/unarmed = 1,
-		/datum/skill/combat/wrestling = 1,
-		/datum/skill/combat/bows = 2,
-	)
 
 	traits = list(
 		TRAIT_NOBLE
 	)
+	honorary = "Lord"
+	honorary_f = "Lady"
 
 /datum/job/advclass/towner/patrician/after_spawn(mob/living/carbon/human/spawned, client/player_client)
 	. = ..()
-	var/prev_real_name = spawned.real_name
-	var/prev_name = spawned.name
-	var/honorary = "Lord"
-	if(spawned.pronouns == SHE_HER)
-		honorary = "Lady"
-	spawned.real_name = "[honorary] [prev_real_name]"
-	spawned.name = "[honorary] [prev_name]"
-
 	var/static/list/selectable = list( \
 		"Dagger" = /obj/item/weapon/knife/dagger/silver, \
 		"Rapier" = /obj/item/weapon/sword/rapier/dec, \

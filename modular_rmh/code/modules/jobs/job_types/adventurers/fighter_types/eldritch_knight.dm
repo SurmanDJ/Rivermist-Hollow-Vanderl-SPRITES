@@ -1,3 +1,22 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/eldritch_knight
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_INTELLIGENCE = 1,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/wrestling = 10,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/combat/knives = 10,
+		/datum/attribute/skill/misc/swimming = 10,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/misc/sewing = 10,
+		/datum/attribute/skill/magic/arcane = 10,
+		/datum/attribute/skill/craft/alchemy = 10
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/eldritch_knight
 	title = "Eldritch Knight"
 	tutorial = "You are a warrior of spell and sword, weaving incantations that supplement your extensive martial expertise."
@@ -12,26 +31,8 @@
 	attunements_max = 10
 	attunements_min = 5
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_INT = 1,
-		STATKEY_SPD = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/eldritch_knight
 
-	skills = list(
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/wrestling = 1,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/combat/knives = 1,
-		/datum/skill/misc/swimming = 1,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/misc/sewing = 1,
-		/datum/skill/magic/arcane = 1,
-		/datum/skill/craft/alchemy = 1
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,

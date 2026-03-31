@@ -1,3 +1,22 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/winged_rescuer
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_SPEED = 3,
+		/datum/attribute/skill/combat/bows = 20,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/craft/tanning = 20,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/craft/crafting = 10,
+		/datum/attribute/skill/misc/climbing = 10,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/craft/alchemy = 30
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/winged_rescuer
 	title = "Winged Rescuer"
 	tutorial = "You've seen countless battles and earned your fair share of riches from them. \
@@ -9,26 +28,8 @@
 	give_bank_account = TRUE
 
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_SPD = 3
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/winged_rescuer
 
-	skills = list(
-		/datum/skill/combat/bows = 2,
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/craft/tanning = 2,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/craft/crafting = 1,
-		/datum/skill/misc/climbing = 1,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/craft/alchemy = 3,
-	)
 
 	traits = list(
 		TRAIT_DEADNOSE,

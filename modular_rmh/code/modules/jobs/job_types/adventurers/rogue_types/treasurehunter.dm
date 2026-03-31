@@ -1,3 +1,26 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/treasurehunter
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_PERCEPTION = 2,
+		STAT_INTELLIGENCE = 1,
+		STAT_ENDURANCE = 2,
+		STAT_SPEED = 1,
+		STAT_FORTUNE = -1,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/combat/whipsflails = 30,
+		/datum/attribute/skill/combat/wrestling = 10,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/combat/unarmed = 10,
+		/datum/attribute/skill/craft/crafting = 10,
+		/datum/attribute/skill/craft/cooking = 10,
+		/datum/attribute/skill/misc/swimming = 30,
+		/datum/attribute/skill/misc/climbing = 50,
+		/datum/attribute/skill/misc/sewing = 10,
+		/datum/attribute/skill/misc/lockpicking = 20,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/reading = 10
+	)
+
 /datum/job/advclass/combat/adventurer_rogue/treasurehunter
 	title = "Treasure Hunter"
 	tutorial = "A tomb delver who robs the dead and survives by cunning, grit, and a strong stomach."
@@ -6,30 +29,8 @@
 	category_tags = list(CAT_ADVENTURER_ROGUE)
 	give_bank_account = TRUE
 
-	skills = list(
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/combat/whipsflails = 3,
-		/datum/skill/combat/wrestling = 1,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/unarmed = 1,
-		/datum/skill/craft/crafting = 1,
-		/datum/skill/craft/cooking = 1,
-		/datum/skill/misc/swimming = 3,
-		/datum/skill/misc/climbing = 5,
-		/datum/skill/misc/sewing = 1,
-		/datum/skill/misc/lockpicking = 2,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/reading = 1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/treasurehunter
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_PER = 2,
-		STATKEY_INT = 1,
-		STATKEY_END = 2,
-		STATKEY_SPD = 1,
-		STATKEY_LCK = -1,
-	)
 
 	traits = list(
 		TRAIT_DEADNOSE,

@@ -1,3 +1,24 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_wizard/sell_wizard
+	raw_attribute_list = list(
+		STAT_ENDURANCE = 1,
+		STAT_INTELLIGENCE = 3,
+		STAT_CONSTITUTION = -1,
+		STAT_PERCEPTION = -1,
+		STAT_STRENGTH = -2,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/combat/knives = 10,
+		/datum/attribute/skill/combat/unarmed = 10,
+		/datum/attribute/skill/combat/wrestling = 10,
+		/datum/attribute/skill/magic/arcane = 30,
+		/datum/attribute/skill/combat/polearms = 20,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/swimming = 10,
+		/datum/attribute/skill/misc/climbing = 10,
+		/datum/attribute/skill/craft/crafting = 10,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/misc/reading = 40
+	)
+
 /datum/job/advclass/combat/adventurer_wizard/sell_wizard
 	title = "Sellwizard"
 	tutorial = "Once a noble trained in the arcane arts in Waterdeep, \
@@ -8,28 +29,8 @@
 	outfit = /datum/outfit/adventurer_wizard/sell_wizard
 	category_tags = list(CAT_ADVENTURER_WIZARD)
 
-	jobstats = list(
-		STATKEY_END = 1,
-		STATKEY_INT = 3,
-		STATKEY_CON = -1,
-		STATKEY_PER = -1,
-		STATKEY_STR = -2,
-		STATKEY_SPD = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_wizard/sell_wizard
 
-	skills = list(
-		/datum/skill/combat/knives = 1,
-		/datum/skill/combat/unarmed = 1,
-		/datum/skill/combat/wrestling = 1,
-		/datum/skill/magic/arcane = 3,
-		/datum/skill/combat/polearms = 2,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/swimming = 1,
-		/datum/skill/misc/climbing = 1,
-		/datum/skill/craft/crafting = 1,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/misc/reading = 4
-	)
 
 	traits = list(
 		TRAIT_NOBLE

@@ -1,3 +1,16 @@
+/datum/attribute_holder/sheet/job/advclass/artisan_apprentice/blacksmith
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_ENDURANCE = 1,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/craft/blacksmithing = 20,
+		/datum/attribute/skill/craft/smelting = 20,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/combat/unarmed = 10,
+		/datum/attribute/skill/misc/reading = 10
+	)
+
 /datum/job/advclass/artisan_apprentice/blacksmith
 	title = "Smithy Apprentice"
 	tutorial = "You pump bellows, haul iron, and learn how heat and hammer shape steel."
@@ -8,20 +21,8 @@
 	give_bank_account = 5
 	job_bitflag = BITFLAG_CONSTRUCTOR
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_END = 1,
-		STATKEY_SPD = -1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/artisan_apprentice/blacksmith
 
-	skills = list(
-		/datum/skill/craft/blacksmithing = 2,
-		/datum/skill/craft/smelting = 2,
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/combat/unarmed = 1,
-		/datum/skill/misc/reading = 1,
-	)
 
 	traits = list(
 		TRAIT_MALUMFIRE,

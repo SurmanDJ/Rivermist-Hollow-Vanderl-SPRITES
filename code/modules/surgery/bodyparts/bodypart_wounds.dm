@@ -152,7 +152,7 @@
 			do_crit = FALSE
 
 	if(user)
-		if(user.stat_roll(STATKEY_LCK, 2, 10))
+		if(user.stat_roll(STAT_FORTUNE, 2, 10))
 			dam += 10
 		if(ispath(user.rmb_intent?.type, /datum/rmb_intent/weak))
 			do_crit = FALSE
@@ -217,7 +217,7 @@
 	if(!crit_classes)
 		return FALSE
 
-	if(user?.stat_roll(STATKEY_LCK, 2, 10))
+	if(user?.stat_roll(STAT_FORTUNE, 2, 10))
 		dam += 10
 
 	var/used
@@ -292,7 +292,7 @@
 			return applied
 	return FALSE
 
-/obj/item/bodypart/chest/try_crit(bclass, dam, mob/living/user, zone_precise, silent = FALSE, crit_message = FALSE)
+/obj/item/bodypart/chest/try_crit(bclass, dam, mob/living/user, zone_precise, silent = FALSE, crit_message = FALSE, reduce_crit = 0)
 	if(!bclass || !dam || (owner.status_flags & GODMODE))
 		return FALSE
 
@@ -312,10 +312,11 @@
 	if(!crit_classes)
 		return FALSE
 
-	if(user?.stat_roll(STATKEY_LCK,2,10))
+	if(user?.stat_roll(STAT_FORTUNE,2,10))
 		dam += 10
 
 	var/used
+	used -= reduce_crit
 	var/damage_dividend = (get_damage() / max_damage)
 	var/resistance = HAS_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE)
 	var/list/attempted_wounds
@@ -388,7 +389,7 @@
 			return applied
 	return FALSE
 
-/obj/item/bodypart/head/try_crit(bclass, dam, mob/living/user, zone_precise, silent = FALSE, crit_message = FALSE)
+/obj/item/bodypart/head/try_crit(bclass, dam, mob/living/user, zone_precise, silent = FALSE, crit_message = FALSE, reduce_crit = 0)
 	var/static/list/eyestab_zones = list(BODY_ZONE_PRECISE_R_EYE, BODY_ZONE_PRECISE_L_EYE)
 	var/static/list/tonguestab_zones = list(BODY_ZONE_PRECISE_MOUTH)
 	var/static/list/nosestab_zones = list(BODY_ZONE_PRECISE_NOSE)
@@ -409,7 +410,7 @@
 	if(!crit_classes)
 		return FALSE
 
-	if(user?.stat_roll(STATKEY_LCK, 2, 10))
+	if(user?.stat_roll(STAT_FORTUNE, 2, 10))
 		dam += 10
 
 	var/from_behind = FALSE
@@ -418,6 +419,7 @@
 			from_behind = TRUE
 
 	var/used
+	used -= reduce_crit
 	var/damage_dividend = (get_damage() / max_damage)
 	var/resistance = HAS_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE)
 	var/list/attempted_wounds

@@ -1,3 +1,24 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/assassin
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 2,
+		STAT_SPEED = 2,
+		STAT_STRENGTH = 1,
+		/datum/attribute/skill/combat/knives = 40,
+		/datum/attribute/skill/combat/swords = 20,
+		/datum/attribute/skill/combat/bows = 20,
+		/datum/attribute/skill/combat/crossbows = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/misc/sneaking = 50,
+		/datum/attribute/skill/misc/climbing = 50,
+		/datum/attribute/skill/misc/stealing = 30,
+		/datum/attribute/skill/misc/lockpicking = 40,
+		/datum/attribute/skill/misc/athletics = 40,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/craft/traps = 30,
+		/datum/attribute/skill/misc/reading = 10
+	)
+
 /datum/job/advclass/combat/adventurer_rogue/assassin
 	title = "Assassin"
 	tutorial = "You prefer to deal sublime punishment to a single foe at a time - not in a duel, mind, because a duel implies chivalry, \
@@ -11,29 +32,8 @@
 
 	outfit = /datum/outfit/adventurer_rogue/assassin
 
-	skills = list(
-		/datum/skill/combat/knives = 4,
-		/datum/skill/combat/swords = 2,
-		/datum/skill/combat/bows = 2,
-		/datum/skill/combat/crossbows = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/combat/wrestling = 2,
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/assassin
 
-		/datum/skill/misc/sneaking = 5,
-		/datum/skill/misc/climbing = 5,
-		/datum/skill/misc/stealing = 3,
-		/datum/skill/misc/lockpicking = 4,
-		/datum/skill/misc/athletics = 4,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/craft/traps = 3,
-		/datum/skill/misc/reading = 1,
-	)
-
-	jobstats = list(
-		STATKEY_PER = 2,
-		STATKEY_SPD = 2,
-		STATKEY_STR = 1,
-	)
 
 	traits = list(
 		TRAIT_ASSASSIN,

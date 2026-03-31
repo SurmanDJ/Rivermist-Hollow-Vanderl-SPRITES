@@ -1,3 +1,22 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_barbarian/seaelf_reaver
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_ENDURANCE = 1,
+		STAT_CONSTITUTION = 2,
+		STAT_SPEED = 1,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/combat/shields = 30,
+		/datum/attribute/skill/misc/swimming = 30,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/combat/swords = 20,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/combat/axesmaces = 20,
+		/datum/attribute/skill/combat/bows = 20
+	)
+
 /datum/job/advclass/combat/adventurer_barbarian/seaelf_reaver
 	title = "Sea Elf Reaver"
 	tutorial = "You were raised to fear the sea — and to make offerings so it fears you back. \
@@ -8,26 +27,8 @@
 	category_tags = list(CAT_ADVENTURER_BARBARIAN)
 	give_bank_account = TRUE
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_END = 1,
-		STATKEY_CON = 2,
-		STATKEY_SPD = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_barbarian/seaelf_reaver
 
-	skills = list(
-		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/shields = 3,
-		/datum/skill/misc/swimming = 3,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/combat/swords = 2,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/combat/bows = 2,
-	)
 
 	traits = list(
 		TRAIT_STEELHEARTED,

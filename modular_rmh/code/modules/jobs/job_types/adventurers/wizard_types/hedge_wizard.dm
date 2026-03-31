@@ -1,3 +1,18 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_wizard/hedge_wizard
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 4,
+		// Base for non-old characters
+		STAT_ENDURANCE = 1,
+		/datum/attribute/skill/combat/polearms = 30,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/misc/reading = 50,
+		/datum/attribute/skill/craft/alchemy = 40,
+		/datum/attribute/skill/magic/arcane = 40 // Base value, adjusted for age in after_spawn
+	)
+
 /datum/job/advclass/combat/adventurer_wizard/hedge_wizard
 	title = "Hedge Wizard"
 	tutorial = "Once a prodigy of the arcane academies, you were cast out for defying tradition and pursuing forbidden experiments. \
@@ -8,21 +23,8 @@
 	category_tags = list(CAT_ADVENTURER_WIZARD)
 	total_positions = 2
 
-	jobstats = list(
-		STATKEY_INT = 4, // Base for non-old characters
-		STATKEY_END = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_wizard/hedge_wizard
 
-	skills = list(
-		/datum/skill/combat/polearms = 3,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/misc/reading = 5,
-		/datum/skill/craft/alchemy = 4,
-		/datum/skill/magic/arcane = 4 // Base value, adjusted for age in after_spawn
-	)
 
 	traits = list(
 		TRAIT_STEELHEARTED,

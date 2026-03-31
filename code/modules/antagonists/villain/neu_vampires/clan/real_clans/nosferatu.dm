@@ -66,5 +66,8 @@
 	H.AddComponent(/datum/component/vampire_disguise)
 	H.AddComponent(/datum/component/hideous_face, CALLBACK(src, TYPE_PROC_REF(/datum/clan/nosferatu, face_seen)))
 
-/datum/clan/nosferatu/proc/face_seen(mob/living/carbon/human/nosferatu)
-	nosferatu.AdjustMasquerade(-1)
+/datum/clan/nosferatu/proc/face_seen(mob/living/carbon/human/nosferatu, mob/living/carbon/user)
+	if(!user || user == nosferatu)
+		return
+	if(user.affects_masquerade(FALSE))
+		nosferatu.vampire_detected(max(0, length(nosferatu.CheckEyewitness(nosferatu)) - 1))
