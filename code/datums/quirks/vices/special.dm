@@ -135,9 +135,8 @@
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/H = owner
-	for(var/datum/skill/skill in SSskills.all_skills)
-		if(H.get_skill_level(skill) > SKILL_LEVEL_NONE)
-			H.adjust_skillrank(skill, -1, TRUE)
+	for(var/datum/attribute/skill/skill in SSskills.all_skills)
+		H.adjust_skill_level(skill, -10)
 
 /datum/quirk/vice/deaf
 	name = "Hard of Hearing"
@@ -465,3 +464,6 @@
 	else // Outlaw
 		GLOB.outlawed_players |= H.real_name
 		to_chat(H, span_boldwarning("Whether for crimes I did or was accused of, I have been declared an outlaw!"))
+
+/datum/quirk/vice/hunted
+	parent_type = /datum/quirk/vice/wanted

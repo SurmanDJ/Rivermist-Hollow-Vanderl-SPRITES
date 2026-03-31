@@ -32,6 +32,39 @@
 	. = ..()
 	enchant(/datum/enchantment/silver)
 
+/obj/item/clothing/neck/psycross/silver/divine
+	parent_type = /obj/item/clothing/neck/psycross/silver
+
+/obj/item/clothing/neck/psycross/silver/divine/astrata
+	parent_type = /obj/item/clothing/neck/psycross/silver/astrata
+
+/obj/item/clothing/neck/psycross/silver/divine/noc
+	parent_type = /obj/item/clothing/neck/psycross/silver/noc
+
+/obj/item/clothing/neck/psycross/silver/divine/dendor
+	parent_type = /obj/item/clothing/neck/psycross/silver/dendor
+
+/obj/item/clothing/neck/psycross/silver/divine/abyssor
+	parent_type = /obj/item/clothing/neck/psycross/silver/abyssor
+
+/obj/item/clothing/neck/psycross/silver/divine/necra
+	parent_type = /obj/item/clothing/neck/psycross/silver/necra
+
+/obj/item/clothing/neck/psycross/silver/divine/ravox
+	parent_type = /obj/item/clothing/neck/psycross/silver/ravox
+
+/obj/item/clothing/neck/psycross/silver/divine/xylix
+	parent_type = /obj/item/clothing/neck/psycross/silver/xylix
+
+/obj/item/clothing/neck/psycross/silver/divine/eora
+	parent_type = /obj/item/clothing/neck/psycross/silver/eora
+
+/obj/item/clothing/neck/psycross/silver/divine/pestra
+	parent_type = /obj/item/clothing/neck/psycross/silver/pestra
+
+/obj/item/clothing/neck/psycross/silver/divine/malum
+	parent_type = /obj/item/clothing/neck/psycross/silver/malum
+
 // PANTHEON SILVER PSYCROSSES START
 
 /obj/item/clothing/neck/psycross/silver/astrata

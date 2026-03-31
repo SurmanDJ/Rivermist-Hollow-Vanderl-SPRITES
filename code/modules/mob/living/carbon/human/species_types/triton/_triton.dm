@@ -1,6 +1,29 @@
 /mob/living/carbon/human/species/triton
 	race = /datum/species/triton
 
+/datum/attribute_holder/sheet/job/species/triton
+	raw_attribute_list = list(
+		/datum/attribute/skill/labor/fishing = 30,
+		/datum/attribute/skill/misc/swimming = 40,
+	)
+
+/datum/attribute_holder/sheet/job/species/triton/male
+	raw_attribute_list = list(
+		STAT_STRENGTH = -1,
+		STAT_PERCEPTION = -2,
+		STAT_CONSTITUTION = -2,
+		STAT_SPEED = 1,
+		STAT_INTELLIGENCE = 2
+	)
+
+/datum/attribute_holder/sheet/job/species/triton/female
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_PERCEPTION = -4,
+		STAT_CONSTITUTION = 3,
+		STAT_SPEED = -3
+	)
+
 /datum/species/triton
 	name = "Triton"
 	id = SPEC_ID_TRITON
@@ -174,4 +197,3 @@
 		"Photic" = HAIR_COLOR_PHOTIC,
 		"Turtle Egg" = HAIR_COLOR_TURTLE,
 	)
-

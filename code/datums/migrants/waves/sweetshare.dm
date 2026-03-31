@@ -5,12 +5,31 @@
 	own supply. You are Baotha's strongest spice-addict."
 	migrant_job = /datum/job/migrant/sweetshare
 
+/datum/attribute_holder/sheet/job/migrant/sweetshare
+	raw_attribute_list = list(
+		STAT_SPEED = 2,
+		STAT_ENDURANCE = 2,
+		STAT_STRENGTH = -2,
+		STAT_CONSTITUTION = -1,
+		/datum/attribute/skill/combat/knives = 10,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/swimming = 30,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/craft/alchemy = 30,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/climbing = 40,
+	)
+
 /datum/job/migrant/sweetshare
 	title = "Candyman"
 	tutorial = "Who can take a rainbow, wrap it in a sigh. Soak it in the sun, and make a groovy pie? The Candy Man can. \
 	Sell your product to those who should imbibe - the poor, the downtrodden, the youth. Get them hooked; stay off of your \
 	own supply. You are Baotha's strongest spice-addict."
 	outfit = /datum/outfit/sweetshare
+	honorary_suffix = "the Candyman"
+	honorary_suffix_f = "the Candywoman"
 
 	jobstats = list(
 		STATKEY_SPD = 2,

@@ -28,7 +28,7 @@
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_BACK|ITEM_SLOT_WRISTS|ITEM_SLOT_NECK
-	associated_skill = /datum/skill/combat/knives
+	associated_skill = /datum/attribute/skill/combat/knives
 	sewrepair = TRUE
 	sellprice = 10
 	experimental_onback = FALSE
@@ -75,8 +75,8 @@
 	wdefense = GREAT_PARRY
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
-	anvilrepair = /datum/skill/craft/carpentry
-	associated_skill = /datum/skill/combat/swords
+	anvilrepair = /datum/attribute/skill/craft/carpentry
+	associated_skill = /datum/attribute/skill/combat/swords
 	sellprice = 10
 
 /obj/item/weapon/scabbard/sword/apply_components()
@@ -119,8 +119,8 @@
 
 	slot_flags = ITEM_SLOT_HIP
 	w_class = WEIGHT_CLASS_BULKY
-	anvilrepair = /datum/skill/craft/carpentry
-	associated_skill = /datum/skill/combat/swords
+	anvilrepair = /datum/attribute/skill/craft/carpentry
+	associated_skill = /datum/attribute/skill/combat/swords
 
 /obj/item/weapon/scabbard/cane/courtphysician
 	name = "fancy cane"
@@ -205,8 +205,8 @@
 	wdefense = GREAT_PARRY
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
-	anvilrepair = /datum/skill/craft/carpentry
-	associated_skill = /datum/skill/combat/shields
+	anvilrepair = /datum/attribute/skill/craft/carpentry
+	associated_skill = /datum/attribute/skill/combat/shields
 	max_integrity = INTEGRITY_STANDARD
 	sellprice = 10
 

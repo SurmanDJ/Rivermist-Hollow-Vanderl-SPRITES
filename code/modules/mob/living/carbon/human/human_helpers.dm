@@ -117,12 +117,12 @@
 		return
 
 	var/damage
-	if(STASTR > 12 || STASTR < 10)
-		damage = STASTR
+	if(GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) > 12 || GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH) < 10)
+		damage = GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH)
 	else
 		damage = 12
 
-	var/used_str = STASTR
+	var/used_str = GET_MOB_ATTRIBUTE_VALUE(src, STAT_STRENGTH)
 
 	if(mind?.has_antag_datum(/datum/antagonist/werewolf))
 		return damage * 2
@@ -192,8 +192,8 @@
 	if(randomise_flags & RANDOMIZE_NAME)
 		real_name = species.random_name(gender, TRUE)
 
-	//if(randomise_flags & RANDOMIZE_UNDERWEAR)
-	//	underwear = species.random_underwear(gender)
+	if(randomise_flags & RANDOMIZE_UNDERWEAR)
+		underwear = species.random_underwear(gender)
 
 	if(randomise_flags & RANDOMIZE_SKIN_TONE)
 		var/list/skin_list = species.get_skin_list()

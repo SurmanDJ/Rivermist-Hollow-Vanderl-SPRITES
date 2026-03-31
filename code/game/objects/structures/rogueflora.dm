@@ -35,14 +35,20 @@
 	smeltresult = /obj/item/ore/coal
 
 /obj/structure/flora/tree/attack_hand_secondary(mob/user, list/modifiers)
-
-    . = ..()
-    if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-        return
-
-    handle_special_items_retrieval(user, src)
-
-    return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(user.mind && isliving(user))
+		if(user.mind.special_items && user.mind.special_items.len)
+			var/item = browser_input_list(user, "What will I take?", "STASH", user.mind.special_items)
+			if(item)
+				if(user.Adjacent(src))
+					if(user.mind.special_items[item])
+						var/path2item = user.mind.special_items[item]
+						user.mind.special_items -= item
+						var/obj/item/I = new path2item(user.loc)
+						user.put_in_hands(I)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/flora/tree/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
@@ -574,14 +580,20 @@
 	static_debris = list(/obj/item/grown/log/tree/small = 1)
 
 /obj/structure/flora/shroom_tree/attack_hand_secondary(mob/user, list/modifiers)
-
-    . = ..()
-    if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-        return
-
-    handle_special_items_retrieval(user, src)
-
-    return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(user.mind && isliving(user))
+		if(user.mind.special_items && user.mind.special_items.len)
+			var/item = browser_input_list(user, "What will I take?", "STASH", user.mind.special_items)
+			if(item)
+				if(user.Adjacent(src))
+					if(user.mind.special_items[item])
+						var/path2item = user.mind.special_items[item]
+						user.mind.special_items -= item
+						var/obj/item/I = new path2item(user.loc)
+						user.put_in_hands(I)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/flora/shroom_tree/Initialize()
 	. = ..()

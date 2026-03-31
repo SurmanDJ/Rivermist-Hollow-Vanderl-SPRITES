@@ -8,7 +8,8 @@
 	cast_range = 6
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
-	associated_skill = /datum/skill/magic/holy
+	associated_skill = /datum/attribute/skill/magic/holy
+	required_items = list(/obj/item/clothing/neck/psycross/silver/divine)
 
 	charge_required = FALSE
 	cooldown_time = 10 SECONDS
@@ -233,8 +234,6 @@
 	if(affecting)
 		affecting.heal_damage(amount_healed, amount_healed)
 		affecting.heal_wounds(amount_healed * wound_modifier)
-		C.adjustBruteLoss(-amount_healed * 0.2) //still heal the 20% of overall damage
-		C.adjustFireLoss(-amount_healed * 0.2)
 		C.update_damage_overlays()
 
 /datum/action/cooldown/spell/healing/profane
@@ -242,6 +241,7 @@
 	antimagic_flags = MAGIC_RESISTANCE_UNHOLY
 	required_items = null
 	is_profane = TRUE
+	required_items = list(/obj/item/clothing/neck/psycross)
 
 /datum/action/cooldown/spell/healing/greater
 	name = "Miracle"
@@ -256,6 +256,7 @@
 	wound_modifier = 0.5
 	blood_restoration = BLOOD_VOLUME_SURVIVE
 	stun_undead = TRUE
+	patron_restrictive = TRUE
 
 /datum/action/cooldown/spell/healing/greater/profane
 	name = "Corrupt Miracle"
@@ -263,3 +264,4 @@
 	required_items = null
 	stun_undead = FALSE
 	is_profane = TRUE
+	required_items = list(/obj/item/clothing/neck/psycross)

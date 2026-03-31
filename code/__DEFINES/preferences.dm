@@ -146,6 +146,7 @@
 
 //Age ranges
 #define AGE_ADULT			"Adult"
+#define AGE_CHILD			"Child"
 #define AGE_MIDDLEAGED		"Middle-Aged"
 #define AGE_OLD				"Old"
 #define AGE_IMMORTAL		"Immortal"
