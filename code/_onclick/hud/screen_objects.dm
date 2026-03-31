@@ -658,16 +658,22 @@
 	name = ""
 	icon = null
 	icon_state = ""
+	var/check_mob_timer = TIMER_ID_NULL
 
 /atom/movable/screen/advsetup/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(check_mob)), 3 SECONDS)
+	check_mob_timer = addtimer(CALLBACK(src, PROC_REF(check_mob)), 3 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
 /atom/movable/screen/advsetup/Destroy()
+	if(check_mob_timer != TIMER_ID_NULL)
+		deltimer(check_mob_timer)
+		check_mob_timer = TIMER_ID_NULL
+	hud?.mymob?.client?.screen -= src
 	hud?.static_inventory -= src
 	return ..()
 
 /atom/movable/screen/advsetup/proc/check_mob()
+	check_mob_timer = TIMER_ID_NULL
 	if(QDELETED(src))
 		return
 	if(!hud)

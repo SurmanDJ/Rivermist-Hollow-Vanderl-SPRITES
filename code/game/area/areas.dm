@@ -284,15 +284,33 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 /// Setup all ambience tracks
 /area/proc/setup_ambience()
+	ambientsounds = resolve_ambience_setting(ambientsounds, GLOB.ambience_assoc_sounds, GLOB.ambience_assoc_droning)
+	ambientnight = resolve_ambience_setting(ambientnight, GLOB.ambience_assoc_sounds, GLOB.ambience_assoc_droning)
+	alternative_droning = resolve_ambience_setting(alternative_droning, GLOB.ambience_assoc_droning, GLOB.ambience_assoc_sounds)
+	alternative_droning_night = resolve_ambience_setting(alternative_droning_night, GLOB.ambience_assoc_droning, GLOB.ambience_assoc_sounds)
+
 	if(!ambientsounds && ambient_index)
-		ambientsounds = GLOB.ambience_assoc_sounds[ambient_index]
+		ambientsounds = resolve_ambience_setting(ambient_index, GLOB.ambience_assoc_sounds, GLOB.ambience_assoc_droning)
 	if(!ambientnight && ambient_index_night)
-		ambientnight = GLOB.ambience_assoc_sounds[ambient_index_night]
+		ambientnight = resolve_ambience_setting(ambient_index_night, GLOB.ambience_assoc_sounds, GLOB.ambience_assoc_droning)
 
 	if(!alternative_droning && droning_index)
-		alternative_droning = GLOB.ambience_assoc_droning[droning_index]
+		alternative_droning = resolve_ambience_setting(droning_index, GLOB.ambience_assoc_droning, GLOB.ambience_assoc_sounds)
 	if(!alternative_droning_night && droning_index_night)
-		alternative_droning_night = GLOB.ambience_assoc_droning[droning_index_night]
+		alternative_droning_night = resolve_ambience_setting(droning_index_night, GLOB.ambience_assoc_droning, GLOB.ambience_assoc_sounds)
+
+/area/proc/resolve_ambience_setting(setting, list/primary_assoc, list/secondary_assoc)
+	if(isnull(setting) || islist(setting) || isfile(setting))
+		return setting
+	if(istext(setting))
+		var/resolved
+		if(primary_assoc)
+			resolved = primary_assoc[setting]
+		if(isnull(resolved) && secondary_assoc)
+			resolved = secondary_assoc[setting]
+		if(!isnull(resolved))
+			return resolved
+	return setting
 
 /**
  * Destroy an area and clean it up
@@ -469,6 +487,16 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  */
 /area/drop_location()
 	CRASH("Bad op: area/drop_location() called")
+
+/area/Safe_COORD_Location()
+	for(var/list/zlevel_turfs as anything in get_zlevel_turf_lists())
+		if(!length(zlevel_turfs))
+			continue
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			if(!area_turf.density)
+				return area_turf
+		return zlevel_turfs[1]
+	return null
 
 /// A hook so areas can modify the incoming args (of what??)
 /area/proc/PlaceOnTopReact(list/new_baseturfs, turf/fake_turf_type, flags)

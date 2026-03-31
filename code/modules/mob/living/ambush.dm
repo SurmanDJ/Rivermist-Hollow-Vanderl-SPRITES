@@ -20,6 +20,8 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 		if(world.time > last_client_interact + 0.3 SECONDS)
 			return
 	var/area/AR = get_area(src)
+	if(!can_trigger_ambush_in_area(AR))
+		return
 	var/datum/threat_region/TR = SSregionthreat.get_region(AR.threat_region)
 	var/danger_level = DANGER_LEVEL_MODERATE // Fallback if there's no region
 	if(TR)
@@ -56,103 +58,156 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 				victimsa += V
 			if(victims > 3)
 				return
-	var/list/possible_targets = get_possible_ambush_spawn(min_dist, max_dist)
-	if(possible_targets.len)
-		mob_timers["ambushlast"] = world.time
-		for(var/mob/living/V in victimsa)
-			V.mob_timers["ambushlast"] = world.time
-		if(TR)
-			TR.reduce_latent_ambush(1) // Remove one ambush from the ambient pool
-			TR.last_natural_ambush_time = world.time
-		var/list/mobs_to_spawn = list()
-		var/mobs_to_spawn_single = FALSE
-		var/max_spawns = 3
-		var/mustype = 1
-		if(!length(AR.ambush_mobs))
-			return
-		var/spawnedtype = pickweight(AR.ambush_mobs)
+	var/list/possible_targets = get_possible_ambush_spawn(AR, min_dist, max_dist)
+	if(!length(possible_targets))
+		return
 
-		// This is the part where we scale ambush difficulty based on threat. Due to how we have a mix of
-		// Ambush Config and Single Mob Ambush, I use a weird scaling system:
-		// Single Mob
-		// Low - 1 Mob only
-		// Moderate - 1 to 2 (This is REALLY moderate)
-		// Dangerous - 2 to 3
-		// Dire - 3 to 4
-		// Ambush Difficulty Scaling:
-		// Low = -1 Mob
-		// Dangerous = +1 Mob
-		// Dire = + 2 Mobs
-		// Previous ambush system is 2 mobs, unless there's 3 victims, in which 3 mobs
-		// And Ambush Config number is fixed
+	var/list/mobs_to_spawn = list()
+	var/mobs_to_spawn_single = FALSE
+	var/max_spawns = 3
+	var/mustype = 1
+	var/spawnedtype = pickweight(AR.ambush_mobs)
 
-		if(ispath(spawnedtype, /mob/living))
+	// This is the part where we scale ambush difficulty based on threat. Due to how we have a mix of
+	// Ambush Config and Single Mob Ambush, I use a weird scaling system:
+	// Single Mob
+	// Low - 1 Mob only
+	// Moderate - 1 to 2 (This is REALLY moderate)
+	// Dangerous - 2 to 3
+	// Dire - 3 to 4
+	// Ambush Difficulty Scaling:
+	// Low = -1 Mob
+	// Dangerous = +1 Mob
+	// Dire = + 2 Mobs
+	// Previous ambush system is 2 mobs, unless there's 3 victims, in which 3 mobs
+	// And Ambush Config number is fixed
+
+	if(ispath(spawnedtype, /mob/living))
+		switch(danger_level)
+			if(DANGER_LEVEL_SAFE) // Induced Ambush
+				max_spawns = 1
+			if(DANGER_LEVEL_LOW)
+				max_spawns = 1
+			if(DANGER_LEVEL_MODERATE)
+				max_spawns = rand(1, 2) // This is lower than before, to make moderate easier to deal with
+			if(DANGER_LEVEL_DANGEROUS)
+				max_spawns = rand(2, 3)
+			if(DANGER_LEVEL_BLEAK)
+				max_spawns = rand(3, 4)
+		mobs_to_spawn_single = TRUE
+	else if(istype(spawnedtype, /datum/ambush_config))
+		var/datum/ambush_config/A = spawnedtype
+		for(var/type_path in A.mob_types)
+			var/amt = A.mob_types[type_path]
+			if(!ispath(type_path, /mob/living) || amt <= 0)
+				continue
+			for(var/i in 1 to amt)
+				mobs_to_spawn += type_path
+		if(length(mobs_to_spawn) > 1)
 			switch(danger_level)
-				if(DANGER_LEVEL_SAFE) // Induced Ambush
-					max_spawns = 1
+				if(DANGER_LEVEL_SAFE)
+					var/ri = rand(1, mobs_to_spawn.len)
+					mobs_to_spawn.Cut(ri, ri + 1) // Randomly remove one mob
 				if(DANGER_LEVEL_LOW)
-					max_spawns = 1
-				if(DANGER_LEVEL_MODERATE)
-					max_spawns = rand(1, 2) // This is lower than before, to make moderate easier to deal with
+					var/ri = rand(1, mobs_to_spawn.len)
+					mobs_to_spawn.Cut(ri, ri + 1) // Randomly remove one mob
 				if(DANGER_LEVEL_DANGEROUS)
-					max_spawns = rand(2, 3)
+					mobs_to_spawn += pick(mobs_to_spawn) // Randomly add 1
 				if(DANGER_LEVEL_BLEAK)
-					max_spawns = rand(3, 4)
-			mobs_to_spawn_single = TRUE
-		else if(istype(spawnedtype, /datum/ambush_config))
-			var/datum/ambush_config/A = spawnedtype
-			for(var/type_path in A.mob_types)
-				var/amt = A.mob_types[type_path]
-				for(var/i in 1 to amt)
-					mobs_to_spawn += type_path
-			if(mobs_to_spawn.len > 1)
-				switch(danger_level)
-					if(DANGER_LEVEL_SAFE)
-						var/ri = rand(1, mobs_to_spawn.len)
-						mobs_to_spawn.Cut(ri, ri + 1) // Randomly remove one mob
-					if(DANGER_LEVEL_LOW)
-						var/ri = rand(1, mobs_to_spawn.len)
-						mobs_to_spawn.Cut(ri, ri + 1) // Randomly remove one mob
-					if(DANGER_LEVEL_DANGEROUS)
-						mobs_to_spawn += pick(mobs_to_spawn) // Randomly add 1
-					if(DANGER_LEVEL_BLEAK)
-						mobs_to_spawn += pick(mobs_to_spawn) // Randomly add 2
-						mobs_to_spawn += pick(mobs_to_spawn)
-			max_spawns = mobs_to_spawn.len
+					mobs_to_spawn += pick(mobs_to_spawn) // Randomly add 2
+					mobs_to_spawn += pick(mobs_to_spawn)
+		max_spawns = mobs_to_spawn.len
+	else
+		return
 
-		for(var/i in 1 to max_spawns)
-			var/spawnloc = pick(possible_targets)
-			if(spawnloc)
-				var/mob_type
-				if(mobs_to_spawn_single)
-					mob_type = spawnedtype
-				else
-					if(!mobs_to_spawn.len)
-						continue
-					mob_type = mobs_to_spawn[1]
-				var/mob/spawnedmob = new mob_type(spawnloc)
-				if(mobs_to_spawn.len && !mobs_to_spawn_single)
-					mobs_to_spawn.Cut(1, 2)
-				if(istype(spawnedmob, /mob/living/simple_animal/hostile))
-					var/mob/living/simple_animal/hostile/M = spawnedmob
-					M.del_on_deaggro = 44 SECONDS
-					M.faction += "ambush"
-				if(istype(spawnedmob, /mob/living/carbon/human))
-					var/mob/living/carbon/human/H = spawnedmob
-					H.del_on_deaggro = 44 SECONDS
-					H.last_aggro_loss = world.time
-					H.faction += "ambush"
-					addtimer(CALLBACK(H, PROC_REF(setup_equip_block)), 3 SECONDS)
-					mustype = 2
-		if(mustype == 1)
-			playsound_local(src, pick('modular_rmh/sound/misc/suprised (1).ogg','modular_rmh/sound/misc/suprised (2).ogg','modular_rmh/sound/misc/suprised (3).ogg','modular_rmh/sound/misc/suprised (4).ogg', 'modular_rmh/sound/misc/suprised (5).ogg'), 100)
+	var/list/ambush_targets = list(src)
+	ambush_targets |= victimsa
+	var/spawned_count = 0
+
+	for(var/i in 1 to max_spawns)
+		var/spawnloc = pick(possible_targets)
+		if(!spawnloc)
+			continue
+
+		var/mob_type
+		if(mobs_to_spawn_single)
+			mob_type = spawnedtype
 		else
-			playsound_local(src, pick('sound/misc/jumphumans (1).ogg','sound/misc/jumphumans (2).ogg','sound/misc/jumphumans (3).ogg'), 100)
-		shake_camera(src, 2, 2)
+			if(!length(mobs_to_spawn))
+				continue
+			mob_type = mobs_to_spawn[1]
+
+		if(!ispath(mob_type, /mob/living))
+			if(length(mobs_to_spawn) && !mobs_to_spawn_single)
+				mobs_to_spawn.Cut(1, 2)
+			continue
+
+		var/mob/living/spawnedmob = new mob_type(spawnloc)
+		if(length(mobs_to_spawn) && !mobs_to_spawn_single)
+			mobs_to_spawn.Cut(1, 2)
+		if(QDELETED(spawnedmob))
+			continue
+
+		spawned_count++
+		setup_ambush_spawn(spawnedmob, ambush_targets)
+
+		if(istype(spawnedmob, /mob/living/simple_animal/hostile))
+			var/mob/living/simple_animal/hostile/M = spawnedmob
+			M.del_on_deaggro = 44 SECONDS
+			M.faction += "ambush"
+		if(istype(spawnedmob, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = spawnedmob
+			H.del_on_deaggro = 44 SECONDS
+			H.last_aggro_loss = world.time
+			H.faction += "ambush"
+			addtimer(CALLBACK(H, PROC_REF(setup_equip_block)), 3 SECONDS)
+			mustype = 2
+
+	if(!spawned_count)
+		return
+
+	mob_timers["ambushlast"] = world.time
+	for(var/mob/living/V in victimsa)
+		V.mob_timers["ambushlast"] = world.time
+	if(TR)
+		TR.reduce_latent_ambush(1) // Remove one ambush from the ambient pool
+		TR.last_natural_ambush_time = world.time
+
+	if(mustype == 1)
+		playsound_local(src, pick('modular_rmh/sound/misc/suprised (1).ogg','modular_rmh/sound/misc/suprised (2).ogg','modular_rmh/sound/misc/suprised (3).ogg','modular_rmh/sound/misc/suprised (4).ogg', 'modular_rmh/sound/misc/suprised (5).ogg'), 100)
+	else
+		playsound_local(src, pick('sound/misc/jumphumans (1).ogg','sound/misc/jumphumans (2).ogg','sound/misc/jumphumans (3).ogg'), 100)
+	shake_camera(src, 2, 2)
 
 /mob/living/proc/setup_equip_block()
 	for(var/obj/item/clothing/clothing in contents)
 		clothing.AddElement(/datum/element/faction_restricted_equip)
+
+/mob/living/proc/can_trigger_ambush_in_area(area/AR)
+	if(!AR || !length(AR.ambush_mobs))
+		return FALSE
+	if(length(AR.ambush_times) && !(GLOB.tod in AR.ambush_times))
+		return FALSE
+	if(length(AR.ambush_types))
+		var/turf/current_turf = get_turf(src)
+		if(!is_type_in_list(current_turf, AR.ambush_types))
+			return FALSE
+	return TRUE
+
+/mob/living/proc/setup_ambush_spawn(mob/living/spawnedmob, list/ambush_targets)
+	var/datum/component/ai_aggro_system/aggro_system = spawnedmob.GetComponent(/datum/component/ai_aggro_system)
+	if(aggro_system)
+		for(var/mob/living/ambush_target as anything in ambush_targets)
+			if(QDELETED(ambush_target))
+				continue
+			aggro_system.add_threat_to_mob_capped(ambush_target, 15, 15)
+		return
+	if(spawnedmob.ai_controller)
+		for(var/mob/living/ambush_target as anything in ambush_targets)
+			if(QDELETED(ambush_target))
+				continue
+			spawnedmob.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, ambush_target)
+			return
 
 // Return whether a mob is blocked from being ambushed
 /mob/living/proc/get_will_block_ambush()
@@ -165,7 +220,7 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 	if(campfires > 0)
 		return TRUE
 
-/mob/living/proc/get_possible_ambush_spawn(min_dist = 2, max_dist = 7)
+/mob/living/proc/get_possible_ambush_spawn(area/ambush_area, min_dist = 2, max_dist = 7)
 	var/list/possible_targets = list()
 	for(var/obj/structure/flora/tree/RT in orange(max_dist, src))
 		if(istype(RT,/obj/structure/flora/tree/stump))
@@ -180,6 +235,14 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 			continue
 		if(isturf(RS.loc) && get_dist(RS.loc, src) >= min_dist)
 			possible_targets += get_adjacent_ambush_turfs(RS.loc, src)
+	if(length(possible_targets))
+		return possible_targets
+	if(length(ambush_area?.ambush_types))
+		for(var/turf/open/T in orange(max_dist, src))
+			if(T.density || get_dist(T, src) < min_dist)
+				continue
+			if(is_type_in_list(T, ambush_area.ambush_types))
+				possible_targets += T
 
 	return possible_targets
 

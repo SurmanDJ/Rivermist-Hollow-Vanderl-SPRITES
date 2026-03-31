@@ -52,19 +52,26 @@ SUBSYSTEM_DEF(ambience)
 
 ///Attempts to play an ambient sound to a mob, returning the cooldown in deciseconds
 /area/proc/play_ambience(mob/M, sound/override_sound, volume = 50)
-	var/sound/new_sound
-	var/list/spooky_sounds = ambientsounds
+	var/sound_source
+	var/spooky_sounds = ambientsounds
 	if(override_sound)
-		new_sound = override_sound
-	else if(spooky_sounds)
+		sound_source = override_sound
+	else
 		if(ambientnight && GLOB.tod == "night")
 			spooky_sounds = ambientnight
-		new_sound = pick(spooky_sounds)
+		if(islist(spooky_sounds))
+			if(length(spooky_sounds))
+				sound_source = pick(spooky_sounds)
+		else
+			sound_source = spooky_sounds
 
-	if(!new_sound)
+	if(!sound_source)
 		return
 
-	new_sound = sound(new_sound, repeat = 0, wait = 0, volume = volume, channel = CHANNEL_AMBIENCE)
+	var/sound/new_sound = sound(sound_source, repeat = 0, wait = 0, volume = volume, channel = CHANNEL_AMBIENCE)
+	if(!new_sound?.file)
+		stack_trace("[type] ([name]) tried to play invalid ambience source [sound_source].")
+		return rand(min_ambience_cooldown, max_ambience_cooldown)
 	SEND_SOUND(M, new_sound)
 
 	var/sound_length = SSsounds.get_sound_length(new_sound.file)

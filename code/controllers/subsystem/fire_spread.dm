@@ -23,11 +23,12 @@ SUBSYSTEM_DEF(fire_spread)
 		var/obj/effect/hotspot/fire = currentrun[currentrun.len]
 		--currentrun.len
 
+		if(isnull(fire))
+			GLOB.active_fires -= fire
+			continue
+
 		if (QDELETED(fire))
 			GLOB.active_fires -= fire
-			///this should never happen as fires are cleared on deletion
-			///but in case it isn't this prevents fires from breaking
-			log_world("Null fire in processing list!")
 			continue
 
 		if(MC_TICK_CHECK)

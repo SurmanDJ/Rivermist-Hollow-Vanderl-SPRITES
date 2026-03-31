@@ -711,6 +711,9 @@
 				to_chat(L, span_warning("I'm scratched by the thorns."))
 				L.apply_damage(5, BRUTE)
 				L.Immobilize(10)
+				var/obj/item/clothing/socks = L.get_item_by_slot(ITEM_SLOT_SOCKS)
+				if(socks)
+					socks.take_damage(30)
 
 		if(L.m_intent == MOVE_INTENT_RUN)
 			if(!ishuman(L))
@@ -718,6 +721,9 @@
 				L.apply_damage(5, BRUTE)
 			else
 				var/mob/living/carbon/human/H = L
+				var/obj/item/clothing/socks = L.get_item_by_slot(ITEM_SLOT_SOCKS)
+				if(socks)
+					socks.take_damage(110)
 				if(prob(80))
 					if(!HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
 						var/obj/item/bodypart/BP = pick(H.bodyparts)
