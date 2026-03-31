@@ -1,3 +1,28 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_ranger/swampstalker
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_CONSTITUTION = 3,
+		STAT_SPEED = 1,
+		STAT_ENDURANCE = 2,
+		STAT_INTELLIGENCE = -2,
+		/datum/attribute/skill/misc/swimming = 30,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/sneaking = 40,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/craft/crafting = 10,
+		/datum/attribute/skill/craft/tanning = 10,
+		/datum/attribute/skill/combat/axesmaces = 30,
+		/datum/attribute/skill/craft/cooking = 10,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/labor/butchering = 20,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/craft/traps = 30,
+		/datum/attribute/skill/labor/taming = 10,
+		/datum/attribute/skill/labor/lumberjacking = 30
+	)
+
 /datum/job/advclass/combat/adventurer_ranger/swampstalker
 	title = "Swampstalker"
 	tutorial = "Hardened in the fetid marshes of the Mere of Dead Men and the shadowed bogs of the Moonshae Isles, \
@@ -9,32 +34,8 @@
 	category_tags = list(CAT_ADVENTURER_RANGER)
 	give_bank_account = TRUE
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_CON = 3,
-		STATKEY_SPD = 1,
-		STATKEY_END = 2,
-		STATKEY_INT = -2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_ranger/swampstalker
 
-	skills = list(
-		/datum/skill/misc/swimming = 3,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/sneaking = 4,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/craft/crafting = 1,
-		/datum/skill/craft/tanning = 1,
-		/datum/skill/combat/axesmaces = 3,
-		/datum/skill/craft/cooking = 1,
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/labor/butchering = 2,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/craft/traps = 3,
-		/datum/skill/labor/taming = 1,
-		/datum/skill/labor/lumberjacking = 3
-	)
 
 	traits = list(
 		TRAIT_DODGEEXPERT,

@@ -1,3 +1,19 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_cleric/war_domain
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_CONSTITUTION = 2,
+		STAT_ENDURANCE = 2,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/athletics = 40,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/magic/holy = 20,
+		/datum/attribute/skill/labor/mathematics = 10
+	)
+
 /datum/job/advclass/combat/adventurer_cleric/war_domain
 	title = "War Domain"
 	tutorial = "Fortified by holy zeal, you brandish an arsenal of sacramental savagery to use against those you deem unrighteous."
@@ -6,23 +22,8 @@
 	category_tags = list(CAT_ADVENTURER_CLERIC)
 	give_bank_account = TRUE
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_CON = 2,
-		STATKEY_END = 2,
-		STATKEY_SPD = -1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_cleric/war_domain
 
-	skills = list(
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/athletics = 4,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/magic/holy = 2,
-		/datum/skill/labor/mathematics = 1,
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,

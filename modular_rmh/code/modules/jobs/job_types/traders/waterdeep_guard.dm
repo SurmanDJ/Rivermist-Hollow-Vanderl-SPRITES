@@ -1,3 +1,19 @@
+/datum/attribute_holder/sheet/job/waterdeep_guild_guard
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_ENDURANCE = 2,
+		STAT_CONSTITUTION = 2,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/axesmaces = 30,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/combat/shields = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/reading = 10
+	)
+
 /datum/job/waterdeep_guild_guard
 	title = "Waterdeep Guild Guard"
 	tutorial = "You are a hired guard of the Waterdeep Trading Guild. \
@@ -23,23 +39,8 @@
 		EXP_TYPE_LIVING = 300
 	)
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_END = 2,
-		STATKEY_CON = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/waterdeep_guild_guard
 
-	skills = list(
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/axesmaces = 3,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/combat/shields = 3,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/reading = 1
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,

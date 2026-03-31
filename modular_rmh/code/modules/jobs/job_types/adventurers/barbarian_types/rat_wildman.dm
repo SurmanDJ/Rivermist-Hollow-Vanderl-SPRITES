@@ -1,3 +1,21 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_barbarian/rat_wildman
+	raw_attribute_list = list(
+		STAT_STRENGTH = 3,
+		STAT_ENDURANCE = 2,
+		STAT_CONSTITUTION = 2,
+		STAT_INTELLIGENCE = -3,
+		/datum/attribute/skill/combat/wrestling = 40,
+		/datum/attribute/skill/combat/knives = 40,
+		/datum/attribute/skill/combat/unarmed = 50,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/labor/farming = 20,
+		/datum/attribute/skill/labor/fishing = 20,
+		/datum/attribute/skill/labor/mathematics = 10,
+		/datum/attribute/skill/misc/swimming = 30,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/labor/taming = 40
+	)
+
 /datum/job/advclass/combat/adventurer_barbarian/rat_wildman
 	title = "Rat Wildman"
 	tutorial = "Abandoned at birth and raised in the sewers by rats, \
@@ -10,25 +28,8 @@
 	total_positions = 2
 	faction = FACTION_RATS
 
-	jobstats = list(
-		STATKEY_STR = 3,
-		STATKEY_END = 2,
-		STATKEY_CON = 2,
-		STATKEY_INT = -3
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_barbarian/rat_wildman
 
-	skills = list(
-		/datum/skill/combat/wrestling = 4,
-		/datum/skill/combat/knives = 4,
-		/datum/skill/combat/unarmed = 5,
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/labor/farming = 2,
-		/datum/skill/labor/fishing = 2,
-		/datum/skill/labor/mathematics = 1,
-		/datum/skill/misc/swimming = 3,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/labor/taming = 4
-	)
 
 	traits = list(
 		TRAIT_DARKVISION,

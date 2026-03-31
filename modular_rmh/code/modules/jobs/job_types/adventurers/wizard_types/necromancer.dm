@@ -1,3 +1,18 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_wizard/necromancer
+	raw_attribute_list = list(
+		STAT_STRENGTH = -1,
+		STAT_CONSTITUTION = -1,
+		STAT_INTELLIGENCE = 4,
+		/datum/attribute/skill/combat/polearms = 30,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/misc/reading = 50,
+		/datum/attribute/skill/craft/alchemy = 40,
+		/datum/attribute/skill/magic/arcane = 40
+	)
+
 /datum/job/advclass/combat/adventurer_wizard/necromancer
 	title = "Necromancer Wizard"
 	tutorial = "Shunned, hunted, and feared, you have embraced the dark arts of death and undeath. \
@@ -11,22 +26,8 @@
 
 	languages = list(/datum/language/undead)
 
-	jobstats = list(
-		STATKEY_STR = -1,
-		STATKEY_CON = -1,
-		STATKEY_INT = 4
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_wizard/necromancer
 
-	skills = list(
-		/datum/skill/combat/polearms = 3,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/misc/reading = 5,
-		/datum/skill/craft/alchemy = 4,
-		/datum/skill/magic/arcane = 4
-	)
 
 	traits = list(
 		TRAIT_CABAL,

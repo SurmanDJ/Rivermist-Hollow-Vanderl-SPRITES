@@ -88,3 +88,95 @@
 
 	generated_sheet.update_attributes()
 	return generated_sheet
+
+/proc/resolve_attribute_sheet(sheet_type)
+	if(ispath(sheet_type, /datum/attribute_holder/sheet))
+		if(GLOB.attribute_sheets[sheet_type])
+			return GLOB.attribute_sheets[sheet_type]
+		return GLOB.attribute_sheets[sheet_type] = new sheet_type()
+	if(istype(sheet_type, /datum/attribute_holder/sheet))
+		return sheet_type
+	return null
+
+/proc/legacy_attribute_stat_key(stat_key)
+	switch(stat_key)
+		if(STAT_STRENGTH)
+			return STATKEY_STR
+		if(STAT_PERCEPTION)
+			return STATKEY_PER
+		if(STAT_INTELLIGENCE)
+			return STATKEY_INT
+		if(STAT_CONSTITUTION)
+			return STATKEY_CON
+		if(STAT_ENDURANCE)
+			return STATKEY_END
+		if(STAT_SPEED)
+			return STATKEY_SPD
+		if(STAT_FORTUNE)
+			return STATKEY_LCK
+	if(istext(stat_key))
+		return stat_key
+	return null
+
+/proc/legacy_attribute_skill_legacy_path(skill_type)
+	if(isnull(skill_type))
+		return null
+	if(ispath(skill_type, /datum/skill))
+		return skill_type
+
+	switch(skill_type)
+		if(/datum/attribute/skill/combat/axesmaces)
+			return /datum/skill/combat/axesmaces
+
+	var/text_path = "[skill_type]"
+	if(!findtext(text_path, "/datum/attribute/skill/"))
+		return null
+
+	var/translated_path = text2path(replacetext(text_path, "/datum/attribute/skill/", "/datum/skill/"))
+	if(ispath(translated_path, /datum/skill))
+		return translated_path
+	return null
+
+/proc/build_legacy_jobstats_from_sheet(sheet_type)
+	var/datum/attribute_holder/sheet/resolved_sheet = resolve_attribute_sheet(sheet_type)
+	if(!resolved_sheet)
+		return null
+
+	var/list/legacy_stats = list()
+	for(var/attribute_path in resolved_sheet.raw_attribute_list)
+		if(!ispath(attribute_path, STAT))
+			continue
+
+		var/legacy_stat_key = legacy_attribute_stat_key(attribute_path)
+		if(!legacy_stat_key)
+			continue
+
+		var/amount = resolved_sheet.raw_attribute_list[attribute_path]
+		if(!isnum(amount))
+			continue
+
+		legacy_stats[legacy_stat_key] = amount
+
+	return LAZYLEN(legacy_stats) ? legacy_stats : null
+
+/proc/build_legacy_skills_from_sheet(sheet_type)
+	var/datum/attribute_holder/sheet/resolved_sheet = resolve_attribute_sheet(sheet_type)
+	if(!resolved_sheet)
+		return null
+
+	var/list/legacy_skills = list()
+	for(var/attribute_path in resolved_sheet.raw_attribute_list)
+		if(!ispath(attribute_path, SKILL))
+			continue
+
+		var/legacy_skill_path = legacy_attribute_skill_legacy_path(attribute_path)
+		if(!legacy_skill_path)
+			continue
+
+		var/amount = resolved_sheet.raw_attribute_list[attribute_path]
+		if(!isnum(amount))
+			continue
+
+		legacy_skills[legacy_skill_path] = round(amount / 10)
+
+	return LAZYLEN(legacy_skills) ? legacy_skills : null

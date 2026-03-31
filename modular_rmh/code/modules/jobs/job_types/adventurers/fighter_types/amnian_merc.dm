@@ -1,3 +1,19 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/amnian_merc
+	raw_attribute_list = list(
+		STAT_CONSTITUTION = 2,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/sneaking = 30,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/swords = 20,
+		/datum/attribute/skill/combat/whipsflails = 10,
+		/datum/attribute/skill/combat/shields = 10,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/craft/cooking = 10
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/amnian_merc
 	title = "Amnian Mercenary"
 	tutorial = "Hailing from the mercenary guilds of Amn, \
@@ -8,20 +24,7 @@
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
 
-	jobstats = list(STATKEY_CON = 2)
-	skills = list(
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/sneaking = 3,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/swords = 2,
-		/datum/skill/combat/whipsflails = 1,
-		/datum/skill/combat/shields = 1,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/craft/cooking = 1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/amnian_merc
 	traits = list(TRAIT_MEDIUMARMOR)
 
 /datum/outfit/adventurer_fighter/amnian_merc

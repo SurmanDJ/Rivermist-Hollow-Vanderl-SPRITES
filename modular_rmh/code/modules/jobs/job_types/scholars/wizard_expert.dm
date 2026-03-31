@@ -25,6 +25,16 @@
 
 //SUBCLASSES
 
+/datum/attribute_holder/sheet/job/advclass/guild_wizard/expert
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 4,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/magic/arcane = 50,
+		/datum/attribute/skill/misc/reading = 50,
+		/datum/attribute/skill/craft/alchemy = 30,
+		/datum/attribute/skill/labor/mathematics = 30
+	)
+
 /datum/job/advclass/guild_wizard/expert
 	title = "Guild Wizard Expert"
 	tutorial = "A senior wizard in the guild. You can lead apprentices, conduct research, and manage complex arcane projects."
@@ -49,17 +59,8 @@
 		/datum/action/cooldown/spell/forced_orgasm,
 	)
 
-	jobstats = list(
-		STATKEY_INT = 4,
-		STATKEY_SPD = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/guild_wizard/expert
 
-	skills = list(
-		/datum/skill/magic/arcane = 5,
-		/datum/skill/misc/reading = 5,
-		/datum/skill/craft/alchemy = 3,
-		/datum/skill/labor/mathematics = 3
-	)
 
 	traits = list(
 		TRAIT_TUTELAGE,
@@ -125,6 +126,16 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/guild_wizard/adept
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 2,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/magic/arcane = 30,
+		/datum/attribute/skill/misc/reading = 40,
+		/datum/attribute/skill/craft/alchemy = 20,
+		/datum/attribute/skill/labor/mathematics = 20
+	)
+
 /datum/job/advclass/guild_wizard/adept
 	title = "Guild Wizard Adept"
 	tutorial = "You have completed your basic training. You are proficient in the arcane, learning to manage guild tasks."
@@ -145,17 +156,8 @@
 		/datum/action/cooldown/spell/forced_orgasm,
 	)
 
-	jobstats = list(
-		STATKEY_INT = 2,
-		STATKEY_SPD = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/guild_wizard/adept
 
-	skills = list(
-		/datum/skill/magic/arcane = 3,
-		/datum/skill/misc/reading = 4,
-		/datum/skill/craft/alchemy = 2,
-		/datum/skill/labor/mathematics = 2
-	)
 
 /datum/outfit/guild_wizard/adept
 	name = "Adept Wizard"

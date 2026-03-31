@@ -281,12 +281,15 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 
 /datum/outfit/npc/rousman/ambush/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.base_strength = rand(6, 10)
-	H.base_perception = rand(6, 10)
-	H.base_intelligence = rand(2, 5)
-	H.base_constitution = rand(4, 8)
-	H.base_endurance = rand(7, 10)
-	H.base_speed = rand(10, 15)
+	H.adjust_stat_modifier_list("[type]", list(
+		STATKEY_STR = rand(6, 10),
+		STATKEY_PER = rand(6, 10),
+		STATKEY_INT = rand(2, 5),
+		STATKEY_CON = rand(4, 8),
+		STATKEY_END = rand(7, 10),
+		STATKEY_SPD = rand(10, 15),
+		STATKEY_LCK = 6,
+	))
 	H.recalculate_stats(FALSE)
 
 	var/loadout = rand(1,4)
@@ -445,12 +448,15 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 /datum/outfit/job/npc/rousman/assassin/pre_equip(mob/living/carbon/human/H)
 	..()
 
-	H.base_strength = rand(6, 10)
-	H.base_perception = rand(6, 10)
-	H.base_intelligence = rand(2, 5)
-	H.base_constitution = rand(4, 8)
-	H.base_endurance = rand(7, 10)
-	H.base_speed = rand(15, 20)
+	H.adjust_stat_modifier_list("[type]", list(
+		STATKEY_STR = rand(6, 10),
+		STATKEY_PER = rand(6, 10),
+		STATKEY_INT = rand(2, 5),
+		STATKEY_CON = rand(4, 8),
+		STATKEY_END = rand(7, 10),
+		STATKEY_SPD = rand(15, 20),
+		STATKEY_LCK = 6,
+	))
 	H.recalculate_stats(FALSE)
 
 	armor = /obj/item/clothing/armor/leather/advanced/rousman
@@ -482,12 +488,15 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 
 /datum/outfit/npc/rousman/seer/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.base_strength = rand(4, 8)
-	H.base_perception = rand(6, 10)
-	H.base_intelligence = rand(10, 16)
-	H.base_constitution = rand(4, 8)
-	H.base_endurance = rand(7, 10)
-	H.base_speed = rand(10, 15)
+	H.adjust_stat_modifier_list("[type]", list(
+		STATKEY_STR = rand(4, 8),
+		STATKEY_PER = rand(6, 10),
+		STATKEY_INT = rand(10, 16),
+		STATKEY_CON = rand(4, 8),
+		STATKEY_END = rand(7, 10),
+		STATKEY_SPD = rand(10, 15),
+		STATKEY_LCK = 6,
+	))
 	H.recalculate_stats(FALSE)
 
 	armor = /obj/item/clothing/shirt/robe/rousseer

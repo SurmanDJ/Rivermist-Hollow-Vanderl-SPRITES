@@ -1,3 +1,17 @@
+/datum/attribute_holder/sheet/job/guild_master_wizard
+	raw_attribute_list = list(
+		STAT_STRENGTH = -2,
+		STAT_INTELLIGENCE = 5,
+		STAT_CONSTITUTION = -1,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/magic/arcane = 60,
+		/datum/attribute/skill/misc/reading = 60,
+		/datum/attribute/skill/craft/alchemy = 40,
+		/datum/attribute/skill/labor/mathematics = 40,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/wrestling = 20
+	)
+
 /datum/job/guild_master_wizard
 	title = "Guild Master Wizard"
 	tutorial = "The leader of the wizard's guild. You oversee the magical affairs of the town, guide the younger wizards, and handle the most complex arcane matters."
@@ -20,21 +34,8 @@
 	give_bank_account = 120
 	exp_types_granted = list(EXP_TYPE_MAGICK, EXP_TYPE_ADVENTURER, EXP_TYPE_NOBLE)
 
-	jobstats = list(
-		STATKEY_STR = -2,
-		STATKEY_INT = 5,
-		STATKEY_CON = -1,
-		STATKEY_SPD = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/guild_master_wizard
 
-	skills = list(
-		/datum/skill/magic/arcane = 6,
-		/datum/skill/misc/reading = 6,
-		/datum/skill/craft/alchemy = 4,
-		/datum/skill/labor/mathematics = 4,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/wrestling = 2
-	)
 
 	traits = list(
 		TRAIT_TUTELAGE,

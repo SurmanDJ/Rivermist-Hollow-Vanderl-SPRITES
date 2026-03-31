@@ -76,6 +76,29 @@ GLOBAL_LIST_EMPTY(burgmeister_titles)
 /datum/job/advclass/burgmeister
 	exp_types_granted = list(EXP_TYPE_NOBLE)
 
+/datum/attribute_holder/sheet/job/advclass/burgmeister/marshall
+	raw_attribute_list = list(
+		STAT_STRENGTH = 3,
+		STAT_ENDURANCE = 3,
+		STAT_CONSTITUTION = 2,
+		STAT_PERCEPTION = 2,
+		STAT_SPEED = 2,
+		STAT_INTELLIGENCE = 1,
+		STAT_FORTUNE = 1,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/axesmaces = 30,
+		/datum/attribute/skill/combat/shields = 30,
+		/datum/attribute/skill/combat/bows = 30,
+		/datum/attribute/skill/combat/crossbows = 30,
+		/datum/attribute/skill/combat/firearms = 30,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/sneaking = 10,
+		/datum/attribute/skill/misc/reading = 20,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/swimming = 20
+	)
+
 /datum/job/advclass/burgmeister/marshall
 	title = "Ex-Guard Captain"
 	tutorial = "You once led the city watch and now act as Burgmeister. Your experience in combat and leadership makes you authoritative and respected in town affairs."
@@ -83,30 +106,8 @@ GLOBAL_LIST_EMPTY(burgmeister_titles)
 	outfit = /datum/outfit/burgmeister/marshall
 	category_tags = list(CAT_BURGMESITER)
 
-	jobstats = list(
-	    STATKEY_STR = 3,
-	    STATKEY_END = 3,
-	    STATKEY_CON = 2,
-	    STATKEY_PER = 2,
-	    STATKEY_SPD = 2,
-	    STATKEY_INT = 1,
-	    STATKEY_LCK = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/burgmeister/marshall
 
-	skills = list(
-	    /datum/skill/combat/swords = 3,
-	    /datum/skill/combat/axesmaces = 3,
-	    /datum/skill/combat/shields = 3,
-	    /datum/skill/combat/bows = 3,
-	    /datum/skill/combat/crossbows = 3,
-	    /datum/skill/combat/firearms = 3,
-	    /datum/skill/combat/wrestling = 3,
-	    /datum/skill/misc/athletics = 3,
-	    /datum/skill/misc/sneaking = 1,
-	    /datum/skill/misc/reading = 2,
-	    /datum/skill/misc/climbing = 2,
-	    /datum/skill/misc/swimming = 2
-	)
 
 	traits = list(
 	    TRAIT_HEAVYARMOR,
@@ -175,6 +176,21 @@ GLOBAL_LIST_EMPTY(burgmeister_titles)
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/burgmeister/elected
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 3,
+		STAT_PERCEPTION = 3,
+		STAT_FORTUNE = 2,
+		STAT_ENDURANCE = 1,
+		STAT_STRENGTH = 1,
+		STAT_SPEED = 2,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/misc/riding = 10,
+		/datum/attribute/skill/misc/climbing = 10,
+		/datum/attribute/skill/misc/sneaking = 10
+	)
+
 /datum/job/advclass/burgmeister/elected
 	title = "Elected Burgmeister"
 	tutorial = "You were chosen by the townsfolk to serve as Burgmeister. Your social skills, perception, and wisdom allow you to maintain order and ensure the town prospers."
@@ -182,22 +198,8 @@ GLOBAL_LIST_EMPTY(burgmeister_titles)
 	outfit = /datum/outfit/burgmeister/elected
 	category_tags = list(CAT_BURGMESITER)
 
-	jobstats = list(
-	    STATKEY_INT = 3,
-	    STATKEY_PER = 3,
-	    STATKEY_LCK = 2,
-	    STATKEY_END = 1,
-	    STATKEY_STR = 1,
-	    STATKEY_SPD = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/burgmeister/elected
 
-	skills = list(
-	    /datum/skill/misc/reading = 3,
-	    /datum/skill/misc/athletics = 1,
-	    /datum/skill/misc/riding = 1,
-	    /datum/skill/misc/climbing = 1,
-	    /datum/skill/misc/sneaking = 1
-	)
 
 	traits = list(
 	    TRAIT_EMPATH,
@@ -268,6 +270,20 @@ GLOBAL_LIST_EMPTY(burgmeister_titles)
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/burgmeister/patrician
+	raw_attribute_list = list(
+		STAT_FORTUNE = 4,
+		STAT_INTELLIGENCE = 3,
+		STAT_PERCEPTION = 2,
+		STAT_ENDURANCE = 1,
+		STAT_STRENGTH = 1,
+		STAT_SPEED = 1,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/misc/sneaking = 10
+	)
+
 /datum/job/advclass/burgmeister/patrician
 	title = "Patrician"
 	tutorial = "You are a wealthy Burgmeister whose influence comes from gold and heritage. Your resources and connections make you untouchable and influential."
@@ -276,21 +292,8 @@ GLOBAL_LIST_EMPTY(burgmeister_titles)
 	category_tags = list(CAT_BURGMESITER)
 	give_bank_account = 2000
 
-	jobstats = list(
-	    STATKEY_LCK = 4,
-	    STATKEY_INT = 3,
-	    STATKEY_PER = 2,
-	    STATKEY_END = 1,
-	    STATKEY_STR = 1,
-	    STATKEY_SPD = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/burgmeister/patrician
 
-	skills = list(
-	    /datum/skill/misc/reading = 3,
-	    /datum/skill/misc/athletics = 1,
-	    /datum/skill/craft/crafting = 2,
-	    /datum/skill/misc/sneaking = 1
-	)
 
 	traits = list(
 	    TRAIT_NOBLE,
@@ -362,6 +365,21 @@ GLOBAL_LIST_EMPTY(burgmeister_titles)
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/burgmeister/scholar
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 4,
+		STAT_PERCEPTION = 3,
+		STAT_CONSTITUTION = 2,
+		STAT_ENDURANCE = 1,
+		STAT_STRENGTH = 1,
+		STAT_SPEED = 1,
+		STAT_FORTUNE = 2,
+		/datum/attribute/skill/misc/reading = 40,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/labor/mathematics = 30,
+		/datum/attribute/skill/misc/sneaking = 10
+	)
+
 /datum/job/advclass/burgmeister/scholar
 	title = "Scholar-Administrator"
 	tutorial = "You are a Burgmeister who governs with knowledge and wisdom. Your intelligence and insight ensure the town is managed efficiently and the laws are fair."
@@ -369,22 +387,8 @@ GLOBAL_LIST_EMPTY(burgmeister_titles)
 	outfit = /datum/outfit/burgmeister/scholar
 	category_tags = list(CAT_BURGMESITER)
 
-	jobstats = list(
-	    STATKEY_INT = 4,
-	    STATKEY_PER = 3,
-	    STATKEY_CON = 2,
-	    STATKEY_END = 1,
-	    STATKEY_STR = 1,
-	    STATKEY_SPD = 1,
-	    STATKEY_LCK = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/burgmeister/scholar
 
-	skills = list(
-	    /datum/skill/misc/reading = 4,
-	    /datum/skill/misc/athletics = 1,
-	    /datum/skill/labor/mathematics = 3,
-	    /datum/skill/misc/sneaking = 1
-	)
 
 	traits = list(
 	    TRAIT_EMPATH,

@@ -1,3 +1,25 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/black_swordsman
+	raw_attribute_list = list(
+		STAT_STRENGTH = 15,
+		STAT_ENDURANCE = 3,
+		STAT_CONSTITUTION = 3,
+		STAT_INTELLIGENCE = -2,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/combat/swords = 50,
+		/datum/attribute/skill/combat/axesmaces = 30,
+		/datum/attribute/skill/combat/whipsflails = 20,
+		/datum/attribute/skill/combat/polearms = 20,
+		/datum/attribute/skill/combat/bows = 10,
+		/datum/attribute/skill/combat/crossbows = 10,
+		/datum/attribute/skill/combat/shields = 20,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/reading = 10
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/black_swordsman
 	title = "Black Swordsman"
 	tutorial = "A lone blade against the world, hardened by strife and blood. \
@@ -9,29 +31,8 @@
 	give_bank_account = TRUE
 	total_positions = 1
 
-	skills = list(
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/combat/swords = 5,
-		/datum/skill/combat/axesmaces = 3,
-		/datum/skill/combat/whipsflails = 2,
-		/datum/skill/combat/polearms = 2,
-		/datum/skill/combat/bows = 1,
-		/datum/skill/combat/crossbows = 1,
-		/datum/skill/combat/shields = 2,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/reading = 1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/black_swordsman
 
-	jobstats = list(
-		STATKEY_STR = 15,
-		STATKEY_END = 3,
-		STATKEY_CON = 3,
-		STATKEY_INT = -2,
-	)
 
 	traits = list(
 		TRAIT_STEELHEARTED,

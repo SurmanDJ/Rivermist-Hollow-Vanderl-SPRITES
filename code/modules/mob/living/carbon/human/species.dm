@@ -518,7 +518,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	var/list/possible_surnames = get_possible_surnames(gender)
 	return " [pick(possible_surnames)]"
 
-/datum/species/proc/get_spec_undies_list(gender)
+/*/datum/species/proc/get_spec_undies_list(gender)
 	if(!GLOB.underwear_list.len)
 		return list()
 
@@ -546,7 +546,7 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	if(LAZYLEN(spec_undies))
 		var/datum/sprite_accessory/underwear = pick(spec_undies)
 		return underwear.name
-	return null
+	return null*/
 
 /datum/species/proc/regenerate_icons(mob/living/carbon/human/H)
 	return FALSE

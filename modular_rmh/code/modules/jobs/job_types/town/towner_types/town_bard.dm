@@ -1,3 +1,24 @@
+/datum/attribute_holder/sheet/job/advclass/towner/bard
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 1,
+		STAT_SPEED = 2,
+		STAT_STRENGTH = -1,
+		/datum/attribute/skill/combat/knives = 10,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/craft/crafting = 10,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/riding = 30,
+		/datum/attribute/skill/misc/sewing = 10,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/craft/cooking = 10,
+		/datum/attribute/skill/misc/sneaking = 30,
+		/datum/attribute/skill/misc/stealing = 10,
+		/datum/attribute/skill/misc/lockpicking = 10,
+		/datum/attribute/skill/misc/music = 40,
+		/datum/attribute/skill/misc/athletics = 30
+	)
+
 /datum/job/advclass/towner/bard
 	title = "Bard"
 	tutorial = "You are a keeper of stories and song. \
@@ -17,28 +38,8 @@
 		/datum/action/cooldown/spell/bardic_inspiration
 	)
 
-	jobstats = list(
-		STATKEY_PER = 1,
-		STATKEY_SPD = 2,
-		STATKEY_STR = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/towner/bard
 
-	skills = list(
-		/datum/skill/combat/knives = 1,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/craft/crafting = 1,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/riding = 3,
-		/datum/skill/misc/sewing = 1,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/craft/cooking = 1,
-		/datum/skill/misc/sneaking = 3,
-		/datum/skill/misc/stealing = 1,
-		/datum/skill/misc/lockpicking = 1,
-		/datum/skill/misc/music = 4,
-		/datum/skill/misc/athletics = 3
-	)
 
 	traits = list(
 		TRAIT_DODGEEXPERT,

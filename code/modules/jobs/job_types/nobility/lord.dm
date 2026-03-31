@@ -86,31 +86,6 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	honorary = "Lord"
 	honorary_f = "Lady"
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_INT = 3,
-		STATKEY_END = 3,
-		STATKEY_SPD = 1,
-		STATKEY_PER = 2,
-		STATKEY_LCK = 5
-	)
-
-	skills = list(
-		/datum/skill/combat/polearms = 2,
-		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/combat/crossbows = 3,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 1,
-		/datum/skill/combat/swords = 4,
-		/datum/skill/combat/knives = 3,
-		/datum/skill/misc/swimming = 1,
-		/datum/skill/misc/climbing = 1,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/reading = 4,
-		/datum/skill/misc/riding = 3,
-		/datum/skill/labor/mathematics = 3
-	)
-
 	mind_traits = list(
 		TRAIT_KNOW_KEEP_DOORS
 	)

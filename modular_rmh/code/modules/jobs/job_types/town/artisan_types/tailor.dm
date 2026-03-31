@@ -1,3 +1,22 @@
+/datum/attribute_holder/sheet/job/advclass/artisan/tailor
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 2,
+		STAT_SPEED = 1,
+		STAT_PERCEPTION = 1,
+		STAT_STRENGTH = -1,
+		/datum/attribute/skill/misc/sewing = 50,
+		/datum/attribute/skill/craft/tanning = 50,
+		/datum/attribute/skill/craft/crafting = 30,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/misc/sneaking = 20,
+		/datum/attribute/skill/labor/taming = 30,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/craft/carpentry = 10,
+		/datum/attribute/skill/misc/stealing = 10,
+		/datum/attribute/skill/labor/mathematics = 20
+	)
+
 /datum/job/advclass/artisan/tailor
 	title = "Tailor"
 	f_title = "Seamstress"
@@ -12,26 +31,8 @@
 	give_bank_account = 25
 	job_bitflag = BITFLAG_CONSTRUCTOR
 
-	jobstats = list(
-		STATKEY_INT = 2,
-		STATKEY_SPD = 1,
-		STATKEY_PER = 1,
-		STATKEY_STR = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/artisan/tailor
 
-	skills = list(
-		/datum/skill/misc/sewing = 5,
-		/datum/skill/craft/tanning = 5,
-		/datum/skill/craft/crafting = 3,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/misc/sneaking = 2,
-		/datum/skill/labor/taming = 3,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/craft/carpentry = 1,
-		/datum/skill/misc/stealing = 1,
-		/datum/skill/labor/mathematics = 2
-	)
 
 	traits = list(
 		TRAIT_TUTELAGE,

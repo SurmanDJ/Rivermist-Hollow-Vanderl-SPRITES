@@ -115,7 +115,7 @@
 		body += "<a href='?_src_=holder;[HrefToken()];open_whitelist_panel=[REF(M)]'>\[Whitelists\]</a> "
 		body += "<a href='?_src_=holder;[HrefToken()];open_boost_panel=[REF(M)]'>\[JOB BOOST\]</a> "
 		if(M.attributes)
-			body += "<a href='byond://?_src_=holder;[HrefToken()];attributes=[REF(M)]'>\[GURPS\]</a> "
+			body += "<a href='byond://?_src_=holder;[HrefToken()];attributes=[REF(M)]'>\[SKILLS\]</a> "
 
 		var/patron = ""
 		if(isliving(M))

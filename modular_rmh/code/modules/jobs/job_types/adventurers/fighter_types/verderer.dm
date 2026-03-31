@@ -1,3 +1,26 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/verderer
+	raw_attribute_list = list(
+		STAT_CONSTITUTION = 1,
+		STAT_ENDURANCE = 1,
+		STAT_STRENGTH = 2,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/combat/axesmaces = 20,
+		/datum/attribute/skill/combat/shields = 10,
+		/datum/attribute/skill/combat/polearms = 30,
+		/datum/attribute/skill/combat/bows = 20,
+		/datum/attribute/skill/craft/tanning = 20,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/craft/crafting = 10,
+		/datum/attribute/skill/misc/swimming = 10,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/riding = 20,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/misc/athletics = 30
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/verderer
 	title = "Verderer"
 	tutorial = "Once a verderer sworn to guard the forest marches of the Western Heartlands, \
@@ -8,30 +31,8 @@
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
 
-	jobstats = list(
-		STATKEY_CON = 1,
-		STATKEY_END = 1,
-		STATKEY_STR = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/verderer
 
-	skills = list(
-		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/combat/shields = 1,
-		/datum/skill/combat/polearms = 3,
-		/datum/skill/combat/bows = 2,
-		/datum/skill/craft/tanning = 2,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/craft/crafting = 1,
-		/datum/skill/misc/swimming = 1,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/riding = 2,
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/athletics = 3
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,

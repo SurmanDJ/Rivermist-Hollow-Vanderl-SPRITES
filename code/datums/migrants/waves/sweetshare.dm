@@ -31,26 +31,11 @@
 	honorary_suffix = "the Candyman"
 	honorary_suffix_f = "the Candywoman"
 
-	jobstats = list(
-		STATKEY_SPD = 2,
-		STATKEY_END = 2,
-		STATKEY_STR = -2,
-		STATKEY_CON = -1,
-	)
 	honorary_suffix = "the Candyman"
 	honorary_suffix_f = "the Candywoman"
 
-	skills = list(
-		/datum/skill/combat/knives = 1,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/swimming = 3,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/craft/alchemy = 3,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/climbing = 4,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/migrant/sweetshare
+
 
 	traits = list(TRAIT_STEELHEARTED)
 	cmode_music = 'sound/music/cmode/antag/CombatBandit1.ogg'

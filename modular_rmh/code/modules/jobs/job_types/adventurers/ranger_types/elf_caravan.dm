@@ -1,3 +1,19 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_ranger/elf_caravan
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_ENDURANCE = 2,
+		STAT_SPEED = 1,
+		/datum/attribute/skill/combat/knives = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/misc/sneaking = 20,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/craft/crafting = 10
+	)
+
 /datum/job/advclass/combat/adventurer_ranger/elf_caravan
 	title = "Elf Caravan Guard"
 	tutorial = "Elven guardians of the caravans guards, these Rangers patrol forests and wildlands, \
@@ -9,24 +25,9 @@
 	give_bank_account = TRUE
 
 	// Base stats
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_END = 2,
-		STATKEY_SPD = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_ranger/elf_caravan
 
 	// Base skills
-	skills = list(
-		/datum/skill/combat/knives = 3,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/misc/sneaking = 2,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/craft/crafting = 1,
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,

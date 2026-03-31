@@ -1,3 +1,25 @@
+/datum/attribute_holder/sheet/job/advclass/towner/jester
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 1,
+		STAT_SPEED = 1,
+		STAT_FORTUNE = 2,
+		/datum/attribute/skill/combat/knives = 30,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/misc/riding = 20,
+		/datum/attribute/skill/craft/bombs = 20,
+		/datum/attribute/skill/labor/fishing = 20,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/misc/sneaking = 30,
+		/datum/attribute/skill/misc/stealing = 30,
+		/datum/attribute/skill/misc/lockpicking = 30,
+		/datum/attribute/skill/misc/climbing = 40,
+		/datum/attribute/skill/misc/athletics = 40,
+		/datum/attribute/skill/misc/music = 30,
+		/datum/attribute/skill/craft/cooking = 20,
+		/datum/attribute/skill/combat/firearms = 10
+	)
+
 /datum/job/advclass/towner/jester
 	title = "Jester"
 	tutorial = "You perform with humor, chaos, and audacity. \
@@ -10,11 +32,7 @@
 	category_tags = list(CAT_TOWNER)
 	give_bank_account = 20
 
-	jobstats = list(
-		STATKEY_PER = 1,
-		STATKEY_SPD = 1,
-		STATKEY_LCK = 2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/towner/jester
 
 	spells = list(
 		/datum/action/cooldown/spell/undirected/joke,
@@ -22,23 +40,6 @@
 		/datum/action/cooldown/spell/vicious_mockery,
 	)
 
-	skills = list(
-		/datum/skill/combat/knives = 3,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/misc/riding = 2,
-		/datum/skill/craft/bombs = 2,
-		/datum/skill/labor/fishing = 2,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/misc/sneaking = 3,
-		/datum/skill/misc/stealing = 3,
-		/datum/skill/misc/lockpicking = 3,
-		/datum/skill/misc/climbing = 4,
-		/datum/skill/misc/athletics = 4,
-		/datum/skill/misc/music = 3,
-		/datum/skill/craft/cooking = 2,
-		/datum/skill/combat/firearms = 1,
-	)
 
 	traits = list(
 		TRAIT_EMPATH,

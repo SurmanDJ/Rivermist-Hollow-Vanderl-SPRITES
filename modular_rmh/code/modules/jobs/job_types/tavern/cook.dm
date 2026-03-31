@@ -1,3 +1,18 @@
+/datum/attribute_holder/sheet/job/cook
+	raw_attribute_list = list(
+		STAT_ENDURANCE = 1,
+		STAT_INTELLIGENCE = 1,
+		STAT_CONSTITUTION = 1,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/craft/cooking = 40,
+		/datum/attribute/skill/craft/crafting = 10,
+		/datum/attribute/skill/misc/sewing = 10,
+		/datum/attribute/skill/labor/butchering = 30,
+		/datum/attribute/skill/labor/taming = 10,
+		/datum/attribute/skill/labor/farming = 10
+	)
+
 /datum/job/cook
 	title = "Inn Cook"
 	tutorial = "The heart of the Drunken Dwarf’s kitchen. \
@@ -21,22 +36,8 @@
 	give_bank_account = 20
 	job_bitflag = BITFLAG_CONSTRUCTOR
 
-	jobstats = list(
-		STATKEY_END = 1,
-		STATKEY_INT = 1,
-		STATKEY_CON = 1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/cook
 
-	skills = list(
-		/datum/skill/combat/knives = 2,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/craft/cooking = 4,
-		/datum/skill/craft/crafting = 1,
-		/datum/skill/misc/sewing = 1,
-		/datum/skill/labor/butchering = 3,
-		/datum/skill/labor/taming = 1,
-		/datum/skill/labor/farming = 1
-	)
 
 	traits = list(
 		TRAIT_EXTEROCEPTION

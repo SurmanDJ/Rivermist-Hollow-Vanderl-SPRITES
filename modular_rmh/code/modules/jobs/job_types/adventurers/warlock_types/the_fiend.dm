@@ -1,3 +1,17 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_warlock/the_fiend
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 2,
+		STAT_CONSTITUTION = 1,
+		STAT_ENDURANCE = -1,
+		STAT_STRENGTH = -1,
+		/datum/attribute/skill/magic/arcane = 30,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/misc/sewing = 10,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/combat/knives = 10
+	)
+
 /datum/job/advclass/combat/adventurer_warlock/the_fiend
 	title = "The Fiend"
 	tutorial = "You have pledged your soul to the Hells or Abyss in return for a deadly arsenal of fiendish arcana."
@@ -6,21 +20,8 @@
 	outfit = /datum/outfit/adventurer_warlock/the_fiend
 	category_tags = list(CAT_ADVENTURER_WARLOCK)
 
-	skills = list(
-		/datum/skill/magic/arcane = 3,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/misc/sewing = 1,
-		/datum/skill/misc/athletics = 1,
-		/datum/skill/combat/knives = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_warlock/the_fiend
 
-	jobstats = list(
-		STATKEY_INT = 2,
-		STATKEY_CON = 1,
-		STATKEY_END = -1,
-		STATKEY_STR = -1
-	)
 
 	traits = list(
 		TRAIT_STEELHEARTED,

@@ -1,3 +1,18 @@
+/datum/attribute_holder/sheet/job/advclass/towner/fisher
+	raw_attribute_list = list(
+		STAT_CONSTITUTION = 2,
+		STAT_PERCEPTION = 1,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/misc/swimming = 30,
+		/datum/attribute/skill/craft/cooking = 20,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/misc/sewing = 10,
+		/datum/attribute/skill/labor/fishing = 40,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/misc/reading = 10
+	)
+
 /datum/job/advclass/towner/fisher
 	title = "Fisher"
 	tutorial = "Rivers and marshwaters sustain Rivermist Hollow, \
@@ -14,22 +29,8 @@
 
 	job_bitflag = BITFLAG_CONSTRUCTOR
 
-	jobstats = list(
-		STATKEY_CON = 2,
-		STATKEY_PER = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/towner/fisher
 
-	skills = list(
-		/datum/skill/combat/knives = 2,
-		/datum/skill/misc/swimming = 3,
-		/datum/skill/craft/cooking = 2,
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/misc/sewing = 1,
-		/datum/skill/labor/fishing = 4,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/misc/reading = 1
-	)
 
 	traits = list(
 		TRAIT_DEADNOSE,

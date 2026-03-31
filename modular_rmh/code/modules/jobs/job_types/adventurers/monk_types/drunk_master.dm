@@ -1,3 +1,22 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_monk/drunk_master
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_CONSTITUTION = 1,
+		STAT_ENDURANCE = 1,
+		STAT_PERCEPTION = 1,
+		STAT_SPEED = 1,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/combat/unarmed = 60,
+		/datum/attribute/skill/combat/wrestling = 50,
+		/datum/attribute/skill/combat/polearms = 20,
+		/datum/attribute/skill/combat/swords = 10,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/misc/climbing = 40,
+		/datum/attribute/skill/misc/athletics = 40,
+		/datum/attribute/skill/misc/music = 20
+	)
+
 /datum/job/advclass/combat/adventurer_monk/drunk_master
 	title = "Drunk Master"
 	tutorial = "With the unpredictable lurches of a tippler, you hiccup your way through battle, \
@@ -7,26 +26,8 @@
 	category_tags = list(CAT_ADVENTURER_MONK)
 	give_bank_account = TRUE
 
-	skills = list(
-		/datum/skill/misc/reading = 3,
-		/datum/skill/combat/unarmed = 6,
-		/datum/skill/combat/wrestling = 5,
-		/datum/skill/combat/polearms = 2,
-		/datum/skill/combat/swords = 1,
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/misc/climbing = 4,
-		/datum/skill/misc/athletics = 4,
-		/datum/skill/misc/music = 2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_monk/drunk_master
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_CON = 1,
-		STATKEY_END = 1,
-		STATKEY_PER = 1,
-		STATKEY_SPD = 1,
-	)
 
 	traits = list(
 		TRAIT_DODGEEXPERT,

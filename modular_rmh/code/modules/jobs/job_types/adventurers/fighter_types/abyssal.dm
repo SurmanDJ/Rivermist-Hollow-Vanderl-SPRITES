@@ -1,3 +1,16 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/abyssal
+	raw_attribute_list = list(
+		/datum/attribute/skill/misc/swimming = 30,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/misc/sneaking = 10,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/combat/polearms = 30,
+		/datum/attribute/skill/combat/swords = 20
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/abyssal
 	title = "Abyssal Guard"
 	tutorial = "Amphibious warriors from the depths, the Abyss Guard is a legion of triton mercenaries forged in the seas, the males are trained in the arcyne whilst the females take the vanguard with their imposing physique."
@@ -7,17 +20,7 @@
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
 
-	skills = list(
-		/datum/skill/misc/swimming = 3,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/misc/sneaking = 1,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/polearms = 3,
-		/datum/skill/combat/swords = 2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/abyssal
 
 	traits = list(
 		TRAIT_MEDIUMARMOR

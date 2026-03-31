@@ -1,3 +1,25 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_druid/troll_skin
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_ENDURANCE = 1,
+		STAT_INTELLIGENCE = -1,
+		/datum/attribute/skill/combat/axesmaces = 20,
+		/datum/attribute/skill/combat/knives = 10,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/wrestling = 10,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/magic/holy = 30,
+		/datum/attribute/skill/labor/taming = 40,
+		/datum/attribute/skill/craft/tanning = 20,
+		/datum/attribute/skill/misc/riding = 10,
+		/datum/attribute/skill/labor/butchering = 20,
+		/datum/attribute/skill/labor/farming = 30,
+		/datum/attribute/skill/craft/crafting = 10,
+		/datum/attribute/skill/craft/cooking = 10,
+		/datum/attribute/skill/misc/sewing = 10,
+		/datum/attribute/skill/misc/swimming = 20
+	)
+
 /datum/job/advclass/combat/adventurer_druid/troll_skin
 	title = "Trollskin Druid"
 	tutorial = "A druid who learned forbidden rites to wear the flesh of trolls, embracing regeneration and monstrous strength."
@@ -7,29 +29,8 @@
 	give_bank_account = TRUE
 	total_positions = 2
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_END = 1,
-		STATKEY_INT = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_druid/troll_skin
 
-	skills = list(
-		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/combat/knives = 1,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/wrestling = 1,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/magic/holy = 3,
-		/datum/skill/labor/taming = 4,
-		/datum/skill/craft/tanning = 2,
-		/datum/skill/misc/riding = 1,
-		/datum/skill/labor/butchering = 2,
-		/datum/skill/labor/farming = 3,
-		/datum/skill/craft/crafting = 1,
-		/datum/skill/craft/cooking = 1,
-		/datum/skill/misc/sewing = 1,
-		/datum/skill/misc/swimming = 2
-	)
 
 	traits = list(
 		TRAIT_SEEDKNOW,

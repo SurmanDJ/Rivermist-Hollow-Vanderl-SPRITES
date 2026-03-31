@@ -1,3 +1,24 @@
+/datum/attribute_holder/sheet/job/matron
+	raw_attribute_list = list(
+		STAT_STRENGTH = -1,
+		STAT_INTELLIGENCE = 2,
+		STAT_PERCEPTION = 1,
+		STAT_SPEED = 2,
+		/datum/attribute/skill/misc/sewing = 30,
+		/datum/attribute/skill/misc/sneaking = 40,
+		/datum/attribute/skill/misc/stealing = 40,
+		/datum/attribute/skill/misc/lockpicking = 40,
+		/datum/attribute/skill/craft/traps = 20,
+		/datum/attribute/skill/misc/climbing = 40,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/craft/cooking = 40,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/combat/knives = 50,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/combat/wrestling = 30
+	)
+
 /datum/job/matron
 	title = "Matron"
 	tutorial = "You are the Matron of the Drunken Dwarf’s hall — the quiet authority behind its lively atmosphere. \
@@ -33,28 +54,8 @@
 		EXP_TYPE_THIEF = 300
 	)
 
-	skills = list(
-		/datum/skill/misc/sewing = 3,
-		/datum/skill/misc/sneaking = 4,
-		/datum/skill/misc/stealing = 4,
-		/datum/skill/misc/lockpicking = 4,
-		/datum/skill/craft/traps = 2,
-		/datum/skill/misc/climbing = 4,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/craft/cooking = 4,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/combat/knives = 5,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/combat/wrestling = 3,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/matron
 
-	jobstats = list(
-		STATKEY_STR = -1,
-		STATKEY_INT =  2,
-		STATKEY_PER =  1,
-		STATKEY_SPD =  2
-	)
 
 	traits = list(
 		TRAIT_THIEVESGUILD,

@@ -1,3 +1,17 @@
+/datum/attribute_holder/sheet/job/advclass/town_scholar_apprentice/artificer
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 1,
+		STAT_CONSTITUTION = 1,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/craft/engineering = 20,
+		/datum/attribute/skill/craft/masonry = 10,
+		/datum/attribute/skill/craft/smelting = 10,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/labor/mathematics = 10,
+		/datum/attribute/skill/misc/athletics = 10
+	)
+
 /datum/job/advclass/town_scholar_apprentice/artificer
 	title = "Artificer Apprentice"
 	tutorial = "You assist a master artificer, cleaning tools, assembling simple parts, \
@@ -11,21 +25,8 @@
 	give_bank_account = 3
 	job_bitflag = BITFLAG_CONSTRUCTOR
 
-	jobstats = list(
-		STATKEY_INT = 1,
-		STATKEY_CON = 1,
-		STATKEY_SPD = -1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/town_scholar_apprentice/artificer
 
-	skills = list(
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/craft/engineering = 2,
-		/datum/skill/craft/masonry = 1,
-		/datum/skill/craft/smelting = 1,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/labor/mathematics = 1,
-		/datum/skill/misc/athletics = 1,
-	)
 
 /datum/outfit/town_scholar_apprentice/artificer
 	name = "Artificer Apprentice"

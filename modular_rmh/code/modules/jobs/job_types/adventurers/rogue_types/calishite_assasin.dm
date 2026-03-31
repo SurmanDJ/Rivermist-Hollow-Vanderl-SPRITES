@@ -1,3 +1,24 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/calishite_assasin
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_SPEED = 2,
+		STAT_ENDURANCE = 1,
+		/datum/attribute/skill/combat/knives = 40,
+		/datum/attribute/skill/combat/swords = 20,
+		/datum/attribute/skill/combat/crossbows = 20,
+		/datum/attribute/skill/combat/bows = 20,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/misc/climbing = 40,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/misc/sneaking = 40,
+		/datum/attribute/skill/misc/stealing = 20,
+		/datum/attribute/skill/misc/lockpicking = 30,
+		/datum/attribute/skill/craft/traps = 10
+	)
+
 /datum/job/advclass/combat/adventurer_rogue/calishite_assasin
 	title = "Calishite"
 	tutorial = "A Calishite assassin trained in stealth and close-quarters murder, you sell death with a steady hand and no questions asked."
@@ -6,28 +27,8 @@
 	category_tags = list(CAT_ADVENTURER_ROGUE)
 	give_bank_account = TRUE
 
-	skills = list(
-		/datum/skill/combat/knives = 4,
-		/datum/skill/combat/swords = 2,
-		/datum/skill/combat/crossbows = 2,
-		/datum/skill/combat/bows = 2,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/misc/climbing = 4,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/sneaking = 4,
-		/datum/skill/misc/stealing = 2,
-		/datum/skill/misc/lockpicking = 3,
-		/datum/skill/craft/traps = 1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/calishite_assasin
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_SPD = 2,
-		STATKEY_END = 1,
-	)
 
 	traits = list(
 		TRAIT_DODGEEXPERT,

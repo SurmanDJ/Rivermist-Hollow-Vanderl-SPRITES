@@ -243,6 +243,7 @@
 		rune_linked = get_default_rune_link()
 	if(!attribute_sheet && !attribute_sheet_old && !attribute_sheet_child && !attribute_sheet_adult)
 		attribute_sheet = get_legacy_attribute_sheet()
+	populate_legacy_attribute_lists()
 	if(give_bank_account)
 		for(var/X in GLOB.lords_positions)
 			peopleiknow += X
@@ -483,6 +484,30 @@
 	if(!legacy_attribute_sheet)
 		legacy_attribute_sheet = build_legacy_attribute_sheet(jobstats, skills)
 	return legacy_attribute_sheet
+
+/datum/job/proc/get_attribute_sheet_for_legacy_views()
+	if(attribute_sheet)
+		return resolve_attribute_sheet(attribute_sheet)
+	if(attribute_sheet_adult)
+		return resolve_attribute_sheet(attribute_sheet_adult)
+	if(attribute_sheet_old)
+		return resolve_attribute_sheet(attribute_sheet_old)
+	if(attribute_sheet_child)
+		return resolve_attribute_sheet(attribute_sheet_child)
+	return null
+
+/datum/job/proc/populate_legacy_attribute_lists()
+	if(LAZYLEN(jobstats) && LAZYLEN(skills))
+		return
+
+	var/datum/attribute_holder/sheet/legacy_view_sheet = get_attribute_sheet_for_legacy_views()
+	if(!legacy_view_sheet)
+		return
+
+	if(!LAZYLEN(jobstats))
+		jobstats = build_legacy_jobstats_from_sheet(legacy_view_sheet)
+	if(!LAZYLEN(skills))
+		skills = build_legacy_skills_from_sheet(legacy_view_sheet)
 
 /datum/job/proc/GetAntagRep()
 	. = CONFIG_GET(keyed_list/antag_rep)[lowertext(title)]

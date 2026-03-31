@@ -1,3 +1,26 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/warrior
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_ENDURANCE = 1,
+		STAT_CONSTITUTION = 1,
+		STAT_INTELLIGENCE = -1,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/combat/swords = 20,
+		/datum/attribute/skill/combat/axesmaces = 20,
+		/datum/attribute/skill/combat/whipsflails = 20,
+		/datum/attribute/skill/combat/polearms = 20,
+		/datum/attribute/skill/combat/bows = 10,
+		/datum/attribute/skill/combat/crossbows = 10,
+		/datum/attribute/skill/combat/shields = 30,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/misc/riding = 20
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/warrior
 	title = "Warrior"
 	tutorial = "On the Sword Coast, steel speaks louder than promises. \
@@ -8,30 +31,8 @@
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
 
-	skills = list(
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/combat/swords = 2,
-		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/combat/whipsflails = 2,
-		/datum/skill/combat/polearms = 2,
-		/datum/skill/combat/bows = 1,
-		/datum/skill/combat/crossbows = 1,
-		/datum/skill/combat/shields = 3,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/riding = 2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/warrior
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_END = 1,
-		STATKEY_CON = 1,
-		STATKEY_INT = -1,
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,

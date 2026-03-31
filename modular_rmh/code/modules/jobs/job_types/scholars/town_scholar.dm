@@ -29,6 +29,22 @@
 
 //SUBCLASSES
 
+/datum/attribute_holder/sheet/job/advclass/town_scholar/explorer
+	raw_attribute_list = list(
+		STAT_STRENGTH = 4,
+		STAT_INTELLIGENCE = 3,
+		STAT_CONSTITUTION = 1,
+		STAT_SPEED = 2,
+		/datum/attribute/skill/misc/reading = 40,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/magic/arcane = 20,
+		/datum/attribute/skill/labor/mathematics = 30,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/whipsflails = 20,
+		/datum/attribute/skill/combat/firearms = 30
+	)
+
 /datum/job/advclass/town_scholar/explorer
 	title = "Explorer"
 	tutorial = "An adventurous scholar. You venture beyond town to study ancient ruins, recover artifacts."
@@ -38,23 +54,8 @@
 	outfit = /datum/outfit/town_scholar/explorer
 	category_tags = list(CAT_ARCHIVIST)
 
-	jobstats = list(
-		STATKEY_STR = 4,
-		STATKEY_INT = 3,
-		STATKEY_CON = 1,
-		STATKEY_SPD = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/town_scholar/explorer
 
-	skills = list(
-		/datum/skill/misc/reading = 4,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/magic/arcane = 2,
-		/datum/skill/labor/mathematics = 3,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/whipsflails = 2,
-		/datum/skill/combat/firearms = 3,
-	)
 
 	magic_user = TRUE
 	spell_points = 15
@@ -111,6 +112,16 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/town_scholar/archivist
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 4,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/misc/reading = 60,
+		/datum/attribute/skill/craft/alchemy = 30,
+		/datum/attribute/skill/magic/arcane = 40,
+		/datum/attribute/skill/labor/mathematics = 50
+	)
+
 /datum/job/advclass/town_scholar/archivist
 	title = "Archivist"
 	tutorial = "A dedicated keeper of rare texts and artifacts. You catalog, research, and occasionally unlock magical secrets."
@@ -120,17 +131,8 @@
 	outfit = /datum/outfit/town_scholar/archivist
 	category_tags = list(CAT_ARCHIVIST)
 
-	jobstats = list(
-		STATKEY_INT = 4,
-		STATKEY_SPD = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/town_scholar/archivist
 
-	skills = list(
-		/datum/skill/misc/reading = 6,
-		/datum/skill/craft/alchemy = 3,
-		/datum/skill/magic/arcane = 4,
-		/datum/skill/labor/mathematics = 5
-	)
 
 	languages = list(
 		/datum/language/elvish,

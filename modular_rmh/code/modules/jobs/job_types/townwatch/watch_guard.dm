@@ -50,6 +50,24 @@
 // BULWARK //
 //////////////////////////////////
 
+/datum/attribute_holder/sheet/job/advclass/watch_guard/bulwark
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_ENDURANCE = 3,
+		STAT_CONSTITUTION = 3,
+		/datum/attribute/skill/combat/axesmaces = 40,
+		/datum/attribute/skill/combat/shields = 40,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 40,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/athletics = 40,
+		/datum/attribute/skill/misc/sneaking = 20,
+		/datum/attribute/skill/misc/reading = 10
+	)
+
 /datum/job/advclass/watch_guard/bulwark
 	title = "Town Watch Bulwark"
 	tutorial = "You serve as the shield of the Town Watch. \
@@ -59,25 +77,8 @@
 	outfit = /datum/outfit/watch_guard/bulwark
 	category_tags = list(CAT_WATCHMAN)
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_END = 3,
-		STATKEY_CON = 3,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/watch_guard/bulwark
 
-	skills = list(
-		/datum/skill/combat/axesmaces = 4,
-		/datum/skill/combat/shields = 4,
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 4,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/athletics = 4,
-		/datum/skill/misc/sneaking = 2,
-		/datum/skill/misc/reading = 1
-	)
 
 	traits = list(
 		TRAIT_HEAVYARMOR,
@@ -128,6 +129,23 @@
 // HALBERDIER //
 //////////////////////////////////
 
+/datum/attribute_holder/sheet/job/advclass/watch_guard/halberdier
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_ENDURANCE = 2,
+		STAT_CONSTITUTION = 2,
+		/datum/attribute/skill/combat/polearms = 40,
+		/datum/attribute/skill/combat/swords = 20,
+		/datum/attribute/skill/combat/axesmaces = 20,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/athletics = 40,
+		/datum/attribute/skill/misc/reading = 10
+	)
+
 /datum/job/advclass/watch_guard/halberdier
 	title = "Town Watch Halberdier"
 	tutorial = "You wield long weapons to control space and repel attackers. \
@@ -137,24 +155,8 @@
 	outfit = /datum/outfit/watch_guard/halberdier
 	category_tags = list(CAT_WATCHMAN)
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_END = 2,
-		STATKEY_CON = 2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/watch_guard/halberdier
 
-	skills = list(
-		/datum/skill/combat/polearms = 4,
-		/datum/skill/combat/swords = 2,
-		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/athletics = 4,
-		/datum/skill/misc/reading = 1
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,
@@ -193,6 +195,26 @@
 // SENTINEL //
 //////////////////////////////
 
+/datum/attribute_holder/sheet/job/advclass/watch_guard/sentinel
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 2,
+		STAT_ENDURANCE = 1,
+		STAT_SPEED = 2,
+		/datum/attribute/skill/combat/bows = 30,
+		/datum/attribute/skill/combat/crossbows = 30,
+		/datum/attribute/skill/combat/firearms = 30,
+		/datum/attribute/skill/combat/axesmaces = 30,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/combat/swords = 10,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 40,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/sneaking = 20,
+		/datum/attribute/skill/misc/reading = 10
+	)
+
 /datum/job/advclass/watch_guard/sentinel
 	title = "Town Watch Sentinel"
 	tutorial = "You are trained to watch from above. \
@@ -202,27 +224,8 @@
 	outfit = /datum/outfit/watch_guard/sentinel
 	category_tags = list(CAT_WATCHMAN)
 
-	jobstats = list(
-		STATKEY_PER = 2,
-		STATKEY_END = 1,
-		STATKEY_SPD = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/watch_guard/sentinel
 
-	skills = list(
-		/datum/skill/combat/bows = 3,
-		/datum/skill/combat/crossbows = 3,
-		/datum/skill/combat/firearms = 3,
-		/datum/skill/combat/axesmaces = 3,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/combat/swords = 1,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 4,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/sneaking = 2,
-		/datum/skill/misc/reading = 1
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,

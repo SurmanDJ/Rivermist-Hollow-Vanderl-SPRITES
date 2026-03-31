@@ -1,3 +1,24 @@
+/datum/attribute_holder/sheet/job/advclass/towner/hunter
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 3,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/craft/tanning = 30,
+		/datum/attribute/skill/combat/bows = 30,
+		/datum/attribute/skill/combat/crossbows = 20,
+		/datum/attribute/skill/combat/knives = 20,
+		/datum/attribute/skill/craft/cooking = 10,
+		/datum/attribute/skill/labor/butchering = 20,
+		/datum/attribute/skill/labor/taming = 30,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/misc/sneaking = 20,
+		/datum/attribute/skill/craft/traps = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/swimming = 10,
+		/datum/attribute/skill/misc/reading = 10
+	)
+
 /datum/job/advclass/towner/hunter
 	title = "Hunter"
 	f_title = "Huntress"
@@ -13,28 +34,8 @@
 
 	job_bitflag = BITFLAG_CONSTRUCTOR
 
-	jobstats = list(
-		STATKEY_PER = 3
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/towner/hunter
 
-	skills = list(
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/craft/tanning = 3,
-		/datum/skill/combat/bows = 3,
-		/datum/skill/combat/crossbows = 2,
-		/datum/skill/combat/knives = 2,
-		/datum/skill/craft/cooking = 1,
-		/datum/skill/labor/butchering = 2,
-		/datum/skill/labor/taming = 3,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/misc/sneaking = 2,
-		/datum/skill/craft/traps = 3,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/swimming = 1,
-		/datum/skill/misc/reading = 1
-	)
 
 	traits = list(
 		TRAIT_FORAGER

@@ -1,4 +1,4 @@
-// Once a blessing Dendor's champions, now a curse suffering endless hunger from Graggar's corruption.
+// Hungry Beasts
 
 /datum/antagonist/werewolf
 	name = "Werewolf"

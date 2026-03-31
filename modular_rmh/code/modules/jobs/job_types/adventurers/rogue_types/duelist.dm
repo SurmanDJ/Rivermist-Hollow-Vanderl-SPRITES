@@ -1,3 +1,22 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/duelist
+	raw_attribute_list = list(
+		STAT_ENDURANCE = 2,
+		STAT_SPEED = 2,
+		STAT_PERCEPTION = 2,
+		STAT_STRENGTH = -1,
+		/datum/attribute/skill/combat/swords = 40,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/misc/swimming = 30,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/sneaking = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/craft/crafting = 10,
+		/datum/attribute/skill/craft/cooking = 30
+	)
+
 /datum/job/advclass/combat/adventurer_rogue/duelist
 	title = "Duelist"
 	tutorial = "A nimble duelist from Waterdeep, wielding rapier and wit with deadly grace."
@@ -6,26 +25,8 @@
 	category_tags = list(CAT_ADVENTURER_ROGUE)
 	give_bank_account = TRUE
 
-	jobstats = list(
-		STATKEY_END = 2,
-		STATKEY_SPD = 2,
-		STATKEY_PER = 2,
-		STATKEY_STR = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_rogue/duelist
 
-	skills = list(
-		/datum/skill/combat/swords = 4,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/misc/swimming = 3,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/sneaking = 3,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/craft/crafting = 1,
-		/datum/skill/craft/cooking = 3
-	)
 
 	traits = list(
 		TRAIT_DODGEEXPERT

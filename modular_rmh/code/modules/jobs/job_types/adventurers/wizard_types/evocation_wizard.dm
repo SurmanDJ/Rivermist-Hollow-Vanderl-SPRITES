@@ -1,3 +1,13 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_wizard/evocation_wizard
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 2,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/magic/arcane = 30,
+		/datum/attribute/skill/misc/reading = 40,
+		/datum/attribute/skill/craft/alchemy = 20,
+		/datum/attribute/skill/labor/mathematics = 20
+	)
+
 /datum/job/advclass/combat/adventurer_wizard/evocation_wizard
 	title = "Evocation Wizard"
 	tutorial = "You are known as an evoker - striding unharmed through the unfettered chaos you call."
@@ -14,17 +24,8 @@
 		/datum/action/cooldown/spell/forced_orgasm,
 	)
 
-	jobstats = list(
-		STATKEY_INT = 2,
-		STATKEY_SPD = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_wizard/evocation_wizard
 
-	skills = list(
-		/datum/skill/magic/arcane = 3,
-		/datum/skill/misc/reading = 4,
-		/datum/skill/craft/alchemy = 2,
-		/datum/skill/labor/mathematics = 2
-	)
 
 /datum/outfit/adventurer_wizard/evocation_wizard
 	name = "Evocation Wizard"

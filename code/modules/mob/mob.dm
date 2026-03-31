@@ -436,7 +436,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 			client.perspective = MOB_PERSPECTIVE
 
 /// Show the mob's inventory to another mob
-/mob/proc/show_inv(mob/user)
+/mob/proc/show_inv(mob/user, extra_only = FALSE)
 	return
 
 /**
@@ -467,7 +467,27 @@ GLOBAL_VAR_INIT(mobids, 1)
 	if(isturf(examinify.loc) && isliving(src) && stat == CONSCIOUS)
 		face_atom(examinify)
 		if(m_intent != MOVE_INTENT_SNEAK)
-			visible_message(span_emote("[src] looks at [examinify]."), span_emote("I look at [examinify]"))
+			var/look_target_text = "[examinify]"
+			if(cmode && ismob(examinify))
+				var/atom/movable/T = examinify
+				var/zone_text = parse_zone(zone_selected)
+				if(zone_selected == BODY_ZONE_PRECISE_GROIN)
+					var/atom/front_turf = get_step(T, T.dir)
+					var/atom/behind_turf = get_step(T, turn(T.dir, 180))
+					var/atom/side_left = get_step(T, turn(T.dir, 90))
+					var/atom/side_right = get_step(T, turn(T.dir, 270))
+					if(behind_turf && src.loc && behind_turf.z == src.loc.z && abs(behind_turf.x - src.loc.x) <= 1 && abs(behind_turf.y - src.loc.y) == 0)
+						zone_text = "ass"
+					else if((side_left && src.loc && side_left.z == src.loc.z && abs(side_left.x - src.loc.x) == 0 && abs(side_left.y - src.loc.y) == 0) || (side_right && src.loc && side_right.z == src.loc.z && abs(side_right.x - src.loc.x) == 0 && abs(side_right.y - src.loc.y) == 0))
+						zone_text = "hips"
+					else if(front_turf && src.loc && front_turf.z == src.loc.z && abs(front_turf.x - src.loc.x) <= 1 && abs(front_turf.y - src.loc.y) == 0)
+						zone_text = "crotch"
+				else if(zone_selected == BODY_ZONE_CHEST)
+					var/mob/living/carbon/target_carbon = T
+					if(istype(target_carbon) && target_carbon.getorganslot(ORGAN_SLOT_BREASTS))
+						zone_text = "breasts"
+				look_target_text = "[T]'s [zone_text]"
+			visible_message("<span class='emote'>[src] looks at [look_target_text].</span>")
 		else if(isliving(examinify))
 			var/mob/living/examaniee = examinify
 			if(examaniee.peek_examine_check(src))
@@ -684,7 +704,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 
 	if(href_list["refresh"])
 		if(machine && in_range(src, usr))
-			show_inv(machine)
+			show_inv(machine, text2num(href_list["extra_only"]))
 
 	if(href_list["item"] && usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		var/slot = text2num(href_list["item"])
@@ -697,24 +717,29 @@ GLOBAL_VAR_INIT(mobids, 1)
 			what = get_item_by_slot(slot)
 		if(what)
 			if(!(what.item_flags & ABSTRACT))
-				usr.stripPanelUnequip(what,src,slot)
+				usr.stripPanelUnequip(what,src,slot, text2num(href_list["extra_only"]))
 		else
-			usr.stripPanelEquip(what,src,slot)
+			usr.stripPanelEquip(what,src,slot, text2num(href_list["extra_only"]))
+
+	if(href_list["show_storage"])
+		var/slot = text2num(href_list["show_storage"])
+		var/obj/item/what = get_item_by_slot(slot)
+		SEND_SIGNAL(what, COMSIG_ATOM_ATTACK_HAND, usr)
 
 	if(usr.machine == src)
 		if(Adjacent(usr))
-			show_inv(usr)
+			show_inv(usr, text2num(href_list["extra_only"]))
 		else
 			usr << browse(null,"window=mob[REF(src)]")
 
 // The src mob is trying to strip an item from someone
 // Defined in living.dm
-/mob/proc/stripPanelUnequip(obj/item/what, mob/who)
+/mob/proc/stripPanelUnequip(obj/item/what, mob/who, extra_only = FALSE)
 	return
 
 // The src mob is trying to place an item on someone
 // Defined in living.dm
-/mob/proc/stripPanelEquip(obj/item/what, mob/who)
+/mob/proc/stripPanelEquip(obj/item/what, mob/who, extra_only = FALSE)
 	return
 
 /**
@@ -894,6 +919,8 @@ GLOBAL_VAR_INIT(mobids, 1)
  * * magic_flags (optional) A bitfield with the type of magic being cast (see flags at: /datum/component/anti_magic)
 **/
 /mob/proc/can_cast_magic(magic_flags = MAGIC_RESISTANCE)
+	if(HAS_TRAIT(src, TRAIT_NO_SELF_MAGIC)) // Cannot ever cast with the nomagic trait
+		return FALSE
 	if(magic_flags == NONE) // magic with the NONE flag can always be cast
 		return TRUE
 
@@ -1251,6 +1278,8 @@ GLOBAL_VAR_INIT(mobids, 1)
 /mob/proc/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 		nutrition = NUTRITION_LEVEL_FULL
+	if((client?.manual_afk || HAS_TRAIT(src, TRAIT_FREEZEHUNGER)) && change < 0)
+		return FALSE
 	nutrition = max(0, nutrition + change)
 	if(nutrition > NUTRITION_LEVEL_FULL)
 		nutrition = NUTRITION_LEVEL_FULL
@@ -1266,6 +1295,8 @@ GLOBAL_VAR_INIT(mobids, 1)
 /mob/proc/adjust_hydration(change)
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 		hydration = HYDRATION_LEVEL_FULL
+	if((client?.manual_afk || HAS_TRAIT(src, TRAIT_FREEZEHUNGER)) && change < 0)
+		return FALSE
 	hydration = max(0, hydration + change)
 	if(hydration > HYDRATION_LEVEL_FULL)
 		hydration = HYDRATION_LEVEL_FULL

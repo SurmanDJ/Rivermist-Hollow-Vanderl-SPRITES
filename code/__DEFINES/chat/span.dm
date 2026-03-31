@@ -113,7 +113,6 @@
 #define span_small(str) ("<span class='small'>" + str + "</span>")
 
 #define span_slightlylarger(str) ("<span class='slightlylarger'>" + str + "</span>")
-#define span_big(str) ("<span class='big'>" + str + "</span>")
 #define span_larger(str) ("<span class='larger'>" + str + "</span>")
 #define span_reallybig(str) ("<span class='reallybig'>" + str + "</span>")
 #define span_extremelybig(str) ("<span class='extremelybig'>" + str + "</span>")

@@ -356,7 +356,7 @@
 
 /datum/quirk/vice/nightmares/on_examined(mob/user, list/P, list/examine_contents)
 	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
-		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, SPAN_GOD_BAOTHA("Nitemares..."))
+		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("Nitemares..."))
 
 /datum/quirk/vice/nightmares/on_spawn()
 	if(!owner)
@@ -389,7 +389,7 @@
 
 /datum/quirk/vice/fear_darkness/on_examined(mob/user, list/P, list/examine_contents)
 	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
-		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, SPAN_GOD_BAOTHA("Scared of the Dark..."))
+		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("Scared of the Dark..."))
 
 /datum/quirk/vice/fear_darkness/on_life(mob/living/user)
 	if(!owner)

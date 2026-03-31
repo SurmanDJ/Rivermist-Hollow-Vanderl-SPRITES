@@ -1,3 +1,17 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_druid/circle_land
+	raw_attribute_list = list(
+		STAT_ENDURANCE = 2,
+		STAT_ENDURANCE = 1,
+		/datum/attribute/skill/magic/druidic = 40,
+		/datum/attribute/skill/labor/farming = 30,
+		/datum/attribute/skill/labor/taming = 20,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/combat/polearms = 20,
+		/datum/attribute/skill/combat/knives = 10
+	)
+
 /datum/job/advclass/combat/adventurer_druid/circle_land
 	title = "Circle of Land Druid"
 	tutorial = "You channel the natural arcana flowing through the earth and creatures atop it to cast powerful druidic magic"
@@ -6,21 +20,8 @@
 	category_tags = list(CAT_ADVENTURER_DRUID)
 	give_bank_account = TRUE
 
-	jobstats = list(
-		STATKEY_END = 2,
-		STATKEY_END = 1,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_druid/circle_land
 
-	skills = list(
-		/datum/skill/magic/druidic = 4,
-		/datum/skill/labor/farming = 3,
-		/datum/skill/labor/taming = 2,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/athletics = 1,
-		/datum/skill/combat/polearms = 2,
-		/datum/skill/combat/knives = 1
-	)
 
 	traits = list(
 		TRAIT_SEEDKNOW,

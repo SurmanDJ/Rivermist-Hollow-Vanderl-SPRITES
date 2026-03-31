@@ -23,7 +23,7 @@
 
 /datum/quirk/vice/wanted/on_examined(mob/user, list/P, list/examine_contents)
 	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
-		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, SPAN_GOD_BAOTHA("Graggar's Prey..."))
+		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("A wanted person..."))
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
@@ -48,7 +48,7 @@
 
 /datum/quirk/vice/luxless/on_examined(mob/user, list/P, list/examine_contents)
 	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
-		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, SPAN_GOD_BAOTHA("Luxless..."))
+		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("Luxless..."))
 
 /datum/quirk/vice/luxless/on_spawn()
 	if(!ishuman(owner))
@@ -75,7 +75,7 @@
 
 /datum/quirk/vice/pacifist/on_examined(mob/user, list/P, list/examine_contents)
 	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
-		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, SPAN_GOD_BAOTHA("Pacifist..."))
+		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("Pacifist..."))
 
 /datum/quirk/vice/pacifist/on_remove()
 	if(owner)
@@ -179,7 +179,7 @@
 
 /datum/quirk/vice/traumatized/on_examined(mob/user, list/P, list/examine_contents)
 	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
-		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, SPAN_GOD_BAOTHA("Traumatized..."))
+		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("Traumatized..."))
 
 /datum/quirk/vice/traumatized/on_spawn()
 	if(!ishuman(owner))
@@ -241,7 +241,7 @@
 
 /datum/quirk/vice/tortured/on_examined(mob/user, list/P, list/examine_contents)
 	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
-		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, SPAN_GOD_BAOTHA("Tortured..."))
+		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("Tortured..."))
 
 /datum/quirk/vice/tortured/on_spawn()
 	if(!ishuman(owner))
@@ -328,7 +328,7 @@
 
 /datum/quirk/vice/weak_heart/on_examined(mob/user, list/P, list/examine_contents)
 	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
-		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, SPAN_GOD_BAOTHA("Weak-Hearted..."))
+		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("Weak-Hearted..."))
 
 /datum/quirk/vice/weak_heart/on_spawn()
 	if(!ishuman(owner))

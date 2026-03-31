@@ -42,7 +42,7 @@
 
 /datum/quirk/vice/greedy/on_examined(mob/user, list/P, list/examine_contents)
 	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
-		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, SPAN_GOD_BAOTHA("Greed..."))
+		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("Greed..."))
 
 /datum/quirk/vice/greedy/on_spawn()
 	next_mammon_increase = world.time + rand(15 MINUTES, 25 MINUTES)
@@ -142,7 +142,7 @@
 
 /datum/quirk/vice/paranoid/on_examined(mob/user, list/P, list/examine_contents)
 	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
-		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, SPAN_GOD_BAOTHA("Paranoid..."))
+		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("Paranoid..."))
 
 /datum/quirk/vice/clingy
 	name = "Clingy"
@@ -155,7 +155,7 @@
 
 /datum/quirk/vice/clingy/on_examined(mob/user, list/P, list/examine_contents)
 	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
-		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, SPAN_GOD_BAOTHA("Clingy..."))
+		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("Clingy..."))
 
 /datum/quirk/vice/clingy/on_life(mob/living/user)
 	if(world.time < last_check + 10 SECONDS)
@@ -191,7 +191,7 @@
 
 /datum/quirk/vice/isolationist/on_examined(mob/user, list/P, list/examine_contents)
 	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
-		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, SPAN_GOD_BAOTHA("Introvert..."))
+		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("Introvert..."))
 
 /datum/quirk/vice/isolationist/on_life(mob/living/user)
 	if(world.time < last_check + 10 SECONDS)
@@ -229,7 +229,7 @@
 
 /datum/quirk/vice/narcoleptic/on_examined(mob/user, list/P, list/examine_contents)
 	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
-		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, SPAN_GOD_BAOTHA("Sleepy..."))
+		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("Sleepy..."))
 
 /datum/quirk/vice/narcoleptic/on_spawn()
 	ADD_TRAIT(owner, TRAIT_FASTSLEEP, "[type]")
@@ -295,7 +295,7 @@
 
 /datum/quirk/vice/masochist/on_examined(mob/user, list/P, list/examine_contents)
 	if(HAS_TRAIT(user, TRAIT_RECOGNIZE_ADDICTS))
-		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, SPAN_GOD_BAOTHA("Masochist!"))
+		LAZYADDASSOCLIST(examine_contents, EXAMINE_SECT_PREGEAR, span_info("Masochist!"))
 
 /datum/quirk/vice/masochist/on_spawn()
 	next_paincrave = world.time + rand(15 MINUTES, 25 MINUTES)

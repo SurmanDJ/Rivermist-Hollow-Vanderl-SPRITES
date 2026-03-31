@@ -1,3 +1,17 @@
+/datum/attribute_holder/sheet/job/innkeep
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_ENDURANCE = 1,
+		STAT_CONSTITUTION = 1,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/misc/reading = 20,
+		/datum/attribute/skill/craft/cooking = 30,
+		/datum/attribute/skill/misc/medicine = 10,
+		/datum/attribute/skill/combat/swords = 20,
+		/datum/attribute/skill/labor/mathematics = 20
+	)
+
 /datum/job/innkeep
 	title = "Innkeep"
 	tutorial = "You run the Drunken Dwarf — tavern, inn, and the public face of the Blue Sage Guild. \
@@ -20,21 +34,8 @@
 	give_bank_account = 100
 	job_bitflag = BITFLAG_CONSTRUCTOR
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_END = 1,
-		STATKEY_CON = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/innkeep
 
-	skills = list(
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/misc/reading = 2,
-		/datum/skill/craft/cooking = 3,
-		/datum/skill/misc/medicine = 1,
-		/datum/skill/combat/swords = 2,
-		/datum/skill/labor/mathematics = 2
-	)
 
 	traits = list(
 		TRAIT_BOOZE_SLIDER,

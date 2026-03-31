@@ -1031,7 +1031,7 @@
 			if(heal_flags & ADMIN_HEAL_ALL)
 				qdel(wound)
 			else
-				wound.heal_wound(wound.whp, forced = TRUE)
+				wound.heal_wound(wound.whp)
 
 	if(heal_flags & HEAL_TEMP)
 		bodytemperature = BODYTEMP_NORMAL
@@ -1685,7 +1685,7 @@
 
 // The src mob is trying to strip an item from someone
 // Override if a certain type of mob should be behave differently when stripping items (can't, for example)
-/mob/living/stripPanelUnequip(obj/item/what, mob/who, where)
+/mob/living/stripPanelUnequip(obj/item/what, mob/who, where, extra_only)
 	if(!what.canStrip(who))
 		to_chat(src, "<span class='warning'>I can't remove \the [what.name], it appears to be stuck!</span>")
 		return
@@ -1731,13 +1731,13 @@
 					log_combat(src, who, "stripped [what] off")
 
 	if(Adjacent(who)) //update inventory window
-		who.show_inv(src)
+		who.show_inv(src, extra_only)
 	else
 		src << browse(null,"window=mob[REF(who)]")
 
 // The src mob is trying to place an item on someone
 // Override if a certain mob should be behave differently when placing items (can't, for example)
-/mob/living/stripPanelEquip(obj/item/what, mob/who, where)
+/mob/living/stripPanelEquip(obj/item/what, mob/who, where, extra_only)
 	what = src.get_active_held_item()
 	if(what && (HAS_TRAIT(what, TRAIT_NODROP)))
 		to_chat(src, "<span class='warning'>I can't put \the [what.name] on [who], it's stuck to my hand!</span>")
@@ -1769,7 +1769,7 @@
 						who.equip_to_slot(what, where, TRUE)
 
 		if(Adjacent(who)) //update inventory window
-			who.show_inv(src)
+			who.show_inv(src, extra_only)
 		else
 			src << browse(null,"window=mob[REF(who)]")
 

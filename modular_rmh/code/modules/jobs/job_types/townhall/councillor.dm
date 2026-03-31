@@ -51,6 +51,28 @@
 	exp_types_granted = list(EXP_TYPE_NOBLE)
 
 
+/datum/attribute_holder/sheet/job/advclass/councilor/adjutant
+	raw_attribute_list = list(
+		STAT_STRENGTH = 1,
+		STAT_CONSTITUTION = 2,
+		STAT_PERCEPTION = 3,
+		STAT_INTELLIGENCE = 2,
+		STAT_ENDURANCE = 2,
+		/datum/attribute/skill/combat/wrestling = 30,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/axesmaces = 30,
+		/datum/attribute/skill/combat/shields = 30,
+		/datum/attribute/skill/combat/bows = 30,
+		/datum/attribute/skill/combat/crossbows = 30,
+		/datum/attribute/skill/combat/firearms = 30,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/misc/climbing = 20,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/labor/mathematics = 20
+	)
+
 /datum/job/advclass/councilor/adjutant
 	title = "Adjutant"
 	tutorial = "You once enforced law on the streets of Rivermist Hollow. \
@@ -60,31 +82,8 @@
 	outfit = /datum/outfit/councilor/adjutant
 	category_tags = list(CAT_COUNCILOR)
 
-	jobstats = list(
-		STATKEY_STR = 1,
-		STATKEY_CON = 2,
-		STATKEY_PER = 3,
-		STATKEY_INT = 2,
-		STATKEY_END = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/councilor/adjutant
 
-	skills = list(
-		/datum/skill/combat/wrestling = 3,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/combat/swords = 3,
-	    /datum/skill/combat/axesmaces = 3,
-		/datum/skill/combat/shields = 3,
-	    /datum/skill/combat/bows = 3,
-	    /datum/skill/combat/crossbows = 3,
-		/datum/skill/combat/firearms = 3,
-
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/misc/climbing = 2,
-		/datum/skill/misc/swimming = 2,
-
-		/datum/skill/labor/mathematics = 2
-	)
 
 	traits = list(
 		TRAIT_BREADY,
@@ -146,6 +145,18 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/councilor/clerk
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 4,
+		STAT_PERCEPTION = 3,
+		STAT_FORTUNE = 1,
+		/datum/attribute/skill/misc/reading = 50,
+		/datum/attribute/skill/labor/mathematics = 40,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/lockpicking = 20,
+		/datum/attribute/skill/combat/unarmed = 10
+	)
+
 /datum/job/advclass/councilor/clerk
 	title = "Clerk"
 	tutorial = "You are the keeper of records, taxes, decrees, and civic correspondence. \
@@ -155,21 +166,8 @@
 	outfit = /datum/outfit/councilor/clerk
 	category_tags = list(CAT_COUNCILOR)
 
-	jobstats = list(
-		STATKEY_INT = 4,
-		STATKEY_PER = 3,
-		STATKEY_LCK = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/councilor/clerk
 
-	skills = list(
-		/datum/skill/misc/reading = 5,
-		/datum/skill/labor/mathematics = 4,
-
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/lockpicking = 2,
-
-		/datum/skill/combat/unarmed = 1
-	)
 
 	traits = list(
 		TRAIT_SEEPRICES,
@@ -212,6 +210,19 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/councilor/advisor
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 4,
+		STAT_PERCEPTION = 3,
+		STAT_FORTUNE = 2,
+		/datum/attribute/skill/misc/reading = 50,
+		/datum/attribute/skill/labor/mathematics = 30,
+		/datum/attribute/skill/misc/medicine = 30,
+		/datum/attribute/skill/misc/lockpicking = 30,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 20
+	)
+
 /datum/job/advclass/councilor/advisor
 	title = "Advisor"
 	tutorial = "You serve as the Burgmeister’s counselor, strategist, and interpreter of consequence. \
@@ -222,22 +233,8 @@
 	category_tags = list(CAT_COUNCILOR)
 
 
-	jobstats = list(
-		STATKEY_INT = 4,
-		STATKEY_PER = 3,
-		STATKEY_LCK = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/councilor/advisor
 
-	skills = list(
-		/datum/skill/misc/reading = 5,
-		/datum/skill/labor/mathematics = 3,
-
-		/datum/skill/misc/medicine = 3,
-		/datum/skill/misc/lockpicking = 3,
-
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 2
-	)
 
 	traits = list(
 		TRAIT_EMPATH,
@@ -272,6 +269,23 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/councilor/spymaster
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 4,
+		STAT_PERCEPTION = 4,
+		STAT_FORTUNE = 2,
+		STAT_STRENGTH = -1,
+		/datum/attribute/skill/misc/reading = 50,
+		/datum/attribute/skill/misc/sneaking = 30,
+		/datum/attribute/skill/misc/stealing = 30,
+		/datum/attribute/skill/misc/lockpicking = 30,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/labor/mathematics = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/combat/knives = 20
+	)
+
 /datum/job/advclass/councilor/spymaster
 	title = "Spymaster Councilor"
 	tutorial = "You are the keeper of secrets, informants, and quiet truths. \
@@ -281,26 +295,8 @@
 	outfit = /datum/outfit/councilor/spymaster
 	category_tags = list(CAT_COUNCILOR)
 
-	jobstats = list(
-		STATKEY_INT = 4,
-		STATKEY_PER = 4,
-		STATKEY_LCK = 2,
-		STATKEY_STR = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/councilor/spymaster
 
-	skills = list(
-		/datum/skill/misc/reading = 5,
-		/datum/skill/misc/sneaking = 3,
-		/datum/skill/misc/stealing = 3,
-		/datum/skill/misc/lockpicking = 3,
-		/datum/skill/misc/athletics = 2,
-
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/labor/mathematics = 2,
-
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/combat/knives = 2
-	)
 
 	traits = list(
 		TRAIT_DECEIVING_MEEKNESS,

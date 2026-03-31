@@ -1,3 +1,17 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/hedgeknight
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_ENDURANCE = 2,
+		STAT_CONSTITUTION = 2,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/combat/swords = 40,
+		/datum/attribute/skill/misc/climbing = 10,
+		/datum/attribute/skill/misc/athletics = 30,
+		/datum/attribute/skill/misc/reading = 20
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/hedgeknight
 	title = "Hedge Knight"
 	tutorial = "A wandering hedge knight, mastering the sword and upholding the code of honor across Faerûn."
@@ -8,24 +22,11 @@
 	outfit = /datum/outfit/adventurer_fighter/hedgeknight
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
-	honorary = "Ritter"
-	honorary_f = "Ritterin"
+	honorary = "Sir"
+	honorary_f = "Dame"
 
-	skills = list(
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/combat/swords = 4,
-		/datum/skill/misc/climbing = 1,
-		/datum/skill/misc/athletics = 3,
-		/datum/skill/misc/reading = 2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/hedgeknight
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_END = 2,
-		STATKEY_CON = 2,
-		STATKEY_SPD = -1,
-	)
 
 	traits = list(
 		TRAIT_HEAVYARMOR,

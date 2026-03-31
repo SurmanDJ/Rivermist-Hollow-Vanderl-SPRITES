@@ -1,3 +1,26 @@
+/datum/attribute_holder/sheet/job/watch_sergeant
+	raw_attribute_list = list(
+		STAT_STRENGTH = 3,
+		STAT_PERCEPTION = 2,
+		STAT_INTELLIGENCE = 1,
+		STAT_CONSTITUTION = 3,
+		STAT_ENDURANCE = 3,
+		STAT_SPEED = 2,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/shields = 30,
+		/datum/attribute/skill/combat/wrestling = 40,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/combat/axesmaces = 30,
+		/datum/attribute/skill/combat/polearms = 30,
+		/datum/attribute/skill/combat/bows = 30,
+		/datum/attribute/skill/combat/crossbows = 30,
+		/datum/attribute/skill/combat/firearms = 30,
+		/datum/attribute/skill/misc/athletics = 40,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/reading = 20
+	)
+
 /datum/job/watch_sergeant
 	title = "Town Watch Sergeant"
 	tutorial = "You are a Sergeant of the Town Watch of Rivermist Hollow. \
@@ -27,31 +50,8 @@
 
 	job_bitflag = BITFLAG_GARRISON
 
-	jobstats = list(
-		STATKEY_STR = 3,
-		STATKEY_PER = 2,
-		STATKEY_INT = 1,
-		STATKEY_CON = 3,
-		STATKEY_END = 3,
-		STATKEY_SPD = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/watch_sergeant
 
-	skills = list(
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/shields = 3,
-		/datum/skill/combat/wrestling = 4,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/combat/axesmaces = 3,
-		/datum/skill/combat/polearms = 3,
-		/datum/skill/combat/bows = 3,
-		/datum/skill/combat/crossbows = 3,
-		/datum/skill/combat/firearms = 3,
-
-		/datum/skill/misc/athletics = 4,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/reading = 2
-	)
 
 	traits = list(
 		TRAIT_HEAVYARMOR,

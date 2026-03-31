@@ -496,8 +496,9 @@
 /mob/living/carbon/proc/get_unobscured_items(transparent_protection)
 	var/list/items = list()
 	var/obscured_slots = check_obscured_slots(transparent_protection)
+	var/extra_obscured = (obscured_slots[SLOT_CHECK_EXTRA] << 1) >> 1 //We "cut off" the 24th bit of the extra slots flag so that the bitwise & can work.
 	for(var/slot in SLOT_DISPLAY_PRIORITY)
-		if(obscured_slots[SLOT_CHECK_REGULAR] & slot)
+		if(obscured_slots[SLOT_CHECK_REGULAR] & slot || ((extra_obscured & slot) && (obscured_slots[SLOT_CHECK_EXTRA] & ITEM_SLOT_EXTRA)))
 			continue
 		var/obj/item/I = get_item_by_slot(slot)
 		if(I)

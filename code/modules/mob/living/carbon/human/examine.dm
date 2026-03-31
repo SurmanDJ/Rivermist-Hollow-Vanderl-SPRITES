@@ -136,3 +136,60 @@
 		return
 
 	return examine_list.Join("\n")
+
+
+
+/mob/living/carbon/human/get_examine_body(mob/user, list/P, list/examine_list)
+	. = ..()
+	var/list/organ_desc = list()
+	var/show_undie_desc = FALSE
+	var/show_naked_desc = FALSE
+	var/list/arousal_data = list()
+	SEND_SIGNAL(src, COMSIG_SEX_GET_AROUSAL, arousal_data)
+	if(wear_pants)
+		var/obj/item/clothing/pantsies = wear_pants
+		var/obj/item/clothing/undies = underwear
+		if(pantsies.flags_inv & HIDECROTCH)
+			if(!pantsies.genital_access)
+				if(arousal_data["arousal"] > VISIBLE_AROUSAL_THRESHOLD)
+					if(getorganslot(ORGAN_SLOT_PENIS))
+						organ_desc += "[capitalize(P[THEYVE])] a visible bulge in [P[THEIR]] [pantsies.name]."
+					if(getorganslot(ORGAN_SLOT_VAGINA))
+						organ_desc += "[capitalize(P[THEYRE])] shifting [P[THEIR]] legs uncomfortably."
+					//show_pant_desc = TRUE
+		else if(undies)
+			if(arousal_data["arousal"] > VISIBLE_AROUSAL_THRESHOLD)
+				if(getorganslot(ORGAN_SLOT_PENIS))
+					organ_desc += "[capitalize(P[THEYRE])] pitching a tent in [P[THEIR]] [underwear.name]."
+				if(getorganslot(ORGAN_SLOT_VAGINA))
+					organ_desc += "[capitalize(P[THEYVE])] a wet spot on [P[THEIR]] [underwear.name]."
+				show_undie_desc = TRUE
+		else
+			if(arousal_data["arousal"] > VISIBLE_AROUSAL_THRESHOLD)
+				if(getorganslot(ORGAN_SLOT_PENIS))
+					var/obj/item/organ/genitals/penis/pen = getorganslot(ORGAN_SLOT_PENIS)
+					organ_desc += "[capitalize(P[THEIR])] [pen.name] is visibly erect!"
+				if(getorganslot(ORGAN_SLOT_VAGINA))
+					var/obj/item/organ/genitals/filling_organ/vagina/vag = getorganslot(ORGAN_SLOT_VAGINA)
+					organ_desc += "[capitalize(P[THEIR])] [vag.name] is glistening with arousal!"
+				show_naked_desc = TRUE
+
+	else if(underwear && !show_undie_desc)
+		if(arousal_data["arousal"] > VISIBLE_AROUSAL_THRESHOLD)
+			if(getorganslot(ORGAN_SLOT_PENIS))
+				organ_desc += "[capitalize(P[THEYRE])] pitching a tent in [P[THEIR]] [underwear.name]."
+			if(getorganslot(ORGAN_SLOT_VAGINA))
+				organ_desc += "[capitalize(P[THEYVE])] a wet spot on [P[THEIR]] [underwear.name]."
+			show_undie_desc = TRUE
+
+	else if(arousal_data["arousal"] > VISIBLE_AROUSAL_THRESHOLD && !show_naked_desc)
+		if(getorganslot(ORGAN_SLOT_PENIS))
+			var/obj/item/organ/genitals/penis/pen = getorganslot(ORGAN_SLOT_PENIS)
+			organ_desc += "[capitalize(P[THEIR])] [pen.name] is visibly erect!"
+		if(getorganslot(ORGAN_SLOT_VAGINA))
+			var/obj/item/organ/genitals/filling_organ/vagina/vag = getorganslot(ORGAN_SLOT_VAGINA)
+			organ_desc += "[capitalize(P[THEIR])] [vag.name] is glistening with arousal!"
+		show_naked_desc = TRUE
+
+	if(length(organ_desc))
+		. += span_love("[organ_desc.Join("\n")]")

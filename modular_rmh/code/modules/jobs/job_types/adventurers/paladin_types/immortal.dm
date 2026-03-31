@@ -1,3 +1,17 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_paladin/immortal
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_ENDURANCE = 2,
+		STAT_CONSTITUTION = 2,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/combat/shields = 40,
+		/datum/attribute/skill/misc/swimming = 30,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/athletics = 40
+	)
+
 /datum/job/advclass/combat/adventurer_paladin/immortal
 	title = "Immortal"
 	tutorial = "You are a veteran of the celestial-legion campaigns, sworn to defend the realms of Amn and the Sword Coast. \
@@ -8,21 +22,8 @@
 	category_tags = list(CAT_ADVENTURER_PALADIN)
 	give_bank_account = TRUE
 
-	skills = list(
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/combat/shields = 4,
-		/datum/skill/misc/swimming = 3,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/athletics = 4,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_paladin/immortal
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_END = 2,
-		STATKEY_CON = 2,
-		STATKEY_SPD = -1,
-	)
 
 	traits = list(
 		TRAIT_HEAVYARMOR,

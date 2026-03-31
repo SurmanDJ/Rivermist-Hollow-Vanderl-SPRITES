@@ -1,3 +1,18 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/sembian_merc
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_ENDURANCE = 2,
+		STAT_CONSTITUTION = 2,
+		STAT_SPEED = -1,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/axesmaces = 20,
+		/datum/attribute/skill/combat/wrestling = 20,
+		/datum/attribute/skill/combat/unarmed = 30,
+		/datum/attribute/skill/misc/reading = 10,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/athletics = 30
+	)
+
 /datum/job/advclass/combat/adventurer_fighter/sembian_merc
 	title = "Sembian Mercenary"
 	tutorial = "A claymore-wielding mercenary from the nation of Sembia, \
@@ -8,22 +23,8 @@
 	category_tags = list(CAT_ADVENTURER_FIGHTER)
 	give_bank_account = TRUE
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_END = 2,
-		STATKEY_CON = 2,
-		STATKEY_SPD = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_fighter/sembian_merc
 
-	skills = list(
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/combat/wrestling = 2,
-		/datum/skill/combat/unarmed = 3,
-		/datum/skill/misc/reading = 1,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/athletics = 3
-	)
 
 	traits = list(
 		TRAIT_HEAVYARMOR

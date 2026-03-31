@@ -1,3 +1,24 @@
+/datum/attribute_holder/sheet/job/advclass/combat/adventurer_ranger/dwarf_ranger
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 3,
+		STAT_SPEED = 1,
+		// Fast... for a dwarf
+		/datum/attribute/skill/combat/swords = 30,
+		// In line with basic combat classes
+		/datum/attribute/skill/combat/wrestling = 10,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/misc/swimming = 10,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/combat/crossbows = 30,
+		/datum/attribute/skill/craft/tanning = 20,
+		/datum/attribute/skill/misc/sewing = 30,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/craft/cooking = 10,
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/misc/reading = 20
+	)
+
 /datum/job/advclass/combat/adventurer_ranger/dwarf_ranger
 	title = "Dwarf Ranger"
 	tutorial = "Dwarven rangers are scouts, hunters, and wardens of the wild marches beyond the clanholds. \
@@ -8,26 +29,8 @@
 	category_tags = list(CAT_ADVENTURER_RANGER)
 	give_bank_account = TRUE
 
-	skills = list(
-		/datum/skill/combat/swords = 3, // In line with basic combat classes
-		/datum/skill/combat/wrestling = 1,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/misc/swimming = 1,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/combat/crossbows = 3,
-		/datum/skill/craft/tanning = 2,
-		/datum/skill/misc/sewing = 3,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/craft/cooking = 1,
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/misc/reading = 2,
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/combat/adventurer_ranger/dwarf_ranger
 
-	jobstats = list(
-		STATKEY_PER = 3,
-		STATKEY_SPD = 1, // Fast... for a dwarf
-	)
 
 	traits = list(
 		TRAIT_MEDIUMARMOR,

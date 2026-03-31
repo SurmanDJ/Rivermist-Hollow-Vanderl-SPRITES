@@ -28,6 +28,29 @@
 // BUTLER
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/servant/butler
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 3,
+		STAT_PERCEPTION = 2,
+		STAT_FORTUNE = 1,
+		/datum/attribute/skill/combat/swords = 20,
+		//Alfred, is this you?
+		/datum/attribute/skill/combat/wrestling = 10,
+		/datum/attribute/skill/combat/unarmed = 10,
+		/datum/attribute/skill/combat/firearms = 20,
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/craft/masonry = 20,
+		/datum/attribute/skill/craft/carpentry = 20,
+		/datum/attribute/skill/craft/engineering = 10,
+		/datum/attribute/skill/misc/reading = 40,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/sneaking = 30,
+		/datum/attribute/skill/misc/stealing = 20,
+		/datum/attribute/skill/labor/mathematics = 20,
+		/datum/attribute/skill/labor/butchering = 30,
+		/datum/attribute/skill/craft/cooking = 30
+	)
+
 /datum/job/advclass/servant/butler
 	title = "Butler"
 	tutorial = "You oversee servants, schedules, keys, and etiquette. \
@@ -38,31 +61,8 @@
 	category_tags = list(CAT_SERVANT)
 	allowed_sexes = list(MALE)
 
-	jobstats = list(
-		STATKEY_INT = 3,
-		STATKEY_PER = 2,
-		STATKEY_LCK = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/servant/butler
 
-	skills = list(
-	    /datum/skill/combat/swords = 2,	//Alfred, is this you?
-		/datum/skill/combat/wrestling = 1,
-		/datum/skill/combat/unarmed = 1,
-	    /datum/skill/combat/firearms = 2,
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/craft/masonry = 2,
-		/datum/skill/craft/carpentry = 2,
-		/datum/skill/craft/engineering = 1,
-
-		/datum/skill/misc/reading = 4,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/sneaking = 3,
-		/datum/skill/misc/stealing = 2,
-		/datum/skill/labor/mathematics = 2,
-
-		/datum/skill/labor/butchering = 3,
-		/datum/skill/craft/cooking = 3,
-	)
 
 	traits = list(
 		TRAIT_ROYALSERVANT,
@@ -99,6 +99,18 @@
 // MAID
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/servant/maid
+	raw_attribute_list = list(
+		STAT_SPEED = 3,
+		STAT_PERCEPTION = 2,
+		/datum/attribute/skill/misc/sewing = 40,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/sneaking = 30,
+		/datum/attribute/skill/misc/stealing = 20,
+		/datum/attribute/skill/labor/butchering = 20,
+		/datum/attribute/skill/craft/cooking = 40
+	)
+
 /datum/job/advclass/servant/maid
 	title = "Maid"
 	tutorial = "You attend private chambers, clothing, and personal routines. \
@@ -108,19 +120,8 @@
 	category_tags = list(CAT_SERVANT)
 	allowed_sexes = list(FEMALE)
 
-	jobstats = list(
-		STATKEY_SPD = 3,
-		STATKEY_PER = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/servant/maid
 
-	skills = list(
-		/datum/skill/misc/sewing = 4,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/sneaking = 3,
-		/datum/skill/misc/stealing = 2,
-		/datum/skill/labor/butchering = 2,
-		/datum/skill/craft/cooking = 4,
-	)
 
 	traits = list(
 		TRAIT_ROYALSERVANT
@@ -156,6 +157,16 @@
 // CONCUBINE
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/servant/concubine
+	raw_attribute_list = list(
+		STAT_FORTUNE = 3,
+		STAT_PERCEPTION = 2,
+		STAT_INTELLIGENCE = 1,
+		/datum/attribute/skill/misc/sneaking = 30,
+		/datum/attribute/skill/misc/stealing = 30,
+		/datum/attribute/skill/misc/reading = 20
+	)
+
 /datum/job/advclass/servant/concubine
 	title = "Concubine"
 	tutorial = "You are kept for pleasure, companionship, and emotional indulgence. \
@@ -165,17 +176,8 @@
 	outfit =/datum/outfit/servant/concubine
 	category_tags = list(CAT_SERVANT)
 
-	jobstats = list(
-		STATKEY_LCK = 3,
-		STATKEY_PER = 2,
-		STATKEY_INT = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/servant/concubine
 
-	skills = list(
-		/datum/skill/misc/sneaking = 3,
-		/datum/skill/misc/stealing = 3,
-		/datum/skill/misc/reading = 2
-	)
 
 	traits = list(
 		TRAIT_DECEIVING_MEEKNESS,

@@ -1,3 +1,16 @@
+/datum/attribute_holder/sheet/job/advclass/towner/town_mouth
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 2,
+		STAT_PERCEPTION = 3,
+		STAT_STRENGTH = -1,
+		/datum/attribute/skill/misc/reading = 50,
+		/datum/attribute/skill/labor/mathematics = 30,
+		/datum/attribute/skill/misc/music = 30,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/misc/riding = 20,
+		/datum/attribute/skill/combat/unarmed = 10
+	)
+
 /datum/job/advclass/towner/town_mouth
 	title = "Town Mouth"
 	tutorial = "You are the appointed voice of civic authority. \
@@ -9,20 +22,8 @@
 	category_tags = list(CAT_TOWNER)
 	give_bank_account = 20
 
-	jobstats = list(
-		STATKEY_INT = 2,
-		STATKEY_PER = 3,
-		STATKEY_STR = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/towner/town_mouth
 
-	skills = list(
-		/datum/skill/misc/reading = 5,
-		/datum/skill/labor/mathematics = 3,
-		/datum/skill/misc/music = 3,
-		/datum/skill/misc/athletics = 1,
-		/datum/skill/misc/riding = 2,
-		/datum/skill/combat/unarmed = 1,
-	)
 
 /datum/job/advclass/towner/town_mouth/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()

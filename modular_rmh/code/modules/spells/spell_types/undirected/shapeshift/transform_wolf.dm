@@ -20,4 +20,4 @@
 	if(!.)
 		return
 	var/mob/living/new_shape = .
-	new_shape.adjust_stat_modifier("[REF(src)]", STATKEY_SPD, 15 - new_shape.base_speed)
+	new_shape.adjust_stat_modifier("[REF(src)]", STATKEY_SPD, 15 - GET_MOB_ATTRIBUTE_VALUE(new_shape, STAT_SPEED))

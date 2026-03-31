@@ -92,6 +92,24 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/acolyte/base
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 1,
+		STAT_INTELLIGENCE = 2,
+		STAT_CONSTITUTION = 1,
+		STAT_ENDURANCE = 1,
+		STAT_SPEED = 1,
+		STAT_FORTUNE = 1,
+		/datum/attribute/skill/magic/holy = 20,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/combat/unarmed = 10,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/craft/cooking = 20,
+		/datum/attribute/skill/labor/mathematics = 20
+	)
+
 /datum/job/advclass/acolyte/base
 	title = "Chapel Acolyte"
 	tutorial = "You are a humble servant of the gods. \
@@ -107,25 +125,8 @@
 		/datum/action/cooldown/spell/undirected/conjure_item/light,
 	)
 
-	jobstats = list(
-		STATKEY_PER = 1,
-		STATKEY_INT = 2,
-		STATKEY_CON = 1,
-		STATKEY_END = 1,
-		STATKEY_SPD = 1,
-		STATKEY_LCK = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/acolyte/base
 
-	skills = list(
-		/datum/skill/magic/holy = 2,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/athletics = 1,
-		/datum/skill/combat/unarmed = 1,
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/craft/cooking = 2,
-		/datum/skill/labor/mathematics = 2
-	)
 
 	traits = list(
 		TRAIT_HOLY,
@@ -165,6 +166,24 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/acolyte/selune
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 2,
+		STAT_INTELLIGENCE = 2,
+		STAT_CONSTITUTION = 1,
+		STAT_ENDURANCE = 1,
+		STAT_SPEED = 1,
+		STAT_FORTUNE = 1,
+		/datum/attribute/skill/magic/holy = 20,
+		/datum/attribute/skill/misc/reading = 40,
+		/datum/attribute/skill/misc/medicine = 30,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/combat/unarmed = 10,
+		/datum/attribute/skill/misc/swimming = 20,
+		/datum/attribute/skill/misc/climbing = 10,
+		/datum/attribute/skill/labor/mathematics = 20
+	)
+
 /datum/job/advclass/acolyte/selune
 	title = "Selune Acolyte"
 	tutorial = "You serve Selune, the Moonmaiden. \
@@ -184,25 +203,8 @@
 		/datum/action/cooldown/spell/sacred_flame,
 	)
 
-	jobstats = list(
-		STATKEY_PER = 2,
-		STATKEY_INT = 2,
-		STATKEY_CON = 1,
-		STATKEY_END = 1,
-		STATKEY_SPD = 1,
-		STATKEY_LCK = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/acolyte/selune
 
-	skills = list(
-		/datum/skill/magic/holy = 2,
-		/datum/skill/misc/reading = 4,
-		/datum/skill/misc/medicine = 3,
-		/datum/skill/misc/athletics = 1,
-		/datum/skill/combat/unarmed = 1,
-		/datum/skill/misc/swimming = 2,
-		/datum/skill/misc/climbing = 1,
-		/datum/skill/labor/mathematics = 2
-	)
 
 	traits = list(
 		TRAIT_HOLY,
@@ -242,6 +244,22 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/acolyte/sune
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 1,
+		STAT_INTELLIGENCE = 2,
+		STAT_CONSTITUTION = 1,
+		STAT_ENDURANCE = 1,
+		STAT_SPEED = 2,
+		STAT_FORTUNE = 2,
+		/datum/attribute/skill/magic/holy = 20,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/music = 30,
+		/datum/attribute/skill/misc/sewing = 30,
+		/datum/attribute/skill/combat/unarmed = 10
+	)
+
 /datum/job/advclass/acolyte/sune
 	title = "Sune Acolyte"
 	tutorial = "You are a humble servant of the gods. \
@@ -265,23 +283,8 @@
 		/datum/action/cooldown/spell/forced_orgasm,
 	)
 
-	jobstats = list(
-		STATKEY_PER = 1,
-		STATKEY_INT = 2,
-		STATKEY_CON = 1,
-		STATKEY_END = 1,
-		STATKEY_SPD = 2,
-		STATKEY_LCK = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/acolyte/sune
 
-	skills = list(
-		/datum/skill/magic/holy = 2,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/music = 3,
-		/datum/skill/misc/sewing = 3,
-		/datum/skill/combat/unarmed = 1
-	)
 
 	traits = list(
 		TRAIT_HOLY,
@@ -324,6 +327,24 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/acolyte/nun
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 1,
+		STAT_INTELLIGENCE = 2,
+		STAT_CONSTITUTION = 1,
+		STAT_ENDURANCE = 1,
+		STAT_SPEED = 1,
+		STAT_FORTUNE = 1,
+		/datum/attribute/skill/magic/holy = 20,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/combat/unarmed = 10,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/craft/cooking = 20,
+		/datum/attribute/skill/labor/mathematics = 20
+	)
+
 /datum/job/advclass/acolyte/nun
 	title = "Nun"
 	tutorial = "You are a consecrated servant of the chapel. \
@@ -342,25 +363,8 @@
 		/datum/action/cooldown/spell/undirected/conjure_item/light,
 	)
 
-	jobstats = list(
-		STATKEY_PER = 1,
-		STATKEY_INT = 2,
-		STATKEY_CON = 1,
-		STATKEY_END = 1,
-		STATKEY_SPD = 1,
-		STATKEY_LCK = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/acolyte/nun
 
-	skills = list(
-		/datum/skill/magic/holy = 2,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/athletics = 1,
-		/datum/skill/combat/unarmed = 1,
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/craft/cooking = 2,
-		/datum/skill/labor/mathematics = 2
-	)
 
 	traits = list(
 		TRAIT_HOLY,
@@ -403,6 +407,24 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/acolyte/nun_regal
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 1,
+		STAT_INTELLIGENCE = 2,
+		STAT_CONSTITUTION = 1,
+		STAT_ENDURANCE = 1,
+		STAT_SPEED = 1,
+		STAT_FORTUNE = 1,
+		/datum/attribute/skill/magic/holy = 20,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/combat/unarmed = 10,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/craft/cooking = 20,
+		/datum/attribute/skill/labor/mathematics = 20
+	)
+
 /datum/job/advclass/acolyte/nun_regal
 	title = "Regal Nun"
 	tutorial = "You are a revered and adorned figure of the chapel. \
@@ -421,25 +443,8 @@
 		/datum/action/cooldown/spell/undirected/conjure_item/light,
 	)
 
-	jobstats = list(
-		STATKEY_PER = 1,
-		STATKEY_INT = 2,
-		STATKEY_CON = 1,
-		STATKEY_END = 1,
-		STATKEY_SPD = 1,
-		STATKEY_LCK = 1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/acolyte/nun_regal
 
-	skills = list(
-		/datum/skill/magic/holy = 2,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/athletics = 1,
-		/datum/skill/combat/unarmed = 1,
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/craft/cooking = 2,
-		/datum/skill/labor/mathematics = 2
-	)
 
 	traits = list(
 		TRAIT_HOLY,
@@ -482,6 +487,29 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/acolyte/warrior_priest
+	raw_attribute_list = list(
+		STAT_STRENGTH = 2,
+		STAT_PERCEPTION = 1,
+		STAT_INTELLIGENCE = 1,
+		STAT_CONSTITUTION = 2,
+		STAT_ENDURANCE = 3,
+		STAT_SPEED = 3,
+		STAT_FORTUNE = 2,
+		/datum/attribute/skill/magic/holy = 20,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/athletics = 10,
+		/datum/attribute/skill/combat/axesmaces = 20,
+		/datum/attribute/skill/combat/swords = 20,
+		/datum/attribute/skill/combat/whipsflails = 20,
+		/datum/attribute/skill/combat/polearms = 20,
+		/datum/attribute/skill/combat/unarmed = 20,
+		/datum/attribute/skill/misc/sewing = 20,
+		/datum/attribute/skill/craft/cooking = 20,
+		/datum/attribute/skill/labor/mathematics = 20
+	)
+
 /datum/job/advclass/acolyte/warrior_priest
 	title = "Warrior Acolyte"
 	tutorial = "A devout sentinel of the chapel, wielding faith as her weapon. She walks day and night, defending the weak and punishing darkness wherever it stirs."
@@ -500,30 +528,8 @@
 		/datum/action/cooldown/spell/undirected/longstrider,
 	)
 
-	jobstats = list(
-		STATKEY_STR = 2,
-		STATKEY_PER = 1,
-		STATKEY_INT = 1,
-		STATKEY_CON = 2,
-		STATKEY_END = 3,
-		STATKEY_SPD = 3,
-		STATKEY_LCK = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/acolyte/warrior_priest
 
-	skills = list(
-		/datum/skill/magic/holy = 2,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/athletics = 1,
-		/datum/skill/combat/axesmaces = 2,
-		/datum/skill/combat/swords = 2,
-		/datum/skill/combat/whipsflails = 2,
-		/datum/skill/combat/polearms = 2,
-		/datum/skill/combat/unarmed = 2,
-		/datum/skill/misc/sewing = 2,
-		/datum/skill/craft/cooking = 2,
-		/datum/skill/labor/mathematics = 2
-	)
 
 	traits = list(
 		TRAIT_HOLY,
@@ -577,6 +583,22 @@
 
 // ─────────────────────────────
 
+/datum/attribute_holder/sheet/job/advclass/acolyte/love
+	raw_attribute_list = list(
+		STAT_PERCEPTION = 1,
+		STAT_INTELLIGENCE = 2,
+		STAT_CONSTITUTION = 1,
+		STAT_ENDURANCE = 1,
+		STAT_SPEED = 2,
+		STAT_FORTUNE = 2,
+		/datum/attribute/skill/magic/holy = 20,
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/misc/medicine = 20,
+		/datum/attribute/skill/misc/music = 30,
+		/datum/attribute/skill/misc/sewing = 30,
+		/datum/attribute/skill/combat/unarmed = 10
+	)
+
 /datum/job/advclass/acolyte/love
 	title = "Love Acolyte"
 	tutorial = "A tender, spreading warmth, healing hearts, and inspiring love. She turns every gesture into a blessing of beauty and passion."
@@ -594,23 +616,8 @@
 		/datum/action/cooldown/spell/forced_orgasm,
 	)
 
-	jobstats = list(
-		STATKEY_PER = 1,
-		STATKEY_INT = 2,
-		STATKEY_CON = 1,
-		STATKEY_END = 1,
-		STATKEY_SPD = 2,
-		STATKEY_LCK = 2
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/acolyte/love
 
-	skills = list(
-		/datum/skill/magic/holy = 2,
-		/datum/skill/misc/reading = 3,
-		/datum/skill/misc/medicine = 2,
-		/datum/skill/misc/music = 3,
-		/datum/skill/misc/sewing = 3,
-		/datum/skill/combat/unarmed = 1
-	)
 
 	traits = list(
 		TRAIT_HOLY,

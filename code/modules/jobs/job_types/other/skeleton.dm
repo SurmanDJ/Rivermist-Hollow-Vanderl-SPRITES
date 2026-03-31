@@ -76,7 +76,6 @@
 	spawned.update_a_intents()
 	spawned.grant_undead_eyes()
 	spawned.ambushable = FALSE
-	spawned.underwear = "Nude"
 	if(length(spawned.quirks))
 		spawned.clear_quirks()
 	spawned.update_body()

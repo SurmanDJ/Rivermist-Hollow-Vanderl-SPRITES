@@ -98,7 +98,7 @@
 	//var/mob/dead/observer/O = isobserver(user) ? user : null
 	//var/mob/living/L = isliving(user) ? user : null
 	//var/mob/living/carbon/C = iscarbon(user) ? user : null
-	var/mob/living/carbon/human/H = ishuman(user) ? user : null
+	//var/mob/living/carbon/human/H = ishuman(user) ? user : null
 
 	. = list()
 
@@ -130,6 +130,16 @@
 				. += span_necrosis("[P[THEYRE]] hideous!")
 				user.add_stress(self_inspect ? /datum/stress_event/ugly_self : /datum/stress_event/ugly)
 
+	//Facial status
+	var/datum/status_effect/facial/facial = has_status_effect(/datum/status_effect/facial)
+	if(facial)
+		var/wet_or_dry = !facial?.has_dried_up ? "glazed with cum" : "plastered with dried cum"
+		if(user != src && isliving(user))
+			var/mob/living/L = user
+			. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_info("[P[THEYRE]] [wet_or_dry]!") : span_warning("[P[THEYRE]] smeared with something glossy!")
+		else
+			. += span_info("[P[THEYRE]] [wet_or_dry]!")
+
 	// Self inspections
 	if(!self_inspect)
 		//Old Party
@@ -147,7 +157,7 @@
 
 		// Excommunications
 		if(real_name in GLOB.excommunicated_players)
-			. += span_redtextbig("EXCOMMUNICATED!")
+			. += span_redtextbig("GOD-FORSAKEN!")
 		if(real_name in GLOB.heretical_players)
 			. += span_redtextbig("HERETIC! SHAME!")
 
@@ -173,6 +183,14 @@
 		// Thuild
 		if(HAS_TRAIT(src, TRAIT_THIEVESGUILD) && HAS_TRAIT(user, TRAIT_THIEVESGUILD))
 			. += span_smallgreen("A member of the Thieves' Guild.")
+
+
+		if(HAS_TRAIT(src, TRAIT_ALLURE))
+			if(user == src)
+				user.add_stress(/datum/stress_event/allure_self)
+			else
+				user.add_stress(/datum/stress_event/allure)
+
 		// Cabal
 		if(HAS_TRAIT(user, TRAIT_CABAL) && (istype(patron, /datum/patron/inhumen/zizo) || HAS_TRAIT(src, TRAIT_CABAL)))
 			. += span_purple("A fellow seeker of Her ascension.")
@@ -183,13 +201,13 @@
 		var/im_inquis = HAS_TRAIT(src, TRAIT_INQUISITION)
 		var/inquis_msg
 		if(they_inquis && im_inquis)
-			inquis_msg = "A Practical of our Psydonic Inquisitorial Sect."
+			inquis_msg = "A Practical of our Inquisitorial Sect."
 		if(they_inquis && im_pur)
-			inquis_msg = "The Lorde-Inquisitor of our Psydonic Inquisitorial Sect."
+			inquis_msg = "The Lorde-Inquisitor of our Inquisitorial Sect."
 		if(they_pur && im_inquis)
-			inquis_msg = "Subordinate to me in the Psydonic Inquisitorial Sect."
+			inquis_msg = "Subordinate to me in the Inquisitorial Sect."
 		if(they_pur && im_pur)
-			inquis_msg = "The Lorde-Inquisitor of the Sect sent here. That should be me though..."
+			inquis_msg = "The Lord-Inquisitor of the Sect sent here. That should be me though..."
 		if(inquis_msg)
 			. += span_silver(inquis_msg)
 
@@ -285,6 +303,18 @@
 				slot_title = " on [P[THEIR]] left side"
 			if(ITEM_SLOT_BELT_R)
 				slot_title = " on [P[THEIR]] right side"
+			if(ITEM_SLOT_ARMSLEEVES)
+				. += " on [P[THEIR]] arms."
+			if(ITEM_SLOT_GARTER)
+				. += " on [P[THEIR]] waist."
+			if(ITEM_SLOT_CHOKER)
+				. += " around [P[THEIR]] neck."
+			if(ITEM_SLOT_SOCKS)
+				. += " on [P[THEIR]] legs."
+			if(ITEM_SLOT_EARRING_L)
+				. += " in [P[THEIR]] left ear."
+			if(ITEM_SLOT_EARRING_R)
+				. += " in [P[THEIR]] right ear."
 		. += "[I.get_examine_icon(user)] - [P[THEYVE]] [I.get_examine_string(user)][slot_title]."
 	for(var/obj/item/I in held_items)
 		if(I.item_flags & ABSTRACT)
@@ -327,6 +357,28 @@
 		var/atom/item = get_most_expensive()
 		if(item)
 			. += span_tinynoticeital("You get the feeling [P[THEIR]] most valuable possession is [item.get_examine_name(user)].")
+
+	// Facial/creampie effect message
+	var/observer_privilege = isobserver(user)
+	var/datum/status_effect/facial/facial = has_status_effect(/datum/status_effect/facial)
+	var/datum/status_effect/facial/internal/creampie = null
+	if(observer_privilege || get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
+		creampie = has_status_effect(/datum/status_effect/facial/internal)
+	if(facial && creampie)
+		var/facial_wet_or_dry = !facial?.has_dried_up ? "glazed" : "plastered"
+		var/creampie_wet_or_dry = !creampie?.has_dried_up ? "dripping out" : "stained with"
+		var/we_wet_or_dry = facial?.has_dried_up && creampie?.has_dried_up ? "dried cum" : "cum"
+		if(user != src && isliving(user))
+			. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_info("[P[THEYRE]] [facial_wet_or_dry] and [creampie_wet_or_dry] [we_wet_or_dry]!") : span_warning("[P[THEYRE]] covered in something glossy!")
+		else
+			. += span_info("[P[THEYRE]] [facial_wet_or_dry] and [creampie_wet_or_dry] [we_wet_or_dry]!")
+	else if(creampie)
+		var/wet_or_dry = !creampie?.has_dried_up ? "dripping out cum" : "stained with dried cum"
+		if(user != src && isliving(user))
+			. += (L.STAPER >= 8 && L.STAINT >= 5) ? span_info("[P[THEYRE]] [wet_or_dry]!") : span_warning("[P[THEYRE]] letting out some glossy stuff!")
+		else
+			. += span_info("[P[THEYRE]] [wet_or_dry]!")
+
 
 	/// Stat comparing
 	if(!self_inspect && L && user.cmode)
@@ -501,6 +553,35 @@
 		. += span_boldwarning("[P[THEYRE]] unconscious.")
 	else if(InCritical())
 		. += span_warning("[P[THEYRE]] barely unconscious.")
+
+	//The Nymphomaniac Underground
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if((!appears_dead) && stat == CONSCIOUS && src.has_quirk(/datum/quirk/vice/lovefiend))
+			var/datum/quirk/vice/bonercheck = src.get_quirk(/datum/quirk/vice/lovefiend)
+			if((bonercheck) && (bonercheck.sated == 0))
+				if(living_user.has_quirk(/datum/quirk/vice/lovefiend)) //Takes one to know one
+					switch(rand(1,5))
+						if(1)
+							. += span_love("I can sense [P[THEIR]] <B>need</B> for fun...")
+						if(2)
+							. += span_love("[P[THEYRE]] <B>aching</B> for a release.")
+						if(3)
+							. += span_love("A carnal need <B>stirs</B> within [P[THEIR]] core.")
+						if(4)
+							. += span_love("I can practically feel [P[THEIR]] <B>horniness</B>...")
+						if(5)
+							. += span_love("Embers of desire <B>smolder</B> within [P[THEIR]].")
+				else if(Adjacent(user)) //No nympho, but close enough to notice.
+					switch(rand(1,4))
+						if(1)
+							. += span_love("[P[THEYRE]] shifting their legs quite a bit...")
+						if(2)
+							. += span_love("I can see [P[THEYRE]] is a bit restless...")
+						if(3)
+							. += span_love("[P[THEY]] seem distracted...")
+						if(4)
+							. += span_love("[P[THEYRE]] restless, for some reason.")
 
 	// Blood volume
 	if(!SEND_SIGNAL(src, COMSIG_DISGUISE_STATUS))

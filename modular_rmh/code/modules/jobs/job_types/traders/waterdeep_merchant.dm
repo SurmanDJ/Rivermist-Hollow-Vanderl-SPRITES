@@ -1,3 +1,18 @@
+/datum/attribute_holder/sheet/job/waterdeep_merchant
+	raw_attribute_list = list(
+		STAT_INTELLIGENCE = 2,
+		STAT_PERCEPTION = 1,
+		STAT_STRENGTH = -1,
+		/datum/attribute/skill/combat/swords = 20,
+		/datum/attribute/skill/combat/knives = 10,
+		/datum/attribute/skill/misc/reading = 60,
+		/datum/attribute/skill/misc/sneaking = 10,
+		/datum/attribute/skill/misc/stealing = 50,
+		/datum/attribute/skill/misc/lockpicking = 20,
+		/datum/attribute/skill/misc/riding = 20,
+		/datum/attribute/skill/labor/mathematics = 60
+	)
+
 /datum/job/waterdeep_merchant
 	title = "Waterdeep Guild Merchant"
 	tutorial = "You are a licensed merchant of the Waterdeep Trading Guild, operating in Rivermist Hollow. \
@@ -25,22 +40,8 @@
 		EXP_TYPE_MERCHANT_COMPANY = 500,
 	)
 
-	jobstats = list(
-		STATKEY_INT = 2,
-		STATKEY_PER = 1,
-		STATKEY_STR = -1
-	)
+	attribute_sheet = /datum/attribute_holder/sheet/job/waterdeep_merchant
 
-	skills = list(
-		/datum/skill/combat/swords = 2,
-		/datum/skill/combat/knives = 1,
-		/datum/skill/misc/reading = 6,
-		/datum/skill/misc/sneaking = 1,
-		/datum/skill/misc/stealing = 5,
-		/datum/skill/misc/lockpicking = 2,
-		/datum/skill/misc/riding = 2,
-		/datum/skill/labor/mathematics = 6
-	)
 
 	traits = list(
 		TRAIT_SEEPRICES,
