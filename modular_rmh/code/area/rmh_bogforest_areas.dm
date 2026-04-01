@@ -8,8 +8,10 @@
 	name = "Green Swamps"
 	first_time_text = "GREEN SWAMPS"
 	icon_state = "bog"
-	ambientsounds = DRONING_BOG_DAY
-	ambientnight = DRONING_BOG_NIGHT
+	droning_index = DRONING_BOG_DAY
+	droning_index_night = DRONING_BOG_NIGHT
+	ambient_index = AMBIENCE_FROG
+	ambient_index_night = AMBIENCE_GENERIC
 	background_track = 'sound/music/area/forest.ogg'
 	background_track_dusk = 'sound/music/area/forest.ogg'
 	background_track_night = 'sound/music/area/forest.ogg'
@@ -60,8 +62,10 @@
 /area/outdoors/rmh_darkforest
 	name = "The Dark Forest"
 	icon_state = "woods"
-	ambientsounds = DRONING_FOREST_DAY
-	ambientnight = DRONING_FOREST_NIGHT
+	droning_index = DRONING_FOREST_DAY
+	droning_index_night = DRONING_FOREST_NIGHT
+	ambient_index = AMBIENCE_BIRDS
+	ambient_index_night = AMBIENCE_FOREST
 	//spookysounds = SPOOKY_CROWS
 	//spookynight = SPOOKY_FOREST
 	background_track = 'sound/music/area/forest.ogg'
@@ -206,8 +210,8 @@
 	name = "Caves"
 	first_time_text = "CAVES"
 	icon_state = "cave"
-	ambientsounds = DRONING_CAVE_GENERIC
-	ambientnight = DRONING_CAVE_GENERIC
+	droning_index = DRONING_CAVE_GENERIC
+	ambient_index = AMBIENCE_CAVE
 	soundenv = 8
 	//deathsight_message = "a dark cave"
 	ceiling_protected = TRUE
@@ -217,8 +221,8 @@
 	name = "Moist Tunnels"
 	first_time_text = "MOIST TUNNELS"
 	icon_state = "cavewet"
-	ambientsounds = DRONING_CAVE_WET
-	ambientnight = DRONING_CAVE_WET
+	droning_index = DRONING_CAVE_WET
+	ambient_index = AMBIENCE_CAVE
 	//spookysounds = AMBIENCE_CAVE
 	//spookynight = AMBIENCE_CAVE
 	background_track = 'sound/music/area/caves.ogg'
@@ -326,8 +330,10 @@
 /area/under/town/rmh/basement/bogforest
 	name = "Bog&Forest Basements"
 	icon_state = "basement"
-	ambientsounds = DRONING_BASEMENT
-	ambientnight = DRONING_BASEMENT
+	droning_index = DRONING_BASEMENT
+	droning_index_night = DRONING_BASEMENT
+	ambient_index = AMBIENCE_DUNGEON
+	ambient_index_night = AMBIENCE_DUNGEON
 	//spookysounds = SPOOKY_DUNGEON
 	//spookynight = SPOOKY_DUNGEON
 	background_track = 'sound/music/area/catacombs.ogg'

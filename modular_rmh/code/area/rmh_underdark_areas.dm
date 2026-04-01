@@ -4,8 +4,8 @@
 	name = "The Underdark"
 	first_time_text = "THE UNDERDARK"
 	icon_state = "cavewet"
-	ambientsounds = DRONING_CAVE_WET
-	ambientnight = DRONING_CAVE_WET
+	droning_index = DRONING_CAVE_WET
+	ambient_index = AMBIENCE_CAVE
 	//spookysounds = AMBIENCE_CAVE
 	//spookynight = AMBIENCE_CAVE
 	background_track = 'sound/music/area/underdark.ogg'
@@ -83,8 +83,8 @@
 	first_time_text = "LAVA HOLLOWS"
 	icon_state = "cavelava"
 	first_time_text = "MOUNT DECAPITATION"
-	ambientsounds = DRONING_CAVE_LAVA
-	ambientnight = DRONING_CAVE_LAVA
+	droning_index = DRONING_CAVE_WET
+	ambient_index = AMBIENCE_CAVE
 	//spookysounds = AMBIENCE_CAVE
 	//spookynight = AMBIENCE_CAVE
 	ambush_times = list("night","dawn","dusk","day")

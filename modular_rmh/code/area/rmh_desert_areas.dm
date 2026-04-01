@@ -10,8 +10,8 @@
 	soundenv = 19
 	ambush_mobs = null
 	first_time_text = "CURSED DESERT"
-	ambientsounds = DRONING_MOUNTAIN
-	ambientnight = DRONING_MOUNTAIN
+	droning_index = DRONING_MOUNTAIN
+	ambient_index = AMBIENCE_GENERIC
 	background_track_dawn = 'modular_rmh/sound/music/area/desert_dawn.ogg'
 	background_track = 'modular_rmh/sound/music/area/desert_day.ogg'
 	background_track_dusk = 'modular_rmh/sound/music/area/desert_dusk.ogg'
@@ -30,8 +30,8 @@
 	ambush_mobs = list(
 				/mob/living/simple_animal/hostile/retaliate/spider/mutated = 5)
 	first_time_text = "DESERT VALLEY"
-	ambientsounds = DRONING_MOUNTAIN
-	ambientnight = DRONING_MOUNTAIN
+	droning_index = DRONING_MOUNTAIN
+	ambient_index = AMBIENCE_GENERIC
 	background_track_dawn = 'modular_rmh/sound/music/area/desert_dawn.ogg'
 	background_track = 'modular_rmh/sound/music/area/desert_day.ogg'
 	background_track_dusk = 'modular_rmh/sound/music/area/desert_dusk.ogg'
@@ -70,8 +70,8 @@
 	name = "Seaport Roofs"
 	icon = 'modular_rmh/icons/turf/areas.dmi'
 	icon_state = "roofs"
-	ambientsounds = DRONING_MOUNTAIN
-	ambientnight = DRONING_MOUNTAIN
+	droning_index = DRONING_MOUNTAIN
+	ambient_index = AMBIENCE_GENERIC
 	//spookysounds = SPOOKY_GEN
 	//spookynight = SPOOKY_GEN
 	background_track_dawn = 'modular_rmh/sound/music/area/desert_town.ogg'
@@ -130,8 +130,8 @@
 	name = "Oasis"
 	icon = 'modular_rmh/icons/turf/areas.dmi'
 	icon_state = "oasis"
-	ambientsounds = 'modular_rmh/sound/music/area/oasis_day.ogg'
-	ambientnight = 'modular_rmh/sound/music/area/oasis_night.ogg'
+	ambient_index = 'modular_rmh/sound/music/area/oasis_day.ogg'
+	ambient_index_night = 'modular_rmh/sound/music/area/oasis_night.ogg'
 	//spookysounds = null
 	//spookynight = null
 	background_track = 'sound/silence.ogg'

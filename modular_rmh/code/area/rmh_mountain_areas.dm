@@ -3,8 +3,8 @@
 /area/outdoors/mountains/rmh_mountains/frozen
 	name = "Dusk Spire Mountains"
 	icon_state = "decap"
-	ambientsounds = DRONING_MOUNTAIN
-	ambientnight = DRONING_MOUNTAIN
+	droning_index = DRONING_MOUNTAIN
+	ambient_index = AMBIENCE_GENERIC
 	background_track = 'sound/music/area/decap.ogg'
 	background_track_dusk = 'sound/music/area/decap.ogg'
 	background_track_night = 'sound/music/area/decap.ogg'
@@ -61,8 +61,8 @@
 	background_track_dusk = 'sound/music/area/manorgarri.ogg'
 	background_track_night = 'sound/music/area/manorgarri.ogg'
 	keep_area = TRUE
-	ambientsounds = DRONING_MOUNTAIN
-	ambientnight = DRONING_MOUNTAIN
+	droning_index = DRONING_MOUNTAIN
+	ambient_index = AMBIENCE_GENERIC
 
 /area/indoors/town/rmh/manor/basement
 	name = "Dusk Spire Manor Basement"
@@ -112,8 +112,8 @@
 	icon = 'modular_rmh/icons/turf/areas.dmi'
 	icon_state = "df"
 	background_track = 'sound/music/area/dwarf.ogg'
-	ambientsounds = DRONING_CAVE_GENERIC
-	ambientnight = DRONING_CAVE_GENERIC
+	droning_index = DRONING_CAVE_GENERIC
+	ambient_index = AMBIENCE_CAVE
 	//spookysounds = AMBIENCE_CAVE
 	//spookynight = AMBIENCE_CAVE
 	background_track_dusk = 'sound/music/area/dwarf.ogg'
@@ -129,8 +129,8 @@
 	icon = 'modular_rmh/icons/turf/areas.dmi'
 	icon_state = "df"
 	background_track = 'sound/music/area/dwarf.ogg'
-	ambientsounds = DRONING_CAVE_GENERIC
-	ambientnight = DRONING_CAVE_GENERIC
+	droning_index = DRONING_CAVE_GENERIC
+	ambient_index = AMBIENCE_CAVE
 	//spookysounds = AMBIENCE_CAVE
 	//spookynight = AMBIENCE_CAVE
 	background_track_dusk = 'sound/music/area/dwarf.ogg'
@@ -190,8 +190,8 @@
 /area/outdoors/rmh_field/tavel/mount_to_rivermist
 	name = "Mountain To Rivermist Hollow"
 	first_time_text = "TO RIVERMIST HOLLOW"
-	ambientsounds = DRONING_MOUNTAIN
-	ambientnight = DRONING_MOUNTAIN
+	droning_index = DRONING_MOUNTAIN
+	ambient_index = AMBIENCE_GENERIC
 
 /area/outdoors/rmh_field/tavel/mount_to_underdark
 	name = "Mountain Descent To Underdark"
