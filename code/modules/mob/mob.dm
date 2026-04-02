@@ -199,6 +199,32 @@ GLOBAL_VAR_INIT(mobids, 1)
 					return
 	to_chat(src, msg)
 
+/mob/proc/get_portal_visible_message_recipients()
+	return null
+
+/mob/proc/get_portal_visible_message(message)
+	return message
+
+/atom/proc/relay_visible_message_to_portals(message, list/skipped_mobs)
+	if(!message || !ismob(src))
+		return
+
+	var/mob/source_mob = src
+	var/list/portal_recipients = source_mob.get_portal_visible_message_recipients()
+	if(!length(portal_recipients))
+		return
+
+	var/portal_message = source_mob.get_portal_visible_message(message)
+	if(!portal_message)
+		return
+
+	for(var/mob/recipient in portal_recipients)
+		if(!recipient?.client)
+			continue
+		if(skipped_mobs && (recipient in skipped_mobs))
+			continue
+		recipient.show_message(portal_message, MSG_VISUAL)
+
 /**
  * Generate a visible message from this atom
  *
@@ -240,6 +266,10 @@ GLOBAL_VAR_INIT(mobids, 1)
 		M.show_message(msg, MSG_VISUAL, blind_message, MSG_AUDIBLE)
 		if(runechat_message && M.can_hear())
 			M.create_chat_message(src, raw_message = runechat_message, spans = list("emote"))
+
+	var/list/portal_skipped_mobs = hearers.Copy()
+	portal_skipped_mobs |= ignored_mobs
+	relay_visible_message_to_portals(message, portal_skipped_mobs)
 
 ///Adds the functionality to self_message.
 /mob/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, runechat_message = null, log_seen = NONE, log_seen_msg = null)

@@ -63,7 +63,8 @@
 	basic_mob.start_sex_session(target_living)
 	if(QDELETED(target))
 		return FALSE
-	set_movement_target(controller, target)
+	var/atom/interaction_anchor = get_horny_interaction_anchor(controller, basic_mob, target_living)
+	set_movement_target(controller, interaction_anchor ? interaction_anchor : target)
 
 	RegisterSignal(basic_mob, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 
@@ -104,6 +105,16 @@
 			return
 
 	var/mob/living/target_living = current_target
+	var/obj/item/portallight/expected_portal_light = controller.blackboard[BB_HORNY_PORTAL_LIGHT]
+	var/obj/item/portallight/portal_light = get_target_portal_light(controller, basic_mob, target_living)
+	if(expected_portal_light && !portal_light)
+		clear_completed_target_hostility(controller, target_living)
+		finish_action(controller, FALSE, target_key)
+		return
+	var/atom/interaction_anchor = portal_light ? portal_light : target_living
+	if(!interaction_anchor)
+		finish_action(controller, FALSE, target_key)
+		return
 	var/seek_start_time = controller.blackboard[BB_HORNY_SEEK_START_TIME]
 	var/stand_up_counter = controller.blackboard[BB_HORNY_STAND_UP_COUNTER]
 	if(isnull(stand_up_counter))
@@ -113,8 +124,9 @@
 	if(isnull(knockdown_need))
 		knockdown_need = TRUE
 
-	if(!basic_mob.Adjacent(target_living))
-		controller.set_blackboard_key(BB_HORNY_KNOCKDOWN_NEED, TRUE)
+	if(!basic_mob.Adjacent(interaction_anchor))
+		controller.set_blackboard_key(BB_HORNY_KNOCKDOWN_NEED, portal_light ? FALSE : TRUE)
+		set_movement_target(controller, interaction_anchor)
 		if(isnull(seek_start_time))
 			controller.set_blackboard_key(BB_HORNY_SEEK_START_TIME, world.time)
 		else if(world.time >= seek_start_time + seek_timeout)
@@ -125,7 +137,10 @@
 	else
 		controller.clear_blackboard_key(BB_HORNY_SEEK_START_TIME)
 
-	if(target_living.body_position != LYING_DOWN)
+	if(portal_light)
+		controller.set_blackboard_key(BB_HORNY_KNOCKDOWN_NEED, FALSE)
+		knockdown_need = FALSE
+	else if(target_living.body_position != LYING_DOWN)
 		controller.set_blackboard_key(BB_HORNY_KNOCKDOWN_NEED, TRUE)
 		knockdown_need = TRUE
 	else
@@ -159,6 +174,13 @@
 				finish_action(controller, FALSE, target_key)
 			return
 		controller.set_blackboard_key(BB_HORNY_STAND_UP_COUNTER, 0)
+		return
+
+	if(portal_light)
+		if(handle_target_prep(controller, basic_mob, target_living, session))
+			controller.set_blackboard_key(BB_HORNY_ACTIONLESS_TICKS, 0)
+			return
+		start_horny_action(controller, basic_mob, target_living, session, target_key)
 		return
 
 	if(try_pre_knockdown_disarm(controller, basic_mob, target_living))
@@ -226,6 +248,36 @@
 
 	return FALSE
 
+/datum/ai_behavior/horny/proc/get_target_portal_light(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
+	if(!controller || !basic_mob || !target_living)
+		return null
+
+	var/obj/item/portallight/portal_light = controller.blackboard[BB_HORNY_PORTAL_LIGHT]
+	if(!istype(portal_light))
+		return null
+	if(QDELETED(portal_light))
+		controller.clear_blackboard_key(BB_HORNY_PORTAL_LIGHT)
+		return null
+	if(portal_light.get_wearer() != target_living)
+		controller.clear_blackboard_key(BB_HORNY_PORTAL_LIGHT)
+		return null
+
+	if(iscarbon(basic_mob))
+		if(portal_light.loc != basic_mob && !isturf(portal_light.loc))
+			controller.clear_blackboard_key(BB_HORNY_PORTAL_LIGHT)
+			return null
+	else if(!isturf(portal_light.loc))
+		controller.clear_blackboard_key(BB_HORNY_PORTAL_LIGHT)
+		return null
+
+	return portal_light
+
+/datum/ai_behavior/horny/proc/get_horny_interaction_anchor(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
+	var/obj/item/portallight/portal_light = get_target_portal_light(controller, basic_mob, target_living)
+	if(portal_light)
+		return portal_light
+	return target_living
+
 /datum/ai_behavior/horny/proc/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
 	// Override this in mob-specific subclasses when they need setup work before the sex action starts.
 	return FALSE
@@ -255,17 +307,14 @@
 		prob2defend *= 1.2
 	if(target_living.surrendering)
 		prob2defend *= 0.1
-	prob2defend = CLAMP(prob2defend, 0, 85)
-
-	var/base_stamina_drain = iscarbon(basic_mob) ? target_living.maximum_stamina * 0.20 : target_living.maximum_stamina * 0.28
-	var/stamina_drain = max(round(base_stamina_drain * (1 - (prob2defend / 125))), 5)
-	target_living.adjust_stamina(stamina_drain, null, FALSE, FALSE)
+	prob2defend = CLAMP(prob2defend, 0, 100)
 
 	// Once only 20% stamina remains, the takedown becomes guaranteed
-	var/stamina_exhaustion = target_living.maximum_stamina ? (target_living.stamina / target_living.maximum_stamina) : 0
-	var/down_chance = CLAMP(round((stamina_exhaustion / 0.8) * 100), 0, 100)
+	var/stamina_exhaustion = (target_living.maximum_stamina - target_living.stamina) / target_living.maximum_stamina <= 0.2 ? 0 : (target_living.maximum_stamina - target_living.stamina) / target_living.maximum_stamina
+	prob2defend = prob2defend * stamina_exhaustion
+	var/down_chance = CLAMP(prob2defend, 0, 100)
 
-	if(prob(down_chance))
+	if(prob(100 - down_chance))
 		if(iscarbon(basic_mob))
 			target_living.SetStun(30)
 			target_living.SetKnockdown(50)
@@ -280,13 +329,17 @@
 		controller.set_blackboard_key(BB_HORNY_STUN_COOLDOWN, world.time + 5 SECONDS)
 		basic_mob.visible_message(span_danger("[basic_mob] tries to pull [target_living] to the ground, exhausting them!"))
 
+	var/base_stamina_drain = iscarbon(basic_mob) ? target_living.maximum_stamina * 0.25 : target_living.maximum_stamina * 0.28
+	var/stamina_drain = max(round(base_stamina_drain * (1 - (prob2defend / 125))), 5)
+	target_living.adjust_stamina(stamina_drain, null, FALSE, FALSE)
+
 	return TRUE
 
 /datum/ai_behavior/horny/proc/start_horny_action(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session, target_key)
 	if(!session)
 		return
 
-	var/action_type = select_horny_ai_act(basic_mob, target_living, session)
+	var/action_type = select_horny_ai_act(controller, basic_mob, target_living, session)
 	if(isnull(action_type))
 		var/actionless_ticks = controller.blackboard[BB_HORNY_ACTIONLESS_TICKS]
 		if(isnull(actionless_ticks))
@@ -300,7 +353,8 @@
 	controller.set_blackboard_key(BB_HORNY_ACTIONLESS_TICKS, 0)
 	if(isnull(session.current_action))
 		session.try_start_action(action_type)
-		basic_mob.face_atom(target_living)
+		var/atom/interaction_anchor = get_horny_interaction_anchor(controller, basic_mob, target_living)
+		basic_mob.face_atom(interaction_anchor ? interaction_anchor : target_living)
 		var/force = rand(SEX_FORCE_MID, SEX_FORCE_MAX)
 		var/speed = rand(SEX_SPEED_MID, SEX_SPEED_MAX)
 		session.set_current_force(force)
@@ -316,30 +370,48 @@
 				controller.set_blackboard_key(BB_HORNY_WRONG_ACTION, TRUE)
 				finish_action(controller, FALSE, target_key)
 
-/datum/ai_behavior/horny/proc/select_horny_ai_act(mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
-	var/list/weighted_actions = list()
+/datum/ai_behavior/horny/proc/add_weighted_action(list/weighted_actions, datum/sex_action/action_type, weight = 1)
+	for(var/i in 1 to weight)
+		weighted_actions += action_type
+
+/datum/ai_behavior/horny/proc/add_local_horny_actions(list/weighted_actions, mob/living/basic_mob, mob/living/target_living)
 	var/has_penis = !!basic_mob.getorganslot(ORGAN_SLOT_PENIS)
 	var/has_vagina = !!basic_mob.getorganslot(ORGAN_SLOT_VAGINA)
 	var/target_has_penis = !!target_living.getorganslot(ORGAN_SLOT_PENIS)
 	var/target_has_vagina = !!target_living.getorganslot(ORGAN_SLOT_VAGINA)
 
 	if(has_penis)
-		weighted_actions += /datum/sex_action/npc/npc_throat_sex
-		weighted_actions += /datum/sex_action/npc/npc_throat_sex
-		weighted_actions += /datum/sex_action/npc/npc_anal_sex
+		add_weighted_action(weighted_actions, /datum/sex_action/npc/npc_throat_sex, 2)
+		add_weighted_action(weighted_actions, /datum/sex_action/npc/npc_anal_sex)
 		if(target_has_vagina)
-			weighted_actions += /datum/sex_action/npc/npc_vaginal_sex
-			weighted_actions += /datum/sex_action/npc/npc_vaginal_sex
-			weighted_actions += /datum/sex_action/npc/npc_vaginal_sex
+			add_weighted_action(weighted_actions, /datum/sex_action/npc/npc_vaginal_sex, 3)
 
 	if(has_vagina)
-		weighted_actions += /datum/sex_action/npc/npc_facesitting
-		weighted_actions += /datum/sex_action/npc/npc_facesitting
+		add_weighted_action(weighted_actions, /datum/sex_action/npc/npc_facesitting, 2)
 		if(target_has_penis)
-			weighted_actions += /datum/sex_action/npc/npc_vaginal_ride_sex
-			weighted_actions += /datum/sex_action/npc/npc_vaginal_ride_sex
-			weighted_actions += /datum/sex_action/npc/npc_vaginal_ride_sex
-			weighted_actions += /datum/sex_action/npc/npc_anal_ride_sex
+			add_weighted_action(weighted_actions, /datum/sex_action/npc/npc_vaginal_ride_sex, 3)
+			add_weighted_action(weighted_actions, /datum/sex_action/npc/npc_anal_ride_sex)
+
+/datum/ai_behavior/horny/proc/add_portal_horny_actions(list/weighted_actions, mob/living/basic_mob, mob/living/target_living)
+	var/has_penis = !!basic_mob.getorganslot(ORGAN_SLOT_PENIS)
+	var/has_vagina = !!basic_mob.getorganslot(ORGAN_SLOT_VAGINA)
+
+	if(has_penis)
+		if(target_living.getorganslot(ORGAN_SLOT_VAGINA))
+			add_weighted_action(weighted_actions, /datum/sex_action/portal_base/portal_penis_vaginal, 3)
+		add_weighted_action(weighted_actions, /datum/sex_action/portal_base/portal_penis_anal, 2)
+
+	if(has_vagina)
+		if(target_living.getorganslot(ORGAN_SLOT_VAGINA))
+			add_weighted_action(weighted_actions, /datum/sex_action/portal_base/portal_vagina_vaginal, 3)
+		add_weighted_action(weighted_actions, /datum/sex_action/portal_base/portal_vagina_anal, 2)
+
+/datum/ai_behavior/horny/proc/select_horny_ai_act(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
+	var/list/weighted_actions = list()
+	if(get_target_portal_light(controller, basic_mob, target_living))
+		add_portal_horny_actions(weighted_actions, basic_mob, target_living)
+	else
+		add_local_horny_actions(weighted_actions, basic_mob, target_living)
 
 	if(!length(weighted_actions))
 		return null
@@ -355,6 +427,9 @@
 	return pick(valid_actions)
 
 /datum/ai_behavior/horny/simple_mob/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
+	if(get_target_portal_light(controller, basic_mob, target_living))
+		return FALSE
+
 	if(!ishuman(target_living) || !basic_mob.Adjacent(target_living))
 		return FALSE
 
@@ -367,7 +442,7 @@
 		if(pick_strip_target(basic_mob, human_target, allow_regular_clothes = TRUE))
 			return strip_human_target(basic_mob, human_target)
 
-	var/has_valid_action = !isnull(select_horny_ai_act(basic_mob, target_living, session))
+	var/has_valid_action = !isnull(select_horny_ai_act(controller, basic_mob, target_living, session))
 	if(has_valid_action && !prob(35))
 		return FALSE
 
@@ -497,12 +572,19 @@
 	if(!iscarbon(basic_mob))
 		return FALSE
 
+	var/obj/item/portallight/portal_light = get_target_portal_light(controller, basic_mob, target_living)
+	if(portal_light)
+		if(!ishuman(basic_mob))
+			return FALSE
+		var/mob/living/carbon/human/human_portal_user = basic_mob
+		return prepare_portal_light(controller, human_portal_user, portal_light)
+
 	var/mob/living/carbon/carbon_mob = basic_mob
 	ensure_target_grab(carbon_mob, target_living)
 	if(session.current_action)
 		return FALSE
 
-	var/has_valid_action = !isnull(select_horny_ai_act(basic_mob, target_living, session))
+	var/has_valid_action = !isnull(select_horny_ai_act(controller, basic_mob, target_living, session))
 	if(!has_valid_action && ishuman(basic_mob))
 		var/mob/living/carbon/human/human_basic_mob = basic_mob
 		if(pick_strip_target(basic_mob, human_basic_mob, FALSE))
@@ -545,6 +627,37 @@
 
 	if(!length(target_living.grabbedby))
 		target_living.grabbedby(carbon_mob, FALSE, sel_zone)
+
+/datum/ai_behavior/horny/human/proc/prepare_portal_light(datum/ai_controller/controller, mob/living/carbon/human/human_basic_mob, obj/item/portallight/portal_light)
+	if(human_basic_mob.get_active_held_item() == portal_light)
+		return FALSE
+
+	if(human_basic_mob.get_inactive_held_item() == portal_light)
+		human_basic_mob.swap_hand()
+		return TRUE
+
+	if(!isturf(portal_light.loc))
+		return FALSE
+	if(!human_basic_mob.Adjacent(portal_light))
+		return FALSE
+
+	if(human_basic_mob.get_active_held_item())
+		human_basic_mob.swap_hand()
+		if(human_basic_mob.get_active_held_item())
+			human_basic_mob.swap_hand()
+			var/obj/item/active_item = human_basic_mob.get_active_held_item()
+			var/datum/component/ai_inventory_manager/inventory = controller.get_inventory()
+			if(active_item && !(inventory && inventory.stow_item(active_item)))
+				human_basic_mob.dropItemToGround(active_item)
+		if(human_basic_mob.get_active_held_item())
+			return FALSE
+
+	human_basic_mob.visible_message(span_notice("[human_basic_mob] reaches for [portal_light]."))
+	if(!human_basic_mob.put_in_active_hand(portal_light) && !human_basic_mob.put_in_hands(portal_light))
+		return FALSE
+	if(human_basic_mob.get_inactive_held_item() == portal_light)
+		human_basic_mob.swap_hand()
+	return TRUE
 
 /datum/ai_behavior/horny/human/disarm_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
 	if(!human_target.Adjacent(basic_mob))
@@ -631,6 +744,7 @@
 
 	stop_active_horny_actions(source)
 	controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_HORNY_TARGET)
+	controller.clear_blackboard_key(BB_HORNY_PORTAL_LIGHT)
 	controller.CancelActions()
 
 
@@ -698,6 +812,7 @@
 	controller.clear_blackboard_key(BB_HORNY_KNOCKDOWN_NEED)
 	controller.clear_blackboard_key(BB_HORNY_AGGRO_TARGET)
 	controller.clear_blackboard_key(BB_HORNY_STUN_COOLDOWN)
+	controller.clear_blackboard_key(BB_HORNY_PORTAL_LIGHT)
 	controller.clear_blackboard_key(target_key)
 	controller.clear_blackboard_key(BB_HORNY_TIME_START)
 	if(basic_mob.is_dead())

@@ -110,3 +110,4 @@
 #define BB_HORNY_ACTIONLESS_TICKS "BB_horny_actionless_ticks"
 #define BB_HORNY_WRONG_ACTION "BB_horny_wrong_action"
 #define BB_HORNY_KNOCKDOWN_NEED "BB_horny_knockdown_need"
+#define BB_HORNY_PORTAL_LIGHT "BB_horny_portal_light"
