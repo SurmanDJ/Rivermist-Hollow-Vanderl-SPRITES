@@ -265,6 +265,8 @@
 	var/music_playing = FALSE
 	/// Tracker for amount of turfs we sprinted over, for things like bumping and charging
 	var/sprinted_tiles = 0
+	/// Tracker for amount of turfs sprinted since last dir change
+	var/sprinted_since_last_dir_change = 0
 	///how many tiles we can move while casting
 	var/cast_move = 0
 
