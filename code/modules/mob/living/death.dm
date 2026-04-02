@@ -178,6 +178,6 @@ GLOBAL_LIST_EMPTY(last_words)
 		if ("sewers")
 			locale = "somwhere under the city of [SSmapping.config.map_name] and all its bustling souls"
 		if ("church")
-			locale = "a hallowed place, sworn to the Ten" // special bit for the church since it's sacred ground
+			locale = "a hallowed place, sworn to the gods" // special bit for the church since it's sacred ground
 
 	return locale

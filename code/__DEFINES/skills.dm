@@ -17,7 +17,7 @@
 #define SKILL_EXP_LEGENDARY 2500
 
 // Gets the reference for the skill type that was given
-#define GetSkillRef(A) (SSskills.all_skills[A])
+#define GetSkillRef(A) (SSskills.all_skills[canonical_skill_type(A)])
 
 //Blacksmith resultant skills
 #define BLACKSMITH_LEVEL_MIN -10

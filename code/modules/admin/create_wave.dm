@@ -129,10 +129,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 
 /datum/create_wave/New()
 
-	for(var/datum/attribute/skill/skill as anything in subtypesof(/datum/attribute/skill))
-		if(IS_ABSTRACT(skill))
-			continue
-		skills_list += skill
+	for(var/skill_type in GLOB.all_skills)
+		skills_list += GLOB.all_skills[skill_type]
 
 	for(var/trait in GLOB.traits_by_type)
 		traits_list += GLOB.traits_by_type[trait]

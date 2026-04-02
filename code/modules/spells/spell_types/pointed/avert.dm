@@ -13,7 +13,6 @@
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	associated_skill = /datum/attribute/skill/magic/holy
-	required_items = list(/obj/item/clothing/neck/psycross/silver/divine/necra)
 
 	invocation = "Undermaiden avert your gaze!"
 	invocation_type = INVOCATION_SHOUT
@@ -31,8 +30,7 @@
 
 /datum/action/cooldown/spell/avert/templar
 	name = "Divine Grace"
-	invocation = "May The Ten grace you with time!"
-	required_items = list(/obj/item/clothing/neck/psycross/silver/divine)
+	invocation = "May the gods grace you with time!"
 
 /datum/action/cooldown/spell/avert/is_valid_target(atom/cast_on)
 	. = ..()

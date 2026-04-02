@@ -9,7 +9,6 @@
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	associated_skill = /datum/attribute/skill/magic/holy
-	required_items = list(/obj/item/clothing/neck/psycross/silver/divine)
 
 	charge_required = FALSE
 	cooldown_time = 10 SECONDS
@@ -65,7 +64,7 @@
 		if(((cast_on.real_name in GLOB.excommunicated_players) || (cast_on.real_name in GLOB.heretical_players)) && !HAS_TRAIT(cast_on, TRAIT_FANATICAL))
 			cast_on.visible_message(
 				span_warning("The angry Ten sear the flesh of [cast_on]! a foolish blasphemer and heretic!"),
-				span_notice("I am despised by the Ten, rejected, and they remind me just how unlovable I am with a wave of pain!"),
+				span_notice("I am despised by the gods, rejected, and they remind me just how unlovable I am with a wave of pain!"),
 			)
 			cast_on.emote("scream")
 			return
@@ -241,7 +240,6 @@
 	antimagic_flags = MAGIC_RESISTANCE_UNHOLY
 	required_items = null
 	is_profane = TRUE
-	required_items = list(/obj/item/clothing/neck/psycross)
 
 /datum/action/cooldown/spell/healing/greater
 	name = "Miracle"
@@ -264,4 +262,3 @@
 	required_items = null
 	stun_undead = FALSE
 	is_profane = TRUE
-	required_items = list(/obj/item/clothing/neck/psycross)

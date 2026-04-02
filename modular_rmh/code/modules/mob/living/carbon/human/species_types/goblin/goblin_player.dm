@@ -143,8 +143,8 @@
 		/datum/body_marking/front,
 	)
 
-	specstats_m = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 1, STATKEY_LCK = 0)
-	specstats_f = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 1, STATKEY_LCK = 0)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/goblin_player/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/goblin_player/stats/female
 
 	enflamed_icon = "widefire"
 	native_language = "Orcish"
@@ -180,3 +180,10 @@
 		"Teal" = "2D7B75",
 		"Hadal" = "1C4552",
 	)
+
+/datum/attribute_holder/sheet/job/species/goblin_player/stats/male
+	raw_attribute_list = list(STAT_STRENGTH = 0, STAT_PERCEPTION = 0, STAT_INTELLIGENCE = 0, STAT_CONSTITUTION = 0, STAT_ENDURANCE = 0, STAT_SPEED = 1, STAT_FORTUNE = 0)
+
+
+/datum/attribute_holder/sheet/job/species/goblin_player/stats/female
+	raw_attribute_list = list(STAT_STRENGTH = 0, STAT_PERCEPTION = 0, STAT_INTELLIGENCE = 0, STAT_CONSTITUTION = 0, STAT_ENDURANCE = 0, STAT_SPEED = 1, STAT_FORTUNE = 0)

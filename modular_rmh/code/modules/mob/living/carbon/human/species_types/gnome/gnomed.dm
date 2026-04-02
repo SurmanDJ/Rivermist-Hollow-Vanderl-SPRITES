@@ -16,20 +16,7 @@
 
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, STUBBLE, OLDGREY)
 	inherent_traits = list(TRAIT_TINY, TRAIT_NOMOBSWAP, TRAIT_LIGHT_STEP, TRAIT_COIN_ILLITERATE, TRAIT_LUCKY_COOK)
-	inherent_skills = list(
-		/datum/skill/misc/sneaking = 4,
-		/datum/skill/misc/lockpicking = 3,
-
-		/datum/skill/combat/knives = 3,
-		/datum/skill/combat/crossbows = 3,
-
-		/datum/skill/craft/traps = 4,
-		/datum/skill/craft/alchemy = 3,
-
-		/datum/skill/labor/mining = 3,
-
-		/datum/skill/magic/arcane = 2,
-	)
+	inherent_sheet = /datum/attribute_holder/sheet/job/species/gnomed/inherent
 
 	use_skintones = TRUE
 
@@ -119,8 +106,8 @@
 
 	// Gets 2 SPD if they aren't wearing shoes
 	// Gets 0 / 1 END if they eat enough
-	specstats_m = list(STATKEY_STR = 0, STATKEY_PER = 1, STATKEY_INT = 2, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 0, STATKEY_LCK = -1)
-	specstats_f = list(STATKEY_STR = 0, STATKEY_PER = 1, STATKEY_INT = 2, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 0, STATKEY_LCK = -1)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/gnomed/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/gnomed/stats/female
 
 	enflamed_icon = "widefire"
 
@@ -216,3 +203,27 @@
 	var/datum/component/darkling/D = C.GetComponent(/datum/component/darkling)
 	if(D)
 		qdel(D)
+
+/datum/attribute_holder/sheet/job/species/gnomed/inherent
+	raw_attribute_list = list(
+		/datum/attribute/skill/misc/sneaking = 40,
+		/datum/attribute/skill/misc/lockpicking = 30,
+
+		/datum/attribute/skill/combat/knives = 30,
+		/datum/attribute/skill/combat/crossbows = 30,
+
+		/datum/attribute/skill/craft/traps = 40,
+		/datum/attribute/skill/craft/alchemy = 30,
+
+		/datum/attribute/skill/labor/mining = 30,
+
+		/datum/attribute/skill/magic/arcane = 20,
+	)
+
+
+/datum/attribute_holder/sheet/job/species/gnomed/stats/male
+	raw_attribute_list = list(STAT_STRENGTH = 0, STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 2, STAT_CONSTITUTION = 0, STAT_ENDURANCE = 0, STAT_SPEED = 0, STAT_FORTUNE = -1)
+
+
+/datum/attribute_holder/sheet/job/species/gnomed/stats/female
+	raw_attribute_list = list(STAT_STRENGTH = 0, STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 2, STAT_CONSTITUTION = 0, STAT_ENDURANCE = 0, STAT_SPEED = 0, STAT_FORTUNE = -1)

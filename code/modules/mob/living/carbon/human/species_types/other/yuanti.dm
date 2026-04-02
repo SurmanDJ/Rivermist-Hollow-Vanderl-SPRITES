@@ -68,8 +68,8 @@
 		OFFSET_UNDIES = list(0,-1),\
 	)
 
-	specstats_m = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = 1, STATKEY_END = 1, STATKEY_SPD = 0, STATKEY_LCK = -1)
-	specstats_f = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = 1, STATKEY_END = 1, STATKEY_SPD = 0, STATKEY_LCK = -1)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/yuanti/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/yuanti/stats/female
 
 	enflamed_icon = "widefire"
 	bodypart_features = list(
@@ -164,3 +164,10 @@
 		"Black 3"      = SKIN_TONE_BLACK3,
 
 	))
+
+/datum/attribute_holder/sheet/job/species/yuanti/stats/male
+	raw_attribute_list = list(STAT_STRENGTH = 0, STAT_PERCEPTION = 0, STAT_INTELLIGENCE = 0, STAT_CONSTITUTION = 1, STAT_ENDURANCE = 1, STAT_SPEED = 0, STAT_FORTUNE = -1)
+
+
+/datum/attribute_holder/sheet/job/species/yuanti/stats/female
+	raw_attribute_list = list(STAT_STRENGTH = 0, STAT_PERCEPTION = 0, STAT_INTELLIGENCE = 0, STAT_CONSTITUTION = 1, STAT_ENDURANCE = 1, STAT_SPEED = 0, STAT_FORTUNE = -1)

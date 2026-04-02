@@ -1,6 +1,5 @@
 /datum/attribute_holder/sheet/job/advclass/combat/adventurer_druid/circle_moon
 	raw_attribute_list = list(
-		STAT_ENDURANCE = 2,
 		STAT_ENDURANCE = 1,
 		/datum/attribute/skill/magic/druidic = 40,
 		/datum/attribute/skill/labor/farming = 30,

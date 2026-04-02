@@ -858,7 +858,6 @@
 #include "code\datums\attributes\attributes\attribute_modifier.dm"
 #include "code\datums\attributes\attributes\holders\_sheet.dm"
 #include "code\datums\attributes\attributes\holders\jobs\_job_sheet.dm"
-#include "code\datums\attributes\legacy_adapters.dm"
 #include "code\datums\attributes\attributes\skills\_skill.dm"
 #include "code\datums\attributes\attributes\skills\combat.dm"
 #include "code\datums\attributes\attributes\skills\craft.dm"

@@ -165,7 +165,7 @@
 /datum/stress_event/eora
 	stress_change = -4
 	timer = INFINITY
-	desc = span_boldgreen("Eora brings me peace.")
+	desc = span_boldgreen("Sune brings me peace.")
 
 // Bard buffs below
 

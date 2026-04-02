@@ -25,19 +25,7 @@
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,OLDGREY)
 	inherent_traits = list(TRAIT_NOMOBSWAP)
-	inherent_skills = list(
-		/datum/skill/combat/bows = 4,
-		/datum/skill/combat/knives = 3,
-
-		/datum/skill/misc/sneaking = 4,
-		/datum/skill/misc/climbing = 3,
-		/datum/skill/misc/swimming = 2,
-
-		/datum/skill/labor/butchering = 2,
-		/datum/skill/labor/fishing = 2,
-
-		/datum/skill/magic/druidic = 3,
-	)
+	inherent_sheet = /datum/attribute_holder/sheet/job/species/wood/inherent
 	use_skintones = 1
 	disliked_food = NONE
 	liked_food = NONE
@@ -124,8 +112,8 @@
 		OFFSET_UNDIES = list(0,0),\
 	)
 
-	specstats_m = list(STATKEY_STR = 0, STATKEY_PER = 2, STATKEY_INT = 0, STATKEY_CON = 0, STATKEY_END = 1, STATKEY_SPD = 2, STATKEY_LCK = 0)
-	specstats_f = list(STATKEY_STR = 0, STATKEY_PER = 2, STATKEY_INT = 0, STATKEY_CON = 0, STATKEY_END = 1, STATKEY_SPD = 2, STATKEY_LCK = 0)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/wood/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/wood/stats/female
 	enflamed_icon = "widefire"
 
 	body_markings = list(
@@ -206,3 +194,26 @@
 
 /datum/species/elf/wood/after_creation(mob/living/carbon/C)
 	C.dna.species.accent_language = C.dna.species.get_accent(C.dna.species.native_language, 1)
+
+/datum/attribute_holder/sheet/job/species/wood/inherent
+	raw_attribute_list = list(
+		/datum/attribute/skill/combat/bows = 40,
+		/datum/attribute/skill/combat/knives = 30,
+
+		/datum/attribute/skill/misc/sneaking = 40,
+		/datum/attribute/skill/misc/climbing = 30,
+		/datum/attribute/skill/misc/swimming = 20,
+
+		/datum/attribute/skill/labor/butchering = 20,
+		/datum/attribute/skill/labor/fishing = 20,
+
+		/datum/attribute/skill/magic/druidic = 30,
+	)
+
+
+/datum/attribute_holder/sheet/job/species/wood/stats/male
+	raw_attribute_list = list(STAT_STRENGTH = 0, STAT_PERCEPTION = 2, STAT_INTELLIGENCE = 0, STAT_CONSTITUTION = 0, STAT_ENDURANCE = 1, STAT_SPEED = 2, STAT_FORTUNE = 0)
+
+
+/datum/attribute_holder/sheet/job/species/wood/stats/female
+	raw_attribute_list = list(STAT_STRENGTH = 0, STAT_PERCEPTION = 2, STAT_INTELLIGENCE = 0, STAT_CONSTITUTION = 0, STAT_ENDURANCE = 1, STAT_SPEED = 2, STAT_FORTUNE = 0)

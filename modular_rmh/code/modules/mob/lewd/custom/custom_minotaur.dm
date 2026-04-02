@@ -64,8 +64,8 @@
 	soundpack_m = /datum/voicepack/orc
 	soundpack_f = /datum/voicepack/orc
 
-	specstats_m = list(STATKEY_STR = 5, STATKEY_PER = 5, STATKEY_INT = -3, STATKEY_CON = 5, STATKEY_END = 5, STATKEY_SPD = 3, STATKEY_LCK = 0)
-	specstats_f = list(STATKEY_STR = 5, STATKEY_PER = 5, STATKEY_INT = -3, STATKEY_CON = 5, STATKEY_END = 5, STATKEY_SPD = 3, STATKEY_LCK = 0)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/custom_minotaur/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/custom_minotaur/stats/female
 
 	enflamed_icon = "widefire"
 
@@ -123,3 +123,10 @@
 	. = ..()
 	name = "Minotaur"
 	icon_state = "MinotaurFem"
+
+/datum/attribute_holder/sheet/job/species/custom_minotaur/stats/male
+	raw_attribute_list = list(STAT_STRENGTH = 5, STAT_PERCEPTION = 5, STAT_INTELLIGENCE = -3, STAT_CONSTITUTION = 5, STAT_ENDURANCE = 5, STAT_SPEED = 3, STAT_FORTUNE = 0)
+
+
+/datum/attribute_holder/sheet/job/species/custom_minotaur/stats/female
+	raw_attribute_list = list(STAT_STRENGTH = 5, STAT_PERCEPTION = 5, STAT_INTELLIGENCE = -3, STAT_CONSTITUTION = 5, STAT_ENDURANCE = 5, STAT_SPEED = 3, STAT_FORTUNE = 0)

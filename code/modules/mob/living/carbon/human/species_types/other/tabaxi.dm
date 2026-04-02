@@ -64,8 +64,8 @@
 	)
 	inherent_traits = list(TRAIT_LIGHT_STEP)
 
-	specstats_m = list(STATKEY_STR = -2, STATKEY_PER = 2, STATKEY_INT = 0, STATKEY_CON = -2, STATKEY_END = 0, STATKEY_SPD = 2, STATKEY_LCK = 0)
-	specstats_f = list(STATKEY_STR = -2, STATKEY_PER = 2, STATKEY_INT = 0, STATKEY_CON = -2, STATKEY_END = 0, STATKEY_SPD = 2, STATKEY_LCK = 0)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/tabaxi/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/tabaxi/stats/female
 
 	enflamed_icon = "widefire"
 	organs = list(
@@ -180,3 +180,10 @@
 		H.emote(emote, forced = TRUE)
 
 		COOLDOWN_START(src, cat_meow_cooldown, 5 MINUTES)
+
+/datum/attribute_holder/sheet/job/species/tabaxi/stats/male
+	raw_attribute_list = list(STAT_STRENGTH = -2, STAT_PERCEPTION = 2, STAT_INTELLIGENCE = 0, STAT_CONSTITUTION = -2, STAT_ENDURANCE = 0, STAT_SPEED = 2, STAT_FORTUNE = 0)
+
+
+/datum/attribute_holder/sheet/job/species/tabaxi/stats/female
+	raw_attribute_list = list(STAT_STRENGTH = -2, STAT_PERCEPTION = 2, STAT_INTELLIGENCE = 0, STAT_CONSTITUTION = -2, STAT_ENDURANCE = 0, STAT_SPEED = 2, STAT_FORTUNE = 0)

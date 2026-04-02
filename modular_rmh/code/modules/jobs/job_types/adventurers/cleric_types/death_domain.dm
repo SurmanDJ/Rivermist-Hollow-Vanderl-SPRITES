@@ -72,7 +72,7 @@
 		"Great axe" = /obj/item/weapon/polearm/halberd/bardiche/woodcutter,
 	)
 
-	var/weaponchoice = spawned.select_equippable(player_client, selectableweapon, message = "Choose Your Specialisation", title = "Warrior of the ten!")
+	var/weaponchoice = spawned.select_equippable(player_client, selectableweapon, message = "Choose Your Specialisation", title = "Warrior of the gods!")
 	if(!weaponchoice)
 		return
 
@@ -135,4 +135,3 @@
 	. = ..()
 	equipped_human.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
 
-	

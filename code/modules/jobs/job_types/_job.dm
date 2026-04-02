@@ -229,9 +229,6 @@
 	var/attribute_sheet_child
 	var/attribute_sheet_adult
 
-	/// Runtime-cached bridge for legacy jobstats/skills content.
-	var/datum/attribute_holder/sheet/job/legacy_attribute_sheet
-
 /datum/job/proc/get_default_rune_link()
 	if(antag_job)
 		return RUNE_LINK_ANTAG
@@ -241,9 +238,6 @@
 	. = ..()
 	if(rune_linked == RUNE_LINK_DEFAULT)
 		rune_linked = get_default_rune_link()
-	if(!attribute_sheet && !attribute_sheet_old && !attribute_sheet_child && !attribute_sheet_adult)
-		attribute_sheet = get_legacy_attribute_sheet()
-	populate_legacy_attribute_lists()
 	if(give_bank_account)
 		for(var/X in GLOB.lords_positions)
 			peopleiknow += X
@@ -470,7 +464,7 @@
 	else if(attribute_sheet)
 		sheet_to_apply = attribute_sheet
 	else
-		sheet_to_apply = get_legacy_attribute_sheet()
+		sheet_to_apply = build_runtime_attribute_sheet()
 
 	if(!sheet_to_apply)
 		return FALSE
@@ -478,36 +472,45 @@
 	spawned_human.attributes?.add_sheet(sheet_to_apply)
 	return TRUE
 
-/datum/job/proc/get_legacy_attribute_sheet()
+/datum/job/proc/build_runtime_attribute_sheet()
 	if(!LAZYLEN(jobstats) && !LAZYLEN(skills))
 		return null
-	if(!legacy_attribute_sheet)
-		legacy_attribute_sheet = build_legacy_attribute_sheet(jobstats, skills)
-	return legacy_attribute_sheet
 
-/datum/job/proc/get_attribute_sheet_for_legacy_views()
-	if(attribute_sheet)
-		return resolve_attribute_sheet(attribute_sheet)
-	if(attribute_sheet_adult)
-		return resolve_attribute_sheet(attribute_sheet_adult)
-	if(attribute_sheet_old)
-		return resolve_attribute_sheet(attribute_sheet_old)
-	if(attribute_sheet_child)
-		return resolve_attribute_sheet(attribute_sheet_child)
-	return null
+	var/datum/attribute_holder/sheet/job/generated_sheet = new
+	generated_sheet.raw_attribute_list = list()
 
-/datum/job/proc/populate_legacy_attribute_lists()
-	if(LAZYLEN(jobstats) && LAZYLEN(skills))
-		return
+	if(LAZYLEN(jobstats))
+		for(var/stat_key in jobstats)
+			var/stat_path = legacy_attribute_stat_path(stat_key)
+			if(!stat_path)
+				continue
 
-	var/datum/attribute_holder/sheet/legacy_view_sheet = get_attribute_sheet_for_legacy_views()
-	if(!legacy_view_sheet)
-		return
+			var/amount = jobstats[stat_key]
+			if(!isnum(amount))
+				continue
 
-	if(!LAZYLEN(jobstats))
-		jobstats = build_legacy_jobstats_from_sheet(legacy_view_sheet)
-	if(!LAZYLEN(skills))
-		skills = build_legacy_skills_from_sheet(legacy_view_sheet)
+			generated_sheet.raw_attribute_list[stat_path] = amount
+
+	if(LAZYLEN(skills))
+		for(var/skill_key in skills)
+			var/skill_path = canonical_skill_type(skill_key)
+			if(!skill_path)
+				continue
+
+			var/amount = skills[skill_key]
+			if(islist(amount))
+				amount = amount[1]
+			if(!isnum(amount))
+				continue
+
+			var/translated_amount = amount * 10
+			if(skill_path in generated_sheet.raw_attribute_list)
+				generated_sheet.raw_attribute_list[skill_path] = max(generated_sheet.raw_attribute_list[skill_path], translated_amount)
+			else
+				generated_sheet.raw_attribute_list[skill_path] = translated_amount
+
+	generated_sheet.update_attributes()
+	return generated_sheet
 
 /datum/job/proc/GetAntagRep()
 	. = CONFIG_GET(keyed_list/antag_rep)[lowertext(title)]

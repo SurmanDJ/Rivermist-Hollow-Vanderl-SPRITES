@@ -199,10 +199,6 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	var/list/inherent_traits_f
 	/// Associative list of skills to adjustments
 	var/datum/attribute_holder/sheet/job/inherent_sheet
-	/// Legacy associative list of skills to adjustments. Kept as a bridge for local content still being migrated.
-	var/list/inherent_skills
-	/// Runtime-cached bridge for legacy inherent skill content.
-	var/datum/attribute_holder/sheet/job/legacy_inherent_sheet
 	/// Species-only traits used for drawing, can be found in DNA.dm
 	var/list/species_traits = list()
 	/// Components to add when spawning
@@ -287,12 +283,6 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 
 	var/datum/attribute_holder/sheet/statsheet_male
 	var/datum/attribute_holder/sheet/statsheet_female
-	/// Legacy species stat modifiers. Kept as a bridge for local content still being migrated.
-	var/list/specstats_m
-	var/list/specstats_f
-	/// Runtime-cached bridge for legacy species stat content.
-	var/datum/attribute_holder/sheet/job/legacy_statsheet_male
-	var/datum/attribute_holder/sheet/job/legacy_statsheet_female
 
 	/// Amount of times we got autocorrected?? why is this a thing?
 	var/amtfail = 0
@@ -911,31 +901,13 @@ GLOBAL_LIST_EMPTY(roundstart_species)
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
 /datum/species/proc/get_inherent_attribute_sheet()
-	if(inherent_sheet)
-		return inherent_sheet
-	if(!LAZYLEN(inherent_skills))
-		return null
-	if(!legacy_inherent_sheet)
-		legacy_inherent_sheet = build_legacy_attribute_sheet(null, inherent_skills)
-	return legacy_inherent_sheet
+	return inherent_sheet
 
 /datum/species/proc/get_gender_attribute_sheet(gender)
 	if(gender == FEMALE)
-		if(statsheet_female)
-			return statsheet_female
-		if(!LAZYLEN(specstats_f))
-			return statsheet_male || legacy_statsheet_male
-		if(!legacy_statsheet_female)
-			legacy_statsheet_female = build_legacy_attribute_sheet(specstats_f, null)
-		return legacy_statsheet_female
+		return statsheet_female || statsheet_male
 
-	if(statsheet_male)
-		return statsheet_male
-	if(!LAZYLEN(specstats_m))
-		return null
-	if(!legacy_statsheet_male)
-		legacy_statsheet_male = build_legacy_attribute_sheet(specstats_m, null)
-	return legacy_statsheet_male
+	return statsheet_male
 
 /datum/species/proc/on_gender_update(mob/living/carbon/human/C, old_gender)
 	var/datum/attribute_holder/sheet/male_sheet = get_gender_attribute_sheet(MALE)

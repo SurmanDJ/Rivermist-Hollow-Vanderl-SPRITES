@@ -19,18 +19,7 @@
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, STUBBLE, OLDGREY)
 	inherent_traits = list(TRAIT_TINY, TRAIT_NOMOBSWAP, TRAIT_LIGHT_STEP, TRAIT_COIN_ILLITERATE, TRAIT_LUCKY_COOK)
-	inherent_skills = list(
-		/datum/skill/craft/engineering = 4,
-		/datum/skill/craft/crafting = 3,
-		/datum/skill/craft/alchemy = 3,
-
-		/datum/skill/combat/crossbows = 2,
-
-		/datum/skill/misc/reading = 4,
-		/datum/skill/labor/mathematics = 4,
-
-		/datum/skill/magic/arcane = 3,
-	)
+	inherent_sheet = /datum/attribute_holder/sheet/job/species/gnome/inherent
 
 	use_skintones = TRUE
 
@@ -120,8 +109,8 @@
 
 	// Gets 2 SPD if they aren't wearing shoes
 	// Gets 0 / 1 END if they eat enough
-	specstats_m = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = 1, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 0, STATKEY_LCK = 2)
-	specstats_f = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = 1, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 0, STATKEY_LCK = 2)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/gnome/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/gnome/stats/female
 
 	enflamed_icon = "widefire"
 
@@ -245,3 +234,25 @@
 		H.apply_status_effect(/datum/status_effect/buff/stuffed)
 	else
 		H.remove_status_effect(/datum/status_effect/buff/stuffed)
+
+/datum/attribute_holder/sheet/job/species/gnome/inherent
+	raw_attribute_list = list(
+		/datum/attribute/skill/craft/engineering = 40,
+		/datum/attribute/skill/craft/crafting = 30,
+		/datum/attribute/skill/craft/alchemy = 30,
+
+		/datum/attribute/skill/combat/crossbows = 20,
+
+		/datum/attribute/skill/misc/reading = 40,
+		/datum/attribute/skill/labor/mathematics = 40,
+
+		/datum/attribute/skill/magic/arcane = 30,
+	)
+
+
+/datum/attribute_holder/sheet/job/species/gnome/stats/male
+	raw_attribute_list = list(STAT_STRENGTH = 0, STAT_PERCEPTION = 0, STAT_INTELLIGENCE = 1, STAT_CONSTITUTION = 0, STAT_ENDURANCE = 0, STAT_SPEED = 0, STAT_FORTUNE = 2)
+
+
+/datum/attribute_holder/sheet/job/species/gnome/stats/female
+	raw_attribute_list = list(STAT_STRENGTH = 0, STAT_PERCEPTION = 0, STAT_INTELLIGENCE = 1, STAT_CONSTITUTION = 0, STAT_ENDURANCE = 0, STAT_SPEED = 0, STAT_FORTUNE = 2)

@@ -7,7 +7,7 @@
 /mob/living/carbon/human/species/tieberian
 	race = /datum/species/tieberian
 
-/datum/attribute_holder/sheet/job/species/tieberian
+/datum/attribute_holder/sheet/job/species/tieberian/stats
 	raw_attribute_list = list(
 		STAT_INTELLIGENCE = 1,
 		STAT_FORTUNE = 2
@@ -34,17 +34,7 @@
 
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, STUBBLE, OLDGREY)
 	inherent_traits = list(TRAIT_NOMOBSWAP, TRAIT_NOFIRE, TRAIT_ALLURE)
-	inherent_skills = list(
-		/datum/skill/magic/arcane = 3,
-		/datum/skill/magic/blood = 2,
-
-		/datum/skill/craft/alchemy = 2,
-
-		/datum/skill/combat/knives = 2,
-
-		/datum/skill/misc/sneaking = 2,
-		/datum/skill/misc/reading = 2,
-	)
+	inherent_sheet = /datum/attribute_holder/sheet/job/species/tieberian/inherent
 	use_skintones = TRUE
 
 	possible_ages = NORMAL_AGES_LIST
@@ -107,8 +97,8 @@
 		OFFSET_TESTICLES = list(0,0),\
 		OFFSET_VAGINA = list(0,0),\
 	)
-	statsheet_male = /datum/attribute_holder/sheet/job/species/tieberian
-	statsheet_female = /datum/attribute_holder/sheet/job/species/tieberian
+	statsheet_male = /datum/attribute_holder/sheet/job/species/tieberian/stats
+	statsheet_female = /datum/attribute_holder/sheet/job/species/tieberian/stats
 
 	enflamed_icon = "widefire"
 
@@ -241,3 +231,15 @@
 	var/static/list/last_names = world.file2list('strings/rt/names/other/tieflast.txt')
 	return last_names
 
+/datum/attribute_holder/sheet/job/species/tieberian/inherent
+	raw_attribute_list = list(
+		/datum/attribute/skill/magic/arcane = 30,
+		/datum/attribute/skill/magic/blood = 20,
+
+		/datum/attribute/skill/craft/alchemy = 20,
+
+		/datum/attribute/skill/combat/knives = 20,
+
+		/datum/attribute/skill/misc/sneaking = 20,
+		/datum/attribute/skill/misc/reading = 20,
+	)

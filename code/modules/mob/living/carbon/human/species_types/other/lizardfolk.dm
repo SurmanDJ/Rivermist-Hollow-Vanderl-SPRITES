@@ -66,8 +66,8 @@
 	)
 
 
-	specstats_m = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = -1, STATKEY_CON = 1, STATKEY_END = 1, STATKEY_SPD = 0, STATKEY_LCK = 0)
-	specstats_f = list(STATKEY_STR = 0, STATKEY_PER = 0, STATKEY_INT = -1, STATKEY_CON = 1, STATKEY_END = 1, STATKEY_SPD = 0, STATKEY_LCK = 0)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/lizardfolk/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/lizardfolk/stats/female
 
 	inherent_traits = list(TRAIT_NASTY_EATER)
 	enflamed_icon = "widefire"
@@ -162,3 +162,10 @@
 
 /datum/species/lizardfolk/get_skin_list()
 	return get_common_mutant_color_palette()
+
+/datum/attribute_holder/sheet/job/species/lizardfolk/stats/male
+	raw_attribute_list = list(STAT_STRENGTH = 0, STAT_PERCEPTION = 0, STAT_INTELLIGENCE = -1, STAT_CONSTITUTION = 1, STAT_ENDURANCE = 1, STAT_SPEED = 0, STAT_FORTUNE = 0)
+
+
+/datum/attribute_holder/sheet/job/species/lizardfolk/stats/female
+	raw_attribute_list = list(STAT_STRENGTH = 0, STAT_PERCEPTION = 0, STAT_INTELLIGENCE = -1, STAT_CONSTITUTION = 1, STAT_ENDURANCE = 1, STAT_SPEED = 0, STAT_FORTUNE = 0)

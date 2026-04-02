@@ -16,8 +16,8 @@
 	inherent_traits = list(TRAIT_TINY, TRAIT_DARKVISION)
 	hungry_hungry_kobold = FALSE
 
-	specstats_m = list(STATKEY_STR = -1, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = -1, STATKEY_END = 0, STATKEY_SPD = 1, STATKEY_LCK = 1)
-	specstats_f = list(STATKEY_STR = -1, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = -1, STATKEY_END = 0, STATKEY_SPD = 1, STATKEY_LCK = 1)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/kobold_classic/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/kobold_classic/stats/female
 
 	use_skintones = FALSE
 	default_color = "EAA501"
@@ -125,3 +125,10 @@
 
 /datum/species/kobold/classic/get_random_features()
 	return ..()
+
+/datum/attribute_holder/sheet/job/species/kobold_classic/stats/male
+	raw_attribute_list = list(STAT_STRENGTH = -1, STAT_PERCEPTION = 0, STAT_INTELLIGENCE = 0, STAT_CONSTITUTION = -1, STAT_ENDURANCE = 0, STAT_SPEED = 1, STAT_FORTUNE = 1)
+
+
+/datum/attribute_holder/sheet/job/species/kobold_classic/stats/female
+	raw_attribute_list = list(STAT_STRENGTH = -1, STAT_PERCEPTION = 0, STAT_INTELLIGENCE = 0, STAT_CONSTITUTION = -1, STAT_ENDURANCE = 0, STAT_SPEED = 1, STAT_FORTUNE = 1)

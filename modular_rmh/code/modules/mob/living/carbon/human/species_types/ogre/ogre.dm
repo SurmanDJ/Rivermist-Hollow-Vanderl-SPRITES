@@ -85,8 +85,8 @@
 		OFFSET_BREASTS = list(0,5),\
 	)
 
-	specstats_m = list(STATKEY_STR = 2, STATKEY_CON = 2, STATKEY_END = 1, STATKEY_INT = -3, STATKEY_SPD = -1)
-	specstats_f = list(STATKEY_STR = 2, STATKEY_CON = 2, STATKEY_END = 1, STATKEY_INT = -3, STATKEY_SPD = -1)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/ogre/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/ogre/stats/female
 
 	enflamed_icon = "widefire"
 
@@ -208,3 +208,10 @@
 
 /datum/species/ogre/get_possible_surnames(gender = MALE)
 	return null
+
+/datum/attribute_holder/sheet/job/species/ogre/stats/male
+	raw_attribute_list = list(STAT_STRENGTH = 2, STAT_CONSTITUTION = 2, STAT_ENDURANCE = 1, STAT_INTELLIGENCE = -3, STAT_SPEED = -1)
+
+
+/datum/attribute_holder/sheet/job/species/ogre/stats/female
+	raw_attribute_list = list(STAT_STRENGTH = 2, STAT_CONSTITUTION = 2, STAT_ENDURANCE = 1, STAT_INTELLIGENCE = -3, STAT_SPEED = -1)

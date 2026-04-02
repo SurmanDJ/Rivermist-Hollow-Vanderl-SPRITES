@@ -1,13 +1,13 @@
 /mob/living/carbon/human/species/triton
 	race = /datum/species/triton
 
-/datum/attribute_holder/sheet/job/species/triton
+/datum/attribute_holder/sheet/job/species/triton/inherent
 	raw_attribute_list = list(
 		/datum/attribute/skill/labor/fishing = 30,
 		/datum/attribute/skill/misc/swimming = 40,
 	)
 
-/datum/attribute_holder/sheet/job/species/triton/male
+/datum/attribute_holder/sheet/job/species/triton/stats/female
 	raw_attribute_list = list(
 		STAT_STRENGTH = -1,
 		STAT_PERCEPTION = -2,
@@ -16,7 +16,7 @@
 		STAT_INTELLIGENCE = 2
 	)
 
-/datum/attribute_holder/sheet/job/species/triton/female
+/datum/attribute_holder/sheet/job/species/triton/stats/male
 	raw_attribute_list = list(
 		STAT_STRENGTH = 2,
 		STAT_PERCEPTION = -4,
@@ -57,15 +57,12 @@
 	species_traits = list(NO_UNDERWEAR, HAIR, FACEHAIR, OLDGREY)
 	inherent_traits = list(TRAIT_NOMOBSWAP, TRAIT_WATER_BREATHING, TRAIT_GOOD_SWIM)
 	inherent_traits_m = list(TRAIT_STRONGBITE)
-	inherent_skills = list(
-		/datum/skill/labor/fishing = 3,
-		/datum/skill/misc/swimming = 4,
-	)
+	inherent_sheet = /datum/attribute_holder/sheet/job/species/triton/inherent
 
-	specstats_f = list(STATKEY_STR = -1, STATKEY_PER = -2, STATKEY_CON = -2, STATKEY_SPD = 1, STATKEY_INT = 2)
-	specstats_m = list(STATKEY_STR = 2, STATKEY_PER = -4, STATKEY_CON = 3, STATKEY_SPD = -3)
-	// Поменял местами, так как женские спрайты - это были мужские, и наоборот
-	limbs_icon_m = 'icons/roguetown/mob/bodies/f/triton.dmi'
+	statsheet_female = /datum/attribute_holder/sheet/job/species/triton/stats/female
+	statsheet_male = /datum/attribute_holder/sheet/job/species/triton/stats/male
+
+	limbs_icon_m = 'icons/roguetown/mob/bodies/f/triton.dmi' //This is intended, as triton sprite files are named in reverse
 	limbs_icon_f = 'icons/roguetown/mob/bodies/m/triton.dmi'
 
 	soundpack_f = /datum/voicepack/female

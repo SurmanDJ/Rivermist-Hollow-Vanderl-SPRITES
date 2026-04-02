@@ -1,4 +1,4 @@
-#define GET_ATTRIBUTE_DATUM(path) GLOB.all_attributes[path]
+#define GET_ATTRIBUTE_DATUM(path) GLOB.all_attributes[canonical_attribute_type(path)]
 #define GET_MOB_ATTRIBUTE_VALUE_RAW(mob, attribute_path) mob.attributes?.raw_attribute_list[attribute_path]
 #define GET_MOB_ATTRIBUTE_VALUE(mob, attribute_path) mob.attributes?.attribute_list[attribute_path]
 #define GET_MOB_SKILL_VALUE_RAW(mob, skill_path) mob.attributes?.return_raw_effective_skill(skill_path)

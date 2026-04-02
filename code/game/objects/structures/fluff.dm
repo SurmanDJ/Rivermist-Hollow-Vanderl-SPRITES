@@ -1347,17 +1347,13 @@
 	bride.adjust_triumphs(1)
 
 	if(!secret_marriage)
-		var/announcement_message = "Eora [groom.gender == bride.gender ? "begrudgingly accepts" : "proudly embraces"] the marriage between [groom.real_name] and [bride_first_name]!"
+		var/announcement_message = "Sune [groom.gender == bride.gender ? "begrudgingly accepts" : "proudly embraces"] the marriage between [groom.real_name] and [bride_first_name]!"
 		priority_announce(announcement_message, title = "Holy Union!", sound = 'sound/misc/bell.ogg')
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_MARRIAGE, groom, bride)
 	record_round_statistic(STATS_MARRIAGES)
 	qdel(apple)
 	return TRUE
-
-/obj/structure/fluff/psycross/copper/Destroy()
-	addomen("psycross")
-	return ..()
 
 /obj/structure/fluff/psycross/proc/AOE_flash(mob/user, range = 15, power = 5, targeted = FALSE)
 	var/list/mob/targets = get_flash_targets(get_turf(src), range, FALSE)

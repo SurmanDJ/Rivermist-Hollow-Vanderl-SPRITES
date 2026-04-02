@@ -988,7 +988,7 @@
 	category = "Cloak"
 
 /datum/repeatable_crafting_recipe/sewing/eoratemplar
-	name = "eoran surcoat"
+	name = "sunean surcoat"
 	output = /obj/item/clothing/cloak/stabard/templar/eora
 	requirements = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 1)
@@ -1483,7 +1483,7 @@
 	category = "Tabard"
 
 /datum/repeatable_crafting_recipe/sewing/eoran_tabard
-	name = "eoran tabard"
+	name = "sunean tabard"
 	output = /obj/item/clothing/cloak/templar/eoran
 	requirements = list(
 		/obj/item/natural/cloth = 2,
@@ -1776,11 +1776,11 @@
 	output =/obj/item/caparison/psy
 
 /datum/repeatable_crafting_recipe/sewing/caparison/astrata
-	name = "astratan caparison"
+	name = "solar caparison"
 	output =/obj/item/caparison/astrata
 
 /datum/repeatable_crafting_recipe/sewing/caparison/eora
-	name = "eoran caparison"
+	name = "sunean caparison"
 	output =/obj/item/caparison/eora
 
 /datum/repeatable_crafting_recipe/sewing/caparison/honse

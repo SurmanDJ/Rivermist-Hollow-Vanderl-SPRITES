@@ -7,7 +7,6 @@
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	associated_skill = /datum/attribute/skill/magic/holy
-	required_items = list(/obj/item/clothing/neck/psycross/silver/divine/abyssor)
 
 	invocation = "Abyssor bless me with one of your servants!"
 	invocation_type = INVOCATION_WHISPER
@@ -20,11 +19,9 @@
 	item_duration = 0
 
 /datum/action/cooldown/spell/undirected/conjure_item/summon_leech/pestra
-	name = "Pestra's Leech"
-	desc = "Summon a leech by Pestra's will."
+	name = "Healing Leech"
+	desc = "Summon a Healing leech."
 	button_icon_state = "diagnose"
 
-	required_items = list(/obj/item/clothing/neck/psycross/silver/divine/pestra)
-
-	invocation = "Pestra grant me the creacher to cleanse the blood!"
+	invocation = "Grant me a creature to cleanse the blood!"
 	invocation_type = INVOCATION_WHISPER

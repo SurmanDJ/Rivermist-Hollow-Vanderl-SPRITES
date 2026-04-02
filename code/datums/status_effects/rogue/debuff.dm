@@ -439,7 +439,7 @@
 	duration = 20 SECONDS
 
 /atom/movable/screen/alert/status_effect/debuff/drunk
-	name = "Eoran Wine"
+	name = "Sunean Wine"
 	desc = span_warning("I am intoxicated from ambrosia not meant for mortal mouths.\n")
 	icon_state = "drunk"
 
