@@ -1008,6 +1008,8 @@
 
 		if(SPELL_ESSENCE)
 			var/obj/item/clothing/gloves/essence_gauntlet/gaunt = target
+			if(!istype(gaunt))
+				return
 			if(!gaunt?.check_gauntlet_validity(owner))
 				return
 

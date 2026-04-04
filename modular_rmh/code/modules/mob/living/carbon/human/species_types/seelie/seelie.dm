@@ -81,8 +81,8 @@
 		/datum/customizer/organ/genitals/testicles/human,
 	)
 
-	specstats_m = list(STATKEY_STR = -6, STATKEY_PER = 4, STATKEY_INT = 2, STATKEY_CON = -6, STATKEY_END = -1, STATKEY_SPD = 7)
-	specstats_f = list(STATKEY_STR = -6, STATKEY_PER = 4, STATKEY_INT = 2, STATKEY_CON = -6, STATKEY_END = -1, STATKEY_SPD = 7)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/seelie/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/seelie/stats/female
 
 	enflamed_icon = "widefire"
 
@@ -213,3 +213,10 @@
 #undef SEELIE_SCALE
 #undef SEELIE_WING_TRAIT
 #undef SEELIE_MOVESPEED_ID
+
+/datum/attribute_holder/sheet/job/species/seelie/stats/male
+	raw_attribute_list = list(STAT_STRENGTH = -6, STAT_PERCEPTION = 4, STAT_INTELLIGENCE = 2, STAT_CONSTITUTION = -6, STAT_ENDURANCE = -1, STAT_SPEED = 7)
+
+
+/datum/attribute_holder/sheet/job/species/seelie/stats/female
+	raw_attribute_list = list(STAT_STRENGTH = -6, STAT_PERCEPTION = 4, STAT_INTELLIGENCE = 2, STAT_CONSTITUTION = -6, STAT_ENDURANCE = -1, STAT_SPEED = 7)

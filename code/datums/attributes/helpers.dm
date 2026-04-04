@@ -1,4 +1,71 @@
 // This is stupid and inefficient and should be defines, but i don't want to type every argument out, every time
+/proc/canonical_skill_type(skill_type)
+	if(isnull(skill_type))
+		return null
+
+	var/text_path = "[skill_type]"
+	if(findtext(text_path, "/datum/skill/"))
+		switch(skill_type)
+			if(/datum/skill/combat/axes, /datum/skill/combat/maces)
+				return /datum/attribute/skill/combat/axesmaces
+
+		var/translated_path = text2path(replacetext(text_path, "/datum/skill/", "/datum/attribute/skill/"))
+		if(ispath(translated_path, SKILL))
+			return translated_path
+		return null
+
+	if(ispath(skill_type, SKILL))
+		return skill_type
+	return null
+
+/proc/canonical_attribute_type(attribute_type)
+	var/canonical_skill = canonical_skill_type(attribute_type)
+	if(canonical_skill)
+		return canonical_skill
+
+	var/canonical_stat = legacy_attribute_stat_path(attribute_type)
+	if(canonical_stat)
+		return canonical_stat
+
+	return attribute_type
+
+/proc/legacy_attribute_stat_path(stat_key)
+	switch(stat_key)
+		if(STATKEY_STR)
+			return STAT_STRENGTH
+		if(STATKEY_PER)
+			return STAT_PERCEPTION
+		if(STATKEY_INT)
+			return STAT_INTELLIGENCE
+		if(STATKEY_CON)
+			return STAT_CONSTITUTION
+		if(STATKEY_END)
+			return STAT_ENDURANCE
+		if(STATKEY_SPD)
+			return STAT_SPEED
+		if(STATKEY_LCK)
+			return STAT_FORTUNE
+	if(ispath(stat_key, STAT))
+		return stat_key
+	return null
+
+/proc/normalize_attribute_stat_list(list/stat_list)
+	if(!LAZYLEN(stat_list))
+		return null
+
+	var/list/normalized = list()
+	for(var/stat_key in stat_list)
+		var/stat_path = legacy_attribute_stat_path(stat_key)
+		if(!stat_path)
+			continue
+
+		var/amount = stat_list[stat_key]
+		if(!isnum(amount))
+			continue
+
+		normalized[stat_path] = amount
+	return normalized
+
 /mob/proc/diceroll(requirement = 0, crit = 10, dice_num = 3, dice_sides = 6, count_modifiers = TRUE, context = DICE_CONTEXT_DEFAULT, return_flags = RETURN_DICE_SUCCESS)
 	return attributes ? attributes.diceroll(requirement, crit, dice_num, dice_sides, count_modifiers, context, return_flags) : DICE_FAILURE
 

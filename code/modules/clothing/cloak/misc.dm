@@ -309,7 +309,7 @@
 
 /obj/item/clothing/cloak/pantheon
 	name = "pantheon cloak"
-	desc = "A divine blue cloak with shimmering gold sewn in, it represents the ten in their whole. Typically worn by High Templars of the Ten"
+	desc = "A divine blue cloak with shimmering gold sewn in, it represents the gods in their whole. Typically worn by High Templars of the gods"
 	icon_state = "seecloak"
 	item_state = "seecloak"
 	boobed = FALSE

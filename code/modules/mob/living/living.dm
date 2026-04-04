@@ -1112,6 +1112,7 @@
 
 	if(m_intent == MOVE_INTENT_RUN)
 		sprinted_tiles++
+		sprinted_since_last_dir_change++
 		var/boon = get_learning_boon(/datum/attribute/skill/misc/athletics)
 		adjust_experience(/datum/attribute/skill/misc/athletics, (GET_MOB_ATTRIBUTE_VALUE(src, STAT_ENDURANCE)*0.05) * boon)
 

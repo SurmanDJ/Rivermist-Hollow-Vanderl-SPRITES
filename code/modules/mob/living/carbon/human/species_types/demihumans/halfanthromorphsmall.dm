@@ -105,8 +105,8 @@
 
 	inherent_traits = list(TRAIT_KEENEARS)
 
-	specstats_m = list(STATKEY_PER = 2, STATKEY_INT = -1, STATKEY_CON = -1, STATKEY_SPD = 1, STATKEY_LCK = -1, STATKEY_END = -1)
-	specstats_f = list(STATKEY_PER = 2, STATKEY_INT = -1, STATKEY_CON = -1, STATKEY_SPD = 1, STATKEY_LCK = -1, STATKEY_END = -1)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/halfanthromorphsmall/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/halfanthromorphsmall/stats/female
 	enflamed_icon = "widefire"
 	organs = list(
 		ORGAN_SLOT_BRAIN = /obj/item/organ/brain,
@@ -195,4 +195,9 @@
 /datum/species/half_anthromorphsmall/qualifies_for_rank(rank, list/features)
 	return TRUE
 
+/datum/attribute_holder/sheet/job/species/halfanthromorphsmall/stats/male
+	raw_attribute_list = list(STAT_PERCEPTION = 2, STAT_INTELLIGENCE = -1, STAT_CONSTITUTION = -1, STAT_SPEED = 1, STAT_FORTUNE = -1, STAT_ENDURANCE = -1)
 
+
+/datum/attribute_holder/sheet/job/species/halfanthromorphsmall/stats/female
+	raw_attribute_list = list(STAT_PERCEPTION = 2, STAT_INTELLIGENCE = -1, STAT_CONSTITUTION = -1, STAT_SPEED = 1, STAT_FORTUNE = -1, STAT_ENDURANCE = -1)

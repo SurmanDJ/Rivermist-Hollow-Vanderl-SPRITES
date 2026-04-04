@@ -14,7 +14,7 @@
 
 /obj/item/clothing/armor/plate/full/holysee
 	name = "holy silver plate"
-	desc = "Silver-clad plate for the guardians and the warriors, for the spears and shields of the Ten."
+	desc = "Silver-clad plate for the guardians and the warriors, for the spears and shields of the gods."
 	icon = 'icons/roguetown/clothing/special/martyr.dmi'
 	icon_state = "silverarmor"
 	item_state = "silverarmor"

@@ -7,7 +7,7 @@
 /mob/living/carbon/human/species/human/halfdrow
 	race = /datum/species/human/halfdrow
 
-/datum/attribute_holder/sheet/job/species/halfdrow
+/datum/attribute_holder/sheet/job/species/halfdrow/stats
 	raw_attribute_list = list(
 		STAT_SPEED = 1,
 		STAT_FORTUNE = 2,
@@ -35,17 +35,7 @@
 
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, STUBBLE, OLDGREY)
 	inherent_traits = list(TRAIT_NOMOBSWAP, TRAIT_ALLURE)
-	inherent_skills = list(
-		/datum/skill/combat/knives = 3,
-		/datum/skill/combat/swords = 2,
-		/datum/skill/combat/bows = 2,
-
-		/datum/skill/misc/sneaking = 3,
-		/datum/skill/misc/lockpicking = 2,
-		/datum/skill/misc/reading = 2,
-
-		/datum/skill/magic/arcane = 2,
-	)
+	inherent_sheet = /datum/attribute_holder/sheet/job/species/halfdrow/inherent
 
 	use_skintones = TRUE
 	possible_ages = NORMAL_AGES_LIST
@@ -95,8 +85,8 @@
 		OFFSET_UNDIES = list(0,-1),\
 	)
 
-	statsheet_male = /datum/attribute_holder/sheet/job/species/halfdrow
-	statsheet_female = /datum/attribute_holder/sheet/job/species/halfdrow
+	statsheet_male = /datum/attribute_holder/sheet/job/species/halfdrow/stats
+	statsheet_female = /datum/attribute_holder/sheet/job/species/halfdrow/stats
 
 	enflamed_icon = "widefire"
 
@@ -231,3 +221,16 @@
 	var/datum/component/darkling/D = C.GetComponent(/datum/component/darkling)
 	if(D)
 		qdel(D)
+
+/datum/attribute_holder/sheet/job/species/halfdrow/inherent
+	raw_attribute_list = list(
+		/datum/attribute/skill/combat/knives = 30,
+		/datum/attribute/skill/combat/swords = 20,
+		/datum/attribute/skill/combat/bows = 20,
+
+		/datum/attribute/skill/misc/sneaking = 30,
+		/datum/attribute/skill/misc/lockpicking = 20,
+		/datum/attribute/skill/misc/reading = 20,
+
+		/datum/attribute/skill/magic/arcane = 20,
+	)

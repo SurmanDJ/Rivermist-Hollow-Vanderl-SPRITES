@@ -7,7 +7,6 @@
 	charge_required = FALSE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	associated_skill = /datum/attribute/skill/magic/holy
-	required_items = list(/obj/item/clothing/neck/psycross/silver/divine/dendor)
 
 	possible_shapes = list(/mob/living/simple_animal/hostile/retaliate/troll)
 
@@ -33,7 +32,6 @@
 		return
 	var/mob/living/new_shape = .
 	new_shape.set_patron(caster.patron)
-	required_items = list() // so the troll can transform back
 	spell_cost = 0
 	spell_type = NONE
 
@@ -41,6 +39,5 @@
 	. = ..()
 	if(!.)
 		return
-	required_items = list(/obj/item/clothing/neck/psycross/silver/divine/dendor)
 	spell_cost = 100
 	spell_type = SPELL_MIRACLE

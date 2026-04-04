@@ -65,7 +65,7 @@
 		"Claymor" = /obj/item/weapon/sword/long/greatsword/claymore/iron,
 	)
 
-	var/weaponchoice = spawned.select_equippable(player_client, selectableweapon, message = "Choose Your Specialisation", title = "Warrior of the ten!")
+	var/weaponchoice = spawned.select_equippable(player_client, selectableweapon, message = "Choose Your Specialisation", title = "Warrior of the gods!")
 	if(!weaponchoice)
 		return
 

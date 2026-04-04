@@ -82,13 +82,13 @@
 	icon_state = "dendorrobe"
 
 /obj/item/clothing/shirt/robe/eora
-	name = "eoran robe"
+	name = "revealing robe"
 	desc = "Holy robes, intended for use by followers of Sune"
 	icon_state = "eorarobes"
 
 /obj/item/clothing/shirt/robe/eora/alt
-	name = "eoran straps"
-	desc = "Sanctified, form fitting straps. Used by more radical followers of the Eoran Church"
+	name = "revealing straps"
+	desc = "Sanctified, form fitting straps."
 	icon_state = "eorastraps"
 
 /obj/item/clothing/shirt/robe/necra

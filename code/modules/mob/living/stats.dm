@@ -121,12 +121,6 @@
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if(H.dna?.species)
-			var/datum/species/species = H.dna.species
-			var/list/specstat_list = (gender == FEMALE) ? species.specstats_f : species.specstats_m
-			for(var/stat in specstat_list)
-				set_stat_modifier(STATMOD_SEX, stat, specstat_list[stat])
-
 		switch(H.age)
 			if(AGE_MIDDLEAGED)
 				set_stat_modifier(STATMOD_AGE, STATKEY_END, 1)

@@ -43,11 +43,11 @@
 
 	var/do_i_know = user.mind?.do_i_know(src.mind, real_name)
 
-	var/datum/species/species = dna?.species
+	/*var/datum/species/species = dna?.species
 	if(species?.use_skintones)
 		LAZYADDASSOCLIST(examine_list, EXAMINE_SECT_SPECIES+0.6, \
 			"[capitalize(P[THEIR])] [lowertext(species.skin_tone_wording || "skin tone")] \
-			is [find_key_by_value(species.get_skin_list(), skin_tone) || "incomprehensible"].")
+			is [find_key_by_value(species.get_skin_list(), skin_tone) || "incomprehensible"].")*/
 
 	. = list()
 

@@ -5,6 +5,9 @@
 		if(isnull(attribute.name))
 			qdel(attribute)
 			continue
+		if(attribute.type != canonical_attribute_type(attribute.type))
+			qdel(attribute)
+			continue
 		.[attribute.type] = attribute
 
 /proc/initialize_stats()

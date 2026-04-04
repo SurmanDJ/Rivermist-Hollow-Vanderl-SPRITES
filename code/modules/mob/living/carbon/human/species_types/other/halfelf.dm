@@ -7,7 +7,7 @@
 /mob/living/carbon/human/species/human/halfelf
 	race = /datum/species/human/halfelf
 
-/datum/attribute_holder/sheet/job/species/halfelf
+/datum/attribute_holder/sheet/job/species/halfelf/stats
 	raw_attribute_list = list(
 		STAT_FORTUNE = 2,
 	)
@@ -32,16 +32,7 @@
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, STUBBLE, OLDGREY)
 	inherent_traits = list(TRAIT_NOMOBSWAP, TRAIT_ALLURE)
-	inherent_skills = list(
-		/datum/skill/combat/swords = 2,
-		/datum/skill/combat/bows = 2,
-
-		/datum/skill/magic/arcane = 2,
-
-		/datum/skill/misc/reading = 3,
-		/datum/skill/misc/music = 2,
-		/datum/skill/misc/sneaking = 2,
-	)
+	inherent_sheet = /datum/attribute_holder/sheet/job/species/halfelf/inherent
 	use_skintones = TRUE
 	possible_ages = NORMAL_AGES_LIST
 
@@ -90,8 +81,8 @@
 		OFFSET_UNDIES = list(0,-1),\
 	)
 
-	statsheet_male = /datum/attribute_holder/sheet/job/species/halfelf
-	statsheet_female = /datum/attribute_holder/sheet/job/species/halfelf
+	statsheet_male = /datum/attribute_holder/sheet/job/species/halfelf/stats
+	statsheet_female = /datum/attribute_holder/sheet/job/species/halfelf/stats
 
 	enflamed_icon = "widefire"
 
@@ -212,3 +203,15 @@
 /datum/species/human/halfelf/on_species_gain(mob/living/carbon/human/C, datum/species/old_species)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(species_stat_pick), C, "Half-Elf Versatility", "Choose an attribute to gain +1:", 2, FALSE), 100)
+
+/datum/attribute_holder/sheet/job/species/halfelf/inherent
+	raw_attribute_list = list(
+		/datum/attribute/skill/combat/swords = 20,
+		/datum/attribute/skill/combat/bows = 20,
+
+		/datum/attribute/skill/magic/arcane = 20,
+
+		/datum/attribute/skill/misc/reading = 30,
+		/datum/attribute/skill/misc/music = 20,
+		/datum/attribute/skill/misc/sneaking = 20,
+	)

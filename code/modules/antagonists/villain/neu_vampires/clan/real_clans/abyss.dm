@@ -15,4 +15,4 @@
 	H.AddElement(/datum/element/holy_weakness)
 
 /datum/clan/abyss/get_downside_string()
-	return "burn in sunlight, and in the presence of the Ten"
+	return "burn in sunlight, and in the presence of the gods"

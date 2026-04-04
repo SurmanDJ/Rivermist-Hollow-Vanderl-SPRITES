@@ -57,6 +57,7 @@
 		/obj/item/bodypart/taur/snep,
 		/obj/item/bodypart/taur/tiger,
 		/obj/item/bodypart/taur/spider,
+		/obj/item/bodypart/taur/arachne,
 		/obj/item/bodypart/taur/centipede,
 		/obj/item/bodypart/taur/sloog,
 		/obj/item/bodypart/taur/ant,
@@ -114,8 +115,8 @@
 		OFFSET_UNDIES = list(0,-1),\
 	)
 
-	specstats_m = list(STATKEY_STR = 1, STATKEY_PER = 2, STATKEY_INT = -1, STATKEY_CON = 1, STATKEY_SPD = 1, STATKEY_LCK = -1, STATKEY_END = -1)
-	specstats_f = list(STATKEY_STR = 1, STATKEY_PER = 2, STATKEY_INT = -1, STATKEY_CON = 1, STATKEY_SPD = 1, STATKEY_LCK = -1, STATKEY_END = -1)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/taur/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/taur/stats/female
 	enflamed_icon = "widefire"
 
 	organs = list(
@@ -223,4 +224,9 @@
 /datum/species/taur_kin/qualifies_for_rank(rank, list/features)
 	return TRUE
 
+/datum/attribute_holder/sheet/job/species/taur/stats/male
+	raw_attribute_list = list(STAT_STRENGTH = 1, STAT_PERCEPTION = 2, STAT_INTELLIGENCE = -1, STAT_CONSTITUTION = 1, STAT_SPEED = 1, STAT_FORTUNE = -1, STAT_ENDURANCE = -1)
 
+
+/datum/attribute_holder/sheet/job/species/taur/stats/female
+	raw_attribute_list = list(STAT_STRENGTH = 1, STAT_PERCEPTION = 2, STAT_INTELLIGENCE = -1, STAT_CONSTITUTION = 1, STAT_SPEED = 1, STAT_FORTUNE = -1, STAT_ENDURANCE = -1)

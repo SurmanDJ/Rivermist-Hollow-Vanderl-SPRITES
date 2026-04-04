@@ -143,8 +143,8 @@
 		/datum/descriptor_choice/prominent_four_wild,
 	)
 
-	specstats_m = list(STATKEY_STR = 2, STATKEY_PER = 1, STATKEY_INT = -1, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 1, STATKEY_LCK = -1)
-	specstats_f = list(STATKEY_STR = 2, STATKEY_PER = 1, STATKEY_INT = -1, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = 1, STATKEY_LCK = -1)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/gnoll/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/gnoll/stats/female
 
 	enflamed_icon = "widefire"
 	native_language = "Common"
@@ -173,3 +173,10 @@
 
 /datum/species/gnoll/get_random_features()
 	return ..()
+
+/datum/attribute_holder/sheet/job/species/gnoll/stats/male
+	raw_attribute_list = list(STAT_STRENGTH = 2, STAT_PERCEPTION = 1, STAT_INTELLIGENCE = -1, STAT_CONSTITUTION = 0, STAT_ENDURANCE = 0, STAT_SPEED = 1, STAT_FORTUNE = -1)
+
+
+/datum/attribute_holder/sheet/job/species/gnoll/stats/female
+	raw_attribute_list = list(STAT_STRENGTH = 2, STAT_PERCEPTION = 1, STAT_INTELLIGENCE = -1, STAT_CONSTITUTION = 0, STAT_ENDURANCE = 0, STAT_SPEED = 1, STAT_FORTUNE = -1)

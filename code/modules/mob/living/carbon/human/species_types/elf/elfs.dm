@@ -7,7 +7,7 @@
 /mob/living/carbon/human/species/elf/snow
 	race = /datum/species/elf/snow
 
-/datum/attribute_holder/sheet/job/species/snow
+/datum/attribute_holder/sheet/job/species/snow/stats
 	raw_attribute_list = list(
 		STAT_PERCEPTION = 1,
 		STAT_INTELLIGENCE = 2,
@@ -31,18 +31,7 @@
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,OLDGREY)
 	inherent_traits = list(TRAIT_NOMOBSWAP)
 	use_skintones = 1
-	inherent_skills = list(
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/bows = 3,
-
-		/datum/skill/magic/arcane = 4,
-
-		/datum/skill/misc/reading = 4,
-		/datum/skill/misc/music = 3,
-		/datum/skill/labor/mathematics = 2,
-
-		/datum/skill/craft/crafting = 2,
-	)
+	inherent_sheet = /datum/attribute_holder/sheet/job/species/snow/inherent
 	disliked_food = NONE
 	liked_food = NONE
 	possible_ages = NORMAL_AGES_LIST
@@ -127,8 +116,8 @@
 		OFFSET_UNDIES = list(0,0),\
 	)
 
-	statsheet_male = /datum/attribute_holder/sheet/job/species/snow
-	statsheet_female = /datum/attribute_holder/sheet/job/species/snow
+	statsheet_male = /datum/attribute_holder/sheet/job/species/snow/stats
+	statsheet_female = /datum/attribute_holder/sheet/job/species/snow/stats
 	enflamed_icon = "widefire"
 
 	body_markings = list(
@@ -213,3 +202,17 @@
 
 /datum/species/elf/snow/after_creation(mob/living/carbon/C)
 	C.dna.species.accent_language = C.dna.species.get_accent(C.dna.species.native_language, 1)
+
+/datum/attribute_holder/sheet/job/species/snow/inherent
+	raw_attribute_list = list(
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/bows = 30,
+
+		/datum/attribute/skill/magic/arcane = 40,
+
+		/datum/attribute/skill/misc/reading = 40,
+		/datum/attribute/skill/misc/music = 30,
+		/datum/attribute/skill/labor/mathematics = 20,
+
+		/datum/attribute/skill/craft/crafting = 20,
+	)

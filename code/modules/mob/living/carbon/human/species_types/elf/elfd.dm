@@ -9,14 +9,7 @@
 /mob/living/carbon/human/species/elf/dark
 	race = /datum/species/elf/dark
 
-/datum/attribute_holder/sheet/job/species/dark
-	raw_attribute_list = list(
-		STAT_PERCEPTION = 1,
-		STAT_SPEED = 2,
-		STAT_FORTUNE = 1,
-	)
-
-/datum/attribute_holder/sheet/job/species/dark/female
+/datum/attribute_holder/sheet/job/species/dark/stats
 	raw_attribute_list = list(
 		STAT_PERCEPTION = 1,
 		STAT_SPEED = 2,
@@ -42,22 +35,7 @@
 
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,OLDGREY)
 	inherent_traits = list(TRAIT_NOMOBSWAP, TRAIT_ALLURE)
-	inherent_skills = list(
-		/datum/skill/combat/knives = 4,
-		/datum/skill/combat/swords = 3,
-		/datum/skill/combat/crossbows = 4,
-		/datum/skill/combat/whipsflails = 3,
-
-		/datum/skill/misc/sneaking = 4,
-		/datum/skill/misc/lockpicking = 3,
-
-		/datum/skill/magic/arcane = 3,
-		/datum/skill/magic/blood = 2,
-
-		/datum/skill/craft/alchemy = 3,
-		/datum/skill/craft/weaponsmithing = 2,
-		/datum/skill/craft/traps = 2,
-	)
+	inherent_sheet = /datum/attribute_holder/sheet/job/species/dark/inherent
 	use_skintones = 1
 	disliked_food = NONE
 	liked_food = NONE
@@ -145,8 +123,8 @@
 		OFFSET_UNDIES = list(0,0),\
 	)
 
-	statsheet_male = /datum/attribute_holder/sheet/job/species/dark
-	statsheet_female = /datum/attribute_holder/sheet/job/species/dark/female
+	statsheet_male = /datum/attribute_holder/sheet/job/species/dark/stats
+	statsheet_female = /datum/attribute_holder/sheet/job/species/dark/stats
 	enflamed_icon = "widefire"
 
 	body_markings = list(
@@ -241,3 +219,21 @@
 	var/datum/component/darkling/D = C.GetComponent(/datum/component/darkling)
 	if(D)
 		qdel(D)
+
+/datum/attribute_holder/sheet/job/species/dark/inherent
+	raw_attribute_list = list(
+		/datum/attribute/skill/combat/knives = 40,
+		/datum/attribute/skill/combat/swords = 30,
+		/datum/attribute/skill/combat/crossbows = 40,
+		/datum/attribute/skill/combat/whipsflails = 30,
+
+		/datum/attribute/skill/misc/sneaking = 40,
+		/datum/attribute/skill/misc/lockpicking = 30,
+
+		/datum/attribute/skill/magic/arcane = 30,
+		/datum/attribute/skill/magic/blood = 20,
+
+		/datum/attribute/skill/craft/alchemy = 30,
+		/datum/attribute/skill/craft/weaponsmithing = 20,
+		/datum/attribute/skill/craft/traps = 20,
+	)

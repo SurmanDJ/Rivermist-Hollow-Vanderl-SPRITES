@@ -70,8 +70,8 @@
 	)
 
 
-	specstats_m = list(STATKEY_STR = 2, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = -1, STATKEY_LCK = 0)
-	specstats_f = list(STATKEY_STR = 2, STATKEY_PER = 0, STATKEY_INT = 0, STATKEY_CON = 0, STATKEY_END = 0, STATKEY_SPD = -1, STATKEY_LCK = 0)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/dragonborn/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/dragonborn/stats/female
 	enflamed_icon = "widefire"
 	organs = list(
 		ORGAN_SLOT_BRAIN = /obj/item/organ/brain,
@@ -173,3 +173,10 @@
 
 /datum/species/dragonborn/get_skin_list()
 	return get_common_mutant_color_palette()
+
+/datum/attribute_holder/sheet/job/species/dragonborn/stats/male
+	raw_attribute_list = list(STAT_STRENGTH = 2, STAT_PERCEPTION = 0, STAT_INTELLIGENCE = 0, STAT_CONSTITUTION = 0, STAT_ENDURANCE = 0, STAT_SPEED = -1, STAT_FORTUNE = 0)
+
+
+/datum/attribute_holder/sheet/job/species/dragonborn/stats/female
+	raw_attribute_list = list(STAT_STRENGTH = 2, STAT_PERCEPTION = 0, STAT_INTELLIGENCE = 0, STAT_CONSTITUTION = 0, STAT_ENDURANCE = 0, STAT_SPEED = -1, STAT_FORTUNE = 0)

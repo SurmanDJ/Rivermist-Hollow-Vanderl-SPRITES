@@ -45,8 +45,8 @@
 
 	no_equip = list(ITEM_SLOT_SHIRT, ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_ARMOR, ITEM_SLOT_GLOVES, ITEM_SLOT_SHOES, ITEM_SLOT_PANTS, ITEM_SLOT_CLOAK, ITEM_SLOT_BELT, ITEM_SLOT_BACK_R, ITEM_SLOT_BACK_L)
 
-	specstats_m = list(STATKEY_STR = 1, STATKEY_PER = 1, STATKEY_INT = 1, STATKEY_CON = 1, STATKEY_END = 1, STATKEY_SPD = 1, STATKEY_LCK = 1)
-	specstats_f = list(STATKEY_STR = 1, STATKEY_PER = 1, STATKEY_INT = 1, STATKEY_CON = 1, STATKEY_END = 1, STATKEY_SPD = 1, STATKEY_LCK = 1)
+	statsheet_male = /datum/attribute_holder/sheet/job/species/custom_slime/stats/male
+	statsheet_female = /datum/attribute_holder/sheet/job/species/custom_slime/stats/female
 
 	enflamed_icon = "widefire"
 
@@ -71,3 +71,10 @@
 	H.icon = 'modular_rmh/icons/mob/lewd/custom/slime.dmi'
 	H.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
 	H.icon_state = "slime"
+
+/datum/attribute_holder/sheet/job/species/custom_slime/stats/male
+	raw_attribute_list = list(STAT_STRENGTH = 1, STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 1, STAT_CONSTITUTION = 1, STAT_ENDURANCE = 1, STAT_SPEED = 1, STAT_FORTUNE = 1)
+
+
+/datum/attribute_holder/sheet/job/species/custom_slime/stats/female
+	raw_attribute_list = list(STAT_STRENGTH = 1, STAT_PERCEPTION = 1, STAT_INTELLIGENCE = 1, STAT_CONSTITUTION = 1, STAT_ENDURANCE = 1, STAT_SPEED = 1, STAT_FORTUNE = 1)

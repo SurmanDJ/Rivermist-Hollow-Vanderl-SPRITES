@@ -378,8 +378,8 @@
 	craftdiff = 2
 
 /datum/anvil_recipe/armor/iron/eoran_sallet
-	name = "Eoran Sallet (+Bar)"
-	recipe_name = "an Eoran Sallet"
+	name = "Sunean Sallet (+Bar)"
+	recipe_name = "a Sunean Sallet"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/ingot/iron)
 	created_item = /obj/item/clothing/head/helmet/sallet/eoran

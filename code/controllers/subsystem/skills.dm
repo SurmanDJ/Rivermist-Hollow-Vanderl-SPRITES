@@ -22,4 +22,6 @@ SUBSYSTEM_DEF(skills)
 	for(var/datum/attribute/skill/type as anything in subtypesof(/datum/attribute/skill))
 		if(IS_ABSTRACT(type))
 			continue
+		if(type != canonical_skill_type(type))
+			continue
 		all_skills[type] = new type()

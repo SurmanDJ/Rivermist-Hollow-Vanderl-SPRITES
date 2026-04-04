@@ -1,15 +1,14 @@
 /datum/action/cooldown/spell/eoran_bloom
-	name = "Eoran Bloom"
-	desc = "Grows an Eoran bud on the target."
+	name = "Sharess' Bloom"
+	desc = "Grows an Sharess' bud on the target."
 	button_icon_state = "pflower"
 	sound = 'sound/magic/magnet.ogg'
 
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	associated_skill = /datum/attribute/skill/magic/holy
-	required_items = list(/obj/item/clothing/neck/psycross/silver/divine/eora)
 
-	invocation = "Be at peace with Eora."
+	invocation = "Be at peace with Sharess."
 	invocation_type = INVOCATION_SHOUT
 
 	cast_range = 3
@@ -33,16 +32,16 @@
 		if(!spawn_on.density)
 			new /obj/item/clothing/head/peaceflower(cast_on)
 		else
-			to_chat(owner, span_warning("The targeted location is blocked. The flowers of Eora refuse to bloom."))
+			to_chat(owner, span_warning("The targeted location is blocked. The flowers of Sharess refuse to bloom."))
 		return
 
 	if(to_pacify.get_item_by_slot(ITEM_SLOT_HEAD))
-		to_chat(owner, span_warning("The target's head is covered. The flowers of Eora need an open space to bloom."))
+		to_chat(owner, span_warning("The target's head is covered. The flowers of Sharess need an open space to bloom."))
 		return
 
 	var/obj/item/clothing/head/peaceflower/F = new(get_turf(to_pacify))
 	to_pacify.equip_to_slot_if_possible(F, ITEM_SLOT_HEAD, TRUE, TRUE)
-	to_chat(to_pacify, span_info("<b style='color:pink'>A flower of Eora blooms on my head, I feel at peace.</b>"))
+	to_chat(to_pacify, span_info("<b style='color:pink'>A flower of Sharess blooms on my head, I feel at peace.</b>"))
 
 /obj/item/clothing/head/peaceflower
 	name = "Sune bud"

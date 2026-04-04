@@ -9,7 +9,7 @@
 /mob/living/carbon/human/species/human/northern
 	race = /datum/species/human/northern
 
-/datum/attribute_holder/sheet/job/species/northern
+/datum/attribute_holder/sheet/job/species/northern/stats
 	raw_attribute_list = list(
 		STAT_STRENGTH = 1,
 		STAT_PERCEPTION = 1,
@@ -38,21 +38,7 @@
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, STUBBLE, OLDGREY)
 	inherent_traits = list(TRAIT_NOMOBSWAP)
-	inherent_skills = list(
-		/datum/skill/combat/swords = 2,
-		/datum/skill/combat/polearms = 2,
-		/datum/skill/combat/shields = 2,
-
-		/datum/skill/craft/crafting = 2,
-		/datum/skill/craft/carpentry = 2,
-		/datum/skill/craft/cooking = 2,
-
-		/datum/skill/labor/farming = 2,
-
-		/datum/skill/misc/athletics = 2,
-		/datum/skill/misc/reading = 2,
-		/datum/skill/misc/riding = 1,
-	)
+	inherent_sheet = /datum/attribute_holder/sheet/job/species/northern/inherent
 
 	order_num = 2
 
@@ -103,8 +89,8 @@
 		OFFSET_UNDIES = list(0,-1),\
 	)
 
-	statsheet_male = /datum/attribute_holder/sheet/job/species/northern
-	statsheet_female = /datum/attribute_holder/sheet/job/species/northern
+	statsheet_male = /datum/attribute_holder/sheet/job/species/northern/stats
+	statsheet_female = /datum/attribute_holder/sheet/job/species/northern/stats
 
 	enflamed_icon = "widefire"
 
@@ -235,3 +221,20 @@
 			choices -= choice
 
 		picks--
+
+/datum/attribute_holder/sheet/job/species/northern/inherent
+	raw_attribute_list = list(
+		/datum/attribute/skill/combat/swords = 20,
+		/datum/attribute/skill/combat/polearms = 20,
+		/datum/attribute/skill/combat/shields = 20,
+
+		/datum/attribute/skill/craft/crafting = 20,
+		/datum/attribute/skill/craft/carpentry = 20,
+		/datum/attribute/skill/craft/cooking = 20,
+
+		/datum/attribute/skill/labor/farming = 20,
+
+		/datum/attribute/skill/misc/athletics = 20,
+		/datum/attribute/skill/misc/reading = 20,
+		/datum/attribute/skill/misc/riding = 10,
+	)
