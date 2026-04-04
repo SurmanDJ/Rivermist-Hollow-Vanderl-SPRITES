@@ -19,6 +19,7 @@
 	forced_taur = TRUE
 	allowed_taur_types = list(
 		/obj/item/bodypart/taur/spider,
+		/obj/item/bodypart/taur/arachne,
 	)
 
 	order_num = 33
