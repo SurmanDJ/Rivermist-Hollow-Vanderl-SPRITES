@@ -753,18 +753,19 @@
 	if(!controller || !finished_target)
 		return
 
-	// A partner who just completed an encounter with us should not stay stuck in the
-	// retaliation/aggro memory and block horny retargeting after the seek cooldown ends.
+	// A partner who just completed an encounter with us should not stay stuck in combat
+	// memory and block horny retargeting after the seek cooldown ends.
 	var/mob/living/basic_mob = controller.pawn
 	var/datum/targetting_datum/targetting_datum = controller.blackboard[BB_TARGETTING_DATUM]
 	if(targetting_datum && basic_mob)
 		targetting_datum.clear_horny_target_hostility(basic_mob, finished_target)
-	else
-		var/list/hostile_targets = controller.blackboard[BB_HORNY_HOSTILE_TARGETS]
-		if(hostile_targets && !isnull(hostile_targets[finished_target]))
-			controller.remove_thing_from_blackboard_key(BB_HORNY_HOSTILE_TARGETS, finished_target)
-		if(controller.blackboard[BB_HORNY_AGGRO_TARGET] == finished_target)
-			controller.clear_blackboard_key(BB_HORNY_AGGRO_TARGET)
+		return
+
+	var/list/hostile_targets = controller.blackboard[BB_HORNY_HOSTILE_TARGETS]
+	if(hostile_targets && !isnull(hostile_targets[finished_target]))
+		controller.remove_thing_from_blackboard_key(BB_HORNY_HOSTILE_TARGETS, finished_target)
+	if(controller.blackboard[BB_HORNY_AGGRO_TARGET] == finished_target)
+		controller.clear_blackboard_key(BB_HORNY_AGGRO_TARGET)
 
 	var/list/retaliate_list = controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
 	if(retaliate_list && !isnull(retaliate_list[finished_target]))

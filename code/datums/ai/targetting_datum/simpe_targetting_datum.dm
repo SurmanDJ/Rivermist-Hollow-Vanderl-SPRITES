@@ -45,7 +45,47 @@
 	if(controller.blackboard[BB_HORNY_AGGRO_TARGET] == target)
 		controller.clear_blackboard_key(BB_HORNY_AGGRO_TARGET)
 
+	var/list/retaliate_list = controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
+	if(retaliate_list && !isnull(retaliate_list[target]))
+		controller.remove_thing_from_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST, target)
+
+	var/list/aggro_table = controller.blackboard[BB_MOB_AGGRO_TABLE]
+	if(aggro_table && !isnull(aggro_table[target]))
+		aggro_table -= target
+
+	if(controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] == target)
+		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+		controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+
+	if(controller.blackboard[BB_HIGHEST_THREAT_MOB] == target)
+		controller.clear_blackboard_key(BB_HIGHEST_THREAT_MOB)
+
 	return TRUE
+
+/datum/targetting_datum/proc/should_release_horny_target_hostility(mob/living/living_mob, mob/living/target_living)
+	if(!living_mob || !target_living)
+		return FALSE
+	if(!is_horny_pref_target(living_mob, target_living))
+		return FALSE
+	if(target_living.body_position == LYING_DOWN)
+		return TRUE
+	if(target_living.has_status_effect(/datum/status_effect/debuff/mob_fucked))
+		return TRUE
+
+	// Another mob already has them in an active sex action, so stop treating them as a combat target.
+	for(var/datum/sex_session/session as anything in return_sessions_with_user(target_living))
+		if(QDELETED(session))
+			continue
+		if(!session.current_action && !length(session.active_actions))
+			continue
+
+		var/mob/living/other_participant = session.user == target_living ? session.target : session.user
+		if(!other_participant || other_participant == target_living || other_participant == living_mob)
+			continue
+
+		return TRUE
+
+	return FALSE
 
 /datum/targetting_datum/proc/is_horny_target_now_hostile(mob/living/living_mob, atom/target)
 	var/datum/ai_controller/controller = living_mob?.ai_controller
@@ -60,6 +100,14 @@
 			if(controller.blackboard[BB_HORNY_AGGRO_TARGET] == target)
 				controller.clear_blackboard_key(BB_HORNY_AGGRO_TARGET)
 			return FALSE
+
+	if(isliving(target))
+		var/mob/living/target_living = target
+		if(should_release_horny_target_hostility(living_mob, target_living))
+			clear_horny_target_hostility(living_mob, target_living)
+			return FALSE
+
+	if(!isnull(hostile_until))
 		return TRUE
 
 	if(controller.blackboard[BB_HORNY_AGGRO_TARGET] != target)
