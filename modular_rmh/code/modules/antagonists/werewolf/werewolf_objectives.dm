@@ -18,6 +18,26 @@
 	var/tmp/animals_hunted_in_wolf_form = 0
 	var/tmp/foes_slain_in_wolf_form = 0
 	var/tmp/list/converted_player_minds = list()
+	var/tmp/contract_objective_score = 0
+
+/datum/antagonist/werewolf/proc/refresh_werewolf_objectives()
+	for(var/datum/objective/objective as anything in objectives)
+		if(!istype(objective, /datum/objective/werewolf_counter))
+			continue
+		objective.update_explanation_text()
+
+/datum/antagonist/werewolf/proc/add_contract_objective_score(score_amount)
+	if(score_amount <= 0)
+		return FALSE
+
+	contract_objective_score += score_amount
+	refresh_werewolf_objectives()
+
+	if(owner?.current)
+		to_chat(owner.current, span_notice("The moon hunt credits me [score_amount] score. Total: [contract_objective_score]/[WW_CONTRACT_OBJECTIVE_TARGET]."))
+		if(contract_objective_score >= WW_CONTRACT_OBJECTIVE_TARGET)
+			to_chat(owner.current, span_greentext("The moon hunt is satisfied."))
+	return TRUE
 
 /datum/antagonist/werewolf/proc/record_breed_target(mob/living/carbon/human/target)
 	if(!transformed)
@@ -32,6 +52,7 @@
 		return FALSE
 
 	bred_player_minds += target.mind
+	refresh_werewolf_objectives()
 	return TRUE
 
 /datum/antagonist/werewolf/proc/record_conversion_target(mob/living/carbon/human/target)
@@ -43,6 +64,7 @@
 		return FALSE
 
 	converted_player_minds += target.mind
+	refresh_werewolf_objectives()
 	return TRUE
 
 /datum/antagonist/werewolf/proc/on_werewolf_kill(mob/living/source, mob/living/victim)
@@ -57,12 +79,14 @@
 
 	if(isanimal(victim))
 		animals_hunted_in_wolf_form += 1
+		refresh_werewolf_objectives()
 		return
 
 	if(werewolf_is_player_character(victim))
 		return
 
 	foes_slain_in_wolf_form += 1
+	refresh_werewolf_objectives()
 
 /mob/living/carbon/human/proc/can_receive_werewolf_conversion_offer()
 	if(werewolf_conversion_prompt_pending)
@@ -195,6 +219,21 @@
 	if(!owner)
 		return null
 	return owner.has_antag_datum(/datum/antagonist/werewolf)
+
+/datum/objective/werewolf_counter/contracts
+	name = "contracts"
+	target_minimum = WW_CONTRACT_OBJECTIVE_TARGET
+	target_maximum = WW_CONTRACT_OBJECTIVE_TARGET
+
+/datum/objective/werewolf_counter/contracts/get_progress()
+	var/datum/antagonist/werewolf/werewolf_antag = get_werewolf_antag()
+	if(!werewolf_antag)
+		return 0
+	return werewolf_antag.contract_objective_score
+
+/datum/objective/werewolf_counter/contracts/update_explanation_text()
+	..()
+	explanation_text = "Complete moon-hunt contracts until I have [target_amount] hunt score. Progress: [get_progress()]/[target_amount]."
 
 /datum/objective/werewolf_counter/breed
 	name = "breed"

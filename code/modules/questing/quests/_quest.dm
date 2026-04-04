@@ -13,6 +13,10 @@
 	var/base_reward_value = 0
 	var/reward_amount = 0
 	var/deposit_amount = 0
+	var/issuing_ledger_id = "guild_contracts"
+	var/issuing_ledger_name = "Grand Contract Ledger"
+	var/objective_score_reward = 0
+	var/show_handler_advice = TRUE
 	var/complete = FALSE
 	var/being_destroyed = FALSE
 
@@ -625,3 +629,23 @@
 /datum/quest/proc/on_claim(mob/user)
 	quest_receiver_reference = WEAKREF(user)
 	quest_receiver_name = user.real_name
+
+/datum/quest/proc/on_issued_from_ledger(obj/structure/fake_machine/contractledger/ledger, mob/living/carbon/human/user)
+	if(!ledger)
+		return
+	issuing_ledger_id = ledger.get_contract_ledger_id()
+	issuing_ledger_name = ledger.name
+	objective_score_reward = ledger.get_contract_objective_score(src)
+	show_handler_advice = ledger.should_show_handler_contract_advice()
+	if(!quest_giver_name)
+		quest_giver_name = ledger.get_default_contract_issuer_name(user)
+
+/datum/quest/proc/can_turn_in_at_ledger(obj/structure/fake_machine/contractledger/ledger)
+	if(!ledger)
+		return FALSE
+	return issuing_ledger_id == ledger.get_contract_ledger_id()
+
+/datum/quest/proc/get_turn_in_ledger_name()
+	if(issuing_ledger_name)
+		return issuing_ledger_name
+	return "Grand Contract Ledger"
