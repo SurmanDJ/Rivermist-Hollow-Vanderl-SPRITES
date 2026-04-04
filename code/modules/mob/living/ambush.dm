@@ -17,7 +17,7 @@ GLOBAL_VAR_INIT(ambush_mobconsider_cooldown, 2 MINUTES) // Cooldown for each ind
 
 /mob/living/proc/consider_ambush(always = FALSE, ignore_cooldown = FALSE, min_dist = 1, max_dist = 7)
 	if(!always)
-		if(world.time > last_client_interact + 0.3 SECONDS)
+		if(world.time > last_client_interact + 5 MINUTES)
 			return
 	var/area/AR = get_area(src)
 	if(!can_trigger_ambush_in_area(AR))
