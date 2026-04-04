@@ -20,7 +20,7 @@
 	sleep_healing = 0
 	embed_chance = 0
 
-	werewolf_infection_probability = 50
+	werewolf_infection_probability = 0
 
 /datum/wound/artery/can_apply_to_bodypart(obj/item/bodypart/affected)
 	. = ..()

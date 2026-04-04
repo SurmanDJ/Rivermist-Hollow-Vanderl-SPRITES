@@ -528,8 +528,14 @@
 		else
 			handle_climax(action, return_type, mob, target, giving)
 
+		var/knot_finished = FALSE
 		if(action.knot_on_finish) //no idea how to stop other partner from triggering the knotting yet sorry
-			action.try_knot_on_climax(mob, target)
+			knot_finished = action.try_knot_on_climax(mob, target)
+
+		if(return_type == ORGASM_LOCATION_INTO && ishuman(mob) && ishuman(target))
+			var/mob/living/carbon/human/source_human = mob
+			var/mob/living/carbon/human/target_human = target
+			target_human.handle_werewolf_creampie_conversion(source_human, knot_finished)
 
 
 /datum/component/arousal/proc/handle_climax(datum/sex_action/action, climax_type, mob/living/user, mob/living/target, giving)

@@ -169,6 +169,10 @@
 		return FALSE
 
 	var/mob/living/carbon/human/current_body = owner.current
+	if(HAS_TRAIT(current_body, TRAIT_WEREWOLF_TRANSFORMATION_SUPPRESSED))
+		if(feedback)
+			to_chat(current_body, span_warning("Silver bindings keep the beast from taking hold."))
+		return FALSE
 	if(HAS_TRAIT(current_body, TRAIT_NO_TRANSFORM))
 		if(feedback)
 			to_chat(current_body, span_warning("Something prevents my body from changing right now."))
@@ -294,6 +298,7 @@
 	transformed = TRUE
 	transformation_in_progress = FALSE
 	mark_transformation_complete()
+	RegisterSignal(new_werewolf, COMSIG_LIVING_COMBAT_KILL, PROC_REF(on_werewolf_kill))
 	RegisterSignal(new_werewolf, COMSIG_LIVING_UNSHAPESHIFTED, PROC_REF(werewolf_untransform))
 	return TRUE
 
@@ -361,7 +366,7 @@
 	caster_mob.adjustOxyLoss(werewolf_user.getOxyLoss() / 2)
 	caster_mob.adjustCloneLoss(werewolf_user.getCloneLoss() / 2)
 
-	UnregisterSignal(werewolf_user, COMSIG_LIVING_UNSHAPESHIFTED)
+	UnregisterSignal(werewolf_user, list(COMSIG_LIVING_COMBAT_KILL, COMSIG_LIVING_UNSHAPESHIFTED))
 	transformed = FALSE
 	transformation_in_progress = FALSE
 	mark_transformation_complete()

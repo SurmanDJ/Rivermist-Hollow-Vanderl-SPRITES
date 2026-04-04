@@ -79,6 +79,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// "Magic" trait that blocks the mob from moving or interacting with anything. Used for transient stuff like mob transformations or incorporality in special cases.
 /// Will block movement, `Life()` (!!!), and other stuff based on the mob.
 #define TRAIT_NO_TRANSFORM "block_transformations"
+/// Prevents werewolf antagonists from taking beast form without blocking unrelated transformations.
+#define TRAIT_WEREWOLF_TRANSFORMATION_SUPPRESSED "werewolf_transformation_suppressed"
 /// Blocker trait for hardcore quirk users
 #define TRAIT_HARDCORE_PROFANE	"hardcore_profane"
 /// Weak to inquisition torture

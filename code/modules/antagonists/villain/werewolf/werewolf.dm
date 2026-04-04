@@ -35,7 +35,8 @@
 		/datum/action/cooldown/spell/aoe/repulse/howl, \
 		/datum/action/cooldown/spell/woundlick, \
 		/datum/action/cooldown/spell/lunge, \
-		/datum/action/cooldown/spell/throw_target
+		/datum/action/cooldown/spell/throw_target, \
+		/datum/action/cooldown/spell/werewolf_voluntary_bite
 	)
 	COOLDOWN_DECLARE(message_cooldown)
 	COOLDOWN_DECLARE(transformation_cooldown)
@@ -112,24 +113,17 @@
 	objectives -= O
 
 /datum/antagonist/werewolf/proc/forge_werewolf_objectives()
-	var/list/primary = pick(list("1", "2"))
-	var/list/secondary = pick(list("1", "2"))
-	switch(primary)
-		if("1")
-			objectives += new /datum/objective/dominate/werewolf()
-		if("2")
-			var/datum/objective/werewolf/spread/T = new
-			objectives += T
-	switch(secondary)
-		if("1")
-			var/datum/objective/werewolf/infiltrate/one/T = new
-			objectives += T
-		if("2")
-			var/datum/objective/werewolf/infiltrate/two/T = new
-			objectives += T
+	var/list/new_objectives = list(
+		new /datum/objective/werewolf_counter/breed(),
+		new /datum/objective/werewolf_counter/hunt(),
+		new /datum/objective/werewolf_counter/slay(),
+		new /datum/objective/werewolf_counter/convert(),
+		new /datum/objective/werewolf/survive(),
+	)
 
-	var/datum/objective/werewolf/survive/survive = new
-	objectives += survive
+	for(var/datum/objective/objective as anything in new_objectives)
+		objective.owner = owner
+		objectives += objective
 
 /datum/antagonist/werewolf/greet()
 	to_chat(owner.current, span_userdanger("Ever since that bite, I have been a [name]."))

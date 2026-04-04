@@ -202,21 +202,14 @@
 	. = ..()
 	if(.)
 		return
-	var/obj/item/bodypart/affecting = get_bodypart(check_zone(user.zone_selected))
-	if(!affecting)
-		return TRUE // how tf did we lose it between the carbon proc and this one
-	var/datum/wound/bite/open_wound = affecting.has_wound(/datum/wound/bite)
-	if(!open_wound)
-		return TRUE
 	if(user.mind && mind)
-		if(is_species(user, /datum/species/werewolf))
-			var/mob/living/carbon/human/H = user
+		var/datum/antagonist/werewolf/werewolf_antag = IS_WEREWOLF(user)
+		if(werewolf_antag?.transformed)
+			var/mob/living/carbon/human/werewolf_user = user
 			if(HAS_TRAIT(src, TRAIT_SILVER_BLESSED))
-				to_chat(user, span_warning("BLEH! [src] tastes of SILVER! My gift cannot take hold."))
-			else
-				open_wound.werewolf_infect_attempt()
-				if(prob(30))
-					H.werewolf_feed(src)
+				to_chat(user, span_warning("BLEH! [src] tastes of SILVER!"))
+			else if(prob(30))
+				werewolf_user.werewolf_feed(src)
 		if(user.mind.has_antag_datum(/datum/antagonist/zombie) && !src.mind.has_antag_datum(/datum/antagonist/zombie))
 			INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon/human, zombie_infect_attempt))
 
