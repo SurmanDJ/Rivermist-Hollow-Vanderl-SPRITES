@@ -65,6 +65,8 @@
 		reset_spell_cooldown()
 		return . | SPELL_CANCEL_CAST
 
+	return . | SPELL_NO_IMMEDIATE_COOLDOWN
+
 /datum/action/cooldown/spell/pointed/werewolf_create_lair/cast(atom/cast_on)
 	. = ..()
 
@@ -114,3 +116,14 @@
 	)
 	playsound(source_turf, 'sound/foley/doors/stoneopen.ogg', 80, FALSE)
 	return TRUE
+
+/datum/action/cooldown/spell/pointed/werewolf_create_lair/after_cast(atom/cast_on)
+	. = ..()
+
+	var/datum/antagonist/werewolf/source_werewolf = IS_WEREWOLF(owner)
+	if(!source_werewolf)
+		return
+
+	// Successful digs consume the spell, but delaying the sync until after Activate()
+	// finishes avoids tearing down the active click action mid-cast.
+	addtimer(CALLBACK(source_werewolf, TYPE_PROC_REF(/datum/antagonist/werewolf, sync_werewolf_lair_creation_spell)), 0)

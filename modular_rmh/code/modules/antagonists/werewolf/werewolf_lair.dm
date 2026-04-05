@@ -10,10 +10,11 @@
 	var/datum/weakref/lair_entrance_ref
 
 /datum/antagonist/werewolf/proc/initialize_werewolf_lair_ability()
-	var/static/lair_spell_type = /datum/action/cooldown/spell/pointed/werewolf_create_lair
-	if(!(lair_spell_type in werewolf_form_powers))
-		werewolf_form_powers += lair_spell_type
+	sync_werewolf_lair_creation_spell()
 
+/datum/antagonist/werewolf/on_body_transfer(mob/living/old_body, mob/living/new_body)
+	. = ..()
+	remove_werewolf_lair_creation_spell(old_body)
 	sync_werewolf_lair_creation_spell()
 
 /datum/antagonist/werewolf/proc/cleanup_werewolf_lair()
@@ -46,39 +47,24 @@
 
 	lair_created = TRUE
 	lair_entrance_ref = WEAKREF(lair_entrance)
-	remove_werewolf_lair_creation_spell()
 	return TRUE
 
-/datum/antagonist/werewolf/proc/remove_werewolf_lair_creation_spell()
-	var/static/lair_spell_type = /datum/action/cooldown/spell/pointed/werewolf_create_lair
-	werewolf_form_powers -= lair_spell_type
-	sync_werewolf_lair_creation_spell()
+/datum/antagonist/werewolf/proc/remove_werewolf_lair_creation_spell(mob/living/carbon/human/spell_holder = owner?.current)
+	if(!istype(spell_holder))
+		return
+
+	spell_holder.remove_spell(/datum/action/cooldown/spell/pointed/werewolf_create_lair)
 
 /datum/antagonist/werewolf/proc/sync_werewolf_lair_creation_spell()
-	var/static/lair_spell_type = /datum/action/cooldown/spell/pointed/werewolf_create_lair
-	var/should_have_spell = can_create_werewolf_lair()
-
-	for(var/mob/living/carbon/human/spell_holder as anything in get_werewolf_lair_spell_holders())
-		if(should_have_spell)
-			spell_holder.add_spell(lair_spell_type, source = owner)
-			continue
-
-		spell_holder.remove_spell(lair_spell_type)
-
-/datum/antagonist/werewolf/proc/get_werewolf_lair_spell_holders()
-	var/list/spell_holders = list()
 	var/mob/living/carbon/human/current_mob = owner?.current
 	if(!istype(current_mob))
-		return spell_holders
+		return
 
-	spell_holders += current_mob
+	if(transformed && can_create_werewolf_lair())
+		current_mob.add_spell(/datum/action/cooldown/spell/pointed/werewolf_create_lair, source = src)
+		return
 
-	var/datum/status_effect/shapechange_mob/die_with_form/shapechange = current_mob.has_status_effect(/datum/status_effect/shapechange_mob/die_with_form)
-	var/mob/living/carbon/human/caster_mob = shapechange?.caster_mob
-	if(istype(caster_mob))
-		spell_holders += caster_mob
-
-	return spell_holders
+	current_mob.remove_spell(/datum/action/cooldown/spell/pointed/werewolf_create_lair)
 
 /area/pocket_dimension/werewolf_lair
 	name = "Werewolf Lair"

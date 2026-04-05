@@ -59,30 +59,55 @@
 	cooldown_time = 5 SECONDS
 
 	var/extended = FALSE
+	var/datum/weakref/left_claw_ref
+	var/datum/weakref/right_claw_ref
+
+/datum/action/cooldown/spell/undirected/claws/proc/get_lupine_claw(datum/weakref/claw_ref)
+	if(!claw_ref)
+		return null
+
+	var/obj/item/weapon/werewolf_claw/claw = claw_ref.resolve()
+	if(claw)
+		return claw
+
+	return null
+
+/datum/action/cooldown/spell/undirected/claws/proc/clear_lupine_claw_refs()
+	left_claw_ref = null
+	right_claw_ref = null
+
+/datum/action/cooldown/spell/undirected/claws/proc/remove_lupine_claw(obj/item/weapon/werewolf_claw/claw_item)
+	if(!istype(claw_item))
+		return
+
+	if(claw_item.loc == owner)
+		owner.dropItemToGround(claw_item, TRUE)
+
+	qdel(claw_item)
+
+/datum/action/cooldown/spell/undirected/claws/proc/retract_lupine_claws()
+	remove_lupine_claw(get_lupine_claw(left_claw_ref))
+	remove_lupine_claw(get_lupine_claw(right_claw_ref))
+	clear_lupine_claw_refs()
+	extended = FALSE
 
 /datum/action/cooldown/spell/undirected/claws/cast(atom/cast_on)
 	. = ..()
-	var/obj/item/weapon/werewolf_claw/left/l
-	var/obj/item/weapon/werewolf_claw/right/r
-
-	l = owner.get_active_held_item()
-	r = owner.get_inactive_held_item()
+	var/obj/item/weapon/werewolf_claw/left/left_claw
+	var/obj/item/weapon/werewolf_claw/right/right_claw
 
 	if(extended)
-		if(istype(owner.get_active_held_item(), /obj/item/weapon/werewolf_claw))
-			owner.dropItemToGround(l, TRUE)
-			owner.dropItemToGround(r, TRUE)
-			qdel(l)
-			qdel(r)
-			//owner.visible_message("Your claws retract.", "You feel your claws retracting.", "You hear a sound of claws retracting.")
-			extended = FALSE
-	else
-		l = new(owner, 1)
-		r = new(owner, 2)
-		owner.put_in_hands(l, TRUE, FALSE, TRUE)
-		owner.put_in_hands(r, TRUE, FALSE, TRUE)
-		//owner.visible_message("Your claws extend.", "You feel your claws extending.", "You hear a sound of claws extending.")
-		extended = TRUE
+		retract_lupine_claws()
+		return
+
+	left_claw = new(owner, 1)
+	right_claw = new(owner, 2)
+	left_claw_ref = WEAKREF(left_claw)
+	right_claw_ref = WEAKREF(right_claw)
+	owner.put_in_hands(left_claw, TRUE, FALSE, TRUE)
+	owner.put_in_hands(right_claw, TRUE, FALSE, TRUE)
+	//owner.visible_message("Your claws extend.", "You feel your claws extending.", "You hear a sound of claws extending.")
+	extended = TRUE
 
 /datum/action/cooldown/spell/woundlick
 	name = "Lick the wounds"

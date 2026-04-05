@@ -296,6 +296,10 @@
 	new_werewolf.emote("rage")
 
 	transformed = TRUE
+	var/datum/mind/werewolf_mind = human_user.mind
+	if(werewolf_mind?.current == human_user)
+		// Keep the werewolf player in control of the beast, along with any mind-bound actions.
+		werewolf_mind.transfer_to(new_werewolf, TRUE)
 	transformation_in_progress = FALSE
 	mark_transformation_complete()
 	RegisterSignal(new_werewolf, COMSIG_LIVING_COMBAT_KILL, PROC_REF(on_werewolf_kill))
@@ -352,6 +356,13 @@
 		werewolf_user.dropItemToGround(dropped_item, silent = TRUE)
 
 	INVOKE_ASYNC(werewolf_user, TYPE_PROC_REF(/mob, emote), "scream")
+	transformed = FALSE
+	transformation_in_progress = FALSE
+
+	var/datum/mind/werewolf_mind = werewolf_user.mind
+	if(werewolf_mind?.current == werewolf_user)
+		// Restore control to the hidden human before the beast body is cleaned up.
+		werewolf_mind.transfer_to(caster_mob, TRUE)
 
 	to_chat(caster_mob, span_userdanger("The beast within returns to slumber."))
 	playsound(caster_mob, pick('sound/combat/gib (1).ogg', 'sound/combat/gib (2).ogg'), 200, FALSE, 3)
@@ -367,6 +378,4 @@
 	caster_mob.adjustCloneLoss(werewolf_user.getCloneLoss() / 2)
 
 	UnregisterSignal(werewolf_user, list(COMSIG_LIVING_COMBAT_KILL, COMSIG_LIVING_UNSHAPESHIFTED))
-	transformed = FALSE
-	transformation_in_progress = FALSE
 	mark_transformation_complete()
