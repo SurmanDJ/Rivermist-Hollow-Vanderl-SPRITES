@@ -21,6 +21,7 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	var/contract_ledger_id = "guild_contracts"
 	var/list/ui_sessions
 	var/list/ui_opening_lock
+	var/taxable = TRUE
 
 /obj/structure/fake_machine/contractledger/Initialize()
 	. = ..()
@@ -1412,12 +1413,13 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 		reward += deposit_return
 		original_reward += deposit_return
 
-		tax_amt = round(tax_rate * reward)
-		if(tax_amt > 0)
-			reward -= tax_amt
-			SStreasury.give_money_treasury(tax_amt, "quest completion tax - [src.name]")
-			record_featured_stat(FEATURED_STATS_TAX_PAYERS, user, tax_amt)
-			record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
+		if(taxable)
+			tax_amt = round(tax_rate * reward)
+			if(tax_amt > 0)
+				reward -= tax_amt
+				SStreasury.give_money_treasury(tax_amt, "quest completion tax - [src.name]")
+				record_featured_stat(FEATURED_STATS_TAX_PAYERS, user, tax_amt)
+				record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
 
 		on_contract_completed(user, completed_quest, reward, original_reward, tax_amt)
 		qdel(completed_quest)
@@ -1432,9 +1434,14 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 /obj/structure/fake_machine/contractledger/proc/cash_in(mob/user, reward, original_reward, tax_amt)
 	add_mammons_to_atom(user, reward)
 	if(reward > 0)
-		say(reward > original_reward ? \
-			"Your handler assistance-increased reward of [reward] amna has been dispensed! The difference is [reward - original_reward] amna. ([tax_amt] amna taxed.)" : \
-			"Your reward of [reward] amna has been dispensed. ([tax_amt] amna taxed.)")
+		if(tax_amt)
+			say(reward > original_reward ? \
+				"Your handler assistance-increased reward of [reward] amna has been dispensed! The difference is [reward - original_reward] amna. ([tax_amt] amna taxed.)" : \
+				"Your reward of [reward] amna has been dispensed. ([tax_amt] amna taxed.)")
+		else
+			say(reward > original_reward ? \
+				"Your handler assistance-increased reward of [reward] amna has been dispensed! The difference is [reward - original_reward] amna." : \
+				"Your reward of [reward] amna has been dispensed.")
 
 /obj/structure/fake_machine/contractledger/proc/abandon_scroll(mob/user, obj/item/paper/scroll/quest/abandoned_scroll)
 	if(!abandoned_scroll)

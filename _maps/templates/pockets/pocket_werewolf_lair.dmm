@@ -1,0 +1,204 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/bedrock,
+/area/pocket_dimension/werewolf_lair)
+"b" = (
+/turf/open/floor/dirt/road,
+/area/pocket_dimension/werewolf_lair)
+"c" = (
+/turf/open/floor/naturalstone,
+/area/pocket_dimension/werewolf_lair)
+"d" = (
+/obj/structure/flora/rock/pile,
+/turf/open/floor/dirt/road,
+/area/pocket_dimension/werewolf_lair)
+"e" = (
+/turf/closed/wall/mineral/stone/moss,
+/area/pocket_dimension/werewolf_lair)
+"g" = (
+/obj/structure/flora/tinymushrooms,
+/turf/open/floor/naturalstone,
+/area/pocket_dimension/werewolf_lair)
+"i" = (
+/obj/structure/fake_machine/contractledger/antag/werewolf,
+/turf/open/floor/cobble/alt,
+/area/pocket_dimension/werewolf_lair)
+"p" = (
+/obj/structure/flora/mushroomcluster,
+/turf/open/floor/naturalstone,
+/area/pocket_dimension/werewolf_lair)
+"x" = (
+/obj/structure/bed/bear,
+/turf/open/floor/dirt/road,
+/area/pocket_dimension/werewolf_lair)
+"z" = (
+/turf/open/floor/cobble/alt,
+/area/pocket_dimension/werewolf_lair)
+"H" = (
+/obj/structure/flora/rock/pile,
+/turf/open/floor/naturalstone,
+/area/pocket_dimension/werewolf_lair)
+"J" = (
+/obj/effect/landmark/pocket_dimension/drop_spot,
+/obj/effect/landmark/pocket_dimension/entry,
+/turf/open/floor/naturalstone,
+/area/pocket_dimension/werewolf_lair)
+"Q" = (
+/obj/structure/wild_plant/nospread/mushroom/borowiki,
+/turf/open/floor/naturalstone,
+/area/pocket_dimension/werewolf_lair)
+"R" = (
+/obj/machinery/light/fueled/firebowl/stump,
+/turf/open/floor/dirt/road,
+/area/pocket_dimension/werewolf_lair)
+"S" = (
+/obj/structure/table/wood/treestump/shroomstump,
+/turf/open/floor/dirt/road,
+/area/pocket_dimension/werewolf_lair)
+"V" = (
+/obj/structure/bed/shit,
+/turf/open/floor/naturalstone,
+/area/pocket_dimension/werewolf_lair)
+"W" = (
+/obj/effect/landmark/pocket_dimension/exit/werewolf,
+/turf/closed/mineral/bedrock,
+/area/pocket_dimension/werewolf_lair)
+"X" = (
+/obj/structure/wild_plant/nospread/mushroom/merkel,
+/turf/open/floor/naturalstone,
+/area/pocket_dimension/werewolf_lair)
+"Z" = (
+/obj/structure/table/wood/treestump,
+/turf/open/floor/dirt/road,
+/area/pocket_dimension/werewolf_lair)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+e
+e
+e
+X
+c
+c
+g
+e
+e
+a
+"}
+(3,1,1) = {"
+a
+e
+g
+z
+c
+R
+c
+c
+c
+e
+a
+"}
+(4,1,1) = {"
+a
+e
+z
+i
+z
+b
+b
+d
+c
+c
+a
+"}
+(5,1,1) = {"
+a
+V
+c
+z
+c
+b
+b
+b
+b
+c
+a
+"}
+(6,1,1) = {"
+a
+c
+Z
+b
+d
+b
+d
+b
+b
+J
+W
+"}
+(7,1,1) = {"
+a
+V
+c
+b
+b
+x
+b
+S
+c
+c
+a
+"}
+(8,1,1) = {"
+a
+e
+e
+Q
+c
+c
+b
+c
+p
+e
+a
+"}
+(9,1,1) = {"
+a
+e
+e
+e
+H
+e
+g
+e
+e
+e
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

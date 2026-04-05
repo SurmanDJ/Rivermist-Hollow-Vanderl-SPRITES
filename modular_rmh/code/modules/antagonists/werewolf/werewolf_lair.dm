@@ -75,17 +75,19 @@
 /datum/map_template/pocket/werewolf_lair
 	name = "Werewolf Lair"
 	id = "pocket_werewolf_lair"
-	mappath = "modular_rmh/_maps/templates/pockets/pocket_werewolf_lair.dmm"
+	mappath = "_maps/templates/pockets/pocket_werewolf_lair.dmm"
+	exit_structure_type = /obj/structure/pocket_dimension_exit/hole
 	lifecycle_policy = POCKET_LIFECYCLE_KEEP_LOADED
 	persistence_mode = POCKET_PERSISTENCE_MOVABLES
 
 /obj/structure/werewolf_lair_entrance
 	name = "clawed-out lair"
-	desc = "A clawed burrow mouth hidden against the wild wall. The air beyond smells of damp earth, wet fur, and the moon."
+	desc = "A clawed burrow mouth hidden against the wall. The air beyond smells of damp earth, wet fur, and the moon."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "hole1"
 	anchored = TRUE
 	density = FALSE
+	pixel_y = 5
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/datum/weakref/owner_werewolf_ref
 	var/list/invited_werewolf_ckeys

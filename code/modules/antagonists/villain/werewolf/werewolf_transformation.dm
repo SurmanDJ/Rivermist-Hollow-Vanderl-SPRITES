@@ -228,16 +228,16 @@
 	transformation_in_progress = TRUE
 	ADD_TRAIT(human_user, TRAIT_NO_TRANSFORM, REF(src))
 	human_user.flash_fullscreen("redflash3")
-	human_user.emote("agony", forced = TRUE)
+	human_user.emote("scream", forced = TRUE)
 	if(force_due_to_missed_nights)
 		to_chat(human_user, span_userdanger("Three nights denied. The beast tears free!"))
 	else
-		to_chat(human_user, span_userdanger("UNIMAGINABLE PAIN!"))
+		to_chat(human_user, span_userdanger("The Moon calls!"))
 	human_user.Stun(WW_TRANSFORMATION_LOCKDOWN, ignore_canstun = TRUE)
-	//human_user.Knockdown(WW_TRANSFORMATION_LOCKDOWN, ignore_canstun = TRUE)
+	//human_user.Knockdown(WW_TRANSFORMATION_LOCKDOWN, ignore_canstun = TRUE)w
 	sleep(WW_TRANSFORMATION_AGONY_INTERVAL)
-	//if(!QDELETED(human_user))
-	//	human_user.emote("agony", forced = TRUE)
+	human_user.flash_fullscreen("redflash3")
+	human_user.emote("scream", forced = TRUE)
 	sleep(WW_TRANSFORMATION_AGONY_INTERVAL)
 	if(!QDELETED(human_user))
 		REMOVE_TRAIT(human_user, TRAIT_NO_TRANSFORM, REF(src))

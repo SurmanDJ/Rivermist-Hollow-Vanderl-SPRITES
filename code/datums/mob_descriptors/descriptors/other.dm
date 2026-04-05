@@ -167,7 +167,7 @@
 	var/obj/item/organ/genitals/filling_organ/vagina/vagina = H.getorganslot(ORGAN_SLOT_VAGINA)
 	if(!vagina)
 		return
-	var/vagina_type
+	var/vagina_type = "vagina"
 	var/arousal_modifier
 	switch(vagina.accessory_type)
 		if(/datum/sprite_accessory/genitals/vagina/human)

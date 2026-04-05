@@ -2,6 +2,7 @@
 	name = "black contract ledger"
 	desc = "A hidden ledger whose ink writhes when ordinary eyes try to follow it. Only those already marked as villains can make sense of its pages."
 	contract_ledger_id = "antag_contracts"
+	taxable = FALSE
 
 /obj/structure/fake_machine/contractledger/antag/proc/get_access_antag_datum(mob/living/carbon/human/user)
 	if(!user)

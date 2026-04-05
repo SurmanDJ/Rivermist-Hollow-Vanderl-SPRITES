@@ -814,6 +814,10 @@
 	name = "pocket closet exit marker"
 	exit_structure_type = /obj/structure/pocket_dimension_exit/closet
 
+/obj/effect/landmark/pocket_dimension/exit/werewolf
+	name = "pocket closet exit marker"
+	exit_structure_type = /obj/structure/pocket_dimension_exit/hole
+
 /obj/effect/abstract/pocket_dimension_storage
 	invisibility = INVISIBILITY_ABSTRACT
 
@@ -856,6 +860,15 @@
 	desc = "A wardrobe door humming with folded space. Touch it to return outside."
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "closet3"
+	density = TRUE
+
+/obj/structure/pocket_dimension_exit/hole
+	name = "lair exit"
+	desc = "Step out and join the hunt."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "hole1"
+	anchored = TRUE
+	pixel_y = 5
 	density = TRUE
 
 /datum/map_template/pocket/test_chamber
