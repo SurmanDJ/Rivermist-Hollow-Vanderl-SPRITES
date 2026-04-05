@@ -79,6 +79,7 @@
 
 	owner.current.grant_language(/datum/language/beast)
 	owner.current.add_spell(/datum/action/cooldown/spell/undirected/werewolf_form, source = owner)
+	initialize_werewolf_lair_ability()
 
 	var/datum/rage/werewolf/new_rage = new
 	new_rage.grant_to_holder(owner.current)
@@ -90,6 +91,7 @@
 /datum/antagonist/werewolf/on_removal()
 	remove_werewolf(forced = TRUE)
 	clear_transformation_pressure()
+	cleanup_werewolf_lair()
 
 	// owner.current should now be the original human mob, if not something is terribly wrong
 	if(!silent && owner.current)
