@@ -399,7 +399,10 @@
 
 	return null
 
-/datum/pocket_dimension/proc/get_exit_destination()
+/datum/pocket_dimension/proc/get_exit_destination(atom/override_destination = null)
+	if(override_destination && !QDELETED(override_destination))
+		return override_destination
+
 	var/atom/holder_destination = get_holder_exit_destination()
 	if(holder_destination)
 		return holder_destination
@@ -488,8 +491,8 @@
 	user.forceMove(target)
 	return TRUE
 
-/datum/pocket_dimension/proc/eject_occupants(message = null)
-	var/atom/target = get_exit_destination()
+/datum/pocket_dimension/proc/eject_occupants(message = null, atom/override_destination = null)
+	var/atom/target = get_exit_destination(override_destination)
 	if(!target)
 		return
 
@@ -500,8 +503,8 @@
 			to_chat(occupant, span_warning(message))
 		occupant.forceMove(target)
 
-/datum/pocket_dimension/proc/eject_all(message = null)
-	return eject_occupants(message)
+/datum/pocket_dimension/proc/eject_all(message = null, atom/override_destination = null)
+	return eject_occupants(message, override_destination)
 
 /datum/pocket_dimension/proc/is_native_snapshot_movable(atom/movable/movable)
 	if(!movable || QDELETED(movable))
@@ -555,8 +558,8 @@
 
 	return movable.forceMove(new_loc)
 
-/datum/pocket_dimension/proc/eject_foreign_movables(items_only = FALSE)
-	var/atom/target = get_exit_destination()
+/datum/pocket_dimension/proc/eject_foreign_movables(items_only = FALSE, atom/override_destination = null)
+	var/atom/target = get_exit_destination(override_destination)
 	if(!target)
 		return
 
@@ -567,9 +570,9 @@
 	if(storage && !length(storage.contents))
 		QDEL_NULL(storage)
 
-/datum/pocket_dimension/proc/eject_teardown_contents(message = null)
-	eject_occupants(message)
-	eject_foreign_movables()
+/datum/pocket_dimension/proc/eject_teardown_contents(message = null, atom/override_destination = null)
+	eject_occupants(message, override_destination)
+	eject_foreign_movables(FALSE, override_destination)
 
 /datum/pocket_dimension/proc/ensure_storage()
 	if(!storage)

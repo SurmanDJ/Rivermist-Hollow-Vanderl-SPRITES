@@ -84,7 +84,7 @@ SUBSYSTEM_DEF(pocket_dimensions)
 	if(instances_by_id["[instance.instance_id]"] == instance)
 		instances_by_id -= "[instance.instance_id]"
 
-/datum/controller/subsystem/pocket_dimensions/proc/delete_instance(instance_or_key, eject_message = null)
+/datum/controller/subsystem/pocket_dimensions/proc/delete_instance(instance_or_key, eject_message = null, atom/eject_destination_override = null)
 	var/datum/pocket_dimension/instance
 	if(istype(instance_or_key, /datum/pocket_dimension))
 		instance = instance_or_key
@@ -94,7 +94,7 @@ SUBSYSTEM_DEF(pocket_dimensions)
 	if(!instance)
 		return FALSE
 
-	instance.eject_teardown_contents(eject_message)
+	instance.eject_teardown_contents(eject_message, eject_destination_override)
 
 	unregister_instance(instance)
 	qdel(instance)

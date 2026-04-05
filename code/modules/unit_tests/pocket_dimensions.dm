@@ -130,3 +130,23 @@
 
 	TEST_ASSERT(test_bag.store_item_in_pocket(tester_scroll, user), "Bag of holding should consume attempts to store another pocket-holder item.")
 	TEST_ASSERT_EQUAL(get_turf(tester_scroll), origin, "Bag of holding should refuse to swallow another pocket-holder item.")
+
+/datum/unit_test/bag_of_holding_destroy_ejection/Run()
+	var/turf/origin = run_loc_floor_bottom_left
+	var/turf/moved_bag_turf = run_loc_floor_top_right
+
+	var/obj/item/storage/backpack/bag_of_holding/live_bag = allocate(/obj/item/storage/backpack/bag_of_holding, origin)
+	var/mob/living/carbon/human/live_user = allocate(/mob/living/carbon/human, origin)
+	var/obj/item/natural/cloth/live_item = allocate(/obj/item/natural/cloth, origin)
+	TEST_ASSERT(live_bag.store_item_in_pocket(live_item, live_user), "Bag of holding should accept a foreign item before the destroy ejection test.")
+	live_bag.forceMove(moved_bag_turf)
+	qdel(live_bag, force = TRUE)
+	TEST_ASSERT_EQUAL(get_turf(live_item), moved_bag_turf, "Destroying a bag on-map should eject stored items onto the turf underneath the bag.")
+
+	var/obj/item/storage/backpack/bag_of_holding/fallback_bag = allocate(/obj/item/storage/backpack/bag_of_holding, origin)
+	var/mob/living/carbon/human/fallback_user = allocate(/mob/living/carbon/human, origin)
+	var/obj/item/natural/cloth/fallback_item = allocate(/obj/item/natural/cloth, origin)
+	TEST_ASSERT(fallback_bag.store_item_in_pocket(fallback_item, fallback_user), "Bag of holding should accept a foreign item before the saved-exit fallback test.")
+	fallback_bag.moveToNullspace()
+	qdel(fallback_bag, force = TRUE)
+	TEST_ASSERT_EQUAL(get_turf(fallback_item), origin, "Destroying a bag without a live turf should eject stored items to the saved exit turf.")
