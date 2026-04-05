@@ -49,6 +49,7 @@
 	var/last_touched = 0
 	var/datum/turf_reservation/reservation
 	var/turf/load_turf
+	var/datum/weakref/pocket_holder_ref
 	var/turf/return_turf
 	var/datum/weakref/return_anchor_ref
 	var/list/affected_turfs = list()
@@ -65,11 +66,12 @@
 	var/list/datum/pocket_movable_snapshot/hibernated_foreign_movables = list()
 	var/obj/effect/abstract/pocket_dimension_storage/storage
 
-/datum/pocket_dimension/New(datum/map_template/pocket/template, instance_key, instance_id, lifecycle_policy, idle_timeout)
+/datum/pocket_dimension/New(datum/map_template/pocket/template, instance_key, instance_id, lifecycle_policy, idle_timeout, atom/pocket_holder = null)
 	src.template = template
 	src.instance_key = instance_key
 	src.instance_id = instance_id
 	apply_lifecycle_settings(lifecycle_policy, idle_timeout)
+	set_pocket_holder(pocket_holder)
 	touch()
 	. = ..()
 
@@ -91,6 +93,7 @@
 	persistence_mode = null
 	state = null
 	last_touched = 0
+	pocket_holder_ref = null
 	return_turf = null
 	return_anchor_ref = null
 	return ..()
@@ -113,6 +116,32 @@
 
 /datum/pocket_dimension/proc/touch()
 	last_touched = world.time
+
+/datum/pocket_dimension/proc/release_reservation()
+	if(!reservation)
+		return
+
+	var/datum/turf_reservation/current_reservation = reservation
+	reservation = null
+	if(!QDELETED(current_reservation))
+		qdel(current_reservation)
+
+/datum/pocket_dimension/proc/set_pocket_holder(atom/new_pocket_holder)
+	if(!new_pocket_holder || QDELETED(new_pocket_holder))
+		return
+
+	pocket_holder_ref = WEAKREF(new_pocket_holder)
+
+/datum/pocket_dimension/proc/get_pocket_holder()
+	if(!pocket_holder_ref)
+		return null
+
+	var/atom/pocket_holder = pocket_holder_ref.resolve()
+	if(pocket_holder && !QDELETED(pocket_holder))
+		return pocket_holder
+
+	pocket_holder_ref = null
+	return null
 
 /datum/pocket_dimension/proc/is_hibernating()
 	return state == POCKET_STATE_HIBERNATING && !reservation
@@ -142,7 +171,7 @@
 	native_slot_offsets.Cut()
 	load_turf = null
 
-	QDEL_NULL(reservation)
+	release_reservation()
 	state = POCKET_STATE_HIBERNATING
 
 /datum/pocket_dimension/proc/activate()
@@ -166,7 +195,7 @@
 	)
 	if(!load_turf || !template.load(load_turf))
 		load_turf = null
-		QDEL_NULL(reservation)
+		release_reservation()
 		return FALSE
 
 	seal_padding_ring()
@@ -355,15 +384,48 @@
 		return pick(fallback_turfs)
 	return get_entry_turf() || get_center_turf()
 
-/datum/pocket_dimension/proc/get_return_turf()
+/datum/pocket_dimension/proc/get_holder_exit_destination()
+	var/atom/pocket_holder = get_pocket_holder()
+	if(!pocket_holder)
+		return null
+
+	var/turf/holder_turf = get_turf(pocket_holder)
+	if(holder_turf && !QDELETED(holder_turf))
+		return holder_turf
+
+	var/atom/holder_loc = pocket_holder.loc
+	if(holder_loc && !QDELETED(holder_loc))
+		return holder_loc
+
+	return null
+
+/datum/pocket_dimension/proc/get_exit_destination()
+	var/atom/holder_destination = get_holder_exit_destination()
+	if(holder_destination)
+		return holder_destination
+
 	var/atom/return_anchor = return_anchor_ref?.resolve()
 	if(return_anchor && !QDELETED(return_anchor))
 		var/turf/anchor_turf = get_turf(return_anchor)
 		if(anchor_turf && !QDELETED(anchor_turf))
 			return anchor_turf
+
+		var/atom/anchor_loc = return_anchor.loc
+		if(anchor_loc && !QDELETED(anchor_loc))
+			return anchor_loc
+
 	if(isturf(return_turf) && !QDELETED(return_turf))
 		return return_turf
+
 	return find_safe_turf()
+
+/datum/pocket_dimension/proc/get_return_turf()
+	var/atom/exit_destination = get_exit_destination()
+	if(!exit_destination)
+		return null
+	if(isturf(exit_destination))
+		return exit_destination
+	return get_turf(exit_destination)
 
 /datum/pocket_dimension/proc/set_return_target(turf/new_return_turf = null, atom/new_return_anchor = null)
 	if(new_return_anchor && !QDELETED(new_return_anchor))
@@ -418,7 +480,7 @@
 	if(!user)
 		return FALSE
 
-	var/turf/target = get_return_turf()
+	var/atom/target = get_exit_destination()
 	if(!target)
 		return FALSE
 
@@ -427,7 +489,7 @@
 	return TRUE
 
 /datum/pocket_dimension/proc/eject_occupants(message = null)
-	var/turf/target = get_return_turf()
+	var/atom/target = get_exit_destination()
 	if(!target)
 		return
 
@@ -494,7 +556,7 @@
 	return movable.forceMove(new_loc)
 
 /datum/pocket_dimension/proc/eject_foreign_movables(items_only = FALSE)
-	var/turf/target = get_return_turf()
+	var/atom/target = get_exit_destination()
 	if(!target)
 		return
 
@@ -650,10 +712,16 @@
 	var/state_text = is_hibernating() ? "hibernating" : "active"
 	return "#[instance_id] [template_name] ([state_text])"
 
-/datum/pocket_dimension/proc/format_debug_turf(turf/target)
+/datum/pocket_dimension/proc/format_debug_atom(atom/target)
 	if(!target || QDELETED(target))
 		return "none"
-	return "[html_encode("[target]")] ([target.x], [target.y], [target.z])"
+	if(isturf(target))
+		var/turf/target_turf = target
+		return "[html_encode("[target_turf]")] ([target_turf.x], [target_turf.y], [target_turf.z])"
+	return "[html_encode("[target]")] ([html_encode("[target.type]")])"
+
+/datum/pocket_dimension/proc/format_debug_turf(turf/target)
+	return format_debug_atom(target)
 
 /datum/pocket_dimension/proc/get_debug_reservation_text()
 	if(!reservation?.bottom_left_coords)
@@ -683,8 +751,10 @@
 	html += "<li><b>Persistence:</b> [html_encode(format_pocket_persistence_mode(persistence_mode))]</li>"
 	html += "<li><b>Idle timeout:</b> [idle_timeout ? html_encode(DisplayTimeText(idle_timeout)) : "disabled"]</li>"
 	html += "<li><b>Last touched:</b> [last_touched ? html_encode("[DisplayTimeText(world.time - last_touched)] ago") : "never"]</li>"
+	html += "<li><b>Pocket holder:</b> [format_debug_atom(get_pocket_holder())]</li>"
+	html += "<li><b>Exit destination:</b> [format_debug_atom(get_exit_destination())]</li>"
 	html += "<li><b>Reservation:</b> [html_encode(get_debug_reservation_text())]</li>"
-	html += "<li><b>Return turf:</b> [format_debug_turf(return_turf)]</li>"
+	html += "<li><b>Return turf fallback:</b> [format_debug_turf(return_turf)]</li>"
 	html += "<li><b>Load turf:</b> [format_debug_turf(load_turf)]</li>"
 	html += "<li><b>Occupants:</b> [length(get_occupants())]</li>"
 	html += "<li><b>Affected turfs:</b> [length(affected_turfs)]</li>"

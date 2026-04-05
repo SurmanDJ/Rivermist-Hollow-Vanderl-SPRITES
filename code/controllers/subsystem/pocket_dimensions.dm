@@ -48,18 +48,19 @@ SUBSYSTEM_DEF(pocket_dimensions)
 		return null
 	return instance
 
-/datum/controller/subsystem/pocket_dimensions/proc/get_or_create_instance(instance_key, template_ref, lifecycle_policy = null, idle_timeout = null)
+/datum/controller/subsystem/pocket_dimensions/proc/get_or_create_instance(instance_key, template_ref, lifecycle_policy = null, idle_timeout = null, atom/pocket_holder = null)
 	instance_key = "[instance_key]"
 	var/datum/pocket_dimension/instance = get_instance(instance_key)
 	if(instance)
 		instance.apply_lifecycle_settings(lifecycle_policy, idle_timeout)
+		instance.set_pocket_holder(pocket_holder)
 		return instance
 
 	var/datum/map_template/pocket/template = resolve_template(template_ref)
 	if(!template)
 		return null
 
-	instance = new(template, instance_key, next_instance_id++, lifecycle_policy, idle_timeout)
+	instance = new(template, instance_key, next_instance_id++, lifecycle_policy, idle_timeout, pocket_holder)
 	if(!instance.activate())
 		qdel(instance)
 		return null

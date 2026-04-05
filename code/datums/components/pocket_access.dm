@@ -194,7 +194,8 @@
 		instance_key,
 		template_ref,
 		lifecycle_policy,
-		idle_timeout
+		idle_timeout,
+		parent,
 	)
 	if(instance)
 		track_instance_key(instance.instance_key)

@@ -195,7 +195,7 @@
 	return SSpocket_dimensions?.get_instance(get_pocket_instance_key())
 
 /obj/structure/werewolf_lair_entrance/proc/get_or_create_pocket_instance()
-	return SSpocket_dimensions?.get_or_create_instance(get_pocket_instance_key(), /datum/map_template/pocket/werewolf_lair, POCKET_LIFECYCLE_KEEP_LOADED, 0)
+	return SSpocket_dimensions?.get_or_create_instance(get_pocket_instance_key(), /datum/map_template/pocket/werewolf_lair, POCKET_LIFECYCLE_KEEP_LOADED, 0, src)
 
 /obj/structure/werewolf_lair_entrance/proc/try_enter_user(mob/living/user)
 	if(!can_user_enter_lair(user, FALSE, TRUE))

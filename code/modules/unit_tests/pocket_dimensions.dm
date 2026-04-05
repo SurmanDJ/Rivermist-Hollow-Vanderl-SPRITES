@@ -2,8 +2,9 @@
 	var/obj/item/pocket_dimension_tester/tester_scroll = allocate(/obj/item/pocket_dimension_tester, run_loc_floor_bottom_left)
 	var/mob/living/carbon/human/tester = allocate(/mob/living/carbon/human, run_loc_floor_bottom_left)
 	var/turf/origin = get_turf(tester)
+	var/turf/moved_holder_turf = run_loc_floor_top_right
 
-	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance(REF(tester_scroll), tester_scroll.template_ref, POCKET_LIFECYCLE_HIBERNATE, 1)
+	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance(REF(tester_scroll), tester_scroll.template_ref, POCKET_LIFECYCLE_HIBERNATE, 1, tester_scroll)
 	TEST_ASSERT_NOTNULL(instance, "Pocket dimension instance should be created.")
 	TEST_ASSERT(instance.enter_mob(tester, origin), "Pocket dimension should accept a mob entry.")
 	TEST_ASSERT(instance.contains_turf(get_turf(tester)), "Tester should wind up inside the pocket dimension.")
@@ -12,8 +13,9 @@
 	TEST_ASSERT(instance.send_movable_inside(foreign_bag, origin), "Pocket dimension should accept foreign movables from outside.")
 	TEST_ASSERT(instance.contains_turf(get_turf(foreign_bag)), "Foreign items sent inside should count as in-pocket objects.")
 
+	tester_scroll.forceMove(moved_holder_turf)
 	TEST_ASSERT(instance.exit_mob(tester), "Pocket dimension should be able to return a mob.")
-	TEST_ASSERT_EQUAL(get_turf(tester), origin, "Tester should return to the entry turf.")
+	TEST_ASSERT_EQUAL(get_turf(tester), moved_holder_turf, "Tester should return to the holder's current turf.")
 	instance.last_touched = 0
 	TEST_ASSERT(instance.process_idle_lifecycle(), "Pocket dimension should hibernate when left idle.")
 	TEST_ASSERT(instance.is_hibernating(), "Pocket dimension should enter a hibernating state after idling out.")
@@ -22,7 +24,7 @@
 	TEST_ASSERT(instance.contains_turf(get_turf(foreign_bag)), "Foreign movables should be restored when a hibernating pocket wakes.")
 	TEST_ASSERT(SSpocket_dimensions.delete_instance(REF(tester_scroll)), "Pocket dimension should be deletable.")
 	TEST_ASSERT_NULL(SSpocket_dimensions.get_instance(REF(tester_scroll)), "Pocket dimension should unregister after deletion.")
-	TEST_ASSERT_EQUAL(get_turf(foreign_bag), origin, "Foreign items should be ejected before the pocket collapses.")
+	TEST_ASSERT_EQUAL(get_turf(foreign_bag), moved_holder_turf, "Foreign items should be ejected to the holder's current turf before the pocket collapses.")
 
 /datum/unit_test/pocket_dimension_drop_spot/Run()
 	var/turf/origin = run_loc_floor_bottom_left
@@ -86,14 +88,16 @@
 
 /datum/unit_test/pocket_dimension_snapshot/Run()
 	var/turf/origin = run_loc_floor_bottom_left
-	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance("[REF(src)]::snapshot", /datum/map_template/pocket/bag_of_holding, POCKET_LIFECYCLE_HIBERNATE, 1)
+	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance("[REF(src)]::snapshot", /datum/map_template/pocket/bag_of_holding, POCKET_LIFECYCLE_HIBERNATE, 0)
 	TEST_ASSERT_NOTNULL(instance, "Snapshot test instance should be created.")
 	TEST_ASSERT(instance.uses_movable_snapshot_persistence(), "Bag pocket should opt into movable snapshot persistence.")
 
 	var/list/chests = list()
 	for(var/turf/current_turf as anything in instance.affected_turfs)
-		for(var/obj/structure/closet/crate/chest/chest as anything in current_turf)
-			chests += chest
+		for(var/atom/movable/current_movable as anything in current_turf.contents)
+			if(!istype(current_movable, /obj/structure/closet/crate/chest))
+				continue
+			chests += current_movable
 
 	TEST_ASSERT(length(chests) >= 2, "Bag pocket should load both template chests for the snapshot test.")
 
