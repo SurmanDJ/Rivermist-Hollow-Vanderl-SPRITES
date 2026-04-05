@@ -80,6 +80,108 @@
 	)
 	return werewolf_contract_groups
 
+/obj/structure/fake_machine/contractledger/antag/werewolf/can_issue_quest_compass(mob/living/carbon/human/user)
+	return FALSE
+
+/obj/structure/fake_machine/contractledger/antag/werewolf/issue_quest_compass(mob/living/carbon/human/user)
+	set_session_notice(user, "notice.compass_carried", "warning")
+	to_chat(user, span_notice("The moon hunt offers no compass. I must use Moon Hunt and Sniff Trail instead."))
+	return FALSE
+
+/obj/structure/fake_machine/contractledger/antag/werewolf/create_contract_token(mob/living/carbon/human/user, datum/quest/attached_quest)
+	if(!attached_quest)
+		return null
+
+	var/datum/antagonist/werewolf/werewolf_antag = get_access_antag_datum(user)
+	if(!werewolf_antag)
+		return null
+
+	var/obj/item/paper/scroll/quest/werewolf_hidden/hidden_scroll = new(null, werewolf_antag)
+	hidden_scroll.assigned_quest = attached_quest
+	attached_quest.quest_scroll = hidden_scroll
+	attached_quest.quest_scroll_ref = WEAKREF(hidden_scroll)
+	hidden_scroll.sync_receiver_to_current_owner(user)
+	return hidden_scroll
+
+/obj/structure/fake_machine/contractledger/antag/werewolf/on_contract_token_issued(mob/living/carbon/human/user, datum/quest/attached_quest, obj/item/paper/scroll/quest/spawned_scroll)
+	var/datum/antagonist/werewolf/werewolf_antag = get_access_antag_datum(user)
+	var/obj/item/paper/scroll/quest/werewolf_hidden/hidden_scroll = spawned_scroll
+	if(!werewolf_antag || !istype(hidden_scroll))
+		return ..()
+
+	hidden_scroll.update_quest_text()
+	werewolf_antag.set_tracked_werewolf_contract_scroll(hidden_scroll)
+	to_chat(user, span_notice("The contract sinks into instinct. Use Moon Hunt to review it and Sniff Trail to follow the scent."))
+
+/obj/structure/fake_machine/contractledger/antag/werewolf/can_turn_in_any_contract(mob/living/carbon/human/user)
+	if(!user)
+		return FALSE
+	if(!can_user_access_ledger(user))
+		return FALSE
+
+	var/datum/antagonist/werewolf/werewolf_antag = get_access_antag_datum(user)
+	if(!werewolf_antag)
+		return FALSE
+
+	werewolf_antag.sync_werewolf_contract_assignments()
+	return !!werewolf_antag.get_turn_in_werewolf_contract_scroll()
+
+/obj/structure/fake_machine/contractledger/antag/werewolf/can_abandon_any_contract(mob/living/carbon/human/user)
+	if(!user)
+		return FALSE
+	if(!can_user_access_ledger(user))
+		return FALSE
+
+	var/datum/antagonist/werewolf/werewolf_antag = get_access_antag_datum(user)
+	if(!werewolf_antag)
+		return FALSE
+
+	werewolf_antag.sync_werewolf_contract_assignments()
+	return !!werewolf_antag.get_abandonable_werewolf_contract_scroll()
+
+/obj/structure/fake_machine/contractledger/antag/werewolf/turn_in_contract(mob/user, obj/item/paper/scroll/quest/scroll_in_hand)
+	if(scroll_in_hand)
+		return ..()
+	if(!can_user_access_ledger(user, TRUE))
+		return
+
+	var/mob/living/carbon/human/human_user = user
+	if(!istype(human_user))
+		return
+
+	var/datum/antagonist/werewolf/werewolf_antag = get_access_antag_datum(human_user)
+	if(!werewolf_antag)
+		return
+
+	werewolf_antag.sync_werewolf_contract_assignments()
+	var/obj/item/paper/scroll/quest/werewolf_hidden/turn_in_target = werewolf_antag.get_turn_in_werewolf_contract_scroll()
+	if(!turn_in_target)
+		set_session_notice(human_user, "notice.no_completed_contract", "warning")
+		return
+
+	turn_in_scroll(human_user, turn_in_target)
+
+/obj/structure/fake_machine/contractledger/antag/werewolf/abandon_contract(mob/user)
+	if(!can_user_access_ledger(user, TRUE))
+		return
+
+	var/mob/living/carbon/human/human_user = user
+	if(!istype(human_user))
+		return
+
+	var/datum/antagonist/werewolf/werewolf_antag = get_access_antag_datum(human_user)
+	if(!werewolf_antag)
+		return
+
+	werewolf_antag.sync_werewolf_contract_assignments()
+	var/obj/item/paper/scroll/quest/werewolf_hidden/abandon_target = werewolf_antag.get_abandonable_werewolf_contract_scroll()
+	if(!abandon_target)
+		set_session_notice(human_user, "notice.no_scroll_input", "warning")
+		to_chat(human_user, span_warning("No active moon-hunt contract is ready to abandon."))
+		return
+
+	abandon_scroll(human_user, abandon_target)
+
 /obj/structure/fake_machine/contractledger/antag/werewolf/get_contract_objective_score(datum/quest/quest)
 	var/effective_tier = quest?.threat_tier || quest?.requested_tier || QUEST_TIER_ROUTINE
 	effective_tier = clamp(effective_tier, QUEST_TIER_ROUTINE, QUEST_TIER_MYTHIC)

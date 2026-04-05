@@ -1201,10 +1201,12 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	// Try to set up a quest ambush on one of the spawned mobs (no extra reward)
 	attached_quest.try_setup_quest_ambush(chosen_landmark)
 
-	var/obj/item/paper/scroll/quest/spawned_scroll = new(get_turf(src))
-	spawned_scroll.assigned_quest = attached_quest
-	attached_quest.quest_scroll = spawned_scroll
-	attached_quest.quest_scroll_ref = WEAKREF(spawned_scroll)
+	var/obj/item/paper/scroll/quest/spawned_scroll = create_contract_token(user, attached_quest)
+	if(!spawned_scroll)
+		set_session_notice(user, "notice.invalid_contract", "warning")
+		to_chat(user, span_warning("The ledger fails to bind this contract to a quest token."))
+		qdel(attached_quest)
+		return FALSE
 
 	attached_quest.reward_amount = attached_quest.calculate_reward(get_turf(chosen_landmark))
 	attached_quest.deposit_amount = get_contract_deposit_amount(user, attached_quest)
@@ -1220,9 +1222,8 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 		qdel(attached_quest)
 		return FALSE
 
-	user.put_in_hands(spawned_scroll)
+	on_contract_token_issued(user, attached_quest, spawned_scroll)
 	log_quest(user.ckey, user.mind, user, "Take [attached_quest.quest_type]")
-	spawned_scroll.update_quest_text()
 
 	set_session_notice(user, "notice.issued_contract", "success", list(
 		"contract_type" = attached_quest.quest_type,
@@ -1230,6 +1231,23 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 		"deposit" = attached_quest.deposit_amount,
 	))
 	return TRUE
+
+/obj/structure/fake_machine/contractledger/proc/create_contract_token(mob/living/carbon/human/user, datum/quest/attached_quest)
+	if(!attached_quest)
+		return null
+
+	var/obj/item/paper/scroll/quest/spawned_scroll = new(get_turf(src))
+	spawned_scroll.assigned_quest = attached_quest
+	attached_quest.quest_scroll = spawned_scroll
+	attached_quest.quest_scroll_ref = WEAKREF(spawned_scroll)
+	return spawned_scroll
+
+/obj/structure/fake_machine/contractledger/proc/on_contract_token_issued(mob/living/carbon/human/user, datum/quest/attached_quest, obj/item/paper/scroll/quest/spawned_scroll)
+	if(!user || !attached_quest || !spawned_scroll)
+		return
+
+	user.put_in_hands(spawned_scroll)
+	spawned_scroll.update_quest_text()
 
 /obj/structure/fake_machine/contractledger/proc/find_quest_landmark(contract_tier, contract_type)
 	var/list/exact_landmarks = list()
@@ -1418,8 +1436,7 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 			"Your handler assistance-increased reward of [reward] amna has been dispensed! The difference is [reward - original_reward] amna. ([tax_amt] amna taxed.)" : \
 			"Your reward of [reward] amna has been dispensed. ([tax_amt] amna taxed.)")
 
-/obj/structure/fake_machine/contractledger/proc/abandon_contract(mob/user)
-	var/obj/item/paper/scroll/quest/abandoned_scroll = locate() in input_point
+/obj/structure/fake_machine/contractledger/proc/abandon_scroll(mob/user, obj/item/paper/scroll/quest/abandoned_scroll)
 	if(!abandoned_scroll)
 		set_session_notice(user, "notice.no_scroll_input", "warning")
 		to_chat(user, span_warning("No contract scroll found in the input area!"))
@@ -1467,6 +1484,15 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	abandoned_scroll.assigned_quest = null
 	qdel(quest)
 	qdel(abandoned_scroll)
+
+/obj/structure/fake_machine/contractledger/proc/abandon_contract(mob/user)
+	var/obj/item/paper/scroll/quest/abandoned_scroll = locate() in input_point
+	if(!abandoned_scroll)
+		set_session_notice(user, "notice.no_scroll_input", "warning")
+		to_chat(user, span_warning("No contract scroll found in the input area!"))
+		return
+
+	abandon_scroll(user, abandoned_scroll)
 
 /obj/structure/fake_machine/contractledger/proc/print_contracts(mob/user)
 	var/list/active_quests = list()

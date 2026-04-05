@@ -16,6 +16,9 @@
 	. = ..()
 	remove_werewolf_lair_creation_spell(old_body)
 	sync_werewolf_lair_creation_spell()
+	sync_werewolf_contract_assignments()
+	sync_werewolf_contract_actions()
+	refresh_werewolf_contract_browser_if_open()
 
 /datum/antagonist/werewolf/proc/cleanup_werewolf_lair()
 	remove_werewolf_lair_creation_spell()
