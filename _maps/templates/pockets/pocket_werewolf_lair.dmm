@@ -67,6 +67,10 @@
 /obj/structure/wild_plant/nospread/mushroom/merkel,
 /turf/open/floor/naturalstone,
 /area/pocket_dimension/werewolf_lair)
+"Y" = (
+/obj/structure/werewolf_lair_trap_maw,
+/turf/open/floor/cobble/alt,
+/area/pocket_dimension/werewolf_lair)
 "Z" = (
 /obj/structure/table/wood/treestump,
 /turf/open/floor/dirt/road,
@@ -128,7 +132,7 @@ a
 a
 V
 c
-z
+Y
 c
 b
 b

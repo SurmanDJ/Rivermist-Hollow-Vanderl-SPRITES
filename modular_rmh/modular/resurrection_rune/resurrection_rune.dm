@@ -471,7 +471,7 @@
 
 	hard_crit_deadlines.Remove(user)
 
-/datum/resurrection_rune_controller/proc/trigger_voluntary_revival(mob/living/carbon/user)
+/datum/resurrection_rune_controller/proc/can_queue_rescue_for(mob/living/carbon/user)
 	if(!user)
 		return FALSE
 	if(resurrections_disabled())
@@ -479,6 +479,21 @@
 	if(!(user in linked_users))
 		return FALSE
 	if(user in resurrecting)
+		return FALSE
+	return TRUE
+
+/datum/resurrection_rune_controller/proc/can_trigger_trap_rescue(mob/living/carbon/user)
+	return can_queue_rescue_for(user)
+
+/datum/resurrection_rune_controller/proc/trigger_trap_rescue(mob/living/carbon/user)
+	if(!can_trigger_trap_rescue(user))
+		return FALSE
+
+	queue_revival(user, voluntary = TRUE)
+	return TRUE
+
+/datum/resurrection_rune_controller/proc/trigger_voluntary_revival(mob/living/carbon/user)
+	if(!can_queue_rescue_for(user))
 		return FALSE
 
 	var/rescue_stage = get_rescue_stage(user)

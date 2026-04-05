@@ -26,7 +26,6 @@
 /datum/antagonist/werewolf/proc/refresh_werewolf_contract_state()
 	sync_werewolf_contract_assignments()
 	sync_werewolf_contract_actions()
-	refresh_werewolf_contract_browser_if_open()
 
 /datum/antagonist/werewolf/proc/get_werewolf_contract_scrolls(include_complete = TRUE)
 	var/list/contract_scrolls = list()
@@ -181,13 +180,9 @@
 	current_body << browse(null, "window=[WW_CONTRACT_BROWSER_WINDOW_ID]")
 
 /datum/antagonist/werewolf/proc/refresh_werewolf_contract_browser_if_open()
-	var/mob/living/current_body = owner?.current
-	if(!can_use_werewolf_contract_interface(current_body))
-		return
-	if(!current_body.client || !winexists(current_body, WW_CONTRACT_BROWSER_WINDOW_ID))
-		return
-
-	open_werewolf_contract_browser(current_body)
+	// Refreshing browse windows here steals focus and can make Moon Hunt pop open
+	// during background quest updates. Keep browser updates manual instead.
+	return FALSE
 
 /datum/antagonist/werewolf/proc/build_werewolf_contract_browser_html(mob/living/user)
 	var/turf/reference_turf = get_turf(user)

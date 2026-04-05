@@ -122,6 +122,7 @@
 		new /datum/objective/werewolf_counter/hunt(),
 		new /datum/objective/werewolf_counter/slay(),
 		new /datum/objective/werewolf_counter/convert(),
+		new /datum/objective/werewolf_counter/trap(),
 		new /datum/objective/werewolf_counter/contracts(),
 		new /datum/objective/werewolf/survive(),
 	)

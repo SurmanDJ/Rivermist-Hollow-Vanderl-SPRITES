@@ -60,7 +60,11 @@ SUBSYSTEM_DEF(pocket_dimensions)
 	if(!template)
 		return null
 
-	instance = new(template, instance_key, next_instance_id++, lifecycle_policy, idle_timeout, pocket_holder)
+	var/instance_type = template.instance_type
+	if(!ispath(instance_type, /datum/pocket_dimension))
+		instance_type = /datum/pocket_dimension
+
+	instance = new instance_type(template, instance_key, next_instance_id++, lifecycle_policy, idle_timeout, pocket_holder)
 	if(!instance.activate())
 		qdel(instance)
 		return null
@@ -151,6 +155,7 @@ SUBSYSTEM_DEF(pocket_dimensions)
 		if(QDELETED(instance))
 			continue
 
+		instance.process_pocket()
 		instance.process_idle_lifecycle()
 
 		if(MC_TICK_CHECK)
