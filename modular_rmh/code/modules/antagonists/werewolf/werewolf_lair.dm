@@ -1,6 +1,6 @@
 /proc/is_werewolf_lair_natural_wall(turf/target_wall)
 	if(istype(target_wall, /turf/closed/mineral))
-		return !istype(target_wall, /turf/closed/mineral/bedrock)
+		return TRUE
 	if(istype(target_wall, /turf/closed/wall/mineral))
 		return target_wall.type == /turf/closed/wall/mineral
 	return FALSE
@@ -91,7 +91,7 @@
 	persistence_mode = POCKET_PERSISTENCE_MOVABLES
 
 /obj/structure/werewolf_lair_entrance
-	name = "moon-dug lair"
+	name = "clawed-out lair"
 	desc = "A clawed burrow mouth hidden against the wild wall. The air beyond smells of damp earth, wet fur, and the moon."
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "hole1"
@@ -141,7 +141,7 @@
 
 /obj/structure/werewolf_lair_entrance/Destroy()
 	if(SSpocket_dimensions)
-		SSpocket_dimensions.delete_instance(get_pocket_instance_key(), "The moon-dug lair collapses and throws everything back outside!")
+		SSpocket_dimensions.delete_instance(get_pocket_instance_key(), "The lair collapses and throws everything back outside!")
 
 	var/datum/antagonist/werewolf/owner_werewolf = get_owner_werewolf()
 	if(owner_werewolf)
@@ -215,7 +215,7 @@
 		to_chat(user, span_warning("The lair refuses to open right now."))
 		return FALSE
 
-	to_chat(user, span_notice("I slip into the moon-dug lair."))
+	to_chat(user, span_notice("I slip into the lair."))
 	return pocket_instance.enter_mob(user, get_turf(src), src)
 
 /obj/structure/werewolf_lair_entrance/proc/handle_grabbed_entry(mob/living/user, obj/item/grabbing/grab_item)
