@@ -1,0 +1,52 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/bedrock,
+/area/pocket_dimension/werewolf_lair_trap)
+"b" = (
+/turf/open/floor/naturalstone,
+/area/pocket_dimension/werewolf_lair_trap)
+"c" = (
+/obj/effect/landmark/pocket_dimension/drop_spot,
+/obj/effect/landmark/pocket_dimension/entry,
+/turf/open/floor/naturalstone,
+/area/pocket_dimension/werewolf_lair_trap)
+"d" = (
+/obj/effect/landmark/pocket_dimension/exit/werewolf,
+/turf/open/floor/naturalstone,
+/area/pocket_dimension/werewolf_lair_trap)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+b
+b
+a
+"}
+(3,1,1) = {"
+a
+b
+c
+d
+a
+"}
+(4,1,1) = {"
+a
+b
+b
+b
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+"}

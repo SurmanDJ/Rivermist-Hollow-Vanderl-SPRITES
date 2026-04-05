@@ -18,6 +18,7 @@
 	var/tmp/animals_hunted_in_wolf_form = 0
 	var/tmp/foes_slain_in_wolf_form = 0
 	var/tmp/list/converted_player_minds = list()
+	var/tmp/list/trapped_player_minds = list()
 	var/tmp/contract_objective_score = 0
 
 /datum/antagonist/werewolf/proc/refresh_werewolf_objectives()
@@ -64,6 +65,18 @@
 		return FALSE
 
 	converted_player_minds += target.mind
+	refresh_werewolf_objectives()
+	return TRUE
+
+/datum/antagonist/werewolf/proc/record_trapped_target(mob/living/target)
+	if(!istype(target))
+		return FALSE
+	if(!werewolf_is_player_character(target))
+		return FALSE
+	if(target.mind in trapped_player_minds)
+		return FALSE
+
+	trapped_player_minds += target.mind
 	refresh_werewolf_objectives()
 	return TRUE
 
@@ -294,3 +307,18 @@
 /datum/objective/werewolf_counter/convert/update_explanation_text()
 	..()
 	explanation_text = "Convert [target_amount] willing soul[werewolf_plural_suffix(target_amount)] into werewolves. Progress: [get_progress()]/[target_amount]."
+
+/datum/objective/werewolf_counter/trap
+	name = "trap"
+	target_minimum = WW_TRAP_OBJECTIVE_TARGET
+	target_maximum = WW_TRAP_OBJECTIVE_TARGET
+
+/datum/objective/werewolf_counter/trap/get_progress()
+	var/datum/antagonist/werewolf/werewolf_antag = get_werewolf_antag()
+	if(!werewolf_antag)
+		return 0
+	return length(werewolf_antag.trapped_player_minds)
+
+/datum/objective/werewolf_counter/trap/update_explanation_text()
+	..()
+	explanation_text = "Throw [target_amount] different player[werewolf_plural_suffix(target_amount)] into my moon pit. Progress: [get_progress()]/[target_amount]."

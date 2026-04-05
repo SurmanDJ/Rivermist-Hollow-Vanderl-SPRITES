@@ -6,6 +6,7 @@
 	var/lifecycle_policy = POCKET_LIFECYCLE_KEEP_LOADED
 	var/idle_timeout = POCKET_DEFAULT_IDLE_TIMEOUT
 	var/persistence_mode = POCKET_PERSISTENCE_NONE
+	var/instance_type = /datum/pocket_dimension
 	var/exit_structure_type = /obj/structure/pocket_dimension_exit
 
 /proc/is_valid_pocket_lifecycle_policy(policy)
@@ -116,6 +117,9 @@
 
 /datum/pocket_dimension/proc/touch()
 	last_touched = world.time
+
+/datum/pocket_dimension/proc/process_pocket()
+	return FALSE
 
 /datum/pocket_dimension/proc/release_reservation()
 	if(!reservation)
@@ -486,6 +490,9 @@
 
 	touch()
 	user.forceMove(target)
+	return TRUE
+
+/datum/pocket_dimension/proc/can_exit_mob(mob/user, obj/structure/pocket_dimension_exit/exit_object, show_feedback = TRUE)
 	return TRUE
 
 /datum/pocket_dimension/proc/eject_occupants(message = null)
@@ -912,6 +919,8 @@
 /obj/structure/pocket_dimension_exit/proc/use_exit(mob/user)
 	if(!linked_pocket)
 		to_chat(user, span_warning("The seam wavers, but nowhere answers."))
+		return
+	if(!linked_pocket.can_exit_mob(user, src))
 		return
 	linked_pocket.exit_mob(user)
 
