@@ -502,7 +502,7 @@
 /turf/open/floor/dirt,
 /area/outdoors/woods_safe)
 "bA" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/woods_safe)
 "bB" = (
 /obj/structure/flora/tree/burnt,
@@ -720,7 +720,7 @@
 /turf/open/floor/dirt,
 /area/outdoors/woods_safe)
 "cn" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/vampire_manor)
 "co" = (
 /obj/item/clothing/gloves/rare/elfplate/welfplate,
@@ -3257,7 +3257,7 @@
 /area/indoors)
 "sa" = (
 /obj/machinery/light/fueled/wallfire/candle/weak/r,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/vampire_manor)
 "sb" = (
 /obj/structure/chair/stool,
@@ -7129,7 +7129,7 @@
 /area/outdoors/bog/inhumen_camp)
 "Sh" = (
 /obj/structure/bars,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/vampire_manor)
 "Si" = (
 /obj/structure/fluff/railing/border{

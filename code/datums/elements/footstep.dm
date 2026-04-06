@@ -56,7 +56,7 @@
 	if(!istype(turf))
 		return
 
-	if(!turf.footstep || source.buckled || source.throwing || source.movement_type & (VENTCRAWLING | FLYING) || HAS_TRAIT(source, TRAIT_IMMOBILIZED))
+	if(source.buckled || source.throwing || source.movement_type & (VENTCRAWLING | FLYING) || HAS_TRAIT(source, TRAIT_IMMOBILIZED))
 		return
 
 	if(source.body_position == LYING_DOWN) //play crawling sound if we're lying
@@ -161,6 +161,8 @@
 	// NORMAL SHOES
 	else if ((humshoes && !humshoes?.is_barefoot) || feetCover)
 		var/shoestep_type = prepared_steps[FOOTSTEP_MOB_SHOE]
+		if(!shoestep_type)
+			return
 		heard_clients = playsound(source.loc, pick(footstep_sounds[shoestep_type][1]),
 			footstep_sounds[shoestep_type][2] * volume * volume_multiplier,
 			TRUE,
@@ -172,6 +174,8 @@
 	// BAREFOOT
 	else
 		var/barefoot_type = prepared_steps[FOOTSTEP_MOB_BAREFOOT]
+		if(!barefoot_type)
+			return
 		var/list/bare_footstep_sounds = GLOB.barefootstep
 		heard_clients = playsound(source.loc, pick(bare_footstep_sounds[barefoot_type][1]),
 			bare_footstep_sounds[barefoot_type][2] * volume * volume_multiplier,

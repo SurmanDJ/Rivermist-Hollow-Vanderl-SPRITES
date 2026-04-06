@@ -3331,7 +3331,7 @@
 /turf/open/floor/cobblerock/alt,
 /area/outdoors/bog)
 "tV" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave)
 "tW" = (
 /obj/structure/fluff/railing/border{

@@ -429,7 +429,7 @@
 /turf/open/floor/church,
 /area/under/underdark/rmh/main)
 "eV" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/underdark/rmh/glimmerlakes)
 "eW" = (
 /obj/structure/flora/shroom_tree,
@@ -645,7 +645,7 @@
 /obj/structure/flora/grass/water/reeds{
 	layer = 5
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/underdark/rmh)
 "hk" = (
 /turf/closed/indestructible/rock,
@@ -1198,7 +1198,7 @@
 	opacity = 1;
 	name = "fog"
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/underdark/rmh)
 "ps" = (
 /turf/open/floor/dirt,
@@ -1720,7 +1720,7 @@
 	name = "Will-o'-the-wisp";
 	desc = "A small, fiery ball of light made up of mystical energy."
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/underdark/rmh)
 "ww" = (
 /obj/effect/decal/cleanable/blood/drip,
@@ -2161,7 +2161,7 @@
 /turf/open/floor/hexstone,
 /area/under/underdark/rmh/shar)
 "Cd" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/underdark/rmh/flow)
 "Ce" = (
 /obj/item/natural/stoneblock,
@@ -2482,7 +2482,7 @@
 	name = "Will-o'-the-wisp";
 	desc = "A small, fiery ball of light made up of mystical energy."
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/underdark/rmh/glimmerlakes)
 "Gk" = (
 /obj/effect/spawner/map_spawner/loot/valuable_candle_spawner,
@@ -3359,7 +3359,7 @@
 /turf/open/floor/cobble,
 /area/under/underdark/rmh)
 "Sk" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/underdark/rmh)
 "So" = (
 /turf/closed/wall/mineral/stone/moss/blue,
@@ -3816,7 +3816,7 @@
 /obj/structure/flora/grass/water/reeds{
 	layer = 5
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/underdark/rmh/glimmerlakes)
 "Yk" = (
 /turf/open/floor/cobblerock/alt,

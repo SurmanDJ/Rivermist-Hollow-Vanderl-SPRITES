@@ -43,7 +43,7 @@
 "aaM" = (
 /obj/structure/hotspring,
 /obj/structure/flora/rock/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "aaR" = (
 /obj/structure/flora/grass/water/reeds,
@@ -55,7 +55,7 @@
 "abl" = (
 /obj/structure/hotspring,
 /obj/structure/flora/grass/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "abq" = (
 /turf/open/floor/grass/yel,
@@ -299,7 +299,7 @@
 /obj/effect/decal/cobblerockedge{
 	dir = 6
 	},
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/under/rmh_dungeon/jergal)
 "afD" = (
 /obj/effect/decal/cobbleedge{
@@ -393,7 +393,7 @@
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
 	},
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/under/rmh_dungeon/jergal)
 "ahh" = (
 /obj/structure/chair/stool,
@@ -687,7 +687,7 @@
 	light_power = 2
 	},
 /obj/structure/hotspring/border/nine,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "amP" = (
 /obj/structure/door/viewport{
@@ -753,7 +753,7 @@
 /area/indoors/town/rmh/town_hall)
 "aoK" = (
 /obj/structure/flora/driftwood,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/rmh_river)
 "aoM" = (
 /turf/closed/wall/mineral/stone,
@@ -800,7 +800,7 @@
 /turf/open/floor/herringbone,
 /area/under/rmh_dungeon/jergal)
 "apI" = (
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_field/west)
 "apN" = (
 /obj/structure/window/openclose/reinforced{
@@ -1804,7 +1804,7 @@
 "aKq" = (
 /obj/structure/hotspring,
 /obj/effect/lily_petal/three,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/town/rmh/chapel/basement)
 "aKr" = (
 /obj/structure/lever/wall{
@@ -1885,7 +1885,7 @@
 /area/indoors/cave/rmh_cave/west)
 "aLJ" = (
 /obj/structure/hotspring/border,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "aLP" = (
 /obj/structure/fluff/railing/wood/north{
@@ -2057,7 +2057,7 @@
 "aPu" = (
 /obj/structure/hotspring,
 /obj/structure/flora/grass/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "aPz" = (
 /turf/open/floor/naturalstone,
@@ -2418,7 +2418,7 @@
 /area/indoors/town/rmh/farm/ambar)
 "aYq" = (
 /obj/structure/hotspring/border/nine,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "aYA" = (
 /obj/structure/rack/shelf/biggest,
@@ -3129,7 +3129,7 @@
 	pixel_y = 16;
 	pixel_x = 3
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "bnH" = (
 /obj/effect/decal/edge_corner{
@@ -3381,7 +3381,7 @@
 /area/outdoors/rmh_eilistraee)
 "brV" = (
 /obj/structure/hotspring/border/seven,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "bsa" = (
 /obj/structure/fluff/railing/wood/west,
@@ -3859,7 +3859,7 @@
 /area/indoors/town/rmh/bank)
 "bCI" = (
 /obj/structure/flora/grass/water/reeds,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "bCL" = (
 /obj/structure/fluff/railing/corner/north_east,
@@ -3927,7 +3927,7 @@
 /obj/structure/hotspring,
 /obj/structure/flora/hotspring_rocks,
 /obj/structure/flora/grass/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "bET" = (
 /obj/effect/decal/edge_corner{
@@ -4018,7 +4018,7 @@
 	pixel_y = 18;
 	pixel_x = 5
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "bGU" = (
 /obj/structure/curtain/dir{
@@ -4466,7 +4466,7 @@
 	pixel_x = -10;
 	pixel_y = 19
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/town/rmh/basement/pump)
 "bPp" = (
 /obj/effect/landmark/start/farmhand,
@@ -5709,7 +5709,7 @@
 "cmu" = (
 /obj/structure/hotspring,
 /obj/effect/lily_petal,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/town/rmh/chapel/basement)
 "cmv" = (
 /obj/structure/fluff/nest{
@@ -5853,7 +5853,7 @@
 /area/indoors/town/rmh)
 "cpM" = (
 /obj/structure/flora/driftwood,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_magelake)
 "cpS" = (
 /obj/structure/resurrection_rune/city,
@@ -6302,7 +6302,7 @@
 /area/indoors/town/rmh)
 "cyG" = (
 /obj/structure/hotspring/border/seven,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "czo" = (
 /obj/structure/fluff/railing/border/east,
@@ -6903,7 +6903,7 @@
 /obj/structure/hotspring,
 /obj/effect/waterfall,
 /obj/effect/lily_petal/three,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "cMU" = (
 /obj/effect/decal/edge{
@@ -7200,7 +7200,7 @@
 "cSs" = (
 /obj/structure/hotspring,
 /obj/structure/flora/starfish,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "cSP" = (
 /obj/structure/door{
@@ -7581,7 +7581,7 @@
 /area/under/town/rmh/basement/pump)
 "dbm" = (
 /obj/structure/hotspring/border/six,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "dbs" = (
 /turf/closed/wall/mineral/decowood,
@@ -7855,7 +7855,7 @@
 "dhH" = (
 /obj/effect/waterfall,
 /obj/structure/hotspring,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "dhI" = (
 /obj/structure/lever/wall{
@@ -8382,7 +8382,7 @@
 /area/outdoors/rmh_field)
 "dou" = (
 /obj/structure/hotspring,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "doB" = (
 /obj/item/natural/rock,
@@ -8943,7 +8943,7 @@
 /turf/open/floor/naturalstone,
 /area/indoors/cave/rmh_cave/west)
 "dxy" = (
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_magelake)
 "dxz" = (
 /obj/machinery/light/fueled/chand,
@@ -9549,7 +9549,7 @@
 /area/outdoors/beach/rmh_beach)
 "dHF" = (
 /obj/structure/water_pump,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/rmh_river)
 "dHI" = (
 /obj/effect/decal/edge_corner{
@@ -10240,7 +10240,7 @@
 /area/indoors/town/rmh/cell)
 "dTt" = (
 /obj/structure/flora/grass/water/reeds,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/west)
 "dTB" = (
 /obj/structure/closet/crate/chest/old_crate{
@@ -10912,7 +10912,7 @@
 /area/indoors/town/rmh/farm/henhouse)
 "ehu" = (
 /obj/structure/hotspring/border/nine,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "ehv" = (
 /obj/effect/decal/edge{
@@ -10987,7 +10987,7 @@
 "eiR" = (
 /obj/structure/hotspring,
 /obj/structure/flora/hotspring_rocks,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "eiY" = (
 /obj/structure/fermentation_keg/beer,
@@ -11704,7 +11704,7 @@
 	pixel_x = 5
 	},
 /obj/item/natural/worms/leech,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/under/town/rmh/basement)
 "ewF" = (
 /obj/structure/rack/shelf/biggest,
@@ -11748,7 +11748,7 @@
 /area/indoors/town/rmh/chapel/basement)
 "exO" = (
 /obj/structure/hotspring/border/twelve,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "eyg" = (
 /obj/structure/bed/wool,
@@ -11983,7 +11983,7 @@
 "eCY" = (
 /obj/structure/hotspring,
 /obj/effect/lily_petal,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "eDk" = (
 /obj/effect/decal/edge_corner{
@@ -12495,7 +12495,7 @@
 /area/under/town/rmh/basement/farm)
 "eLM" = (
 /obj/structure/hotspring/border,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "eLW" = (
 /obj/structure/flora/newtree,
@@ -13512,7 +13512,7 @@
 /area/under/rmh_dungeon/jergal)
 "feM" = (
 /obj/structure/hotspring/border/six,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "feV" = (
 /obj/structure/fluff/railing/border/east,
@@ -14318,7 +14318,7 @@
 /area/outdoors/rmh_field/north)
 "fwc" = (
 /obj/structure/fluff/walldeco/vinez/r,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/rmh_dungeon/catacombs_town)
 "fwd" = (
 /obj/machinery/light/fueled/torchholder/c,
@@ -14599,7 +14599,7 @@
 /area/under/rmh_dungeon/underdarkmaze)
 "fCn" = (
 /obj/structure/hotspring/border/eleven,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "fCo" = (
 /obj/structure/fluff/railing/wood{
@@ -15364,7 +15364,7 @@
 /area/indoors/town/rmh/tavern)
 "fRK" = (
 /obj/structure/flora/grass,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "fRO" = (
 /obj/effect/decal/edge{
@@ -15405,7 +15405,7 @@
 /area/indoors/cave/rmh_cave/mine)
 "fSr" = (
 /obj/structure/rotation_piece/cog/large,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/rmh_river)
 "fSx" = (
 /obj/structure/chair/wood/alt/chair_noble{
@@ -15530,7 +15530,7 @@
 	opacity = 1;
 	name = "fog"
 	},
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "fUx" = (
 /obj/machinery/light/fueled/wallfire/candle,
@@ -16529,7 +16529,7 @@
 /turf/open/floor/carpet/stellar,
 /area/indoors/town/rmh/tavern)
 "gmi" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/cavewet)
 "gmk" = (
 /obj/structure/rack,
@@ -17325,7 +17325,7 @@
 /area/outdoors/rmh_field/camp)
 "gzF" = (
 /obj/structure/hotspring/border/four,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "gzO" = (
 /obj/structure/table/vtable/v2,
@@ -17409,7 +17409,7 @@
 /area/under/town/rmh/basement/mages)
 "gAN" = (
 /obj/structure/hotspring/border,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "gAP" = (
 /obj/effect/decal/edge_corner{
@@ -18853,7 +18853,7 @@
 "hbY" = (
 /obj/structure/flora/grass/water/reeds,
 /obj/structure/flora/driftwood,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "hcm" = (
 /turf/open/floor/ruinedwood/turned,
@@ -19177,7 +19177,7 @@
 /area/indoors/town/rmh/witch)
 "hhO" = (
 /obj/structure/hotspring/border/eleven,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "hhZ" = (
 /obj/structure/fluff/pillow/brown,
@@ -19503,7 +19503,7 @@
 /area/outdoors/town/rmh)
 "hoT" = (
 /obj/structure/hotspring/border/eight,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "hoY" = (
 /obj/structure/leyline,
@@ -19535,7 +19535,7 @@
 	name = "Will-o'-the-wisp";
 	desc = "A small, fiery ball of light made up of mystical energy."
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "hpq" = (
 /obj/machinery/anvil/crafted,
@@ -19924,7 +19924,7 @@
 	light_outer_range = 8;
 	light_power = 2
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "hxZ" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -20100,7 +20100,7 @@
 "hBI" = (
 /obj/structure/flora/grass/water/reeds,
 /obj/structure/fluff/railing/corner/south_west,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "hBU" = (
 /obj/effect/decal/edge{
@@ -20253,14 +20253,14 @@
 /obj/structure/hotspring,
 /obj/effect/waterfall,
 /obj/structure/flora/grass/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "hEy" = (
 /turf/open/floor/grass/yel,
 /area/outdoors/rmh_field/druid)
 "hEz" = (
 /obj/structure/hotspring/border/seven,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "hEF" = (
 /obj/structure/flora/grass/crawlvines,
@@ -20772,7 +20772,7 @@
 /area/indoors/town/rmh/town_hall)
 "hPD" = (
 /obj/structure/flora/driftwood,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/rmh_magelake)
 "hPP" = (
 /obj/structure/fluff/railing/corner{
@@ -20791,7 +20791,7 @@
 "hQk" = (
 /obj/structure/hotspring,
 /obj/effect/lily_petal/three,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "hQm" = (
 /obj/structure/window,
@@ -20997,7 +20997,7 @@
 "hTE" = (
 /obj/structure/hotspring,
 /obj/effect/lily_petal/two,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/town/rmh/chapel/basement)
 "hTL" = (
 /obj/structure/bookcase/random_recipes{
@@ -21460,7 +21460,7 @@
 /turf/open/openspace,
 /area/under/cavewet)
 "icT" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/rmh_river)
 "icV" = (
 /obj/structure/flora/grass/herb/benedictus{
@@ -21645,7 +21645,7 @@
 "igk" = (
 /obj/structure/hotspring,
 /obj/structure/flora/rock/coral,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "igr" = (
 /obj/structure/wild_plant/nospread/mushroom/borowiki,
@@ -21655,7 +21655,7 @@
 /obj/effect/particle_effect/smoke{
 	lifetime = 999999
 	},
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_magelake)
 "igv" = (
 /turf/open/floor/ruinedwood/turned,
@@ -21682,7 +21682,7 @@
 /obj/structure/fluff/railing/corner{
 	dir = 9
 	},
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "igL" = (
 /obj/structure/fluff/walldeco/church/line{
@@ -22004,7 +22004,7 @@
 /area/under/town/rmh/sewer)
 "int" = (
 /obj/structure/hotspring,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/town/rmh/chapel/basement)
 "inz" = (
 /obj/structure/fluff/walldeco/church/line{
@@ -22067,7 +22067,7 @@
 /area/indoors/town/rmh/bath)
 "ioE" = (
 /obj/structure/water_pump,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/town/rmh/basement/pump)
 "ioH" = (
 /obj/structure/flora/grass,
@@ -22878,7 +22878,7 @@
 "iAJ" = (
 /obj/structure/hotspring,
 /obj/structure/hotspring,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "iAM" = (
 /obj/effect/decal/cleanable/debris/stone,
@@ -23006,7 +23006,7 @@
 /area/indoors/town/rmh/chapel/basement)
 "iDp" = (
 /obj/structure/rotation_piece/cog,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/rmh_river)
 "iDq" = (
 /obj/structure/closet/crate/crafted_closet/inn,
@@ -23390,7 +23390,7 @@
 	pixel_y = 18;
 	pixel_x = 5
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "iKN" = (
 /obj/effect/decal/edge{
@@ -24227,7 +24227,7 @@
 /obj/structure/hotspring,
 /obj/structure/hotspring,
 /obj/effect/waterfall,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "iZt" = (
 /obj/item/natural/stoneblock,
@@ -25141,7 +25141,7 @@
 /obj/structure/flora/hotspring_rocks/small/three{
 	pixel_y = 14
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "jti" = (
 /obj/effect/decal/carpet{
@@ -25462,7 +25462,7 @@
 /area/outdoors/rmh_field/druid)
 "jAu" = (
 /obj/structure/flora/grass/water/reeds,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/rmh_dungeon/catacombs_town)
 "jAC" = (
 /obj/structure/rack/shelf/biggest,
@@ -25559,7 +25559,7 @@
 /area/indoors/town/rmh/cell)
 "jCU" = (
 /obj/structure/hotspring/border/three,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "jCX" = (
 /obj/structure/fluff/walldeco/vinez/offset,
@@ -25754,7 +25754,7 @@
 /turf/open/floor/dirt,
 /area/indoors/cave/rmh_cave/east)
 "jHo" = (
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/exposed/town/rmh/farm)
 "jHp" = (
 /turf/open/floor/dirt/road,
@@ -26157,7 +26157,7 @@
 /area/indoors/town/rmh/magician/pass)
 "jNV" = (
 /obj/structure/fluff/railing/corner/north_east,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "jNZ" = (
 /obj/item/bin/water,
@@ -26588,7 +26588,7 @@
 "jVf" = (
 /obj/effect/waterfall,
 /obj/structure/hotspring/border/ten,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "jVi" = (
 /obj/structure/closet/crate/chest/wicker,
@@ -27368,7 +27368,7 @@
 "klR" = (
 /obj/structure/hotspring,
 /obj/structure/flora/driftwood,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "klZ" = (
 /obj/structure/fluff/railing/wood/north{
@@ -27614,7 +27614,7 @@
 /area/outdoors/bog)
 "kqg" = (
 /obj/structure/hotspring/border/two,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "kqp" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -27919,7 +27919,7 @@
 "kwQ" = (
 /obj/structure/hotspring,
 /obj/effect/lily_petal,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "kwS" = (
 /turf/closed/wall/mineral/decostone/center,
@@ -28785,7 +28785,7 @@
 /area/outdoors/town/rmh/roofs)
 "kMt" = (
 /obj/structure/fluff/railing/border/east,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "kMG" = (
 /obj/structure/curtain/bounty/dir{
@@ -29157,7 +29157,7 @@
 /obj/structure/hotspring,
 /obj/effect/waterfall,
 /obj/effect/lily_petal/two,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "kSx" = (
 /obj/effect/decal/edge{
@@ -29249,7 +29249,7 @@
 "kUF" = (
 /obj/structure/hotspring/border/ten,
 /obj/effect/lily_petal,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "kUK" = (
 /obj/structure/flora/grass/bush/wall/green,
@@ -29383,7 +29383,7 @@
 /area/under/town/rmh/basement/tavern)
 "kWP" = (
 /obj/structure/flora/grass/water/reeds,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/rmh_river)
 "kWQ" = (
 /obj/structure/table/wood/large_new{
@@ -29461,7 +29461,7 @@
 /area/outdoors/exposed/town/rmh/farm)
 "kYs" = (
 /obj/structure/flora/hotspring_rocks,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "kYt" = (
 /obj/effect/decal/cleanable/blood/old,
@@ -29720,7 +29720,7 @@
 /area/indoors/town/rmh/magician)
 "ldd" = (
 /obj/effect/waterfall,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/town/rmh/magician)
 "ldg" = (
 /obj/machinery/light/fueled/hearth,
@@ -30105,7 +30105,7 @@
 /area/indoors/town/rmh/craft/blacksmith)
 "ljy" = (
 /obj/structure/underworld/ship/smol,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "ljA" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -30172,12 +30172,12 @@
 	pixel_y = 6;
 	pixel_x = 7
 	},
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/town/rmh)
 "lkQ" = (
 /obj/structure/hotspring,
 /obj/structure/flora/rock/coral,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "llb" = (
 /turf/closed/wall/mineral/wooddark,
@@ -30238,7 +30238,7 @@
 /turf/open/floor/ruinedwood,
 /area/indoors/town/rmh/town_hall)
 "lml" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/west)
 "lmn" = (
 /obj/structure/flora/grass/fullgrass,
@@ -32366,7 +32366,7 @@
 /area/under/town/rmh/basement/mages)
 "maz" = (
 /obj/structure/hotspring/border/three,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "maD" = (
 /obj/structure/fluff/railing/border,
@@ -33546,7 +33546,7 @@
 "mwX" = (
 /obj/structure/hotspring,
 /obj/structure/flora/starfish,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "mxa" = (
 /turf/open/floor/cobblerock,
@@ -34105,7 +34105,7 @@
 /obj/structure/flora/ausbushes/reedbush{
 	pixel_y = -3
 	},
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/town/rmh)
 "mHz" = (
 /obj/structure/fluff/walldeco/church/line{
@@ -34195,7 +34195,7 @@
 "mIB" = (
 /obj/structure/hotspring,
 /obj/effect/lily_petal/three,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "mID" = (
 /obj/effect/decal/edge{
@@ -34339,7 +34339,7 @@
 	name = "Will-o'-the-wisp";
 	desc = "A small, fiery ball of light made up of mystical energy."
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "mLI" = (
 /obj/structure/bookcase/random,
@@ -34450,7 +34450,7 @@
 /area/under/rmh_dungeon/jergal)
 "mOj" = (
 /obj/structure/hotspring/border/two,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "mOt" = (
 /obj/effect/decal/cobblerockedge{
@@ -34799,7 +34799,7 @@
 /turf/open/floor/cobblerock,
 /area/under/rmh_dungeon/catacombs_church)
 "mUv" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/rmh_dungeon/underdarkmaze)
 "mUH" = (
 /obj/structure/fluff/railing/wood/north{
@@ -35052,7 +35052,7 @@
 /obj/effect/falling_sakura{
 	color = "#5e61b5"
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/town/rmh/magician)
 "nam" = (
 /turf/open/floor/dirt,
@@ -35276,7 +35276,7 @@
 "nfw" = (
 /obj/structure/hotspring,
 /obj/structure/flora/rock/coral,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "nfA" = (
 /turf/closed/mineral,
@@ -36147,7 +36147,7 @@
 /area/indoors/town/rmh/farm/henhouse)
 "nxg" = (
 /obj/structure/hotspring/border/eight,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "nxq" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -36198,7 +36198,7 @@
 "nxY" = (
 /obj/structure/hotspring,
 /obj/effect/lily_petal/two,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "nyh" = (
 /obj/structure/flora/grass/herb/benedictus{
@@ -36315,7 +36315,7 @@
 /turf/closed/wall/mineral/decostone/moss/blue/cand,
 /area/indoors/town/rmh/chapel/basement)
 "nzW" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/town/rmh/basement/pump)
 "nAb" = (
 /obj/structure/chair/bench/couch/right/lord_secondary,
@@ -36893,7 +36893,7 @@
 /turf/open/floor/tile/tilerg,
 /area/indoors/town/rmh/bath)
 "nLp" = (
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/under/rmh_dungeon/jergal)
 "nLt" = (
 /obj/structure/bed/inn/double{
@@ -37457,7 +37457,7 @@
 /turf/open/floor/cobblerock,
 /area/under/town/rmh/basement/merchant)
 "nUs" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/underhamlet)
 "nUu" = (
 /obj/structure/bed/inn/double,
@@ -37556,7 +37556,7 @@
 /area/indoors/cave/rmh_cave/west)
 "nWm" = (
 /obj/structure/hotspring,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "nWz" = (
 /turf/closed/wall/mineral/roofwall/outercorner{
@@ -37804,7 +37804,7 @@
 /area/indoors/town/rmh/bath)
 "nZX" = (
 /obj/structure/hotspring/border/five,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "oac" = (
 /obj/machinery/light/fueled/torchholder/c,
@@ -37845,7 +37845,7 @@
 /turf/open/floor/dirt,
 /area/under/rmh_dungeon/catacombs_town)
 "oaC" = (
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/indoors/cave/rmh_cave/wet/lake)
 "oaE" = (
 /obj/structure/fluff/railing/corner/south_east,
@@ -38029,7 +38029,7 @@
 /obj/item/natural/worms/leech{
 	pixel_x = 5
 	},
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/under/town/rmh/basement)
 "oes" = (
 /obj/structure/fluff/railing/corner/south_east,
@@ -38520,7 +38520,7 @@
 "onq" = (
 /obj/structure/hotspring,
 /obj/effect/lily_petal/three,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "onB" = (
 /obj/structure/bookcase/random/erotica{
@@ -39072,7 +39072,7 @@
 	name = "Will-o'-the-wisp";
 	desc = "A small, fiery ball of light made up of mystical energy."
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "owY" = (
 /obj/machinery/light/fueled/hearth{
@@ -39150,7 +39150,7 @@
 /area/indoors/cave/rmh_cave/greenskins)
 "oyB" = (
 /obj/structure/hotspring/border/four,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "oyD" = (
 /turf/open/floor/tile/tilerg,
@@ -39282,7 +39282,7 @@
 /area/outdoors/town/rmh)
 "oAL" = (
 /obj/structure/hotspring/border/eight,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "oAN" = (
 /obj/structure/door/fancy{
@@ -39328,7 +39328,7 @@
 /area/under/rmh_dungeon/underdarkmaze)
 "oBf" = (
 /obj/structure/fluff/railing/corner/south_west,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "oBg" = (
 /turf/open/floor/dirt/road,
@@ -40659,7 +40659,7 @@
 /area/outdoors/rmh_field)
 "oYh" = (
 /obj/structure/hotspring/border/twelve,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "oYk" = (
 /obj/structure/stairs/stone,
@@ -40679,7 +40679,7 @@
 /area/outdoors/beach/rmh_beach)
 "oYG" = (
 /obj/structure/hotspring/border/five,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "oYJ" = (
 /obj/item/bin/water/gross,
@@ -40842,7 +40842,7 @@
 "pbs" = (
 /obj/structure/hotspring,
 /obj/effect/lily_petal/two,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "pby" = (
 /obj/structure/fluff/railing/corner/north_east,
@@ -41485,10 +41485,10 @@
 /turf/open/floor/tile/brick,
 /area/under/town/rmh/basement/tavern)
 "poM" = (
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/indoors/town/rmh)
 "poO" = (
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "poR" = (
 /obj/effect/decal/edge{
@@ -42155,7 +42155,7 @@
 /obj/effect/waterfall,
 /obj/structure/hotspring,
 /obj/effect/lily_petal,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "pzX" = (
 /obj/structure/fluff/railing/wood/west,
@@ -42285,7 +42285,7 @@
 /area/outdoors/rmh_field/rmh_mageporch)
 "pDb" = (
 /obj/structure/hotspring/border/ten,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "pDr" = (
 /obj/effect/landmark/house_spot{
@@ -42518,7 +42518,7 @@
 /turf/closed/wall/mineral/craftstone,
 /area/indoors/town/rmh)
 "pJj" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/rmh_dungeon/catacombs_church)
 "pJE" = (
 /obj/effect/landmark/start/grove_druid,
@@ -42868,7 +42868,7 @@
 	},
 /area/outdoors/town/rmh/roofs)
 "pNw" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/town/rmh)
 "pNI" = (
 /turf/closed/wall/mineral/decostone/moss/cand,
@@ -43295,7 +43295,7 @@
 /area/indoors/town/rmh)
 "pUY" = (
 /obj/structure/hotspring/border/eleven,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "pVe" = (
 /obj/structure/door/stone{
@@ -43325,7 +43325,7 @@
 "pVB" = (
 /obj/structure/hotspring,
 /obj/effect/lily_petal/two,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "pVD" = (
 /obj/effect/decal/cobblerockedge,
@@ -43424,7 +43424,7 @@
 /area/under/town/basement)
 "pYw" = (
 /obj/structure/hotspring/border/ten,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "pYy" = (
 /obj/item/reagent_containers/glass/bucket/wooden,
@@ -43751,7 +43751,7 @@
 "qfp" = (
 /obj/structure/hotspring,
 /obj/effect/waterfall,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "qfx" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -44258,7 +44258,7 @@
 "qnc" = (
 /obj/effect/waterfall,
 /obj/structure/hotspring,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "qnd" = (
 /obj/effect/decal/edge_corner{
@@ -44512,7 +44512,7 @@
 /area/indoors/town/rmh/magician)
 "qqB" = (
 /obj/item/grown/log/tree/stick,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "qqG" = (
 /turf/open/floor/ruinedwood/herringbone,
@@ -44577,7 +44577,7 @@
 /turf/open/floor/snow/rough,
 /area/under/town/rmh/basement/mages)
 "qss" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/rmh_magelake)
 "qst" = (
 /obj/machinery/light/fueled/wallfire/candle,
@@ -45980,7 +45980,7 @@
 /turf/open/floor/ruinedwood/darker,
 /area/indoors/town/rmh/craft/tailor)
 "qRV" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/rmh_dungeon/arena)
 "qSd" = (
 /obj/structure/fluff/railing/corner/north_east,
@@ -46177,7 +46177,7 @@
 "qWb" = (
 /obj/structure/hotspring,
 /obj/structure/flora/rock/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "qWu" = (
 /obj/effect/decal/cobblerockedge{
@@ -47214,7 +47214,7 @@
 "rpV" = (
 /obj/structure/hotspring,
 /obj/item/reagent_containers/food/snacks/produce/manabloom,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "rqa" = (
 /obj/effect/decal/cobblerockedge{
@@ -47307,7 +47307,7 @@
 /area/outdoors/rmh_field/west)
 "rsl" = (
 /obj/structure/hotspring/border/five,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "rsn" = (
 /turf/closed/wall/mineral/roofwall/middle{
@@ -47630,7 +47630,7 @@
 "rxw" = (
 /obj/structure/hotspring,
 /obj/structure/flora/grass/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "rxE" = (
 /obj/structure/fluff/railing/corner/north_east,
@@ -48055,7 +48055,7 @@
 "rFd" = (
 /obj/structure/hotspring/border/eleven,
 /obj/effect/waterfall,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "rFh" = (
 /obj/effect/decal/cobblerockedge{
@@ -48991,7 +48991,7 @@
 "rWF" = (
 /obj/structure/fluff/statue,
 /obj/machinery/light/fueled/firebowl/standing/blue,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/town/rmh/craft/clinic)
 "rWG" = (
 /obj/structure/bed/wool,
@@ -49301,7 +49301,7 @@
 /turf/closed/wall/mineral/craftstone,
 /area/outdoors/town/rmh)
 "sbT" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/rmh_dungeon/catacombs_town)
 "sbV" = (
 /obj/item/bin/water/gross,
@@ -50244,7 +50244,7 @@
 "sxv" = (
 /obj/structure/hotspring,
 /obj/structure/flora/starfish,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "sxI" = (
 /obj/effect/decal/edge{
@@ -50677,7 +50677,7 @@
 /area/outdoors/town/rmh/roofs)
 "sHL" = (
 /obj/structure/flora/grass/water/reeds,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_magelake)
 "sHR" = (
 /obj/item/natural/bundle/stick{
@@ -50823,7 +50823,7 @@
 "sKi" = (
 /obj/structure/hotspring,
 /obj/effect/lily_petal,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "sKo" = (
 /obj/structure/mannequin/male/female,
@@ -51356,7 +51356,7 @@
 /area/outdoors/mountains/rmh_mountains)
 "sTl" = (
 /obj/effect/decal/cleanable/debris/stone,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/rmh_dungeon/catacombs_town)
 "sTv" = (
 /turf/closed/wall/mineral/stone/window,
@@ -51417,7 +51417,7 @@
 /area/outdoors/rmh_river)
 "sUE" = (
 /obj/structure/hotspring/border/two,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "sUP" = (
 /obj/effect/decal/edge_corner{
@@ -51596,7 +51596,7 @@
 	opacity = 1;
 	name = "fog"
 	},
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_magelake)
 "sXZ" = (
 /obj/effect/landmark/observer_start,
@@ -51862,7 +51862,7 @@
 /turf/closed/wall/mineral/craftstone,
 /area/indoors/town/rmh/cell)
 "tcZ" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/town/rmh/sewer)
 "tdd" = (
 /obj/effect/decal/edge{
@@ -52363,7 +52363,7 @@
 /area/outdoors/town/rmh)
 "tmF" = (
 /obj/structure/hotspring/border/nine,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "tmK" = (
 /obj/effect/decal/cobbleedge{
@@ -54210,11 +54210,11 @@
 /area/under/town/rmh/basement/tavern)
 "tUP" = (
 /obj/structure/hotspring/border/ten,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "tUQ" = (
 /obj/structure/flora/grass/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/rmh_dungeon/catacombs_town)
 "tUT" = (
 /obj/structure/table/wood{
@@ -54323,7 +54323,7 @@
 /area/indoors/town/rmh/loudmouth)
 "tXe" = (
 /obj/structure/hotspring/border/thirteen,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "tXu" = (
 /obj/effect/wisp/prestidigitation{
@@ -54332,7 +54332,7 @@
 	desc = "A small, fiery ball of light made up of mystical energy."
 	},
 /obj/structure/hotspring,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "tXT" = (
 /turf/open/floor/ruinedwood,
@@ -54371,7 +54371,7 @@
 /turf/open/floor/ruinedwood/herringbone_clear,
 /area/indoors/town/rmh/craft/tailor)
 "tYr" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/northern)
 "tYv" = (
 /obj/effect/decal/edge_corner{
@@ -55762,7 +55762,7 @@
 /area/indoors/town/rmh/tavern)
 "uxn" = (
 /obj/structure/fluff/railing/border/west,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "uxp" = (
 /obj/structure/window/openclose/reinforced{
@@ -55912,7 +55912,7 @@
 /area/outdoors/rmh_field/rmh_mageporch)
 "uAU" = (
 /obj/structure/underworld/ship/smol,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/rmh_river)
 "uBd" = (
 /obj/structure/well,
@@ -56394,7 +56394,7 @@
 "uMB" = (
 /obj/structure/hotspring,
 /obj/structure/flora/rock/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "uME" = (
 /obj/structure/door/weak/bolt{
@@ -56421,7 +56421,7 @@
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "uMX" = (
 /obj/structure/underworld/ship/ramp,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "uNb" = (
 /obj/structure/closet/crate/chest/wicker,
@@ -56458,7 +56458,7 @@
 "uNq" = (
 /obj/structure/flora/rock/water,
 /obj/structure/hotspring,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "uNx" = (
 /obj/effect/decal/edge{
@@ -56774,7 +56774,7 @@
 /area/indoors/town/rmh)
 "uTN" = (
 /obj/structure/flora/driftwood,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "uTT" = (
 /obj/item/natural/rock/mana_crystal,
@@ -57364,7 +57364,7 @@
 "vgx" = (
 /obj/structure/hotspring/border/two,
 /obj/effect/waterfall,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "vgC" = (
 /obj/structure/fluff/railing/wood/west,
@@ -57579,7 +57579,7 @@
 "vlo" = (
 /obj/structure/hotspring,
 /obj/item/alch/herb/valeriana,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/town/rmh/chapel/basement)
 "vls" = (
 /obj/effect/decal/cobblerockedge{
@@ -58576,7 +58576,7 @@
 /area/indoors/town/rmh/craft/apothecary)
 "vEw" = (
 /obj/structure/hotspring/border/fourteen,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "vEz" = (
 /obj/structure/flora/grass/water/reeds,
@@ -58754,7 +58754,7 @@
 /obj/item/natural/worms/leech{
 	pixel_x = 5
 	},
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/under/town/rmh/basement)
 "vIN" = (
 /obj/structure/fluff/walldeco/bath/gents,
@@ -59345,7 +59345,7 @@
 "vUy" = (
 /obj/structure/hotspring,
 /obj/effect/waterfall,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "vUz" = (
 /turf/open/floor/tile,
@@ -59357,7 +59357,7 @@
 	name = "Will-o'-the-wisp";
 	desc = "A small, fiery ball of light made up of mystical energy."
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "vUG" = (
 /obj/structure/fluff/walldeco/church/line{
@@ -59609,7 +59609,7 @@
 /area/under/rmh_dungeon/jergal)
 "vYw" = (
 /obj/structure/hotspring/border/thirteen,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "vYx" = (
 /obj/item/natural/stoneblock,
@@ -59674,7 +59674,7 @@
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "vZX" = (
 /obj/structure/hotspring/border/twelve,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "wam" = (
 /obj/structure/bookcase/random/legends,
@@ -59783,7 +59783,7 @@
 /obj/structure/hotspring,
 /obj/effect/waterfall,
 /obj/effect/lily_petal,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_leshiy)
 "wbV" = (
 /obj/structure/flora/grass,
@@ -60280,7 +60280,7 @@
 /area/outdoors/town/rmh)
 "wiX" = (
 /obj/structure/flora/grass/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/west)
 "wje" = (
 /turf/closed/wall/mineral/wooddark,
@@ -60522,7 +60522,7 @@
 	pixel_x = 4;
 	pixel_y = -6
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/town/rmh/basement/pump)
 "wnW" = (
 /mob/living/carbon/human/species/halforc/base/very_skilled/naked,
@@ -61190,7 +61190,7 @@
 /area/under/town/rmh/sewer)
 "wzM" = (
 /obj/structure/fluff/railing/corner/south_east,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "wzN" = (
 /obj/effect/decal/edge{
@@ -61212,7 +61212,7 @@
 /area/indoors/town/rmh/library)
 "wAa" = (
 /obj/item/natural/wood/plank,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "wAh" = (
 /obj/item/natural/stone,
@@ -61267,7 +61267,7 @@
 /area/indoors/town/rmh/garrison/wall)
 "wBt" = (
 /obj/structure/rotation_piece/cog,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/town/rmh/basement/pump)
 "wBG" = (
 /obj/effect/decal/cobblerockedge{
@@ -61616,7 +61616,7 @@
 	desc = "A small, fiery ball of light made up of mystical energy.";
 	pixel_y = 15
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "wIR" = (
 /obj/machinery/light/fueled/firebowl/church{
@@ -63203,7 +63203,7 @@
 /area/indoors/town/rmh)
 "xlu" = (
 /obj/structure/hotspring,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/wet/lake)
 "xlB" = (
 /obj/structure/fluff/railing/border,
@@ -64468,7 +64468,7 @@
 /area/indoors/town/rmh/chapel/basement)
 "xJY" = (
 /obj/item/rope/net,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_river)
 "xJZ" = (
 /obj/effect/decal/edge{
@@ -65516,7 +65516,7 @@
 /area/outdoors/rmh_field)
 "yeH" = (
 /obj/structure/hotspring/border/three,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cave_druid)
 "yeI" = (
 /obj/structure/fluff/railing/wood/north{
@@ -65939,7 +65939,7 @@
 /area/indoors/town/rmh/chapel/basement)
 "yll" = (
 /obj/item/natural/stone,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/rmh_dungeon/catacombs_town)
 "ylm" = (
 /obj/structure/flora/grass,

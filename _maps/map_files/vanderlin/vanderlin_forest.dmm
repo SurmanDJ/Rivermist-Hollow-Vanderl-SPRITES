@@ -239,14 +239,14 @@
 "dz" = (
 /obj/structure/flora/grass/water,
 /obj/structure/flora/grass/water/reeds,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/wilderness)
 "dL" = (
 /obj/structure/table/stone_small,
 /turf/open/floor/herringbone,
 /area/indoors/dungeon)
 "dN" = (
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/wilderness)
 "dS" = (
 /obj/structure/table/wood/bar,
@@ -340,7 +340,7 @@
 "fl" = (
 /obj/structure/flora/grass/water,
 /obj/structure/kneestingers,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/wilderness)
 "fm" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -450,7 +450,7 @@
 "gg" = (
 /obj/structure/flora/grass/water/reeds,
 /obj/structure/flora/grass/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/wilderness)
 "gk" = (
 /obj/structure/bars/cemetery,
@@ -561,7 +561,7 @@
 /area/indoors/wilderness/shop)
 "gZ" = (
 /obj/structure/kneestingers,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/wilderness)
 "hf" = (
 /obj/structure/flora/grass/bush_meagre/yellow,
@@ -586,7 +586,7 @@
 	icon_state = "borderfall";
 	pixel_y = 3
 	},
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/wilderness)
 "hp" = (
 /obj/structure/closet/crate/coffin,
@@ -605,7 +605,7 @@
 /area/indoors/dungeon)
 "hx" = (
 /obj/structure/flora/grass/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/wilderness)
 "hA" = (
 /obj/structure/bridge_stakes,
@@ -852,7 +852,7 @@
 /area/indoors/dungeon)
 "jK" = (
 /obj/structure/flora/grass/water/reeds,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/wilderness)
 "jN" = (
 /obj/structure/fluff/railing/border{
@@ -1149,7 +1149,7 @@
 "ni" = (
 /obj/structure/flora/grass/water,
 /obj/structure/flora/grass/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/wilderness)
 "nj" = (
 /turf/open/floor/ruinedwood,
@@ -1842,7 +1842,7 @@
 "vx" = (
 /obj/structure/flora/grass/water,
 /obj/structure/flora/grass/water,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/wilderness)
 "vy" = (
 /obj/structure/closet/dirthole/closed/loot,
@@ -1915,7 +1915,7 @@
 "wr" = (
 /obj/structure/flora/grass/water/reeds,
 /obj/structure/kneestingers,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/wilderness)
 "wu" = (
 /obj/structure/fermentation_keg/random/water,
@@ -2539,7 +2539,7 @@
 /turf/open/floor/herringbone,
 /area/indoors/dungeon)
 "Dv" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave)
 "Dw" = (
 /obj/structure/fluff/walldeco/vinez,
@@ -2712,7 +2712,7 @@
 /area/outdoors/mountains)
 "EQ" = (
 /obj/structure/flora/tree,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/wilderness)
 "ES" = (
 /obj/effect/decal/cleanable/blood/puddle,
@@ -2983,7 +2983,7 @@
 "HQ" = (
 /obj/structure/flora/tree/burnt,
 /obj/structure/flora/grass/water/reeds,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/wilderness)
 "HX" = (
 /obj/structure/stone_tile/center/cracked{
@@ -3039,7 +3039,7 @@
 /turf/open/floor/dirt/road,
 /area/outdoors/wilderness)
 "IK" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/wilderness)
 "IL" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3049,7 +3049,7 @@
 "IM" = (
 /obj/structure/flora/grass/water,
 /obj/structure/kneestingers,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/wilderness)
 "IN" = (
 /obj/structure/spider/stickyweb,
@@ -3454,7 +3454,7 @@
 "Ni" = (
 /obj/structure/flora/tree,
 /obj/structure/flora/grass/water/reeds,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/wilderness)
 "No" = (
 /obj/structure/flora/grass/water,
@@ -3628,7 +3628,7 @@
 /area/outdoors/mountains)
 "Ow" = (
 /obj/structure/flora/grass/water,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/wilderness)
 "OC" = (
 /turf/closed/wall/mineral/wooddark/slitted,
@@ -3640,7 +3640,7 @@
 "OL" = (
 /obj/structure/flora/grass/water,
 /obj/structure/flora/grass/water/reeds,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/wilderness)
 "OM" = (
 /turf/open/floor/cobblerock,
@@ -3692,7 +3692,7 @@
 "Po" = (
 /obj/structure/flora/grass/water/reeds,
 /obj/item/carvedgem/rose/carp,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/wilderness)
 "Pp" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3748,13 +3748,13 @@
 /area/indoors/wilderness)
 "Qd" = (
 /obj/structure/flora/tree/burnt,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/wilderness)
 "Qf" = (
 /obj/structure/bridge{
 	dir = 4
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/wilderness)
 "Qi" = (
 /obj/structure/spider/stickyweb,
@@ -3984,7 +3984,7 @@
 /area/indoors/dungeon)
 "Tb" = (
 /obj/structure/kneestingers,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/wilderness)
 "Te" = (
 /obj/structure/window/openclose,
@@ -4405,7 +4405,7 @@
 /area/indoors/cave)
 "XJ" = (
 /obj/structure/flora/grass/water/reeds,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/wilderness)
 "XM" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -4575,7 +4575,7 @@
 /area/indoors/dungeon)
 "Zk" = (
 /obj/structure/bridge,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/wilderness)
 "Zl" = (
 /mob/living/carbon/human/species/skeleton/npc/warrior,

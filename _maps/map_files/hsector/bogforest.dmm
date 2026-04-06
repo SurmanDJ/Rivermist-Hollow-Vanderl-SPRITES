@@ -1011,7 +1011,7 @@
 /turf/open/water/swamp/deep,
 /area/outdoors/bog/rmh/travel/forest_to_main)
 "gF" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/rmh_bogforest_caves/moistcaves)
 "gG" = (
 /obj/structure/kneestingers,
@@ -2736,7 +2736,7 @@
 /area/outdoors/rmh_air)
 "rX" = (
 /obj/structure/well/climb_up,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/rmh_bogforest_caves/moistcaves)
 "rY" = (
 /obj/structure/fluff/railing/tall/palisade{

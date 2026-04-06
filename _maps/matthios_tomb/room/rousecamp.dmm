@@ -264,7 +264,7 @@
 /turf/open/floor/dirt,
 /area/under/tomb/indoors)
 "Ib" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/tomb/cave/lava)
 "Ie" = (
 /mob/living/carbon/human/species/rousman/ambush,

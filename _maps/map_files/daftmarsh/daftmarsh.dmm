@@ -169,7 +169,7 @@
 /turf/open/floor/woodturned,
 /area/indoors/town/shop)
 "ais" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/town/sewer)
 "ajf" = (
 /obj/structure/bookcase/random/myths,
@@ -9405,7 +9405,7 @@
 /area/indoors/town/keep/halls/s)
 "ibH" = (
 /obj/structure/well/climb_up,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/town/sewer)
 "ico" = (
 /obj/machinery/light/fueled/torchholder{
@@ -12943,7 +12943,7 @@
 /turf/open/floor/woodturned/nosmooth,
 /area/indoors/town/keep)
 "kZl" = (
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/under/town/sewer)
 "kZq" = (
 /obj/structure/window/stained/silver/alt,
@@ -15487,7 +15487,7 @@
 /turf/closed/wall/mineral/decorstone,
 /area/indoors/town/keep/hand)
 "nqO" = (
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/indoors/town/church/inquisition)
 "nrc" = (
 /obj/machinery/light/fueled/wallfire/candle/blue,
@@ -18054,7 +18054,7 @@
 /turf/open/floor/wood/nosmooth,
 /area/indoors/town)
 "pLa" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/town)
 "pLe" = (
 /obj/structure/industrial_lift/tram{
@@ -20474,7 +20474,7 @@
 /turf/open/floor/carpet/lord/left,
 /area/indoors/town/keep)
 "rTn" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/wilderness)
 "rTu" = (
 /obj/structure/fluff/railing/wood{

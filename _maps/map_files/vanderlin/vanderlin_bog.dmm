@@ -630,7 +630,7 @@
 /area/under/tomb/indoors/magic)
 "aqA" = (
 /obj/machinery/light/fueled/firebowl/stumpb,
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/under/cavewet)
 "aqN" = (
 /obj/structure/stairs/stone/church{
@@ -720,7 +720,7 @@
 	desc = "Twisted wood formed into the shape of a tree";
 	name = "Twisted Wood"
 	},
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/under/cavewet)
 "asp" = (
 /turf/open/floor/abyss_tile{
@@ -762,7 +762,7 @@
 /turf/open/floor/sand/bloodied,
 /area/under/cavewet)
 "att" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/cavewet)
 "atx" = (
 /obj/structure/flora/shells,
@@ -786,7 +786,7 @@
 /turf/open/water/ocean,
 /area/under/cavewet)
 "aui" = (
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/under/cavewet)
 "auj" = (
 /obj/structure/fluff/walldeco/church/line{
@@ -856,7 +856,7 @@
 /mob/living/simple_animal/hostile/retaliate/swamp_kraken{
 	anchored = 1
 	},
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/under/cavewet)
 "avr" = (
 /obj/structure/inert_bonepile,
@@ -1177,7 +1177,7 @@
 /obj/structure/bars{
 	color = "#7D9BAE"
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/cavewet)
 "aCd" = (
 /obj/structure/fluff/walldeco/church/line{
@@ -1736,7 +1736,7 @@
 /area/under/cavewet)
 "aQG" = (
 /obj/structure/flora/kelp,
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/under/cavewet)
 "aQL" = (
 /obj/structure/fluff/walldeco/church/line,
@@ -1985,7 +1985,7 @@
 /obj/structure/bars/grille{
 	color = "#7D9BAE"
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/cavewet)
 "aWq" = (
 /obj/structure/flora/pillar,
@@ -6638,7 +6638,7 @@
 /area/indoors/town/clocktower)
 "gTM" = (
 /obj/structure/flora/driftwood,
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/outdoors/bog)
 "gUv" = (
 /obj/structure/flora/pillar,
@@ -8680,7 +8680,7 @@
 "jJi" = (
 /obj/effect/decal/shadow_floor,
 /obj/effect/decal/shadow_floor,
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/outdoors/bog)
 "jJU" = (
 /turf/open/floor/abyss_tile{
@@ -10278,7 +10278,7 @@
 /turf/open/floor/concrete,
 /area/indoors/town/clocktower)
 "lKv" = (
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/outdoors/bog)
 "lKz" = (
 /obj/structure/fluff/psycross/psycrucifix/silver,
@@ -12189,7 +12189,7 @@
 /mob/living/simple_animal/hostile/retaliate/shark{
 	faction = list("Hostile")
 	},
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/under/cavewet)
 "oyx" = (
 /turf/open/openspace,
@@ -13162,7 +13162,7 @@
 /area/under/cavewet)
 "qeW" = (
 /obj/structure/flora/shells,
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/under/cavewet)
 "qfB" = (
 /obj/structure/flora/grass/water/reeds,
@@ -17445,7 +17445,7 @@
 /obj/effect/decal/shadow_floor{
 	dir = 10
 	},
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/outdoors/bog)
 "wlz" = (
 /obj/structure/table/stone_small{
