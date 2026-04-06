@@ -2435,7 +2435,7 @@
 /turf/closed/wall/mineral/decowood,
 /area/indoors/shelter/woods)
 "Zy" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/wilderness)
 "ZA" = (
 /obj/effect/falling_sakura,

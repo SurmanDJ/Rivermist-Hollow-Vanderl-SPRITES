@@ -448,7 +448,7 @@
 /turf/open/floor/carpet/royalblack,
 /area/indoors/town/merc_guild)
 "awv" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/cavewet)
 "aww" = (
 /turf/open/floor/ruinedwood/chevron,
@@ -5649,7 +5649,7 @@
 /turf/open/floor/hexstone,
 /area/indoors/town/smithy)
 "fxw" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/town/keep)
 "fxE" = (
 /obj/structure/bars,
@@ -7395,7 +7395,7 @@
 /obj/structure/fluff/railing/border{
 	dir = 1
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/town/keep/phys)
 "gSM" = (
 /obj/structure/chair/hotspring_bench/left{
@@ -8906,7 +8906,7 @@
 /turf/open/floor/ruinedwood,
 /area/indoors/town/garrison)
 "idU" = (
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/basin/safe)
 "iel" = (
 /obj/structure/fluff/statue/knight/interior,
@@ -11684,7 +11684,7 @@
 /obj/structure/fluff/railing/border{
 	dir = 1
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/town/keep/phys)
 "kKt" = (
 /obj/structure/fluff/railing/border{
@@ -13024,7 +13024,7 @@
 /obj/structure/fluff/railing/border{
 	dir = 6
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/town/bath)
 "lWu" = (
 /obj/machinery/light/fueled/torchholder/metal_torch/east,
@@ -13558,7 +13558,7 @@
 "mDo" = (
 /obj/effect/waterfall,
 /obj/structure/flora/grass/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/cavewet)
 "mDD" = (
 /turf/open/floor/carpet/lord/center,
@@ -13892,7 +13892,7 @@
 /obj/structure/fluff/railing/border{
 	dir = 1
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/town/keep/phys)
 "mSd" = (
 /obj/machinery/light/fueled/wallfire/candle/r,
@@ -14372,7 +14372,7 @@
 /area/under/town/basement)
 "nmd" = (
 /obj/structure/flora/grass/water/reeds,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/cavewet)
 "nmi" = (
 /obj/structure/fluff/walldeco/vinez/blue{
@@ -14613,7 +14613,7 @@
 /area/indoors/town/garrison)
 "nzz" = (
 /obj/effect/waterfall,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/cavewet)
 "nAM" = (
 /obj/structure/closet/crate/crafted_closet/inn,
@@ -18515,7 +18515,7 @@
 "qYB" = (
 /obj/structure/flora/ausbushes/reedbush,
 /obj/structure/flora/grass/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/cavewet)
 "qYW" = (
 /obj/structure/fake_machine/scomm,
@@ -21428,7 +21428,7 @@
 /area/outdoors/basin/safe)
 "tKK" = (
 /obj/structure/flora/tree/wise,
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/basin/safe)
 "tLc" = (
 /obj/machinery/light/fueled/wallfire/candle{
@@ -21774,7 +21774,7 @@
 /area/under/cave)
 "tZe" = (
 /obj/machinery/light/fueled/wallfire/candle/r,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/town/keep)
 "tZt" = (
 /obj/structure/bed/inn/double,
@@ -22972,7 +22972,7 @@
 /area/indoors/town/keep/hand)
 "vkJ" = (
 /mob/living/simple_animal/hostile/retaliate/shade,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/cavewet)
 "vlv" = (
 /obj/structure/fluff/railing/wood{
@@ -23543,7 +23543,7 @@
 /turf/closed/wall/mineral/wooddark/vertical,
 /area/indoors/town/garrison)
 "vJC" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/cave)
 "vJN" = (
 /obj/structure/fluff/railing/wood{
@@ -26250,7 +26250,7 @@
 /area/indoors/town/keep/halls/s)
 "ydP" = (
 /obj/structure/flora/grass/water,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/cavewet)
 "ydQ" = (
 /obj/structure/table/wood/plain,

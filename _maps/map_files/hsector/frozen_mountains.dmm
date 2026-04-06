@@ -4838,7 +4838,7 @@
 	opacity = 1;
 	name = "fog"
 	},
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cold)
 "uI" = (
 /obj/effect/decal/cleanable/debris/stone,
@@ -6554,7 +6554,7 @@
 /turf/open/floor/cobble,
 /area/indoors/town/rmh/manor/basement)
 "Cn" = (
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/indoors/cave/rmh_cave/cold)
 "Co" = (
 /obj/structure/fluff/railing/border{
@@ -8116,7 +8116,7 @@
 /turf/open/floor/dirt/road,
 /area/outdoors/mountains/rmh_mountains/frozen/forsaken_village)
 "Jd" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/town/rmh/manor)
 "Je" = (
 /obj/structure/fluff/railing/border{
@@ -8261,7 +8261,7 @@
 /turf/open/floor/dirt,
 /area/outdoors/mountains/rmh_mountains)
 "JN" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/indoors/cave/rmh_cave/cold)
 "JO" = (
 /obj/structure/fluff/railing/border,

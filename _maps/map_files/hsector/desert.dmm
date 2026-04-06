@@ -1703,7 +1703,7 @@
 	endTurfX = 255;
 	endTurfY = 255
 	},
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/outdoors/rmh_desert/sea)
 "cKf" = (
 /obj/structure/fluff/railing/stonehedge{
@@ -3174,7 +3174,7 @@
 /area/under/rmh_desert/tea/harem)
 "eVL" = (
 /obj/structure/water_pipe,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/rmh_dungeon)
 "eWb" = (
 /obj/effect/decal/cobbleedge{
@@ -4544,7 +4544,7 @@
 /turf/open/floor/tile/diamond/blue,
 /area/indoors/rmh_desert)
 "hcU" = (
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/under/rmh_desert/spider)
 "hdw" = (
 /obj/structure/fluff/railing/corner/south_east,
@@ -4666,7 +4666,7 @@
 /turf/closed/wall/mineral/wood/window,
 /area/indoors/rmh_desert/phouse)
 "hlK" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/outdoors/rmh_desert/oasis)
 "hmt" = (
 /obj/structure/fluff/railing/corner{
@@ -5381,7 +5381,7 @@
 /turf/open/floor/greenstone,
 /area/under/town/rmh/sewer)
 "ijr" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/rmh_dungeon)
 "iks" = (
 /obj/item/natural/glass/shard,
@@ -7718,7 +7718,7 @@
 /turf/open/openspace,
 /area/outdoors/rmh_air)
 "lxe" = (
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/rmh_desert/spider)
 "lxl" = (
 /obj/structure/fluff/railing/corner/south_east,
@@ -8600,7 +8600,7 @@
 /area/under/rmh_dungeon)
 "mRY" = (
 /mob/living/simple_animal/hostile/retaliate/gator,
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/outdoors/rmh_desert/sea)
 "mSA" = (
 /obj/structure/flora/tree,
@@ -8918,7 +8918,7 @@
 	icon_state = "borderfall";
 	icon = 'icons/turf/constructed/misc.dmi'
 	},
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/outdoors/rmh_desert/port)
 "npw" = (
 /turf/open/floor/tile/bfloorz,
@@ -10057,7 +10057,7 @@
 	icon_state = "chains2";
 	pixel_x = 12
 	},
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/outdoors/rmh_desert/sea)
 "oHd" = (
 /obj/structure/flora/grass/bush/wall/tall/tundra,
@@ -12188,7 +12188,7 @@
 /turf/open/floor/tile/masonic/spiral,
 /area/under/rmh_desert/tea/hareml)
 "rVD" = (
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/outdoors/rmh_desert/port)
 "rVM" = (
 /obj/structure/rack/shelf/biggest,
@@ -12377,7 +12377,7 @@
 /area/under/rmh_desert/tea/hareml)
 "smd" = (
 /obj/structure/underworld/ship,
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/outdoors/rmh_desert/sea)
 "smx" = (
 /obj/effect/decal/cobbleedge{
@@ -13799,7 +13799,7 @@
 /area/indoors/rmh_desert/phouse)
 "uma" = (
 /obj/structure/fluff/statue/aasimar,
-/turf/open/water/cleanshallow,
+/turf/open/water/clean,
 /area/under/rmh_dungeon)
 "umN" = (
 /obj/item/fertilizer/ash,
@@ -14788,7 +14788,7 @@
 /turf/open/floor/sandstone,
 /area/under/rmh_desert/tea/harem)
 "vFl" = (
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/outdoors/rmh_desert/sea)
 "vFI" = (
 /turf/open/floor/rooftop{
@@ -15372,7 +15372,7 @@
 /turf/open/openspace,
 /area/outdoors/rmh_air)
 "wCt" = (
-/turf/open/water/cleanshallow/dirt,
+/turf/open/water/clean/dirt,
 /area/outdoors/rmh_desert/oasis)
 "wCM" = (
 /obj/structure/rack/shelf/biggest,
@@ -16029,7 +16029,7 @@
 	endTurfX = 255;
 	endTurfY = 255
 	},
-/turf/open/water/ocean/deep,
+/turf/open/water/ocean/abyss,
 /area/outdoors/rmh_desert/sea)
 "xIM" = (
 /obj/effect/decal/cleanable/dirt/dust{
