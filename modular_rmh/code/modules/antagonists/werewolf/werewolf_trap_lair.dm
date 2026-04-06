@@ -194,8 +194,6 @@
 	var/list/captive_lookup = list()
 	for(var/mob/living/captive as anything in forced_captives)
 		var/display_name = "[captive.real_name || captive.name]"
-		if(captive.ckey)
-			display_name += " ([captive.ckey])"
 		while(display_name in captive_lookup)
 			display_name += " *"
 		display_names += display_name

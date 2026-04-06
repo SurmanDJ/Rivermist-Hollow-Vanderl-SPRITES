@@ -84,6 +84,7 @@
 
 	var/datum/rage/werewolf/new_rage = new
 	new_rage.grant_to_holder(owner.current)
+	owner.current.faction.Add("wolves")
 
 	wolfname = "[pick(strings("werewolf_names.json", "wolf_prefixes"))] [pick(strings("werewolf_names.json", "wolf_suffixes"))]"
 	last_seen_tod = GLOB.tod
@@ -103,6 +104,7 @@
 	if(owner.current)
 		owner.current.remove_spell(/datum/action/cooldown/spell/undirected/werewolf_form)
 		owner.current.remove_language(/datum/language/beast)
+	owner.current.faction.Remove("wolves")
 
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/current_human = owner.current
