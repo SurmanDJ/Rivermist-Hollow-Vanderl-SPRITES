@@ -20,6 +20,10 @@
 	// Taur stuff!
 	// offset_x forces the limb_icon to be shifted on x relative to the human (since these are >32x32)
 	var/offset_x = -16
+	// offset_y forces the limb_icon to be shifted on y relative to the human
+	var/offset_y = 0
+	// body_offset_y shifts the main body parts up/down when this taur is equipped
+	var/body_offset_y = 0
 	// taur_icon_state sets which icon to use from icons/mob/taurs.dmi to render
 	// (we don't use icon_state to avoid duplicate rendering on dropped organs)
 	var/taur_icon_state = "naga_s"
@@ -71,14 +75,17 @@
 	// because these can overlap other organs, we need to layer slightly higher
 	working.layer = -BODYPARTS_LAYER // -FRONT_MUTATIONS_LAYER = tail renders over tits, -BODYPARTS_LAYER = tail renders underneath the tits, as it should
 	working.pixel_x = offset_x
+	working.pixel_y = offset_y
 
 	var/image/markings = image(taur_m)
 	markings.layer = -BODY_ADJ_LAYER
 	markings.pixel_x = offset_x
+	markings.pixel_y = offset_y
 
 	var/image/tertiary = image(taur_t)
 	tertiary.layer = -BODY_ADJ_LAYER
 	tertiary.pixel_x = offset_x
+	tertiary.pixel_y = offset_y
 
 	. += working
 	. += markings
@@ -343,5 +350,18 @@ GLOBAL_LIST_INIT(taur_types, subtypesof(/obj/item/bodypart/taur))
 	taur_icon_state = "insect_s"
 	taur_markings_state = "insect_markings"
 	taur_tertiary_state = "insect_markings_2"
+
+	has_taur_color = TRUE
+
+/obj/item/bodypart/taur/jdeer
+	icon = 'modular_rmh/icons/mob/taur2.dmi'
+	name = "Jenny Body"
+
+	offset_x = -16
+	offset_y = 0
+	// Special offset for jdeer taur to render the body and all equipment 16 pixels higher on Y-axis, without affecting other taur types.
+	body_offset_y = 17
+	taur_icon_state = "jdeer_s"
+	taur_markings_state = "jdeer_markings"
 
 	has_taur_color = TRUE
