@@ -156,6 +156,11 @@
 				inhand_overlay.pixel_y += offsets[OFFSET_HANDS][2]
 				behindhand_overlay.pixel_x += offsets[OFFSET_HANDS][1]
 				behindhand_overlay.pixel_y += offsets[OFFSET_HANDS][2]
+			// Apply taur body offset to adjust rendering height for taurs like jdeer
+			var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
+			if(T && T.body_offset_y)
+				inhand_overlay.pixel_y += T.body_offset_y
+				behindhand_overlay.pixel_y += T.body_offset_y
 			hands += inhand_overlay
 			behindhands += behindhand_overlay
 			if(I.blocks_emissive != EMISSIVE_BLOCK_NONE)
@@ -178,6 +183,10 @@
 			if(LAZYACCESS(offsets, OFFSET_HANDS))
 				inhand_overlay.pixel_x += offsets[OFFSET_HANDS][1]
 				inhand_overlay.pixel_y += offsets[OFFSET_HANDS][2]
+			// Apply taur body offset to adjust rendering height for taurs like jdeer
+			var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
+			if(T && T.body_offset_y)
+				inhand_overlay.pixel_y += T.body_offset_y
 			hands += inhand_overlay
 
 	update_inv_cloak() //cloak held items

@@ -368,6 +368,8 @@ GLOBAL_PROTECT(no_child_icons)
 /mob/living/carbon/human/update_inv_neck()
 	remove_overlay(NECK_LAYER)
 
+	var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
+
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_NECK) + 1]
 		inv?.update_appearance(UPDATE_ICON_STATE)
@@ -393,6 +395,9 @@ GLOBAL_PROTECT(no_child_icons)
 			if(LAZYACCESS(offsets, OFFSET_NECK))
 				neck_overlay.pixel_x += offsets[OFFSET_NECK][1]
 				neck_overlay.pixel_y += offsets[OFFSET_NECK][2]
+			// Apply taur body offset to adjust rendering height for taurs like jdeer
+			if(T && T.body_offset_y)
+				neck_overlay.pixel_y += T.body_offset_y
 			overlays_standing[NECK_LAYER] = neck_overlay
 
 	update_body()
@@ -400,6 +405,8 @@ GLOBAL_PROTECT(no_child_icons)
 
 /mob/living/carbon/human/update_inv_ring()
 	remove_overlay(RING_LAYER)
+
+	var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
 
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_RING) + 1]
@@ -428,6 +435,9 @@ GLOBAL_PROTECT(no_child_icons)
 		if(LAZYACCESS(offsets, OFFSET_RING))
 			ring_overlay.pixel_x += offsets[OFFSET_RING][1]
 			ring_overlay.pixel_y += offsets[OFFSET_RING][2]
+		// Apply taur body offset to adjust rendering height for taurs like jdeer
+		if(T && T.body_offset_y)
+			ring_overlay.pixel_y += T.body_offset_y
 		overlays_standing[RING_LAYER] = ring_overlay
 
 	apply_overlay(RING_LAYER)
@@ -436,6 +446,8 @@ GLOBAL_PROTECT(no_child_icons)
 /mob/living/carbon/human/update_inv_gloves()
 	remove_overlay(GLOVES_LAYER)
 	remove_overlay(GLOVESLEEVE_LAYER)
+
+	var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
 
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_GLOVES) + 1]
@@ -486,6 +498,9 @@ GLOBAL_PROTECT(no_child_icons)
 		if(LAZYACCESS(offsets, OFFSET_GLOVES))
 			gloves_overlay.pixel_x += offsets[OFFSET_GLOVES][1]
 			gloves_overlay.pixel_y += offsets[OFFSET_GLOVES][2]
+		// Apply taur body offset to adjust rendering height for taurs like jdeer
+		if(T && T.body_offset_y)
+			gloves_overlay.pixel_y += T.body_offset_y
 		overlays_standing[GLOVES_LAYER] = gloves_overlay
 
 		//add sleeve overlays, then offset
@@ -498,6 +513,9 @@ GLOBAL_PROTECT(no_child_icons)
 				if(LAZYACCESS(offsets, OFFSET_GLOVES))
 					S.pixel_x += offsets[OFFSET_GLOVES][1]
 					S.pixel_y += offsets[OFFSET_GLOVES][2]
+				// Apply taur body offset to adjust rendering height for taurs like jdeer
+				if(T && T.body_offset_y)
+					S.pixel_y += T.body_offset_y
 				overlays_standing[GLOVESLEEVE_LAYER] = sleeves
 
 	apply_overlay(GLOVES_LAYER)
@@ -506,6 +524,8 @@ GLOBAL_PROTECT(no_child_icons)
 /mob/living/carbon/human/update_inv_wrists()
 	remove_overlay(WRISTS_LAYER)
 	remove_overlay(WRISTSLEEVE_LAYER)
+
+	var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
 
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_WRISTS) + 1]
@@ -543,6 +563,9 @@ GLOBAL_PROTECT(no_child_icons)
 		if(LAZYACCESS(offsets, OFFSET_WRISTS))
 			wrists_overlay.pixel_x += offsets[OFFSET_WRISTS][1]
 			wrists_overlay.pixel_y += offsets[OFFSET_WRISTS][2]
+		// Apply taur body offset to adjust rendering height for taurs like jdeer
+		if(T && T.body_offset_y)
+			wrists_overlay.pixel_y += T.body_offset_y
 
 		overlays_standing[WRISTS_LAYER] = wrists_overlay
 
@@ -556,6 +579,9 @@ GLOBAL_PROTECT(no_child_icons)
 				if(LAZYACCESS(offsets, OFFSET_WRISTS))
 					S.pixel_x += offsets[OFFSET_WRISTS][1]
 					S.pixel_y += offsets[OFFSET_WRISTS][2]
+				// Apply taur body offset to adjust rendering height for taurs like jdeer
+				if(T && T.body_offset_y)
+					S.pixel_y += T.body_offset_y
 			overlays_standing[WRISTSLEEVE_LAYER] = sleeves
 
 	apply_overlay(WRISTS_LAYER)
@@ -566,8 +592,9 @@ GLOBAL_PROTECT(no_child_icons)
 	remove_overlay(SHOESLEEVE_LAYER)
 
 	var/obj/item/bodypart/taur/taur = get_taur_tail()
-	if(taur)
-		return // taurs don't render shoes if they manage to even equip them
+	var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
+	if(taur && !T?.body_offset_y)
+		return // taurs don't render shoes if they manage to even equip them, except jdeer
 
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_SHOES) + 1]
@@ -605,6 +632,9 @@ GLOBAL_PROTECT(no_child_icons)
 		if(LAZYACCESS(offsets, OFFSET_SHOES))
 			shoes_overlay.pixel_x += offsets[OFFSET_SHOES][1]
 			shoes_overlay.pixel_y += offsets[OFFSET_SHOES][2]
+		// Apply taur body offset to adjust rendering height for taurs like jdeer
+		if(T && T.body_offset_y)
+			shoes_overlay.pixel_y += T.body_offset_y
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 
 		//add sleeve overlays, then offset
@@ -616,6 +646,9 @@ GLOBAL_PROTECT(no_child_icons)
 				if(LAZYACCESS(offsets, OFFSET_SHOES))
 					S.pixel_x += offsets[OFFSET_SHOES][1]
 					S.pixel_y += offsets[OFFSET_SHOES][2]
+				// Apply taur body offset to adjust rendering height for taurs like jdeer
+				if(T && T.body_offset_y)
+					S.pixel_y += T.body_offset_y
 
 			overlays_standing[SHOESLEEVE_LAYER] = sleeves
 
@@ -624,6 +657,8 @@ GLOBAL_PROTECT(no_child_icons)
 
 /mob/living/carbon/human/update_inv_head(hide_nonstandard = FALSE)
 	remove_overlay(HEAD_LAYER)
+
+	var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
@@ -655,6 +690,9 @@ GLOBAL_PROTECT(no_child_icons)
 			if(LAZYACCESS(offsets, OFFSET_HEAD))
 				head_overlay.pixel_x += offsets[OFFSET_HEAD][1]
 				head_overlay.pixel_y += offsets[OFFSET_HEAD][2]
+			// Apply taur body offset to adjust rendering height for taurs like jdeer
+			if(T && T.body_offset_y)
+				head_overlay.pixel_y += T.body_offset_y
 			overlays_standing[HEAD_LAYER] = head_overlay
 
 	apply_overlay(HEAD_LAYER)
@@ -686,6 +724,8 @@ GLOBAL_PROTECT(no_child_icons)
 		offsets = species.offset_features_f
 	else
 		offsets = species.offset_features_m
+
+	var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
 
 	var/racecustom
 	if(species?.custom_clothes)
@@ -724,6 +764,10 @@ GLOBAL_PROTECT(no_child_icons)
 						onbelt_overlay.pixel_y += offsets[OFFSET_BELT][2]
 						onbelt_behind.pixel_x += offsets[OFFSET_BELT][1]
 						onbelt_behind.pixel_y += offsets[OFFSET_BELT][2]
+					// Apply taur body offset to adjust rendering height for taurs like jdeer
+					if(T && T.body_offset_y)
+						onbelt_overlay.pixel_y += T.body_offset_y
+						onbelt_behind.pixel_y += T.body_offset_y
 					standing_front += onbelt_overlay
 					standing_behind += onbelt_behind
 			else
@@ -732,6 +776,9 @@ GLOBAL_PROTECT(no_child_icons)
 					if(LAZYACCESS(offsets, OFFSET_BELT))
 						onbelt_overlay.pixel_x += offsets[OFFSET_BELT][1]
 						onbelt_overlay.pixel_y += offsets[OFFSET_BELT][2]
+					// Apply taur body offset to adjust rendering height for taurs like jdeer
+					if(T && T.body_offset_y)
+						onbelt_overlay.pixel_y += T.body_offset_y
 				standing_front += onbelt_overlay
 
 	if(beltl)
@@ -764,6 +811,10 @@ GLOBAL_PROTECT(no_child_icons)
 						onbelt_overlay.pixel_y += offsets[OFFSET_BELT][2]
 						onbelt_behind.pixel_x += offsets[OFFSET_BELT][1]
 						onbelt_behind.pixel_y += offsets[OFFSET_BELT][2]
+					// Apply taur body offset to adjust rendering height for taurs like jdeer
+					if(T && T.body_offset_y)
+						onbelt_overlay.pixel_y += T.body_offset_y
+						onbelt_behind.pixel_y += T.body_offset_y
 					standing_front += onbelt_overlay
 					standing_behind += onbelt_behind
 			else
@@ -772,6 +823,9 @@ GLOBAL_PROTECT(no_child_icons)
 					if(LAZYACCESS(offsets, OFFSET_BELT))
 						onbelt_overlay.pixel_x += offsets[OFFSET_BELT][1]
 						onbelt_overlay.pixel_y += offsets[OFFSET_BELT][2]
+					// Apply taur body offset to adjust rendering height for taurs like jdeer
+					if(T && T.body_offset_y)
+						onbelt_overlay.pixel_y += T.body_offset_y
 				standing_front += onbelt_overlay
 
 	if(belt)
@@ -785,6 +839,9 @@ GLOBAL_PROTECT(no_child_icons)
 				if(LAZYACCESS(offsets, OFFSET_BELT))
 					mbeltoverlay.pixel_x += offsets[OFFSET_BELT][1]
 					mbeltoverlay.pixel_y += offsets[OFFSET_BELT][2]
+				// Apply taur body offset to adjust rendering height for taurs like jdeer
+				if(T && T.body_offset_y)
+					mbeltoverlay.pixel_y += T.body_offset_y
 			standing_front += mbeltoverlay
 
 	overlays_standing[BELT_LAYER] = standing_front
@@ -821,10 +878,14 @@ GLOBAL_PROTECT(no_child_icons)
 				offsets = species.offset_features_f
 			else
 				offsets = species.offset_features_m
+			var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
 			if(mask_overlay)
 				if(LAZYACCESS(offsets, OFFSET_FACEMASK))
 					mask_overlay.pixel_x += offsets[OFFSET_FACEMASK][1]
 					mask_overlay.pixel_y += offsets[OFFSET_FACEMASK][2]
+				// Apply taur body offset to adjust rendering height for taurs like jdeer
+				if(T && T.body_offset_y)
+					mask_overlay.pixel_y += T.body_offset_y
 				overlays_standing[MASK_LAYER] = mask_overlay
 
 	apply_overlay(MASK_LAYER)
@@ -859,6 +920,8 @@ GLOBAL_PROTECT(no_child_icons)
 	else
 		offsets = species.offset_features_m
 
+	var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
+
 	if(backr)
 		if(backr.alternate_worn_layer == CLOAK_BEHIND_LAYER)
 			update_inv_cloak()
@@ -885,6 +948,10 @@ GLOBAL_PROTECT(no_child_icons)
 						back_overlay.pixel_y += offsets[OFFSET_BACK][2]
 						behindback_overlay.pixel_x += offsets[OFFSET_BACK][1]
 						behindback_overlay.pixel_y += offsets[OFFSET_BACK][2]
+					// Apply taur body offset to adjust rendering height for taurs like jdeer
+					if(T && T.body_offset_y)
+						back_overlay.pixel_y += T.body_offset_y
+						behindback_overlay.pixel_y += T.body_offset_y
 					LAZYADD(overcloaks, back_overlay)
 					LAZYADD(backbehind, behindback_overlay)
 			else
@@ -892,6 +959,9 @@ GLOBAL_PROTECT(no_child_icons)
 				if(LAZYACCESS(offsets, OFFSET_BACK))
 					back_overlay.pixel_x += offsets[OFFSET_BACK][1]
 					back_overlay.pixel_y += offsets[OFFSET_BACK][2]
+				// Apply taur body offset to adjust rendering height for taurs like jdeer
+				if(T && T.body_offset_y)
+					back_overlay.pixel_y += T.body_offset_y
 				if(backr.alternate_worn_layer == UNDER_CLOAK_LAYER)
 					LAZYADD(undercloaks, back_overlay)
 				else
@@ -923,6 +993,10 @@ GLOBAL_PROTECT(no_child_icons)
 						back_overlay.pixel_y += offsets[OFFSET_BACK][2]
 						behindback_overlay.pixel_x += offsets[OFFSET_BACK][1]
 						behindback_overlay.pixel_y += offsets[OFFSET_BACK][2]
+					// Apply taur body offset to adjust rendering height for taurs like jdeer
+					if(T && T.body_offset_y)
+						back_overlay.pixel_y += T.body_offset_y
+						behindback_overlay.pixel_y += T.body_offset_y
 					LAZYADD(overcloaks, back_overlay)
 					LAZYADD(backbehind, behindback_overlay)
 			else
@@ -930,6 +1004,9 @@ GLOBAL_PROTECT(no_child_icons)
 				if(LAZYACCESS(offsets, OFFSET_BACK))
 					back_overlay.pixel_x += offsets[OFFSET_BACK][1]
 					back_overlay.pixel_y += offsets[OFFSET_BACK][2]
+				// Apply taur body offset to adjust rendering height for taurs like jdeer
+				if(T && T.body_offset_y)
+					back_overlay.pixel_y += T.body_offset_y
 				if(backl.alternate_worn_layer == UNDER_CLOAK_LAYER)
 					LAZYADD(undercloaks, back_overlay)
 				else
@@ -953,6 +1030,7 @@ GLOBAL_PROTECT(no_child_icons)
 
 	var/obj/item/bodypart/taur/taur = get_taur_tail()
 	var/icon/c_mask = taur?.clip_mask
+	var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
 
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_CLOAK) + 1]
@@ -993,6 +1071,9 @@ GLOBAL_PROTECT(no_child_icons)
 		if(LAZYACCESS(offsets, OFFSET_CLOAK))
 			cloak_overlay.pixel_x += offsets[OFFSET_CLOAK][1]
 			cloak_overlay.pixel_y += offsets[OFFSET_CLOAK][2]
+		// Apply taur body offset to adjust rendering height for taurs like jdeer
+		if(T && T.body_offset_y)
+			cloak_overlay.pixel_y += T.body_offset_y
 		if(cloak.alternate_worn_layer == TABARD_LAYER)
 			overlays_standing[TABARD_LAYER] = cloak_overlay
 		if(cloak.alternate_worn_layer == CLOAK_BEHIND_LAYER)
@@ -1010,6 +1091,9 @@ GLOBAL_PROTECT(no_child_icons)
 				if(LAZYACCESS(offsets, OFFSET_CLOAK))
 					S.pixel_x += offsets[OFFSET_CLOAK][1]
 					S.pixel_y += offsets[OFFSET_CLOAK][2]
+				// Apply taur body offset to adjust rendering height for taurs like jdeer
+				if(T && T.body_offset_y)
+					S.pixel_y += T.body_offset_y
 				LAZYADD(cloaklays, S)
 
 	if(backr && backr.alternate_worn_layer == CLOAK_BEHIND_LAYER)
@@ -1019,6 +1103,9 @@ GLOBAL_PROTECT(no_child_icons)
 		if(LAZYACCESS(offsets, OFFSET_CLOAK))
 			cloak_overlay.pixel_x += offsets[OFFSET_CLOAK][1]
 			cloak_overlay.pixel_y += offsets[OFFSET_CLOAK][2]
+		// Apply taur body offset to adjust rendering height for taurs like jdeer
+		if(T && T.body_offset_y)
+			cloak_overlay.pixel_y += T.body_offset_y
 		if(backr.alternate_worn_layer == TABARD_LAYER)
 			overlays_standing[TABARD_LAYER] = cloak_overlay
 		if(backr.alternate_worn_layer == CLOAK_BEHIND_LAYER)
@@ -1036,6 +1123,9 @@ GLOBAL_PROTECT(no_child_icons)
 				if(LAZYACCESS(offsets, OFFSET_CLOAK))
 					S.pixel_x += offsets[OFFSET_CLOAK][1]
 					S.pixel_y += offsets[OFFSET_CLOAK][2]
+				// Apply taur body offset to adjust rendering height for taurs like jdeer
+				if(T && T.body_offset_y)
+					S.pixel_y += T.body_offset_y
 				LAZYADD(cloaklays, S)
 
 	overlays_standing[CLOAK_LAYER] = cloaklays
@@ -1050,6 +1140,7 @@ GLOBAL_PROTECT(no_child_icons)
 
 	var/obj/item/bodypart/taur/taur = get_taur_tail()
 	var/icon/c_mask = taur?.clip_mask
+	var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
 
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_SHIRT) + 1]
@@ -1092,6 +1183,9 @@ GLOBAL_PROTECT(no_child_icons)
 		if(LAZYACCESS(offsets, OFFSET_SHIRT))
 			shirt_overlay.pixel_x += offsets[OFFSET_SHIRT][1]
 			shirt_overlay.pixel_y += offsets[OFFSET_SHIRT][2]
+		// Apply taur body offset to adjust rendering height for taurs like jdeer
+		if(T && T.body_offset_y)
+			shirt_overlay.pixel_y += T.body_offset_y
 		overlays_standing[SHIRT_LAYER] = shirt_overlay
 
 		//add sleeve overlays, then offset
@@ -1104,6 +1198,9 @@ GLOBAL_PROTECT(no_child_icons)
 				if(LAZYACCESS(offsets, OFFSET_SHIRT))
 					S.pixel_x += offsets[OFFSET_SHIRT][1]
 					S.pixel_y += offsets[OFFSET_SHIRT][2]
+				// Apply taur body offset to adjust rendering height for taurs like jdeer
+				if(T && T.body_offset_y)
+					S.pixel_y += T.body_offset_y
 			overlays_standing[SHIRTSLEEVE_LAYER] = sleeves
 
 	update_body_parts(redraw = TRUE)
@@ -1119,6 +1216,7 @@ GLOBAL_PROTECT(no_child_icons)
 
 	var/obj/item/bodypart/taur/taur = get_taur_tail()
 	var/icon/c_mask = taur?.clip_mask
+	var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
 
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_ARMOR) + 1]
@@ -1158,6 +1256,9 @@ GLOBAL_PROTECT(no_child_icons)
 		if(LAZYACCESS(offsets, OFFSET_ARMOR))
 			armor_overlay.pixel_x += offsets[OFFSET_ARMOR][1]
 			armor_overlay.pixel_y += offsets[OFFSET_ARMOR][2]
+		// Apply taur body offset to adjust rendering height for taurs like jdeer
+		if(T && T.body_offset_y)
+			armor_overlay.pixel_y += T.body_offset_y
 		overlays_standing[ARMOR_LAYER] = armor_overlay
 
 		//add sleeve overlays, then offset
@@ -1170,6 +1271,9 @@ GLOBAL_PROTECT(no_child_icons)
 				if(LAZYACCESS(offsets, OFFSET_ARMOR))
 					S.pixel_x += offsets[OFFSET_ARMOR][1]
 					S.pixel_y += offsets[OFFSET_ARMOR][2]
+				// Apply taur body offset to adjust rendering height for taurs like jdeer
+				if(T && T.body_offset_y)
+					S.pixel_y += T.body_offset_y
 			overlays_standing[ARMORSLEEVE_LAYER] = sleeves
 
 	update_body_parts(redraw = TRUE)
@@ -1186,6 +1290,7 @@ GLOBAL_PROTECT(no_child_icons)
 
 	var/obj/item/bodypart/taur/taur = get_taur_tail()
 	var/icon/c_mask = taur?.clip_mask
+	var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
 
 	if(client && hud_used)
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_PANTS) + 1]
@@ -1219,6 +1324,9 @@ GLOBAL_PROTECT(no_child_icons)
 		if(LAZYACCESS(offsets, OFFSET_PANTS))
 			pants_overlay.pixel_x += offsets[OFFSET_PANTS][1]
 			pants_overlay.pixel_y += offsets[OFFSET_PANTS][2]
+		// Apply taur body offset to adjust rendering height for taurs like jdeer
+		if(T && T.body_offset_y)
+			pants_overlay.pixel_y += T.body_offset_y
 		overlays_standing[PANTS_LAYER] = pants_overlay
 
 		//add sleeve overlays, then offset
@@ -1234,6 +1342,9 @@ GLOBAL_PROTECT(no_child_icons)
 				if(LAZYACCESS(offsets, OFFSET_PANTS))
 					S.pixel_x += offsets[OFFSET_PANTS][1]
 					S.pixel_y += offsets[OFFSET_PANTS][2]
+				// Apply taur body offset to adjust rendering height for taurs like jdeer
+				if(T && T.body_offset_y)
+					S.pixel_y += T.body_offset_y
 			overlays_standing[LEGSLEEVE_LAYER] = sleeves
 
 	update_body()
@@ -1365,6 +1476,8 @@ GLOBAL_PROTECT(no_child_icons)
 		else
 			offsets = species.offset_features_m
 
+		var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
+
 		var/racecustom
 		if(species?.custom_clothes)
 			if(species.custom_id)
@@ -1382,6 +1495,9 @@ GLOBAL_PROTECT(no_child_icons)
 		if(LAZYACCESS(offsets, OFFSET_BRA))
 			underwear_overlay.pixel_x += offsets[OFFSET_BRA][1]
 			underwear_overlay.pixel_y += offsets[OFFSET_BRA][2]
+		// Apply taur body offset to adjust rendering height for taurs like jdeer
+		if(T && T.body_offset_y)
+			underwear_overlay.pixel_y += T.body_offset_y
 		overlays_standing[UNDERWEAR_TOP_LAYER] = underwear_overlay
 
 	update_body_parts(redraw = TRUE)
@@ -1404,6 +1520,8 @@ GLOBAL_PROTECT(no_child_icons)
 		else
 			offsets = species.offset_features_m
 
+		var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
+
 		var/racecustom
 		if(species?.custom_clothes)
 			if(species.custom_id)
@@ -1417,6 +1535,9 @@ GLOBAL_PROTECT(no_child_icons)
 		if(LAZYACCESS(offsets, OFFSET_NECK))
 			garter_overlay.pixel_x += offsets[OFFSET_NECK][1]
 			garter_overlay.pixel_y += offsets[OFFSET_NECK][2]
+		// Apply taur body offset to adjust rendering height for taurs like jdeer
+		if(T && T.body_offset_y)
+			garter_overlay.pixel_y += T.body_offset_y
 		overlays_standing[GARTER_LAYER] = garter_overlay
 
 	update_body_parts(redraw = TRUE)
@@ -1453,6 +1574,8 @@ GLOBAL_PROTECT(no_child_icons)
 		else
 			offsets = species.offset_features_m
 
+		var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
+
 		var/armsindex = get_limbloss_index(ARM_RIGHT, ARM_LEFT)
 		var/racecustom
 		if(species?.custom_clothes)
@@ -1472,6 +1595,9 @@ GLOBAL_PROTECT(no_child_icons)
 		if(LAZYACCESS(offsets, OFFSET_SHIRT))
 			undershirt_overlay.pixel_x += offsets[OFFSET_SHIRT][1]
 			undershirt_overlay.pixel_y += offsets[OFFSET_SHIRT][2]
+		// Apply taur body offset to adjust rendering height for taurs like jdeer
+		if(T && T.body_offset_y)
+			undershirt_overlay.pixel_y += T.body_offset_y
 		overlays_standing[UNDERSHIRT_LAYER] = undershirt_overlay
 
 		//add sleeve overlays, then offset
@@ -1484,6 +1610,9 @@ GLOBAL_PROTECT(no_child_icons)
 				if(LAZYACCESS(offsets, OFFSET_SHIRT))
 					S.pixel_x += offsets[OFFSET_SHIRT][1]
 					S.pixel_y += offsets[OFFSET_SHIRT][2]
+				// Apply taur body offset to adjust rendering height for taurs like jdeer
+				if(T && T.body_offset_y)
+					S.pixel_y += T.body_offset_y
 			overlays_standing[UNDERSLEEVE_LAYER] = sleeves
 
 	update_body_parts(redraw = TRUE)
@@ -1506,6 +1635,7 @@ GLOBAL_PROTECT(no_child_icons)
 			offsets = species.offset_features_f
 		else
 			offsets = species.offset_features_m
+		var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
 		var/racecustom
 		if(species?.custom_clothes)
 			if(species.custom_id)
@@ -1517,6 +1647,9 @@ GLOBAL_PROTECT(no_child_icons)
 		if(LAZYACCESS(offsets, OFFSET_NECK))
 			choker_overlay.pixel_x += offsets[OFFSET_NECK][1]
 			choker_overlay.pixel_y += offsets[OFFSET_NECK][2]
+		// Apply taur body offset to adjust rendering height for taurs like jdeer
+		if(T && T.body_offset_y)
+			choker_overlay.pixel_y += T.body_offset_y
 		overlays_standing[CHOKER_LAYER] = choker_overlay
 
 	update_body_parts(redraw = TRUE)
@@ -2064,8 +2197,14 @@ generate/load female uniform sprites matching all previously decided variables
 
 	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
+	var/obj/item/bodypart/taur/T = get_bodypart(BODY_ZONE_TAUR)
+	var/body_offset = T ? T.body_offset_y : 0
 	for(var/obj/item/bodypart/BP as anything in bodyparts)
-		new_limbs += BP.get_limb_icon()
+		var/list/limb_icons = BP.get_limb_icon()
+		if(BP.body_zone != BODY_ZONE_TAUR && body_offset)
+			for(var/image/I in limb_icons)
+				I.pixel_y += body_offset
+		new_limbs += limb_icons
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
 		limb_icon_cache[icon_render_key] = new_limbs
