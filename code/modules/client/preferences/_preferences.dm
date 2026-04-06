@@ -1206,6 +1206,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 				GLOB.town_positions,
 				GLOB.outsiders_positions,
 				GLOB.adventurers_positions,
+				GLOB.villains_positions,
 			)
 			var/category_index = 0
 			for(var/list/category in omegalist)
@@ -1370,6 +1371,15 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/datum/job/job = SSjob.GetJob(role)
 	if(!job || !(job.job_flags & JOB_NEW_PLAYER_JOINABLE))
 		user << browse(null, "window=mob_occupation")
+		update_menu_data(user, list("job"))
+		return
+	if(CONFIG_GET(flag/usewhitelist))
+		if(job.whitelist_req && (!user.client.whitelisted()))
+			to_chat(user, span_warning("You are not on the server whitelist for [job.title]."))
+			update_menu_data(user, list("job"))
+			return
+	if(!job.player_has_job_whitelist(user.client))
+		to_chat(user, span_warning("You are not whitelisted for [job.title]."))
 		update_menu_data(user, list("job"))
 		return
 	if(!isnum(desiredLvl))
@@ -3538,6 +3548,12 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			used_name,
 			"\[PATRON LOCK\]",
 			"<b>Patron Needed:</b><br>[patron_text]"
+		)
+	if(job.requires_job_whitelist() && !job.player_has_job_whitelist(user.client))
+		return make_lock_row(
+			used_name,
+			"\[WHITELIST\]",
+			"This role requires an admin-managed job whitelist."
 		)
 	// No lock
 	return FALSE

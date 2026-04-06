@@ -108,6 +108,8 @@ SUBSYSTEM_DEF(role_class_handler)
 		class_select.special_session_queue = list()
 		for(var/funny_key in special_session_queue[used_key])
 			var/datum/job/advclass/special_class = special_session_queue[used_key][funny_key]
+			if(!special_class.player_has_job_whitelist(H.client))
+				continue
 			if(special_class.total_positions > special_class.current_positions)
 				class_select.special_session_queue += special_class
 

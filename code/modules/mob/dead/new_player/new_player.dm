@@ -332,6 +332,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 				var/next_respawn_time = GLOB.job_respawn_delays[usr.ckey]
 				var/remaining_time = round((next_respawn_time - world.time) / 10)
 				return "You must wait [remaining_time] seconds before playing as an [jobtitle] again."
+		if(JOB_UNAVAILABLE_WHITELIST)
+			return "You are not whitelisted for [jobtitle]."
 	return "Error: Unknown job availability."
 
 //used for latejoining
@@ -383,6 +385,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 	if(CONFIG_GET(flag/usewhitelist))
 		if(job.whitelist_req && (!client.whitelisted()))
 			return JOB_UNAVAILABLE_GENERIC
+	if(!job.player_has_job_whitelist(client))
+		return JOB_UNAVAILABLE_WHITELIST
 	if(is_role_banned(client.ckey, job.title))
 		return JOB_UNAVAILABLE_BANNED
 
@@ -502,6 +506,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 		GLOB.town_positions,
 		GLOB.outsiders_positions,
 		GLOB.adventurers_positions,
+		GLOB.villains_positions,
 	)
 
 	for(var/list/category in omegalist)

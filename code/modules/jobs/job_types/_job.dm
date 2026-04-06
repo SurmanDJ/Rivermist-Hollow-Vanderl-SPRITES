@@ -137,6 +137,8 @@
 	var/attunements_min
 
 	var/whitelist_req = FALSE //!
+	/// Stable database whitelist identifier for jobs and subclasses.
+	var/job_whitelist_id = null
 
 	var/banned_leprosy = TRUE
 	var/banned_lunatic = TRUE
@@ -233,6 +235,24 @@
 	if(antag_job)
 		return RUNE_LINK_ANTAG
 	return RUNE_LINK_CITY
+
+/datum/job/proc/requires_job_whitelist()
+	return !!job_whitelist_id
+
+/datum/job/proc/player_has_job_whitelist(client/player_client)
+	if(!requires_job_whitelist())
+		return TRUE
+	if(!player_client)
+		return FALSE
+	return player_client.is_job_whitelisted(job_whitelist_id)
+
+/datum/job/proc/player_has_required_whitelists(client/player_client)
+	if(!player_client)
+		return FALSE
+	if(CONFIG_GET(flag/usewhitelist))
+		if(whitelist_req && !player_client.whitelisted())
+			return FALSE
+	return player_has_job_whitelist(player_client)
 
 /datum/job/New()
 	. = ..()

@@ -32,6 +32,9 @@
 	apply_character_post_equipment(spawned)
 
 /datum/job/advclass/proc/check_requirements(mob/living/carbon/human/to_check)
+	if(!player_has_job_whitelist(to_check?.client))
+		return FALSE
+
 	if(!prob(roll_chance))
 		return FALSE
 
