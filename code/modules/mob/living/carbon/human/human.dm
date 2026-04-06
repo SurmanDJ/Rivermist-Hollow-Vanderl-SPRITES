@@ -902,6 +902,7 @@
 	//stop_pulling()
 	riding_datum.handle_vehicle_layer()
 	. = ..(target, force, check_loc)
+// Attaches the rider's sprite to a specific point
 	if(. && istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
 		var/obj/item/bodypart/taur/T = H.get_bodypart(BODY_ZONE_TAUR)
