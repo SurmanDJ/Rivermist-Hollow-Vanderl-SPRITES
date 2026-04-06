@@ -908,6 +908,22 @@
 	//stop_pulling()
 	riding_datum.handle_vehicle_layer()
 	. = ..(target, force, check_loc)
+// Attaches the rider's sprite to a specific point
+	if(. && istype(src, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = src
+		var/obj/item/bodypart/taur/T = H.get_bodypart(BODY_ZONE_TAUR)
+		if(istype(T, /obj/item/bodypart/taur/jdeer))
+			var/mob/rider = target
+			rider.transform = rider.transform.Translate(0, 16)
+
+/mob/living/carbon/human/unbuckle_mob(target, force = FALSE)
+	. = ..()
+	if(. && istype(src, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = src
+		var/obj/item/bodypart/taur/T = H.get_bodypart(BODY_ZONE_TAUR)
+		if(istype(T, /obj/item/bodypart/taur/jdeer))
+			var/mob/rider = target
+			rider.transform = rider.transform.Translate(0, -16)
 
 /mob/living/carbon/human/proc/is_shove_knockdown_blocked() //If you want to add more things that block shove knockdown, extend this
 	var/list/body_parts = list(head, wear_mask, wear_armor, wear_pants, backl, backr, gloves, shoes, belt, wear_ring)
