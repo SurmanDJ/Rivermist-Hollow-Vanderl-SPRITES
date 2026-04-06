@@ -423,6 +423,11 @@
 
 	return find_safe_turf()
 
+/datum/pocket_dimension/proc/get_teardown_exit_destination(atom/override_target = null)
+	if(override_target && !QDELETED(override_target))
+		return override_target
+	return get_exit_destination()
+
 /datum/pocket_dimension/proc/get_return_turf()
 	var/atom/exit_destination = get_exit_destination()
 	if(!exit_destination)
@@ -495,8 +500,8 @@
 /datum/pocket_dimension/proc/can_exit_mob(mob/user, obj/structure/pocket_dimension_exit/exit_object, show_feedback = TRUE)
 	return TRUE
 
-/datum/pocket_dimension/proc/eject_occupants(message = null)
-	var/atom/target = get_exit_destination()
+/datum/pocket_dimension/proc/eject_occupants(message = null, atom/override_target = null)
+	var/atom/target = get_teardown_exit_destination(override_target)
 	if(!target)
 		return
 
@@ -507,8 +512,8 @@
 			to_chat(occupant, span_warning(message))
 		occupant.forceMove(target)
 
-/datum/pocket_dimension/proc/eject_all(message = null)
-	return eject_occupants(message)
+/datum/pocket_dimension/proc/eject_all(message = null, atom/override_target = null)
+	return eject_occupants(message, override_target)
 
 /datum/pocket_dimension/proc/is_native_snapshot_movable(atom/movable/movable)
 	if(!movable || QDELETED(movable))
@@ -562,8 +567,8 @@
 
 	return movable.forceMove(new_loc)
 
-/datum/pocket_dimension/proc/eject_foreign_movables(items_only = FALSE)
-	var/atom/target = get_exit_destination()
+/datum/pocket_dimension/proc/eject_foreign_movables(items_only = FALSE, atom/override_target = null)
+	var/atom/target = get_teardown_exit_destination(override_target)
 	if(!target)
 		return
 
@@ -574,9 +579,26 @@
 	if(storage && !length(storage.contents))
 		QDEL_NULL(storage)
 
-/datum/pocket_dimension/proc/eject_teardown_contents(message = null)
-	eject_occupants(message)
-	eject_foreign_movables()
+/datum/pocket_dimension/proc/collapse_nested_pockets(message = null, atom/override_target = null)
+	if(!SSpocket_dimensions)
+		return FALSE
+
+	var/list/child_instances = SSpocket_dimensions.get_child_instances(src)
+	if(!length(child_instances))
+		return FALSE
+
+	var/atom/child_exit_target = get_teardown_exit_destination(override_target)
+	for(var/datum/pocket_dimension/child_instance as anything in child_instances)
+		if(QDELETED(child_instance))
+			continue
+		SSpocket_dimensions.delete_instance(child_instance, message, child_exit_target)
+
+	return TRUE
+
+/datum/pocket_dimension/proc/eject_teardown_contents(message = null, atom/override_target = null)
+	collapse_nested_pockets(message, override_target)
+	eject_occupants(message, override_target)
+	eject_foreign_movables(FALSE, override_target)
 
 /datum/pocket_dimension/proc/ensure_storage()
 	if(!storage)

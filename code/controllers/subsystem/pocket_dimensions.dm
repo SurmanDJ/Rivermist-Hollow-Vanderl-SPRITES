@@ -88,7 +88,7 @@ SUBSYSTEM_DEF(pocket_dimensions)
 	if(instances_by_id["[instance.instance_id]"] == instance)
 		instances_by_id -= "[instance.instance_id]"
 
-/datum/controller/subsystem/pocket_dimensions/proc/delete_instance(instance_or_key, eject_message = null)
+/datum/controller/subsystem/pocket_dimensions/proc/delete_instance(instance_or_key, eject_message = null, atom/eject_destination_override = null)
 	var/datum/pocket_dimension/instance
 	if(istype(instance_or_key, /datum/pocket_dimension))
 		instance = instance_or_key
@@ -98,11 +98,31 @@ SUBSYSTEM_DEF(pocket_dimensions)
 	if(!instance)
 		return FALSE
 
-	instance.eject_teardown_contents(eject_message)
+	instance.eject_teardown_contents(eject_message, eject_destination_override)
 
 	unregister_instance(instance)
 	qdel(instance)
 	return TRUE
+
+/datum/controller/subsystem/pocket_dimensions/proc/get_child_instances(datum/pocket_dimension/parent_instance)
+	var/list/child_instances = list()
+	if(!parent_instance)
+		return child_instances
+
+	for(var/instance_id in instances_by_id)
+		var/datum/pocket_dimension/instance = instances_by_id[instance_id]
+		if(!instance || QDELETED(instance) || instance == parent_instance)
+			continue
+
+		var/atom/pocket_holder = instance.get_pocket_holder()
+		if(!pocket_holder)
+			continue
+		if(!parent_instance.contains_turf(get_turf(pocket_holder)))
+			continue
+
+		child_instances += instance
+
+	return child_instances
 
 /datum/controller/subsystem/pocket_dimensions/proc/get_debug_instances()
 	var/list/instances = list()
