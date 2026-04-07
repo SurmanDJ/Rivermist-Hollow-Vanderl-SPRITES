@@ -333,9 +333,6 @@
 "cf" = (
 /obj/structure/bed/wool,
 /obj/item/bedsheet/wool,
-/obj/effect/landmark/start/guardsman{
-	dir = 1
-	},
 /turf/open/floor/wood,
 /area/ship/middeck)
 "cg" = (
@@ -465,12 +462,6 @@
 	},
 /turf/open/floor/wood,
 /area/ship/middeck)
-"cQ" = (
-/obj/effect/landmark/start/beastmonger{
-	dir = 8
-	},
-/turf/open/floor/ruinedwood/spiral,
-/area/ship/topdeck)
 "cV" = (
 /obj/structure/table/wood/reinforced_alt,
 /obj/item/candle/skull/lit{
@@ -818,11 +809,11 @@
 /turf/open/floor/hay,
 /area/ship/middeck)
 "fe" = (
-/obj/effect/landmark/start/mercenary{
-	dir = 1
-	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/fueled/wallfire/candle,
+/obj/effect/landmark/start/hunter,
 /turf/open/floor/ruinedwood/spiral,
-/area/ship/topdeck)
+/area/ship/middeck)
 "ff" = (
 /obj/structure/handcart{
 	dir = 1
@@ -834,9 +825,6 @@
 	dir = 1;
 	icon_state = "chair2"
 	},
-/obj/effect/landmark/start/villager{
-	dir = 1
-	},
 /obj/effect/decal/cobbleedge{
 	dir = 10;
 	icon_state = "cobbleedge-w"
@@ -845,9 +833,7 @@
 /turf/open/floor/herringbone,
 /area/ship/middeck)
 "fi" = (
-/obj/effect/landmark/start/templar{
-	dir = 8
-	},
+/obj/effect/landmark/start/heart_priest,
 /turf/open/floor/churchmarble,
 /area/indoors/town/church/chapel)
 "fk" = (
@@ -912,6 +898,7 @@
 /obj/structure/fluff/walldeco/customflag{
 	pixel_y = 32
 	},
+/obj/effect/landmark/start/swamp_witch,
 /turf/open/floor/ruinedwood/darker,
 /area/ship/middeck)
 "fH" = (
@@ -937,13 +924,9 @@
 /turf/open/floor/metal/barograte,
 /area/ship/nobledeck)
 "fR" = (
-/obj/structure/bed/mediocre,
-/obj/item/bedsheet/pelt,
-/obj/effect/landmark/start/wapprentice{
-	dir = 8
-	},
-/turf/open/floor/ruinedwood/two,
-/area/ship/nobledeck)
+/obj/effect/landmark/start/servant,
+/turf/open/floor/ruinedwood/spiral,
+/area/ship/topdeck)
 "fZ" = (
 /obj/structure/closet/crate/chest/neu_iron{
 	pixel_y = 8
@@ -966,9 +949,6 @@
 "gc" = (
 /obj/structure/bed/inn/double,
 /obj/item/bedsheet/fabric_double,
-/obj/effect/landmark/start/prince{
-	dir = 8
-	},
 /turf/open/floor/ruinedwood/two,
 /area/ship/nobledeck)
 "gd" = (
@@ -1172,11 +1152,9 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/topdeck)
 "he" = (
-/obj/effect/landmark/start/tailor{
-	dir = 4
-	},
-/turf/open/floor/tile/diamond/purple,
-/area/ship/middeck)
+/obj/effect/landmark/start/cook,
+/turf/open/floor/ruinedwood/spiral,
+/area/ship/topdeck)
 "hf" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
@@ -1334,9 +1312,8 @@
 /turf/open/floor/churchrough/purple,
 /area/indoors/town/church/inquisition)
 "ij" = (
-/obj/effect/landmark/start/veteran,
-/obj/structure/chair/stool/bar,
-/turf/open/floor/herringbone,
+/obj/effect/landmark/start/towner,
+/turf/open/floor/ruinedwood/darker,
 /area/ship/middeck)
 "ik" = (
 /obj/effect/decal/cobbleedge{
@@ -1349,9 +1326,7 @@
 /turf/open/openspace,
 /area/ship/topdeck)
 "is" = (
-/obj/effect/landmark/start/mercenarylate{
-	dir = 1
-	},
+/obj/effect/landmark/start/barber_surgeon,
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/topdeck)
 "it" = (
@@ -1406,14 +1381,9 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/indoors/town/church/inquisition)
 "iG" = (
-/obj/structure/bed/inn/double,
-/obj/item/bedsheet/fabric_double,
-/obj/effect/landmark/start/prince{
-	dir = 8
-	},
-/obj/machinery/light/fueled/wallfire/candle/r,
-/turf/open/floor/ruinedwood/two,
-/area/ship/nobledeck)
+/obj/effect/landmark/start/artisan,
+/turf/open/floor/ruinedwood/spiral,
+/area/ship/topdeck)
 "iH" = (
 /obj/structure/door/viewport{
 	dir = 4;
@@ -1454,9 +1424,7 @@
 	},
 /area/ship/nobledeck)
 "jh" = (
-/obj/effect/landmark/start/villager{
-	dir = 1
-	},
+/obj/effect/landmark/start/town_apothecary,
 /turf/open/floor/ruinedwood/darker,
 /area/ship/middeck)
 "jj" = (
@@ -1739,12 +1707,6 @@
 /obj/machinery/light/fueled/wallfire/candle/blue/l,
 /turf/open/floor/ruinedwood/spiral,
 /area/indoors/town/church/inquisition)
-"lx" = (
-/obj/effect/landmark/start/priest{
-	dir = 4
-	},
-/turf/open/floor/ruinedwood/spiral,
-/area/indoors/town/church)
 "ly" = (
 /turf/open/floor/tile/masonic{
 	dir = 4
@@ -1884,13 +1846,6 @@
 /obj/machinery/tanningrack,
 /turf/open/floor/hay,
 /area/ship/middeck)
-"mv" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/villager{
-	dir = 1
-	},
-/turf/open/floor/hay,
-/area/ship/middeck)
 "mF" = (
 /obj/structure/lever/hidden{
 	redstone_id = "VoyageMidPortBow"
@@ -1929,16 +1884,12 @@
 /area/indoors/town/vault)
 "mR" = (
 /obj/structure/bed/inn,
-/obj/effect/landmark/start/dungeoneer{
-	dir = 8
-	},
 /obj/item/bedsheet/fabric,
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/floor/wood,
 /area/ship/shipbrig)
 "mU" = (
 /obj/structure/bed/mediocre,
-/obj/effect/landmark/start/monk,
 /turf/open/floor/wood,
 /area/indoors/town/church)
 "mV" = (
@@ -2098,12 +2049,6 @@
 /obj/structure/carpet/purple,
 /turf/open/floor/ruinedwood/chevron,
 /area/ship/middeck)
-"oe" = (
-/obj/effect/landmark/start/wapprentice{
-	dir = 1
-	},
-/turf/open/floor/ruinedwood/two,
-/area/ship/nobledeck)
 "og" = (
 /turf/open/floor/carpet/lord/center,
 /area/ship/nobledeck)
@@ -2179,10 +2124,9 @@
 /turf/open/floor/wood,
 /area/indoors/town/church)
 "oL" = (
-/obj/effect/landmark/start/lord,
-/obj/structure/carpet/blue,
-/turf/open/floor/ruinedwood/chevron,
-/area/ship/nobledeck)
+/obj/effect/landmark/start/artisan_apprentice,
+/turf/open/floor/ruinedwood/spiral,
+/area/ship/topdeck)
 "oM" = (
 /obj/effect/landmark/tram/queued_path{
 	next_path_id = "cargo_map_enter";
@@ -2238,8 +2182,8 @@
 /turf/open/floor/wood,
 /area/ship/middeck)
 "oX" = (
-/obj/effect/landmark/start/villager,
 /obj/structure/fake_machine/stockpile,
+/obj/effect/landmark/start/guild_master_wizard,
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/middeck)
 "oY" = (
@@ -2299,7 +2243,7 @@
 /turf/open/openspace,
 /area/ship/topdeck)
 "pv" = (
-/obj/effect/landmark/start/villager,
+/obj/effect/landmark/start/towner,
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/middeck)
 "px" = (
@@ -2448,12 +2392,6 @@
 	},
 /turf/open/floor/ruinedwood/two,
 /area/ship/nobledeck)
-"qB" = (
-/obj/effect/landmark/start/nightmaiden{
-	dir = 4
-	},
-/turf/open/floor/ruinedwood/chevron,
-/area/ship/middeck)
 "qE" = (
 /obj/effect/landmark/start/cook{
 	dir = 4
@@ -2485,9 +2423,7 @@
 /turf/open/floor/hay,
 /area/ship/topdeck)
 "qP" = (
-/obj/effect/landmark/start/villager{
-	dir = 8
-	},
+/obj/effect/landmark/start/waterdeep_banker,
 /turf/open/floor/ruinedwood/darker,
 /area/ship/middeck)
 "qR" = (
@@ -2612,7 +2548,6 @@
 /area/ship/middeck)
 "rx" = (
 /obj/structure/bed/wool,
-/obj/effect/landmark/start/guardsman,
 /turf/open/floor/wood,
 /area/ship/middeck)
 "ry" = (
@@ -2747,9 +2682,9 @@
 /turf/open/floor/church/purple,
 /area/indoors/town/church/inquisition)
 "sh" = (
-/obj/effect/landmark/start/squire,
+/obj/effect/landmark/start/adventurers_assistant,
 /turf/open/floor/ruinedwood/spiral,
-/area/ship/middeck)
+/area/ship/topdeck)
 "sq" = (
 /obj/effect/decal/cobbleedge{
 	dir = 8
@@ -2880,11 +2815,10 @@
 /turf/open/water/bath,
 /area/ship/middeck)
 "sY" = (
-/obj/effect/landmark/start/farmer{
-	dir = 1
-	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/town_mouth,
 /turf/open/floor/ruinedwood/spiral,
-/area/ship/topdeck)
+/area/ship/middeck)
 "sZ" = (
 /obj/item/reagent_containers/food/snacks/produce/grain/oat,
 /obj/item/reagent_containers/food/snacks/produce/grain/oat,
@@ -2913,7 +2847,7 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/topdeck)
 "tb" = (
-/obj/effect/landmark/start/villager,
+/obj/effect/landmark/start/forest_warden,
 /turf/open/floor/ruinedwood/darker,
 /area/ship/middeck)
 "tc" = (
@@ -2924,9 +2858,13 @@
 /turf/open/openspace,
 /area/outdoors/beach)
 "td" = (
-/obj/effect/landmark/start/innkeep_son,
-/turf/open/floor/herringbone,
-/area/ship/middeck)
+/obj/structure/fluff/walldeco/church/line,
+/obj/structure/fluff/walldeco/church/line{
+	dir = 1
+	},
+/obj/effect/landmark/start/acolyte,
+/turf/open/floor/churchrough,
+/area/indoors/town/church/chapel)
 "te" = (
 /obj/structure/fluff/walldeco/church/line,
 /obj/structure/fluff/walldeco/church/line{
@@ -3151,17 +3089,9 @@
 /turf/open/openspace,
 /area/outdoors/beach)
 "uA" = (
-/obj/structure/chair/pew{
-	dir = 4
-	},
-/obj/structure/fluff/walldeco/church/line{
-	dir = 8
-	},
-/obj/effect/landmark/start/churchling{
-	dir = 4
-	},
-/turf/open/floor/church,
-/area/indoors/town/church/chapel)
+/obj/effect/landmark/start/guild_wizard_apprentice,
+/turf/open/floor/ruinedwood/spiral,
+/area/ship/middeck)
 "uB" = (
 /obj/structure/stairs{
 	dir = 1
@@ -3203,9 +3133,6 @@
 /area/ship/middeck)
 "uN" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/absolver{
-	dir = 8
-	},
 /turf/open/floor/church/purple,
 /area/indoors/town/church/inquisition)
 "uO" = (
@@ -3365,6 +3292,7 @@
 	dir = 4;
 	pixel_x = 8
 	},
+/obj/effect/landmark/resurrection_rune_destination,
 /turf/open/floor/church,
 /area/indoors/town/church/chapel)
 "vX" = (
@@ -3446,15 +3374,13 @@
 /area/ship/nobledeck)
 "wk" = (
 /obj/machinery/light/fueled/wallfire/candle,
+/obj/effect/landmark/start/watch_veteran,
 /turf/open/floor/carpet/lord/right{
 	dir = 1
 	},
 /area/ship/nobledeck)
 "wm" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/villager{
-	dir = 8
-	},
 /obj/machinery/light/fueled/wallfire/candle/r,
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/middeck)
@@ -3518,14 +3444,6 @@
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/hay,
 /area/ship/topdeck)
-"wK" = (
-/obj/item/bedsheet/cloth,
-/obj/structure/bed/mediocre,
-/obj/effect/landmark/start/monk{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/indoors/town/church)
 "wL" = (
 /turf/open/floor/metal,
 /area/ship/middeck)
@@ -3636,12 +3554,14 @@
 /turf/open/floor/tile/diamond/purple,
 /area/ship/middeck)
 "xH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/mercenary{
-	dir = 8
+/obj/structure/resurrection_rune{
+	icon = 'icons/obj/rune.dmi';
+	pixel_x = 0;
+	pixel_y = 0;
+	icon_state = "summon"
 	},
-/turf/open/floor/ruinedwood/spiral,
-/area/ship/middeck)
+/turf/open/floor/blocks,
+/area/indoors/town/church)
 "xJ" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
@@ -3778,11 +3698,9 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/topdeck)
 "zb" = (
-/obj/effect/landmark/start/tailor{
-	dir = 8
-	},
-/turf/open/floor/hay,
-/area/ship/topdeck)
+/obj/effect/landmark/start/town_scholar,
+/turf/open/floor/ruinedwood/spiral,
+/area/ship/middeck)
 "zd" = (
 /obj/machinery/light/fueled/wallfire/candle/r,
 /obj/structure/industrial_lift/tram,
@@ -3793,12 +3711,6 @@
 	dir = 1
 	},
 /turf/open/floor/ruinedwood/spiral,
-/area/ship/middeck)
-"zf" = (
-/obj/structure/bed/wool,
-/obj/item/bedsheet/wool,
-/obj/effect/landmark/start/guardsman,
-/turf/open/floor/wood,
 /area/ship/middeck)
 "zi" = (
 /obj/effect/decal/cleanable/dirt,
@@ -3833,9 +3745,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/fueled/wallfire/candle/blue{
 	pixel_y = -32
-	},
-/obj/effect/landmark/start/orthodoxist{
-	dir = 4
 	},
 /turf/open/floor/church/purple,
 /area/indoors/town/church/inquisition)
@@ -3904,7 +3813,7 @@
 /turf/open/floor/ruinedwood/darker,
 /area/ship/topdeck)
 "zP" = (
-/obj/effect/landmark/start/farmer,
+/obj/effect/landmark/start/adventurers_guildmaster,
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/topdeck)
 "zR" = (
@@ -4093,12 +4002,6 @@
 	},
 /turf/open/openspace,
 /area/outdoors/beach)
-"Bm" = (
-/obj/effect/landmark/start/hand{
-	dir = 8
-	},
-/turf/open/floor/ruinedwood/two,
-/area/ship/nobledeck)
 "Bq" = (
 /obj/structure/lever/hidden{
 	redstone_id = "VoyageMidPortStern"
@@ -4202,9 +4105,8 @@
 /turf/open/floor/ruinedwood/darker,
 /area/ship/middeck)
 "BS" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/mercenary,
-/turf/open/floor/hay,
+/obj/effect/landmark/start/waterdeep_guild_guard,
+/turf/open/floor/ruinedwood/darker,
 /area/ship/middeck)
 "BV" = (
 /obj/structure/fluff/railing/border{
@@ -4728,16 +4630,8 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/topdeck)
 "Fp" = (
-/obj/effect/landmark/start/churchling{
-	dir = 4
-	},
-/turf/open/floor/ruinedwood/spiral,
-/area/indoors/town/church)
-"Fq" = (
-/obj/effect/landmark/start/villager{
-	dir = 4
-	},
-/turf/open/floor/ruinedwood/spiral,
+/obj/effect/landmark/start/tavern_wench,
+/turf/open/floor/herringbone,
 /area/ship/middeck)
 "Fs" = (
 /obj/structure/fluff/walldeco/church/line,
@@ -5039,9 +4933,6 @@
 /turf/open/floor/hay,
 /area/ship/topdeck)
 "HA" = (
-/obj/effect/landmark/start/villager{
-	dir = 1
-	},
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_y = -32
 	},
@@ -5174,13 +5065,6 @@
 /obj/structure/roguetent,
 /turf/open/floor/metal/barograte,
 /area/ship/middeck)
-"IJ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/villager{
-	dir = 4
-	},
-/turf/open/floor/ruinedwood/spiral,
-/area/ship/middeck)
 "IL" = (
 /turf/closed/wall/mineral/wooddark,
 /area/ship/topdeck)
@@ -5233,11 +5117,9 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/topdeck)
 "Jo" = (
-/obj/effect/landmark/start/jester{
-	dir = 4
-	},
-/turf/closed/wall/mineral/wooddark,
-/area/ship/topdeck)
+/obj/effect/landmark/start/watch_sergeant,
+/turf/open/floor/carpet/lord/center,
+/area/ship/nobledeck)
 "Jp" = (
 /obj/item/reagent_containers/glass/bucket/wooden,
 /turf/open/water/clean,
@@ -5282,11 +5164,9 @@
 /turf/closed/wall/mineral/wooddark,
 /area/ship/nobledeck)
 "JP" = (
-/obj/effect/landmark/start/beastmonger{
-	dir = 8
-	},
-/turf/open/floor/hay,
-/area/ship/topdeck)
+/obj/effect/landmark/start/guild_wizard,
+/turf/open/floor/ruinedwood/spiral,
+/area/ship/middeck)
 "JQ" = (
 /obj/structure/carpet/blue,
 /turf/open/floor/ruinedwood/two,
@@ -5415,9 +5295,7 @@
 /turf/closed/wall/mineral/wooddark/vertical,
 /area/ship/nobledeck)
 "KI" = (
-/obj/effect/landmark/start/woodsman{
-	dir = 8
-	},
+/obj/effect/landmark/start/councilor,
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/topdeck)
 "KO" = (
@@ -5484,9 +5362,9 @@
 /turf/open/floor/wood,
 /area/ship/nobledeck)
 "Lf" = (
-/obj/effect/landmark/start/artificer,
-/turf/open/floor/hexstone,
-/area/ship/middeck)
+/obj/effect/landmark/start/fisher,
+/turf/open/floor/ruinedwood/spiral,
+/area/ship/topdeck)
 "Lg" = (
 /obj/structure/fake_machine/atm{
 	pixel_y = 0;
@@ -5511,9 +5389,6 @@
 	dir = 8;
 	icon_state = "chair2"
 	},
-/obj/effect/landmark/start/villager{
-	dir = 8
-	},
 /turf/open/floor/wood,
 /area/ship/middeck)
 "Lj" = (
@@ -5528,9 +5403,6 @@
 /turf/open/floor/twig,
 /area/ship/middeck)
 "Lp" = (
-/obj/effect/landmark/start/orthodoxist{
-	dir = 8
-	},
 /obj/structure/bed/inn,
 /obj/item/bedsheet/wool,
 /obj/machinery/light/fueled/wallfire/candle/blue/r,
@@ -5565,9 +5437,6 @@
 "LC" = (
 /obj/structure/bed/shit,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/prisoner{
-	dir = 4
-	},
 /turf/open/floor/hay,
 /area/ship/shipbrig)
 "LD" = (
@@ -5594,9 +5463,6 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/shipbrig)
 "LJ" = (
-/obj/effect/landmark/start/orthodoxist{
-	dir = 8
-	},
 /obj/structure/bed/inn,
 /obj/item/bedsheet/wool,
 /turf/open/floor/churchbrick,
@@ -5847,22 +5713,9 @@
 /turf/open/openspace,
 /area/outdoors/beach)
 "Nn" = (
-/obj/effect/landmark/start/villager{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/ruinedwood/darker,
-/area/ship/middeck)
-"Np" = (
-/obj/structure/fluff/walldeco/church/line{
-	dir = 1
-	},
-/obj/structure/fluff/walldeco/church/line,
-/obj/effect/landmark/start/clinicapprentice{
-	dir = 4
-	},
+/obj/effect/landmark/start/moon_priest,
 /turf/open/floor/churchmarble,
-/area/ship/middeck)
+/area/indoors/town/church/chapel)
 "Nt" = (
 /obj/structure/fluff/nest{
 	name = "patch of straw"
@@ -6097,9 +5950,6 @@
 /area/ship/middeck)
 "OF" = (
 /obj/structure/bed/shit,
-/obj/effect/landmark/start/prisoner{
-	dir = 8
-	},
 /turf/open/floor/hay,
 /area/ship/shipbrig)
 "OJ" = (
@@ -6360,9 +6210,9 @@
 /turf/open/floor/wood,
 /area/ship/middeck)
 "Qx" = (
-/obj/effect/landmark/start/veteran,
-/turf/open/floor/hay,
-/area/ship/topdeck)
+/obj/effect/landmark/start/servant,
+/turf/open/floor/ruinedwood/darker,
+/area/ship/middeck)
 "QA" = (
 /obj/item/weapon/mace/spiked{
 	pixel_x = 4;
@@ -6420,6 +6270,7 @@
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_y = -32
 	},
+/obj/effect/landmark/start/waterdeep_guild_assistant,
 /turf/open/floor/ruinedwood/darker,
 /area/ship/middeck)
 "QS" = (
@@ -6543,9 +6394,6 @@
 /area/ship/middeck)
 "RA" = (
 /obj/structure/chair/stool,
-/obj/effect/landmark/start/nightman{
-	dir = 1
-	},
 /turf/open/floor/ruinedwood/chevron,
 /area/ship/middeck)
 "RB" = (
@@ -6558,9 +6406,6 @@
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_y = -32
 	},
-/obj/effect/landmark/start/nightmaiden{
-	dir = 1
-	},
 /turf/open/floor/churchrough,
 /area/ship/middeck)
 "RD" = (
@@ -6570,7 +6415,6 @@
 "RE" = (
 /obj/structure/fluff/walldeco/church/line,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/orthodoxist,
 /obj/structure/fake_machine/mail/l{
 	mailtag = "Inquisition"
 	},
@@ -6743,9 +6587,6 @@
 /obj/structure/chair/pew/left{
 	dir = 4
 	},
-/obj/effect/landmark/start/monk{
-	dir = 4
-	},
 /turf/open/floor/church,
 /area/indoors/town/church/chapel)
 "SC" = (
@@ -6830,15 +6671,7 @@
 /obj/structure/stairs/fancy/r,
 /turf/open/floor/tile,
 /area/indoors/town/vault)
-"Tg" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/mercenary{
-	dir = 1
-	},
-/turf/open/floor/ruinedwood/spiral,
-/area/ship/middeck)
 "Tj" = (
-/obj/effect/landmark/start/magician,
 /obj/machinery/light/fueled/wallfire/candle/l,
 /turf/open/floor/ruinedwood/two,
 /area/ship/nobledeck)
@@ -6854,11 +6687,6 @@
 "Tp" = (
 /obj/machinery/light/fueled/wallfire/candle/r,
 /turf/open/floor/churchmarble,
-/area/ship/middeck)
-"Tq" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/mercenary,
-/turf/open/floor/ruinedwood/spiral,
 /area/ship/middeck)
 "Ts" = (
 /obj/machinery/light/fueled/wallfire/candle,
@@ -7069,14 +6897,6 @@
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/shipbrig)
-"Uw" = (
-/obj/structure/fluff/walldeco/church/line{
-	dir = 1
-	},
-/obj/structure/fluff/walldeco/church/line,
-/obj/effect/landmark/start/clinicapprentice,
-/turf/open/floor/churchmarble,
-/area/ship/middeck)
 "Ux" = (
 /obj/structure/fluff/railing/border{
 	dir = 4
@@ -7265,12 +7085,11 @@
 /turf/open/floor/hay,
 /area/ship/middeck)
 "Vz" = (
-/obj/structure/fluff/walldeco/church/line{
-	dir = 4
+/obj/effect/landmark/start/watch_warden,
+/turf/open/floor/carpet/lord/right{
+	dir = 1
 	},
-/obj/effect/landmark/start/feldsher,
-/turf/open/floor/church,
-/area/ship/middeck)
+/area/ship/nobledeck)
 "VA" = (
 /obj/structure/chair/pew/right{
 	dir = 4
@@ -7474,13 +7293,9 @@
 /turf/open/floor/churchrough/purple,
 /area/indoors/town/church/inquisition)
 "WP" = (
-/obj/structure/bed/inn,
-/obj/item/bedsheet/wool,
-/obj/effect/landmark/start/puritan{
-	dir = 8
-	},
-/turf/open/floor/churchbrick,
-/area/indoors/town/church/inquisition)
+/obj/effect/landmark/start/burgmeister,
+/turf/open/floor/carpet/lord/center,
+/area/ship/nobledeck)
 "WQ" = (
 /obj/structure/closet/crate/drawer/inn{
 	pixel_y = 0
@@ -7562,10 +7377,11 @@
 /turf/open/floor/churchrough/purple,
 /area/indoors/town/church/inquisition)
 "Xw" = (
-/obj/effect/landmark/start/villager{
+/obj/structure/fluff/railing/wood{
 	dir = 1
 	},
-/turf/open/floor/ruinedwood/spiral,
+/obj/effect/landmark/start/waterdeep_merchant,
+/turf/open/floor/ruinedwood/darker,
 /area/ship/middeck)
 "Xx" = (
 /obj/structure/barricade/wooden,
@@ -7684,10 +7500,8 @@
 /turf/open/floor/ruinedwood/chevron,
 /area/ship/middeck)
 "Yp" = (
-/obj/effect/landmark/start/villager{
-	dir = 8
-	},
-/turf/open/floor/ruinedwood/spiral,
+/obj/effect/landmark/start/town_apothecary_apprentice,
+/turf/open/floor/ruinedwood/darker,
 /area/ship/middeck)
 "Yq" = (
 /obj/structure/fake_machine/mail{
@@ -7780,21 +7594,6 @@
 "Zf" = (
 /turf/closed/wall/mineral/pipe,
 /area/indoors/town/vault)
-"Zi" = (
-/obj/structure/chair/pew/right{
-	dir = 4
-	},
-/obj/structure/fluff/walldeco/church/line{
-	dir = 1
-	},
-/obj/structure/fluff/walldeco/church/line{
-	dir = 8
-	},
-/obj/effect/landmark/start/monk{
-	dir = 4
-	},
-/turf/open/floor/church,
-/area/indoors/town/church/chapel)
 "Zk" = (
 /obj/effect/mapping_helpers/secret_door_creator{
 	redstone_id = "VoyageUpperPortStern"
@@ -7914,12 +7713,9 @@
 /turf/open/openspace,
 /area/outdoors/beach)
 "ZJ" = (
-/obj/structure/fluff/railing/border{
-	dir = 1
-	},
-/obj/effect/landmark/start/orphanlate,
-/turf/open/floor/ruinedwood/spiral,
-/area/ship/topdeck)
+/obj/effect/landmark/start/grove_druid,
+/turf/open/floor/ruinedwood/darker,
+/area/ship/middeck)
 "ZK" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -7983,10 +7779,7 @@
 /turf/open/floor/ruinedwood/darker,
 /area/ship/topdeck)
 "ZZ" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/villager{
-	dir = 8
-	},
+/obj/effect/landmark/start/town_performer,
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/middeck)
 
@@ -13794,7 +13587,7 @@ OA
 hm
 Tp
 tL
-Vz
+eO
 hf
 eO
 sT
@@ -14002,7 +13795,7 @@ RC
 tL
 uw
 Kc
-qB
+Kc
 kM
 Ve
 tL
@@ -14199,7 +13992,7 @@ MP
 or
 Si
 ot
-Np
+hf
 ot
 iR
 hB
@@ -14397,7 +14190,7 @@ ES
 ES
 Ic
 ot
-Uw
+hf
 ot
 Si
 oY
@@ -14808,7 +14601,7 @@ aO
 LY
 LY
 zR
-IJ
+LY
 LY
 cz
 tL
@@ -15006,7 +14799,7 @@ LY
 LY
 rz
 LY
-ZZ
+LY
 wm
 aO
 aO
@@ -15204,7 +14997,7 @@ sE
 Zw
 aO
 iR
-BS
+Cn
 RM
 gH
 VC
@@ -15618,7 +15411,7 @@ xY
 Ha
 gp
 aO
-Tg
+LY
 tL
 dW
 Jd
@@ -15808,7 +15601,7 @@ IR
 tL
 TA
 mH
-Fq
+aO
 tL
 VX
 LY
@@ -16429,7 +16222,7 @@ vz
 LY
 IF
 aO
-Xw
+aO
 aO
 tL
 IR
@@ -17032,7 +16825,7 @@ nA
 UL
 gp
 Nf
-Xw
+aO
 iR
 ES
 hL
@@ -17830,7 +17623,7 @@ qG
 eT
 Ax
 tL
-IJ
+LY
 LY
 gH
 VC
@@ -17842,7 +17635,7 @@ gH
 LY
 Cn
 iR
-Fq
+aO
 xu
 Eu
 tL
@@ -18042,7 +17835,7 @@ jj
 jj
 Bk
 LY
-mv
+Cn
 tL
 aO
 eW
@@ -18232,7 +18025,7 @@ IR
 tL
 gk
 Px
-Yp
+aO
 tL
 vz
 LY
@@ -18445,7 +18238,7 @@ LH
 LH
 tL
 tL
-FZ
+fe
 aO
 ML
 KP
@@ -19042,7 +18835,7 @@ xo
 xo
 xo
 tL
-Tq
+LY
 GZ
 iR
 Au
@@ -19244,7 +19037,7 @@ CO
 kS
 ES
 iR
-Tq
+LY
 LM
 iR
 pe
@@ -19847,7 +19640,7 @@ IR
 IR
 tL
 aO
-pv
+aO
 aO
 RH
 aO
@@ -19855,7 +19648,7 @@ aO
 aO
 VN
 ME
-LY
+sY
 LY
 zi
 LY
@@ -20057,11 +19850,11 @@ LY
 LY
 VN
 rI
-aO
+ZZ
 aO
 VN
 LY
-xH
+LY
 qu
 ML
 KP
@@ -20259,7 +20052,7 @@ sF
 sF
 dO
 RD
-Yp
+aO
 uv
 dO
 sF
@@ -20862,14 +20655,14 @@ sK
 TC
 Yl
 jG
-Fp
+jG
 ai
 Yc
 te
 ka
 TC
 jG
-lx
+jG
 yh
 TC
 xz
@@ -21262,7 +21055,7 @@ IR
 dO
 sK
 Gb
-wK
+sK
 TC
 pn
 Ai
@@ -21478,7 +21271,7 @@ sF
 sF
 sF
 dO
-xz
+xH
 Aq
 uf
 dO
@@ -21871,14 +21664,14 @@ sF
 sF
 dO
 gX
-Zi
+ZT
 NS
 MR
 Yc
 eV
 Yc
 ZT
-uA
+NS
 MR
 Xu
 dO
@@ -22278,9 +22071,9 @@ ag
 VA
 Vt
 Fz
-Yc
-eV
-Yc
+fi
+td
+Nn
 eS
 Vt
 SB
@@ -23083,7 +22876,7 @@ IR
 Iq
 Iq
 gX
-fi
+Yc
 Yc
 Pt
 Rn
@@ -23091,7 +22884,7 @@ xw
 Lj
 cg
 Yc
-fi
+Yc
 Xu
 Iq
 Iq
@@ -54807,7 +54600,7 @@ Kg
 kf
 LJ
 Lp
-WP
+LJ
 Mt
 kM
 kI
@@ -56418,13 +56211,13 @@ Qo
 KD
 iR
 aO
-aO
+pv
 aO
 dP
 An
 mo
 CY
-he
+wb
 xD
 iR
 di
@@ -56615,7 +56408,7 @@ ES
 iR
 TX
 Sh
-Lf
+Sh
 oD
 tL
 tL
@@ -56822,7 +56615,7 @@ Qo
 py
 uO
 aO
-aO
+pv
 aO
 pm
 HU
@@ -57431,7 +57224,7 @@ jj
 jj
 jj
 jj
-Nn
+kQ
 tL
 cu
 oW
@@ -57630,9 +57423,9 @@ iR
 jj
 jj
 jj
+ij
 jj
-jj
-jj
+ij
 hu
 tL
 xo
@@ -57825,7 +57618,7 @@ BC
 tL
 xM
 iR
-zf
+cf
 kM
 cf
 iR
@@ -58032,12 +57825,12 @@ Mz
 fm
 iR
 tb
-jj
+Qx
 tL
 tL
 tL
 jj
-jj
+Yp
 iR
 pI
 DS
@@ -58233,7 +58026,7 @@ Mz
 Mz
 Mz
 iR
-jj
+ZJ
 jj
 tL
 tL
@@ -58440,7 +58233,7 @@ QV
 YF
 TU
 hE
-MZ
+Xw
 jj
 hM
 MC
@@ -58634,7 +58427,7 @@ tL
 ES
 iR
 hP
-sh
+aO
 DZ
 tL
 kQ
@@ -59038,7 +58831,7 @@ tL
 ES
 iR
 Ac
-sh
+aO
 aO
 tL
 mk
@@ -59046,8 +58839,8 @@ jj
 LH
 LH
 LH
-jj
-jj
+ij
+BS
 uO
 Oa
 kM
@@ -59650,7 +59443,7 @@ jC
 sc
 iR
 aO
-aO
+pv
 aO
 iR
 EL
@@ -59851,9 +59644,9 @@ Lo
 jC
 aU
 iR
-pv
 aO
-Yp
+aO
+aO
 iR
 dm
 TL
@@ -60458,8 +60251,8 @@ xo
 xo
 tL
 oX
-aO
-aO
+uA
+zb
 tL
 xo
 tL
@@ -60659,7 +60452,7 @@ Pc
 HG
 kM
 iR
-aO
+JP
 aO
 aO
 bu
@@ -60867,8 +60660,8 @@ aO
 Fk
 kM
 Mz
-Mz
-ij
+Fp
+Um
 GK
 aO
 fy
@@ -61069,7 +60862,7 @@ aO
 DJ
 kM
 Mz
-Mz
+Fp
 Um
 cM
 ze
@@ -61675,7 +61468,7 @@ EZ
 tL
 gd
 Mz
-td
+Mz
 DD
 tL
 xo
@@ -94799,7 +94592,7 @@ Iu
 vk
 Yq
 KB
-Bm
+KB
 KB
 KB
 vk
@@ -95207,7 +95000,7 @@ We
 LO
 rb
 LO
-Vv
+Vz
 mj
 ic
 ox
@@ -95603,7 +95396,7 @@ uu
 vk
 oo
 Vv
-og
+Jo
 VP
 VP
 VP
@@ -96214,7 +96007,7 @@ vk
 ve
 gc
 vk
-iG
+BE
 Ca
 vk
 tX
@@ -96222,7 +96015,7 @@ mj
 Sv
 KB
 KB
-oe
+KB
 gM
 BC
 BC
@@ -96422,7 +96215,7 @@ LO
 mh
 mj
 LO
-fR
+HV
 nb
 HV
 LO
@@ -96816,7 +96609,7 @@ GC
 Uz
 Uz
 Uz
-sY
+Uz
 Uz
 Uz
 Uz
@@ -97024,7 +96817,7 @@ Uz
 bd
 Uz
 Uz
-fe
+Uz
 Uz
 Uz
 Uz
@@ -97226,7 +97019,7 @@ fk
 IL
 dl
 Uz
-fe
+Uz
 Uz
 Uz
 hb
@@ -97420,7 +97213,7 @@ FK
 Uz
 Uz
 Uz
-cQ
+Uz
 Uz
 Uz
 HN
@@ -97624,7 +97417,7 @@ tj
 os
 tj
 Uz
-Uz
+sh
 cr
 FR
 FR
@@ -97826,7 +97619,7 @@ bk
 Ed
 SS
 zu
-Uz
+zP
 cr
 FR
 FR
@@ -97837,7 +97630,7 @@ YM
 de
 CU
 Uz
-fe
+Uz
 Uz
 dh
 XM
@@ -98028,7 +97821,7 @@ tj
 os
 os
 Uz
-Uz
+iG
 qq
 FR
 FR
@@ -98230,7 +98023,7 @@ Uz
 Uz
 Uz
 Uz
-Uz
+oL
 jt
 ir
 ir
@@ -98432,7 +98225,7 @@ Uz
 Uz
 Uz
 Uz
-Uz
+he
 px
 KA
 KA
@@ -98630,16 +98423,16 @@ bP
 wX
 Uz
 Uz
+Lf
 Uz
 Uz
 Uz
-Uz
-Uz
+is
 Uz
 Uz
 bd
 Uz
-Uz
+fR
 Uz
 cv
 zu
@@ -99046,7 +98839,7 @@ Uz
 Uz
 Uz
 Uz
-sY
+Uz
 Uz
 Uz
 Uz
@@ -99236,9 +99029,9 @@ gi
 Ft
 FK
 zu
-Qx
+zu
 TM
-zb
+zu
 Uz
 Uz
 Uz
@@ -99248,7 +99041,7 @@ Uz
 Uz
 Uz
 Uz
-sY
+Uz
 Uz
 Uz
 Uz
@@ -99438,7 +99231,7 @@ gi
 cF
 Uz
 zu
-JP
+zu
 bk
 fk
 Uz
@@ -100862,8 +100655,8 @@ Uz
 Uz
 Uz
 Uz
+KI
 Uz
-sY
 LO
 rb
 rb
@@ -101064,7 +100857,7 @@ Uz
 Uz
 Uz
 bd
-Uz
+KI
 Uz
 vk
 HH
@@ -101270,7 +101063,7 @@ KA
 KA
 vk
 NC
-oL
+Af
 Af
 Vm
 vk
@@ -102066,7 +101859,7 @@ IE
 og
 og
 pK
-og
+WP
 og
 og
 og
@@ -134593,9 +134386,9 @@ Ep
 eU
 Bf
 NX
-KI
 Uz
-KI
+Uz
+Uz
 NX
 rP
 pr
@@ -135808,7 +135601,7 @@ NW
 FR
 FR
 FR
-ZJ
+wY
 Uz
 Uz
 Uz
@@ -136003,14 +135796,14 @@ LT
 Uz
 Uz
 Uz
-zP
+Uz
 Uz
 Uz
 NW
 FR
 FR
 FR
-ZJ
+wY
 Uz
 Uz
 Uz
@@ -136204,10 +135997,10 @@ Gy
 Uz
 Uz
 Uz
-zP
-zP
 Uz
-sY
+Uz
+Uz
+Uz
 px
 Rc
 Rc
@@ -136407,7 +136200,6 @@ Uz
 Uz
 Uz
 Uz
-zP
 Uz
 Uz
 Uz
@@ -136417,7 +136209,8 @@ Uz
 Uz
 Uz
 Uz
-is
+Uz
+Uz
 Uz
 Uz
 Uz
@@ -136619,7 +136412,7 @@ Uz
 Uz
 Uz
 Uz
-is
+Uz
 Uz
 Uz
 Uz
@@ -136821,7 +136614,7 @@ Pz
 AK
 ky
 Uz
-is
+Uz
 Uz
 Uz
 Uz
@@ -139240,7 +139033,7 @@ Kj
 Kj
 Kj
 IL
-Jo
+IL
 IL
 Kj
 Kj

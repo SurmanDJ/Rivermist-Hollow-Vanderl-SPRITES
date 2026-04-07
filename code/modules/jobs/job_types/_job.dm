@@ -9,6 +9,8 @@
 	var/f_title = null
 	/// Used if the job gets switched later to something else.
 	var/datum/job/parent_job
+	/// Used if this job uses parent's title for visuals
+	var/uses_parent_title = FALSE
 	/// When joining the round, this text will be shown to the player.
 	var/tutorial = null
 	/// Whether this job is intended to give quests
@@ -721,6 +723,8 @@
 
 	if(title_override)
 		return title_override
+	if(uses_parent_title && parent_job)
+		return parent_job.title
 
 	if(f_title)
 		if(ignore_pronouns && mob.gender == FEMALE || !ignore_pronouns && mob.pronouns == SHE_HER)

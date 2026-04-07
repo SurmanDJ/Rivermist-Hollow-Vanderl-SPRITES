@@ -48,6 +48,7 @@
 // SUBCLASSES
 // ─────────────────────────────
 /datum/job/advclass/councilor
+	uses_parent_title = TRUE
 	exp_types_granted = list(EXP_TYPE_NOBLE)
 
 

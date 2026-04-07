@@ -20,8 +20,14 @@
 		return default_numeric
 	return clamp(stored_value, min_value, max_value)
 
-/datum/erp_preference/numeric/show_pref_ui(datum/preferences/prefs)
+/datum/erp_preference/numeric/show_pref_ui(datum/preferences/prefs, lock_reason = null)
 	var/current_value = get_value(prefs)
+	if(lock_reason)
+		var/dec_link = wrap_with_tooltip("<a class='linkOff'>&lt;</a>", lock_reason)
+		var/inc_link = wrap_with_tooltip("<a class='linkOff'>&gt;</a>", lock_reason)
+		var/value_link = wrap_with_tooltip("<a class='linkOff'>[html_encode("[current_value]")]</a>", lock_reason)
+		return "[dec_link][value_link][inc_link]"
+
 	var/dec_link = "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=decrease'>&lt;</a>"
 	var/inc_link = "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=increase'>&gt;</a>"
 	var/value_link = "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=set'>[html_encode("[current_value]")]</a>"
@@ -29,10 +35,15 @@
 	return "[dec_link][value_link][inc_link]"
 
 /datum/erp_preference/numeric/handle_topic(mob/user, list/href_list, datum/preferences/prefs)
+	if(!ensure_editable(user, prefs))
+		return
+
 	switch(href_list["action"])
 		if("set")
 			var/new_value = input(user, "Enter value ([min_value] to [max_value]):", "ERP Preference", get_value(prefs)) as num|null
 			if(isnum(new_value))
+				if(!ensure_editable(user, prefs))
+					return
 				set_value(prefs, clamp(new_value, min_value, max_value))
 		if("increase")
 			var/current_value = get_value(prefs)
@@ -43,7 +54,7 @@
 			var/new_value = max(current_value - step_size, min_value)
 			set_value(prefs, new_value)
 
-/datum/erp_preference/numeric/show_session_ui(datum/preferences/prefs, editable = FALSE, datum/sex_session/session)
+/datum/erp_preference/numeric/show_session_ui(datum/preferences/prefs, editable = FALSE, datum/sex_session/session, lock_reason = null)
 	var/current_value = get_value(prefs)
 
 	if(editable)
@@ -53,12 +64,19 @@
 		var/controls = "<div style='display: flex; align-items: center; justify-content: center; margin-top: 5px;'>[dec_link][value_link][inc_link]</div>"
 		var/range_info = "<div style='text-align: center; font-size: 10px; color: #808080; margin-top: 2px;'>Range: [min_value] - [max_value]</div>"
 		return "[controls][range_info]"
-	else
-		var/value_display = "<div class='pref-toggle disabled' style='margin-top: 5px;'>[html_encode("[current_value]")]</div>"
-		var/range_info = "<div style='text-align: center; font-size: 10px; color: #808080; margin-top: 2px;'>Range: [min_value] - [max_value]</div>"
-		return "[value_display][range_info]"
+
+	var/tooltip_attr = get_tooltip_attribute(lock_reason)
+	var/dec_link = "<span class='control-btn disabled'[tooltip_attr]>&lt;</span>"
+	var/inc_link = "<span class='control-btn disabled'[tooltip_attr]>&gt;</span>"
+	var/value_display = wrap_with_tooltip("<div class='pref-toggle disabled' style='margin: 0 5px; min-width: 60px; text-align: center;'>[html_encode("[current_value]")]</div>", lock_reason)
+	var/controls = "<div style='display: flex; align-items: center; justify-content: center; margin-top: 5px;'>[dec_link][value_display][inc_link]</div>"
+	var/range_info = "<div style='text-align: center; font-size: 10px; color: #808080; margin-top: 2px;'>Range: [min_value] - [max_value]</div>"
+	return "[controls][range_info]"
 
 /datum/erp_preference/numeric/handle_session_topic(mob/user, list/href_list, datum/preferences/prefs, datum/sex_session/session)
+	if(!ensure_editable(user, prefs))
+		return TRUE
+
 	switch(href_list["action"])
 		if("increase", "decrease")
 			var/current_value = get_value(prefs)
@@ -79,6 +97,8 @@
 			var/current_value = get_value(prefs)
 			var/new_value = input(user, "Enter value ([min_value] to [max_value]):", "ERP Preference", current_value) as num|null
 			if(isnum(new_value))
+				if(!ensure_editable(user, prefs))
+					return TRUE
 				new_value = clamp(new_value, min_value, max_value)
 				set_value(prefs, new_value)
 				prefs.save_preferences()

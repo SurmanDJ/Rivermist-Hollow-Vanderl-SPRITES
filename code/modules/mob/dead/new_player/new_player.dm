@@ -634,6 +634,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 	return
 
 /mob/living/carbon/human/after_creation()
+	erp_preference_edit_grace_expires_at = world.time + ERP_PREFERENCE_EDIT_GRACE_PERIOD
 	if(dna?.species)
 		dna.species.after_creation(src)
 	roll_mob_stats()

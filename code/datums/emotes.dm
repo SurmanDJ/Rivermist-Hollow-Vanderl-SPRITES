@@ -52,6 +52,63 @@
 /datum/emote/proc/adjacentaction(mob/user, mob/target)
 	return
 
+/datum/emote/proc/send_sneaky_visible_emote_message(atom/message_source, message, obfuscated_message, runechat_message = null, obfuscated_runechat_message = null)
+	if(QDELETED(message_source))
+		return
+	if(isnull(obfuscated_message))
+		obfuscated_message = message
+	if(isnull(obfuscated_runechat_message))
+		obfuscated_runechat_message = runechat_message
+
+	var/list/viewers = get_hearers_in_view(DEFAULT_MESSAGE_RANGE, message_source)
+	var/rendered_message = span_italics(message)
+	var/rendered_obfuscated_message = span_italics(obfuscated_message)
+	var/static/list/sneaky_runechat_spans = list("emote", SPAN_ITALICS)
+
+	// Sneaky emotes behave like whispers: nearby viewers get the full emote, farther viewers only get an obfuscated version.
+	for(var/mob/viewer in viewers)
+		if(!viewer.client)
+			continue
+		if(viewer.see_invisible < message_source.invisibility)
+			continue
+
+		var/displayed_message = rendered_message
+		var/runechat_message_to_use = runechat_message
+		if(get_dist(message_source, viewer) > SNEAKY_EMOTE_VISIBLE_RANGE)
+			displayed_message = rendered_obfuscated_message
+			runechat_message_to_use = obfuscated_runechat_message
+
+		if(viewer != message_source && !viewer.is_blind())
+			viewer.log_message("saw [key_name(message_source)] emote: [displayed_message]", LOG_EMOTE, log_globally = FALSE)
+		viewer.show_message(displayed_message, MSG_VISUAL, null, MSG_AUDIBLE)
+		if(runechat_message_to_use && viewer.can_hear())
+			viewer.create_chat_message(message_source, raw_message = runechat_message_to_use, spans = sneaky_runechat_spans)
+
+	message_source.relay_visible_message_to_portals(rendered_obfuscated_message, viewers)
+
+/datum/emote/proc/send_visible_emote_message(mob/user, atom/message_source, message, runechat_message = null, intentional = FALSE, obfuscated_message = null, obfuscated_runechat_message = null)
+	if(QDELETED(user))
+		return
+	if(QDELETED(message_source))
+		return
+
+	if(intentional && isliving(user))
+		var/mob/living/living_user = user
+		if(living_user.m_intent == MOVE_INTENT_SNEAK)
+			var/sneaking_skill = GET_MOB_SKILL_VALUE(living_user, /datum/attribute/skill/misc/sneaking)
+			if(isnull(sneaking_skill))
+				sneaking_skill = 0
+			var/scaled_sneaking_skill = max(sneaking_skill, 0)
+			var/sneaky_emote_success_chance = SNEAKY_EMOTE_BASE_SUCCESS_CHANCE
+			if(scaled_sneaking_skill < SNEAKY_EMOTE_FULL_SUCCESS_SKILL)
+				var/success_range = SNEAKY_EMOTE_BASE_SUCCESS_CHANCE - SNEAKY_EMOTE_MIN_SUCCESS_CHANCE
+				sneaky_emote_success_chance = SNEAKY_EMOTE_MIN_SUCCESS_CHANCE + round(success_range * (scaled_sneaking_skill / SNEAKY_EMOTE_FULL_SUCCESS_SKILL))
+			if(prob(sneaky_emote_success_chance))
+				send_sneaky_visible_emote_message(message_source, message, obfuscated_message, runechat_message, obfuscated_runechat_message)
+				return
+
+	message_source.visible_message(message, runechat_message = runechat_message)
+
 /datum/emote/proc/run_emote(mob/user, params, type_override, intentional = FALSE, targetted = FALSE)
 	. = TRUE
 	if(!can_run_emote(user, TRUE, intentional))
@@ -83,8 +140,10 @@
 	if(!msg && nomsg == FALSE)
 		return
 
+	var/obfuscated_msg = null
 	if(!nomsg)
 		user.log_message(msg, LOG_EMOTE)
+		obfuscated_msg = "<b>[user]</b> [stars(msg)]"
 		msg = "<b>[user]</b> " + msg
 
 	var/pitch = 1 //bespoke vary system so deep voice/high voiced humans
@@ -110,12 +169,14 @@
 			if(M.stat == DEAD && M.client && (M.client.prefs?.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
 				M.show_message(msg)
 		var/runechat_msg_to_use = null
+		var/obfuscated_runechat_msg_to_use = null
 		if(show_runechat && emote_type != EMOTE_AUDIBLE)
 			runechat_msg_to_use = runechat_msg ? runechat_msg : raw_msg
+			obfuscated_runechat_msg_to_use = stars(runechat_msg_to_use)
 		if(emote_type == EMOTE_AUDIBLE)
 			user.audible_message(msg, runechat_message = runechat_msg_to_use)
 		else
-			user.visible_message(msg, runechat_message = runechat_msg_to_use)
+			send_visible_emote_message(user, user, msg, runechat_message = runechat_msg_to_use, intentional = intentional, obfuscated_message = obfuscated_msg, obfuscated_runechat_message = obfuscated_runechat_msg_to_use)
 
 /mob/living/proc/get_emote_pitch()
 	return clamp(voice_pitch, 0.5, 2)

@@ -81,7 +81,6 @@
 /datum/customizer_choice/organ/wings/aasimar
 	name = "Wings"
 	organ_type = /obj/item/organ/wings/flight/aasimar
-	allows_accessory_color_customization = TRUE
 	sprite_accessories = list(
 		/datum/sprite_accessory/wings/huge/dragon,
 		/datum/sprite_accessory/wings/huge/angel,

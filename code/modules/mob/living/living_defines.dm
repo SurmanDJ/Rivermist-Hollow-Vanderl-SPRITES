@@ -25,6 +25,8 @@
 	var/recent_attacker_damage_name = null
 	var/recent_attacker_damage_is_player_controlled = FALSE
 	var/recent_attacker_damage_is_human = FALSE
+	/// When the post-spawn ERP preference grace window ends for this body.
+	var/erp_preference_edit_grace_expires_at = 0
 
 	//Health and life related vars
 	var/maxHealth = 100 //Maximum health that should be possible.

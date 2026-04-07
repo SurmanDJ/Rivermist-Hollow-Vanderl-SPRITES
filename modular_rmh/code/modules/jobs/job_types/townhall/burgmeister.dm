@@ -74,6 +74,7 @@ GLOBAL_LIST_EMPTY(burgmeister_titles)
 //SUBCLASSES
 
 /datum/job/advclass/burgmeister
+	uses_parent_title = TRUE
 	exp_types_granted = list(EXP_TYPE_NOBLE)
 
 /datum/attribute_holder/sheet/job/advclass/burgmeister/marshall

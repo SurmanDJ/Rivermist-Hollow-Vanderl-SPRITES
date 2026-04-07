@@ -20,18 +20,36 @@
 		prefs.erp_preferences = list()
 	prefs.erp_preferences[type] = value
 
-/datum/erp_preference/proc/show_pref_ui(datum/preferences/prefs)
+/datum/erp_preference/proc/show_pref_ui(datum/preferences/prefs, lock_reason = null)
 	return
+
+/datum/erp_preference/proc/get_tooltip_attribute(tooltip_text)
+	if(!tooltip_text)
+		return ""
+	return " title='[escape_html_attribute(tooltip_text)]'"
+
+/datum/erp_preference/proc/wrap_with_tooltip(content, tooltip_text)
+	var/tooltip_attr = get_tooltip_attribute(tooltip_text)
+	if(!tooltip_attr)
+		return content
+	return "<span[tooltip_attr]>[content]</span>"
+
+/datum/erp_preference/proc/ensure_editable(mob/user, datum/preferences/prefs)
+	var/lock_reason = prefs.get_erp_preference_edit_lock_reason(user)
+	if(!lock_reason)
+		return TRUE
+	if(user)
+		to_chat(user, span_warning(lock_reason))
+	return FALSE
 
 /datum/erp_preference/proc/handle_topic(mob/user, list/href_list, datum/preferences/prefs)
 	return
 
-/datum/erp_preference/proc/show_session_ui(datum/preferences/prefs, editable = FALSE, datum/sex_session/session)
+/datum/erp_preference/proc/show_session_ui(datum/preferences/prefs, editable = FALSE, datum/sex_session/session, lock_reason = null)
 	var/current_value = get_value(prefs)
 	if(editable)
 		return "<div class='pref-toggle enabled'>[current_value]</div>"
-	else
-		return "<div class='pref-toggle disabled'>[current_value]</div>"
+	return wrap_with_tooltip("<div class='pref-toggle disabled'>[current_value]</div>", lock_reason)
 
 /datum/erp_preference/proc/handle_session_topic(mob/user, list/href_list, datum/preferences/prefs, datum/sex_session/session)
 	// Return TRUE if the topic was handled, FALSE otherwise

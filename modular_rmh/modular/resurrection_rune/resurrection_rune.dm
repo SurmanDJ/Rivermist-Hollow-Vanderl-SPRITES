@@ -959,6 +959,14 @@
 /obj/structure/resurrection_rune/antag
 	rune_tag = RUNE_LINK_ANTAG
 
+/obj/structure/resurrection_rune/werewolf
+	name = "moon rune"
+	rune_tag = RUNE_LINK_WEREWOLF
+	icon = 'icons/obj/rune.dmi'
+	icon_state =  "summon"
+	pixel_x = 0
+	pixel_y = 0
+
 /obj/structure/resurrection_rune/outlaw
 	name = "outlaw rune"
 	rune_tag = RUNE_LINK_OUTLAW

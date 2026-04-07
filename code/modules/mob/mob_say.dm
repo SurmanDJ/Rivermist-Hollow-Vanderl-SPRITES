@@ -144,12 +144,7 @@
 		var/boldcheck = findtext_char(text, "+")	//Check for a *second* + in the text, implying the message is meant to have something formatted as bold (+text+)
 		whisper(copytext_char(message, boldcheck ? 1 : 2),sanitize = FALSE)//already sani'd
 		return 1
-/* commenting out subtler
-/mob/proc/check_subtler(message, forced)
-	if(copytext_char(message, 1, 2) == "@")
-		emote("subtle", message = copytext_char(message, 2), intentional = !forced)
-		return 1
-*/
+
 ///Check if the mob has a hivemind channel
 /mob/proc/hivecheck()
 	return 0

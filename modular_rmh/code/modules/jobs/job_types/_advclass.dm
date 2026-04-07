@@ -63,6 +63,7 @@
 
 /datum/job/advclass/combat
 	exp_types_granted = list(EXP_TYPE_ADVENTURER, EXP_TYPE_COMBAT)
+	uses_parent_title = TRUE
 
 //SO IT WOULD BE EASIER TO MAKE OUTFITS
 /*datum/outfit
