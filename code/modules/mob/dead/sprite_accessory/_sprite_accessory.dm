@@ -165,7 +165,7 @@
 				appearance.layer = draw_above_clothes_layer
 			appearance_list += appearance
 			if(glows)
-				var/mutable_appearance/emissive = emissive_appearance(icon, "[overlay_icon_state]_[get_layer_suffix(iterated_layer)]", layer = -iterated_layer, appearance_flags = KEEP_TOGETHER)
+				var/mutable_appearance/emissive = emissive_appearance(cached_icon, "[overlay_icon_state]_[get_layer_suffix(iterated_layer)]", layer = -iterated_layer, appearance_flags = KEEP_TOGETHER)
 				emissive.pixel_x = pixel_x
 				emissive.pixel_y = pixel_y
 				if(draw_above_clothes && iterated_layer != BODY_BEHIND_LAYER)
@@ -181,7 +181,7 @@
 			appearance.layer = draw_above_clothes_layer
 		appearance_list += appearance
 		if(glows)
-			var/mutable_appearance/emissive = emissive_appearance(icon, overlay_icon_state, layer = -layer)
+			var/mutable_appearance/emissive = emissive_appearance(cached_icon, overlay_icon_state, layer = -layer)
 			emissive.pixel_x = pixel_x
 			emissive.pixel_y = pixel_y
 			if(draw_above_clothes)
