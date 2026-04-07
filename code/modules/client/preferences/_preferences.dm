@@ -435,6 +435,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 #define APPEARANCE_CATEGORY_COLUMN "<td valign='top' width='14%'>"
 #define MAX_MUTANT_ROWS 4
+#define PREFERENCE_BODY_COLOR_MIN_LIGHTNESS 0.2
+#define PREFERENCE_BODY_COLOR_MAX_LIGHTNESS 0.65
+#define PREFERENCE_BODY_COLOR_MAX_SATURATION 0.55
 
 /datum/preferences/proc/show_choices(mob/user, tabchoice)
 	if(!user || !user.client)
@@ -2192,9 +2195,10 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					show_misc_pref_ui(user)
 
 				if("taur_color")
-					var/new_taur_color = pick_common_color_from_palette(user, "CHOOSE YOUR HERO'S TAUR COLOR", "TAUR COLOR", taur_color)
+					var/new_taur_color = tgui_color_picker(user, "Choose your character's taur color:", "Character Preference", "#[taur_color]")
 					if(new_taur_color)
-						taur_color = new_taur_color
+						if(is_body_color_picker_choice_valid(user, new_taur_color))
+							taur_color = sanitize_hexcolor(new_taur_color)
 					show_misc_pref_ui(user)
 
 				if("taur_markings")
@@ -2210,19 +2214,28 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					show_misc_pref_ui(user)
 
 				if("mutant_color")
-					pick_mutant_color_from_palette(user, 1)
+					pick_mutant_color(user, 1)
 					show_misc_pref_ui(user)
 
 				if("mutant_color2")
-					pick_mutant_color_from_palette(user, 2)
+					pick_mutant_color(user, 2)
 					show_misc_pref_ui(user)
 
 				if("mutant_color3")
-					pick_mutant_color_from_palette(user, 3)
+					pick_mutant_color(user, 3)
 					show_misc_pref_ui(user)
 
 				if("skin_choice_pick")
-					pick_mutant_color_from_palette(user, 1)
+					var/prompt = alert(user, "Choose skin/scales color",, "Custom", "Predefined")
+					if(prompt == "Custom")
+						pick_mutant_color(user, 1, "Choose your character's skin/scale color:")
+					if(prompt == "Predefined")
+						var/listy = pref_species.get_skin_list()
+						var/new_mutantcolor = input(user, "Choose your character's skin tone:", "Sun") as null|anything in listy
+						if(new_mutantcolor)
+							skin_tone = listy[new_mutantcolor]
+							features["mcolor"] = listy[new_mutantcolor]
+							try_update_mutant_colors()
 					show_misc_pref_ui(user)
 				if("race_title")
 					var/list/titles = pref_species.race_titles
@@ -3248,56 +3261,48 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			return "mcolor3"
 	return null
 
-/datum/preferences/proc/get_mutant_palette_choice(list/palette, color_value)
-	if(!length(palette) || !length(color_value))
-		return null
+/datum/preferences/proc/get_body_color_picker_hsl(color_value)
+	var/sanitized_color = sanitize_hexcolor(color_value)
+	var/red = hex2num(copytext(sanitized_color, 1, 3))
+	var/green = hex2num(copytext(sanitized_color, 3, 5))
+	var/blue = hex2num(copytext(sanitized_color, 5, 7))
 
-	var/normalized_color = lowertext("[color_value]")
-	for(var/palette_name in palette)
-		if(lowertext("[palette[palette_name]]") == normalized_color)
-			return palette_name
+	return rgb2hsl(red, green, blue)
 
-	return null
-
-/datum/preferences/proc/is_mutant_color_in_palette(color_value, list/palette)
-	return !isnull(get_mutant_palette_choice(palette, color_value))
-
-/datum/preferences/proc/get_first_mutant_palette_color(list/palette)
-	for(var/palette_name in palette)
-		return palette[palette_name]
-	return null
+/datum/preferences/proc/is_body_color_picker_choice_valid(mob/user, color_value)
+	var/list/hsl = get_body_color_picker_hsl(color_value)
+	var/saturation = hsl[2]
+	var/lightness = hsl[3]
+	if(lightness < PREFERENCE_BODY_COLOR_MIN_LIGHTNESS)
+		to_chat(user, span_warning("That color is too dark. Pick something a little brighter."))
+		return FALSE
+	if(lightness > PREFERENCE_BODY_COLOR_MAX_LIGHTNESS)
+		to_chat(user, span_warning("That color is too bright. Pick something a little darker."))
+		return FALSE
+	if(saturation > PREFERENCE_BODY_COLOR_MAX_SATURATION)
+		to_chat(user, span_warning("That color is too saturated. Pick something a little more muted."))
+		return FALSE
+	return TRUE
 
 /datum/preferences/proc/sanitize_species_mutant_colors()
 	if(!has_mutant_color_preferences())
 		return
 
-	for(var/color_slot in 1 to 3)
-		var/list/palette = pref_species.get_mutant_color_list(color_slot)
-		if(!length(palette))
-			continue
+	if(!pref_species.use_skintones)
+		return
 
-		var/feature_key = get_mutant_color_feature_key(color_slot)
-		if(!feature_key)
-			continue
+	var/feature_key = get_mutant_color_feature_key(1)
+	if(!feature_key)
+		return
 
-		if(color_slot == 1 && pref_species.use_skintones)
-			var/feature_valid = is_mutant_color_in_palette(features[feature_key], palette)
-			var/skin_valid = is_mutant_color_in_palette(skin_tone, palette)
+	if(length(features[feature_key]) == 6)
+		skin_tone = features[feature_key]
+		return
 
-			if(feature_valid)
-				skin_tone = features[feature_key]
-			else if(skin_valid)
-				features[feature_key] = skin_tone
-			/*else
-				var/default_color = get_first_mutant_palette_color(palette)
-				features[feature_key] = default_color
-				skin_tone = default_color*/
-			continue
+	if(length(skin_tone) == 6)
+		features[feature_key] = skin_tone
 
-		if(!is_mutant_color_in_palette(features[feature_key], palette))
-			features[feature_key] = get_first_mutant_palette_color(palette)
-
-/datum/preferences/proc/pick_mutant_color_from_palette(mob/user, color_slot)
+/datum/preferences/proc/pick_mutant_color(mob/user, color_slot, prompt)
 	if(!has_mutant_color_preferences())
 		return
 
@@ -3305,32 +3310,22 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	if(!feature_key)
 		return
 
-	var/list/palette = pref_species.get_mutant_color_list(color_slot)
-	if(!length(palette))
-		to_chat(user, span_warning("This species does not have a preset palette for color #[color_slot] yet."))
+	if(!prompt)
+		prompt = "Choose your character's mutant #[color_slot] color:"
+
+	var/new_mutant_color = tgui_color_picker(user, prompt, "Character Preference", "#[features[feature_key]]")
+	if(!new_mutant_color)
 		return
 
-	var/current_choice = get_mutant_palette_choice(palette, features[feature_key])
-	if(color_slot == 1 && pref_species.use_skintones && !current_choice)
-		current_choice = get_mutant_palette_choice(palette, skin_tone)
-
-	var/selection = tgui_input_list(user, "CHOOSE YOUR HERO'S COLOR #[color_slot]", "BODY COLOR #[color_slot]", palette, current_choice)
-	if(!selection)
+	if(!is_body_color_picker_choice_valid(user, new_mutant_color))
 		return
 
-	features[feature_key] = palette[selection]
+	features[feature_key] = sanitize_hexcolor(new_mutant_color)
 	if(color_slot == 1 && pref_species.use_skintones)
 		skin_tone = features[feature_key]
 
 	try_update_mutant_colors()
 
-/datum/preferences/proc/pick_common_color_from_palette(mob/user, prompt, title, current_color)
-	var/list/palette = pref_species.get_common_mutant_color_palette()
-	var/current_choice = get_mutant_palette_choice(palette, current_color)
-	var/selection = tgui_input_list(user, prompt, title, palette, current_choice)
-	if(!selection)
-		return null
-	return palette[selection]
 /datum/preferences/proc/is_active_migrant()
 	if(!migrant)
 		return FALSE

@@ -32,8 +32,8 @@
 	var/forced_orgasm_to_target = pick("A sudden pleasure surges through your body!", "Your can't hold it!")
 	var/datum/component/arousal/aro = cast_on.GetComponent(/datum/component/arousal)
 	cast_on.visible_message(
-		("<span class='aphrodisiac'>([forced_orgasm_to_public]</span>"),
-		("<span class='aphrodisiac'>([forced_orgasm_to_target]</span>"))
+		("<span class='aphrodisiac'>[forced_orgasm_to_public]</span>"),
+		("<span class='aphrodisiac'>[forced_orgasm_to_target]</span>"))
 	cast_on.Immobilize(85)
 	cast_on.adjust_jitter(50)
 	cast_on.add_stress(/datum/stress_event/forced_orgasm)

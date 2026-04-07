@@ -41,6 +41,32 @@
 	target_xp = clamp(target_xp, 0, cap_exp)
 	sleep_exp[skill] = target_xp
 
+/datum/sleep_adv/proc/get_skill_raw_level(skill_type)
+	if(!mind.current)
+		return 0
+	var/translated_skill = canonical_skill_type(skill_type)
+	if(!translated_skill)
+		return 0
+	return nulltozero(mind.current.attributes?.raw_attribute_list[translated_skill])
+
+/datum/sleep_adv/proc/get_skill_tier_from_raw_level(raw_level)
+	if(raw_level >= SKILL_LEVEL_LEGENDARY * 10)
+		return SKILL_LEVEL_LEGENDARY
+	return max(SKILL_LEVEL_NONE, floor(raw_level / 10))
+
+/datum/sleep_adv/proc/get_skill_tier(skill_type)
+	return get_skill_tier_from_raw_level(get_skill_raw_level(skill_type))
+
+/datum/sleep_adv/proc/get_raw_level_for_skill_tier(skill_tier)
+	skill_tier = clamp(skill_tier, SKILL_LEVEL_NONE, SKILL_LEVEL_LEGENDARY)
+	return skill_tier * 10
+
+/datum/sleep_adv/proc/get_skill_tier_name(skill_type, skill_tier)
+	var/datum/skill/skill = GetSkillRef(skill_type)
+	if(!skill)
+		return "Unknown"
+	return capitalize(skill.description_from_level(get_raw_level_for_skill_tier(skill_tier)))
+
 /datum/sleep_adv/proc/needed_xp_for_level(skill_level)
 	switch(skill_level)
 		if(SKILL_LEVEL_NOVICE)
@@ -59,8 +85,7 @@
 /datum/sleep_adv/proc/enough_sleep_xp_to_advance(skill_type, level_amount)
 	if(level_amount <= 0)
 		return FALSE
-	var/skill_level = mind.current.get_skill_level(skill_type)
-	if(skill_level == SKILL_LEVEL_LEGENDARY)
+	if(get_skill_tier(skill_type) >= SKILL_LEVEL_LEGENDARY)
 		return FALSE
 	var/needed_xp = get_requried_sleep_xp_for_skill(skill_type, level_amount)
 	if(get_sleep_xp(skill_type) < needed_xp)
@@ -68,12 +93,17 @@
 	return TRUE
 
 /datum/sleep_adv/proc/get_requried_sleep_xp_for_skill(skill_type, level_amount)
-	var/skill_level = mind.current.get_skill_level(skill_type)
-	var/next_skill_level = skill_level
+	if(level_amount <= 0)
+		return 0
+	var/current_tier = get_skill_tier(skill_type)
+	var/tiers_to_advance = CEILING(level_amount, 1)
+	var/max_tiers_to_advance = max(SKILL_LEVEL_NONE, SKILL_LEVEL_LEGENDARY - current_tier)
+	tiers_to_advance = min(tiers_to_advance, max_tiers_to_advance)
+	if(tiers_to_advance <= 0)
+		return 0
 	var/needed_xp = 0
-	for(var/i in 1 to level_amount)
-		next_skill_level++
-		needed_xp += needed_xp_for_level(next_skill_level)
+	for(var/tier_offset in 1 to tiers_to_advance)
+		needed_xp += needed_xp_for_level(current_tier + tier_offset)
 	return needed_xp
 
 /datum/sleep_adv/proc/add_sleep_experience(skill, amt, silent = FALSE)
@@ -198,7 +228,7 @@
 
 /datum/sleep_adv/proc/show_ui(mob/living/user)
 	var/list/dat = list()
-	SSassets.transport.send_assets(user.client, list("try4_border.png", "try4.png", "slop_menustyle2.css"))
+	SSassets.transport.send_assets(user.client, list("try4_border.png", "try4.png", "slop_menustyle2.css", "gragstar.gif"))
 	dat += {"
 		<!DOCTYPE html>
 		<html lang='en'>
@@ -229,18 +259,22 @@
 	dat += "<br><center>Dream, for those who dream may reach higher heights</center><br>"
 	dat += "<center>\Roman[sleep_adv_points]</center>"
 	dat += "<br>"
-	for(var/skill_type in SSskills.all_skills)
+	for(var/skill_type in GLOB.all_skills)
 		var/datum/skill/skill = GetSkillRef(skill_type)
+		if(!skill || !length(skill.name))
+			continue
 		if(!enough_sleep_xp_to_advance(skill_type, 1))
 			continue
 		var/can_buy = can_buy_skill(skill_type)
+		var/link_class = can_buy ? "vagrant" : "vagrant linkOff"
 		var/next_level = get_next_level_for_skill(skill_type)
-		var/level_name = SSskills.level_names[next_level]
-		dat += "<div class='class_bar_div'><a class='vagrant' [can_buy ? "" : "class='linkOff'"] href='byond://?src=[REF(src)];task=buy_skill;skill_type=[skill_type]'>[skill.name] ([level_name])><img class='ninetysskull' src='[SSassets.transport.get_asset_url("gragstar.gif")]' width=32 height=32>\Roman[get_skill_cost(skill_type)]</span><img class='ninetysskull' src='[SSassets.transport.get_asset_url("gragstar.gif")]' width=32 height=32></a></div>"
+		var/level_name = get_skill_tier_name(skill_type, next_level)
+		dat += "<div class='class_bar_div'><a class='[link_class]' href='byond://?src=[REF(src)];task=buy_skill;skill_type=[skill_type]'><img class='ninetysskull' src='[SSassets.transport.get_asset_url("gragstar.gif")]' width=32 height=32>[skill.name] ([level_name]) - \Roman[get_skill_cost(skill_type)]<img class='ninetysskull' src='[SSassets.transport.get_asset_url("gragstar.gif")]' width=32 height=32></a></div>"
 	dat += "<br>"
 	if(rolled_specials > 0)
 		var/can_buy = can_buy_special()
-		dat += "<div class='class_bar_div'><a class='vagrant' [can_buy ? "" : "class='linkOff'"] href='byond://?src=[REF(src)];task=buy_special'>>Dream something <b>special</b></a>><img class='ninetysskull' src='[SSassets.transport.get_asset_url("gragstar.gif")]' width=32 height=32>\Roman[get_special_cost()]</span><img class='ninetysskull' src='[SSassets.transport.get_asset_url("gragstar.gif")]' width=32 height=32></a></div>"
+		var/link_class = can_buy ? "vagrant" : "vagrant linkOff"
+		dat += "<div class='class_bar_div'><a class='[link_class]' href='byond://?src=[REF(src)];task=buy_special'><img class='ninetysskull' src='[SSassets.transport.get_asset_url("gragstar.gif")]' width=32 height=32>Dream something <b>special</b> - \Roman[get_special_cost()]<img class='ninetysskull' src='[SSassets.transport.get_asset_url("gragstar.gif")]' width=32 height=32></a></div>"
 		dat += "<br><a [can_buy ? "" : "class='linkOff'"] href='byond://?src=[REF(src)];task=buy_special'>Dream something <b>special</b></a> - \Roman[get_special_cost()]"
 		dat += "<br>Specials can have negative or positive effects"
 	dat += "<div class='footer'>"
@@ -282,14 +316,19 @@
 
 /datum/sleep_adv/proc/get_next_level_for_skill(skill_type)
 	if(!mind.current)
-		return 0
-	var/next_level = mind.current.get_skill_level(skill_type) + 1
+		return SKILL_LEVEL_NONE
+	var/current_tier = get_skill_tier(skill_type)
+	if(current_tier >= SKILL_LEVEL_LEGENDARY)
+		return SKILL_LEVEL_LEGENDARY
+	var/next_level = current_tier + 1
 	return next_level
 
 /datum/sleep_adv/proc/get_skill_cost(skill_type)
 	var/datum/skill/skill = GetSkillRef(skill_type)
+	if(!skill)
+		return 0
 	var/next_level = get_next_level_for_skill(skill_type)
-	return skill.get_dream_cost_for_level(next_level)
+	return skill.get_dream_cost_for_level(get_raw_level_for_skill_tier(next_level))
 
 /datum/sleep_adv/proc/get_special_cost()
 	return 3
@@ -300,28 +339,40 @@
 	if(!enough_sleep_xp_to_advance(skill_type, 1))
 		return
 	var/datum/skill/skill = GetSkillRef(skill_type)
+	var/datum/attribute_holder/attributes = mind.current.attributes
+	var/translated_skill = canonical_skill_type(skill_type)
+	if(!skill || !translated_skill || !attributes)
+		return
+	var/current_raw_level = get_skill_raw_level(skill_type)
+	var/target_raw_level = min(current_raw_level + 10, SKILL_LEVEL_LEGENDARY * 10)
+	if(current_raw_level >= target_raw_level)
+		return
 	var/dream_text = skill.get_random_dream()
 	if(dream_text)
 		to_chat(mind.current, span_notice(dream_text))
 	sleep_adv_points -= get_skill_cost(skill_type)
 	adjust_sleep_xp(skill_type, -get_requried_sleep_xp_for_skill(skill_type, 1))
-	mind.current.adjust_skillrank(skill_type, 1, FALSE)
+	attributes.set_skill_level(translated_skill, target_raw_level, FALSE)
 	record_round_statistic(STATS_SKILLS_DREAMED)
 
 /datum/sleep_adv/proc/grant_inspiration_xp(skill_amt)
 	var/list/viable_skills = list()
 	var/list/inspired_skill_names = list()
-	for(var/skill_type in SSskills.all_skills)
+	var/inspiration_cap_tier = get_skill_tier_from_raw_level(INSPIRATION_MAX_SKILL_LEVEL)
+	for(var/skill_type in GLOB.all_skills)
 		var/datum/skill/skill = GetSkillRef(skill_type)
-		if(!skill.randomable_dream_xp)
+		if(!skill || !skill.randomable_dream_xp)
 			continue
 		if(enough_sleep_xp_to_advance(skill_type, 1))
 			continue
-		var/current_skill_level = mind.current.get_skill_level(skill_type)
-		if(current_skill_level >= INSPIRATION_MAX_SKILL_LEVEL)
+		var/current_raw_level = get_skill_raw_level(skill_type)
+		if(current_raw_level >= INSPIRATION_MAX_SKILL_LEVEL)
 			continue
-		var/required_level_to_cap = INSPIRATION_MAX_SKILL_LEVEL - current_skill_level
-		var/req_exp = get_requried_sleep_xp_for_skill(skill_type, required_level_to_cap)
+		var/current_skill_tier = get_skill_tier(skill_type)
+		var/tiers_until_cap = inspiration_cap_tier - current_skill_tier
+		if(tiers_until_cap <= 0)
+			continue
+		var/req_exp = get_requried_sleep_xp_for_skill(skill_type, tiers_until_cap)
 		if(get_sleep_xp(skill_type) >= req_exp)
 			continue
 		viable_skills += skill_type
@@ -332,9 +383,14 @@
 		var/skill_type = pick_n_take(viable_skills)
 		var/req_exp = get_requried_sleep_xp_for_skill(skill_type, 1)
 		var/datum/skill/skill = GetSkillRef(skill_type)
+		if(req_exp <= 0 || !skill)
+			continue
 		add_sleep_experience(skill_type, req_exp, TRUE)
-		inspired_skill_names += skill.name
-	var/skill_string
+		if(length(skill.name))
+			inspired_skill_names += skill.name
+	if(!length(inspired_skill_names))
+		return
+	var/skill_string = ""
 	for(var/i in 1 to inspired_skill_names.len)
 		var/skill_name = inspired_skill_names[i]
 		if(i > 1 && i == inspired_skill_names.len)
@@ -389,7 +445,7 @@
 /proc/can_train_combat_skill(mob/living/user, skill_type, target_skill_level)
 	if(!user.mind)
 		return FALSE
-	var/user_skill_level = user.get_skill_level(skill_type)
+	var/user_skill_level = user.mind.sleep_adv.get_skill_tier(skill_type)
 	var/level_diff = target_skill_level - user_skill_level
 	if(level_diff <= 0)
 		return FALSE
