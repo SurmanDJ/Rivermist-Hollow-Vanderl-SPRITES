@@ -599,19 +599,23 @@
 			species_icon = S.limbs_icon_f
 		species_flags_list = H.dna.species.species_traits
 
+		species_color = ""
+		mutation_color = ""
 
 		if(S.use_skintones)
 			skin_tone = H.skin_tone
+			should_draw_greyscale = TRUE
+		else if(S.fixed_mut_color)
+			species_color = S.fixed_mut_color
+			should_draw_greyscale = TRUE
+		else if((MUTCOLORS in S.species_traits) || (MUTCOLORS_PARTSONLY in S.species_traits))
+			mutation_color = H.dna.features["mcolor"]
 			should_draw_greyscale = TRUE
 		else
 			skin_tone = ""
 
 		body_gender = H.gender
 		should_draw_gender = S.sexes
-
-		species_color = ""
-
-		mutation_color = ""
 
 		dmg_overlay_type = S.damage_overlay_type
 

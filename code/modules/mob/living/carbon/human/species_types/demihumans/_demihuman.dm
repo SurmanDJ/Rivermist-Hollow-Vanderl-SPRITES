@@ -226,8 +226,6 @@
 	C.remove_language(/datum/language/beast)
 
 /datum/species/demihuman/get_skin_list()
-	if((MUTCOLORS in species_traits) || (MUTCOLORS_PARTSONLY in species_traits))
-		return get_common_mutant_color_palette()
 	return sortList(list(
 		"Pale"         = SKIN_TONE_PALE,
 		"White 1"      = SKIN_TONE_WHITE1,

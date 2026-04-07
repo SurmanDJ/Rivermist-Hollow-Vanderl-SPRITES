@@ -1028,6 +1028,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 
 	if(prefs)
 		// Preview dummies are pooled, so clear taur state when the current prefs don't use one.
+		prefs.sanitize_chosen_prefs()
 		prefs.apply_prefs_to(body, TRUE, TRUE)
 
 	var/datum/outfit/outfit = outfit_override || job?.outfit
