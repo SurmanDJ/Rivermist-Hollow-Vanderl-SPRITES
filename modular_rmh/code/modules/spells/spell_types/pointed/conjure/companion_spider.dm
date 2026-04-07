@@ -50,6 +50,19 @@
 
 /datum/action/cooldown/spell/conjure/companion_spider/post_summon(atom/summoned_object, atom/cast_on)
 	var/mob/living/spider = summoned_object
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/good_boy,
+		/datum/pet_command/follow,
+		/datum/pet_command/attack,
+		/datum/pet_command/fetch,
+		/datum/pet_command/protect_owner,
+		/datum/pet_command/aggressive,
+		/datum/pet_command/calm,
+	)
+	if(!spider.GetComponent(/datum/component/obeys_commands))
+		spider.AddComponent(/datum/component/obeys_commands, pet_commands)
 	spider.befriend(owner)
 
 	if(isliving(cast_on))
