@@ -808,6 +808,7 @@
 
 /obj/item/bodypart/proc/get_specific_markings_overlays(list/specific_markings, aux = FALSE, mob/living/carbon/human/human_owner, override_color)
 	var/list/appearance_list = list()
+	var/list/emissive_markings = human_owner.dna.emissive_markings // RMH edit
 	var/specific_layer = aux ? aux_layer : BODYPARTS_LAYER
 	if(aux_layer == HANDS_PART_LAYER)
 		specific_layer = aux_layer
@@ -824,6 +825,12 @@
 			render_limb_string = "[render_limb_string]_[gendaar]"
 
 		var/mutable_appearance/accessory_overlay = mutable_appearance(BM.icon, "[BM.icon_state]_[render_limb_string]", -specific_layer)
+		// RMH edit start
+		if(key in emissive_markings[specific_render_zone])
+			var/mutable_appearance/emissive_overlay = emissive_appearance(BM.icon, "[BM.icon_state]_[render_limb_string]", -specific_layer)
+			emissive_overlay.color = override_color ? "#[override_color]" : "#[color]"
+			appearance_list += emissive_overlay
+		// RMH edit end
 		if(override_color)
 			accessory_overlay.color = "#[override_color]"
 		else
