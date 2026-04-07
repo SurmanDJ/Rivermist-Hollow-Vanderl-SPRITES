@@ -244,6 +244,8 @@
 		return TRUE
 	if(!player_client)
 		return FALSE
+	if(!CONFIG_GET(flag/sql_enabled))
+		return TRUE
 	return player_client.is_job_whitelisted(job_whitelist_id)
 
 /datum/job/proc/player_has_required_whitelists(client/player_client)

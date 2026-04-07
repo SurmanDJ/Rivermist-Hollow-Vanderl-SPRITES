@@ -1,3 +1,9 @@
+#define WW_LAIR_SNIFF_ICON_STATE "diagnose"
+#define WW_LAIR_DISTANCE_IMMEDIATE 1
+#define WW_LAIR_DISTANCE_NEAR 7
+#define WW_LAIR_DISTANCE_MID 20
+#define WW_LAIR_DISTANCE_FAR 60
+
 /proc/is_werewolf_lair_natural_wall(turf/target_wall)
 	if(istype(target_wall, /turf/closed/mineral))
 		return TRUE
@@ -8,20 +14,24 @@
 /datum/antagonist/werewolf
 	var/lair_created = FALSE
 	var/datum/weakref/lair_entrance_ref
+	var/datum/action/innate/werewolf_lair_scent/lair_scent_action
 
 /datum/antagonist/werewolf/proc/initialize_werewolf_lair_ability()
 	sync_werewolf_lair_creation_spell()
+	sync_werewolf_lair_tracking_action()
 
 /datum/antagonist/werewolf/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
 	remove_werewolf_lair_creation_spell(old_body)
 	sync_werewolf_lair_creation_spell()
+	sync_werewolf_lair_tracking_action()
 	sync_werewolf_contract_assignments()
 	sync_werewolf_contract_actions()
 	refresh_werewolf_contract_browser_if_open()
 
 /datum/antagonist/werewolf/proc/cleanup_werewolf_lair()
 	remove_werewolf_lair_creation_spell()
+	QDEL_NULL(lair_scent_action)
 
 	var/obj/structure/werewolf_lair_entrance/lair_entrance = get_werewolf_lair_entrance()
 	lair_entrance_ref = null
@@ -50,6 +60,7 @@
 
 	lair_created = TRUE
 	lair_entrance_ref = WEAKREF(lair_entrance)
+	sync_werewolf_lair_tracking_action()
 	return TRUE
 
 /datum/antagonist/werewolf/proc/remove_werewolf_lair_creation_spell(mob/living/carbon/human/spell_holder = owner?.current)
@@ -68,6 +79,169 @@
 		return
 
 	current_mob.remove_spell(/datum/action/cooldown/spell/pointed/werewolf_create_lair)
+
+/datum/antagonist/werewolf/proc/sync_werewolf_lair_tracking_action()
+	var/mob/living/current_body = owner?.current
+	if(!current_body)
+		if(lair_scent_action?.owner)
+			lair_scent_action.Remove(lair_scent_action.owner)
+		return
+
+	if(get_werewolf_lair_entrance())
+		if(!lair_scent_action)
+			lair_scent_action = new(src)
+		lair_scent_action.Grant(current_body)
+	else if(lair_scent_action?.owner)
+		lair_scent_action.Remove(lair_scent_action.owner)
+
+/datum/antagonist/werewolf/proc/can_track_werewolf_lair(mob/living/user = owner?.current)
+	if(!istype(user))
+		return FALSE
+	if(owner?.current != user)
+		return FALSE
+	if(IS_WEREWOLF(user) != src)
+		return FALSE
+	return !!get_werewolf_lair_entrance()
+
+/datum/antagonist/werewolf/proc/get_werewolf_lair_distance_text(turf/reference_turf, turf/target_turf)
+	if(!reference_turf || !target_turf)
+		return "somewhere beyond my nose"
+
+	var/distance = get_dist(reference_turf, target_turf)
+	if(distance <= WW_LAIR_DISTANCE_IMMEDIATE)
+		return "right on top of me"
+	if(distance <= WW_LAIR_DISTANCE_NEAR)
+		return "very close"
+	if(distance <= WW_LAIR_DISTANCE_MID)
+		return "nearby"
+	if(distance <= WW_LAIR_DISTANCE_FAR)
+		return "far off"
+	return "very far away"
+
+/datum/antagonist/werewolf/proc/get_werewolf_lair_map_file(turf/target_turf)
+	if(!target_turf)
+		return null
+
+	var/map_file = SSmapping.level_trait(target_turf.z, ZTRAIT_MAP_FILE)
+	if(!map_file)
+		return null
+
+	return lowertext("[map_file]")
+
+/datum/antagonist/werewolf/proc/find_werewolf_lair_gate(area/target_area, turf/from_turf)
+	if(!target_area || !from_turf)
+		return null
+
+	var/obj/structure/fluff/traveltile/best_gate
+	var/best_distance = INFINITY
+	var/source_map_file = get_werewolf_lair_map_file(from_turf)
+
+	for(var/obj/structure/fluff/traveltile/travel_gate in GLOB.traveltiles)
+		var/turf/gate_turf = get_turf(travel_gate)
+		if(!gate_turf)
+			continue
+		if(source_map_file && get_werewolf_lair_map_file(gate_turf) != source_map_file)
+			continue
+		if(travel_gate.cached_destination_area != target_area)
+			continue
+
+		var/distance = get_dist(from_turf, gate_turf)
+		if(distance < best_distance)
+			best_distance = distance
+			best_gate = travel_gate
+
+	return best_gate
+
+/datum/antagonist/werewolf/proc/get_werewolf_lair_signal_data(turf/reference_turf, turf/lair_target_turf)
+	var/list/signal_data = list(
+		"compass_target" = null,
+		"resolved_target" = lair_target_turf,
+		"routed_through_exit" = FALSE,
+		"routed_through_gate" = FALSE,
+		"remote_target" = FALSE,
+	)
+	if(!reference_turf || !lair_target_turf)
+		return signal_data
+
+	signal_data["compass_target"] = lair_target_turf
+
+	var/reference_map_file = get_werewolf_lair_map_file(reference_turf)
+	var/target_map_file = get_werewolf_lair_map_file(lair_target_turf)
+	if(reference_map_file && target_map_file && reference_map_file == target_map_file)
+		return signal_data
+
+	signal_data["remote_target"] = TRUE
+
+	var/area/pocket_dimension/current_pocket_area = get_area(reference_turf)
+	var/datum/pocket_dimension/current_pocket = istype(current_pocket_area, /area/pocket_dimension) ? current_pocket_area.linked_pocket : null
+	if(current_pocket && length(current_pocket.exit_objects))
+		var/obj/structure/pocket_dimension_exit/closest_exit
+		var/closest_distance = INFINITY
+		for(var/obj/structure/pocket_dimension_exit/exit_object as anything in current_pocket.exit_objects)
+			var/turf/exit_turf = get_turf(exit_object)
+			if(!exit_turf)
+				continue
+			var/distance = get_dist(reference_turf, exit_turf)
+			if(distance < closest_distance)
+				closest_distance = distance
+				closest_exit = exit_object
+
+		if(closest_exit)
+			signal_data["compass_target"] = get_turf(closest_exit)
+			signal_data["routed_through_exit"] = TRUE
+			return signal_data
+
+	var/area/target_area = get_area(lair_target_turf)
+	var/obj/structure/fluff/traveltile/target_gate = find_werewolf_lair_gate(target_area, reference_turf)
+	if(target_gate)
+		signal_data["compass_target"] = get_turf(target_gate)
+		signal_data["routed_through_gate"] = TRUE
+		return signal_data
+
+	signal_data["compass_target"] = null
+
+	return signal_data
+
+/datum/antagonist/werewolf/proc/sniff_werewolf_lair(mob/living/user = owner?.current)
+	if(!can_track_werewolf_lair(user))
+		return FALSE
+
+	var/obj/structure/werewolf_lair_entrance/lair_entrance = get_werewolf_lair_entrance()
+	var/turf/reference_turf = get_turf(user)
+	var/turf/lair_turf = get_turf(lair_entrance)
+	if(!reference_turf || !lair_turf)
+		to_chat(user, span_warning("My den's scent slips out of my grasp."))
+		sync_werewolf_lair_tracking_action()
+		return FALSE
+
+	var/list/signal_data = get_werewolf_lair_signal_data(reference_turf, lair_turf)
+	var/turf/compass_target = signal_data["compass_target"]
+	var/direction_text = compass_target ? (get_precise_direction_between(reference_turf, compass_target) || dir2text(get_dir(reference_turf, compass_target))) : null
+	var/distance_text = get_werewolf_lair_distance_text(reference_turf, lair_turf)
+
+	if(signal_data["routed_through_exit"])
+		if(direction_text)
+			to_chat(user, span_notice("The scent of my den-mouth curls to the [direction_text], toward the way back out."))
+		else
+			to_chat(user, span_notice("The scent of my den-mouth pools around the way back out."))
+		return TRUE
+
+	if(signal_data["routed_through_gate"])
+		if(direction_text)
+			to_chat(user, span_notice("The scent of my den-mouth bends to the [direction_text], toward a path back to it."))
+		else
+			to_chat(user, span_notice("The scent of my den-mouth points toward a path back to it."))
+		return TRUE
+
+	if(signal_data["remote_target"])
+		to_chat(user, span_notice("The scent of my den-mouth vanishes off this land. The entrance lies far from here."))
+		return TRUE
+
+	if(!direction_text)
+		to_chat(user, span_notice("My den-mouth is [distance_text]."))
+	else
+		to_chat(user, span_notice("My den-mouth is [distance_text] to the [direction_text]."))
+	return TRUE
 
 /area/pocket_dimension/werewolf_lair
 	name = "Werewolf Lair"
@@ -139,6 +313,7 @@
 		var/obj/structure/werewolf_lair_entrance/current_lair = owner_werewolf.get_werewolf_lair_entrance()
 		if(current_lair == src)
 			owner_werewolf.lair_entrance_ref = null
+		owner_werewolf.sync_werewolf_lair_tracking_action()
 
 	invited_werewolf_ckeys = null
 	owner_werewolf_ref = null
@@ -471,3 +646,34 @@
 		display_names += display_name
 
 	return display_names
+
+/datum/action/innate/werewolf_lair_scent
+	name = "Sniff Den"
+	desc = "Taste the wind and follow the pull back to your lair entrance."
+	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_PHASED
+	button_icon_state = WW_LAIR_SNIFF_ICON_STATE
+
+/datum/action/innate/werewolf_lair_scent/IsAvailable()
+	. = ..()
+	if(!.)
+		return FALSE
+
+	var/datum/antagonist/werewolf/owner_werewolf = target
+	if(!istype(owner_werewolf))
+		return FALSE
+
+	return owner_werewolf.can_track_werewolf_lair(owner)
+
+/datum/action/innate/werewolf_lair_scent/Activate()
+	. = ..()
+	var/datum/antagonist/werewolf/owner_werewolf = target
+	if(!istype(owner_werewolf))
+		return
+
+	owner_werewolf.sniff_werewolf_lair(owner)
+
+#undef WW_LAIR_SNIFF_ICON_STATE
+#undef WW_LAIR_DISTANCE_IMMEDIATE
+#undef WW_LAIR_DISTANCE_NEAR
+#undef WW_LAIR_DISTANCE_MID
+#undef WW_LAIR_DISTANCE_FAR

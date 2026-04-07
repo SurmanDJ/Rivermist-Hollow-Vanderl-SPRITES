@@ -14,7 +14,11 @@
 		// Busy with something
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list, BB_BASIC_MOB_CURRENT_TARGET, controller.blackboard[BB_BASIC_FOODS], vision_range)
+	var/list/food_targets = controller.blackboard[BB_BASIC_FOODS]
+	if(!length(food_targets))
+		return
+
+	controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list, BB_BASIC_MOB_CURRENT_TARGET, food_targets, vision_range)
 
 
 /datum/ai_planning_subtree/find_dead_bodies
@@ -74,4 +78,8 @@
 		// Busy with something
 		return
 
-	controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list/saiga, BB_BASIC_MOB_CURRENT_TARGET, controller.blackboard[BB_BASIC_FOODS], vision_range)
+	var/list/food_targets = controller.blackboard[BB_BASIC_FOODS]
+	if(!length(food_targets))
+		return
+
+	controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list/saiga, BB_BASIC_MOB_CURRENT_TARGET, food_targets, vision_range)

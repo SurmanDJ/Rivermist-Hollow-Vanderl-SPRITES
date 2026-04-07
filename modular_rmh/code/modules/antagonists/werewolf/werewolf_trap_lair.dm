@@ -24,7 +24,7 @@
 	name = "moon pit"
 	desc = "A deeper sinkhole gnawed out beneath the lair. The air inside smells of wet stone, old fear, and patient hunger."
 	icon = 'icons/turf/floors.dmi'
-	icon_state = "hole1"
+	icon_state = "hole2"
 	anchored = TRUE
 	density = TRUE
 	pixel_y = 5
@@ -64,7 +64,7 @@
 	if(IS_WEREWOLF(user) == owner_werewolf)
 		var/datum/pocket_dimension/trap/werewolf/trap_pocket = get_trap_pocket_instance()
 		var/list/forced_captives = trap_pocket?.get_forced_captives() || list()
-		. += span_notice("Touch it to step into the pit. Right-click it to release captives back into the lair.")
+		. += span_notice("Grab and shove victims into the pit. Right-click it to release captives back into the lair.")
 		. += span_notice("Current captives: [length(forced_captives)].")
 
 /obj/structure/werewolf_lair_trap_maw/proc/get_main_lair_entrance()
