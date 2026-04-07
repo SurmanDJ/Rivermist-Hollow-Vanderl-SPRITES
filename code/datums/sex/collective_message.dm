@@ -9,8 +9,6 @@
 	var/collective_display_name = ""
 	/// All sessions that belong to this collective
 	var/list/sessions = list()
-	///is our collective set to subtle mode
-	var/subtle_mode = TRUE
 
 
 /datum/collective_message/New(initial_session)
@@ -25,7 +23,6 @@
 
 	update_display_name()
 	//register_collective_tab()
-	update_subtle()
 
 /datum/collective_message/proc/update_display_name()
 	var/list/names = list()
@@ -42,9 +39,6 @@
 	// Check if this session involves any of our current participants
 	return (new_session.user in involved_mobs) || (new_session.target in involved_mobs)
 
-/datum/collective_message/proc/toggle_subtle()
-	subtle_mode = !subtle_mode
-
 /datum/collective_message/proc/merge_session(datum/sex_session/new_session)
 	// Add new participants if they're not already involved
 	if(!(new_session.user in involved_mobs))
@@ -56,13 +50,6 @@
 	new_session.collective = src
 
 	//update_collective_tab()
-	update_subtle()
-
-/datum/collective_message/proc/update_subtle()
-	if(subtle_mode)
-		return
-
-	subtle_mode = any_has_erp_pref(involved_mobs, /datum/erp_preference/boolean/subtle_session_messages)
 
 /datum/collective_message/Destroy()
 	if(sessions)

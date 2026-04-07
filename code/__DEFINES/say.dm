@@ -81,6 +81,10 @@
 
 //Eavesdropping
 #define EAVESDROP_EXTRA_RANGE 1 //how much past the specified message_range does the message get starred, whispering only
+#define SNEAKY_EMOTE_VISIBLE_RANGE 1
+#define SNEAKY_EMOTE_BASE_SUCCESS_CHANCE 100
+#define SNEAKY_EMOTE_MIN_SUCCESS_CHANCE 50
+#define SNEAKY_EMOTE_FULL_SUCCESS_SKILL 20
 
 // A link given to ghost alice to follow bob
 #define FOLLOW_LINK(alice, bob) "<a href=?src=[REF(alice)];follow=[REF(bob)]>(F)</a>"

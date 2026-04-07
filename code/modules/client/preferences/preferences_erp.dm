@@ -1,3 +1,26 @@
+/proc/is_erp_preference_chapel_area(area/current_area)
+	if(!current_area)
+		return FALSE
+	if(istype(current_area, /area/indoors/town/rmh/chapel))
+		return TRUE
+	return istype(current_area, /area/indoors/town/church/chapel)
+
+/datum/preferences/proc/get_erp_preference_edit_lock_reason(mob/user)
+	if(!has_spawned)
+		return null
+
+	if(is_erp_preference_chapel_area(get_area(user)))
+		return null
+
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if(living_user.erp_preference_edit_grace_expires_at && world.time <= living_user.erp_preference_edit_grace_expires_at)
+			return null
+
+		return "Your first [ERP_PREFERENCE_EDIT_GRACE_MINUTES] minutes after spawning have passed, and you are not in a chapel. ERP preferences can only be changed in the lobby before you spawn, during your first [ERP_PREFERENCE_EDIT_GRACE_MINUTES] minutes after spawning, or while standing in a chapel."
+
+	return "You have already spawned, so ERP preferences are no longer editable from the lobby. They can still be changed during your first [ERP_PREFERENCE_EDIT_GRACE_MINUTES] minutes after spawning or while standing in a chapel."
+
 /datum/preferences/proc/show_erp_preferences(mob/user)
 	var/list/dat = list()
 	dat += "<style>span.color_holder_box{display: inline-block; width: 20px; height: 8px; border:1px solid #000; padding: 0px;}</style>"
@@ -11,6 +34,7 @@
 	dat += ".search-container { margin-bottom: 15px; text-align: center; }"
 	dat += ".search-box { width: 300px; padding: 8px; font-size: 14px; border: 2px solid #333; border-radius: 4px; }"
 	dat += ".hidden { display: none !important; }"
+	dat += ".erp-lock-notice { margin-bottom: 15px; padding: 10px 12px; background: #2a1a15; border: 1px solid #8B0000; color: #d4af8c; line-height: 1.4; }"
 	dat += "</style>"
 
 	// Tab buttons
@@ -26,7 +50,7 @@
 
 	// Tab contents
 	dat += "<div id='general' class='tab-content'>"
-	dat += print_erp_preferences_page()
+	dat += print_erp_preferences_page(user)
 	dat += "</div>"
 
 	dat += "<div id='kinks' class='tab-content'>"
@@ -100,9 +124,10 @@
 	popup.set_content(dat.Join())
 	popup.open(FALSE)
 
-/datum/preferences/proc/print_erp_preferences_page()
+/datum/preferences/proc/print_erp_preferences_page(mob/user)
 	var/list/dat = list()
 	var/list/categories = list()
+	var/lock_reason = get_erp_preference_edit_lock_reason(user)
 
 	for(var/datum/erp_preference/pref_type as anything in subtypesof(/datum/erp_preference))
 		if(IS_ABSTRACT(pref_type))
@@ -118,13 +143,16 @@
 		dat += "<div style='text-align: center; padding: 20px;'>No general ERP preferences available.</div>"
 		return dat
 
+	if(lock_reason)
+		dat += "<div class='erp-lock-notice'>[html_encode(lock_reason)]</div>"
+
 	dat += "<table width='100%'>"
 	for(var/category in categories)
 		dat += "<tr><td colspan='2'><h3>[category]</h3></td></tr>"
 		for(var/pref_type in categories[category])
 			var/datum/erp_preference/pref = new pref_type()
 			dat += "<tr><td width='50%'><b>[pref.name]:</b><br><i>[pref.description]</i></td>"
-			dat += "<td width='50%'>[pref.show_pref_ui(src)]</td></tr>"
+			dat += "<td width='50%'>[pref.show_pref_ui(src, lock_reason)]</td></tr>"
 	dat += "</table>"
 	return dat
 

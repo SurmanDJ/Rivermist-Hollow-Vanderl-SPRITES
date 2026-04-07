@@ -858,6 +858,7 @@
 	dat += ".control-row { margin: 15px 0; text-align: center; }"
 	dat += ".control-btn { padding: 8px 15px; margin: 0 5px; background-color: #8b6914; color: #d4af8c; text-decoration: none; border-radius: 3px; }"
 	dat += ".control-btn:hover { background-color: #a07a1a; }"
+	dat += ".control-btn.disabled { background-color: #666666; color: #d4af8c; cursor: not-allowed; }"
 	dat += ".toggle-btn { padding: 8px 15px; background-color: #4a2c20; color: #d4af8c; text-decoration: none; border-radius: 3px; margin: 5px; border: 1px solid #2a1a15; }"
 	dat += ".toggle-btn:hover { background-color: #5a3525; }"
 
@@ -902,6 +903,7 @@
 	dat += ".pref-item { background-color: #2a1a15; border: 1px solid #4a2c20; margin: 2px 0; padding: 8px; }"
 	dat += ".pref-name { font-weight: bold; color: #d4af8c; margin-bottom: 3px; }"
 	dat += ".pref-description { color: #b09070; font-size: 11px; margin-bottom: 5px; }"
+	dat += ".pref-lock-notice { background-color: #2f2417; border: 1px solid #8b6914; color: #d4af8c; line-height: 1.4; margin-bottom: 10px; padding: 8px 10px; }"
 	dat += ".pref-toggle { background-color: #4a2c20; color: #d4af8c; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }"
 	dat += ".pref-toggle.enabled { background-color: #8b6914; color: #ffffff; }"
 	dat += ".pref-toggle.disabled { background-color: #666666; cursor: not-allowed; }"
@@ -1140,32 +1142,21 @@
 
 	content += "</div>"
 
-	// Collective messaging toggle
-	var/collective_enabled = collective ? TRUE : FALSE
-	var/any_has_flag = any_has_erp_pref(participants, /datum/erp_preference/boolean/subtle_session_messages)
-
-	var/toggle_class = "collective-toggle"
-	if(collective_enabled && any_has_flag)
-		toggle_class += " enabled"
-
-	content += "<div class='[toggle_class]' onclick=\"window.location.href='?src=[REF(src)];task=toggle_subtle;tab=session'\">"
-	content += "<strong>Subtle Messaging:</strong> [collective_enabled && any_has_flag ? "ENABLED" : "DISABLED"]<br>"
-	content += "<small>Allows group chat between all session participants</small>"
-	content += "</div>"
-
 	content += "</div>"
 
 	return content.Join("")
 
 /datum/sex_session/proc/get_preferences_tab_content()
 	var/list/content = list()
+	var/edit_lock_reason = user.client?.prefs?.get_erp_preference_edit_lock_reason(user)
+	var/can_edit_preferences = !edit_lock_reason
 
 	content += "<div class='prefs-container'>"
 
 	// Left side - User's preferences (editable)
 	content += "<div class='prefs-left'>"
 	content += "<div class='prefs-header'>Your Preferences</div>"
-	content += get_erp_preferences_display(user, TRUE)
+	content += get_erp_preferences_display(user, can_edit_preferences, edit_lock_reason)
 	content += "</div>"
 
 	// Right side - Target's preferences (read-only)
@@ -1178,7 +1169,7 @@
 
 	return content.Join("")
 
-/datum/sex_session/proc/get_erp_preferences_display(mob/living/character, editable = FALSE)
+/datum/sex_session/proc/get_erp_preferences_display(mob/living/character, editable = FALSE, lock_reason = null)
 	var/list/content = list()
 
 	if(!character.client?.prefs)
@@ -1188,6 +1179,9 @@
 	var/datum/preferences/prefs = character.client.prefs
 	if(!prefs.erp_preferences)
 		prefs.erp_preferences = list()
+
+	if(lock_reason)
+		content += "<div class='pref-lock-notice'>[html_encode(lock_reason)]</div>"
 
 	// Group preferences by category
 	var/list/prefs_by_category = list()
@@ -1218,7 +1212,7 @@
 				content += "<div class='pref-description'>[format_ui_text(pref.description)]</div>"
 
 			// Let the preference datum handle its own UI
-			content += pref.show_session_ui(prefs, editable, src)
+			content += pref.show_session_ui(prefs, editable, src, lock_reason)
 
 			content += "</div>"
 
@@ -1300,9 +1294,6 @@
 				collective.collective_display_name = new_name
 				//collective.update_collective_tab()
 				to_chat(user, "<span class='notice'>Session name updated to '[new_name]'</span>")
-
-		if("toggle_subtle")
-			collective.toggle_subtle()
 
 		// Generic preference handler - delegates to the preference datum
 		if("handle_pref")

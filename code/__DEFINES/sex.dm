@@ -7,6 +7,9 @@ GLOBAL_LIST_EMPTY(locked_sex_objects)
 
 #define SEX_ACTION(sex_action_type) GLOB.sex_actions[sex_action_type]
 
+#define ERP_PREFERENCE_EDIT_GRACE_MINUTES 20
+#define ERP_PREFERENCE_EDIT_GRACE_PERIOD (ERP_PREFERENCE_EDIT_GRACE_MINUTES MINUTES)
+
 
 #define COMSIG_SEX_ADJUST_AROUSAL "sex_adjust_arousal"                  // (amount) - Adjust arousal level
 #define COMSIG_SEX_SET_AROUSAL "sex_set_arousal"                        // (amount) - Set arousal to specific value
@@ -296,10 +299,6 @@ GLOBAL_LIST_EMPTY(locked_sex_objects)
 	return .
 
 
-#define SUBTLE_TAG (1 << 0)
-#define SUBTLE_ALL (1 << 1)
-#define SUBTLE_NOGHOST (1 << 2)
-#define SUBTLE_SHORT (1 << 3)
 
 #define SEX_SOUNDS_SLOW list(\
 	"sound/misc/mat/sex_clap/slow/SexSlap14.ogg",\

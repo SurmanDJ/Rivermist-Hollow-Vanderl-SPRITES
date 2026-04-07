@@ -14,7 +14,7 @@
 	if(!length(flags))
 		CRASH("Bitflag preference [type] must define flags list")
 
-/datum/erp_preference/bitflag/show_pref_ui(datum/preferences/prefs)
+/datum/erp_preference/bitflag/show_pref_ui(datum/preferences/prefs, lock_reason = null)
 	var/current_value = get_value(prefs)
 	var/list/output = list()
 
@@ -28,10 +28,13 @@
 		var/link_class = is_enabled ? "linkOn" : "linkOff"
 		var/description = flag_descriptions[flag_name] || ""
 		var/title_attr = description ? " title='[escape_html_attribute(description)]'" : ""
+		var/toggle_html = "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=toggle_flag;flag=[flag_bit]' class='[link_class]'>[status_text]</a>"
+		if(lock_reason)
+			toggle_html = wrap_with_tooltip("<a class='linkOff'>[status_text]</a>", lock_reason)
 
 		output += "<div class='bitflag-option'>"
 		output += "<span[title_attr]>[html_encode(flag_name)]</span>: "
-		output += "<a href='?_src_=prefs;task=erp_pref;pref_type=[type];action=toggle_flag;flag=[flag_bit]' class='[link_class]'>[status_text]</a>"
+		output += toggle_html
 		output += "</div>"
 
 	output += "</div>"
@@ -39,6 +42,8 @@
 
 /datum/erp_preference/bitflag/handle_topic(mob/user, list/href_list, datum/preferences/prefs)
 	if(href_list["action"] == "toggle_flag")
+		if(!ensure_editable(user, prefs))
+			return TRUE
 		var/flag_bit = text2num(href_list["flag"])
 		if(!flag_bit)
 			return FALSE
@@ -49,7 +54,7 @@
 		return TRUE
 	return FALSE
 
-/datum/erp_preference/bitflag/show_session_ui(datum/preferences/prefs, editable = FALSE, datum/sex_session/session)
+/datum/erp_preference/bitflag/show_session_ui(datum/preferences/prefs, editable = FALSE, datum/sex_session/session, lock_reason = null)
 	var/current_value = get_value(prefs)
 	var/list/output = list()
 
@@ -74,7 +79,7 @@
 			output += "<button class='[toggle_class]' onclick=\"window.location.href='?src=[REF(session)];task=handle_pref;pref_type=[type];action=toggle_flag;flag=[flag_bit];tab=preferences'\">[toggle_text]</button>"
 		else
 			toggle_class += " disabled"
-			output += "<button class='[toggle_class]'>[toggle_text]</button>"
+			output += wrap_with_tooltip("<button class='[toggle_class]' disabled>[toggle_text]</button>", lock_reason)
 
 		output += "</div>"
 
@@ -84,6 +89,8 @@
 /datum/erp_preference/bitflag/handle_session_topic(mob/user, list/href_list, datum/preferences/prefs, datum/sex_session/session)
 	if(href_list["action"] != "toggle_flag")
 		return FALSE
+	if(!ensure_editable(user, prefs))
+		return TRUE
 
 	var/flag_bit = text2num(href_list["flag"])
 	if(!flag_bit)

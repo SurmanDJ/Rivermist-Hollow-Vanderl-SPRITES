@@ -114,51 +114,6 @@
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
 
-/* A terrible idea, commenting out subtler
-// ............... Subtle ..................
-/datum/emote/living/subtle
-	key = "subtle"
-	key_third_person = "subtleemote"
-	message_param = "%t"
-	restraint_check = TRUE
-
-/datum/emote/living/subtle/can_run_emote(mob/user, status_check, intentional)
-	. = ..() && intentional
-
-/datum/emote/living/subtle/run_emote(mob/user, params, type_override = null, intentional = FALSE)
-	if(!can_run_emote(user, TRUE, intentional))
-		return FALSE
-	if(is_banned_from(user.ckey, "Emote"))
-		to_chat(user, "<span class='boldwarning'>I cannot send custom emotes (banned).</span>")
-		return FALSE
-	else if(QDELETED(user))
-		return FALSE
-	else if(user.client && user.client.prefs.muted & MUTE_IC)
-		to_chat(user, "<span class='boldwarning'>I cannot send IC messages (muted).</span>")
-		return FALSE
-	else if(!params)
-		var/custom_emote = copytext(sanitize(input("What does your character subtly do?") as text|null), 1, MAX_MESSAGE_LEN)
-		if(custom_emote)
-			message = custom_emote
-			emote_type = EMOTE_VISIBLE
-	else
-		message = params
-		if(type_override)
-			emote_type = type_override
-
-	user.log_message("SUBTLE - " + message, LOG_EMOTE)
-	message = "<b>[user]</b> " + message
-
-	for(var/mob/M in GLOB.dead_mob_list)
-		if(!M.client || isnewplayer(M))
-			continue
-		var/T = get_turf(user)
-		if(M.stat == DEAD && M.client && (M.client.prefs?.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
-			M.show_message(message)
-
-	user.visible_message("<i>[message]</i>", vision_distance = 1)
-*/
-
 // ............... A ..................
 /datum/emote/living/attnwhistle
 	key = "attnwhistle"
@@ -994,7 +949,9 @@
 	if(ishuman(user))
 		if(H.mouth)
 			if(H.mouth.spitoutmouth)
-				H.visible_message("<span class='warning'>[H] spits out [H.mouth].</span>")
+				var/full_message = "<span class='warning'>[H] spits out [H.mouth].</span>"
+				var/obfuscated_message = "<span class='warning'>[H] [stars("spits out [H.mouth].")]</span>"
+				send_visible_emote_message(user, H, full_message, intentional = intentional, obfuscated_message = obfuscated_message)
 				H.dropItemToGround(H.mouth, silent = FALSE)
 			return
 	..()
@@ -1449,9 +1406,15 @@
 			if(M.stat == DEAD && M.client && (M.client.prefs?.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(T, null)))
 				M.show_message(msg)
 		var/runechat_msg_to_use = null
+		var/obfuscated_runechat_msg_to_use = null
 		if(show_runechat)
 			runechat_msg_to_use = runechat_msg ? runechat_msg : pre_color_msg
-		emotelocation.visible_message(msg, runechat_message = runechat_msg_to_use)
+			obfuscated_runechat_msg_to_use = stars(runechat_msg_to_use)
+		var/speaker_prefix = "<b>[emotelocation]</b>"
+		if(human && human.voice_color)
+			speaker_prefix = "<span style='color:#[human.voice_color];text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'><b>[emotelocation]</b></span>"
+		var/obfuscated_msg = "[speaker_prefix] [stars(pre_color_msg)]"
+		send_visible_emote_message(user, emotelocation, msg, runechat_message = runechat_msg_to_use, intentional = intentional, obfuscated_message = obfuscated_msg, obfuscated_runechat_message = obfuscated_runechat_msg_to_use)
 
 /datum/emote/living/stat_roll/select_message_type(mob/user, msg, intentional)
 	return pick(attempt_message_list)
