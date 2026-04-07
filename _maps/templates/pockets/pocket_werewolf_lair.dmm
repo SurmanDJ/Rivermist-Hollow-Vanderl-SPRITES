@@ -27,6 +27,10 @@
 /obj/structure/flora/mushroomcluster,
 /turf/open/floor/naturalstone,
 /area/pocket_dimension/werewolf_lair)
+"v" = (
+/obj/structure/stalagmite,
+/turf/open/floor/naturalstone,
+/area/pocket_dimension/werewolf_lair)
 "x" = (
 /obj/structure/bed/bear,
 /turf/open/floor/dirt/road,
@@ -48,8 +52,8 @@
 /turf/open/floor/naturalstone,
 /area/pocket_dimension/werewolf_lair)
 "R" = (
-/obj/machinery/light/fueled/torchholder/l,
-/turf/open/floor/cobble/alt,
+/obj/machinery/light/fueled/firebowl/stump,
+/turf/open/floor/dirt/road,
 /area/pocket_dimension/werewolf_lair)
 "S" = (
 /obj/structure/table/wood/treestump/shroomstump,
@@ -106,12 +110,12 @@ a
 a
 e
 g
+z
+c
 R
 c
-Z
 c
-c
-c
+v
 d
 a
 "}
@@ -164,7 +168,7 @@ x
 b
 S
 c
-c
+v
 a
 "}
 (8,1,1) = {"
@@ -174,7 +178,7 @@ d
 Q
 c
 c
-b
+Z
 c
 p
 e

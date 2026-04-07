@@ -131,6 +131,30 @@
 	TEST_ASSERT(test_bag.store_item_in_pocket(tester_scroll, user), "Bag of holding should consume attempts to store another pocket-holder item.")
 	TEST_ASSERT_EQUAL(get_turf(tester_scroll), origin, "Bag of holding should refuse to swallow another pocket-holder item.")
 
+/datum/unit_test/pocket_dimension_static_lighting/Run()
+	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance("[REF(src)]::static_lighting", /datum/map_template/pocket/lighting_test, POCKET_LIFECYCLE_KEEP_LOADED, 0)
+	TEST_ASSERT_NOTNULL(instance, "Static lighting test pocket should be created.")
+
+	var/obj/machinery/light/fueled/firebowl/stump/fire_stump
+	for(var/turf/current_turf as anything in instance.affected_turfs)
+		fire_stump = locate(/obj/machinery/light/fueled/firebowl/stump) in current_turf
+		if(fire_stump)
+			break
+
+	TEST_ASSERT_NOTNULL(fire_stump, "Static lighting test pocket should load its stump fire fixture.")
+	TEST_ASSERT(fire_stump.on, "Static lighting test stump fire should start lit.")
+
+	var/turf/lit_turf = get_step(get_turf(fire_stump), SOUTH)
+	TEST_ASSERT(instance.contains_turf(lit_turf), "Static lighting test should check a turf inside the loaded pocket.")
+
+	fire_stump.update(FALSE)
+	SSlighting.fire(FALSE, TRUE)
+
+	TEST_ASSERT_NOTNULL(lit_turf.lighting_object, "Pocket lighting refresh should leave nearby turfs with lighting overlays.")
+	TEST_ASSERT(lit_turf.lighting_object.luminosity, "Static fixtures loaded from a pocket template should illuminate adjacent turfs.")
+
+	TEST_ASSERT(SSpocket_dimensions.delete_instance(instance), "Static lighting test pocket should be deletable.")
+
 /datum/unit_test/bag_of_holding_destroy_ejection/Run()
 	var/turf/origin = run_loc_floor_bottom_left
 	var/turf/moved_bag_turf = run_loc_floor_top_right

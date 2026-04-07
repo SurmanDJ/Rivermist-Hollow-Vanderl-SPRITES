@@ -206,8 +206,34 @@
 	cache_loaded_layout()
 	state = POCKET_STATE_ACTIVE
 	restore_hibernated_layout()
+	refresh_loaded_lighting()
 	touch()
 	return TRUE
+
+/datum/pocket_dimension/proc/refresh_loaded_lighting()
+	if(!SSlighting.initialized)
+		return
+
+	var/list/turf/turfs_to_refresh = reservation?.reserved_turfs
+	if(!length(turfs_to_refresh))
+		turfs_to_refresh = affected_turfs
+
+	for(var/turf/current_turf as anything in turfs_to_refresh)
+		if(QDELETED(current_turf))
+			continue
+
+		current_turf.lighting_build_overlay()
+
+		if(current_turf.light_system == STATIC_LIGHT && current_turf.light_power && current_turf.light_outer_range && current_turf.light_on)
+			current_turf.update_light()
+
+		for(var/atom/contained_atom as anything in current_turf)
+			if(contained_atom.light_system != STATIC_LIGHT)
+				continue
+			if(!contained_atom.light_power || !contained_atom.light_outer_range || !contained_atom.light_on)
+				continue
+
+			contained_atom.update_light()
 
 /datum/pocket_dimension/proc/seal_padding_ring()
 	if(!reservation || !load_turf || !template?.padding)
@@ -887,6 +913,9 @@
 /area/pocket_dimension/magic_closet
 	name = "Magic Closet Interior"
 
+/area/pocket_dimension/lighting_test
+	name = "Pocket Lighting Test"
+
 /turf/closed/indestructible/pocket_border
 	name = "folded-space boundary"
 	desc = "Looking at this is making your head hurt."
@@ -999,6 +1028,11 @@
 	lifecycle_policy = POCKET_LIFECYCLE_KEEP_LOADED
 	persistence_mode = POCKET_PERSISTENCE_MOVABLES
 	exit_structure_type = /obj/structure/pocket_dimension_exit/closet
+
+/datum/map_template/pocket/lighting_test
+	name = "Pocket Lighting Test"
+	id = "pocket_lighting_test"
+	mappath = "_maps/templates/pockets/pocket_lighting_test.dmm"
 
 /obj/item/pocket_dimension_tester
 	name = "folded-space scroll"

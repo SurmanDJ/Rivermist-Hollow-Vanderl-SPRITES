@@ -3553,7 +3553,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		return make_lock_row(
 			used_name,
 			"\[WHITELIST\]",
-			"This role requires an admin-managed job whitelist."
+			"This role requires you to be whitelisted for it."
 		)
 	// No lock
 	return FALSE
