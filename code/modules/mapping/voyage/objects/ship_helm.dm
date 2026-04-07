@@ -1,7 +1,7 @@
 /obj/structure/ship_wheel
 	name = "ship wheel"
 	desc = "A large wooden ship wheel. Use it to navigate between islands."
-	icon = 'icons/obj/helm.dmi'
+	icon = 'modular_rmh/icons/obj/structures/helm.dmi'
 	icon_state = "wheel"
 	density = TRUE
 	anchored = TRUE
@@ -59,8 +59,23 @@
 	if(!controlled_ship)
 		to_chat(user, span_warning("This wheel isn't connected to a ship!"))
 		return
+	if(!can_navigate(user))
+		to_chat(user, span_warning("You are not the captain!"))
+		return
 
 	interact(user)
+
+/obj/structure/ship_wheel/proc/can_navigate(mob/user)
+	var/datum/job/job_datum = SSjob.name_occupations[user.job]
+	var/job_name
+	if(job_datum.parent_job)
+		job_name = job_datum.parent_job.title
+	else
+		job_name = job_datum.title
+	if(job_name in GLOB.townhall_positions)
+		return TRUE
+	return FALSE
+
 
 /obj/structure/ship_wheel/interact(mob/user)
 	user << browse_rsc('html/map.jpg')

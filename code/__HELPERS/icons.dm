@@ -712,7 +712,7 @@ world
 /// appearance system (overlays/underlays, etc.) is not available.
 ///
 /// Only the first argument is required.
-/proc/getFlatIcon(image/appearance, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE)
+/proc/getFlatIcon(image/appearance, defdir, deficon, defstate, defblend, start = TRUE, no_anim = FALSE, clip_overflow = FALSE)
 	// Loop through the underlays, then overlays, sorting them into the layers list
 	#define PROCESS_OVERLAYS_OR_UNDERLAYS(flat, process, base_layer) \
 		for (var/i in 1 to length(process)) { \
@@ -826,7 +826,7 @@ world
 				curblend = BLEND_OVERLAY
 				add = icon(layer_image.icon, layer_image.icon_state, base_icon_dir)
 			else // 'I' is an appearance object.
-				add = getFlatIcon(image(layer_image), curdir, curicon, curstate, curblend, FALSE, no_anim)
+				add = getFlatIcon(image(layer_image), curdir, curicon, curstate, curblend, FALSE, no_anim, clip_overflow)
 			if(!add)
 				continue
 
@@ -836,12 +836,12 @@ world
 			addY1 = min(flatY1, layer_image.pixel_y + 1)
 			addY2 = max(flatY2, layer_image.pixel_y + add.Height())
 
-			if (
+			if(!clip_overflow && (
 				addX1 != flatX1 \
-				&& addX2 != flatX2 \
-				&& addY1 != flatY1 \
-				&& addY2 != flatY2 \
-			)
+				|| addX2 != flatX2 \
+				|| addY1 != flatY1 \
+				|| addY2 != flatY2 \
+			))
 				// Resize the flattened icon so the new icon fits
 				flat.Crop(
 					addX1 - flatX1 + 1,
@@ -851,8 +851,8 @@ world
 				)
 
 				flatX1 = addX1
-				flatX2 = addY1
-				flatY1 = addX2
+				flatX2 = addX2
+				flatY1 = addY1
 				flatY2 = addY2
 
 			// Blend the overlay into the flattened icon
@@ -1045,7 +1045,8 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 	for(var/D in showDirs)
 		body.setDir(D)
-		var/icon/partial = getFlatIcon(body, defdir=D)
+		// Keep preview icons in their fixed-size box and clip oversized accessories.
+		var/icon/partial = getFlatIcon(body, defdir = D, clip_overflow = TRUE)
 		out_icon.Insert(partial,dir=D)
 
 	body.update_inv_hands()
