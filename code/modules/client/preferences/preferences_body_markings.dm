@@ -161,6 +161,7 @@
 				dat += "<td>[can_move_up]</td>"
 				dat += "<td>[can_move_down]</td>"
 				dat += "<td><a href='?_src_=prefs;name=[key];key=[zone];preference=change_marking;task=change_marking'>[key]</a></td>"
+				dat += "<td><a href='?_src_=prefs;name=[key];key=[zone];preference=switch_emissive;task=change_marking'>E:[(key in emissive_markings[zone]) ? "YES" : "NO"]</a></td>"	// RMH edit
 				dat += "<td>[color_line]</td>"
 				dat += "<td><a href='?_src_=prefs;name=[key];key=[zone];preference=remove_marking;task=change_marking'>Remove</a></td>"
 				dat += "</tr>"

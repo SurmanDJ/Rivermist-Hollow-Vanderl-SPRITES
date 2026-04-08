@@ -658,6 +658,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	selected_accent ||= ACCENT_DEFAULT
 	selected_title  = selected_title
 
+	S["emissive_markings"] >> emissive_markings 			// RMH edit
+	emissive_markings = SANITIZE_LIST(emissive_markings) 	// RMH edit
 	S["body_markings"] >> body_markings
 	body_markings = SANITIZE_LIST(body_markings)
 	features["mcolor"]	= sanitize_hexcolor(features["mcolor"], 6, 0)
@@ -802,6 +804,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["customizer_entries"], customizer_entries)
 	// Body markings
 	WRITE_FILE(S["body_markings"], body_markings)
+	// Emissive body markings 								// RMH edit
+	WRITE_FILE(S["emissive_markings"], emissive_markings) 	// RMH edit
 	// headshot link
 	WRITE_FILE(S["headshot_link"] , headshot_link)
 	// nsfw headshot link
