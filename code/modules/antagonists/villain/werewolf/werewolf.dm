@@ -120,7 +120,6 @@
 
 /datum/antagonist/werewolf/proc/forge_werewolf_objectives()
 	var/list/new_objectives = list(
-		new /datum/objective/werewolf_counter/breed(),
 		new /datum/objective/werewolf_counter/hunt(),
 		new /datum/objective/werewolf_counter/slay(),
 		new /datum/objective/werewolf_counter/convert(),
@@ -128,7 +127,8 @@
 		new /datum/objective/werewolf_counter/contracts(),
 		new /datum/objective/werewolf/survive(),
 	)
-
+	if(owner.current?.getorganslot(ORGAN_SLOT_TESTICLES))
+		new_objectives.Insert(1, new /datum/objective/werewolf_counter/breed())
 	for(var/datum/objective/objective as anything in new_objectives)
 		objective.owner = owner
 		objectives += objective

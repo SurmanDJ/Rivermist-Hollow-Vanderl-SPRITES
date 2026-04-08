@@ -52,10 +52,53 @@
 /datum/job/werewolf/special_check_latejoin(client/player_client)
 	return can_take_werewolf_job(player_client?.ckey)
 
+/datum/job/werewolf/proc/get_towner_disguise_choices(mob/living/carbon/human/spawned)
+	var/list/disguise_choices = list()
+	var/datum/job/towner/towner_job = SSjob.GetJobType(/datum/job/towner)
+	if(!towner_job)
+		return disguise_choices
+
+	for(var/disguise_type in towner_job.job_subclasses)
+		var/datum/job/disguise_job = SSjob.GetJobType(disguise_type)
+		if(!disguise_job)
+			continue
+		if(!disguise_job.can_disguise_as)
+			continue
+		if(!disguise_job.outfit && !disguise_job.outfit_female)
+			continue
+
+		var/disguise_title = disguise_job.title
+		if(disguise_job.f_title && spawned.pronouns == SHE_HER)
+			disguise_title = disguise_job.f_title
+
+		disguise_choices[disguise_title] = disguise_job
+
+	return disguise_choices
+
+/datum/job/werewolf/proc/apply_towner_disguise(mob/living/carbon/human/spawned, client/player_client)
+	var/list/disguise_choices = get_towner_disguise_choices(spawned)
+	if(!length(disguise_choices))
+		return
+
+	var/choice = spawned.select_outfit(
+		player_client,
+		disguise_choices,
+		time_limit = 1 MINUTES,
+		message = "Choose the towner role I will pass as.",
+		title = "DISGUISE",
+		clear_existing = TRUE
+	)
+	if(!choice)
+		return
+
+	spawned.disguise_title_override = choice
+
 /datum/job/werewolf/after_spawn(mob/living/carbon/human/spawned, client/player_client)
-	. = ..()
 	if(!ishuman(spawned))
 		return
+
+	apply_towner_disguise(spawned, player_client)
+	. = ..()
 
 	if(!rune_linked)
 		return

@@ -154,6 +154,8 @@
 
 	var/can_random = TRUE
 
+	var/can_disguise_as = TRUE
+
 	/// Some jobs have unique combat mode music, because why not?
 	var/cmode_music
 
@@ -720,6 +722,9 @@
 /datum/job/proc/get_informed_title(mob/mob, ignore_pronouns = FALSE)
 	if(mob.admin_title)
 		return mob.admin_title
+
+	if(mob.disguise_title_override)
+		return mob.disguise_title_override
 
 	if(title_override)
 		return title_override

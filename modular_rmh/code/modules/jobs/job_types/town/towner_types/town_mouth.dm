@@ -21,6 +21,7 @@
 	outfit = /datum/outfit/towner/town_mouth
 	category_tags = list(CAT_TOWNER)
 	give_bank_account = 20
+	can_disguise_as = FALSE
 
 	attribute_sheet = /datum/attribute_holder/sheet/job/advclass/towner/town_mouth
 

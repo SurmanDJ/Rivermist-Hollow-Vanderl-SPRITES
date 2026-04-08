@@ -38,6 +38,11 @@
 "z" = (
 /turf/open/floor/cobble/alt,
 /area/pocket_dimension/werewolf_lair)
+"C" = (
+/obj/structure/flora/tinymushrooms,
+/obj/structure/resurrection_rune/werewolf,
+/turf/open/floor/naturalstone,
+/area/pocket_dimension/werewolf_lair)
 "H" = (
 /obj/structure/flora/rock/pile,
 /turf/open/floor/naturalstone,
@@ -73,7 +78,7 @@
 /area/pocket_dimension/werewolf_lair)
 "Y" = (
 /obj/structure/werewolf_lair_trap_maw,
-/turf/open/floor/naturalstone,
+/turf/open/floor/cobble/alt,
 /area/pocket_dimension/werewolf_lair)
 "Z" = (
 /obj/structure/table/wood/treestump,
@@ -96,7 +101,7 @@ a
 (2,1,1) = {"
 a
 e
-e
+d
 e
 X
 c
@@ -109,7 +114,7 @@ a
 (3,1,1) = {"
 a
 e
-g
+C
 z
 c
 R
@@ -124,7 +129,7 @@ a
 e
 z
 i
-z
+Y
 b
 b
 b
@@ -147,7 +152,7 @@ a
 "}
 (6,1,1) = {"
 a
-Y
+d
 b
 b
 b
