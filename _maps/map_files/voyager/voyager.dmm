@@ -1,7 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ab" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
 	},
 /turf/open/floor/hay,
 /area/ship/topdeck)
@@ -162,9 +163,9 @@
 /turf/open/floor/cobble,
 /area/ship/middeck)
 "bj" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -428,9 +429,9 @@
 /obj/item/reagent_containers/powder/blastpowder,
 /obj/item/reagent_containers/powder/blastpowder,
 /obj/item/reagent_containers/powder/blastpowder,
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/topdeck)
@@ -508,7 +509,7 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
-/obj/structure/fluff/walldeco/psybanner{
+/obj/structure/fluff/walldeco/selune_banner/ban1{
 	pixel_x = 32
 	},
 /turf/open/floor/churchrough/purple,
@@ -570,6 +571,12 @@
 /obj/machinery/light/fueled/torchholder/r,
 /obj/structure/industrial_lift/tram,
 /turf/open/openspace,
+/area/outdoors/beach)
+"dA" = (
+/obj/structure/train/far_travel,
+/turf/open/floor/rooftop/green{
+	dir = 8
+	},
 /area/outdoors/beach)
 "dD" = (
 /obj/structure/dye_bin,
@@ -766,8 +773,9 @@
 /turf/open/floor/church,
 /area/indoors/town/church/chapel)
 "eT" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
 	},
 /obj/machinery/light/fueled/wallfire/candle/l,
 /obj/structure/fluff/railing/border,
@@ -788,18 +796,18 @@
 /turf/open/floor/churchrough,
 /area/indoors/town/church/chapel)
 "eW" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /turf/open/floor/rooftop/green{
 	dir = 4
 	},
 /area/ship/middeck)
 "fd" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -854,9 +862,9 @@
 /turf/open/floor/metal/barograte,
 /area/ship/middeck)
 "fr" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /obj/structure/fluff/railing/wood{
 	dir = 8
@@ -905,9 +913,10 @@
 /obj/structure/fluff/railing/border{
 	dir = 4
 	},
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall";
-	dir = 4
+/obj/effect/decal/borderfall{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = 8
 	},
 /turf/open/floor/cobble,
 /area/ship/middeck)
@@ -957,8 +966,9 @@
 /turf/open/floor/wood,
 /area/ship/middeck)
 "ge" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
 	},
 /turf/open/floor/hay,
 /area/ship/middeck)
@@ -1142,7 +1152,7 @@
 /turf/open/floor/ruinedwood/darker,
 /area/ship/topdeck)
 "gX" = (
-/obj/structure/fluff/walldeco/psybanner{
+/obj/structure/fluff/walldeco/selune_banner/ban2{
 	pixel_y = 32
 	},
 /turf/open/floor/churchmarble,
@@ -1316,8 +1326,9 @@
 /turf/open/floor/ruinedwood/darker,
 /area/ship/middeck)
 "ik" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
 	},
 /obj/structure/fluff/railing/border,
 /turf/open/floor/hay,
@@ -1546,9 +1557,9 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/topdeck)
 "kh" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /obj/structure/dryclothes,
 /turf/open/floor/ruinedwood/spiral,
@@ -1626,8 +1637,9 @@
 /turf/open/floor/wood,
 /area/ship/middeck)
 "kF" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
 	},
 /obj/machinery/light/fueled/wallfire/candle/r,
 /obj/structure/fluff/railing/border,
@@ -1777,7 +1789,7 @@
 /turf/open/floor/tile/masonic,
 /area/ship/nobledeck)
 "lZ" = (
-/obj/structure/fluff/psycross/psydon/metal,
+/obj/structure/fluff/statue/selune,
 /obj/item/clothing/head/flowercrown/rosa{
 	pixel_y = -14
 	},
@@ -1860,8 +1872,9 @@
 /obj/item/natural/fur,
 /obj/item/natural/fur,
 /obj/item/natural/fur,
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
 	},
 /obj/structure/fluff/railing/border,
 /turf/open/floor/rooftop/green{
@@ -2768,8 +2781,9 @@
 /turf/open/floor/blocks/newstone/alt,
 /area/ship/middeck)
 "sJ" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
 	},
 /obj/structure/ladder,
 /turf/open/floor/twig,
@@ -2863,6 +2877,12 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/acolyte,
+/obj/structure/resurrection_rune/city{
+	icon = 'icons/effects/96x96.dmi';
+	icon_state = "sealate";
+	pixel_x = -32;
+	pixel_y = -32
+	},
 /turf/open/floor/churchrough,
 /area/indoors/town/church/chapel)
 "te" = (
@@ -2901,9 +2921,9 @@
 /turf/open/floor/ruinedwood/chevron,
 /area/indoors/town/vault)
 "tw" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -2994,9 +3014,9 @@
 	},
 /area/ship/nobledeck)
 "tZ" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -3350,9 +3370,10 @@
 /turf/open/floor/tile/diamond/purple,
 /area/ship/middeck)
 "wc" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall";
-	dir = 4
+/obj/effect/decal/borderfall{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = 8
 	},
 /obj/effect/landmark/boat_transfer/ship_side,
 /obj/structure/fluff/railing/wood{
@@ -3471,9 +3492,9 @@
 /turf/open/floor/hay,
 /area/ship/topdeck)
 "wX" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/topdeck)
@@ -3517,9 +3538,9 @@
 /turf/closed/wall/mineral/wooddark/vertical,
 /area/indoors/town/vault)
 "xu" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /obj/item/reagent_containers/food/snacks/smallrat,
 /turf/open/floor/rooftop/green{
@@ -3527,7 +3548,7 @@
 	},
 /area/ship/middeck)
 "xw" = (
-/obj/structure/fluff/psycross/copper,
+/obj/structure/fluff/statue/selune/guard,
 /turf/open/floor/churchmarble,
 /area/indoors/town/church/chapel)
 "xy" = (
@@ -3641,6 +3662,13 @@
 /obj/item/reagent_containers/glass/cup/silver,
 /turf/open/floor/ruinedwood/spiral,
 /area/indoors/town/church)
+"yj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/wooden_horse/mobile{
+	dir = 4
+	},
+/turf/open/floor/cobble,
+/area/ship/shipbrig)
 "yr" = (
 /obj/structure/window/openclose/reinforced{
 	dir = 4
@@ -3970,6 +3998,12 @@
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/floor/churchrough,
 /area/ship/middeck)
+"AV" = (
+/obj/effect/decal/floor_selune{
+	pixel_x = 0
+	},
+/turf/open/floor/churchmarble,
+/area/indoors/town/church/chapel)
 "AW" = (
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/hay,
@@ -4324,6 +4358,11 @@
 /obj/machinery/light/fueled/wallfire/candle/r,
 /turf/open/floor/blocks/newstone/alt,
 /area/ship/middeck)
+"Dt" = (
+/obj/structure/bondage/chains,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/hay,
+/area/ship/shipbrig)
 "Du" = (
 /obj/structure/fluff/railing/border{
 	dir = 1;
@@ -4534,8 +4573,9 @@
 /turf/open/floor/church/purple,
 /area/indoors/town/church/inquisition)
 "ED" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
 	},
 /obj/structure/fluff/railing/wood,
 /obj/structure/fermentation_keg,
@@ -4580,7 +4620,9 @@
 /turf/open/floor/wood,
 /area/ship/middeck)
 "ET" = (
-/obj/structure/fluff/walldeco/chains,
+/obj/structure/bondage/torture_table{
+	pixel_x = 0
+	},
 /turf/open/floor/hay,
 /area/ship/shipbrig)
 "EX" = (
@@ -4642,9 +4684,9 @@
 /turf/open/floor/churchmarble,
 /area/indoors/town/church/chapel)
 "Ft" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /obj/structure/fluff/railing/wood{
 	dir = 4
@@ -4655,9 +4697,9 @@
 /obj/structure/cannon{
 	dir = 1
 	},
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /turf/open/floor/metal/barograte,
 /area/ship/topdeck)
@@ -4685,6 +4727,13 @@
 /obj/item/candle/skull/lit{
 	pixel_x = -2;
 	pixel_y = 4
+	},
+/turf/open/floor/churchmarble,
+/area/indoors/town/church/chapel)
+"FD" = (
+/obj/structure/fluff/walldeco/church/line,
+/obj/structure/fluff/walldeco/selune_banner{
+	pixel_x = 32
 	},
 /turf/open/floor/churchmarble,
 /area/indoors/town/church/chapel)
@@ -4769,7 +4818,7 @@
 /turf/open/openspace,
 /area/outdoors/beach)
 "Gq" = (
-/obj/structure/toilet,
+/obj/structure/bondage/x_pillory,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/hay,
 /area/ship/shipbrig)
@@ -4798,9 +4847,9 @@
 /turf/closed/wall/mineral/wooddark/horizontal,
 /area/ship/nobledeck)
 "Gy" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /obj/structure/fluff/railing/wood{
 	dir = 8
@@ -5416,7 +5465,7 @@
 /turf/open/openspace,
 /area/outdoors/beach)
 "Lr" = (
-/obj/structure/fluff/statue/astrata/bling,
+/obj/structure/fluff/statue/selune/guard,
 /obj/item/candle/yellow/lit/infinite/strong,
 /turf/open/floor/metal/barograte,
 /area/ship/topdeck)
@@ -5443,7 +5492,7 @@
 /obj/structure/fluff/railing/wood{
 	dir = 4
 	},
-/obj/structure/guillotine,
+/obj/structure/bondage/x_pillory,
 /turf/open/floor/ruinedwood/darker,
 /area/ship/topdeck)
 "LH" = (
@@ -5609,9 +5658,10 @@
 /obj/structure/fluff/railing/border{
 	dir = 4
 	},
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall";
-	dir = 4
+/obj/effect/decal/borderfall{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = 8
 	},
 /turf/open/floor/wood,
 /area/ship/middeck)
@@ -5619,9 +5669,10 @@
 /obj/structure/fluff/railing/border{
 	dir = 4
 	},
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall";
-	dir = 4
+/obj/effect/decal/borderfall{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = 8
 	},
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_y = -32
@@ -5750,8 +5801,9 @@
 /turf/open/floor/tile,
 /area/indoors/town/vault)
 "NA" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
 	},
 /turf/open/floor/rooftop/green{
 	dir = 4
@@ -5889,9 +5941,9 @@
 /turf/open/floor/herringbone,
 /area/ship/middeck)
 "Ot" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /obj/structure/fluff/railing/wood{
 	dir = 4
@@ -5904,9 +5956,9 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/topdeck)
 "Ov" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /obj/structure/bookcase/random/myths,
 /turf/open/floor/ruinedwood/spiral,
@@ -5949,7 +6001,6 @@
 /turf/open/floor/metal/barograte,
 /area/ship/middeck)
 "OF" = (
-/obj/structure/bed/shit,
 /turf/open/floor/hay,
 /area/ship/shipbrig)
 "OJ" = (
@@ -5970,9 +6021,9 @@
 /turf/open/floor/wood,
 /area/ship/middeck)
 "OO" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /obj/structure/chair/bench/couch/lord_secondary,
 /obj/structure/fluff/walldeco/customflag{
@@ -6040,8 +6091,9 @@
 /turf/open/floor/churchmarble,
 /area/indoors/town/church/chapel)
 "Px" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
 	},
 /obj/structure/fluff/railing/border,
 /obj/machinery/light/fueled/wallfire/candle/r,
@@ -6064,8 +6116,9 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/nobledeck)
 "PI" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
 	},
 /obj/structure/fluff/railing/wood{
 	dir = 4
@@ -6107,8 +6160,15 @@
 /turf/open/openspace,
 /area/outdoors/beach)
 "PT" = (
-/obj/structure/toilet,
-/turf/open/floor/hay,
+/obj/effect/mapping_helpers/access/keyset/manor/dungeon,
+/obj/item/clothing/shirt/rags,
+/obj/structure/closet/crate/chest/neu_iron{
+	name = "prisoner chest";
+	desc = "used to store a prisoners belongings."
+	},
+/obj/effect/mapping_helpers/access/locker,
+/obj/item/weapon/whip,
+/turf/open/floor/ruinedwood/spiral,
 /area/ship/shipbrig)
 "PV" = (
 /obj/structure/fluff/walldeco/mageguild{
@@ -6274,9 +6334,9 @@
 /turf/open/floor/ruinedwood/darker,
 /area/ship/middeck)
 "QS" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /obj/structure/fluff/railing/wood{
 	dir = 4
@@ -6369,9 +6429,9 @@
 /turf/open/floor/blocks,
 /area/indoors/town/church)
 "Rw" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /obj/item/candle/yellow/lit/infinite/strong{
 	pixel_y = 22;
@@ -6574,8 +6634,9 @@
 /turf/open/floor/wood,
 /area/ship/middeck)
 "Sz" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
 	},
 /obj/structure/fluff/railing/border,
 /obj/item/reagent_containers/glass/bucket/wooden,
@@ -6613,7 +6674,7 @@
 /turf/open/floor/blocks/newstone/alt,
 /area/ship/middeck)
 "SJ" = (
-/obj/structure/window/stained/yellow,
+/obj/structure/window/stained/silver/alt,
 /obj/structure/curtain/bounty/dir{
 	dir = 4
 	},
@@ -7148,8 +7209,9 @@
 /turf/open/floor/carpet/lord/right,
 /area/ship/nobledeck)
 "VR" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
 	},
 /obj/structure/fluff/railing/wood,
 /turf/open/floor/twig,
@@ -7278,6 +7340,15 @@
 	},
 /turf/open/floor/metal/barograte,
 /area/ship/middeck)
+"WL" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 1
+	},
+/obj/structure/fluff/walldeco/selune_banner{
+	pixel_x = 32
+	},
+/turf/open/floor/churchmarble,
+/area/indoors/town/church/chapel)
 "WN" = (
 /obj/structure/fluff/railing/border{
 	dir = 10
@@ -7366,7 +7437,7 @@
 /turf/closed/wall/mineral/wooddark/horizontal,
 /area/ship/middeck)
 "Xu" = (
-/obj/structure/fluff/walldeco/psybanner{
+/obj/structure/fluff/walldeco/selune_banner/ban2{
 	pixel_y = -32
 	},
 /turf/open/floor/churchmarble,
@@ -7604,16 +7675,18 @@
 /obj/structure/fluff/railing/border{
 	dir = 4
 	},
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall";
-	dir = 4
+/obj/effect/decal/borderfall{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = 8
 	},
 /obj/effect/decal/cobbleedge{
 	dir = 9
 	},
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall";
-	dir = 4
+/obj/effect/decal/borderfall{
+	dir = 4;
+	pixel_y = 0;
+	pixel_x = 8
 	},
 /turf/open/floor/herringbone,
 /area/ship/middeck)
@@ -7630,7 +7703,7 @@
 /area/ship/nobledeck)
 "Zr" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/fluff/walldeco/psybanner{
+/obj/structure/fluff/walldeco/selune_banner/ban1{
 	pixel_x = -32
 	},
 /turf/open/floor/churchbrick,
@@ -7647,8 +7720,9 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/ship/topdeck)
 "Zw" = (
-/obj/effect/decal/cobbleedge{
-	icon_state = "borderfall"
+/obj/effect/decal/borderfall{
+	dir = 2;
+	pixel_y = -8
 	},
 /obj/structure/fluff/railing/border,
 /obj/structure/closet/crate/chest/wicker,
@@ -7674,9 +7748,9 @@
 /turf/open/water/bath,
 /area/ship/middeck)
 "Zz" = (
-/obj/effect/decal/cobbleedge{
+/obj/effect/decal/borderfall{
 	dir = 1;
-	icon_state = "borderfall"
+	pixel_y = 8
 	},
 /obj/structure/closet/crate/chest/old_crate,
 /obj/item/reagent_containers/food/snacks/hardtack,
@@ -15203,10 +15277,10 @@ Xi
 LY
 gp
 LC
-Gq
+xY
 gh
+xY
 Gq
-LC
 gp
 LY
 LY
@@ -15404,7 +15478,7 @@ iR
 hF
 LY
 gp
-Ha
+Dt
 xY
 gh
 xY
@@ -16012,7 +16086,7 @@ LY
 Lu
 WG
 oG
-WG
+yj
 WG
 aG
 Lu
@@ -16819,7 +16893,7 @@ bH
 aO
 gp
 OF
-PT
+OF
 gp
 nA
 UL
@@ -17427,7 +17501,7 @@ gp
 mR
 TK
 gH
-LI
+PT
 NY
 gp
 LY
@@ -20859,9 +20933,9 @@ Jq
 jG
 jG
 dO
-Yc
+gX
 eV
-Yc
+Xu
 TC
 jG
 lV
@@ -22674,7 +22748,7 @@ IR
 Iq
 bU
 Yc
-Yc
+AV
 Yc
 Wb
 Rn
@@ -22682,7 +22756,7 @@ bc
 Lj
 zn
 Yc
-Yc
+AV
 Yc
 bS
 Iq
@@ -22879,9 +22953,9 @@ gX
 Yc
 Yc
 Pt
-Rn
+WL
 xw
-Lj
+FD
 cg
 Yc
 Yc
@@ -58421,7 +58495,7 @@ BC
 BC
 BC
 av
-tf
+dA
 BD
 tL
 ES

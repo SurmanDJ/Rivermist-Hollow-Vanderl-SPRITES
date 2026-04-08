@@ -891,8 +891,8 @@
 	icon_state = "roofs"
 	droning_index = DRONING_BOAT
 	background_track = 'sound/music/area/topdeckdrone.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/topdeckdrone.ogg'
+	background_track_night = 'sound/music/area/topdeckdrone.ogg'
 	first_time_text = "The Voyager"
 	outdoors = TRUE
 
@@ -901,8 +901,8 @@
 	icon_state = "indoors"
 	droning_index = DRONING_BOAT
 	background_track = 'sound/music/area/topdeckdrone.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/topdeckdrone.ogg' // fix null
+	background_track_night = 'sound/music/area/topdeckdrone.ogg' // fix null
 	first_time_text = "Waist Deck"
 
 /area/ship/nobledeck
@@ -910,14 +910,14 @@
 	icon_state = "manor"
 	droning_index = DRONING_BOAT
 	background_track = 'sound/music/area/nobledeckdrone.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/nobledeckdrone.ogg' // fix null
+	background_track_night = 'sound/music/area/nobledeckdrone.ogg' // fix null
 
 /area/ship/shipbrig
 	name = "shipbrig"
 	icon_state = "cell"
 	droning_index = DRONING_BOAT
 	background_track = 'sound/music/area/shipbrig.ogg'
-	background_track_dusk = null
-	background_track_night = null
+	background_track_dusk = 'sound/music/area/shipbrig.ogg' // fix null
+	background_track_night = 'sound/music/area/shipbrig.ogg' // fix null
 	first_time_text = "The Brig"
