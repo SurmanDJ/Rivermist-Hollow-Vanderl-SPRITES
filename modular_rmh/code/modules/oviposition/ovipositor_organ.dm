@@ -5,6 +5,10 @@
 	sheath_type = SHEATH_TYPE_NORMAL
 	ovi_egg_type = OVI_EGG_NORMAL
 	egg_clutch_size = 1
+	var/custom_egg_name = ""
+	var/custom_egg_desc = ""
+	var/custom_egg_color = null
+	var/resource_dependent_yield = FALSE
 
 /obj/item/organ/genitals/penis/ovipositor/Insert(mob/living/M, special, drop_if_replaced)
 	. = ..()
@@ -98,6 +102,13 @@
 	customization_options = list(
 		OVI_EGG_NORMAL,
 	)
+	extra_customization_fields = list(
+		list("key" = "clutch_size", "label" = "Clutch Size", "type" = QUIRK_NUMBER, "default" = 1, "min" = 1, "max" = 6),
+		list("key" = "custom_name", "label" = "Custom Egg Name", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "Leave blank for default"),
+		list("key" = "custom_desc", "label" = "Custom Egg Desc", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "Leave blank for default"),
+		list("key" = "custom_color", "label" = "Egg Color (hex)", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "#RRGGBB or blank"),
+		list("key" = "resource_dependent", "label" = "Resource-Dependent Yield", "type" = QUIRK_SELECT, "default" = "No", "options" = list("No", "Yes")),
+	)
 
 /datum/quirk/peculiarity/ovipositor/is_available(datum/preferences/prefs)
 	if(!..())
@@ -116,7 +127,18 @@
 		customization_value = OVI_EGG_NORMAL
 
 	var/obj/item/organ/genitals/penis/ovipositor/ovipositor_organ = owner?.getorganslot(ORGAN_SLOT_PENIS)
-	ovipositor_organ?.set_egg_type(customization_value)
+	if(!ovipositor_organ)
+		return
+	ovipositor_organ.set_egg_type(customization_value)
+
+	var/clutch = text2num(get_extra_value("clutch_size", 1))
+	ovipositor_organ.set_clutch_size(max(1, clutch))
+
+	ovipositor_organ.custom_egg_name = get_extra_value("custom_name", "")
+	ovipositor_organ.custom_egg_desc = get_extra_value("custom_desc", "")
+	ovipositor_organ.custom_egg_color = sanitize_oviposition_color(get_extra_value("custom_color", ""))
+	ovipositor_organ.resource_dependent_yield = (get_extra_value("resource_dependent", "No") == "Yes")
+
 	set_ovipositor_functionality(ovipositor_organ, TRUE)
 
 /datum/quirk/peculiarity/ovipositor/on_remove()
@@ -133,6 +155,13 @@
 	customization_options = list(
 		OVI_EGG_NORMAL,
 	)
+	extra_customization_fields = list(
+		list("key" = "clutch_size", "label" = "Max Eggs in Womb", "type" = QUIRK_NUMBER, "default" = 3, "min" = 1, "max" = 6),
+		list("key" = "custom_name", "label" = "Custom Egg Name", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "Leave blank for default"),
+		list("key" = "custom_desc", "label" = "Custom Egg Desc", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "Leave blank for default"),
+		list("key" = "custom_color", "label" = "Egg Color (hex)", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "#RRGGBB or blank"),
+		list("key" = "resource_dependent", "label" = "Resource-Dependent Yield", "type" = QUIRK_SELECT, "default" = "No", "options" = list("No", "Yes")),
+	)
 
 /datum/quirk/peculiarity/egg_layer/is_available(datum/preferences/prefs)
 	if(!..())
@@ -147,12 +176,46 @@
 	if(!customization_value || !(customization_value in customization_options))
 		customization_value = OVI_EGG_NORMAL
 
-	if(owner)
-		ADD_TRAIT(owner, TRAIT_EGG_LAYER, "[type]")
+	if(!owner)
+		return
+
+	ADD_TRAIT(owner, TRAIT_EGG_LAYER, "[type]")
+
+	var/obj/item/organ/genitals/filling_organ/vagina/vagina = owner.getorganslot(ORGAN_SLOT_VAGINA)
+	if(vagina)
+		var/clutch = text2num(get_extra_value("clutch_size", 3))
+		vagina.oviposition_egg_production_limit = max(1, clutch)
+		vagina.custom_egg_name = get_extra_value("custom_name", "")
+		vagina.custom_egg_desc = get_extra_value("custom_desc", "")
+		vagina.custom_egg_color = sanitize_oviposition_color(get_extra_value("custom_color", ""))
+		vagina.resource_dependent_yield = (get_extra_value("resource_dependent", "No") == "Yes")
 
 /datum/quirk/peculiarity/egg_layer/on_remove()
-	if(owner)
-		REMOVE_TRAIT(owner, TRAIT_EGG_LAYER, "[type]")
+	if(!owner)
+		return
+
+	REMOVE_TRAIT(owner, TRAIT_EGG_LAYER, "[type]")
+
+	var/obj/item/organ/genitals/filling_organ/vagina/vagina = owner.getorganslot(ORGAN_SLOT_VAGINA)
+	if(vagina)
+		vagina.oviposition_egg_production_limit = initial(vagina.oviposition_egg_production_limit)
+		vagina.custom_egg_name = ""
+		vagina.custom_egg_desc = ""
+		vagina.custom_egg_color = null
+		vagina.resource_dependent_yield = FALSE
 
 /datum/quirk/peculiarity/egg_layer/get_option_name(option)
 	return get_oviposition_egg_type_option_name(option)
+
+/// Validates a hex color string for oviposition egg tinting. Returns null if invalid.
+/proc/sanitize_oviposition_color(color_input)
+	if(!color_input || !istext(color_input))
+		return null
+	var/color = trim(color_input)
+	if(!length(color))
+		return null
+	// Accept #RGB, #RRGGBB, #RRGGBBAA formats
+	var/static/regex/hex_color = regex("^#\[0-9a-fA-F\]{3}(\[0-9a-fA-F\]{3}(\[0-9a-fA-F\]{2})?)?$")
+	if(!hex_color.Find(color))
+		return null
+	return color

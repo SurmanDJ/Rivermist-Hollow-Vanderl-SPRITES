@@ -2,11 +2,12 @@
 	if(!S)
 		return
 
-	// Save as list of lists: list(list("type" = type, "value" = value), ...)
+	// Save as list of lists: list(list("type" = type, "value" = value, "extra" = list(...)), ...)
 	var/list/quirk_data = list()
 	for(var/quirk_type in quirks)
 		var/custom_val = quirk_customizations[quirk_type]
-		quirk_data += list(list("type" = quirk_type, "value" = custom_val))
+		var/list/extra_val = quirk_extra_customizations[quirk_type]
+		quirk_data += list(list("type" = quirk_type, "value" = custom_val, "extra" = extra_val))
 
 	WRITE_FILE(S["quirks"], quirk_data)
 
@@ -16,6 +17,7 @@
 
 	quirks = list()
 	quirk_customizations = list()
+	quirk_extra_customizations = list()
 
 	var/list/quirk_data
 	S["quirks"] >> quirk_data
@@ -28,11 +30,14 @@
 			continue
 		var/quirk_type = entry["type"]
 		var/custom_val = entry["value"]
+		var/list/extra_val = entry["extra"]
 
 		if(ispath(quirk_type, /datum/quirk))
 			quirks += quirk_type
 			if(custom_val)
 				quirk_customizations[quirk_type] = custom_val
+			if(islist(extra_val) && length(extra_val))
+				quirk_extra_customizations[quirk_type] = extra_val
 
 	validate_quirks()
 
@@ -46,6 +51,21 @@
 
 /datum/preferences/proc/get_quirk_customization(quirk_type)
 	return quirk_customizations[quirk_type]
+
+/datum/preferences/proc/set_quirk_extra_customization(quirk_type, key, value)
+	if(!(quirk_type in quirks))
+		return FALSE
+	if(!islist(quirk_extra_customizations[quirk_type]))
+		quirk_extra_customizations[quirk_type] = list()
+	quirk_extra_customizations[quirk_type][key] = value
+	save_character()
+	return TRUE
+
+/datum/preferences/proc/get_quirk_extra_customization(quirk_type, key)
+	var/list/extra = quirk_extra_customizations[quirk_type]
+	if(islist(extra))
+		return extra[key]
+	return null
 
 /datum/preferences/proc/validate_quirks()
 	if(!quirks || !islist(quirks))
@@ -175,6 +195,7 @@
 	if(quirk_type in quirks)
 		quirks -= quirk_type
 		quirk_customizations -= quirk_type
+		quirk_extra_customizations -= quirk_type
 
 		// After removing a quirk, validate that the remaining quirks are still affordable
 		var/balance = calculate_quirk_balance()
@@ -196,6 +217,7 @@
 /datum/preferences/proc/clear_quirks()
 	quirks = list()
 	quirk_customizations = list()
+	quirk_extra_customizations = list()
 	save_character()
 
 /datum/preferences/proc/apply_quirks_to_character(mob/living/carbon/human/H)
@@ -251,7 +273,8 @@
 	// Apply valid quirks to character
 	for(var/quirk_type in quirks)
 		var/custom_val = quirk_customizations[quirk_type]
-		H.add_quirk(quirk_type, custom_val)
+		var/list/extra_val = quirk_extra_customizations[quirk_type]
+		H.add_quirk(quirk_type, custom_val, extra_val)
 
 	// Save if anything changed
 	if(length(quirks) != length(valid_quirks))
@@ -425,6 +448,43 @@
 			dat += "</select>"
 			dat += "</div>"
 
+		// Extra customization fields
+		var/list/extra_fields = quirk.extra_customization_fields
+		if(LAZYLEN(extra_fields))
+			for(var/list/field in extra_fields)
+				var/field_key = field["key"]
+				var/field_label = field["label"]
+				var/field_type = field["type"]
+				var/field_current = get_quirk_extra_customization(quirk_type, field_key)
+				if(isnull(field_current))
+					field_current = field["default"]
+
+				dat += "<div class='quirk-customization'>"
+				dat += "<label>[field_label]:</label>"
+
+				if(field_type == QUIRK_TEXT)
+					var/field_placeholder = field["placeholder"] || ""
+					dat += "<input type='text' class='quirk-text-input' data-quirk='\ref[quirk_type]' data-field='[field_key]' "
+					dat += "placeholder='[field_placeholder]' value='[field_current ? field_current : ""]' "
+					dat += "onchange='updateQuirkExtraField(this)' onclick='event.stopPropagation()' maxlength='64' />"
+
+				else if(field_type == QUIRK_NUMBER)
+					var/field_min = field["min"] || 1
+					var/field_max = field["max"] || 10
+					dat += "<input type='number' class='quirk-text-input' data-quirk='\ref[quirk_type]' data-field='[field_key]' "
+					dat += "value='[field_current]' min='[field_min]' max='[field_max]' "
+					dat += "onchange='updateQuirkExtraField(this)' onclick='event.stopPropagation()' />"
+
+				else if(field_type == QUIRK_SELECT)
+					var/list/field_options = field["options"]
+					dat += "<select class='quirk-select' data-quirk='\ref[quirk_type]' data-field='[field_key]' onchange='updateQuirkExtraSelect(this)'>"
+					for(var/opt in field_options)
+						var/opt_selected = (field_current == opt) ? "selected" : ""
+						dat += "<option value='[opt]' [opt_selected]>[opt]</option>"
+					dat += "</select>"
+
+				dat += "</div>"
+
 		dat += "<div class='quirk-status'>Click to remove</div>"
 		dat += "</div>"
 
@@ -472,6 +532,16 @@
 
 		if(quirk_ref)
 			prefs.set_quirk_customization(quirk_ref, text_value)
+		return TRUE
+
+	if(href_list["quirk_extra_field"])
+		var/quirk_ref = locate(href_list["quirk_extra_field"])
+		var/field_key = href_list["field_key"]
+		var/field_value = href_list["field_value"]
+
+		if(quirk_ref && field_key)
+			prefs.set_quirk_extra_customization(quirk_ref, field_key, field_value)
+			prefs.open_quirk_menu(usr)
 		return TRUE
 
 	if(href_list["quirk_clear"])

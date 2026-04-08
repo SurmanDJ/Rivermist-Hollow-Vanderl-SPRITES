@@ -44,10 +44,11 @@
 /datum/oviposition_egg_profile/proc/apply_to_egg(obj/item/oviposition_egg/egg)
 	if(!egg)
 		return
-	egg.name = display_name
-	egg.desc = display_desc
-	egg.icon_state = display_icon_state
-	egg.color = display_color
+	// Apply base profile values, then let player custom overrides take priority
+	egg.name = egg.custom_egg_name ? egg.custom_egg_name : display_name
+	egg.desc = egg.custom_egg_desc ? egg.custom_egg_desc : display_desc
+	egg.icon_state = egg.custom_egg_color ? "egg_color" : display_icon_state
+	egg.color = egg.custom_egg_color ? egg.custom_egg_color : display_color
 	if(display_icon)
 		egg.icon = display_icon
 	egg.auto_hatch_when_laid = auto_hatch_when_laid
@@ -223,6 +224,12 @@
 	var/mob/living/oviposition_mother
 	var/oviposition_mother_name
 	var/list/oviposition_mother_features
+	/// Player-set custom name override (blank = use profile default)
+	var/custom_egg_name = ""
+	/// Player-set custom description override
+	var/custom_egg_desc = ""
+	/// Player-set custom color override (hex string, uses grayscale icon_state)
+	var/custom_egg_color = null
 	var/auto_hatch_when_laid = TRUE
 	var/hatch_inside_host = FALSE
 	var/newborn_start_scale = 0.5
@@ -246,6 +253,15 @@
 		egg_type = new_egg_type
 	update_egg_appearance()
 	return egg_type
+
+/obj/item/oviposition_egg/proc/apply_custom_overrides(c_name, c_desc, c_color)
+	if(c_name && istext(c_name) && length(c_name))
+		custom_egg_name = c_name
+	if(c_desc && istext(c_desc) && length(c_desc))
+		custom_egg_desc = c_desc
+	if(c_color && istext(c_color) && length(c_color))
+		custom_egg_color = c_color
+	update_egg_appearance()
 
 /obj/item/oviposition_egg/proc/set_oviposition_mother(mob/living/new_mother)
 	oviposition_mother = new_mother

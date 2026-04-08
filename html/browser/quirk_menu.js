@@ -55,6 +55,34 @@ function updateQuirkText(inputElement) {
 	window.location.href = '?quirk_customize=' + quirkRef + '&value=' + encodeURIComponent(textValue);
 }
 
+// Handle extra customization field changes (text/number inputs)
+function updateQuirkExtraField(inputElement) {
+	var quirkRef = inputElement.getAttribute('data-quirk');
+	var fieldKey = inputElement.getAttribute('data-field');
+	var fieldValue = inputElement.value;
+
+	if (!quirkRef || !fieldKey) {
+		return;
+	}
+
+	saveState();
+	window.location.href = '?quirk_extra_field=' + quirkRef + '&field_key=' + encodeURIComponent(fieldKey) + '&field_value=' + encodeURIComponent(fieldValue);
+}
+
+// Handle extra customization field changes (select dropdowns)
+function updateQuirkExtraSelect(selectElement) {
+	var quirkRef = selectElement.getAttribute('data-quirk');
+	var fieldKey = selectElement.getAttribute('data-field');
+	var fieldValue = selectElement.value;
+
+	if (!quirkRef || !fieldKey) {
+		return;
+	}
+
+	saveState();
+	window.location.href = '?quirk_extra_field=' + quirkRef + '&field_key=' + encodeURIComponent(fieldKey) + '&field_value=' + encodeURIComponent(fieldValue);
+}
+
 // Debounced text update (optional - for auto-saving as user types)
 var textUpdateTimeout;
 function updateQuirkTextDebounced(inputElement) {

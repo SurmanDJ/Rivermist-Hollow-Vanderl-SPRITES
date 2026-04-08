@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"Of the Cabal" = TRAIT_CABAL,
 		"Unleechable" = TRAIT_LEECHIMMUNE,
 		"Good Lover" = TRAIT_GOODLOVER,
-		"Vaginal Egg Layer" = TRAIT_EGG_LAYER,
+		"Egg Layer" = TRAIT_EGG_LAYER,
 		"Webwalker" = TRAIT_WEBWALK,
 		"Brushwalker" = TRAIT_BRUSHWALK,
 		"Dead Nose" = TRAIT_DEADNOSE,

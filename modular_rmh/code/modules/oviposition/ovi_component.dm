@@ -76,7 +76,21 @@
 	var/obj/item/organ/genitals/penis/genital = parent
 	if(genital)
 		eggs_clutch_size = max(1, round(genital.egg_clutch_size || 1))
-	return max(1, round(eggs_clutch_size || 1))
+	var/base = max(1, round(eggs_clutch_size || 1))
+	// Resource-dependent yield: scale clutch by carrier's nutriment level
+	var/obj/item/organ/genitals/penis/ovipositor/ovi = parent
+	if(istype(ovi) && ovi.resource_dependent_yield && carrier)
+		base = get_resource_adjusted_clutch(carrier, base)
+	return base
+
+/// Scales a base clutch size by the carrier's internal nutriment. Full nutrition = full clutch.
+/proc/get_resource_adjusted_clutch(mob/living/carrier, base_clutch)
+	if(!carrier || base_clutch <= 0)
+		return max(1, base_clutch)
+	var/nutriment = carrier.get_reagent_amount(/datum/reagent/consumable/nutriment)
+	// 0 nutriment = 1 egg minimum, 5+ nutriment = full clutch, linear scale between
+	var/ratio = clamp(nutriment / 5, 0, 1)
+	return max(1, round(base_clutch * ratio))
 
 /datum/component/ovipositor/proc/get_max_stored_eggs()
 	return max(3, get_clutch_size())
@@ -178,6 +192,8 @@
 	var/egg_type = ovipositor.ovi_egg_type
 	if(egg_type == initial(ovipositor.ovi_egg_type))
 		egg_type = get_species_oviposition_egg_type(carrier) || egg_type
+	// Apply player custom overrides before setting type (so profile apply respects them)
+	egg.apply_custom_overrides(ovipositor.custom_egg_name, ovipositor.custom_egg_desc, ovipositor.custom_egg_color)
 	egg.set_egg_type(egg_type)
 	egg.set_oviposition_mother(carrier)
 	return egg

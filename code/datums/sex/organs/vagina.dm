@@ -29,6 +29,11 @@
 	var/oviposition_egg_production_interval = 20 MINUTES
 	var/oviposition_egg_production_limit = 3
 	var/next_oviposition_egg_generation = 0
+	// Player-customizable egg appearance overrides
+	var/custom_egg_name = ""
+	var/custom_egg_desc = ""
+	var/custom_egg_color = null
+	var/resource_dependent_yield = FALSE
 
 /obj/item/organ/genitals/filling_organ/vagina/Insert(mob/living/M, special, drop_if_replaced)
 	. = ..()
@@ -75,18 +80,35 @@
 	if(oviposition_egg_production_limit <= 0 || oviposition_egg_production_interval <= 0)
 		return FALSE
 
+	var/effective_interval = oviposition_egg_production_interval
+	// Resource-dependent: nutriment speeds up egg formation (halved interval at 10+ nutriment)
+	if(resource_dependent_yield && owner)
+		var/nutriment = owner.get_reagent_amount(/datum/reagent/consumable/nutriment)
+		if(nutriment <= 0)
+			// Only warn occasionally (when timer would have fired)
+			if(next_oviposition_egg_generation && world.time >= next_oviposition_egg_generation)
+				to_chat(owner, span_warning("My [get_oviposition_location_name()] aches faintly — I need to eat for my body to form eggs."))
+				next_oviposition_egg_generation = world.time + oviposition_egg_production_interval
+			return FALSE // No nutriment = no egg production
+		var/speed_ratio = clamp(nutriment / 10, 0.25, 1)
+		effective_interval = round(oviposition_egg_production_interval / speed_ratio)
+
 	if(!next_oviposition_egg_generation)
-		next_oviposition_egg_generation = world.time + oviposition_egg_production_interval
+		next_oviposition_egg_generation = world.time + effective_interval
 		return FALSE
 	if(world.time < next_oviposition_egg_generation)
 		return FALSE
 
-	next_oviposition_egg_generation = world.time + oviposition_egg_production_interval
+	next_oviposition_egg_generation = world.time + effective_interval
 
 	if(length(get_oviposition_eggs()) >= oviposition_egg_production_limit)
+		if(prob(5)) // Occasional reminder
+			to_chat(owner, span_love("My [get_oviposition_location_name()] feels full and heavy with eggs."))
 		return FALSE
 
 	var/obj/item/oviposition_egg/egg = new
+	// Apply player custom overrides before setting type
+	egg.apply_custom_overrides(custom_egg_name, custom_egg_desc, custom_egg_color)
 	var/egg_type = get_generated_oviposition_egg_type()
 	if(egg_type)
 		egg.set_egg_type(egg_type)
