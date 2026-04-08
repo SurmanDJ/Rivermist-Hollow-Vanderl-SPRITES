@@ -265,14 +265,14 @@
 	<HR>
 	<BR><B>Head:</B> <A href='byond://?src=[REF(src)];item=[ITEM_SLOT_HEAD]'>[(head && !(head.item_flags & ABSTRACT)) ? head : "Nothing"]</A>"}
 
-	var/obscured = check_obscured_slots()
+	var/list/obscured = check_obscured_slots()
 
-	if(obscured & ITEM_SLOT_NECK)
+	if(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_NECK)
 		dat += "<BR><B>Neck:</B> Obscured"
 	else
 		dat += "<BR><B>Neck:</B> <A href='byond://?src=[REF(src)];item=[ITEM_SLOT_NECK]'>[(wear_neck && !(wear_neck.item_flags & ABSTRACT)) ? (wear_neck) : "Nothing"]</A>"
 
-	if(obscured & ITEM_SLOT_MASK)
+	if(obscured[SLOT_CHECK_REGULAR] & ITEM_SLOT_MASK)
 		dat += "<BR><B>Mask:</B> Obscured"
 	else
 		dat += "<BR><B>Mask:</B> <A href='byond://?src=[REF(src)];item=[ITEM_SLOT_MASK]'>[(wear_mask && !(wear_mask.item_flags & ABSTRACT))	? wear_mask	: "Nothing"]</a>"
@@ -349,6 +349,20 @@
 	sleep(30)
 	if(fire_stacks + divine_fire_stacks <= 0)
 		ExtinguishMob(TRUE)
+	return
+
+/mob/living/carbon/resist_leash()
+	if(!has_status_effect(/datum/status_effect/leash_pet))
+		return
+	to_chat(src, span_notice("I reach for the hook on my collar..."))
+	var/deleash = 5 SECONDS
+	if(handcuffed)
+		deleash = 20 SECONDS
+	if(do_after(src, deleash, target = src))
+		if(QDELETED(src))
+			return
+		to_chat(src, "<span class='warning'>[src] has removed their leash!</span>")
+		remove_status_effect(/datum/status_effect/leash_pet)
 	return
 
 /mob/living/carbon/resist_restraints(instant = FALSE)
@@ -513,7 +527,8 @@
 	. += "CON: \Roman[GET_MOB_ATTRIBUTE_VALUE(src, STAT_CONSTITUTION)]"
 	. += "END: \Roman[GET_MOB_ATTRIBUTE_VALUE(src, STAT_ENDURANCE)]"
 	. += "SPD: \Roman[GET_MOB_ATTRIBUTE_VALUE(src, STAT_SPEED)]"
-	. += "PATRON: [uppertext(patron.name)]"
+	if(patron)
+		. += "PATRON: [uppertext(patron.name)]"
 
 /mob/living/carbon/attack_ui(slot)
 	if(!has_hand_for_held_index(active_hand_index))
@@ -1016,7 +1031,8 @@
 		// regenerate_organs(regenerate_existing = (heal_flags & HEAL_REFRESH_ORGANS))
 		regenerate_organs()
 		var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
-		B?.brain_death = FALSE
+		if(B)
+			B?.brain_death = FALSE
 
 	if(heal_flags & HEAL_TRAUMAS)
 		cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)
@@ -1092,8 +1108,12 @@
 /mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
 	bodyparts += new_bodypart
 	new_bodypart.set_owner(src)
-
 	switch(new_bodypart.body_part)
+		if(LEGS)
+			if(istype(new_bodypart, /obj/item/bodypart/taur))
+				set_num_legs(num_legs + 2)
+				if(!new_bodypart.bodypart_disabled)
+					set_usable_legs(usable_legs + 2)
 		if(LEG_LEFT, LEG_RIGHT)
 			set_num_legs(num_legs + 1)
 			if(!new_bodypart.bodypart_disabled)
@@ -1108,6 +1128,11 @@
 	bodyparts -= old_bodypart
 
 	switch(old_bodypart.body_part)
+		if(LEGS)
+			if(istype(old_bodypart, /obj/item/bodypart/taur))
+				set_num_legs(num_legs - 2)
+				if(!old_bodypart.bodypart_disabled)
+					set_usable_legs(usable_legs - 2)
 		if(LEG_LEFT, LEG_RIGHT)
 			set_num_legs(num_legs - 1)
 			if(!old_bodypart.bodypart_disabled)
@@ -1285,6 +1310,8 @@
 		return
 	if(mouth?.muteinmouth)
 		return FALSE
+	if(mouth_blocked)
+		return FALSE
 	for(var/obj/item/grabbing/grab in grabbedby)
 		if(grab.sublimb_grabbed == BODY_ZONE_PRECISE_MOUTH)
 			return FALSE
@@ -1329,7 +1356,7 @@
 /mob/living/carbon/get_total_weight()
 	var/held_weight = 0
 
-	for(var/obj/item/worn_item as anything in (get_equipped_items(TRUE) + held_items))
+	for(var/obj/item/worn_item as anything in (get_equipped_items(TRUE) + held_items + get_organs_items()))
 		if(isnull(worn_item))
 			continue
 		var/modifier = 1
@@ -1360,6 +1387,16 @@
 		held_weight += worn_item.get_stored_weight(HAS_TRAIT(src, TRAIT_AMAZING_BACK))
 
 	return held_weight
+
+/mob/living/carbon/encumbrance_to_dodge()
+	var/encumbrance = get_encumbrance()
+	if(!HAS_TRAIT(src, TRAIT_DODGEEXPERT))
+		encumbrance *= 1.5
+	if(encumbrance <= 0.3 && HAS_TRAIT(src, TRAIT_DODGEEXPERT))
+		return 1
+	if(encumbrance >= 1)
+		return 0
+	return 1 - (encumbrance * 1)
 
 /mob/living/carbon/encumbrance_to_speed()
 	var/exponential = (2.71 ** -(get_encumbrance() - 0.6)) * 10

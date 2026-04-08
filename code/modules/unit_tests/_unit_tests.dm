@@ -74,6 +74,7 @@
 #include "load_map_security.dm"
 #include "lootpanel.dm"
 #include "map_landmarks.dm"
+#include "mana_capacity_enchantment.dm"
 #include "mapping.dm"
 #include "mindbound_actions.dm"
 #include "pocket_access.dm"

@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/undirected/conjure_item/summon_leech
 	name = "Summon Leech"
-	desc = "Summon a leech from Abyssor's domain."
+	desc = "Summon a leech from the wetlands."
 	button_icon_state = "curse2"
 	sound = 'sound/foley/jumpland/waterland.ogg'
 
@@ -8,7 +8,7 @@
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	associated_skill = /datum/attribute/skill/magic/holy
 
-	invocation = "Abyssor bless me with one of your servants!"
+	invocation = "Come to my aid, pitiful worm!"
 	invocation_type = INVOCATION_WHISPER
 
 	cooldown_time = 1 MINUTES

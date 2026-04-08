@@ -222,6 +222,10 @@
 	return ..()
 
 /datum/status_effect/shapechange_mob/from_spell/after_unchange()
+	var/datum/mind/shifted_mind = owner.mind
+	if(shifted_mind?.current == owner)
+		shifted_mind.transfer_to(caster_mob, TRUE)
+
 	. = ..()
 	var/datum/action/cooldown/spell/undirected/shapeshift/source_spell = source_weakref?.resolve()
 	if(QDELETED(source_spell) || !source_spell.convert_damage)

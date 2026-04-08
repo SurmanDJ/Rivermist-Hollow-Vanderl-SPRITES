@@ -128,6 +128,10 @@
 		new_shape.real_name = caster.real_name
 		new_shape.name = caster.real_name
 
+	var/datum/mind/caster_mind = caster.mind
+	if(caster_mind?.current == caster)
+		caster_mind.transfer_to(new_shape, TRUE)
+
 	return new_shape
 
 /// Actually does the un-shapeshift, from the caster. (Caster is a shapeshifted mob.)

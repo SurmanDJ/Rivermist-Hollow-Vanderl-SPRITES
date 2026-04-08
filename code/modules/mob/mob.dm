@@ -118,24 +118,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 	attributes.raw_attribute_list[STAT_FORTUNE]      = initial(base_fortune)
 	attributes.update_attributes()
 
-/mob/living/proc/get_lying_direction_name()
-	if(body_position != LYING_DOWN)
-		return null
-	switch(lying_angle)
-		if(90)
-			return "left"
-		if(270)
-			return "right"
-	return "side"
-
-/mob/living/proc/swap_lying_direction()
-	if(body_position != LYING_DOWN)
-		return
-	if(lying_angle == 90)
-		set_lying_angle(270)
-	else
-		set_lying_angle(90)
-
 /mob/living/carbon/human/proc/isautomaton()
 	return istype(dna?.species, /datum/species/automaton)
 

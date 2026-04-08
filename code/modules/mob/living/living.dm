@@ -27,6 +27,11 @@
 	if(has_reflection)
 		create_reflection()
 	recalculate_stats()
+	//for organ spawning
+	if(ai_controller)
+		var/datum/ai_planning_subtree/horny/hornybehavior = locate() in ai_controller.planning_subtrees
+		if(hornybehavior && !GetComponent(/datum/component/arousal))
+			AddComponent(/datum/component/arousal)
 
 /mob/living/Destroy()
 	if(FACTION_MATTHIOS in faction)
@@ -876,6 +881,30 @@
 
 /mob/living/proc/set_lying_down(new_lying_angle)
 	set_body_position(LYING_DOWN)
+/mob/living/proc/get_lying_direction_name()
+	if(body_position != LYING_DOWN)
+		return null
+
+	switch(SIMPLIFY_DEGREES(lying_angle))
+		if(90)
+			return "east"
+		if(180)
+			return "south"
+		if(270)
+			return "west"
+		if(0)
+			return "north"
+
+	return null
+
+/mob/living/proc/swap_lying_direction()
+	if(body_position != LYING_DOWN)
+		to_chat(src, span_warning("I need to be lying down first."))
+		return FALSE
+
+	set_lying_angle(REVERSE_ANGLE(lying_angle))
+	visible_message(span_notice("[src] shifts around and turns the other way."), span_notice("I shift around and turn the other way."))
+	return TRUE
 
 /// Proc to append behavior related to lying down.
 /mob/living/proc/on_lying_down(new_lying_angle)
@@ -1025,6 +1054,11 @@
 
 	set_disgust(0)
 	cure_husk()
+	set_nutrition(NUTRITION_LEVEL_FED + 50)
+	bodytemperature = BODYTEMP_NORMAL
+	remove_status_effect(/datum/status_effect/temporary_blindness)
+	set_eye_blur(0)
+	remove_status_effect(/datum/status_effect/dizziness)
 
 	if(heal_flags & HEAL_WOUNDS)
 		for(var/datum/wound/wound as anything in get_wounds())
@@ -1055,6 +1089,7 @@
 
 	updatehealth()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
+	reapply_quirks()
 	SEND_SIGNAL(src, COMSIG_LIVING_POST_FULLY_HEAL, heal_flags)
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
@@ -1262,7 +1297,14 @@
 		if(on_fire)
 			resist_fire() //stop, drop, and roll
 		else if(last_special <= world.time)
-			resist_restraints() //trying to remove cuffs.
+			if(has_status_effect(/datum/status_effect/leash_pet))
+				resist_leash() //trying to remove a leash.
+			else
+				resist_restraints() //trying to remove cuffs.
+				var/datum/component/riding/human/riding_datum = GetComponent(/datum/component/riding/human)
+				if(HAS_TRAIT(src, TRAIT_PONYGIRL_RIDEABLE) && riding_datum)
+					for(var/mob/M in buckled_mobs)
+						riding_datum.force_dismount(M)
 
 /mob/living/carbon/human/verb/ic_pray()
 	set name = "Prayer"
@@ -1293,6 +1335,61 @@
 	playsound(src, 'sound/misc/surrender.ogg', 100, FALSE, -1)
 	toggle_cmode()
 	addtimer(VARSET_CALLBACK(src, surrendering, FALSE), 15 SECONDS)
+/mob/living
+	var/had_pacifist = FALSE
+
+/mob/living/Topic(href, href_list)
+	if(href_list["swap_lying_direction"])
+		if(usr != src)
+			return
+		swap_lying_direction()
+		return TRUE
+
+	return ..()
+
+/mob/living/verb/toggle_submit()
+	set name = "Toggle Yield"
+	set category = "IC"
+
+	if(stat)
+		return
+
+	if(!surrendering)
+		if(alert(src, "Yield in surrender?",,"YES","NO") == "YES")
+			if(HAS_TRAIT(src, TRAIT_PACIFISM))
+				had_pacifist = TRUE
+			else
+				ADD_TRAIT(src, TRAIT_PACIFISM, TRAIT_GENERIC)
+			surrendering = TRUE
+			changeNext_move(CLICK_CD_EXHAUSTED)
+			var/image/flaggy = image('icons/effects/effects.dmi',src,"surrender",ABOVE_MOB_LAYER)
+			flaggy.appearance_flags = RESET_TRANSFORM|KEEP_APART
+			flaggy.transform = null
+			flaggy.pixel_y = 12
+			flick_overlay_view(flaggy, 150)
+			drop_all_held_items()
+			Stun(20)
+			Knockdown(200)
+			src.visible_message("<span class='notice'>[src] yields utterly - they cannot harm anyone like this!</span>")
+			playsound(src, 'sound/misc/surrender.ogg', 100, FALSE, -1)
+			log_attack("[key_name(src)] has toggled yield ON!")
+	else
+		if(IsKnockdown() || IsStun())
+			to_chat(src, span_warn("I can't rescind my yield when knocked down!"))
+			return
+
+		if(alert(src, "Rescind your yield?",,"YES","NO") == "YES")
+			surrendering = FALSE
+			if(!had_pacifist)
+				REMOVE_TRAIT(src, TRAIT_PACIFISM, TRAIT_GENERIC)
+			had_pacifist = FALSE
+			src.visible_message("<span class='notice'>[src] no longer yields!</span>")
+
+/mob/living/verb/swap_lying_direction_verb()
+	set name = "Swap Lying Direction"
+	set category = "IC"
+
+	swap_lying_direction()
 
 /mob/proc/stop_attack(message = FALSE)
 	if(atkswinging)
@@ -1674,6 +1771,9 @@
 /mob/living/proc/resist_buckle()
 	buckled.user_unbuckle_mob(src,src)
 	return TRUE
+
+/mob/living/proc/resist_leash()
+	return
 
 /mob/living/proc/resist_fire()
 	return
@@ -2762,6 +2862,9 @@
 
 /mob/living/proc/get_total_weight()
 	return 0
+
+/mob/living/proc/encumbrance_to_dodge()
+	return 1
 
 /mob/living/proc/encumbrance_to_speed()
 

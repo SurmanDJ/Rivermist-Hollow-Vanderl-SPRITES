@@ -25,7 +25,10 @@
 		return
 	affecting_mobs[source] |= equipper
 
+	// Keep overload tolerance aligned with temporary hardcap boosts so
+	// mana-capacity gear does not create a lethal "legal capacity" range.
 	equipper.mana_pool?.set_max_mana(equipper.mana_pool.maximum_mana_capacity + hardcap_increase, change_softcap = FALSE)
+	equipper.mana_overload_threshold += hardcap_increase
 
 
 /datum/enchantment/mana_capacity/proc/on_drop(datum/source, mob/living/carbon/user)
@@ -34,8 +37,9 @@
 		affecting_mobs[source] = list()
 	if(!istype(user))
 		return
-	if(user in affecting_mobs[source])
+	if(!(user in affecting_mobs[source]))
 		return
 	affecting_mobs[source] -= user
 
 	user.mana_pool?.set_max_mana(user.mana_pool.maximum_mana_capacity - hardcap_increase)
+	user.mana_overload_threshold -= hardcap_increase
