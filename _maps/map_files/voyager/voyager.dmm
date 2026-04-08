@@ -572,12 +572,6 @@
 /obj/structure/industrial_lift/tram,
 /turf/open/openspace,
 /area/outdoors/beach)
-"dA" = (
-/obj/structure/train/far_travel,
-/turf/open/floor/rooftop/green{
-	dir = 8
-	},
-/area/outdoors/beach)
 "dD" = (
 /obj/structure/dye_bin,
 /turf/open/floor/wood,
@@ -3574,15 +3568,6 @@
 	},
 /turf/open/floor/tile/diamond/purple,
 /area/ship/middeck)
-"xH" = (
-/obj/structure/resurrection_rune{
-	icon = 'icons/obj/rune.dmi';
-	pixel_x = 0;
-	pixel_y = 0;
-	icon_state = "summon"
-	},
-/turf/open/floor/blocks,
-/area/indoors/town/church)
 "xJ" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 4
@@ -21345,7 +21330,7 @@ sF
 sF
 sF
 dO
-xH
+xz
 Aq
 uf
 dO
@@ -58495,7 +58480,7 @@ BC
 BC
 BC
 av
-dA
+tf
 BD
 tL
 ES
