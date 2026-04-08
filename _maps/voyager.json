@@ -5,8 +5,10 @@
 		"voyager.dmm"
 	],
 	"immigrant_origin": "Neverwinter",
-	"monarch_title": "Captain",
-	"monarch_title_f": "Captain",
+	"monarch_title": "Lord Captain",
+	"monarch_title_f": "Lord Captain",
+	"ruler_title": "Lord Captain",
+	"ruler_title_f": "Lord Captain",	
 	"other_z": [
 		"map_files/voyager/island_batch",
 		"map_files/voyager/island_batch2"

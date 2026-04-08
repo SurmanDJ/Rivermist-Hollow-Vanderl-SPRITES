@@ -24,6 +24,9 @@
 	var/monarch_title = "Lord"
 	var/monarch_title_f = "Lady"
 
+	var/ruler_title = "Burgmeister"
+	var/ruler_title_f = "Burgmeisterin"
+
 	var/traits = null
 	var/space_ruin_levels = 7
 	var/space_empty_levels = 1
@@ -104,6 +107,8 @@
 	immigrant_origin = json["immigrant_origin"]
 	monarch_title = json["monarch_title"]
 	monarch_title_f = json["monarch_title_f"]
+	ruler_title = json["ruler_title"]
+	ruler_title_f = json["ruler_title_f"]
 
 	map_file = json["map_file"]
 	if (istext(map_file))

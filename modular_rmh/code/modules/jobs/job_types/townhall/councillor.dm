@@ -35,6 +35,7 @@
 		/datum/job/advclass/councilor/clerk,
 		/datum/job/advclass/councilor/advisor,
 		/datum/job/advclass/councilor/spymaster,
+		/datum/job/advclass/councilor/first_mate,
 	)
 
 

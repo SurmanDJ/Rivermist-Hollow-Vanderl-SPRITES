@@ -38,12 +38,21 @@ GLOBAL_LIST_EMPTY(burgmeister_titles)
 		/datum/job/advclass/burgmeister/marshall,
 		/datum/job/advclass/burgmeister/elected,
 		/datum/job/advclass/burgmeister/patrician,
-		/datum/job/advclass/burgmeister/scholar
+		/datum/job/advclass/burgmeister/scholar,
+		/datum/job/advclass/burgmeister/lord_captain
 	)
 
 	mind_traits = list(
 		TRAIT_KNOW_KEEP_DOORS
 	)
+
+/datum/job/burgmeister/New()
+	. = ..()
+	if(SSmapping.config?.monarch_title)
+		honorary = SSmapping.config.ruler_title
+		honorary_f = SSmapping.config.monarch_title //in case we dont have a female title and they share
+	if(SSmapping.config?.monarch_title_f)
+		honorary_f = SSmapping.config.ruler_title_f
 
 /datum/job/burgmeister/get_informed_title(mob/mob, change_title = FALSE, new_title)
 	if(change_title)
@@ -149,9 +158,9 @@ GLOBAL_LIST_EMPTY(burgmeister_titles)
 
 /datum/outfit/burgmeister/marshall
 	name = "Burgmeister Marshall"
-	head = null
-	mask = null
-	neck = null
+	head = /obj/item/clothing/head/helmet/leather/tricorn/treasure_island
+	mask = /obj/item/clothing/head/wig
+	neck = /obj/item/clothing/neck/formal
 	cloak = /obj/item/clothing/cloak/ordinatorcape/townhall
 	armor = /obj/item/clothing/suit/roguetown/armor/leather/marshall
 	shirt = /obj/item/clothing/shirt/undershirt/fancy

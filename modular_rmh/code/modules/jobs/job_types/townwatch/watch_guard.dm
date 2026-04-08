@@ -21,6 +21,7 @@
 		/datum/job/advclass/watch_guard/bulwark,
 		/datum/job/advclass/watch_guard/halberdier,
 		/datum/job/advclass/watch_guard/sentinel,
+		/datum/job/advclass/watch_guard/marine,
 	)
 
 	give_bank_account = 30
