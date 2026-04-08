@@ -1,0 +1,55 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/wood,
+/area/pocket_dimension/lighting_test)
+"b" = (
+/turf/open/floor/wood,
+/area/pocket_dimension/lighting_test)
+"c" = (
+/obj/effect/landmark/pocket_dimension/entry,
+/turf/open/floor/wood,
+/area/pocket_dimension/lighting_test)
+"d" = (
+/obj/effect/landmark/pocket_dimension/exit,
+/turf/open/floor/wood,
+/area/pocket_dimension/lighting_test)
+"e" = (
+/obj/machinery/light/fueled/firebowl/stump,
+/turf/open/floor/wood,
+/area/pocket_dimension/lighting_test)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+e
+b
+a
+"}
+(3,1,1) = {"
+a
+b
+b
+b
+a
+"}
+(4,1,1) = {"
+a
+c
+b
+d
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+"}

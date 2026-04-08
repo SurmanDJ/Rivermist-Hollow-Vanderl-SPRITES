@@ -139,6 +139,8 @@
 	var/attunements_min
 
 	var/whitelist_req = FALSE //!
+	/// Stable database whitelist identifier for jobs and subclasses.
+	var/job_whitelist_id = null
 
 	var/banned_leprosy = TRUE
 	var/banned_lunatic = TRUE
@@ -151,6 +153,8 @@
 	var/give_bank_account = FALSE
 
 	var/can_random = TRUE
+
+	var/can_disguise_as = TRUE
 
 	/// Some jobs have unique combat mode music, because why not?
 	var/cmode_music
@@ -235,6 +239,26 @@
 	if(antag_job)
 		return RUNE_LINK_ANTAG
 	return RUNE_LINK_CITY
+
+/datum/job/proc/requires_job_whitelist()
+	return !!job_whitelist_id
+
+/datum/job/proc/player_has_job_whitelist(client/player_client)
+	if(!requires_job_whitelist())
+		return TRUE
+	if(!player_client)
+		return FALSE
+	if(!CONFIG_GET(flag/sql_enabled))
+		return TRUE
+	return player_client.is_job_whitelisted(job_whitelist_id)
+
+/datum/job/proc/player_has_required_whitelists(client/player_client)
+	if(!player_client)
+		return FALSE
+	if(CONFIG_GET(flag/usewhitelist))
+		if(whitelist_req && !player_client.whitelisted())
+			return FALSE
+	return player_has_job_whitelist(player_client)
 
 /datum/job/New()
 	. = ..()
@@ -698,6 +722,9 @@
 /datum/job/proc/get_informed_title(mob/mob, ignore_pronouns = FALSE)
 	if(mob.admin_title)
 		return mob.admin_title
+
+	if(mob.disguise_title_override)
+		return mob.disguise_title_override
 
 	if(title_override)
 		return title_override

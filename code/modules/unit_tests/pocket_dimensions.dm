@@ -2,8 +2,9 @@
 	var/obj/item/pocket_dimension_tester/tester_scroll = allocate(/obj/item/pocket_dimension_tester, run_loc_floor_bottom_left)
 	var/mob/living/carbon/human/tester = allocate(/mob/living/carbon/human, run_loc_floor_bottom_left)
 	var/turf/origin = get_turf(tester)
+	var/turf/moved_holder_turf = run_loc_floor_top_right
 
-	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance(REF(tester_scroll), tester_scroll.template_ref, POCKET_LIFECYCLE_HIBERNATE, 1)
+	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance(REF(tester_scroll), tester_scroll.template_ref, POCKET_LIFECYCLE_HIBERNATE, 1, tester_scroll)
 	TEST_ASSERT_NOTNULL(instance, "Pocket dimension instance should be created.")
 	TEST_ASSERT(instance.enter_mob(tester, origin), "Pocket dimension should accept a mob entry.")
 	TEST_ASSERT(instance.contains_turf(get_turf(tester)), "Tester should wind up inside the pocket dimension.")
@@ -12,8 +13,9 @@
 	TEST_ASSERT(instance.send_movable_inside(foreign_bag, origin), "Pocket dimension should accept foreign movables from outside.")
 	TEST_ASSERT(instance.contains_turf(get_turf(foreign_bag)), "Foreign items sent inside should count as in-pocket objects.")
 
+	tester_scroll.forceMove(moved_holder_turf)
 	TEST_ASSERT(instance.exit_mob(tester), "Pocket dimension should be able to return a mob.")
-	TEST_ASSERT_EQUAL(get_turf(tester), origin, "Tester should return to the entry turf.")
+	TEST_ASSERT_EQUAL(get_turf(tester), moved_holder_turf, "Tester should return to the holder's current turf.")
 	instance.last_touched = 0
 	TEST_ASSERT(instance.process_idle_lifecycle(), "Pocket dimension should hibernate when left idle.")
 	TEST_ASSERT(instance.is_hibernating(), "Pocket dimension should enter a hibernating state after idling out.")
@@ -22,7 +24,7 @@
 	TEST_ASSERT(instance.contains_turf(get_turf(foreign_bag)), "Foreign movables should be restored when a hibernating pocket wakes.")
 	TEST_ASSERT(SSpocket_dimensions.delete_instance(REF(tester_scroll)), "Pocket dimension should be deletable.")
 	TEST_ASSERT_NULL(SSpocket_dimensions.get_instance(REF(tester_scroll)), "Pocket dimension should unregister after deletion.")
-	TEST_ASSERT_EQUAL(get_turf(foreign_bag), origin, "Foreign items should be ejected before the pocket collapses.")
+	TEST_ASSERT_EQUAL(get_turf(foreign_bag), moved_holder_turf, "Foreign items should be ejected to the holder's current turf before the pocket collapses.")
 
 /datum/unit_test/pocket_dimension_drop_spot/Run()
 	var/turf/origin = run_loc_floor_bottom_left
@@ -86,14 +88,16 @@
 
 /datum/unit_test/pocket_dimension_snapshot/Run()
 	var/turf/origin = run_loc_floor_bottom_left
-	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance("[REF(src)]::snapshot", /datum/map_template/pocket/bag_of_holding, POCKET_LIFECYCLE_HIBERNATE, 1)
+	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance("[REF(src)]::snapshot", /datum/map_template/pocket/bag_of_holding, POCKET_LIFECYCLE_HIBERNATE, 0)
 	TEST_ASSERT_NOTNULL(instance, "Snapshot test instance should be created.")
 	TEST_ASSERT(instance.uses_movable_snapshot_persistence(), "Bag pocket should opt into movable snapshot persistence.")
 
 	var/list/chests = list()
 	for(var/turf/current_turf as anything in instance.affected_turfs)
-		for(var/obj/structure/closet/crate/chest/chest as anything in current_turf)
-			chests += chest
+		for(var/atom/movable/current_movable as anything in current_turf.contents)
+			if(!istype(current_movable, /obj/structure/closet/crate/chest))
+				continue
+			chests += current_movable
 
 	TEST_ASSERT(length(chests) >= 2, "Bag pocket should load both template chests for the snapshot test.")
 
@@ -126,3 +130,47 @@
 
 	TEST_ASSERT(test_bag.store_item_in_pocket(tester_scroll, user), "Bag of holding should consume attempts to store another pocket-holder item.")
 	TEST_ASSERT_EQUAL(get_turf(tester_scroll), origin, "Bag of holding should refuse to swallow another pocket-holder item.")
+
+/datum/unit_test/pocket_dimension_static_lighting/Run()
+	var/datum/pocket_dimension/instance = SSpocket_dimensions.get_or_create_instance("[REF(src)]::static_lighting", /datum/map_template/pocket/lighting_test, POCKET_LIFECYCLE_KEEP_LOADED, 0)
+	TEST_ASSERT_NOTNULL(instance, "Static lighting test pocket should be created.")
+
+	var/obj/machinery/light/fueled/firebowl/stump/fire_stump
+	for(var/turf/current_turf as anything in instance.affected_turfs)
+		fire_stump = locate(/obj/machinery/light/fueled/firebowl/stump) in current_turf
+		if(fire_stump)
+			break
+
+	TEST_ASSERT_NOTNULL(fire_stump, "Static lighting test pocket should load its stump fire fixture.")
+	TEST_ASSERT(fire_stump.on, "Static lighting test stump fire should start lit.")
+
+	var/turf/lit_turf = get_step(get_turf(fire_stump), SOUTH)
+	TEST_ASSERT(instance.contains_turf(lit_turf), "Static lighting test should check a turf inside the loaded pocket.")
+
+	fire_stump.update(FALSE)
+	SSlighting.fire(FALSE, TRUE)
+
+	TEST_ASSERT_NOTNULL(lit_turf.lighting_object, "Pocket lighting refresh should leave nearby turfs with lighting overlays.")
+	TEST_ASSERT(lit_turf.lighting_object.luminosity, "Static fixtures loaded from a pocket template should illuminate adjacent turfs.")
+
+	TEST_ASSERT(SSpocket_dimensions.delete_instance(instance), "Static lighting test pocket should be deletable.")
+
+/datum/unit_test/bag_of_holding_destroy_ejection/Run()
+	var/turf/origin = run_loc_floor_bottom_left
+	var/turf/moved_bag_turf = run_loc_floor_top_right
+
+	var/obj/item/storage/backpack/bag_of_holding/live_bag = allocate(/obj/item/storage/backpack/bag_of_holding, origin)
+	var/mob/living/carbon/human/live_user = allocate(/mob/living/carbon/human, origin)
+	var/obj/item/natural/cloth/live_item = allocate(/obj/item/natural/cloth, origin)
+	TEST_ASSERT(live_bag.store_item_in_pocket(live_item, live_user), "Bag of holding should accept a foreign item before the destroy ejection test.")
+	live_bag.forceMove(moved_bag_turf)
+	qdel(live_bag, force = TRUE)
+	TEST_ASSERT_EQUAL(get_turf(live_item), moved_bag_turf, "Destroying a bag on-map should eject stored items onto the turf underneath the bag.")
+
+	var/obj/item/storage/backpack/bag_of_holding/fallback_bag = allocate(/obj/item/storage/backpack/bag_of_holding, origin)
+	var/mob/living/carbon/human/fallback_user = allocate(/mob/living/carbon/human, origin)
+	var/obj/item/natural/cloth/fallback_item = allocate(/obj/item/natural/cloth, origin)
+	TEST_ASSERT(fallback_bag.store_item_in_pocket(fallback_item, fallback_user), "Bag of holding should accept a foreign item before the saved-exit fallback test.")
+	fallback_bag.moveToNullspace()
+	qdel(fallback_bag, force = TRUE)
+	TEST_ASSERT_EQUAL(get_turf(fallback_item), origin, "Destroying a bag without a live turf should eject stored items to the saved exit turf.")

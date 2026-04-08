@@ -151,6 +151,17 @@ require only minor tweaks.
 #define POCKET_STATE_ACTIVE "active"
 #define POCKET_STATE_HIBERNATING "hibernating"
 
+// Trap pocket captive release modes
+#define TRAP_RELEASE_NONE "none"
+#define TRAP_RELEASE_FREE_EXIT "free_exit"
+#define TRAP_RELEASE_OWNER_ONLY "owner_only"
+
+// Trap pocket trigger reasons
+#define TRAP_TRIGGER_TIME (1 << 0)
+#define TRAP_TRIGGER_ORGASM (1 << 1)
+#define TRAP_TRIGGER_SOFT_CRIT (1 << 2)
+#define TRAP_TRIGGER_HARD_CRIT (1 << 3)
+
 #define POCKET_DEFAULT_IDLE_TIMEOUT (5 MINUTES)
 
 /// Path for the next_map.json file, if someone, for some messed up reason, wants to change it.

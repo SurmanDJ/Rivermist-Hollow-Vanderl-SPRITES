@@ -6,6 +6,7 @@
 	var/lifecycle_policy = POCKET_LIFECYCLE_KEEP_LOADED
 	var/idle_timeout = POCKET_DEFAULT_IDLE_TIMEOUT
 	var/persistence_mode = POCKET_PERSISTENCE_NONE
+	var/instance_type = /datum/pocket_dimension
 	var/exit_structure_type = /obj/structure/pocket_dimension_exit
 
 /proc/is_valid_pocket_lifecycle_policy(policy)
@@ -49,6 +50,7 @@
 	var/last_touched = 0
 	var/datum/turf_reservation/reservation
 	var/turf/load_turf
+	var/datum/weakref/pocket_holder_ref
 	var/turf/return_turf
 	var/datum/weakref/return_anchor_ref
 	var/list/affected_turfs = list()
@@ -65,11 +67,12 @@
 	var/list/datum/pocket_movable_snapshot/hibernated_foreign_movables = list()
 	var/obj/effect/abstract/pocket_dimension_storage/storage
 
-/datum/pocket_dimension/New(datum/map_template/pocket/template, instance_key, instance_id, lifecycle_policy, idle_timeout)
+/datum/pocket_dimension/New(datum/map_template/pocket/template, instance_key, instance_id, lifecycle_policy, idle_timeout, atom/pocket_holder = null)
 	src.template = template
 	src.instance_key = instance_key
 	src.instance_id = instance_id
 	apply_lifecycle_settings(lifecycle_policy, idle_timeout)
+	set_pocket_holder(pocket_holder)
 	touch()
 	. = ..()
 
@@ -91,6 +94,7 @@
 	persistence_mode = null
 	state = null
 	last_touched = 0
+	pocket_holder_ref = null
 	return_turf = null
 	return_anchor_ref = null
 	return ..()
@@ -113,6 +117,35 @@
 
 /datum/pocket_dimension/proc/touch()
 	last_touched = world.time
+
+/datum/pocket_dimension/proc/process_pocket()
+	return FALSE
+
+/datum/pocket_dimension/proc/release_reservation()
+	if(!reservation)
+		return
+
+	var/datum/turf_reservation/current_reservation = reservation
+	reservation = null
+	if(!QDELETED(current_reservation))
+		qdel(current_reservation)
+
+/datum/pocket_dimension/proc/set_pocket_holder(atom/new_pocket_holder)
+	if(!new_pocket_holder || QDELETED(new_pocket_holder))
+		return
+
+	pocket_holder_ref = WEAKREF(new_pocket_holder)
+
+/datum/pocket_dimension/proc/get_pocket_holder()
+	if(!pocket_holder_ref)
+		return null
+
+	var/atom/pocket_holder = pocket_holder_ref.resolve()
+	if(pocket_holder && !QDELETED(pocket_holder))
+		return pocket_holder
+
+	pocket_holder_ref = null
+	return null
 
 /datum/pocket_dimension/proc/is_hibernating()
 	return state == POCKET_STATE_HIBERNATING && !reservation
@@ -142,7 +175,7 @@
 	native_slot_offsets.Cut()
 	load_turf = null
 
-	QDEL_NULL(reservation)
+	release_reservation()
 	state = POCKET_STATE_HIBERNATING
 
 /datum/pocket_dimension/proc/activate()
@@ -166,15 +199,41 @@
 	)
 	if(!load_turf || !template.load(load_turf))
 		load_turf = null
-		QDEL_NULL(reservation)
+		release_reservation()
 		return FALSE
 
 	seal_padding_ring()
 	cache_loaded_layout()
 	state = POCKET_STATE_ACTIVE
 	restore_hibernated_layout()
+	refresh_loaded_lighting()
 	touch()
 	return TRUE
+
+/datum/pocket_dimension/proc/refresh_loaded_lighting()
+	if(!SSlighting.initialized)
+		return
+
+	var/list/turf/turfs_to_refresh = reservation?.reserved_turfs
+	if(!length(turfs_to_refresh))
+		turfs_to_refresh = affected_turfs
+
+	for(var/turf/current_turf as anything in turfs_to_refresh)
+		if(QDELETED(current_turf))
+			continue
+
+		current_turf.lighting_build_overlay()
+
+		if(current_turf.light_system == STATIC_LIGHT && current_turf.light_power && current_turf.light_outer_range && current_turf.light_on)
+			current_turf.update_light()
+
+		for(var/atom/contained_atom as anything in current_turf)
+			if(contained_atom.light_system != STATIC_LIGHT)
+				continue
+			if(!contained_atom.light_power || !contained_atom.light_outer_range || !contained_atom.light_on)
+				continue
+
+			contained_atom.update_light()
 
 /datum/pocket_dimension/proc/seal_padding_ring()
 	if(!reservation || !load_turf || !template?.padding)
@@ -355,15 +414,51 @@
 		return pick(fallback_turfs)
 	return get_entry_turf() || get_center_turf()
 
-/datum/pocket_dimension/proc/get_return_turf()
+/datum/pocket_dimension/proc/get_holder_exit_destination()
+	var/atom/pocket_holder = get_pocket_holder()
+	if(!pocket_holder)
+		return null
+
+	var/turf/holder_turf = get_turf(pocket_holder)
+	if(holder_turf && !QDELETED(holder_turf))
+		return holder_turf
+
+	var/atom/holder_loc = pocket_holder.loc
+	if(holder_loc && !QDELETED(holder_loc))
+		return holder_loc
+
+	return null
+
+/datum/pocket_dimension/proc/get_exit_destination(atom/override_destination = null)
+	if(override_destination && !QDELETED(override_destination))
+		return override_destination
+
+	var/atom/holder_destination = get_holder_exit_destination()
+	if(holder_destination)
+		return holder_destination
+
 	var/atom/return_anchor = return_anchor_ref?.resolve()
 	if(return_anchor && !QDELETED(return_anchor))
 		var/turf/anchor_turf = get_turf(return_anchor)
 		if(anchor_turf && !QDELETED(anchor_turf))
 			return anchor_turf
+
+		var/atom/anchor_loc = return_anchor.loc
+		if(anchor_loc && !QDELETED(anchor_loc))
+			return anchor_loc
+
 	if(isturf(return_turf) && !QDELETED(return_turf))
 		return return_turf
+
 	return find_safe_turf()
+
+/datum/pocket_dimension/proc/get_return_turf()
+	var/atom/exit_destination = get_exit_destination()
+	if(!exit_destination)
+		return null
+	if(isturf(exit_destination))
+		return exit_destination
+	return get_turf(exit_destination)
 
 /datum/pocket_dimension/proc/set_return_target(turf/new_return_turf = null, atom/new_return_anchor = null)
 	if(new_return_anchor && !QDELETED(new_return_anchor))
@@ -418,7 +513,7 @@
 	if(!user)
 		return FALSE
 
-	var/turf/target = get_return_turf()
+	var/atom/target = get_exit_destination()
 	if(!target)
 		return FALSE
 
@@ -426,8 +521,11 @@
 	user.forceMove(target)
 	return TRUE
 
-/datum/pocket_dimension/proc/eject_occupants(message = null)
-	var/turf/target = get_return_turf()
+/datum/pocket_dimension/proc/can_exit_mob(mob/user, obj/structure/pocket_dimension_exit/exit_object, show_feedback = TRUE)
+	return TRUE
+
+/datum/pocket_dimension/proc/eject_occupants(message = null, atom/override_destination = null)
+	var/atom/target = get_exit_destination(override_destination)
 	if(!target)
 		return
 
@@ -438,8 +536,8 @@
 			to_chat(occupant, span_warning(message))
 		occupant.forceMove(target)
 
-/datum/pocket_dimension/proc/eject_all(message = null)
-	return eject_occupants(message)
+/datum/pocket_dimension/proc/eject_all(message = null, atom/override_destination = null)
+	return eject_occupants(message, override_destination)
 
 /datum/pocket_dimension/proc/is_native_snapshot_movable(atom/movable/movable)
 	if(!movable || QDELETED(movable))
@@ -493,8 +591,8 @@
 
 	return movable.forceMove(new_loc)
 
-/datum/pocket_dimension/proc/eject_foreign_movables(items_only = FALSE)
-	var/turf/target = get_return_turf()
+/datum/pocket_dimension/proc/eject_foreign_movables(items_only = FALSE, atom/override_destination = null)
+	var/atom/target = get_exit_destination(override_destination)
 	if(!target)
 		return
 
@@ -505,9 +603,26 @@
 	if(storage && !length(storage.contents))
 		QDEL_NULL(storage)
 
-/datum/pocket_dimension/proc/eject_teardown_contents(message = null)
-	eject_occupants(message)
-	eject_foreign_movables()
+/datum/pocket_dimension/proc/collapse_nested_pockets(message = null, atom/override_destination = null)
+	if(!SSpocket_dimensions)
+		return FALSE
+
+	var/list/child_instances = SSpocket_dimensions.get_child_instances(src)
+	if(!length(child_instances))
+		return FALSE
+
+	var/atom/child_exit_target = get_exit_destination(override_destination)
+	for(var/datum/pocket_dimension/child_instance as anything in child_instances)
+		if(QDELETED(child_instance))
+			continue
+		SSpocket_dimensions.delete_instance(child_instance, message, child_exit_target)
+
+	return TRUE
+
+/datum/pocket_dimension/proc/eject_teardown_contents(message = null, atom/override_destination = null)
+	collapse_nested_pockets(message, override_destination)
+	eject_occupants(message, override_destination)
+	eject_foreign_movables(FALSE, override_destination)
 
 /datum/pocket_dimension/proc/ensure_storage()
 	if(!storage)
@@ -650,10 +765,16 @@
 	var/state_text = is_hibernating() ? "hibernating" : "active"
 	return "#[instance_id] [template_name] ([state_text])"
 
-/datum/pocket_dimension/proc/format_debug_turf(turf/target)
+/datum/pocket_dimension/proc/format_debug_atom(atom/target)
 	if(!target || QDELETED(target))
 		return "none"
-	return "[html_encode("[target]")] ([target.x], [target.y], [target.z])"
+	if(isturf(target))
+		var/turf/target_turf = target
+		return "[html_encode("[target_turf]")] ([target_turf.x], [target_turf.y], [target_turf.z])"
+	return "[html_encode("[target]")] ([html_encode("[target.type]")])"
+
+/datum/pocket_dimension/proc/format_debug_turf(turf/target)
+	return format_debug_atom(target)
 
 /datum/pocket_dimension/proc/get_debug_reservation_text()
 	if(!reservation?.bottom_left_coords)
@@ -683,8 +804,10 @@
 	html += "<li><b>Persistence:</b> [html_encode(format_pocket_persistence_mode(persistence_mode))]</li>"
 	html += "<li><b>Idle timeout:</b> [idle_timeout ? html_encode(DisplayTimeText(idle_timeout)) : "disabled"]</li>"
 	html += "<li><b>Last touched:</b> [last_touched ? html_encode("[DisplayTimeText(world.time - last_touched)] ago") : "never"]</li>"
+	html += "<li><b>Pocket holder:</b> [format_debug_atom(get_pocket_holder())]</li>"
+	html += "<li><b>Exit destination:</b> [format_debug_atom(get_exit_destination())]</li>"
 	html += "<li><b>Reservation:</b> [html_encode(get_debug_reservation_text())]</li>"
-	html += "<li><b>Return turf:</b> [format_debug_turf(return_turf)]</li>"
+	html += "<li><b>Return turf fallback:</b> [format_debug_turf(return_turf)]</li>"
 	html += "<li><b>Load turf:</b> [format_debug_turf(load_turf)]</li>"
 	html += "<li><b>Occupants:</b> [length(get_occupants())]</li>"
 	html += "<li><b>Affected turfs:</b> [length(affected_turfs)]</li>"
@@ -790,6 +913,9 @@
 /area/pocket_dimension/magic_closet
 	name = "Magic Closet Interior"
 
+/area/pocket_dimension/lighting_test
+	name = "Pocket Lighting Test"
+
 /turf/closed/indestructible/pocket_border
 	name = "folded-space boundary"
 	desc = "Looking at this is making your head hurt."
@@ -813,6 +939,10 @@
 /obj/effect/landmark/pocket_dimension/exit/closet
 	name = "pocket closet exit marker"
 	exit_structure_type = /obj/structure/pocket_dimension_exit/closet
+
+/obj/effect/landmark/pocket_dimension/exit/werewolf
+	name = "pocket closet exit marker"
+	exit_structure_type = /obj/structure/pocket_dimension_exit/hole
 
 /obj/effect/abstract/pocket_dimension_storage
 	invisibility = INVISIBILITY_ABSTRACT
@@ -839,6 +969,8 @@
 	if(!linked_pocket)
 		to_chat(user, span_warning("The seam wavers, but nowhere answers."))
 		return
+	if(!linked_pocket.can_exit_mob(user, src))
+		return
 	linked_pocket.exit_mob(user)
 
 /obj/structure/pocket_dimension_exit/attack_hand(mob/user, list/modifiers)
@@ -856,6 +988,15 @@
 	desc = "A wardrobe door humming with folded space. Touch it to return outside."
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "closet3"
+	density = TRUE
+
+/obj/structure/pocket_dimension_exit/hole
+	name = "lair exit"
+	desc = "Step out and join the hunt."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "hole1"
+	anchored = TRUE
+	pixel_y = 5
 	density = TRUE
 
 /datum/map_template/pocket/test_chamber
@@ -887,6 +1028,11 @@
 	lifecycle_policy = POCKET_LIFECYCLE_KEEP_LOADED
 	persistence_mode = POCKET_PERSISTENCE_MOVABLES
 	exit_structure_type = /obj/structure/pocket_dimension_exit/closet
+
+/datum/map_template/pocket/lighting_test
+	name = "Pocket Lighting Test"
+	id = "pocket_lighting_test"
+	mappath = "_maps/templates/pockets/pocket_lighting_test.dmm"
 
 /obj/item/pocket_dimension_tester
 	name = "folded-space scroll"

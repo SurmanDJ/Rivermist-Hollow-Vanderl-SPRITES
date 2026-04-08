@@ -35,7 +35,8 @@
 		/datum/action/cooldown/spell/aoe/repulse/howl, \
 		/datum/action/cooldown/spell/woundlick, \
 		/datum/action/cooldown/spell/lunge, \
-		/datum/action/cooldown/spell/throw_target
+		/datum/action/cooldown/spell/throw_target, \
+		/datum/action/cooldown/spell/werewolf_voluntary_bite
 	)
 	COOLDOWN_DECLARE(message_cooldown)
 	COOLDOWN_DECLARE(transformation_cooldown)
@@ -78,9 +79,12 @@
 
 	owner.current.grant_language(/datum/language/beast)
 	owner.current.add_spell(/datum/action/cooldown/spell/undirected/werewolf_form, source = owner)
+	initialize_werewolf_lair_ability()
+	initialize_werewolf_contract_interface()
 
 	var/datum/rage/werewolf/new_rage = new
 	new_rage.grant_to_holder(owner.current)
+	owner.current.faction.Add("wolves")
 
 	wolfname = "[pick(strings("werewolf_names.json", "wolf_prefixes"))] [pick(strings("werewolf_names.json", "wolf_suffixes"))]"
 	last_seen_tod = GLOB.tod
@@ -89,6 +93,8 @@
 /datum/antagonist/werewolf/on_removal()
 	remove_werewolf(forced = TRUE)
 	clear_transformation_pressure()
+	cleanup_werewolf_lair()
+	cleanup_werewolf_contract_interface()
 
 	// owner.current should now be the original human mob, if not something is terribly wrong
 	if(!silent && owner.current)
@@ -98,6 +104,7 @@
 	if(owner.current)
 		owner.current.remove_spell(/datum/action/cooldown/spell/undirected/werewolf_form)
 		owner.current.remove_language(/datum/language/beast)
+	owner.current.faction.Remove("wolves")
 
 	if(ishuman(owner.current))
 		var/mob/living/carbon/human/current_human = owner.current
@@ -112,24 +119,19 @@
 	objectives -= O
 
 /datum/antagonist/werewolf/proc/forge_werewolf_objectives()
-	var/list/primary = pick(list("1", "2"))
-	var/list/secondary = pick(list("1", "2"))
-	switch(primary)
-		if("1")
-			objectives += new /datum/objective/dominate/werewolf()
-		if("2")
-			var/datum/objective/werewolf/spread/T = new
-			objectives += T
-	switch(secondary)
-		if("1")
-			var/datum/objective/werewolf/infiltrate/one/T = new
-			objectives += T
-		if("2")
-			var/datum/objective/werewolf/infiltrate/two/T = new
-			objectives += T
-
-	var/datum/objective/werewolf/survive/survive = new
-	objectives += survive
+	var/list/new_objectives = list(
+		new /datum/objective/werewolf_counter/hunt(),
+		new /datum/objective/werewolf_counter/slay(),
+		new /datum/objective/werewolf_counter/convert(),
+		new /datum/objective/werewolf_counter/trap(),
+		new /datum/objective/werewolf_counter/contracts(),
+		new /datum/objective/werewolf/survive(),
+	)
+	if(owner.current?.getorganslot(ORGAN_SLOT_TESTICLES))
+		new_objectives.Insert(1, new /datum/objective/werewolf_counter/breed())
+	for(var/datum/objective/objective as anything in new_objectives)
+		objective.owner = owner
+		objectives += objective
 
 /datum/antagonist/werewolf/greet()
 	to_chat(owner.current, span_userdanger("Ever since that bite, I have been a [name]."))

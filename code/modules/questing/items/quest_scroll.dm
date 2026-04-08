@@ -55,7 +55,7 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	if(!assigned_quest.quest_receiver_reference)
 		. += span_notice("This contract hasn't been claimed yet. Open it to claim it for yourself!")
 	else if(assigned_quest.complete)
-		. += span_notice("\nThis contract is complete! Return it to the Notice Board to claim your reward.")
+		. += span_notice("\nThis contract is complete! Return it to [assigned_quest.get_turn_in_ledger_name()] to claim your reward.")
 		. += span_info("\nPlace it on the marked area next to the book.")
 	else
 		. += span_notice("\nThis contract is still in progress.")
@@ -122,14 +122,16 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	update_quest_text()
 
 /obj/item/paper/scroll/quest/attack_self_secondary(mob/user)
-	to_chat(user, span_notice("The scroll remembers the route, but you must claim a quest compass from the Grand Contract Ledger and link it manually."))
+	var/ledger_name = assigned_quest?.get_turn_in_ledger_name() || "the Grand Contract Ledger"
+	to_chat(user, span_notice("The scroll remembers the route, but you must claim a quest compass from [ledger_name] and link it manually."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/paper/scroll/quest/proc/update_quest_text()
 	if(!assigned_quest)
 		return
 
-	var/compass_hint_text = "Claim a quest compass from the Grand Contract Ledger, then use it on this scroll."
+	var/turn_in_ledger_name = assigned_quest.get_turn_in_ledger_name()
+	var/compass_hint_text = "Claim a quest compass from [turn_in_ledger_name], then use it on this scroll."
 	var/scroll_text = "<center>HELP NEEDED</center><br>"
 	scroll_text += "<center><b>[assigned_quest.get_title()]</b></center><br>"
 	scroll_text += "<b>Issued by:</b> [assigned_quest.quest_giver_name ? "[assigned_quest.quest_giver_name]" : "The Mercenary's Guild"].<br>"
@@ -150,20 +152,22 @@ GLOBAL_LIST_EMPTY(quest_scrolls)
 	scroll_text += "<b>Map:</b> [last_target_map_text]<br>"
 	scroll_text += "<b>Location:</b> [assigned_quest.get_location_text()]<br>"
 	scroll_text += "<br><b>Reward:</b> [assigned_quest.reward_amount] amna upon completion<br>"
+	if(assigned_quest.objective_score_reward > 0)
+		scroll_text += "<b>Objective Score:</b> [assigned_quest.objective_score_reward]<br>"
 
 	if(assigned_quest.complete)
 		scroll_text += "<br><center><b>CONTRACT COMPLETE</b></center>"
-		scroll_text += "<br><b>Return this scroll to the Notice Board to claim your reward!</b>"
+		scroll_text += "<br><b>Return this scroll to [turn_in_ledger_name] to claim your reward!</b>"
 		scroll_text += "<br><i>Place it on the marked area next to the book.</i>"
 		if(assigned_quest.quest_giver_reference)
 			scroll_text += "<br><br><i>Return this to [assigned_quest.quest_giver_name] for increased pay!</i>"
-		else
+		else if(assigned_quest.show_handler_advice)
 			scroll_text += "<br><br><i>Consider getting in touch with a Merchant, Banker, or Steward for your next quest for increased pay!</i>"
 	else
 		scroll_text += "<br><i>The magic in this scroll will update as you progress.</i>"
 		if(assigned_quest.quest_giver_reference)
 			scroll_text += "<br><br><i>Returning this to [assigned_quest.quest_giver_name] upon completion will yield increased pay!</i>"
-		else
+		else if(assigned_quest.show_handler_advice)
 			scroll_text += "<br><br><i>Consider getting in touch with a Merchant, Banker, or Steward for your next quest for increased pay!</i>"
 		scroll_text += "<br><i>[compass_hint_text]</i>"
 

@@ -6,7 +6,6 @@
 	var/mob/living/carbon/human/user_one = allocate(/mob/living/carbon/human, run_loc_floor_bottom_left)
 	var/mob/living/carbon/human/user_two = allocate(/mob/living/carbon/human, run_loc_floor_bottom_left)
 	var/turf/origin_one = get_turf(user_one)
-	var/turf/origin_two = get_turf(user_two)
 	var/turf/moved_anchor_turf = run_loc_floor_top_right
 
 	TEST_ASSERT(access.enter_user(user_one), "Pocket access should let the first user enter.")

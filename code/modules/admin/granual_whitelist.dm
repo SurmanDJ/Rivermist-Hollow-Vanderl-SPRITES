@@ -37,6 +37,37 @@ GLOBAL_LIST_INIT(vessel_ids, list(WHITELIST_AUTOMATON))
 
 		dat += "<BR><a href='byond://?src=[REF(src)];task=add_custom'>Add Custom Whitelist ID</a>"
 
+		dat += "<HR><b>Current Job Whitelists for [selected_ckey]:</b><BR>"
+		if(!CONFIG_GET(flag/sql_enabled))
+			dat += "<font color='red'>SQL is disabled, so job whitelists are unavailable.</font><BR>"
+		else
+			var/list/job_whitelist_options = get_job_whitelist_options()
+			var/list/job_whitelists = get_job_whitelist_grants(selected_ckey, TRUE)
+			if(!islist(job_whitelists))
+				dat += "<font color='red'>Could not load job whitelist data from the database.</font><BR>"
+			else if(!length(job_whitelist_options))
+				dat += "No jobs or subclasses currently use job whitelists.<BR>"
+			else
+				for(var/wl_id in job_whitelist_options)
+					var/display_name = job_whitelist_options[wl_id]
+					var/list/grant_data = job_whitelists[wl_id]
+					var/has_wl = islist(grant_data)
+					dat += " - [display_name]: <b>[has_wl ? "<font color='green'>Granted</font>" : "<font color='red'>Not Granted</font>"]</b>"
+					if(has_wl)
+						dat += " (by [grant_data["granted_by"]] on [grant_data["granted_at"]])"
+						dat += " <a href='byond://?src=[REF(src)];task=remove_job_whitelist;wl_id=[wl_id]'>Remove</a>"
+					else
+						dat += " <a href='byond://?src=[REF(src)];task=add_job_whitelist;wl_id=[wl_id]'>Grant</a>"
+					dat += "<BR>"
+
+				for(var/wl_id in job_whitelists)
+					if(job_whitelist_options[wl_id])
+						continue
+					var/list/grant_data = job_whitelists[wl_id]
+					dat += " - [wl_id] (no longer mapped to a job): <b><font color='green'>Granted</font></b>"
+					dat += " (by [grant_data["granted_by"]] on [grant_data["granted_at"]])"
+					dat += " <a href='byond://?src=[REF(src)];task=remove_job_whitelist;wl_id=[wl_id]'>Remove</a><BR>"
+
 	var/datum/browser/popup = new(user, "whitelist_panel", "Whitelist Panel", 400, 400)
 	popup.set_content(dat.Join())
 	popup.open()
@@ -79,6 +110,20 @@ GLOBAL_LIST_INIT(vessel_ids, list(WHITELIST_AUTOMATON))
 			var/wl_id = href_list["wl_id"]
 			revoke_whitelist(user, selected_ckey, wl_id)
 
+		if("add_job_whitelist")
+			if(!selected_ckey)
+				to_chat(user, span_boldwarning("No ckey selected."))
+				return
+			var/wl_id = href_list["wl_id"]
+			grant_job_whitelist(user, selected_ckey, wl_id)
+
+		if("remove_job_whitelist")
+			if(!selected_ckey)
+				to_chat(user, span_boldwarning("No ckey selected."))
+				return
+			var/wl_id = href_list["wl_id"]
+			revoke_job_whitelist(user, selected_ckey, wl_id)
+
 		if("add_custom")
 			if(!selected_ckey)
 				to_chat(user, span_boldwarning("No ckey selected."))
@@ -115,6 +160,26 @@ GLOBAL_LIST_INIT(vessel_ids, list(WHITELIST_AUTOMATON))
 		"revoked_on" = world.realtime
 	))
 	var/msg = "[key_name_admin(user)] revoked whitelist '[wl_id]' from [target_ckey]"
+	message_admins(msg)
+	log_admin(msg)
+
+/datum/whitelist_panel/proc/grant_job_whitelist(mob/user, target_ckey, wl_id)
+	var/list/job_whitelist_options = get_job_whitelist_options()
+	if(!job_whitelist_options[wl_id])
+		to_chat(user, span_boldwarning("Unknown job whitelist '[wl_id]'."))
+		return
+	if(!grant_job_whitelist_entry(target_ckey, wl_id, user.ckey))
+		to_chat(user, span_boldwarning("Failed to grant the job whitelist '[wl_id]'. Check SQL connectivity."))
+		return
+	var/msg = "[key_name_admin(user)] granted job whitelist '[get_job_whitelist_label(wl_id)]' ([wl_id]) to [target_ckey]"
+	message_admins(msg)
+	log_admin(msg)
+
+/datum/whitelist_panel/proc/revoke_job_whitelist(mob/user, target_ckey, wl_id)
+	if(!revoke_job_whitelist_entry(target_ckey, wl_id))
+		to_chat(user, span_boldwarning("Failed to revoke the job whitelist '[wl_id]'. Check SQL connectivity."))
+		return
+	var/msg = "[key_name_admin(user)] revoked job whitelist '[get_job_whitelist_label(wl_id)]' ([wl_id]) from [target_ckey]"
 	message_admins(msg)
 	log_admin(msg)
 

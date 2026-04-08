@@ -76,10 +76,12 @@
 	UnregisterSignal(parent, signals)
 
 /datum/component/pocket_access/Destroy(force)
+	var/turf/destroy_turf = get_turf(parent)
+
 	if(delete_instances_on_destroy && SSpocket_dimensions)
 		cleanup_tracked_instance_keys()
 		for(var/instance_key in tracked_instance_keys.Copy())
-			SSpocket_dimensions.delete_instance(instance_key, destroy_eject_message)
+			SSpocket_dimensions.delete_instance(instance_key, destroy_eject_message, destroy_turf)
 
 	tracked_instance_keys.Cut()
 	template_ref = null
@@ -194,7 +196,8 @@
 		instance_key,
 		template_ref,
 		lifecycle_policy,
-		idle_timeout
+		idle_timeout,
+		parent,
 	)
 	if(instance)
 		track_instance_key(instance.instance_key)

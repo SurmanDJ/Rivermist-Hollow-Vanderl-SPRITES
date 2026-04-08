@@ -168,9 +168,9 @@ SUBSYSTEM_DEF(job)
 			JobDebug("GRJ player tried to play a disabled job, Player: [player], Job:[job.title]")
 			continue
 
-		if(CONFIG_GET(flag/usewhitelist))
-			if(job.whitelist_req && (!player.client.whitelisted()))
-				continue
+		if(!job.player_has_required_whitelists(player.client))
+			JobDebug("GRJ whitelist failed, Player: [player], Job: [job.title]")
+			continue
 
 		if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
 			JobDebug("GRJ Random job given, Player: [player], Job: [job]")
@@ -234,10 +234,9 @@ SUBSYSTEM_DEF(job)
 		JobDebug("Eligibility failed: lunatic, Player: [player], Job: [job.title]")
 		return FALSE
 
-	if(CONFIG_GET(flag/usewhitelist))
-		if(job.whitelist_req && (!player.client.whitelisted()))
-			JobDebug("Eligibility failed: whitelist, Player: [player], Job: [job.title]")
-			return FALSE
+	if(!job.player_has_required_whitelists(player.client))
+		JobDebug("Eligibility failed: whitelist, Player: [player], Job: [job.title]")
+		return FALSE
 
 	if(length(job.allowed_ages) && !(player_prefs.age in job.allowed_ages))
 		JobDebug("Eligibility failed: age, Player: [player], Job: [job.title]")
@@ -889,9 +888,8 @@ SUBSYSTEM_DEF(job)
 	if(job.banned_lunatic && is_misc_banned(player.client.ckey, BAN_MISC_LUNATIC))
 		return
 
-	if(CONFIG_GET(flag/usewhitelist))
-		if(job.whitelist_req && (!player.client.whitelisted()))
-			return
+	if(!job.player_has_required_whitelists(player.client))
+		return
 
 	if(length(job.allowed_ages) && !(player_prefs.age in job.allowed_ages))
 		return

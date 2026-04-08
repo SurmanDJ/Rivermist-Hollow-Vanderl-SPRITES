@@ -115,6 +115,11 @@ GLOBAL_LIST_INIT(adventurers_positions, list(
 ))
 GLOBAL_PROTECT(adventurers_positions)
 
+GLOBAL_LIST_INIT(villains_positions, list(
+	/datum/job/werewolf::title,
+))
+GLOBAL_PROTECT(villains_positions)
+
 GLOBAL_LIST_INIT(roguewar_positions, list(
 	"Adventurer",
 	))
@@ -138,6 +143,7 @@ GLOBAL_LIST_EMPTY(job_assignment_order)
 	sorting_order += GLOB.town_positions
 	sorting_order += GLOB.outsiders_positions
 	sorting_order += GLOB.adventurers_positions
+	sorting_order += GLOB.villains_positions
 	return sorting_order
 
 GLOBAL_LIST_INIT(exp_specialmap, list(

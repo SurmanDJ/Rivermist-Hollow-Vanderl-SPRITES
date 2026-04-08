@@ -83,13 +83,13 @@
 		var/list/player_queue = SSrole_class_handler.special_session_queue[human_mob.ckey]
 		if(TRIUMPH_BUY_ANY_CLASS in player_queue)
 			var/datum/job/advclass/pick_everything/picker = player_queue[TRIUMPH_BUY_ANY_CLASS]
+			if(picker.player_has_job_whitelist(linked_client))
+				rolled_classes = list(picker = 0)
+				local_total_sorted_class_cache = list(CTAG_ALLCLASS = list(picker))
+				showing_combat_classes = FALSE
 
-			rolled_classes = list(picker = 0)
-			local_total_sorted_class_cache = list(CTAG_ALLCLASS = list(picker))
-			showing_combat_classes = FALSE
-
-			browser_slop()
-			return
+				browser_slop()
+				return
 
 	// Time to sort and find our viable classes depending on what conditions we gotta deal w
 	if(length(class_cat_alloc_attempts))
@@ -103,6 +103,8 @@
 				if(rolled_classes[CUR_AZZ])
 					continue
 				if(is_advclass_banned(human_mob.ckey, CUR_AZZ.title))
+					continue
+				if(!CUR_AZZ.player_has_job_whitelist(human_mob.client))
 					continue
 				if(class_cat_alloc_bypass_reqs || CUR_AZZ.check_requirements(human_mob))
 					local_total_insert_sortlist += CUR_AZZ
@@ -141,6 +143,8 @@
 		for(var/uninstanced_azz_types in forced_class_additions)
 			var/datum/job/advclass/forced_class = SSjob.GetJobType(uninstanced_azz_types)
 			if(rolled_classes[forced_class])
+				continue
+			if(!forced_class.player_has_job_whitelist(human_mob.client))
 				continue
 			if(class_cat_alloc_bypass_reqs || forced_class.check_requirements(human_mob))
 				rolled_classes[forced_class] = 0

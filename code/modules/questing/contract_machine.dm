@@ -18,8 +18,10 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	obj_flags = CAN_BE_HIT | USES_TGUI
 	layer = GAME_PLANE_UPPER
 	var/input_point
+	var/contract_ledger_id = "guild_contracts"
 	var/list/ui_sessions
 	var/list/ui_opening_lock
+	var/taxable = TRUE
 
 /obj/structure/fake_machine/contractledger/Initialize()
 	. = ..()
@@ -40,11 +42,15 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 /obj/structure/fake_machine/contractledger/attack_hand(mob/living/carbon/human/user)
 	if(!ishuman(user))
 		return
+	if(!can_user_access_ledger(user, TRUE))
+		return
 	ui_interact(user)
 
 /obj/structure/fake_machine/contractledger/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	. = ..()
 	if(istype(P, /obj/item/paper/scroll/quest))
+		if(!can_user_access_ledger(user, TRUE))
+			return
 		turn_in_contract(user, P)
 	return
 
@@ -61,6 +67,9 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 
 /obj/structure/fake_machine/contractledger/ui_interact(mob/user, datum/tgui/ui)
 	if(!ishuman(user))
+		return FALSE
+	var/mob/living/carbon/human/human_user = user
+	if(!can_user_access_ledger(human_user, TRUE))
 		return FALSE
 	var/datum/asset/spritesheet/quest_previews/spritesheet = get_asset_datum(/datum/asset/spritesheet/quest_previews)
 	if(!spritesheet.sprites_generated)
@@ -80,10 +89,18 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	. = ..()
 	clear_ui_session(user)
 
+/obj/structure/fake_machine/contractledger/proc/can_user_access_ledger(mob/living/carbon/human/user, show_feedback = FALSE)
+	if(!ishuman(user))
+		return FALSE
+	return TRUE
+
+/obj/structure/fake_machine/contractledger/proc/get_access_denial_message(mob/living/carbon/human/user)
+	return "The ledger refuses me."
+
 /obj/structure/fake_machine/contractledger/ui_data(mob/living/carbon/human/user)
 	var/list/session = get_ui_session_raw(user)
 	var/consult_block_reason = get_consult_block_reason(user)
-	var/can_consult_contracts = !consult_block_reason
+	var/can_consult_contracts = can_user_access_ledger(user) && !consult_block_reason
 
 	var/selected_group = session["selected_group"]
 	var/selected_type = session["selected_type"]
@@ -145,6 +162,8 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	var/mob/living/carbon/human/user = usr
 	if(!ishuman(user))
 		return FALSE
+	if(!can_user_access_ledger(user, TRUE))
+		return FALSE
 
 	switch(action)
 		if("consultcontracts")
@@ -176,6 +195,8 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 
 /obj/structure/fake_machine/contractledger/proc/handle_ledger_action(mob/living/carbon/human/user, action_id)
 	if(!ishuman(user))
+		return FALSE
+	if(!can_user_access_ledger(user, TRUE))
 		return FALSE
 
 	switch(action_id)
@@ -373,6 +394,8 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 /obj/structure/fake_machine/contractledger/proc/can_issue_quest_compass(mob/living/carbon/human/user)
 	if(!user)
 		return FALSE
+	if(!can_user_access_ledger(user))
+		return FALSE
 	if(has_claimed_quest_compass(user))
 		return FALSE
 	if(has_user_quest_compass(user))
@@ -392,7 +415,7 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	var/quest_count = 0
 	for(var/obj/item/paper/scroll/quest/quest_scroll in GLOB.quest_scrolls)
 		var/mob/quest_receiver = quest_scroll.assigned_quest?.quest_receiver_reference?.resolve()
-		if(quest_scroll.assigned_quest && !quest_scroll.assigned_quest.complete && quest_receiver == user)
+		if(quest_scroll.assigned_quest && !quest_scroll.assigned_quest.complete && quest_receiver == user && can_accept_contract_quest(quest_scroll.assigned_quest))
 			quest_count++
 	return quest_count
 
@@ -400,6 +423,23 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	if(is_boss_raid_issuer(user))
 		return 6
 	return 2
+
+/obj/structure/fake_machine/contractledger/proc/get_contract_ledger_id()
+	return contract_ledger_id
+
+/obj/structure/fake_machine/contractledger/proc/get_default_contract_issuer_name(mob/living/carbon/human/user)
+	return "The Mercenary's Guild"
+
+/obj/structure/fake_machine/contractledger/proc/should_show_handler_contract_advice()
+	return TRUE
+
+/obj/structure/fake_machine/contractledger/proc/can_accept_contract_quest(datum/quest/quest)
+	if(!istype(quest))
+		return FALSE
+	return quest.can_turn_in_at_ledger(src)
+
+/obj/structure/fake_machine/contractledger/proc/requires_bank_account_for_contracts(mob/user)
+	return TRUE
 
 /obj/structure/fake_machine/contractledger/proc/has_bank_account(mob/user)
 	if(!user)
@@ -481,7 +521,7 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 /obj/structure/fake_machine/contractledger/proc/get_consult_block_reason(mob/living/carbon/human/user)
 	if(!user)
 		return "consult.no_user"
-	if(!has_bank_account(user))
+	if(requires_bank_account_for_contracts(user) && !has_bank_account(user))
 		return "consult.no_account"
 	var/quest_number = get_active_contract_count(user)
 	var/max_quests_for_job = get_contract_limit(user)
@@ -489,9 +529,13 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 		return "consult.limit_reached"
 	return null
 
+/obj/structure/fake_machine/contractledger/proc/get_contract_group_catalog(mob/user)
+	return GLOB.global_quest_contract_groups
+
 /obj/structure/fake_machine/contractledger/proc/get_available_contract_group_values(mob/user)
 	var/list/group_values = list()
-	for(var/contract_group in GLOB.global_quest_contract_groups)
+	var/list/contract_groups = get_contract_group_catalog(user)
+	for(var/contract_group in contract_groups)
 		if(length(get_available_contract_type_values(user, contract_group)))
 			group_values += contract_group
 	return group_values
@@ -501,9 +545,10 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	if(!contract_group)
 		return type_values
 
-	var/list/group_types = GLOB.global_quest_contract_groups[contract_group] || list()
+	var/list/contract_groups = get_contract_group_catalog(user)
+	var/list/group_types = contract_groups[contract_group] || list()
 	for(var/contract_type in group_types)
-		if((contract_type in list(QUEST_RAID, QUEST_BOSS)) && !is_boss_raid_issuer(user))
+		if(!is_contract_type_allowed_for_user(user, contract_type))
 			continue
 		var/datum/quest/template = create_quest_for_type(contract_type)
 		if(!template)
@@ -515,6 +560,11 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 		qdel(template)
 
 	return type_values
+
+/obj/structure/fake_machine/contractledger/proc/is_contract_type_allowed_for_user(mob/user, contract_type)
+	if((contract_type in list(QUEST_RAID, QUEST_BOSS)) && !is_boss_raid_issuer(user))
+		return FALSE
+	return TRUE
 
 /obj/structure/fake_machine/contractledger/proc/get_tier_values_for_contract(contract_type)
 	var/list/tier_values = list()
@@ -646,6 +696,8 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	return "Unknown contract."
 
 /obj/structure/fake_machine/contractledger/proc/can_take_selected_contract(mob/living/carbon/human/user, contract_type, selected_tier)
+	if(!can_user_access_ledger(user))
+		return FALSE
 	if(get_consult_block_reason(user))
 		return FALSE
 	if(!contract_type || !selected_tier)
@@ -1032,26 +1084,63 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 /obj/structure/fake_machine/contractledger/proc/can_turn_in_any_contract(mob/living/carbon/human/user)
 	if(!user)
 		return FALSE
+	if(!can_user_access_ledger(user))
+		return FALSE
 	for(var/obj/item/paper/scroll/quest/held_scroll in user.GetAllContents(/obj/item/paper/scroll/quest))
 		var/list/mob/quest_assignees = held_scroll.get_quest_assignees(user, TRUE)
-		if((user in quest_assignees) && held_scroll.assigned_quest?.complete)
+		if((user in quest_assignees) && held_scroll.assigned_quest?.complete && can_accept_contract_quest(held_scroll.assigned_quest))
 			return TRUE
 	for(var/obj/item/paper/scroll/quest/floor_scroll in input_point)
 		var/list/mob/quest_assignees = floor_scroll.get_quest_assignees(user, TRUE)
-		if((user in quest_assignees) && floor_scroll.assigned_quest?.complete)
+		if((user in quest_assignees) && floor_scroll.assigned_quest?.complete && can_accept_contract_quest(floor_scroll.assigned_quest))
 			return TRUE
 	return FALSE
 
 /obj/structure/fake_machine/contractledger/proc/can_abandon_any_contract(mob/living/carbon/human/user)
 	if(!user)
 		return FALSE
+	if(!can_user_access_ledger(user))
+		return FALSE
 	var/obj/item/paper/scroll/quest/abandoned_scroll = locate() in input_point
 	if(!abandoned_scroll)
 		return FALSE
 	var/list/mob/quest_assignees = abandoned_scroll.get_quest_assignees(user, TRUE)
-	return (user in quest_assignees) && !abandoned_scroll.assigned_quest?.complete
+	return (user in quest_assignees) && !abandoned_scroll.assigned_quest?.complete && can_accept_contract_quest(abandoned_scroll.assigned_quest)
+
+/obj/structure/fake_machine/contractledger/proc/get_contract_deposit_amount(mob/living/carbon/human/user, datum/quest/attached_quest)
+	if(!attached_quest)
+		return 0
+	return attached_quest.calculate_deposit(attached_quest.reward_amount)
+
+/obj/structure/fake_machine/contractledger/proc/charge_contract_deposit(mob/living/carbon/human/user, datum/quest/attached_quest)
+	if(!attached_quest)
+		return FALSE
+	if(attached_quest.deposit_amount <= 0)
+		return TRUE
+	if(SStreasury.bank_accounts[user] < attached_quest.deposit_amount)
+		set_session_notice(user, "notice.insufficient_funds", "warning", list("amount" = attached_quest.deposit_amount))
+		to_chat(user, span_warning("Insufficient balance funds. You need [attached_quest.deposit_amount] amna in your meister."))
+		return FALSE
+
+	var/deposit_charged = attached_quest.deposit_amount
+	SStreasury.bank_accounts[user] -= deposit_charged
+	SStreasury.treasury_value += deposit_charged
+	SStreasury.log_entries += "+[deposit_charged] to treasury (quest deposit)"
+	return TRUE
+
+/obj/structure/fake_machine/contractledger/proc/get_contract_objective_score(datum/quest/quest)
+	return 0
+
+/obj/structure/fake_machine/contractledger/proc/on_contract_completed(mob/living/carbon/human/user, datum/quest/completed_quest, reward, original_reward, tax_amt)
+	return
+
+/obj/structure/fake_machine/contractledger/proc/show_wrong_ledger_notice(mob/living/carbon/human/user, datum/quest/quest)
+	var/target_ledger_name = quest?.get_turn_in_ledger_name() || "its proper ledger"
+	to_chat(user, span_warning("This contract belongs to [target_ledger_name], not [src.name]."))
 
 /obj/structure/fake_machine/contractledger/proc/create_selected_contract(mob/living/carbon/human/user)
+	if(!can_user_access_ledger(user, TRUE))
+		return FALSE
 	var/block_reason = get_consult_block_reason(user)
 	if(block_reason)
 		set_session_notice(user, block_reason, "warning")
@@ -1113,18 +1202,19 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	// Try to set up a quest ambush on one of the spawned mobs (no extra reward)
 	attached_quest.try_setup_quest_ambush(chosen_landmark)
 
-	var/obj/item/paper/scroll/quest/spawned_scroll = new(get_turf(src))
-	spawned_scroll.assigned_quest = attached_quest
-	attached_quest.quest_scroll = spawned_scroll
-	attached_quest.quest_scroll_ref = WEAKREF(spawned_scroll)
+	var/obj/item/paper/scroll/quest/spawned_scroll = create_contract_token(user, attached_quest)
+	if(!spawned_scroll)
+		set_session_notice(user, "notice.invalid_contract", "warning")
+		to_chat(user, span_warning("The ledger fails to bind this contract to a quest token."))
+		qdel(attached_quest)
+		return FALSE
 
 	attached_quest.reward_amount = attached_quest.calculate_reward(get_turf(chosen_landmark))
-	attached_quest.deposit_amount = attached_quest.calculate_deposit(attached_quest.reward_amount)
+	attached_quest.deposit_amount = get_contract_deposit_amount(user, attached_quest)
+	attached_quest.on_issued_from_ledger(src, user)
 	spawned_scroll.base_icon_state = attached_quest.get_scroll_icon()
 
-	if(SStreasury.bank_accounts[user] < attached_quest.deposit_amount)
-		set_session_notice(user, "notice.insufficient_funds", "warning", list("amount" = attached_quest.deposit_amount))
-		to_chat(user, span_warning("Insufficient balance funds. You need [attached_quest.deposit_amount] amna in your meister."))
+	if(!charge_contract_deposit(user, attached_quest))
 		attached_quest.quest_scroll = null
 		attached_quest.quest_scroll_ref = null
 		attached_quest.deposit_amount = 0
@@ -1133,14 +1223,8 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 		qdel(attached_quest)
 		return FALSE
 
-	user.put_in_hands(spawned_scroll)
+	on_contract_token_issued(user, attached_quest, spawned_scroll)
 	log_quest(user.ckey, user.mind, user, "Take [attached_quest.quest_type]")
-	spawned_scroll.update_quest_text()
-
-	var/deposit_charged = attached_quest.deposit_amount
-	SStreasury.bank_accounts[user] -= deposit_charged
-	SStreasury.treasury_value += deposit_charged
-	SStreasury.log_entries += "+[deposit_charged] to treasury (quest deposit)"
 
 	set_session_notice(user, "notice.issued_contract", "success", list(
 		"contract_type" = attached_quest.quest_type,
@@ -1148,6 +1232,23 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 		"deposit" = attached_quest.deposit_amount,
 	))
 	return TRUE
+
+/obj/structure/fake_machine/contractledger/proc/create_contract_token(mob/living/carbon/human/user, datum/quest/attached_quest)
+	if(!attached_quest)
+		return null
+
+	var/obj/item/paper/scroll/quest/spawned_scroll = new(get_turf(src))
+	spawned_scroll.assigned_quest = attached_quest
+	attached_quest.quest_scroll = spawned_scroll
+	attached_quest.quest_scroll_ref = WEAKREF(spawned_scroll)
+	return spawned_scroll
+
+/obj/structure/fake_machine/contractledger/proc/on_contract_token_issued(mob/living/carbon/human/user, datum/quest/attached_quest, obj/item/paper/scroll/quest/spawned_scroll)
+	if(!user || !attached_quest || !spawned_scroll)
+		return
+
+	user.put_in_hands(spawned_scroll)
+	spawned_scroll.update_quest_text()
 
 /obj/structure/fake_machine/contractledger/proc/find_quest_landmark(contract_tier, contract_type)
 	var/list/exact_landmarks = list()
@@ -1245,24 +1346,29 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	return FALSE
 
 /obj/structure/fake_machine/contractledger/proc/turn_in_contract(mob/user, obj/item/paper/scroll/quest/scroll_in_hand)
+	if(!can_user_access_ledger(user, TRUE))
+		return
 	if(scroll_in_hand)
 		var/list/mob/quest_assignees = scroll_in_hand.get_quest_assignees(user, TRUE)
 		if(!(user in quest_assignees))
 			set_session_notice(user, "notice.not_assigned", "warning")
 			to_chat(user, span_warning("You are not the assigned quest receiver for this contract!"))
 			return
+		if(!can_accept_contract_quest(scroll_in_hand.assigned_quest))
+			show_wrong_ledger_notice(user, scroll_in_hand.assigned_quest)
+			return
 		turn_in_scroll(user, scroll_in_hand)
 	else
 		for(var/obj/item/paper/scroll/quest/held_scroll in user.GetAllContents(/obj/item/paper/scroll/quest))
 			var/list/mob/held_assignees = held_scroll.get_quest_assignees(user, TRUE)
-			if(!(user in held_assignees) || !held_scroll.assigned_quest?.complete)
+			if(!(user in held_assignees) || !held_scroll.assigned_quest?.complete || !can_accept_contract_quest(held_scroll.assigned_quest))
 				continue
 			turn_in_scroll(user, held_scroll)
 			return
 
 		for(var/obj/item/paper/scroll/quest/floor_scroll in input_point)
 			var/list/mob/quest_assignees = floor_scroll.get_quest_assignees(user, TRUE)
-			if(!(user in quest_assignees))
+			if(!(user in quest_assignees) || !can_accept_contract_quest(floor_scroll.assigned_quest))
 				continue
 			turn_in_scroll(user, floor_scroll)
 			return
@@ -1274,18 +1380,28 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	var/original_reward = 0
 	var/tax_rate = SStreasury.tax_value
 	var/tax_amt = 0
+	var/datum/quest/completed_quest = scroll?.assigned_quest
 
-	if(scroll.assigned_quest?.complete)
-		var/base_reward = scroll.assigned_quest.reward_amount
+	if(!completed_quest)
+		set_session_notice(user, "notice.scroll_no_contract", "warning")
+		to_chat(user, span_warning("This scroll doesn't have an assigned contract!"))
+		return
+
+	if(!can_accept_contract_quest(completed_quest))
+		show_wrong_ledger_notice(user, completed_quest)
+		return
+
+	if(completed_quest?.complete)
+		var/base_reward = completed_quest.reward_amount
 		original_reward += base_reward
 
 		// 5% chance to drop a stat ring for Deadly-tier kill quests
-		if(scroll.assigned_quest.threat_tier == QUEST_TIER_DEADLY && prob(5))
+		if(completed_quest.threat_tier == QUEST_TIER_DEADLY && prob(5))
 			var/obj/item/clothing/ring/gold/quest_deadly_prize/deadly_ring = new(get_turf(user))
 			user.put_in_hands(deadly_ring)
 			to_chat(user, span_boldnotice("Among the contract spoils, you find [deadly_ring]!"))
 
-		var/deposit_return = scroll.assigned_quest.deposit_amount || scroll.assigned_quest.calculate_deposit(scroll.assigned_quest.reward_amount)
+		var/deposit_return = completed_quest.deposit_amount || completed_quest.calculate_deposit(completed_quest.reward_amount)
 
 		if(is_boss_raid_issuer(user))
 			reward += ROUND_UP(base_reward * QUEST_HANDLER_REWARD_MULTIPLIER)
@@ -1297,15 +1413,17 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 		reward += deposit_return
 		original_reward += deposit_return
 
-		qdel(scroll.assigned_quest)
-		qdel(scroll)
+		if(taxable)
+			tax_amt = round(tax_rate * reward)
+			if(tax_amt > 0)
+				reward -= tax_amt
+				SStreasury.give_money_treasury(tax_amt, "quest completion tax - [src.name]")
+				record_featured_stat(FEATURED_STATS_TAX_PAYERS, user, tax_amt)
+				record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
 
-		tax_amt = round(tax_rate * reward)
-		if(tax_amt > 0)
-			reward -= tax_amt
-			SStreasury.give_money_treasury(tax_amt, "quest completion tax - [src.name]")
-			record_featured_stat(FEATURED_STATS_TAX_PAYERS, user, tax_amt)
-			record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
+		on_contract_completed(user, completed_quest, reward, original_reward, tax_amt)
+		qdel(completed_quest)
+		qdel(scroll)
 
 	if(reward > 0)
 		set_session_notice(user, "notice.turn_in_success", "success", list("reward" = round(reward)))
@@ -1316,12 +1434,16 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 /obj/structure/fake_machine/contractledger/proc/cash_in(mob/user, reward, original_reward, tax_amt)
 	add_mammons_to_atom(user, reward)
 	if(reward > 0)
-		say(reward > original_reward ? \
-			"Your handler assistance-increased reward of [reward] amna has been dispensed! The difference is [reward - original_reward] amna. ([tax_amt] amna taxed.)" : \
-			"Your reward of [reward] amna has been dispensed. ([tax_amt] amna taxed.)")
+		if(tax_amt)
+			say(reward > original_reward ? \
+				"Your handler assistance-increased reward of [reward] amna has been dispensed! The difference is [reward - original_reward] amna. ([tax_amt] amna taxed.)" : \
+				"Your reward of [reward] amna has been dispensed. ([tax_amt] amna taxed.)")
+		else
+			say(reward > original_reward ? \
+				"Your handler assistance-increased reward of [reward] amna has been dispensed! The difference is [reward - original_reward] amna." : \
+				"Your reward of [reward] amna has been dispensed.")
 
-/obj/structure/fake_machine/contractledger/proc/abandon_contract(mob/user)
-	var/obj/item/paper/scroll/quest/abandoned_scroll = locate() in input_point
+/obj/structure/fake_machine/contractledger/proc/abandon_scroll(mob/user, obj/item/paper/scroll/quest/abandoned_scroll)
 	if(!abandoned_scroll)
 		set_session_notice(user, "notice.no_scroll_input", "warning")
 		to_chat(user, span_warning("No contract scroll found in the input area!"))
@@ -1331,6 +1453,9 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	if(!quest)
 		set_session_notice(user, "notice.scroll_no_contract", "warning")
 		to_chat(user, span_warning("This scroll doesn't have an assigned contract!"))
+		return
+	if(!can_accept_contract_quest(quest))
+		show_wrong_ledger_notice(user, quest)
 		return
 
 	if(quest.complete)
@@ -1366,6 +1491,15 @@ GLOBAL_VAR_INIT(quest_preview_preload_bootstrapped, FALSE)
 	abandoned_scroll.assigned_quest = null
 	qdel(quest)
 	qdel(abandoned_scroll)
+
+/obj/structure/fake_machine/contractledger/proc/abandon_contract(mob/user)
+	var/obj/item/paper/scroll/quest/abandoned_scroll = locate() in input_point
+	if(!abandoned_scroll)
+		set_session_notice(user, "notice.no_scroll_input", "warning")
+		to_chat(user, span_warning("No contract scroll found in the input area!"))
+		return
+
+	abandon_scroll(user, abandoned_scroll)
 
 /obj/structure/fake_machine/contractledger/proc/print_contracts(mob/user)
 	var/list/active_quests = list()

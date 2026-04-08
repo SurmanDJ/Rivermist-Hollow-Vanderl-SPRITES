@@ -208,6 +208,20 @@
 
 	return TRUE
 
+
+/datum/component/knotting/proc/get_knotted_drag_target()
+	var/mob/living/carbon/human/top = knotted_owner
+	var/mob/living/carbon/human/btm = knotted_recipient
+
+	if(knotted_status != KNOTTED_AS_TOP)
+		return null
+	if(parent != top)
+		return null
+	if(!validate_knot_participants(top, btm))
+		return null
+
+	return btm
+
 /datum/component/knotting/proc/handle_special_movement_cases(mob/living/carbon/human/top, mob/living/carbon/human/btm)
 	// Fireman carry case
 	if(prob(10) && top.m_intent == MOVE_INTENT_WALK && (btm in top.buckled_mobs))
@@ -444,3 +458,4 @@
 #undef KNOTTED_NULL
 #undef KNOTTED_AS_TOP
 #undef KNOTTED_AS_BTM
+

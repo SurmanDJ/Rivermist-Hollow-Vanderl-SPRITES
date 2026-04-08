@@ -294,6 +294,8 @@
 
 	/// new title given by an admin.
 	var/admin_title = null
+	/// Visual job title override applied to this mob, useful for disguises.
+	var/disguise_title_override = null
 
 	VAR_PROTECTED/base_strength = 10
 	VAR_PROTECTED/base_perception = 10

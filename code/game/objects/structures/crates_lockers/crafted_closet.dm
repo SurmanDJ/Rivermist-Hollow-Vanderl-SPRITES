@@ -65,7 +65,7 @@
 	return SSpocket_dimensions?.get_instance(get_pocket_instance_key())
 
 /obj/structure/closet/crate/crafted_closet/magic/proc/get_or_create_pocket_instance()
-	return SSpocket_dimensions?.get_or_create_instance(get_pocket_instance_key(), pocket_template, pocket_lifecycle_policy, pocket_idle_timeout)
+	return SSpocket_dimensions?.get_or_create_instance(get_pocket_instance_key(), pocket_template, pocket_lifecycle_policy, pocket_idle_timeout, src)
 
 /obj/structure/closet/crate/crafted_closet/magic/proc/transport_closet_contents()
 	var/datum/pocket_dimension/instance = get_or_create_pocket_instance()

@@ -730,14 +730,11 @@
 	C.next_attack_msg.Cut()
 	if(C.apply_damage(damage, BRUTE, limb_grabbed, armor_block))
 		playsound(C, "smallslash", 100, FALSE, -1)
-		var/datum/wound/caused_wound = limb_grabbed.bodypart_attacked_by(BCLASS_BITE, damage, user, sublimb_grabbed, crit_message = TRUE)
+		limb_grabbed.bodypart_attacked_by(BCLASS_BITE, damage, user, sublimb_grabbed, crit_message = TRUE)
 		if(user.mind)
-			//TODO: Werewolf Signal
 			var/datum/antagonist/werewolf/werewolf_antag = user.mind.has_antag_datum(/datum/antagonist/werewolf)
 			if(werewolf_antag && werewolf_antag.transformed)
 				var/mob/living/carbon/human/human = user
-				if(istype(caused_wound))
-					caused_wound?.werewolf_infect_attempt()
 				if(prob(30))
 					human.werewolf_feed(C)
 

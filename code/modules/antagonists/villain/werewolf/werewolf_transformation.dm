@@ -169,6 +169,10 @@
 		return FALSE
 
 	var/mob/living/carbon/human/current_body = owner.current
+	if(HAS_TRAIT(current_body, TRAIT_WEREWOLF_TRANSFORMATION_SUPPRESSED))
+		if(feedback)
+			to_chat(current_body, span_warning("Silver bindings keep the beast from taking hold."))
+		return FALSE
 	if(HAS_TRAIT(current_body, TRAIT_NO_TRANSFORM))
 		if(feedback)
 			to_chat(current_body, span_warning("Something prevents my body from changing right now."))
@@ -224,16 +228,16 @@
 	transformation_in_progress = TRUE
 	ADD_TRAIT(human_user, TRAIT_NO_TRANSFORM, REF(src))
 	human_user.flash_fullscreen("redflash3")
-	human_user.emote("agony", forced = TRUE)
+	human_user.emote("scream", forced = TRUE)
 	if(force_due_to_missed_nights)
 		to_chat(human_user, span_userdanger("Three nights denied. The beast tears free!"))
 	else
-		to_chat(human_user, span_userdanger("UNIMAGINABLE PAIN!"))
+		to_chat(human_user, span_userdanger("The Moon calls!"))
 	human_user.Stun(WW_TRANSFORMATION_LOCKDOWN, ignore_canstun = TRUE)
-	//human_user.Knockdown(WW_TRANSFORMATION_LOCKDOWN, ignore_canstun = TRUE)
+	//human_user.Knockdown(WW_TRANSFORMATION_LOCKDOWN, ignore_canstun = TRUE)w
 	sleep(WW_TRANSFORMATION_AGONY_INTERVAL)
-	//if(!QDELETED(human_user))
-	//	human_user.emote("agony", forced = TRUE)
+	human_user.flash_fullscreen("redflash3")
+	human_user.emote("scream", forced = TRUE)
 	sleep(WW_TRANSFORMATION_AGONY_INTERVAL)
 	if(!QDELETED(human_user))
 		REMOVE_TRAIT(human_user, TRAIT_NO_TRANSFORM, REF(src))
@@ -292,8 +296,13 @@
 	new_werewolf.emote("rage")
 
 	transformed = TRUE
+	var/datum/mind/werewolf_mind = human_user.mind
+	if(werewolf_mind?.current == human_user)
+		// Keep the werewolf player in control of the beast, along with any mind-bound actions.
+		werewolf_mind.transfer_to(new_werewolf, TRUE)
 	transformation_in_progress = FALSE
 	mark_transformation_complete()
+	RegisterSignal(new_werewolf, COMSIG_LIVING_COMBAT_KILL, PROC_REF(on_werewolf_kill))
 	RegisterSignal(new_werewolf, COMSIG_LIVING_UNSHAPESHIFTED, PROC_REF(werewolf_untransform))
 	return TRUE
 
@@ -347,6 +356,13 @@
 		werewolf_user.dropItemToGround(dropped_item, silent = TRUE)
 
 	INVOKE_ASYNC(werewolf_user, TYPE_PROC_REF(/mob, emote), "scream")
+	transformed = FALSE
+	transformation_in_progress = FALSE
+
+	var/datum/mind/werewolf_mind = werewolf_user.mind
+	if(werewolf_mind?.current == werewolf_user)
+		// Restore control to the hidden human before the beast body is cleaned up.
+		werewolf_mind.transfer_to(caster_mob, TRUE)
 
 	to_chat(caster_mob, span_userdanger("The beast within returns to slumber."))
 	playsound(caster_mob, pick('sound/combat/gib (1).ogg', 'sound/combat/gib (2).ogg'), 200, FALSE, 3)
@@ -361,7 +377,5 @@
 	caster_mob.adjustOxyLoss(werewolf_user.getOxyLoss() / 2)
 	caster_mob.adjustCloneLoss(werewolf_user.getCloneLoss() / 2)
 
-	UnregisterSignal(werewolf_user, COMSIG_LIVING_UNSHAPESHIFTED)
-	transformed = FALSE
-	transformation_in_progress = FALSE
+	UnregisterSignal(werewolf_user, list(COMSIG_LIVING_COMBAT_KILL, COMSIG_LIVING_UNSHAPESHIFTED))
 	mark_transformation_complete()

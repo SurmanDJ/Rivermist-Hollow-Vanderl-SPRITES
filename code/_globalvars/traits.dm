@@ -287,6 +287,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_BLACKLEG = "I can cheat by rigging coin and dice, and peek at cards.",
 	TRAIT_INQUISITION = span_info("I am a member of the Oratorium Throni Vacui. I can easily identify others of my cadre at a glance."),
 	TRAIT_SILVER_BLESSED = span_info("I am anointed with holy silver, which preserves me from curses that bite, miracles of the false gods hold no sway over me."),
+	TRAIT_WEREWOLF_TRANSFORMATION_SUPPRESSED = span_warning("Silver bindings keep the beast buried beneath my skin."),
 	TRAIT_MATTHIOS_EYES = span_notice("I have a sense for what the most valuable item someone has is."),
 	TRAIT_CRATEMOVER = "I am able to drag heavy objects without any difficulty.",
 	TRAIT_SEE_LEYLINES = "I can see the lines that make up this world.",

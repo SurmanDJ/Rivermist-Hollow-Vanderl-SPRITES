@@ -1404,6 +1404,55 @@ GLOBAL_VAR_INIT(mobids, 1)
 
 	return choice
 
+/// Send a menu that allows for the selection of an outfit or job outfit. Randomly selects one after time_limit.
+/// selection_list should be an associative list of string and /datum/job, /datum/job typepath, /datum/outfit, or /datum/outfit typepath
+/mob/living/proc/select_outfit(user_client, list/selection_list, time_limit = 20 SECONDS, message = "", title = "", clear_existing = FALSE)
+	if(!LAZYLEN(selection_list))
+		return
+	if(!ishuman(src))
+		return
+
+	var/to_send = user_client ? user_client : src
+
+	var/choice = browser_input_list(to_send, message, title, selection_list, timeout = time_limit)
+	if(QDELETED(src))
+		return
+
+	if(!choice)
+		choice = pick(selection_list)
+
+	var/selected_outfit = LAZYACCESS(selection_list, choice)
+	if(isnull(selected_outfit))
+		return
+
+	var/mob/living/carbon/human/human_mob = src
+	var/datum/job/selected_job = null
+	var/selected_job_type = null
+	var/selected_outfit_type = null
+
+	if(istype(selected_outfit, /datum/job))
+		selected_job = selected_outfit
+	else if(ispath(selected_outfit, /datum/job))
+		selected_job_type = SSjob.GetJobType(selected_outfit)
+		if(!selected_job_type)
+			return
+	else if(istype(selected_outfit, /datum/outfit) || ispath(selected_outfit, /datum/outfit))
+		selected_outfit_type = selected_outfit
+	else
+		return
+
+	if(clear_existing)
+		human_mob.delete_equipment()
+
+	if(selected_job)
+		human_mob.dress_up_as_job(selected_job)
+	else if(selected_job_type)
+		human_mob.dress_up_as_job(selected_job_type)
+	else if(selected_outfit_type)
+		human_mob.equipOutfit(selected_outfit_type)
+
+	return choice
+
 /mob/proc/nobles_seen_servant_work()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src

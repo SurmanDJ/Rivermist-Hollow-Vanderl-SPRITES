@@ -7131,6 +7131,10 @@
 "cQn" = (
 /turf/open/floor/dirt/road,
 /area/indoors/town/rmh/farm/stall)
+"cQz" = (
+/obj/effect/landmark/start/werewolf,
+/turf/open/floor/grass/healthy,
+/area/outdoors/rmh_field)
 "cQD" = (
 /obj/structure/flora/grass,
 /turf/open/floor/grass/yel,
@@ -11054,6 +11058,10 @@
 	},
 /turf/open/floor/churchrough,
 /area/indoors/town/rmh/chapel/basement)
+"eki" = (
+/obj/effect/landmark/start/werewolf,
+/turf/open/floor/grass/healthy,
+/area/outdoors/rmh_field/east)
 "ekk" = (
 /turf/open/floor/concrete,
 /area/outdoors/town/rmh)
@@ -28838,6 +28846,10 @@
 	},
 /turf/open/floor/naturalstone,
 /area/indoors/cave/rmh_cave/cave_leshiy)
+"kNI" = (
+/obj/effect/landmark/start/werewolf,
+/turf/open/floor/dirt/road,
+/area/outdoors/rmh_field/north)
 "kNM" = (
 /obj/structure/fluff/railing/border/north,
 /obj/structure/fluff/railing/border/east,
@@ -35366,6 +35378,10 @@
 /obj/structure/ladder,
 /turf/open/floor/cobblerock,
 /area/indoors/cave/rmh_cave/west)
+"ngI" = (
+/obj/effect/landmark/start/werewolf,
+/turf/open/floor/grass/healthy,
+/area/outdoors/rmh_field/north)
 "ngJ" = (
 /obj/structure/well{
 	icon = 'icons/obj/structures/rotation_devices/water_vent.dmi';
@@ -38895,6 +38911,10 @@
 /obj/structure/hotspring/border/three,
 /turf/open/floor/church,
 /area/indoors/town/rmh/chapel/basement)
+"oul" = (
+/obj/effect/landmark/start/werewolf,
+/turf/open/floor/grass/healthy,
+/area/outdoors/rmh_field/west)
 "oum" = (
 /obj/structure/flora/grass/herb/valeriana,
 /obj/structure/flora/grass/herb/valeriana{
@@ -220398,7 +220418,7 @@ jJs
 jJs
 qCm
 jJs
-jJs
+oul
 jJs
 chB
 jJs
@@ -228941,7 +228961,7 @@ xQn
 jVb
 min
 arO
-tnn
+kNI
 kmo
 jVb
 jVb
@@ -236841,7 +236861,7 @@ fFw
 fFw
 aiw
 fFw
-fFw
+cQz
 oEr
 fFw
 lbA
@@ -251818,7 +251838,7 @@ jVb
 jVb
 tkt
 jVb
-jVb
+ngI
 jVb
 tkt
 tkt
@@ -256750,7 +256770,7 @@ eao
 pPw
 jTK
 cjI
-pPw
+eki
 eao
 pPw
 gLU
