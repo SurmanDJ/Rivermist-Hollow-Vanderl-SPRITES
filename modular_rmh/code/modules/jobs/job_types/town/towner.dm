@@ -30,7 +30,7 @@
 		/datum/job/advclass/towner/farmhand,
 		/datum/job/advclass/towner/hunter,
 		/datum/job/advclass/towner/fisher,
-
+		/datum/job/advclass/towner/passenger,
 	)
 
 //SUBCLASSES

@@ -20,6 +20,7 @@
 		/datum/job/advclass/town_scholar/archivist,
 		/datum/job/advclass/town_scholar/artificer,
 		/datum/job/advclass/town_scholar/town_physician,
+		/datum/job/advclass/town_scholar/ship_doctor,
 	)
 
 	give_bank_account = 80
