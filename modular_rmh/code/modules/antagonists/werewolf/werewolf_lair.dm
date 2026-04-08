@@ -376,6 +376,10 @@
 	if(!can_user_enter_lair(user, FALSE, TRUE))
 		return FALSE
 
+	var/mob/living/knotted_victim = get_knotted_entry_target(user)
+	if(knotted_victim)
+		return force_movable_inside(user, knotted_victim, TRUE)
+
 	var/datum/pocket_dimension/pocket_instance = get_or_create_pocket_instance()
 	if(!pocket_instance)
 		to_chat(user, span_warning("The lair refuses to open right now."))
@@ -383,6 +387,19 @@
 
 	to_chat(user, span_notice("I slip into the lair."))
 	return pocket_instance.enter_mob(user, get_turf(src), src)
+
+/obj/structure/werewolf_lair_entrance/proc/get_knotted_entry_target(mob/living/user)
+	if(!ishuman(user))
+		return null
+
+	var/mob/living/carbon/human/human_user = user
+	if(!IS_WEREWOLF(human_user))
+		return null
+	var/datum/component/knotting/knot_component = human_user.GetComponent(/datum/component/knotting)
+	if(!knot_component)
+		return null
+
+	return knot_component.get_knotted_drag_target()
 
 /obj/structure/werewolf_lair_entrance/proc/handle_grabbed_entry(mob/living/user, obj/item/grabbing/grab_item)
 	if(!istype(user) || !istype(grab_item))
