@@ -33,10 +33,9 @@
 	mob_overlay_icon = 'modular_rmh/icons/clothing/vladegeg/onmob/treasure_island.dmi'
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
-	ignore_sleeves_code = TRUE // No sleeves, otherwise arms will be over the sprite
-	nodismemsleeves = TRUE
-	sleevetype = null
-	sleeved = null
+	detail_tag = "_detail"
+	sleevetype = "shirt"
+	sleeved = 'modular_rmh/icons/clothing/vladegeg/onmob/helpers/jacket_sleeve.dmi'
 	misc_flags = CRAFTING_TEST_EXCLUDE
 
 /obj/item/clothing/armor/gambeson/treasure_island/blue
