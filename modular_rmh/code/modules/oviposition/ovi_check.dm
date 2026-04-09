@@ -1,4 +1,11 @@
-/// Verb for players to check the status of their oviposition organs and eggs via TGUI.
+// Egg type constants (for get_egg_type_short_name)
+#define OVI_EGG_NORMAL "normal_ovi"
+#define OVI_EGG_SPIDER "spider_ovi"
+#define OVI_EGG_BOG_BUG "bog_bug_ovi"
+#define OVI_EGG_HARPY "harpy_ovi"
+#define OVI_EGG_EMBRYO "embryo_ovi"
+
+/// Verb for checking egg status via TGUI.
 /mob/living/carbon/human/verb/check_eggs()
 	set name = "Check Eggs"
 	set category = "IC"
@@ -36,101 +43,132 @@
 
 /datum/oviposition_status_menu/ui_data(mob/user)
 	var/list/data = list()
-
 	if(!owner || QDELETED(owner))
 		return data
 
-	data["sections"] = list()
+	data["nutriment"] = round(owner.get_reagent_amount(/datum/reagent/consumable/nutriment), 0.1)
+	data["organs"] = list()
 
 	// --- Ovipositor ---
 	var/obj/item/organ/genitals/penis/ovipositor/ovi_organ = owner.getorganslot(ORGAN_SLOT_PENIS)
 	if(istype(ovi_organ))
 		var/datum/component/ovipositor/ovi_comp = ovi_organ.GetComponent(/datum/component/ovipositor)
 		if(ovi_comp)
-			var/list/ovi_data = list()
-			ovi_data["type"] = "ovipositor"
-			ovi_data["title"] = "Ovipositor"
-			ovi_data["eggs_stored"] = ovi_comp.eggs_stored
-			ovi_data["max_stored"] = ovi_comp.get_max_stored_eggs()
-			ovi_data["clutch_size"] = ovi_comp.get_clutch_size()
-			ovi_data["resource_dependent"] = ovi_organ.resource_dependent_yield
-			if(ovi_organ.resource_dependent_yield)
-				ovi_data["nutriment"] = round(owner.get_reagent_amount(/datum/reagent/consumable/nutriment), 0.1)
-			if(ovi_organ.custom_egg_name && length(ovi_organ.custom_egg_name))
-				ovi_data["custom_name"] = ovi_organ.custom_egg_name
-			if(ovi_organ.custom_egg_color)
-				ovi_data["custom_color"] = ovi_organ.custom_egg_color
-			UNTYPED_LIST_ADD(data["sections"], ovi_data)
+			var/list/ovi = list()
+			ovi["id"] = "ovipositor"
+			ovi["title"] = "OVIPOSITOR"
+			ovi["icon"] = "mars"
+			ovi["egg_count"] = ovi_comp.eggs_stored
+			ovi["egg_capacity"] = ovi_comp.get_max_stored_eggs()
+			ovi["clutch_size"] = ovi_comp.get_clutch_size()
+			ovi["egg_type_name"] = get_egg_type_short_name(ovi_organ.ovi_egg_type)
+			ovi["custom_color"] = ovi_organ.custom_egg_color
+			ovi["custom_name"] = ovi_organ.custom_egg_name
+			ovi["resource_dependent"] = ovi_organ.resource_dependent_yield
+			ovi["egg_stage"] = ovi_comp.egg_stage
+			ovi["eggs"] = list()
+			UNTYPED_LIST_ADD(data["organs"], ovi)
 
-	// --- Womb / Vagina ---
+	// --- Womb ---
 	var/obj/item/organ/genitals/filling_organ/vagina/vagina = owner.getorganslot(ORGAN_SLOT_VAGINA)
+	var/list/vagina_eggs
 	if(vagina && vagina.supports_oviposition_pregnancy())
-		var/is_egg_layer = HAS_TRAIT(owner, TRAIT_EGG_LAYER)
-		var/list/all_eggs = vagina.get_oviposition_eggs()
-		var/egg_count = length(all_eggs)
-		var/hatchling_count = vagina.count_internal_womb_hatchlings()
+		vagina_eggs = vagina.get_oviposition_eggs()
 
-		if(egg_count || hatchling_count || is_egg_layer)
-			var/list/womb_data = list()
-			womb_data["type"] = "womb"
-			womb_data["title"] = "Womb"
-			womb_data["is_egg_layer"] = is_egg_layer
-			womb_data["hatchling_count"] = hatchling_count
+	var/is_egg_layer = HAS_TRAIT(owner, TRAIT_EGG_LAYER)
+	var/hatchling_count = 0
+	if(vagina)
+		hatchling_count = vagina.count_internal_womb_hatchlings()
 
-			if(is_egg_layer)
-				var/limit = vagina.oviposition_egg_production_limit
-				womb_data["egg_count"] = egg_count
-				womb_data["egg_limit"] = limit
-				womb_data["resource_dependent"] = vagina.resource_dependent_yield
-				if(vagina.resource_dependent_yield)
-					womb_data["nutriment"] = round(owner.get_reagent_amount(/datum/reagent/consumable/nutriment), 0.1)
-				if(vagina.next_oviposition_egg_generation > 0 && egg_count < limit)
-					var/remaining = max(0, vagina.next_oviposition_egg_generation - world.time)
-					womb_data["next_egg_seconds"] = round(remaining / 10, 1)
-					womb_data["interval_seconds"] = round(vagina.oviposition_egg_production_interval / 10, 1)
+	if(length(vagina_eggs) || hatchling_count || is_egg_layer)
+		var/list/womb = list()
+		womb["id"] = "womb"
+		womb["title"] = "WOMB"
+		womb["icon"] = "venus"
+		womb["egg_count"] = length(vagina_eggs)
+		womb["is_egg_layer"] = is_egg_layer
+		womb["hatchling_count"] = hatchling_count
+		if(is_egg_layer && vagina)
+			womb["egg_capacity"] = vagina.oviposition_egg_production_limit
+			womb["resource_dependent"] = vagina.resource_dependent_yield
+			if(vagina.next_oviposition_egg_generation > 0 && length(vagina_eggs) < vagina.oviposition_egg_production_limit)
+				var/remaining = max(0, vagina.next_oviposition_egg_generation - world.time)
+				womb["next_egg_seconds"] = round(remaining / 10, 1)
+				womb["interval_seconds"] = round(vagina.oviposition_egg_production_interval / 10, 1)
+		womb["eggs"] = list()
+		for(var/obj/item/oviposition_egg/egg as anything in vagina_eggs)
+			UNTYPED_LIST_ADD(womb["eggs"], build_single_egg(egg))
+		UNTYPED_LIST_ADD(data["organs"], womb)
 
-			womb_data["eggs"] = build_egg_list(vagina)
-			UNTYPED_LIST_ADD(data["sections"], womb_data)
-
-	// --- Other organs (anus, guts) ---
+	// --- Other organs (Anus, Guts) ---
 	for(var/slot in list(ORGAN_SLOT_ANUS, ORGAN_SLOT_GUTS))
-		var/obj/item/organ/other_organ = owner.getorganslot(slot)
-		if(!other_organ || !other_organ.supports_oviposition_pregnancy())
+		var/obj/item/organ/organ = owner.getorganslot(slot)
+		if(!organ || !organ.supports_oviposition_pregnancy())
 			continue
-		var/list/other_eggs = other_organ.get_oviposition_eggs()
-		if(!length(other_eggs))
+		var/list/organ_eggs = organ.get_oviposition_eggs()
+		if(!length(organ_eggs))
 			continue
-		var/list/other_data = list()
-		other_data["type"] = "other"
-		other_data["title"] = capitalize(other_organ.get_oviposition_location_name())
-		other_data["eggs"] = build_egg_list(other_organ)
-		UNTYPED_LIST_ADD(data["sections"], other_data)
+		var/list/od = list()
+		od["id"] = slot
+		od["title"] = uppertext(organ.get_oviposition_location_name())
+		od["icon"] = "circle"
+		od["egg_count"] = length(organ_eggs)
+		od["eggs"] = list()
+		for(var/obj/item/oviposition_egg/egg as anything in organ_eggs)
+			UNTYPED_LIST_ADD(od["eggs"], build_single_egg(egg))
+		UNTYPED_LIST_ADD(data["organs"], od)
 
 	return data
 
-/datum/oviposition_status_menu/proc/build_egg_list(obj/item/organ/organ)
-	var/list/egg_list = list()
-	if(!organ)
-		return egg_list
+/datum/oviposition_status_menu/proc/build_single_egg(obj/item/oviposition_egg/egg)
+	var/list/d = list()
+	d["name"] = egg.name
+	d["type_name"] = get_egg_type_short_name(egg.egg_type)
+	d["display_color"] = egg.custom_egg_color || egg.color
+	d["color_hex"] = egg.custom_egg_color
 
-	for(var/obj/item/oviposition_egg/egg as anything in organ.get_oviposition_eggs())
-		var/list/egg_data = list()
-		egg_data["name"] = egg.name
-		egg_data["egg_type"] = egg.egg_type
-		egg_data["custom_color"] = egg.custom_egg_color
-
-		var/datum/component/pregnancy/preg = egg.get_pregnancy_component()
-		if(preg)
-			egg_data["growing"] = TRUE
-			egg_data["stage"] = preg.stage
-			egg_data["max_stage"] = preg.max_stage
-			egg_data["fertilized"] = preg.fertilized
-			egg_data["laid"] = preg.laid
-			egg_data["ready"] = (preg.stage >= preg.max_stage)
-			egg_data["hatch_inside"] = egg.hatch_inside_host
+	var/datum/component/pregnancy/preg = egg.get_pregnancy_component()
+	if(preg)
+		d["has_preg"] = TRUE
+		d["stage"] = preg.stage
+		d["max_stage"] = preg.max_stage
+		d["progress_pct"] = round((preg.stage / max(1, preg.max_stage)) * 100)
+		d["fertilized"] = preg.fertilized
+		d["hatch_inside"] = egg.hatch_inside_host
+		d["auto_hatch"] = egg.auto_hatch_when_laid
+		d["mother_name"] = egg.oviposition_mother_name
+		d["father_name"] = preg.father_name
+		if(preg.stage >= preg.max_stage)
+			d["status"] = "ready"
+		else if(preg.stage > 0)
+			d["status"] = "growing"
 		else
-			egg_data["growing"] = FALSE
+			d["status"] = "dormant"
+		if(preg.stage < preg.max_stage && preg.max_stage > 0)
+			d["time_left"] = round(((preg.max_stage - preg.stage) * preg.stage_duration) / 10, 1)
+		else
+			d["time_left"] = 0
+	else
+		d["has_preg"] = FALSE
+		d["stage"] = 0
+		d["max_stage"] = 0
+		d["progress_pct"] = 0
+		d["status"] = "dormant"
+		d["time_left"] = 0
 
-		UNTYPED_LIST_ADD(egg_list, egg_data)
+	return d
 
-	return egg_list
+/// Short display name for egg types.
+/proc/get_egg_type_short_name(egg_type)
+	switch(egg_type)
+		if(OVI_EGG_NORMAL)
+			return "Normal"
+		if(OVI_EGG_SPIDER)
+			return "Spider"
+		if(OVI_EGG_BOG_BUG)
+			return "Bog Bug"
+		if(OVI_EGG_HARPY)
+			return "Harpy"
+		if(OVI_EGG_EMBRYO)
+			return "Embryo"
+	return "[egg_type]"
