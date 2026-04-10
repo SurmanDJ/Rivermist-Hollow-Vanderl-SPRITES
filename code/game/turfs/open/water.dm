@@ -653,6 +653,8 @@
 	. = ..()
 	if(isliving(arrived) && !arrived.throwing)
 		var/mob/living/living = arrived
+		if(!living.client) // Leeches don't latch onto mobs anymore.
+			return
 		var/chance = 3
 		if(living.m_intent == MOVE_INTENT_RUN)
 			chance *= 2

@@ -162,6 +162,56 @@
 			var/prefix2 = (directions.len > 1 && prefix_with_dirs) ? "[dir2text(direction)]-" : ""
 			insert_icon("[prefix][prefix2][icon_state_name]", uni_icon(I, icon_state_name, direction))
 
+/// rust-g can occasionally return sprite metadata without leaving the PNG behind.
+/// Rebuild the missing sheet from the already-serialized universal_icon entries.
+/datum/asset/spritesheet_batched/proc/ensure_sheet_png(size_id, file_directory)
+	if(fexists(file_directory))
+		return TRUE
+
+	log_asset("Missing generated spritesheet `[file_directory]` for `[name]`, rebuilding it in DM.")
+	return rebuild_sheet_png(size_id, file_directory)
+
+/datum/asset/spritesheet_batched/proc/rebuild_sheet_png(size_id, file_directory)
+	var/list/size_split = splittext(size_id, "x")
+	if(length(size_split) != 2)
+		return FALSE
+
+	var/width = text2num(size_split[1])
+	var/height = text2num(size_split[2])
+	if(!width || !height)
+		return FALSE
+
+	var/highest_position = -1
+	for(var/sprite_id in sprites)
+		var/list/sprite = sprites[sprite_id]
+		if(sprite[SPR_SIZE] != size_id)
+			continue
+		highest_position = max(highest_position, sprite[SPR_IDX])
+
+	if(highest_position < 0)
+		return FALSE
+
+	var/icon/sheet_icon = icon('icons/blanks/32x32.dmi', "nothing")
+	sheet_icon.Scale((highest_position + 1) * width, height)
+
+	for(var/sprite_id in sprites)
+		var/list/sprite = sprites[sprite_id]
+		if(sprite[SPR_SIZE] != size_id)
+			continue
+
+		var/list/entry_data = entries[sprite_id]
+		if(!islist(entry_data))
+			return FALSE
+
+		var/datum/universal_icon/entry_icon = universal_icon_from_list(entry_data)
+		if(!istype(entry_icon))
+			return FALSE
+
+		sheet_icon.Blend(entry_icon.to_icon(), ICON_OVERLAY, (sprite[SPR_IDX] * width) + 1, 1)
+
+	fdel(file_directory)
+	return fcopy(sheet_icon, file_directory)
+
 /datum/asset/spritesheet_batched/proc/realize_spritesheets(yield)
 	if(fully_generated)
 		return
@@ -207,6 +257,8 @@
 	for(var/size_id in sizes)
 		var/png_name = "[name]_[size_id].png"
 		var/file_directory = "data/spritesheets/[png_name]"
+		if(!ensure_sheet_png(size_id, file_directory))
+			CRASH("Spritesheet [name] did not produce a usable `[png_name]` output.")
 		var/file_hash = rustg_hash_file(RUSTG_HASH_MD5, file_directory)
 		SSassets.transport.register_asset(png_name, fcopy_rsc(file_directory), file_hash)
 		if(CONFIG_GET(flag/save_spritesheets))
@@ -289,7 +341,7 @@
 	// sizes gets filled during should_refresh()
 	for(var/size_id in sizes)
 		var/fname = "data/spritesheets/[name]_[size_id].png"
-		if(!fexists(fname))
+		if(!ensure_sheet_png(size_id, fname))
 			return FALSE
 
 	var/css_hash = rustg_hash_file(RUSTG_HASH_MD5, css_file_directory)
