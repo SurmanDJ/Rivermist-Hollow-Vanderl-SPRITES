@@ -99,9 +99,8 @@
 	if(world.time < next_oviposition_egg_generation)
 		return FALSE
 
-	next_oviposition_egg_generation = world.time + effective_interval
-
 	if(length(get_oviposition_eggs()) >= oviposition_egg_production_limit)
+		next_oviposition_egg_generation = world.time + effective_interval
 		if(prob(5)) // Occasional reminder
 			to_chat(owner, span_love("My [get_oviposition_location_name()] feels full and heavy with eggs."))
 		return FALSE
@@ -114,13 +113,15 @@
 		egg.set_egg_type(egg_type)
 	egg.set_oviposition_mother(owner)
 
-	var/fit_result = SEND_SIGNAL(src, COMSIG_BODYSTORAGE_TRY_INSERT, egg, STORAGE_LAYER_DEEP)
+	var/fit_result = SEND_SIGNAL(src, COMSIG_BODYSTORAGE_TRY_INSERT, egg, STORAGE_LAYER_DEEP, FALSE, TRUE)
 	switch(fit_result)
 		if(INSERT_FEEDBACK_OK, INSERT_FEEDBACK_OK_FORCE, INSERT_FEEDBACK_OK_OVERRIDE, INSERT_FEEDBACK_ALMOST_FULL)
+			next_oviposition_egg_generation = world.time + effective_interval
 			to_chat(owner, span_love("I feel a new egg form in my [get_oviposition_location_name()]."))
 			return TRUE
 
 	qdel(egg)
+	next_oviposition_egg_generation = world.time + 30 SECONDS
 	return FALSE
 
 /obj/item/organ/genitals/filling_organ/vagina/get_availability(datum/species/owner_species, mob/living/C, datum/preferences/pref_load)

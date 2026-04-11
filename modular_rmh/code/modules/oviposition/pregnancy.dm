@@ -372,7 +372,20 @@
 /datum/component/pregnancy/proc/create_hatch_result()
 	if(!egg || !hatch_result_type || !ispath(hatch_result_type, /atom/movable))
 		return null
-	return new hatch_result_type(get_turf(egg))
+	var/atom/movable/hatch_result = new hatch_result_type(get_turf(egg))
+	apply_hatch_result_appearance(hatch_result)
+	return hatch_result
+
+/datum/component/pregnancy/proc/apply_hatch_result_appearance(atom/movable/hatch_result)
+	if(!egg || !istype(hatch_result, /obj/item/reagent_containers/food/snacks/oviposition_egg))
+		return
+
+	var/obj/item/reagent_containers/food/snacks/oviposition_egg/hatch_item = hatch_result
+	hatch_item.name = egg.name
+	hatch_item.desc = egg.desc
+	hatch_item.icon = egg.icon
+	hatch_item.icon_state = egg.icon_state
+	hatch_item.color = egg.color
 
 /datum/component/pregnancy/proc/hatch_living_inside_host(mob/living/hatchling)
 	if(!egg || !container || !carrier || !hatchling)
