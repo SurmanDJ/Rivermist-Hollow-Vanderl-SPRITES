@@ -110,20 +110,20 @@
 
 	var/list/sessions = return_sessions_with_user(carrier)
 	var/datum/sex_session/session = return_highest_priority_action(sessions, carrier)
-	if(!session || !session.current_action)
+	if(!session)
 		return null
 
-	var/datum/sex_action/action = SEX_ACTION(session.current_action)
+	var/datum/sex_action/action = session.get_highest_priority_action_for(carrier)
 	if(!action)
 		return null
 	if(!action_allows_internal_oviposition(action))
 		return null
 
-	var/mob/living/insertor = action.flipped ? session.target : session.user
+	var/mob/living/insertor = action.get_storage_insertor(session.user, session.target)
 	if(insertor != carrier)
 		return null
 
-	var/mob/living/receiver_owner = action.flipped ? session.user : session.target
+	var/mob/living/receiver_owner = action.get_storage_receiver(session.user, session.target)
 	if(!receiver_owner)
 		return null
 	if(!target_allows_mob_erp_action(carrier, receiver_owner, /datum/erp_preference/boolean/allow_mob_oviposition))

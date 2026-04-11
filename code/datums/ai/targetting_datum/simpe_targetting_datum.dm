@@ -15,6 +15,58 @@
 /datum/targetting_datum/proc/is_horny_pref_target(mob/living/living_mob, atom/target)
 	return FALSE
 
+/datum/targetting_datum/proc/is_horny_mob_family_allowed(mob/living/living_mob, mob/living/carbon/human/human_target)
+	if(!living_mob || !human_target)
+		return FALSE
+
+	var/family_flag = living_mob.ai_controller?.horny_pref_family_flag
+	if(!family_flag)
+		return FALSE
+
+	var/list/erp_preferences = human_target.client?.prefs?.erp_preferences
+	if(!erp_preferences)
+		return FALSE
+
+	var/allowed_families = erp_preferences[/datum/erp_preference/bitflag/horny_mob_types]
+	if(isnull(allowed_families))
+		allowed_families = HORNY_MOB_TYPE_ALL
+
+	return !!(allowed_families & family_flag)
+
+/datum/targetting_datum/proc/get_active_other_sex_participant(mob/living/target_living, mob/living/excluded_participant)
+	if(!target_living)
+		return null
+
+	for(var/datum/sex_session/session as anything in return_sessions_with_user(target_living))
+		if(QDELETED(session))
+			continue
+		if(!session.current_action && !length(session.active_actions))
+			continue
+
+		var/mob/living/other_participant = session.user == target_living ? session.target : session.user
+		if(!other_participant || QDELETED(other_participant))
+			continue
+		if(other_participant == target_living || other_participant == excluded_participant)
+			continue
+
+		return other_participant
+
+	return null
+
+/datum/targetting_datum/proc/is_protected_by_active_mob_sex(mob/living/living_mob, atom/target)
+	if(!isliving(target))
+		return FALSE
+
+	var/mob/living/target_living = target
+	if(!should_apply_mob_erp_target_pref(living_mob, target_living))
+		return FALSE
+
+	var/mob/living/other_participant = get_active_other_sex_participant(target_living, living_mob)
+	if(!other_participant || other_participant.client)
+		return FALSE
+
+	return TRUE
+
 /datum/targetting_datum/proc/set_horny_target_hostile(mob/living/living_mob, atom/target, duration)
 	var/datum/ai_controller/controller = living_mob?.ai_controller
 	if(!controller || !should_prioritize_horny_targets(living_mob) || !is_horny_pref_target(living_mob, target))
@@ -71,18 +123,7 @@
 		return TRUE
 	if(target_living.has_status_effect(/datum/status_effect/debuff/mob_fucked))
 		return TRUE
-
-	// Another mob already has them in an active sex action, so stop treating them as a combat target.
-	for(var/datum/sex_session/session as anything in return_sessions_with_user(target_living))
-		if(QDELETED(session))
-			continue
-		if(!session.current_action && !length(session.active_actions))
-			continue
-
-		var/mob/living/other_participant = session.user == target_living ? session.target : session.user
-		if(!other_participant || other_participant == target_living || other_participant == living_mob)
-			continue
-
+	if(get_active_other_sex_participant(target_living, living_mob))
 		return TRUE
 
 	return FALSE
@@ -161,8 +202,9 @@
 	if(isliving(the_target)) //Targetting vs living mobs
 		var/mob/living/L = the_target
 
-		var/matches_horny_pref = is_horny_pref_target(living_mob, L)
 		if(L.stat >= DEAD) //basic targetting doesn't target dead people
+			return FALSE
+		if(is_protected_by_active_mob_sex(living_mob, L))
 			return FALSE
 		if(is_horny_target_now_hostile(living_mob, L))
 			return TRUE
@@ -173,6 +215,7 @@
 			if(retaliate_list[L] + 2 MINUTES >= world.time)
 				return TRUE
 			living_mob.ai_controller.remove_thing_from_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST, L)
+		var/matches_horny_pref = is_horny_pref_target(living_mob, L)
 		if(matches_horny_pref || HAS_TRAIT(L, TRAIT_PACIFISM) || L.surrendering)
 			return FALSE
 		if((L.body_position == LYING_DOWN) && !L.get_active_held_item() && L.ckey && !L.cmode) //if is laying and holding nothing, and not in cmode. Ignore.
@@ -218,6 +261,9 @@
 		return FALSE
 
 	var/mob/living/carbon/human/human_target = target
+	if(!is_horny_mob_family_allowed(living_mob, human_target))
+		return FALSE
+
 	var/mobs_flags = human_target.client?.prefs?.erp_preferences[/datum/erp_preference/bitflag/horny_mobs]
 	if(!mobs_flags)
 		return FALSE
@@ -278,6 +324,8 @@
 
 	if(isliving(the_target)) //Targetting vs living mobs
 		var/mob/living/L = the_target
+		if(is_protected_by_active_mob_sex(living_mob, L))
+			return FALSE
 		if(faction_check(living_mob, L) || L.stat >= DEAD) //basic targetting doesn't target dead people
 			return FALSE
 		if(ishuman(L))

@@ -1,12 +1,17 @@
 /datum/ai_behavior/horny
 	action_cooldown = 2 SECONDS
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+	// Horny targets are often "close" while still being blocked by a bush, nest, closet edge,
+	// or similar obstacle. Requiring reach keeps the controller pathing until adjacency is real.
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	var/seek_timeout = 1.5 MINUTES
 	var/failed_seek_cooldown = 10 SECONDS
 	var/successful_seek_cooldown = 15 SECONDS
 
 /datum/ai_behavior/horny/simple_mob
 	// Simple mobs currently only use the shared horny flow as-is.
+
+/datum/ai_behavior/horny/simple_mob/spider
+	// Spider-family mobs can wrap prone targets in silk before starting.
 
 /datum/ai_behavior/horny/human
 	// Human-type mobs add prep work before the shared action flow.
@@ -568,6 +573,59 @@
 /datum/ai_behavior/horny/simple_mob/proc/strip_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
 	return do_strip_human_target(basic_mob, human_target, rand(12, 20) DECISECONDS, 35, 0.15, allow_regular_clothes = TRUE)
 
+/datum/ai_behavior/horny/simple_mob/spider/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
+	if(get_target_portal_light(controller, basic_mob, target_living))
+		return FALSE
+
+	if(!ishuman(target_living) || !basic_mob.Adjacent(target_living))
+		return FALSE
+
+	if(session.current_action)
+		return FALSE
+
+	var/mob/living/carbon/human/human_target = target_living
+	if(!controller.blackboard[BB_HORNY_INITIAL_STRIP_DONE])
+		controller.set_blackboard_key(BB_HORNY_INITIAL_STRIP_DONE, TRUE)
+		if(pick_strip_target(basic_mob, human_target, allow_regular_clothes = TRUE))
+			return strip_human_target(basic_mob, human_target)
+
+	var/has_valid_action = !isnull(select_horny_ai_act(controller, basic_mob, target_living, session))
+	if((!has_valid_action || prob(20)) && strip_human_target(basic_mob, human_target))
+		return TRUE
+
+	if(tie_human_target(basic_mob, human_target))
+		return TRUE
+
+	return FALSE
+
+/datum/ai_behavior/horny/simple_mob/spider/proc/tie_human_target(mob/living/basic_mob, mob/living/carbon/human/human_target)
+	if(human_target.body_position != LYING_DOWN || human_target.get_active_held_item())
+		return FALSE
+	if(!basic_mob.Adjacent(human_target) || human_target.get_num_arms(TRUE) <= 1 || human_target.handcuffed)
+		return FALSE
+
+	basic_mob.visible_message(
+		span_danger("[basic_mob] starts winding sticky silk around [human_target]'s wrists!"),
+		span_danger("[basic_mob] starts winding sticky silk around my wrists!"),
+		span_hear("I hear wet strands of silk stretching tight.")
+	)
+	if(!do_after(basic_mob, 1 SECONDS, human_target))
+		return FALSE
+	if(QDELETED(human_target) || !basic_mob.Adjacent(human_target) || human_target.handcuffed || human_target.body_position != LYING_DOWN)
+		return FALSE
+
+	var/obj/item/rope/spider_silk/webbing = new /obj/item/rope/spider_silk
+	if(webbing.apply_cuffs(human_target))
+		human_target.visible_message(
+			span_danger("[basic_mob] binds [human_target]'s wrists in spider silk!"),
+			span_userdanger("[basic_mob] binds my wrists in sticky spider silk!"),
+			span_hear("I hear silk tightening around someone's wrists.")
+		)
+		return TRUE
+
+	qdel(webbing)
+	return FALSE
+
 /datum/ai_behavior/horny/human/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
 	if(!iscarbon(basic_mob))
 		return FALSE
@@ -834,7 +892,7 @@
 	var/datum/component/arousal/arousal_component = basic_mob.GetComponent(/datum/component/arousal)
 	var/message = span_danger("[basic_mob] exhales contently!")
 	if(arousal_component?.recent_orgasm_count >= 3)
-		success_cooldown += 2 MINUTES
+		success_cooldown += 3 MINUTES
 		message = span_danger("[basic_mob] lets out a releved sigh and releases [finished_target] for now.")
 	controller.set_blackboard_key(BB_HORNY_SEEK_COOLDOWN, world.time + success_cooldown)
 	basic_mob.visible_message(message)

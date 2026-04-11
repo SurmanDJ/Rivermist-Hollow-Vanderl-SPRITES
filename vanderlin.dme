@@ -1577,6 +1577,7 @@
 #include "code\datums\sex\preferences\_base.dm"
 #include "code\datums\sex\preferences\bitflag\_base.dm"
 #include "code\datums\sex\preferences\bitflag\horny_mobs.dm"
+#include "code\datums\sex\preferences\bitflag\horny_mob_types.dm"
 #include "code\datums\sex\preferences\boolean\_base.dm"
 #include "code\datums\sex\preferences\boolean\misc.dm"
 #include "code\datums\sex\preferences\list\_base.dm"
