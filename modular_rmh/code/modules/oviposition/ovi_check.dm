@@ -34,12 +34,15 @@
 /datum/oviposition_status_menu/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "OvipositionStatus")
+		ui = new(user, src, get_interface_name(user))
 		ui.open()
 		ui.set_autoupdate(TRUE)
 
 /datum/oviposition_status_menu/ui_close(mob/user)
 	qdel(src)
+
+/datum/oviposition_status_menu/proc/get_interface_name(mob/user)
+	return get_preferred_ui_language(user) == "ru" ? "OvipositionStatusRu" : "OvipositionStatus"
 
 /datum/oviposition_status_menu/ui_data(mob/user)
 	var/list/data = list()

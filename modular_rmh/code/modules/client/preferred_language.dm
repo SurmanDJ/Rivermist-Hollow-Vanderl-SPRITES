@@ -1,6 +1,16 @@
 /client
 	var/preferred_ui_language = "en"
 
+/proc/get_preferred_ui_language(mob/user)
+	var/client/user_client = user?.client
+	var/stored_language = user_client?.preferred_ui_language
+	if(!stored_language)
+		stored_language = "en"
+	var/selected_language = lowertext("[stored_language]")
+	if(!(selected_language in list("en", "ru")))
+		return "en"
+	return selected_language
+
 /client/verb/change_prefered_language()
 	set name = "Change Preferred Language"
 	set category = "OOC"

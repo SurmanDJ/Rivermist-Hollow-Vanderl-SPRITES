@@ -272,6 +272,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// Handle select changes (prevent event bubbling)
 	document.addEventListener('change', function(e) {
+		if (e.target.hasAttribute('data-field')) {
+			e.stopPropagation();
+			return;
+		}
 		if (e.target.classList.contains('quirk-select')) {
 			e.stopPropagation();
 			updateQuirkCustomization(e.target);
