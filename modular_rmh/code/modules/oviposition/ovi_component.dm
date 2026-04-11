@@ -36,6 +36,9 @@
 /datum/component/ovipositor/proc/register_carrier()
 	RegisterSignal(carrier, COMSIG_LIVING_LIFE, PROC_REF(handle_life))
 	RegisterSignal(carrier, COMSIG_SEX_CLIMAX, PROC_REF(on_climax))
+	if(ishuman(carrier))
+		var/mob/living/carbon/human/human_carrier = carrier
+		human_carrier.grant_check_eggs_verb(TRUE)
 
 /datum/component/ovipositor/proc/unregister_carrier()
 	UnregisterSignal(carrier, COMSIG_LIVING_LIFE)
@@ -206,6 +209,9 @@
 	switch(fit_result)
 		if(INSERT_FEEDBACK_OK, INSERT_FEEDBACK_OK_FORCE, INSERT_FEEDBACK_OK_OVERRIDE, INSERT_FEEDBACK_ALMOST_FULL)
 			var/started_growing = receiver.start_oviposition_egg_growth(egg, carrier)
+			if(ishuman(receiver.owner))
+				var/mob/living/carbon/human/human_receiver = receiver.owner
+				human_receiver.grant_check_eggs_verb(TRUE)
 			carrier.visible_message(
 				span_love("[carrier] lays an egg into [receiver.owner]'s [receiver.get_oviposition_location_name()]!"),
 				span_love("I lai an egg into [receiver.owner]'s [receiver.get_oviposition_location_name()]!")

@@ -5,8 +5,13 @@
 #define OVI_EGG_HARPY "harpy_ovi"
 #define OVI_EGG_EMBRYO "embryo_ovi"
 
+#define CHECK_EGGS_VERB /mob/living/carbon/human/proc/check_eggs
+
+/mob/living/carbon/human
+	var/tmp/oviposition_status_unlocked = FALSE
+
 /// Verb for checking egg status via TGUI.
-/mob/living/carbon/human/verb/check_eggs()
+/mob/living/carbon/human/proc/check_eggs()
 	set name = "Check Eggs"
 	set category = "IC"
 	set desc = "Focus inward to feel the state of any eggs inside you."
@@ -17,6 +22,18 @@
 
 	var/datum/oviposition_status_menu/menu = new(src)
 	menu.ui_interact(src)
+
+/mob/living/carbon/human/proc/grant_check_eggs_verb(persistent = FALSE)
+	if(persistent)
+		oviposition_status_unlocked = TRUE
+	if(!(CHECK_EGGS_VERB in verbs))
+		add_verb(src, CHECK_EGGS_VERB)
+
+/mob/living/carbon/human/proc/update_check_eggs_verb()
+	if(oviposition_status_unlocked || HAS_TRAIT(src, TRAIT_EGG_LAYER))
+		grant_check_eggs_verb()
+	else if(CHECK_EGGS_VERB in verbs)
+		remove_verb(src, CHECK_EGGS_VERB)
 
 /datum/oviposition_status_menu
 	var/mob/living/carbon/human/owner
@@ -175,3 +192,5 @@
 		if(OVI_EGG_EMBRYO)
 			return "Embryo"
 	return "[egg_type]"
+
+#undef CHECK_EGGS_VERB

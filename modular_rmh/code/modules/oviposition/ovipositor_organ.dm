@@ -180,6 +180,9 @@
 		return
 
 	ADD_TRAIT(owner, TRAIT_EGG_LAYER, "[type]")
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.update_check_eggs_verb()
 
 	var/obj/item/organ/genitals/filling_organ/vagina/vagina = owner.getorganslot(ORGAN_SLOT_VAGINA)
 	if(vagina)
@@ -195,6 +198,9 @@
 		return
 
 	REMOVE_TRAIT(owner, TRAIT_EGG_LAYER, "[type]")
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human_owner = owner
+		human_owner.update_check_eggs_verb()
 
 	var/obj/item/organ/genitals/filling_organ/vagina/vagina = owner.getorganslot(ORGAN_SLOT_VAGINA)
 	if(vagina)
