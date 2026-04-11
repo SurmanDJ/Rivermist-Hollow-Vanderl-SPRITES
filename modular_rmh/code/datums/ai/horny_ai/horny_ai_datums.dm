@@ -434,7 +434,7 @@
 			return "[basic_mob] clamps onto [target_living], locking [target_living.p_them()] in place!"
 		if(HORNY_MOB_TYPE_TROLLS)
 			return "[basic_mob] mauls [target_living] to the ground and keeps [target_living.p_them()] there!"
-		if(HORNY_MOB_TYPE_WOLVES)
+		if(HORNY_MOB_TYPE_BEASTS)
 			return "[basic_mob] pins [target_living] in place with snapping jaws and brute weight!"
 		if(HORNY_MOB_TYPE_LAMIAS)
 			return "[basic_mob] coils tightly around [target_living], holding [target_living.p_them()] fast!"

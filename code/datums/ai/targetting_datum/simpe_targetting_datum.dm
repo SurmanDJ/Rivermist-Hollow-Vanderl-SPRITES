@@ -15,6 +15,14 @@
 /datum/targetting_datum/proc/is_horny_pref_target(mob/living/living_mob, atom/target)
 	return FALSE
 
+/datum/targetting_datum/proc/is_selected_horny_target(mob/living/living_mob, atom/target)
+	if(!should_prioritize_horny_targets(living_mob))
+		return FALSE
+	return is_horny_pref_target(living_mob, target)
+
+/datum/targetting_datum/proc/can_engage_target(mob/living/living_mob, atom/target)
+	return can_attack(living_mob, target) || should_disarm(living_mob, target)
+
 /datum/targetting_datum/proc/is_horny_mob_family_allowed(mob/living/living_mob, mob/living/carbon/human/human_target)
 	if(!living_mob || !human_target)
 		return FALSE
@@ -32,6 +40,52 @@
 		allowed_families = HORNY_MOB_TYPE_ALL
 
 	return !!(allowed_families & family_flag)
+
+/datum/targetting_datum/proc/get_horny_mob_pref_flags(mob/living/carbon/human/human_target)
+	if(!human_target)
+		return NONE
+
+	var/list/erp_preferences = human_target.client?.prefs?.erp_preferences
+	if(!erp_preferences)
+		return NONE
+
+	return erp_preferences[/datum/erp_preference/bitflag/horny_mobs] || NONE
+
+/datum/targetting_datum/proc/has_any_horny_mob_pref_enabled(mob/living/carbon/human/human_target)
+	return !!get_horny_mob_pref_flags(human_target)
+
+/datum/targetting_datum/proc/human_has_any_held_item(mob/living/carbon/human/human_target)
+	if(!human_target)
+		return FALSE
+
+	for(var/obj/item/held_item as anything in human_target.held_items)
+		if(held_item)
+			return TRUE
+
+	return FALSE
+
+/datum/targetting_datum/proc/should_use_nonlethal_mob_erp_handling(mob/living/living_mob, mob/living/carbon/human/human_target)
+	if(!living_mob || !human_target)
+		return FALSE
+	if(!should_apply_mob_erp_target_pref(living_mob, human_target))
+		return FALSE
+	if(!has_any_horny_mob_pref_enabled(human_target))
+		return FALSE
+	if(is_selected_horny_target(living_mob, human_target))
+		return FALSE
+
+	return TRUE
+
+/datum/targetting_datum/proc/can_nonlethally_subdue_mob_erp_target(mob/living/living_mob, mob/living/carbon/human/human_target)
+	if(!should_use_nonlethal_mob_erp_handling(living_mob, human_target))
+		return FALSE
+	if(HAS_TRAIT(human_target, TRAIT_PACIFISM))
+		return FALSE
+	if(human_target.surrendering)
+		return FALSE
+	if(human_target.body_position == LYING_DOWN)
+		return FALSE
+	return TRUE
 
 /datum/targetting_datum/proc/get_active_other_sex_participant(mob/living/target_living, mob/living/excluded_participant)
 	if(!target_living)
@@ -69,7 +123,7 @@
 
 /datum/targetting_datum/proc/set_horny_target_hostile(mob/living/living_mob, atom/target, duration)
 	var/datum/ai_controller/controller = living_mob?.ai_controller
-	if(!controller || !should_prioritize_horny_targets(living_mob) || !is_horny_pref_target(living_mob, target))
+	if(!controller || !is_selected_horny_target(living_mob, target))
 		return FALSE
 
 	if(isnull(duration))
@@ -117,7 +171,7 @@
 /datum/targetting_datum/proc/should_release_horny_target_hostility(mob/living/living_mob, mob/living/target_living)
 	if(!living_mob || !target_living)
 		return FALSE
-	if(!is_horny_pref_target(living_mob, target_living))
+	if(!is_selected_horny_target(living_mob, target_living))
 		return FALSE
 	if(target_living.body_position == LYING_DOWN)
 		return TRUE
@@ -210,13 +264,15 @@
 			return TRUE
 		if(faction_check(living_mob, L))
 			return FALSE
+		if(ishuman(L) && should_use_nonlethal_mob_erp_handling(living_mob, L))
+			return FALSE
 		var/list/retaliate_list = living_mob.ai_controller?.blackboard[BB_BASIC_MOB_RETALIATE_LIST]
 		if(should_prioritize_horny_targets(living_mob) && retaliate_list && !isnull(retaliate_list[L]))
 			if(retaliate_list[L] + 2 MINUTES >= world.time)
 				return TRUE
 			living_mob.ai_controller.remove_thing_from_blackboard_key(BB_BASIC_MOB_RETALIATE_LIST, L)
-		var/matches_horny_pref = is_horny_pref_target(living_mob, L)
-		if(matches_horny_pref || HAS_TRAIT(L, TRAIT_PACIFISM) || L.surrendering)
+		var/is_selected_horny_match = is_selected_horny_target(living_mob, L)
+		if(is_selected_horny_match || HAS_TRAIT(L, TRAIT_PACIFISM) || L.surrendering)
 			return FALSE
 		if((L.body_position == LYING_DOWN) && !L.get_active_held_item() && L.ckey && !L.cmode) //if is laying and holding nothing, and not in cmode. Ignore.
 			return FALSE
@@ -252,7 +308,7 @@
 		if(is_horny_target_now_hostile(living_mob, th))
 			return FALSE
 
-		if(is_horny_pref_target(living_mob, th))
+		if(is_selected_horny_target(living_mob, th))
 			return TRUE
 	return FALSE
 
@@ -330,9 +386,11 @@
 			return FALSE
 		if(ishuman(L))
 			var/mob/living/carbon/human/hum = L
+			if(should_use_nonlethal_mob_erp_handling(living_mob, hum))
+				return can_nonlethally_subdue_mob_erp_target(living_mob, hum)
 			if(hum.handcuffed)
 				return FALSE
-		if((L.body_position == LYING_DOWN) && L.get_active_held_item() && L.ckey) //if is laying and holding nothing, and not in cmode. Ignore.
+		if((L.body_position == LYING_DOWN) && human_has_any_held_item(L) && L.ckey)
 			return TRUE
 
 	return FALSE

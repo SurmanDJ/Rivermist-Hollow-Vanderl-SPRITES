@@ -71,6 +71,8 @@
 		var/mob/living/L = the_target
 		if(is_protected_by_active_mob_sex(living_mob, L))
 			return FALSE
+		if(ishuman(L) && should_use_nonlethal_mob_erp_handling(living_mob, L))
+			return FALSE
 		if(faction_check(living_mob, L) || L.stat >= DEAD) //basic targetting doesn't target dead people
 			return FALSE
 		return TRUE
