@@ -12,7 +12,7 @@
 	base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, /datum/intent/unarmed/claw, /datum/intent/simple/bite, /datum/intent/kick)
 
 /mob/living/carbon/human/species/zizombie/npc
-	ai_controller = /datum/ai_controller/human_npc
+	ai_controller = /datum/ai_controller/human_npc/undead
 	dodgetime = 15 //they can dodge easily, but have a cooldown on it
 	canparry = TRUE
 	flee_in_pain = FALSE
@@ -24,7 +24,7 @@
 	AddComponent(/datum/component/combat_noise, list("rage" = 1, "scream" = 1))
 
 /mob/living/carbon/human/species/zizombie/ambush
-	ai_controller = /datum/ai_controller/human_npc
+	ai_controller = /datum/ai_controller/human_npc/undead
 
 /mob/living/carbon/human/species/zizombie/ambush/after_creation()
 	..()

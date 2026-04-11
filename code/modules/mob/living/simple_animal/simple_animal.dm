@@ -355,7 +355,6 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 
 /mob/living/simple_animal
 	var/retreating
-	var/melee_attack_cooldown = 1.4 SECONDS
 
 /mob/living/simple_animal/hostile/updatehealth(amount)
 	..()

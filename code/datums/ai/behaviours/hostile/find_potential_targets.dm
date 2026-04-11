@@ -30,7 +30,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob)))
 		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
 
 	var/atom/current_target = controller.blackboard[target_key]
-	if (targetting_datum.can_attack(living_mob, current_target))
+	if(targetting_datum.can_engage_target(living_mob, current_target))
 		finish_action(controller, succeeded = FALSE)
 		return
 
@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob)))
 	var/list/filtered_targets = list()
 
 	for(var/atom/pot_target in potential_targets)
-		if(targetting_datum.can_attack(living_mob, pot_target) || targetting_datum.should_disarm(living_mob, pot_target))//Can we attack it?
+		if(targetting_datum.can_engage_target(living_mob, pot_target))
 			filtered_targets += pot_target
 			continue
 
@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob)))
 			continue
 		if(!is_type_in_typecache(maybe_target, GLOB.target_interested_atoms))
 			continue
-		if(!strategy.can_attack(pawn, maybe_target))
+		if(!strategy.can_engage_target(pawn, maybe_target))
 			continue
 		valid_found = TRUE
 		break
@@ -124,7 +124,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob)))
 		return FALSE
 	if(!ismob(checking) && !is_type_in_typecache(checking, GLOB.target_interested_atoms))
 		return FALSE
-	if(!strategy.can_attack(pawn, checking))
+	if(!strategy.can_engage_target(pawn, checking))
 		return FALSE
 	return TRUE
 
@@ -137,7 +137,7 @@ GLOBAL_LIST_INIT(target_interested_atoms, typecacheof(list(/mob)))
 		// Need to better handle viewers here
 		if(!ismob(maybe_target) && !is_type_in_typecache(maybe_target, GLOB.target_interested_atoms))
 			continue
-		if(!strategy.can_attack(pawn, maybe_target))
+		if(!strategy.can_engage_target(pawn, maybe_target))
 			continue
 		accepted_targets += maybe_target
 

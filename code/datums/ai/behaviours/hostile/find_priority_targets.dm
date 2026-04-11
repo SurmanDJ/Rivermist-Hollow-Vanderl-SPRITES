@@ -41,11 +41,11 @@
 	var/list/filtered_targets = list()
 	if(islist(priority_targets))
 		for(var/atom/pot_target in potential_targets)
-			if((pot_target in priority_targets) && targetting_datum.can_attack(living_mob, pot_target))//Can we attack it?
+			if((pot_target in priority_targets) && targetting_datum.can_engage_target(living_mob, pot_target))
 				filtered_targets += pot_target
 	else
 		for(var/atom/pot_target in potential_targets)
-			if((pot_target == priority_targets) && targetting_datum.can_attack(living_mob, pot_target))//Can we attack it?
+			if((pot_target == priority_targets) && targetting_datum.can_engage_target(living_mob, pot_target))
 				filtered_targets += pot_target
 				break
 

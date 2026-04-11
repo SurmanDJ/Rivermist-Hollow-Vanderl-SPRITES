@@ -41,6 +41,8 @@
 /datum/ai_planning_subtree/horny/proc/get_horny_behavior_type(datum/ai_controller/controller)
 	if(ishuman(controller.pawn))
 		return /datum/ai_behavior/horny/human
+	if(controller.pawn?.ai_controller?.horny_pref_family_flag == HORNY_MOB_TYPE_SPIDERS)
+		return /datum/ai_behavior/horny/simple_mob/spider
 
 	return /datum/ai_behavior/horny/simple_mob
 

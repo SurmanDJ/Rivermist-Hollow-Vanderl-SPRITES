@@ -40,7 +40,7 @@
 			if(isnull(maintain_range))
 				maintain_range = 12
 
-			if (!targetting_datum.can_attack(living_mob, current_target) && !targetting_datum.should_disarm(living_mob, current_target))
+			if(!targetting_datum.can_engage_target(living_mob, current_target))
 				controller.clear_blackboard_key(BB_HIGHEST_THREAT_MOB)
 				current_target = null
 
@@ -93,7 +93,7 @@
 		// Skip dead mobs
 		if(pot_target.stat == DEAD)
 			continue
-		if (!targetting_datum.can_attack(living_mob, pot_target))
+		if(!targetting_datum.can_engage_target(living_mob, pot_target))
 			continue
 		// Skip sneaking mobs with a chance to detect them
 		if(pot_target.rogue_sneaking)
@@ -161,7 +161,7 @@
 		return FALSE
 	if(!ismob(checking) && !is_type_in_typecache(checking, GLOB.target_interested_atoms))
 		return FALSE
-	if(!strategy.can_attack(pawn, checking))
+	if(!strategy.can_engage_target(pawn, checking))
 		return FALSE
 	// Additional aggro-specific checks for living mobs
 	if(istype(checking, /mob/living))
