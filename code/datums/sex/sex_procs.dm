@@ -8,6 +8,14 @@
 			grabstate = l_grab.grab_state
 	return grabstate
 
+/mob/living/proc/get_effective_grab_state_on(mob/living/victim)
+	var/grabstate = get_highest_grab_state_on(victim)
+	if(pulling != victim && victim?.pulledby != src)
+		return grabstate
+	if(isnull(grabstate))
+		return grab_state
+	return max(grabstate, grab_state)
+
 /proc/do_thrust_animate(atom/movable/user, atom/movable/target, pixels = 4, time = 2.7)
 	var/datum/sex_session/sex_session
 	if(isliving(user) && isliving(target))

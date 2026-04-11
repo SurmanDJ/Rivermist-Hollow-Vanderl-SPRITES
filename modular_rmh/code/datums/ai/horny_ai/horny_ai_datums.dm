@@ -1,5 +1,5 @@
 /datum/ai_behavior/horny
-	action_cooldown = 2 SECONDS
+	action_cooldown = 1.5 SECONDS
 	// Horny targets are often "close" while still being blocked by a bush, nest, closet edge,
 	// or similar obstacle. Requiring reach keeps the controller pathing until adjacency is real.
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
@@ -312,7 +312,7 @@
 		prob2defend *= 1.2
 	if(target_living.surrendering)
 		prob2defend *= 0.1
-	prob2defend = CLAMP(prob2defend, 0, 100)
+	prob2defend = CLAMP(prob2defend + 60, 0, 100)
 
 	// Once only 20% stamina remains, the takedown becomes guaranteed
 	var/stamina_exhaustion = (target_living.maximum_stamina - target_living.stamina) / target_living.maximum_stamina <= 0.2 ? 0 : (target_living.maximum_stamina - target_living.stamina) / target_living.maximum_stamina
@@ -320,12 +320,8 @@
 	var/down_chance = CLAMP(prob2defend, 0, 100)
 
 	if(prob(100 - down_chance))
-		if(iscarbon(basic_mob))
-			target_living.SetStun(30)
-			target_living.SetKnockdown(50)
-		else
-			target_living.SetStun(80)
-			target_living.SetKnockdown(200)
+		target_living.SetStun(20)
+		target_living.SetKnockdown(50)
 		if(target_living.body_position != LYING_DOWN)
 			target_living.emote("gasp")
 		controller.set_blackboard_key(BB_HORNY_STUN_COOLDOWN, world.time + 10 SECONDS)
@@ -334,8 +330,7 @@
 		controller.set_blackboard_key(BB_HORNY_STUN_COOLDOWN, world.time + 5 SECONDS)
 		basic_mob.visible_message(span_danger("[basic_mob] tries to pull [target_living] to the ground, exhausting them!"))
 
-	var/base_stamina_drain = iscarbon(basic_mob) ? target_living.maximum_stamina * 0.25 : target_living.maximum_stamina * 0.28
-	var/stamina_drain = max(round(base_stamina_drain * (1 - (prob2defend / 125))), 5)
+	var/stamina_drain = max(round(target_living.maximum_stamina * 0.60 * (1 - ((100 - prob2defend) * 0.01))), 25)
 	target_living.adjust_stamina(stamina_drain, null, FALSE, FALSE)
 
 	return TRUE
@@ -431,12 +426,97 @@
 
 	return pick(valid_actions)
 
+/datum/ai_behavior/horny/simple_mob/proc/get_hold_message(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
+	switch(controller?.horny_pref_family_flag)
+		if(HORNY_MOB_TYPE_SPIDERS)
+			return "[basic_mob] pins [target_living] down under a tangle of bristling legs!"
+		if(HORNY_MOB_TYPE_BOG_BUGS)
+			return "[basic_mob] clamps onto [target_living], locking [target_living.p_them()] in place!"
+		if(HORNY_MOB_TYPE_TROLLS)
+			return "[basic_mob] mauls [target_living] to the ground and keeps [target_living.p_them()] there!"
+		if(HORNY_MOB_TYPE_WOLVES)
+			return "[basic_mob] pins [target_living] in place with snapping jaws and brute weight!"
+		if(HORNY_MOB_TYPE_LAMIAS)
+			return "[basic_mob] coils tightly around [target_living], holding [target_living.p_them()] fast!"
+		if(HORNY_MOB_TYPE_MINOTAURS)
+			return "[basic_mob] hooks [target_living] into a crushing hold and keeps [target_living.p_them()] pinned!"
+		if(HORNY_MOB_TYPE_LYCANS)
+			return "[basic_mob] slams into [target_living] and pins [target_living.p_them()] in place!"
+		if(HORNY_MOB_TYPE_HUMANOIDS)
+			return "[basic_mob] wrestles [target_living] into a rough hold!"
+	return "[basic_mob] clamps onto [target_living], holding [target_living.p_them()] in place!"
+
+/datum/ai_behavior/horny/simple_mob/proc/promote_existing_pull_to_hold(mob/living/basic_mob, mob/living/target_living)
+	if(target_living.pulledby != basic_mob)
+		return FALSE
+	if(basic_mob.grab_state >= GRAB_AGGRESSIVE)
+		return FALSE
+
+	// Handless mobs keep victims in place through the generic pull state, not grab items.
+	basic_mob.setGrabState(GRAB_AGGRESSIVE)
+	basic_mob.update_pull_movespeed()
+	basic_mob.set_pull_offsets(target_living, basic_mob.grab_state)
+	return TRUE
+
+/datum/ai_behavior/horny/simple_mob/proc/ensure_target_hold(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living)
+	if(!basic_mob.Adjacent(target_living))
+		return FALSE
+
+	if(basic_mob.pulling && basic_mob.pulling != target_living)
+		basic_mob.stop_pulling()
+
+	if(target_living.pulledby == basic_mob)
+		if(basic_mob.grab_state >= GRAB_AGGRESSIVE)
+			return FALSE
+		if(!promote_existing_pull_to_hold(basic_mob, target_living))
+			return FALSE
+		basic_mob.visible_message(
+			span_danger(get_hold_message(controller, basic_mob, target_living)),
+			null,
+			span_hear("I hear a violent struggle.")
+		)
+		return TRUE
+
+	if(basic_mob.pulling == target_living)
+		basic_mob.stop_pulling()
+
+	if(target_living.pulledby && target_living.pulledby != basic_mob && target_living.pulledby.grab_state >= GRAB_AGGRESSIVE)
+		return FALSE
+
+	if(!basic_mob.start_handless_pull(target_living, GRAB_PASSIVE, suppress_message = TRUE))
+		return FALSE
+
+	if(!promote_existing_pull_to_hold(basic_mob, target_living))
+		return FALSE
+
+	basic_mob.visible_message(
+		span_danger(get_hold_message(controller, basic_mob, target_living)),
+		null,
+		span_hear("I hear a violent struggle.")
+	)
+	return TRUE
+
+/datum/ai_behavior/horny/simple_mob/proc/wait_for_knockdown(mob/living/basic_mob, mob/living/target_living)
+	if(target_living.body_position == LYING_DOWN)
+		return FALSE
+
+	if(target_living.pulledby == basic_mob)
+		basic_mob.stop_pulling()
+
+	return TRUE
+
 /datum/ai_behavior/horny/simple_mob/handle_target_prep(datum/ai_controller/controller, mob/living/basic_mob, mob/living/target_living, datum/sex_session/session)
 	if(get_target_portal_light(controller, basic_mob, target_living))
 		return FALSE
 
 	if(!ishuman(target_living) || !basic_mob.Adjacent(target_living))
 		return FALSE
+
+	if(wait_for_knockdown(basic_mob, target_living))
+		return TRUE
+
+	if(ensure_target_hold(controller, basic_mob, target_living))
+		return TRUE
 
 	if(session.current_action)
 		return FALSE
@@ -472,7 +552,7 @@
 		basic_mob.used_intent = cached_intent
 		return TRUE
 	basic_mob.used_intent = cached_intent
-	if(!prob(50))
+	if(!prob(30))
 		human_target.visible_message(span_danger("[basic_mob] swats at [human_target]'s hands, but fails to disarm them!"), \
 				span_userdanger("[basic_mob] swats at my hands, but I keep hold of my weapon!"), span_hear("I hear a rough struggle over a weapon!"), COMBAT_MESSAGE_RANGE)
 		return TRUE
@@ -579,6 +659,12 @@
 
 	if(!ishuman(target_living) || !basic_mob.Adjacent(target_living))
 		return FALSE
+
+	if(wait_for_knockdown(basic_mob, target_living))
+		return TRUE
+
+	if(ensure_target_hold(controller, basic_mob, target_living))
+		return TRUE
 
 	if(session.current_action)
 		return FALSE
@@ -729,7 +815,7 @@
 		basic_mob.used_intent = cached_intent
 		return TRUE
 	basic_mob.used_intent = cached_intent
-	if(!prob(50))
+	if(!prob(30))
 		human_target.visible_message(span_danger("[basic_mob] lunges for [human_target]'s weapon, but can't wrench it free!"), \
 				span_userdanger("[basic_mob] lunges for my weapon, but I keep hold of it!"), span_hear("I hear a struggle over a weapon!"), COMBAT_MESSAGE_RANGE)
 		return TRUE

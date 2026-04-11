@@ -8,18 +8,20 @@
 		"Spiders" = HORNY_MOB_TYPE_SPIDERS,
 		"Bog Bugs" = HORNY_MOB_TYPE_BOG_BUGS,
 		"Trolls" = HORNY_MOB_TYPE_TROLLS,
-		"Volfs and kin" = HORNY_MOB_TYPE_VOLFS,
+		"Wolves and kin" = HORNY_MOB_TYPE_WOLVES,
 		"Lamias" = HORNY_MOB_TYPE_LAMIAS,
 		"Minotaurs" = HORNY_MOB_TYPE_MINOTAURS,
 		"Lycans" = HORNY_MOB_TYPE_LYCANS,
+		"Lizards" = HORNY_MOB_TYPE_LIZARDS,
 	)
 	flag_descriptions = list(
 		"Humanoids" = "Humanlike horny NPCs such as orcs, goblins, bums, and other humanoid hostiles may target you.",
 		"Spiders" = "Horny spiders and mire spiders may target you.",
 		"Bog Bugs" = "Horny bog bugs may target you.",
 		"Trolls" = "Horny trolls and bog trolls may target you.",
-		"Volfs and kin" = "Horny volf-family beasts that share the volf AI may target you.",
+		"Wolves and kin" = "Horny wolf-family beasts that share the wolf AI may target you.",
 		"Lamias" = "Horny lamias may target you.",
 		"Minotaurs" = "Horny minotaurs may target you.",
 		"Lycans" = "Horny lycans may target you.",
+		"Lizards" = "Horny lizards like gators may target you.",
 	)
