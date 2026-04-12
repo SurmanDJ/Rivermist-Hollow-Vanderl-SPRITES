@@ -11913,7 +11913,7 @@
 "rzW" = (
 /obj/structure/roguetent{
 	icon_state = "tent_door0";
-	base_state = "tent_door0"
+	base_state = "tent_door"
 	},
 /turf/open/floor/twig,
 /area/indoors/town/rmh)

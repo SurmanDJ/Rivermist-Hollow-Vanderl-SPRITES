@@ -2832,7 +2832,7 @@
 "bhQ" = (
 /obj/structure/roguetent{
 	icon_state = "tent_door0";
-	base_state = "tent_door0"
+	base_state = "tent_door"
 	},
 /turf/open/floor/dirt/road,
 /area/outdoors/rmh_field/north)
@@ -19987,7 +19987,7 @@
 "hzy" = (
 /obj/structure/roguetent{
 	icon_state = "tent_door0";
-	base_state = "tent_door0"
+	base_state = "tent_door"
 	},
 /turf/open/floor/naturalstone,
 /area/indoors/cave/rmh_cave/cave_leshiy)
@@ -23353,7 +23353,7 @@
 "iJA" = (
 /obj/structure/roguetent{
 	icon_state = "tent_door0";
-	base_state = "tent_door0"
+	base_state = "tent_door"
 	},
 /turf/open/floor/twig,
 /area/outdoors/rmh_field)
@@ -51280,7 +51280,7 @@
 "sRJ" = (
 /obj/structure/roguetent{
 	icon_state = "tent_door0";
-	base_state = "tent_door0"
+	base_state = "tent_door"
 	},
 /turf/open/floor/grass/healthy,
 /area/indoors/town)
@@ -54305,14 +54305,14 @@
 "tVH" = (
 /obj/structure/roguetent{
 	icon_state = "tent_door0";
-	base_state = "tent_door0"
+	base_state = "tent_door"
 	},
 /turf/open/floor/hay,
 /area/outdoors/rmh_field)
 "tWt" = (
 /turf/closed/wall/mineral/stone/window/moss,
 /area/under/rmh_dungeon/catacombs_town)
-"tWB" = (
+"tWB" = (di
 /obj/structure/flora/grass,
 /turf/open/water/swamp,
 /area/outdoors/rmh_field/north_mountain)
