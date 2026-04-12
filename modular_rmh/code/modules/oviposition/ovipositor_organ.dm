@@ -95,6 +95,22 @@
 	organ_type = /obj/item/organ/genitals/penis/ovipositor
 	sprite_accessories = list(/datum/sprite_accessory/genitals/penis/ovipositor)
 
+/datum/preferences/cleanup_quirks_for_customizer_entry(datum/customizer_entry/entry)
+	. = ..()
+	if(istype(entry, /datum/customizer_entry/organ/genitals/vagina))
+		var/datum/customizer_entry/organ/genitals/vagina/vagina_entry = entry
+		if(vagina_entry.disabled)
+			if(remove_quirk(/datum/quirk/peculiarity/egg_layer))
+				. = TRUE
+		return
+
+	if(istype(entry, /datum/customizer_entry/organ/genitals/penis))
+		var/datum/customizer_entry/organ/genitals/penis/penis_entry = entry
+		var/is_ovipositor_choice = (penis_entry.customizer_choice_type == /datum/customizer_choice/organ/genitals/penis/ovipositor)
+		if(penis_entry.disabled || !is_ovipositor_choice)
+			if(remove_quirk(/datum/quirk/peculiarity/ovipositor))
+				. = TRUE
+
 /datum/quirk/peculiarity/ovipositor
 	name = "Oviposition"
 	desc = "My 'penis' is a functional ovipositor and can be used to lay eggs."
