@@ -228,3 +228,8 @@
 		/obj/item/paint_brush,
 		/obj/item/dildo/plug/bunny,
 		/obj/item/reagent_containers/food/snacks/chocolate/bunny)
+	component_type = /datum/component/storage/concrete/grid/handbasket/easter_special
+
+/datum/component/storage/concrete/grid/handbasket/easter_special
+	screen_max_rows = 5
+	screen_max_columns = 5

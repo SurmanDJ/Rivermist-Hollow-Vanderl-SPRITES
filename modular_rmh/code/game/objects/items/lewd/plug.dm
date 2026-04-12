@@ -10,6 +10,7 @@
 	slot_flags = 0
 	w_class = WEIGHT_CLASS_TINY
 	storage_overlay_icon = 'modular_rmh/icons/obj/lewd/plugs_overlay.dmi'
+	bstorage_visible_hole = ORGAN_SLOT_ANUS
 
 /obj/item/dildo/plug/New()
 	. = ..()
@@ -194,6 +195,7 @@
 	storage_overlay_icon = 'modular_rmh/icons/obj/lewd/plugs_overlay.dmi'
 	storage_icon_state = "plug_bunny"
 	has_body_storage_overlay = TRUE
+	bstorage_visible_layer = STORAGE_LAYER_INNER
 
 /obj/item/dildo/plug/bunny/New()
 	. = ..()
