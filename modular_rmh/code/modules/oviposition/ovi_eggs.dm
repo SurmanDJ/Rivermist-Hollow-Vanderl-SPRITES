@@ -1,19 +1,3 @@
-#ifndef OVI_EGG_NORMAL
-#define OVI_EGG_NORMAL "normal_ovi"
-#endif
-#ifndef OVI_EGG_SPIDER
-#define OVI_EGG_SPIDER "spider_ovi"
-#endif
-#ifndef OVI_EGG_BOG_BUG
-#define OVI_EGG_BOG_BUG "bog_bug_ovi"
-#endif
-#ifndef OVI_EGG_HARPY
-#define OVI_EGG_HARPY "harpy_ovi"
-#endif
-#ifndef OVI_EGG_EMBRYO
-#define OVI_EGG_EMBRYO "embryo_ovi"
-#endif
-
 // Egg profiles keep appearance and hatch behavior together so new egg types only
 // need one local subtype instead of special cases spread across the system.
 /datum/oviposition_egg_profile

@@ -1,20 +1,3 @@
-// Egg type constants (for get_egg_type_short_name)
-#ifndef OVI_EGG_NORMAL
-#define OVI_EGG_NORMAL "normal_ovi"
-#endif
-#ifndef OVI_EGG_SPIDER
-#define OVI_EGG_SPIDER "spider_ovi"
-#endif
-#ifndef OVI_EGG_BOG_BUG
-#define OVI_EGG_BOG_BUG "bog_bug_ovi"
-#endif
-#ifndef OVI_EGG_HARPY
-#define OVI_EGG_HARPY "harpy_ovi"
-#endif
-#ifndef OVI_EGG_EMBRYO
-#define OVI_EGG_EMBRYO "embryo_ovi"
-#endif
-
 #define CHECK_EGGS_VERB /mob/living/carbon/human/proc/check_eggs
 
 /mob/living/carbon/human
