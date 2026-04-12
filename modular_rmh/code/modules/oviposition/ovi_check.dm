@@ -137,6 +137,7 @@
 	var/list/d = list()
 	d["name"] = egg.name
 	d["type_name"] = get_egg_type_short_name(egg.egg_type)
+	d["is_hatchling"] = egg.egg_type == OVI_EGG_EMBRYO
 	d["display_color"] = egg.custom_egg_color || egg.color
 	d["color_hex"] = egg.custom_egg_color
 

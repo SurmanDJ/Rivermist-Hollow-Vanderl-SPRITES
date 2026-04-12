@@ -54,7 +54,7 @@ export default {
     Spider: 'Spider',
     'Bog Bug': 'Bog Bug',
     Harpy: 'Harpy',
-    Embryo: 'Embryo',
+    Embryo: 'Hatchling',
   },
   formatTime,
   formatStatus: (status: string, timeLeft: number): string => {

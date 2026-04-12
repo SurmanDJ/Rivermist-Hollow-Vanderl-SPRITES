@@ -11,6 +11,7 @@ type EggData = {
   stage: number;
   max_stage: number;
   progress_pct: number;
+  is_hatchling?: boolean;
   fertilized?: boolean;
   hatch_inside?: boolean;
   auto_hatch?: boolean;
@@ -148,6 +149,9 @@ const OrganSection = (props: {
   const isOvi = organ.id === 'ovipositor';
   const isWomb = organ.id === 'womb';
   const organTitle = resolveOrganName(locale, organ);
+  const allEggs = organ.eggs ?? [];
+  const eggItems = allEggs.filter((egg) => !egg.is_hatchling);
+  const hatchlingItems = allEggs.filter((egg) => egg.is_hatchling);
 
   const countLabel = organ.egg_capacity
     ? `${organ.egg_count}/${organ.egg_capacity}`
@@ -174,14 +178,35 @@ const OrganSection = (props: {
         <WombSummary organ={organ} nutriment={nutriment} locale={locale} />
       )}
 
-      {organ.eggs && organ.eggs.length > 0 && (
+      {eggItems.length > 0 && (
         <Box mt={1}>
           <Box bold color="label" mb={0.5}>
             {locale.labels.eggsInside}
             {':'}
           </Box>
-          {organ.eggs.map((egg, i) => (
-            <EggDetail key={i} egg={egg} index={i + 1} locale={locale} />
+          {eggItems.map((egg, i) => (
+            <EggDetail
+              key={`egg-${i}`}
+              egg={egg}
+              index={i + 1}
+              locale={locale}
+            />
+          ))}
+        </Box>
+      )}
+      {hatchlingItems.length > 0 && (
+        <Box mt={1}>
+          <Box bold color="label" mb={0.5}>
+            {locale.labels.hatchlingsInside}
+            {':'}
+          </Box>
+          {hatchlingItems.map((egg, i) => (
+            <EggDetail
+              key={`hatchling-${i}`}
+              egg={egg}
+              index={i + 1}
+              locale={locale}
+            />
           ))}
         </Box>
       )}

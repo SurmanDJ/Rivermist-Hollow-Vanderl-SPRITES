@@ -54,7 +54,7 @@ export default {
     Spider: 'Паучье',
     'Bog Bug': 'Болотного жука',
     Harpy: 'Гарпии',
-    Embryo: 'Эмбрион',
+    Embryo: 'Детеныш',
   },
   formatTime,
   formatStatus: (status: string, timeLeft: number): string => {
