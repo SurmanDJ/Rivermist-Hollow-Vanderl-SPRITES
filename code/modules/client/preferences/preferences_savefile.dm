@@ -560,7 +560,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	_load_smallclothes_preferences(S)
 
 	_load_combat_music(S)
-	load_quirks(S)
 
 	if(!culture)
 		culture = src::culture
@@ -693,6 +692,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	S["customizer_entries"] >> customizer_entries
 	validate_customizer_entries()
+
+	load_quirks(S)
 
 	load_erp_preferences(S)
 

@@ -274,6 +274,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	document.addEventListener('change', function(e) {
 		if (e.target.hasAttribute('data-field')) {
 			e.stopPropagation();
+			if (e.target.classList.contains('quirk-select')) {
+				updateQuirkExtraSelect(e.target);
+			} else if (e.target.classList.contains('quirk-text-input')) {
+				updateQuirkExtraField(e.target);
+			}
 			return;
 		}
 		if (e.target.classList.contains('quirk-select')) {

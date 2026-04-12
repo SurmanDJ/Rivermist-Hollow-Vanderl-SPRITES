@@ -476,7 +476,7 @@
 			dat += "<label>[label]:</label>"
 			dat += "<input type='text' class='quirk-text-input' data-quirk='\ref[quirk_type]' "
 			dat += "placeholder='[placeholder]' value='[current_value ? current_value : ""]' "
-			dat += "onchange='updateQuirkText(this)' onclick='event.stopPropagation()' />"
+			dat += "onclick='event.stopPropagation()' />"
 			dat += "</div>"
 
 		else if(length(options))
@@ -486,7 +486,7 @@
 
 			dat += "<div class='quirk-customization'>"
 			dat += "<label>[label]:</label>"
-			dat += "<select class='quirk-select' data-quirk='\ref[quirk_type]' onchange='updateQuirkCustomization(this)'>"
+			dat += "<select class='quirk-select' data-quirk='\ref[quirk_type]'>"
 
 			if(!current_value)
 				dat += "<option value='' selected>-- Select --</option>"
@@ -518,18 +518,18 @@
 					var/field_value = field_current ? field_current : ""
 					dat += "<input type='text' class='quirk-text-input' data-quirk='\ref[quirk_type]' data-field='[field_key]' "
 					dat += "placeholder='[escape_html_attribute(field_placeholder)]' value='[escape_html_attribute(field_value)]' "
-					dat += "onchange='updateQuirkExtraField(this)' onclick='event.stopPropagation()' maxlength='64' />"
+					dat += "onclick='event.stopPropagation()' maxlength='64' />"
 
 				else if(field_type == QUIRK_NUMBER)
 					var/field_min = field["min"] || 1
 					var/field_max = field["max"] || 10
 					dat += "<input type='number' class='quirk-text-input' data-quirk='\ref[quirk_type]' data-field='[field_key]' "
 					dat += "value='[field_current]' min='[field_min]' max='[field_max]' "
-					dat += "onchange='updateQuirkExtraField(this)' onclick='event.stopPropagation()' />"
+					dat += "onclick='event.stopPropagation()' />"
 
 				else if(field_type == QUIRK_SELECT)
 					var/list/field_options = field["options"]
-					dat += "<select class='quirk-select' data-quirk='\ref[quirk_type]' data-field='[field_key]' onchange='updateQuirkExtraSelect(this)'>"
+					dat += "<select class='quirk-select' data-quirk='\ref[quirk_type]' data-field='[field_key]'>"
 					for(var/opt in field_options)
 						var/opt_selected = (field_current == opt) ? "selected" : ""
 						dat += "<option value='[opt]' [opt_selected]>[opt]</option>"
@@ -593,7 +593,6 @@
 
 		if(quirk_ref && field_key)
 			prefs.set_quirk_extra_customization(quirk_ref, field_key, field_value)
-			prefs.open_quirk_menu(usr)
 		return TRUE
 
 	if(href_list["quirk_clear"])
