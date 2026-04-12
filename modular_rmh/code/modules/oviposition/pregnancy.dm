@@ -656,10 +656,10 @@
 	if(!release_location)
 		return FALSE
 
+	holder.allow_internal_release = TRUE
 	if(container)
 		SEND_SIGNAL(container, COMSIG_BODYSTORAGE_TRY_REMOVE, holder, null, BODYSTORAGE_REMOVE_INTERNAL)
-
-	holder.allow_internal_release = TRUE
+	holder.remove_from_hole_storage()
 	holder.forceMove(release_location)
 
 	if(!silent && carrier)
