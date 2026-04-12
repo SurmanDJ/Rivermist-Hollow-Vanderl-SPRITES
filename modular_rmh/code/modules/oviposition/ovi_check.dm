@@ -5,9 +5,9 @@
 
 /// Verb for checking egg status via TGUI.
 /mob/living/carbon/human/proc/check_eggs()
-	set name = "Check Eggs"
+	set name = "Check wombs"
 	set category = "IC"
-	set desc = "Focus inward to feel the state of any eggs inside you."
+	set desc = "Focus inward to feel the state of your wombs."
 
 	if(stat == DEAD)
 		to_chat(src, span_warning("I can't feel anything. I'm dead."))

@@ -11,7 +11,7 @@ const formatTime = (seconds: number): string => {
 };
 
 export default {
-  windowTitle: 'Био-монитор',
+  windowTitle: 'My Wombs',
   emptyState: 'Репродуктивные органы не обнаружены.',
   labels: {
     organ: 'ОРГАН',
