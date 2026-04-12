@@ -4180,6 +4180,7 @@
 #include "modular_rmh\code\modules\mob\abyssal_monsters.dm"
 #include "modular_rmh\code\modules\mob\hedghog.dm"
 #include "modular_rmh\code\modules\mob\undead_wolf.dm"
+#include "modular_rmh\code\modules\mob\dead\new_player\sprite_accessories\ears.dm"
 #include "modular_rmh\code\modules\mob\dead\sprite_accessory\eyes.dm"
 #include "modular_rmh\code\modules\mob\lewd\custom\custom_minotaur.dm"
 #include "modular_rmh\code\modules\mob\lewd\custom\custom_slime.dm"
