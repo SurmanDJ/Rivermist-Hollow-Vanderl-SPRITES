@@ -208,10 +208,23 @@
 	to_chat(user, span_notice("You decorate [E] with a custom chocolate pattern."))
 	return TRUE
 
+//CHOCOLATE BUNNY
+
+/obj/item/reagent_containers/food/snacks/chocolate/bunny
+	name = "chocolate bunny"
+	desc = "A hollow chocolate bunny. A seasonal delicacy."
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "chocolatebunny"
+	bitesize = 6
+	nutrition = CHOCCY_NUTRITION * 2
+	w_class = WEIGHT_CLASS_SMALL
+	tastes = list("rich sweetness" = 2)
+
 // EASTER BASKET
 
 /obj/item/storage/handbasket/easter
 	populate_contents = list(
 		/obj/item/clothing/head/bunny,
 		/obj/item/paint_brush,
-		/obj/item/dildo/plug/bunny)
+		/obj/item/dildo/plug/bunny,
+		/obj/item/reagent_containers/food/snacks/chocolate/bunny)
