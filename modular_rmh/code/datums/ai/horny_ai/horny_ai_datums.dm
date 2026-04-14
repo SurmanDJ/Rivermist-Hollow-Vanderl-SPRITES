@@ -1,3 +1,5 @@
+#define HORNY_INTERACTION_TIMEOUT (5 MINUTES)
+
 /datum/ai_behavior/horny
 	action_cooldown = 1.5 SECONDS
 	// Horny targets are often "close" while still being blocked by a bush, nest, closet edge,
@@ -165,7 +167,10 @@
 		session = basic_mob.start_sex_session(target_living)
 
 	//check if we are sated
-	if(last_orgasm_time > world.time - 10 SECONDS || horny_start_time < world.time - 5 MINUTES)
+	var/interaction_timed_out = horny_start_time + HORNY_INTERACTION_TIMEOUT <= world.time
+	if(last_orgasm_time > world.time - 10 SECONDS || interaction_timed_out)
+		if(interaction_timed_out && session && (session.current_action || length(session.active_actions)))
+			offer_target_rune_escape(target_living)
 		if(session)
 			session.stop_current_action()
 		finish_action(controller, TRUE, target_key)
@@ -211,6 +216,16 @@
 		if(session.user != basic_mob)
 			continue
 		session.stop_current_action()
+
+/datum/ai_behavior/horny/proc/offer_target_rune_escape(mob/living/target_living)
+	if(!ishuman(target_living))
+		return FALSE
+
+	var/mob/living/carbon/human/human_target = target_living
+	var/datum/resurrection_rune_controller/rune_controller = get_resurrection_rune_controller_for_user(human_target)
+	if(!rune_controller)
+		return FALSE
+	return rune_controller.offer_mob_erp_escape(human_target)
 
 /datum/ai_behavior/horny/proc/is_valid_aggro_interrupt_target(mob/living/basic_mob, datum/targetting_datum/targetting_datum, atom/target)
 	if(!target || target == basic_mob || QDELETED(target))
@@ -984,4 +999,6 @@
 	basic_mob.visible_message(message)
 	controller.modify_cooldown(src, world.time)
 	//controller.CancelActions()
+
+#undef HORNY_INTERACTION_TIMEOUT
 
