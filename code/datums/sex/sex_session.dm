@@ -580,8 +580,8 @@
 	switch(selected_tab)
 		if("custom_actions")
 			return get_custom_actions_tab_content(selected_tab)
-		if("genital")
-			return get_controls_tab_content(selected_tab)
+		//if("genital")
+		//	return get_controls_tab_content(selected_tab)
 		if("session")
 			return get_session_tab_content()
 		if("preferences")
@@ -985,7 +985,7 @@
 	dat += "<div class='tabs'>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=interactions' class='tab [selected_tab == "interactions" ? "active" : ""]'>Interactions</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=custom_actions' class='tab [selected_tab == "custom_actions" ? "active" : ""]'>Custom Actions</a>"
-	dat += "<a href='?src=[REF(src)];task=tab;tab=genital' class='tab [selected_tab == "genital" ? "active" : ""]'>Controls</a>"
+	//dat += "<a href='?src=[REF(src)];task=tab;tab=genital' class='tab [selected_tab == "genital" ? "active" : ""]'>Controls</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=session' class='tab [selected_tab == "session" ? "active" : ""]'>Session</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=preferences' class='tab [selected_tab == "preferences" ? "active" : ""]'>Preferences</a>"
 	dat += "<a href='?src=[REF(src)];task=tab;tab=kinks' class='tab [selected_tab == "kinks" ? "active" : ""]'>Kinks</a>"
