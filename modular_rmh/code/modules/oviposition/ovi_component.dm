@@ -1,5 +1,3 @@
-#define EGG_STAGE_TIME 1 MINUTES
-
 /datum/component/ovipositor
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
@@ -68,18 +66,48 @@
 	if(COOLDOWN_FINISHED(src, egg_timer))
 		egg_stage += 1
 		egg_stage = min(2, egg_stage)
-		COOLDOWN_START(src, egg_timer, EGG_STAGE_TIME)
+		COOLDOWN_START(src, egg_timer, get_egg_stage_time())
 
 	if(egg_stage == 2)
+		if(eggs_stored >= get_max_stored_eggs())
+			COOLDOWN_START(src, egg_timer, get_egg_stage_time())
+			return
+		var/obj/item/organ/genitals/penis/ovipositor/ovipositor = parent
+		if(ovipositor?.resource_dependent_yield)
+			var/cost = get_oviposition_nutrient_cost(ovipositor.ovi_egg_type, ovipositor.egg_scale, ovipositor.egg_traits, get_clutch_size())
+			if(!consume_oviposition_nutrients(carrier, cost))
+				if(prob(5))
+					to_chat(carrier, span_warning("My ovipositor aches faintly - I need more nutrition to form eggs."))
+				egg_stage = 1
+				COOLDOWN_START(src, egg_timer, get_egg_stage_time())
+				return
 		egg_stage = 0
 		eggs_stored += 1
 		eggs_stored = min(get_max_stored_eggs(), eggs_stored)
 
+/datum/component/ovipositor/proc/get_egg_stage_time()
+	var/obj/item/organ/genitals/penis/ovipositor/ovipositor = parent
+	if(!ovipositor)
+		return OVI_EGG_STAGE_TIME
+
+	var/stage_time = OVI_EGG_STAGE_TIME
+	stage_time *= get_oviposition_egg_type_interval_multiplier(ovipositor.ovi_egg_type)
+	stage_time *= get_oviposition_capacity_interval_multiplier(get_clutch_size())
+	stage_time *= sanitize_oviposition_scale(ovipositor.egg_scale)
+	stage_time *= get_oviposition_trait_interval_multiplier(ovipositor.egg_traits)
+
+	if(ovipositor.resource_dependent_yield && carrier)
+		var/nutriment = carrier.get_reagent_amount(/datum/reagent/consumable/nutriment)
+		var/speed_multiplier = 1.5 - clamp(nutriment / 10, 0, 1)
+		stage_time *= speed_multiplier
+
+	return max(30 SECONDS, round(stage_time))
+
 /datum/component/ovipositor/proc/get_clutch_size()
 	var/obj/item/organ/genitals/penis/genital = parent
 	if(genital)
-		eggs_clutch_size = max(1, round(genital.egg_clutch_size || 1))
-	var/base = max(1, round(eggs_clutch_size || 1))
+		eggs_clutch_size = clamp(round(genital.egg_clutch_size || 1), 1, OVI_EGG_MAX_CLUTCH)
+	var/base = clamp(round(eggs_clutch_size || 1), 1, OVI_EGG_MAX_CLUTCH)
 	// Resource-dependent yield: scale clutch by carrier's nutriment level
 	var/obj/item/organ/genitals/penis/ovipositor/ovi = parent
 	if(istype(ovi) && ovi.resource_dependent_yield && carrier)
@@ -96,15 +124,21 @@
 	return max(1, round(base_clutch * ratio))
 
 /datum/component/ovipositor/proc/get_max_stored_eggs()
-	return max(3, get_clutch_size())
+	var/obj/item/organ/genitals/penis/ovipositor/ovipositor = parent
+	if(istype(ovipositor))
+		return clamp(round(max(ovipositor.egg_storage_capacity, get_clutch_size())), 1, OVI_EGG_MAX_CLUTCH)
+	return OVI_EGG_MAX_CLUTCH
 
 /datum/component/ovipositor/proc/set_clutch_size(new_size)
 	if(isnull(new_size))
 		return eggs_clutch_size
 
-	eggs_clutch_size = max(1, round(new_size))
+	eggs_clutch_size = clamp(round(new_size), 1, OVI_EGG_MAX_CLUTCH)
 	eggs_stored = min(eggs_stored, get_max_stored_eggs())
 	return eggs_clutch_size
+
+/datum/component/ovipositor/proc/sync_storage_capacity()
+	eggs_stored = min(eggs_stored, get_max_stored_eggs())
 
 /datum/component/ovipositor/proc/on_climax(datum/source)
 	SIGNAL_HANDLER
@@ -196,7 +230,7 @@
 	if(egg_type == initial(ovipositor.ovi_egg_type))
 		egg_type = get_species_oviposition_egg_type(carrier) || egg_type
 	// Apply player custom overrides before setting type (so profile apply respects them)
-	egg.apply_custom_overrides(ovipositor.custom_egg_name, ovipositor.custom_egg_desc, ovipositor.custom_egg_color)
+	egg.apply_custom_overrides(ovipositor.custom_egg_name, ovipositor.custom_egg_desc, ovipositor.custom_egg_color, ovipositor.egg_scale, ovipositor.egg_traits, ovipositor.custom_auto_hatch)
 	egg.set_egg_type(egg_type)
 	egg.set_oviposition_mother(carrier)
 	return egg

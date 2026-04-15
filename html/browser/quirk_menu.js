@@ -83,6 +83,31 @@ function updateQuirkExtraSelect(selectElement) {
 	window.location.href = '?quirk_extra_field=' + quirkRef + '&field_key=' + encodeURIComponent(fieldKey) + '&field_value=' + encodeURIComponent(fieldValue);
 }
 
+// Handle color picker fields. The picker itself provides the final Submit action.
+function pickQuirkColor(buttonElement) {
+	var quirkRef = buttonElement.getAttribute('data-quirk');
+	var fieldKey = buttonElement.getAttribute('data-field');
+
+	if (!quirkRef || !fieldKey) {
+		return;
+	}
+
+	saveState();
+	window.location.href = '?quirk_color_field=' + quirkRef + '&field_key=' + encodeURIComponent(fieldKey);
+}
+
+function resetQuirkColor(buttonElement) {
+	var quirkRef = buttonElement.getAttribute('data-quirk');
+	var fieldKey = buttonElement.getAttribute('data-field');
+
+	if (!quirkRef || !fieldKey) {
+		return;
+	}
+
+	saveState();
+	window.location.href = '?quirk_color_reset=' + quirkRef + '&field_key=' + encodeURIComponent(fieldKey);
+}
+
 // Debounced text update (optional - for auto-saving as user types)
 var textUpdateTimeout;
 function updateQuirkTextDebounced(inputElement) {

@@ -81,7 +81,12 @@
 			if(!(value in options))
 				value = field_definition["default"]
 		if(QUIRK_TEXT)
-			value = sanitize(copytext_char("[value]", 1, 65))
+			var/max_length = field_definition["max_length"] || 64
+			var/allow_newlines = field_definition["multiline"] ? TRUE : FALSE
+			value = sanitize_oviposition_text(value, max_length, allow_newlines)
+		if(QUIRK_COLOR)
+			var/sanitized_color = sanitize_oviposition_color(value)
+			value = sanitized_color ? sanitized_color : ""
 	if(!islist(quirk_extra_customizations[quirk_type]))
 		quirk_extra_customizations[quirk_type] = list()
 	quirk_extra_customizations[quirk_type][key] = value
@@ -516,9 +521,15 @@
 				if(field_type == QUIRK_TEXT)
 					var/field_placeholder = field["placeholder"] || ""
 					var/field_value = field_current ? field_current : ""
-					dat += "<input type='text' class='quirk-text-input' data-quirk='\ref[quirk_type]' data-field='[field_key]' "
-					dat += "placeholder='[escape_html_attribute(field_placeholder)]' value='[escape_html_attribute(field_value)]' "
-					dat += "onclick='event.stopPropagation()' maxlength='64' />"
+					var/field_max_length = field["max_length"] || 64
+					if(field["multiline"])
+						dat += "<textarea class='quirk-text-input' data-quirk='\ref[quirk_type]' data-field='[field_key]' "
+						dat += "placeholder='[escape_html_attribute(field_placeholder)]' onclick='event.stopPropagation()' "
+						dat += "maxlength='[field_max_length]' rows='4'>[html_encode(field_value)]</textarea>"
+					else
+						dat += "<input type='text' class='quirk-text-input' data-quirk='\ref[quirk_type]' data-field='[field_key]' "
+						dat += "placeholder='[escape_html_attribute(field_placeholder)]' value='[escape_html_attribute(field_value)]' "
+						dat += "onclick='event.stopPropagation()' maxlength='[field_max_length]' />"
 
 				else if(field_type == QUIRK_NUMBER)
 					var/field_min = field["min"] || 1
@@ -534,6 +545,19 @@
 						var/opt_selected = (field_current == opt) ? "selected" : ""
 						dat += "<option value='[opt]' [opt_selected]>[opt]</option>"
 					dat += "</select>"
+
+				else if(field_type == QUIRK_COLOR)
+					var/field_value = field_current ? field_current : ""
+					var/display_color = sanitize_oviposition_color(field_value)
+					if(!display_color)
+						display_color = "#eee3c7"
+					dat += "<div class='quirk-color-row'>"
+					dat += "<span class='quirk-color-swatch' style='background-color: [display_color];'></span>"
+					dat += "<span class='quirk-color-value'>[field_value ? html_encode(field_value) : "Default"]</span>"
+					dat += "<button type='button' class='quirk-color-button' data-quirk='\ref[quirk_type]' data-field='[field_key]' onclick='event.stopPropagation(); pickQuirkColor(this);'>Set Colour</button>"
+					if(field_value)
+						dat += "<button type='button' class='quirk-color-button reset' data-quirk='\ref[quirk_type]' data-field='[field_key]' onclick='event.stopPropagation(); resetQuirkColor(this);'>Reset</button>"
+					dat += "</div>"
 
 				dat += "</div>"
 
@@ -593,6 +617,29 @@
 
 		if(quirk_ref && field_key)
 			prefs.set_quirk_extra_customization(quirk_ref, field_key, field_value)
+		return TRUE
+
+	if(href_list["quirk_color_field"])
+		var/quirk_ref = locate(href_list["quirk_color_field"])
+		var/field_key = href_list["field_key"]
+
+		if(quirk_ref && field_key)
+			var/current_color = prefs.get_quirk_extra_customization(quirk_ref, field_key)
+			if(!sanitize_oviposition_color(current_color))
+				current_color = "#eee3c7"
+			var/new_color = tgui_color_picker(usr, "Choose the custom egg color.", "Egg Color", current_color)
+			if(new_color)
+				prefs.set_quirk_extra_customization(quirk_ref, field_key, new_color)
+				prefs.open_quirk_menu(usr)
+		return TRUE
+
+	if(href_list["quirk_color_reset"])
+		var/quirk_ref = locate(href_list["quirk_color_reset"])
+		var/field_key = href_list["field_key"]
+
+		if(quirk_ref && field_key)
+			prefs.set_quirk_extra_customization(quirk_ref, field_key, "")
+			prefs.open_quirk_menu(usr)
 		return TRUE
 
 	if(href_list["quirk_clear"])

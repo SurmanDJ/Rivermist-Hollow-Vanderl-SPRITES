@@ -41,7 +41,25 @@
 
 // Oviposition egg type identifiers.
 #define OVI_EGG_NORMAL "normal_ovi"
+#define OVI_EGG_AVIAN "avian_ovi"
+#define OVI_EGG_SOFTSHELL "softshell_ovi"
+#define OVI_EGG_PARASITIC "parasitic_ovi"
 #define OVI_EGG_SPIDER "spider_ovi"
 #define OVI_EGG_BOG_BUG "bog_bug_ovi"
 #define OVI_EGG_HARPY "harpy_ovi"
 #define OVI_EGG_EMBRYO "embryo_ovi"
+
+// Oviposition customization and balance limits.
+#define OVI_EGG_MAX_CLUTCH 30
+#define OVI_EGG_DEFAULT_SCALE 1
+#define OVI_EGG_MIN_SCALE 0.5
+#define OVI_EGG_MAX_SCALE 2
+#define OVI_EGG_MAX_CUSTOM_NAME_LENGTH 96
+#define OVI_EGG_MAX_CUSTOM_DESC_LENGTH 512
+#define OVI_EGG_STAGE_TIME 1 MINUTES
+
+// Oviposition egg modifier flags.
+#define OVI_EGG_TRAIT_APHRODISIAC "aphrodisiac"
+#define OVI_EGG_TRAIT_POISON "poison"
+#define OVI_EGG_TRAIT_PARASITE "parasite"
+#define OVI_EGG_TRAIT_FAST_GROWTH "fast_growth"

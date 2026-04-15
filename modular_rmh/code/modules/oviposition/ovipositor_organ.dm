@@ -5,9 +5,14 @@
 	sheath_type = SHEATH_TYPE_NORMAL
 	ovi_egg_type = OVI_EGG_NORMAL
 	egg_clutch_size = 1
+	var/egg_storage_capacity = OVI_EGG_MAX_CLUTCH
 	var/custom_egg_name = ""
 	var/custom_egg_desc = ""
+	var/custom_organ_desc = ""
 	var/custom_egg_color = null
+	var/custom_auto_hatch = null
+	var/egg_scale = OVI_EGG_DEFAULT_SCALE
+	var/list/egg_traits = list()
 	var/resource_dependent_yield = FALSE
 
 /obj/item/organ/genitals/penis/ovipositor/Insert(mob/living/M, special, drop_if_replaced)
@@ -21,6 +26,14 @@
 	comp?.RemoveComponent()
 	qdel(comp)
 
+/obj/item/organ/genitals/penis/ovipositor/attack_self(mob/user, list/modifiers)
+	if(!ishuman(owner))
+		to_chat(user, span_warning("The ovipositor must be attached before I can tune its egg-laying."))
+		return
+	var/mob/living/carbon/human/human_owner = owner
+	var/datum/oviposition_status_menu/menu = new(human_owner)
+	menu.ui_interact(user)
+
 /obj/item/organ/genitals/penis/ovipositor/proc/set_egg_type(new_egg_type)
 	if(new_egg_type)
 		ovi_egg_type = new_egg_type
@@ -30,11 +43,24 @@
 	if(isnull(new_size))
 		return egg_clutch_size
 
-	egg_clutch_size = max(1, round(new_size))
+	egg_clutch_size = clamp(round(new_size), 1, OVI_EGG_MAX_CLUTCH)
+	egg_storage_capacity = max(egg_storage_capacity, egg_clutch_size)
 
 	var/datum/component/ovipositor/ovipositor_component = GetComponent(/datum/component/ovipositor)
 	ovipositor_component?.set_clutch_size(egg_clutch_size)
 	return egg_clutch_size
+
+/obj/item/organ/genitals/penis/ovipositor/proc/set_storage_capacity(new_capacity)
+	if(isnull(new_capacity))
+		return egg_storage_capacity
+
+	egg_storage_capacity = clamp(round(new_capacity), egg_clutch_size, OVI_EGG_MAX_CLUTCH)
+	var/datum/component/ovipositor/ovipositor_component = GetComponent(/datum/component/ovipositor)
+	ovipositor_component?.sync_storage_capacity()
+	return egg_storage_capacity
+
+/obj/item/organ/genitals/penis/ovipositor/proc/update_custom_organ_desc()
+	desc = custom_organ_desc || initial(desc)
 
 // Keep the organ type and the oviposition behavior separate so character prefs can pick
 // the anatomy while quirks or mob setup decide whether it is actually functional.
@@ -80,9 +106,21 @@
 /proc/get_oviposition_egg_type_option_name(option)
 	switch(option)
 		if(OVI_EGG_NORMAL)
-			return "Safe (Normal)"
+			return "Hardshell"
+		if(OVI_EGG_AVIAN)
+			return "Avian"
+		if(OVI_EGG_SOFTSHELL)
+			return "Softshell"
+		if(OVI_EGG_PARASITIC)
+			return "Parasitic"
 		if(OVI_EGG_HARPY)
 			return "Harpy"
+		if(OVI_EGG_SPIDER)
+			return "Spider"
+		if(OVI_EGG_BOG_BUG)
+			return "Bog Bug"
+		if(OVI_EGG_EMBRYO)
+			return "Embryo"
 	return "[option]"
 
 /datum/sprite_accessory/genitals/penis/ovipositor
@@ -117,13 +155,22 @@
 	customization_label = "Choose Egg Type"
 	customization_options = list(
 		OVI_EGG_NORMAL,
+		OVI_EGG_AVIAN,
+		OVI_EGG_SOFTSHELL,
+		OVI_EGG_PARASITIC,
+		OVI_EGG_HARPY
 	)
 	extra_customization_fields = list(
-		list("key" = "clutch_size", "label" = "Clutch Size", "type" = QUIRK_NUMBER, "default" = 1, "min" = 1, "max" = 6),
-		list("key" = "custom_name", "label" = "Custom Egg Name", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "Leave blank for default"),
-		list("key" = "custom_desc", "label" = "Custom Egg Desc", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "Leave blank for default"),
-		list("key" = "custom_color", "label" = "Egg Color (hex)", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "#RRGGBB or blank"),
-		list("key" = "resource_dependent", "label" = "Resource-Dependent Yield", "type" = QUIRK_SELECT, "default" = "No", "options" = list("No", "Yes")),
+		list("key" = "clutch_size", "label" = "Clutch Size", "type" = QUIRK_NUMBER, "default" = 1, "min" = 1, "max" = OVI_EGG_MAX_CLUTCH),
+		list("key" = "storage_capacity", "label" = "Stored Egg Capacity", "type" = QUIRK_NUMBER, "default" = OVI_EGG_MAX_CLUTCH, "min" = 1, "max" = OVI_EGG_MAX_CLUTCH),
+		list("key" = "egg_scale_percent", "label" = "Egg Size %", "type" = QUIRK_NUMBER, "default" = 100, "min" = 50, "max" = 200),
+		list("key" = "custom_name", "label" = "Custom Egg Name", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "Leave blank for default", "max_length" = OVI_EGG_MAX_CUSTOM_NAME_LENGTH),
+		list("key" = "custom_desc", "label" = "Custom Egg Desc", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "Leave blank for default", "max_length" = OVI_EGG_MAX_CUSTOM_DESC_LENGTH, "multiline" = TRUE),
+		list("key" = "custom_organ_desc", "label" = "Custom Organ Desc", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "Leave blank for default", "max_length" = OVI_EGG_MAX_CUSTOM_DESC_LENGTH, "multiline" = TRUE),
+		list("key" = "custom_color", "label" = "Egg Color", "type" = QUIRK_COLOR, "default" = ""),
+		list("key" = "egg_trait", "label" = "Egg Modifier", "type" = QUIRK_SELECT, "default" = "None", "options" = list("None", OVI_EGG_TRAIT_APHRODISIAC, OVI_EGG_TRAIT_POISON, OVI_EGG_TRAIT_PARASITE, OVI_EGG_TRAIT_FAST_GROWTH)),
+		list("key" = "auto_hatch", "label" = "Auto Hatch", "type" = QUIRK_SELECT, "default" = "Profile", "options" = list("Profile", "Yes", "No")),
+		list("key" = "resource_dependent", "label" = "Resource-Dependent Yield", "type" = QUIRK_SELECT, "default" = "No", "options" = list("No", "Yes"))
 	)
 
 /datum/quirk/peculiarity/ovipositor/is_available(datum/preferences/prefs)
@@ -148,12 +195,26 @@
 	ovipositor_organ.set_egg_type(customization_value)
 
 	var/clutch = text2num(get_extra_value("clutch_size", 1))
-	ovipositor_organ.set_clutch_size(max(1, clutch))
+	ovipositor_organ.set_clutch_size(clutch)
+	var/storage_capacity = text2num(get_extra_value("storage_capacity", OVI_EGG_MAX_CLUTCH))
+	if(isnull(storage_capacity))
+		storage_capacity = OVI_EGG_MAX_CLUTCH
+	ovipositor_organ.set_storage_capacity(storage_capacity)
 
-	ovipositor_organ.custom_egg_name = get_extra_value("custom_name", "")
-	ovipositor_organ.custom_egg_desc = get_extra_value("custom_desc", "")
+	var/scale_percent = text2num(get_extra_value("egg_scale_percent", 100))
+	if(isnull(scale_percent))
+		scale_percent = 100
+	ovipositor_organ.egg_scale = sanitize_oviposition_scale(scale_percent / 100)
+	ovipositor_organ.custom_egg_name = sanitize_oviposition_text(get_extra_value("custom_name", ""), OVI_EGG_MAX_CUSTOM_NAME_LENGTH, FALSE)
+	ovipositor_organ.custom_egg_desc = sanitize_oviposition_text(get_extra_value("custom_desc", ""), OVI_EGG_MAX_CUSTOM_DESC_LENGTH, TRUE)
+	ovipositor_organ.custom_organ_desc = sanitize_oviposition_text(get_extra_value("custom_organ_desc", ""), OVI_EGG_MAX_CUSTOM_DESC_LENGTH, TRUE)
 	ovipositor_organ.custom_egg_color = sanitize_oviposition_color(get_extra_value("custom_color", ""))
+	var/egg_trait = get_extra_value("egg_trait", "None")
+	ovipositor_organ.egg_traits = (egg_trait && egg_trait != "None") ? sanitize_oviposition_trait_list(list(egg_trait)) : list()
+	var/auto_hatch = get_extra_value("auto_hatch", "Profile")
+	ovipositor_organ.custom_auto_hatch = (auto_hatch == "Profile") ? null : (auto_hatch == "Yes")
 	ovipositor_organ.resource_dependent_yield = (get_extra_value("resource_dependent", "No") == "Yes")
+	ovipositor_organ.update_custom_organ_desc()
 
 	set_ovipositor_functionality(ovipositor_organ, TRUE)
 
@@ -170,13 +231,21 @@
 	customization_label = "Choose Egg Type"
 	customization_options = list(
 		OVI_EGG_NORMAL,
+		OVI_EGG_AVIAN,
+		OVI_EGG_SOFTSHELL,
+		OVI_EGG_PARASITIC,
+		OVI_EGG_HARPY
 	)
 	extra_customization_fields = list(
-		list("key" = "clutch_size", "label" = "Max Eggs in Womb", "type" = QUIRK_NUMBER, "default" = 3, "min" = 1, "max" = 6),
-		list("key" = "custom_name", "label" = "Custom Egg Name", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "Leave blank for default"),
-		list("key" = "custom_desc", "label" = "Custom Egg Desc", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "Leave blank for default"),
-		list("key" = "custom_color", "label" = "Egg Color (hex)", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "#RRGGBB or blank"),
-		list("key" = "resource_dependent", "label" = "Resource-Dependent Yield", "type" = QUIRK_SELECT, "default" = "No", "options" = list("No", "Yes")),
+		list("key" = "clutch_size", "label" = "Max Eggs in Womb", "type" = QUIRK_NUMBER, "default" = 6, "min" = 1, "max" = OVI_EGG_MAX_CLUTCH),
+		list("key" = "egg_scale_percent", "label" = "Egg Size %", "type" = QUIRK_NUMBER, "default" = 100, "min" = 50, "max" = 200),
+		list("key" = "custom_name", "label" = "Custom Egg Name", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "Leave blank for default", "max_length" = OVI_EGG_MAX_CUSTOM_NAME_LENGTH),
+		list("key" = "custom_desc", "label" = "Custom Egg Desc", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "Leave blank for default", "max_length" = OVI_EGG_MAX_CUSTOM_DESC_LENGTH, "multiline" = TRUE),
+		list("key" = "custom_organ_desc", "label" = "Custom Womb Desc", "type" = QUIRK_TEXT, "default" = "", "placeholder" = "Leave blank for default", "max_length" = OVI_EGG_MAX_CUSTOM_DESC_LENGTH, "multiline" = TRUE),
+		list("key" = "custom_color", "label" = "Egg Color", "type" = QUIRK_COLOR, "default" = ""),
+		list("key" = "egg_trait", "label" = "Egg Modifier", "type" = QUIRK_SELECT, "default" = "None", "options" = list("None", OVI_EGG_TRAIT_APHRODISIAC, OVI_EGG_TRAIT_POISON, OVI_EGG_TRAIT_PARASITE, OVI_EGG_TRAIT_FAST_GROWTH)),
+		list("key" = "auto_hatch", "label" = "Auto Hatch", "type" = QUIRK_SELECT, "default" = "Profile", "options" = list("Profile", "Yes", "No")),
+		list("key" = "resource_dependent", "label" = "Resource-Dependent Yield", "type" = QUIRK_SELECT, "default" = "No", "options" = list("No", "Yes"))
 	)
 
 /datum/quirk/peculiarity/egg_layer/is_available(datum/preferences/prefs)
@@ -202,12 +271,24 @@
 
 	var/obj/item/organ/genitals/filling_organ/vagina/vagina = owner.getorganslot(ORGAN_SLOT_VAGINA)
 	if(vagina)
-		var/clutch = text2num(get_extra_value("clutch_size", 3))
-		vagina.oviposition_egg_production_limit = max(1, clutch)
-		vagina.custom_egg_name = get_extra_value("custom_name", "")
-		vagina.custom_egg_desc = get_extra_value("custom_desc", "")
+		var/clutch = text2num(get_extra_value("clutch_size", 6))
+		if(isnull(clutch))
+			clutch = 6
+		vagina.oviposition_egg_production_limit = clamp(round(clutch), 1, OVI_EGG_MAX_CLUTCH)
+		var/scale_percent = text2num(get_extra_value("egg_scale_percent", 100))
+		if(isnull(scale_percent))
+			scale_percent = 100
+		vagina.egg_scale = sanitize_oviposition_scale(scale_percent / 100)
+		vagina.custom_egg_name = sanitize_oviposition_text(get_extra_value("custom_name", ""), OVI_EGG_MAX_CUSTOM_NAME_LENGTH, FALSE)
+		vagina.custom_egg_desc = sanitize_oviposition_text(get_extra_value("custom_desc", ""), OVI_EGG_MAX_CUSTOM_DESC_LENGTH, TRUE)
+		vagina.custom_organ_desc = sanitize_oviposition_text(get_extra_value("custom_organ_desc", ""), OVI_EGG_MAX_CUSTOM_DESC_LENGTH, TRUE)
 		vagina.custom_egg_color = sanitize_oviposition_color(get_extra_value("custom_color", ""))
+		var/egg_trait = get_extra_value("egg_trait", "None")
+		vagina.egg_traits = (egg_trait && egg_trait != "None") ? sanitize_oviposition_trait_list(list(egg_trait)) : list()
+		var/auto_hatch = get_extra_value("auto_hatch", "Profile")
+		vagina.custom_auto_hatch = (auto_hatch == "Profile") ? null : (auto_hatch == "Yes")
 		vagina.resource_dependent_yield = (get_extra_value("resource_dependent", "No") == "Yes")
+		vagina.update_custom_organ_desc()
 
 /datum/quirk/peculiarity/egg_layer/on_remove()
 	if(!owner)
@@ -223,8 +304,13 @@
 		vagina.oviposition_egg_production_limit = initial(vagina.oviposition_egg_production_limit)
 		vagina.custom_egg_name = ""
 		vagina.custom_egg_desc = ""
+		vagina.custom_organ_desc = ""
 		vagina.custom_egg_color = null
+		vagina.custom_auto_hatch = null
+		vagina.egg_scale = OVI_EGG_DEFAULT_SCALE
+		vagina.egg_traits = list()
 		vagina.resource_dependent_yield = FALSE
+		vagina.update_custom_organ_desc()
 
 /datum/quirk/peculiarity/egg_layer/get_option_name(option)
 	return get_oviposition_egg_type_option_name(option)

@@ -229,7 +229,7 @@
 	if(!storage || !max_stage)
 		return
 
-	var/new_bulk = max(1, stage) * 2
+	var/new_bulk = egg.get_storage_bulk_for_stage(stage)
 	if(egg.body_storage_bulk == new_bulk)
 		return
 
@@ -386,6 +386,8 @@
 	hatch_item.icon = egg.icon
 	hatch_item.icon_state = egg.icon_state
 	hatch_item.color = egg.color
+	hatch_item.transform = egg.transform
+	egg.apply_trait_reagents_to(hatch_item)
 
 /datum/component/pregnancy/proc/hatch_living_inside_host(mob/living/hatchling)
 	if(!egg || !container || !carrier || !hatchling)
