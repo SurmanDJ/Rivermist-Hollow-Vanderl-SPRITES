@@ -314,6 +314,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/has_body_storage_overlay = FALSE
 	/// If the item has visual overlay only on specific layer
 	var/bstorage_visible_layer
+	/// If the item has visual overlay only in specific hole
+	var/bstorage_visible_hole = null
 	/// Can a user directly pull this item out of body storage?
 	var/body_storage_manual_removal = TRUE
 	/// Can random storage effects pick and remove this item?

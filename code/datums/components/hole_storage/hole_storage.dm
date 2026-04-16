@@ -46,14 +46,14 @@
 
 	var/list/outer_overlays = list()
 
-/datum/component/body_storage/Initialize(obj/item/organ/org, location = null, mob/living/organ_owner)
+/datum/component/body_storage/Initialize(obj/item/organ/org, location, mob/living/organ_owner)
 	. = ..()
 	organ_storing = org
 	owner = organ_owner
 	if(location)
 		applied_slot = location
 	else
-		location = organ_storing.slot
+		applied_slot = organ_storing.slot
 
 	all_layers[STORAGE_LAYER_OUTER] = outer_layer_contents // assembling the linker list
 	all_layers[STORAGE_LAYER_INNER] = inner_layer_contents
@@ -130,8 +130,9 @@
 	t_layer.Add(incoming_item)
 	layer_storage_cur_bulk[target_layer] += incoming_item.body_storage_bulk
 	var/diff = layer_storage_cur_bulk[target_layer] - layer_storage_max_bulk[target_layer]
-	if(incoming_item.has_body_storage_overlay && incoming_item.bstorage_visible_layer == target_layer)
-		apply_outer_overlay(incoming_item)
+	if(incoming_item.has_body_storage_overlay)
+		if(isnull(incoming_item.bstorage_visible_layer) || incoming_item.bstorage_visible_layer == target_layer)
+			apply_outer_overlay(incoming_item)
 	if(diff > 0)
 		handle_stretch(source, diff)
 	owner.encumbrance_to_speed()
@@ -323,6 +324,8 @@
 
 	var/icon = i_item.storage_overlay_icon ? i_item.storage_overlay_icon : i_item.mob_overlay_icon
 	var/state = i_item.storage_icon_state ? i_item.storage_icon_state : i_item.icon_state
+	if(i_item.bstorage_visible_hole && i_item.bstorage_visible_hole == applied_slot)
+		state += "_" + i_item.bstorage_visible_hole
 
 	var/mutable_appearance/item_overlay = mutable_appearance(icon, state, -BODY_LAYER)
 
